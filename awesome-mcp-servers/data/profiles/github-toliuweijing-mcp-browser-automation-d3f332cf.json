@@ -1,0 +1,56 @@
+{
+  "id": "github-toliuweijing-mcp-browser-automation-d3f332cf",
+  "name": "toliuweijing/mcp-browser-automation",
+  "description": "A TypeScript-based MCP server that implements a simple notes system with tools for creating and summarizing text notes.",
+  "category": "Browser Automation & Web Scraping",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-toliuweijing-mcp-browser-automation-d3f332cf",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-toliuweijing-mcp-browser-automation-d3f332cf/badge.svg)](https://tensorblock.co/mcp/servers/github-toliuweijing-mcp-browser-automation-d3f332cf)",
+  "links": {
+    "primary": "https://github.com/toliuweijing/mcp-browser-automation",
+    "repo": "https://github.com/toliuweijing/mcp-browser-automation",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

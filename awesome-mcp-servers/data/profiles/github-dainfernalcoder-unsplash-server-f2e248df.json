@@ -1,0 +1,56 @@
+{
+  "id": "github-dainfernalcoder-unsplash-server-f2e248df",
+  "name": "DaInfernalCoder/unsplash-server",
+  "description": "Integrates Unsplash image search and retrieval with AI assistants, enabling seamless access to high-quality images.",
+  "category": "Multimedia Processing",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-dainfernalcoder-unsplash-server-f2e248df",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-dainfernalcoder-unsplash-server-f2e248df/badge.svg)](https://tensorblock.co/mcp/servers/github-dainfernalcoder-unsplash-server-f2e248df)",
+  "links": {
+    "primary": "https://github.com/DaInfernalCoder/unsplash-server",
+    "repo": "https://github.com/DaInfernalCoder/unsplash-server",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-im-neko-mcp-wikijs-b457e77b",
+  "name": "Im-neko/mcp-wikijs",
+  "description": "Facilitates AI model interaction with WikiJS content through a TypeScript-based MCP server, enabling document search, creation, and management.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-im-neko-mcp-wikijs-b457e77b",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-im-neko-mcp-wikijs-b457e77b/badge.svg)](https://tensorblock.co/mcp/servers/github-im-neko-mcp-wikijs-b457e77b)",
+  "links": {
+    "primary": "https://github.com/Im-neko/mcp-wikijs",
+    "repo": "https://github.com/Im-neko/mcp-wikijs",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

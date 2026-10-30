@@ -1,0 +1,58 @@
+{
+  "id": "github-sheshiyer-acc-ui-comp-builder-b32bc123",
+  "name": "Sheshiyer/acc-ui-comp-builder",
+  "description": "Facilitates seamless integration and customization of Aceternity UI components using Claude's MCP capabilities.",
+  "category": "Developer Productivity & Utilities",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-sheshiyer-acc-ui-comp-builder-b32bc123",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-sheshiyer-acc-ui-comp-builder-b32bc123/badge.svg)](https://tensorblock.co/mcp/servers/github-sheshiyer-acc-ui-comp-builder-b32bc123)",
+  "links": {
+    "primary": "https://github.com/Sheshiyer/acc-ui-comp-builder",
+    "repo": "https://github.com/Sheshiyer/acc-ui-comp-builder",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

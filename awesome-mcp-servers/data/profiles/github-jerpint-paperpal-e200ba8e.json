@@ -1,0 +1,56 @@
+{
+  "id": "github-jerpint-paperpal-e200ba8e",
+  "name": "jerpint/paperpal",
+  "description": "Facilitates literature reviews by integrating LLMs with arXiv and Hugging Face papers for seamless paper discussions and organization.",
+  "category": "Science & Research",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-jerpint-paperpal-e200ba8e",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-jerpint-paperpal-e200ba8e/badge.svg)](https://tensorblock.co/mcp/servers/github-jerpint-paperpal-e200ba8e)",
+  "links": {
+    "primary": "https://github.com/jerpint/paperpal",
+    "repo": "https://github.com/jerpint/paperpal",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

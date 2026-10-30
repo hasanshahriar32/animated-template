@@ -1,0 +1,56 @@
+{
+  "id": "github-giannisanni-kokoro-tts-mcp-720fbbf7",
+  "name": "giannisanni/kokoro-tts-mcp",
+  "description": "Facilitates text-to-speech synthesis using the Kokoro TTS engine, enabling seamless integration of speech capabilities into applications via MCP tools.",
+  "category": "Multimedia Processing",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-giannisanni-kokoro-tts-mcp-720fbbf7",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-giannisanni-kokoro-tts-mcp-720fbbf7/badge.svg)](https://tensorblock.co/mcp/servers/github-giannisanni-kokoro-tts-mcp-720fbbf7)",
+  "links": {
+    "primary": "https://github.com/giannisanni/kokoro-tts-mcp",
+    "repo": "https://github.com/giannisanni/kokoro-tts-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

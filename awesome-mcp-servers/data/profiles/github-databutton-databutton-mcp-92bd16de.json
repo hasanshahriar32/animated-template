@@ -1,0 +1,56 @@
+{
+  "id": "github-databutton-databutton-mcp-92bd16de",
+  "name": "databutton/databutton-mcp",
+  "description": "Facilitates initial app planning and development by deploying frontends and backends using React and Python APIs.",
+  "category": "Data Analysis & Business Intelligence",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-databutton-databutton-mcp-92bd16de",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-databutton-databutton-mcp-92bd16de/badge.svg)](https://tensorblock.co/mcp/servers/github-databutton-databutton-mcp-92bd16de)",
+  "links": {
+    "primary": "https://github.com/databutton/databutton-mcp",
+    "repo": "https://github.com/databutton/databutton-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

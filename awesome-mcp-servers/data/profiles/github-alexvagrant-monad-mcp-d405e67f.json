@@ -1,0 +1,58 @@
+{
+  "id": "github-alexvagrant-monad-mcp-d405e67f",
+  "name": "AlexVagrant/monad-mcp",
+  "description": "Facilitates querying MON token balances on the Monad testnet through an MCP server integrated with Claude Desktop.",
+  "category": "Finance & Crypto",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-alexvagrant-monad-mcp-d405e67f",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-alexvagrant-monad-mcp-d405e67f/badge.svg)](https://tensorblock.co/mcp/servers/github-alexvagrant-monad-mcp-d405e67f)",
+  "links": {
+    "primary": "https://github.com/AlexVagrant/monad-mcp",
+    "repo": "https://github.com/AlexVagrant/monad-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

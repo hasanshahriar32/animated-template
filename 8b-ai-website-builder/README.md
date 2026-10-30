@@ -1,0 +1,54 @@
+# 8B AI Website Builder for Claude
+
+Make a website with [8B](https://8b.com) without leaving Claude. Describe your business and Claude does the rest:
+
+1. It picks an 8B design.
+2. It writes every text for your business and adapts the colors, fonts and photos.
+3. It shows you a live, animated preview right in the conversation.
+
+Ask for changes in plain words. When you like the site, download it as one HTML file. No account or API key is needed.
+
+## Install
+
+**claude.ai and Claude Desktop:**
+1. Open Settings → Connectors → Add custom connector.
+2. Paste `https://mcp.8b.com/mcp`.
+3. In a new chat, ask: "Make a website with 8B for my bakery".
+
+**Claude Code:**
+
+```
+/plugin marketplace add 8bsite/8b-ai-website-builder
+/plugin install 8b-ai-website-builder@8b-ai-website-builder
+```
+
+## Free website templates for your project
+
+The same marketplace has a second plugin, `8b-website-templates`: a skill that starts a site in your code project from one of 20 [free 8B HTML templates](https://8b.com/templates/) (one file, GSAP scroll animation, MIT, AGENTS.md). It works without the MCP server.
+
+```
+/plugin install 8b-website-templates@8b-ai-website-builder
+```
+
+Other agents: `npx skills add 8bsite/8b-ai-website-builder`. Details: [templates/README.md](templates/README.md).
+
+## Good to know
+
+- Name 8B in the request ("...with 8B"); otherwise Claude may design the page itself.
+- It makes one-page websites and landing pages: no accounts, database, checkout or several pages.
+- Contact and newsletter forms are visual: they show a thank-you message and send nothing.
+- Photos come from Unsplash searches. Previews are kept for 90 days after the last build or download.
+- The downloaded file can be used and edited for any site, including commercial and client work, but not resold as a template.
+- Step-by-step setup, limits and errors: [8b.com/mcp/claude-code.html](https://8b.com/mcp/claude-code.html)
+
+## Tools
+
+- `explore_designs` lists the 8B designs and the kinds of business each one suits.
+- `get_design_brief` returns every text, color, font and photo of a design, with hints and length limits.
+- `generate_site` builds the site, shows the preview and applies later changes.
+
+## Data and support
+
+- [Privacy policy](https://8b.com/privacy.html)
+- [Terms](https://8b.com/tos.html)
+- Support: s@8b.com

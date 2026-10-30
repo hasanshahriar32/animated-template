@@ -1,0 +1,56 @@
+{
+  "id": "github-f-inc-containerinc-mcp-20ed8a84",
+  "name": "f-inc/containerinc-mcp",
+  "description": "Automates deployments to Container Inc. with ephemeral and free deployment capabilities.",
+  "category": "Build & Deployment Tools",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-f-inc-containerinc-mcp-20ed8a84",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-f-inc-containerinc-mcp-20ed8a84/badge.svg)](https://tensorblock.co/mcp/servers/github-f-inc-containerinc-mcp-20ed8a84)",
+  "links": {
+    "primary": "https://github.com/f-inc/containerinc-mcp",
+    "repo": "https://github.com/f-inc/containerinc-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-djacobsmeyer-jira-cloud-mcp-b7175a14",
+  "name": "djacobsmeyer/jira-cloud-mcp",
+  "description": "Facilitates AI-driven interaction and analysis of Jira Cloud instances through comprehensive REST API integration.",
+  "category": "Project & Task Management",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-djacobsmeyer-jira-cloud-mcp-b7175a14",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-djacobsmeyer-jira-cloud-mcp-b7175a14/badge.svg)](https://tensorblock.co/mcp/servers/github-djacobsmeyer-jira-cloud-mcp-b7175a14)",
+  "links": {
+    "primary": "https://github.com/djacobsmeyer/jira-cloud-mcp",
+    "repo": "https://github.com/djacobsmeyer/jira-cloud-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

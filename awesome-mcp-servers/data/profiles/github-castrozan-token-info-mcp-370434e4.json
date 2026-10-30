@@ -1,0 +1,56 @@
+{
+  "id": "github-castrozan-token-info-mcp-370434e4",
+  "name": "Castrozan/token-info-mcp",
+  "description": "Facilitates OAuth token validation and detailed information retrieval for Betha Systems using the MCP protocol.",
+  "category": "Finance & Crypto",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-castrozan-token-info-mcp-370434e4",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-castrozan-token-info-mcp-370434e4/badge.svg)](https://tensorblock.co/mcp/servers/github-castrozan-token-info-mcp-370434e4)",
+  "links": {
+    "primary": "https://github.com/Castrozan/token-info-mcp",
+    "repo": "https://github.com/Castrozan/token-info-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "oauth",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "oauth",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

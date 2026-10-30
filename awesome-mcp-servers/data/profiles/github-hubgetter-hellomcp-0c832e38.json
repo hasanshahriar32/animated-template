@@ -1,0 +1,56 @@
+{
+  "id": "github-hubgetter-hellomcp-0c832e38",
+  "name": "hubgetter/HelloMCP",
+  "description": "Showcases various MCP server and client examples, including a BMI Calculator service for health assessments.",
+  "category": "Cloud Platforms & Services",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-hubgetter-hellomcp-0c832e38",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-hubgetter-hellomcp-0c832e38/badge.svg)](https://tensorblock.co/mcp/servers/github-hubgetter-hellomcp-0c832e38)",
+  "links": {
+    "primary": "https://github.com/hubgetter/HelloMCP",
+    "repo": "https://github.com/hubgetter/HelloMCP",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "sse"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "sse"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

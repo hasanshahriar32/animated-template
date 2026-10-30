@@ -1,0 +1,56 @@
+{
+  "id": "github-lemonnekogh-airi-android-b2efcd76",
+  "name": "LemonNekoGH/airi-android",
+  "description": "Facilitates LLM interaction with Android devices through an MCP server, leveraging Docker for deployment.",
+  "category": "AI & LLM Integration",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-lemonnekogh-airi-android-b2efcd76",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-lemonnekogh-airi-android-b2efcd76/badge.svg)](https://tensorblock.co/mcp/servers/github-lemonnekogh-airi-android-b2efcd76)",
+  "links": {
+    "primary": "https://github.com/LemonNekoGH/airi-android",
+    "repo": "https://github.com/LemonNekoGH/airi-android",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

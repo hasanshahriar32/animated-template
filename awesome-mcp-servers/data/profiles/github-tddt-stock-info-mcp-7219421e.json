@@ -1,0 +1,56 @@
+{
+  "id": "github-tddt-stock-info-mcp-7219421e",
+  "name": "tddt/stock_info_mcp",
+  "description": "Provides comprehensive stock data services including historical data, fundamental information, and financial news using FastMCP.",
+  "category": "Finance & Crypto",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-tddt-stock-info-mcp-7219421e",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-tddt-stock-info-mcp-7219421e/badge.svg)](https://tensorblock.co/mcp/servers/github-tddt-stock-info-mcp-7219421e)",
+  "links": {
+    "primary": "https://github.com/tddt/stock_info_mcp",
+    "repo": "https://github.com/tddt/stock_info_mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-bjkemp-mcp-midi-5d35db0e",
+  "name": "bjkemp/mcp-midi",
+  "description": "Facilitates MIDI device interaction through natural language commands, enabling control over synthesizers, note playback, and instrument changes.",
+  "category": "Multimedia Processing",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-bjkemp-mcp-midi-5d35db0e",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-bjkemp-mcp-midi-5d35db0e/badge.svg)](https://tensorblock.co/mcp/servers/github-bjkemp-mcp-midi-5d35db0e)",
+  "links": {
+    "primary": "https://github.com/bjkemp/mcp-midi",
+    "repo": "https://github.com/bjkemp/mcp-midi",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

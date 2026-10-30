@@ -1,0 +1,56 @@
+{
+  "id": "github-glitchfix-mcp-duckduckgo-2c3af413",
+  "name": "Glitchfix/mcp-duckduckgo",
+  "description": "Enables LLMs to perform web searches and content retrieval using DuckDuckGo without API keys.",
+  "category": "Search",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-glitchfix-mcp-duckduckgo-2c3af413",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-glitchfix-mcp-duckduckgo-2c3af413/badge.svg)](https://tensorblock.co/mcp/servers/github-glitchfix-mcp-duckduckgo-2c3af413)",
+  "links": {
+    "primary": "https://github.com/Glitchfix/mcp-duckduckgo",
+    "repo": "https://github.com/Glitchfix/mcp-duckduckgo",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "api-key",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "api-key",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

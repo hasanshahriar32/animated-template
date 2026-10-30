@@ -1,0 +1,56 @@
+{
+  "id": "github-scottlepp-loki-mcp-21256bb9",
+  "name": "scottlepp/loki-mcp",
+  "description": "Facilitates querying Grafana Loki log data using the Model Context Protocol (MCP) with a Go-based server.",
+  "category": "Monitoring & Observability",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-scottlepp-loki-mcp-21256bb9",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-scottlepp-loki-mcp-21256bb9/badge.svg)](https://tensorblock.co/mcp/servers/github-scottlepp-loki-mcp-21256bb9)",
+  "links": {
+    "primary": "https://github.com/scottlepp/loki-mcp",
+    "repo": "https://github.com/scottlepp/loki-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

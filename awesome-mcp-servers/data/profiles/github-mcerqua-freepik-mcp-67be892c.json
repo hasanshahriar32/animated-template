@@ -1,0 +1,56 @@
+{
+  "id": "github-mcerqua-freepik-mcp-67be892c",
+  "name": "MCERQUA/freepik-mcp",
+  "description": "Facilitates interaction with Freepik's API for accessing stock photos and generating images using Mystic AI.",
+  "category": "Multimedia Processing",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-mcerqua-freepik-mcp-67be892c",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-mcerqua-freepik-mcp-67be892c/badge.svg)](https://tensorblock.co/mcp/servers/github-mcerqua-freepik-mcp-67be892c)",
+  "links": {
+    "primary": "https://github.com/MCERQUA/freepik-mcp",
+    "repo": "https://github.com/MCERQUA/freepik-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

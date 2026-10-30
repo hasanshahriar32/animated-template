@@ -1,0 +1,56 @@
+{
+  "id": "github-him0-confluence-mcp-fb4bb94f",
+  "name": "him0/confluence-mcp",
+  "description": "Facilitates searching, fetching, and managing Confluence articles through an MCP server interface.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-him0-confluence-mcp-fb4bb94f",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-him0-confluence-mcp-fb4bb94f/badge.svg)](https://tensorblock.co/mcp/servers/github-him0-confluence-mcp-fb4bb94f)",
+  "links": {
+    "primary": "https://github.com/him0/confluence-mcp",
+    "repo": "https://github.com/him0/confluence-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-abiorh001-mcp-ev-assistant-server-f202e827",
+  "name": "Abiorh001/mcp_ev_assistant_server",
+  "description": "Facilitates efficient management of EV charging stations and trip planning with robust APIs and interactive tools.",
+  "category": "Travel & Transportation",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-abiorh001-mcp-ev-assistant-server-f202e827",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-abiorh001-mcp-ev-assistant-server-f202e827/badge.svg)](https://tensorblock.co/mcp/servers/github-abiorh001-mcp-ev-assistant-server-f202e827)",
+  "links": {
+    "primary": "https://github.com/Abiorh001/mcp_ev_assistant_server",
+    "repo": "https://github.com/Abiorh001/mcp_ev_assistant_server",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

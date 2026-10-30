@@ -1,0 +1,56 @@
+{
+  "id": "github-blurrah-mcp-graphql-475814a8",
+  "name": "blurrah/mcp-graphql",
+  "description": "Facilitates dynamic interaction between LLMs and GraphQL APIs through schema introspection and query execution.",
+  "category": "Data Analysis & Business Intelligence",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-blurrah-mcp-graphql-475814a8",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-blurrah-mcp-graphql-475814a8/badge.svg)](https://tensorblock.co/mcp/servers/github-blurrah-mcp-graphql-475814a8)",
+  "links": {
+    "primary": "https://github.com/blurrah/mcp-graphql",
+    "repo": "https://github.com/blurrah/mcp-graphql",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

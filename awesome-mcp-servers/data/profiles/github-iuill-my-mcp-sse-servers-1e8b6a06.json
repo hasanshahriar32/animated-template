@@ -1,0 +1,56 @@
+{
+  "id": "github-iuill-my-mcp-sse-servers-1e8b6a06",
+  "name": "iuill/my_mcp_sse_servers",
+  "description": "Manage and deploy multiple MCP servers using Docker Compose for streamlined development and production environments.",
+  "category": "Code Execution",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-iuill-my-mcp-sse-servers-1e8b6a06",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-iuill-my-mcp-sse-servers-1e8b6a06/badge.svg)](https://tensorblock.co/mcp/servers/github-iuill-my-mcp-sse-servers-1e8b6a06)",
+  "links": {
+    "primary": "https://github.com/iuill/my_mcp_sse_servers",
+    "repo": "https://github.com/iuill/my_mcp_sse_servers",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

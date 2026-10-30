@@ -1,0 +1,56 @@
+{
+  "id": "github-pkgxdev-mcp-c453689b",
+  "name": "pkgxdev/mcp",
+  "description": "Facilitates AI-driven execution of any Open Source tool via pkgx, with a focus on security and sandboxing.",
+  "category": "Code Execution",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-pkgxdev-mcp-c453689b",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-pkgxdev-mcp-c453689b/badge.svg)](https://tensorblock.co/mcp/servers/github-pkgxdev-mcp-c453689b)",
+  "links": {
+    "primary": "https://github.com/pkgxdev/mcp",
+    "repo": "https://github.com/pkgxdev/mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

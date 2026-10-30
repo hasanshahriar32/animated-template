@@ -1,0 +1,56 @@
+{
+  "id": "github-mark3labs-phalcon-mcp-6e5890ec",
+  "name": "mark3labs/phalcon-mcp",
+  "description": "Integrates with BlockSec to provide comprehensive blockchain transaction analysis tools via MCP.",
+  "category": "Finance & Crypto",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-mark3labs-phalcon-mcp-6e5890ec",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-mark3labs-phalcon-mcp-6e5890ec/badge.svg)](https://tensorblock.co/mcp/servers/github-mark3labs-phalcon-mcp-6e5890ec)",
+  "links": {
+    "primary": "https://github.com/mark3labs/phalcon-mcp",
+    "repo": "https://github.com/mark3labs/phalcon-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "github-donaldtrump-coder-claude-for-desktop-mcp-a2fd8f82",
+  "name": "DonaldTrump-coder/Claude-for-Desktop-MCP",
+  "description": "Facilitates file management on Windows using Claude for Desktop with MCP server integration.",
+  "category": "Utilities & Helpers",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-donaldtrump-coder-claude-for-desktop-mcp-a2fd8f82",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-donaldtrump-coder-claude-for-desktop-mcp-a2fd8f82/badge.svg)](https://tensorblock.co/mcp/servers/github-donaldtrump-coder-claude-for-desktop-mcp-a2fd8f82)",
+  "links": {
+    "primary": "https://github.com/DonaldTrump-coder/Claude-for-Desktop-MCP",
+    "repo": "https://github.com/DonaldTrump-coder/Claude-for-Desktop-MCP",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

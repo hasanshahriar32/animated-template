@@ -1,0 +1,58 @@
+{
+  "id": "github-thomasrohde-mcp-server-manager-bb4009e4",
+  "name": "ThomasRohde/mcp_server_manager",
+  "description": "A backend Python application offering a Model Context Protocol interface and FastAPI web interface for managing MCP servers integrated with Claude Desktop.",
+  "category": "Build & Deployment Tools",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-thomasrohde-mcp-server-manager-bb4009e4",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-thomasrohde-mcp-server-manager-bb4009e4/badge.svg)](https://tensorblock.co/mcp/servers/github-thomasrohde-mcp-server-manager-bb4009e4)",
+  "links": {
+    "primary": "https://github.com/ThomasRohde/mcp_server_manager",
+    "repo": "https://github.com/ThomasRohde/mcp_server_manager",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

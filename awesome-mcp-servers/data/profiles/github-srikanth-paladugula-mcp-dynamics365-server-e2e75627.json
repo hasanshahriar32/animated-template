@@ -1,0 +1,56 @@
+{
+  "id": "github-srikanth-paladugula-mcp-dynamics365-server-e2e75627",
+  "name": "srikanth-paladugula/mcp-dynamics365-server",
+  "description": "Facilitates seamless interaction with Microsoft Dynamics 365 through a robust MCP server, enabling operations like account management and opportunity retrieval.",
+  "category": "Marketing, Sales & CRM",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-srikanth-paladugula-mcp-dynamics365-server-e2e75627",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-srikanth-paladugula-mcp-dynamics365-server-e2e75627/badge.svg)](https://tensorblock.co/mcp/servers/github-srikanth-paladugula-mcp-dynamics365-server-e2e75627)",
+  "links": {
+    "primary": "https://github.com/srikanth-paladugula/mcp-dynamics365-server",
+    "repo": "https://github.com/srikanth-paladugula/mcp-dynamics365-server",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

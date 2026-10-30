@@ -1,0 +1,58 @@
+{
+  "id": "github-bhupas-auto-powerpoint-68729518",
+  "name": "bhupas/auto-powerpoint",
+  "description": "Facilitates seamless interaction with Microsoft PowerPoint through Claude Desktop, enabling tasks like creating presentations and managing slides.",
+  "category": "Developer Productivity & Utilities",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-bhupas-auto-powerpoint-68729518",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-bhupas-auto-powerpoint-68729518/badge.svg)](https://tensorblock.co/mcp/servers/github-bhupas-auto-powerpoint-68729518)",
+  "links": {
+    "primary": "https://github.com/bhupas/auto-powerpoint",
+    "repo": "https://github.com/bhupas/auto-powerpoint",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

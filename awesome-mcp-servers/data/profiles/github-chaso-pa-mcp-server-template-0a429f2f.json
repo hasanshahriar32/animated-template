@@ -1,0 +1,56 @@
+{
+  "id": "github-chaso-pa-mcp-server-template-0a429f2f",
+  "name": "chaso-pa/mcp-server-template",
+  "description": "A template for setting up MCP servers with customizable command configurations for GitHub, PyPI, and local environments.",
+  "category": "Infrastructure",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-chaso-pa-mcp-server-template-0a429f2f",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-chaso-pa-mcp-server-template-0a429f2f/badge.svg)](https://tensorblock.co/mcp/servers/github-chaso-pa-mcp-server-template-0a429f2f)",
+  "links": {
+    "primary": "https://github.com/chaso-pa/mcp-server-template",
+    "repo": "https://github.com/chaso-pa/mcp-server-template",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

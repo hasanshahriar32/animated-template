@@ -1,0 +1,56 @@
+{
+  "id": "github-rardq-rr-mcp-9ba65bc9",
+  "name": "RaRdq/RR.MCP",
+  "description": "Facilitates AI-driven .NET project analysis by extracting interfaces, models, and data structures using PowerShell scripts.",
+  "category": "Code Analysis & Quality",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-rardq-rr-mcp-9ba65bc9",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-rardq-rr-mcp-9ba65bc9/badge.svg)](https://tensorblock.co/mcp/servers/github-rardq-rr-mcp-9ba65bc9)",
+  "links": {
+    "primary": "https://github.com/RaRdq/RR.MCP",
+    "repo": "https://github.com/RaRdq/RR.MCP",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-miyamo2-slackbot-mcp-host-c7c2f8e1",
+  "name": "miyamo2/slackbot-mcp-host",
+  "description": "Integrates MCP server functionalities into a Slack bot, enabling seamless communication and task execution within Slack channels.",
+  "category": "Communication & Messaging",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-miyamo2-slackbot-mcp-host-c7c2f8e1",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-miyamo2-slackbot-mcp-host-c7c2f8e1/badge.svg)](https://tensorblock.co/mcp/servers/github-miyamo2-slackbot-mcp-host-c7c2f8e1)",
+  "links": {
+    "primary": "https://github.com/miyamo2/slackbot-mcp-host",
+    "repo": "https://github.com/miyamo2/slackbot-mcp-host",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-jamsusmaximus-trainingpeaks-mcp-cd88104a",
+  "name": "JamsusMaximus/trainingpeaks-mcp",
+  "description": "Accesses TrainingPeaks training data including fitness metrics (CTL/ATL/TSB), workout history, and power/pace personal records for endurance athletes.",
+  "category": "Sports",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-jamsusmaximus-trainingpeaks-mcp-cd88104a",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-jamsusmaximus-trainingpeaks-mcp-cd88104a/badge.svg)](https://tensorblock.co/mcp/servers/github-jamsusmaximus-trainingpeaks-mcp-cd88104a)",
+  "links": {
+    "primary": "https://github.com/JamsusMaximus/trainingpeaks-mcp",
+    "repo": "https://github.com/JamsusMaximus/trainingpeaks-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "sse"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "sse"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

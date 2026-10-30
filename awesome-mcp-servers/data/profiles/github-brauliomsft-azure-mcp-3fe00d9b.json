@@ -1,0 +1,56 @@
+{
+  "id": "github-brauliomsft-azure-mcp-3fe00d9b",
+  "name": "brauliomsft/azure-mcp",
+  "description": "Manage Azure VMs effortlessly using natural language commands through a Python-based MCP server.",
+  "category": "Cloud Platforms & Services",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-brauliomsft-azure-mcp-3fe00d9b",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-brauliomsft-azure-mcp-3fe00d9b/badge.svg)](https://tensorblock.co/mcp/servers/github-brauliomsft-azure-mcp-3fe00d9b)",
+  "links": {
+    "primary": "https://github.com/brauliomsft/azure-mcp",
+    "repo": "https://github.com/brauliomsft/azure-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

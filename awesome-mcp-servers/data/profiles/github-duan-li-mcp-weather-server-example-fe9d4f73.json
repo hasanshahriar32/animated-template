@@ -1,0 +1,56 @@
+{
+  "id": "github-duan-li-mcp-weather-server-example-fe9d4f73",
+  "name": "duan-li/mcp-weather-server-example",
+  "description": "A weather server utilizing MCP to manage and summarize note resources with customizable prompts.",
+  "category": "Location & Maps",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-duan-li-mcp-weather-server-example-fe9d4f73",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-duan-li-mcp-weather-server-example-fe9d4f73/badge.svg)](https://tensorblock.co/mcp/servers/github-duan-li-mcp-weather-server-example-fe9d4f73)",
+  "links": {
+    "primary": "https://github.com/duan-li/mcp-weather-server-example",
+    "repo": "https://github.com/duan-li/mcp-weather-server-example",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "github-honeygrid-honeygrid-mcp-demo-d4285edf",
+  "name": "honeygrid/honeygrid-mcp-demo",
+  "description": "A remote MCP server implementation on Cloudflare Workers with OAuth login, enabling seamless integration with Claude Desktop and MCP Inspector.",
+  "category": "Cloud Platforms & Services",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-honeygrid-honeygrid-mcp-demo-d4285edf",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-honeygrid-honeygrid-mcp-demo-d4285edf/badge.svg)](https://tensorblock.co/mcp/servers/github-honeygrid-honeygrid-mcp-demo-d4285edf)",
+  "links": {
+    "primary": "https://github.com/honeygrid/honeygrid-mcp-demo",
+    "repo": "https://github.com/honeygrid/honeygrid-mcp-demo",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "oauth",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "oauth",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

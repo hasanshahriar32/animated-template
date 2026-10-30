@@ -1,0 +1,56 @@
+{
+  "id": "github-modelcontextprotocol-servers-whois-mcp-9a59bf95",
+  "name": "modelcontextprotocol-servers/whois-mcp",
+  "description": "Facilitates WHOIS lookups for AI agents to retrieve domain registration details without browser intervention.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-modelcontextprotocol-servers-whois-mcp-9a59bf95",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-modelcontextprotocol-servers-whois-mcp-9a59bf95/badge.svg)](https://tensorblock.co/mcp/servers/github-modelcontextprotocol-servers-whois-mcp-9a59bf95)",
+  "links": {
+    "primary": "https://github.com/modelcontextprotocol-servers/whois-mcp",
+    "repo": "https://github.com/modelcontextprotocol-servers/whois-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

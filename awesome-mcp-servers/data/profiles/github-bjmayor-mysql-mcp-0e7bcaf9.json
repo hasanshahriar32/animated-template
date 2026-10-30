@@ -1,0 +1,56 @@
+{
+  "id": "github-bjmayor-mysql-mcp-0e7bcaf9",
+  "name": "bjmayor/mysql-mcp",
+  "description": "Facilitates AI agent interactions with MySQL databases through a standardized command interface.",
+  "category": "Databases",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-bjmayor-mysql-mcp-0e7bcaf9",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-bjmayor-mysql-mcp-0e7bcaf9/badge.svg)](https://tensorblock.co/mcp/servers/github-bjmayor-mysql-mcp-0e7bcaf9)",
+  "links": {
+    "primary": "https://github.com/bjmayor/mysql-mcp",
+    "repo": "https://github.com/bjmayor/mysql-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

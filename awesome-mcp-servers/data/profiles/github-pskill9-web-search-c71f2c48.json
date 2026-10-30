@@ -1,0 +1,56 @@
+{
+  "id": "github-pskill9-web-search-c71f2c48",
+  "name": "pskill9/web-search",
+  "description": "Facilitates free web searches using Google results without requiring API keys, returning structured data for easy integration.",
+  "category": "Search",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-pskill9-web-search-c71f2c48",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-pskill9-web-search-c71f2c48/badge.svg)](https://tensorblock.co/mcp/servers/github-pskill9-web-search-c71f2c48)",
+  "links": {
+    "primary": "https://github.com/pskill9/web-search",
+    "repo": "https://github.com/pskill9/web-search",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "api-key",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "api-key",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

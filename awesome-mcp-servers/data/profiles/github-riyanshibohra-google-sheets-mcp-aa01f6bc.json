@@ -1,0 +1,58 @@
+{
+  "id": "github-riyanshibohra-google-sheets-mcp-aa01f6bc",
+  "name": "riyanshibohra/google-sheets-mcp",
+  "description": "Facilitates seamless manipulation and analysis of Google Sheets data through a Model Context Protocol server with Claude Desktop integration.",
+  "category": "Data Analysis & Business Intelligence",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-riyanshibohra-google-sheets-mcp-aa01f6bc",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-riyanshibohra-google-sheets-mcp-aa01f6bc/badge.svg)](https://tensorblock.co/mcp/servers/github-riyanshibohra-google-sheets-mcp-aa01f6bc)",
+  "links": {
+    "primary": "https://github.com/riyanshibohra/google-sheets-mcp",
+    "repo": "https://github.com/riyanshibohra/google-sheets-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

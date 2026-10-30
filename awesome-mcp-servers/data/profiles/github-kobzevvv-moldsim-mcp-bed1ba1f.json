@@ -1,0 +1,56 @@
+{
+  "id": "github-kobzevvv-moldsim-mcp-bed1ba1f",
+  "name": "kobzevvv/moldsim-mcp",
+  "description": "Injection molding simulation knowledge for AI — material properties (Cross-WLF, PVT, thermal, mechanical for 21 materials), process validation, DFM checklist, troubleshooting (230+ knowledge chunks with semantic search), and simulation spec generation.",
+  "category": "Science & Research",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-kobzevvv-moldsim-mcp-bed1ba1f",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-kobzevvv-moldsim-mcp-bed1ba1f/badge.svg)](https://tensorblock.co/mcp/servers/github-kobzevvv-moldsim-mcp-bed1ba1f)",
+  "links": {
+    "primary": "https://github.com/kobzevvv/moldsim-mcp",
+    "repo": "https://github.com/kobzevvv/moldsim-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

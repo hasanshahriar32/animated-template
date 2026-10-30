@@ -1,0 +1,58 @@
+{
+  "id": "github-merajmehrabi-outlook-calendar-mcp-30b758bf",
+  "name": "merajmehrabi/Outlook_Calendar_MCP",
+  "description": "Facilitates seamless integration of Claude with Microsoft Outlook for efficient calendar management on Windows.",
+  "category": "Communication & Messaging",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-merajmehrabi-outlook-calendar-mcp-30b758bf",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-merajmehrabi-outlook-calendar-mcp-30b758bf/badge.svg)](https://tensorblock.co/mcp/servers/github-merajmehrabi-outlook-calendar-mcp-30b758bf)",
+  "links": {
+    "primary": "https://github.com/merajmehrabi/Outlook_Calendar_MCP",
+    "repo": "https://github.com/merajmehrabi/Outlook_Calendar_MCP",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

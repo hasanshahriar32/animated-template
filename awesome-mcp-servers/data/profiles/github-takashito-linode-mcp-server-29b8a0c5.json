@@ -1,0 +1,56 @@
+{
+  "id": "github-takashito-linode-mcp-server-29b8a0c5",
+  "name": "takashito/linode-mcp-server",
+  "description": "Facilitates seamless interaction between AI assistants and Linode Cloud services, enabling management of instances, volumes, domains, and more.",
+  "category": "Cloud Platforms & Services",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-takashito-linode-mcp-server-29b8a0c5",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-takashito-linode-mcp-server-29b8a0c5/badge.svg)](https://tensorblock.co/mcp/servers/github-takashito-linode-mcp-server-29b8a0c5)",
+  "links": {
+    "primary": "https://github.com/takashito/linode-mcp-server",
+    "repo": "https://github.com/takashito/linode-mcp-server",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-captaincrouton89-knowledge-ad7f4d35",
+  "name": "CaptainCrouton89/knowledge",
+  "description": "Facilitates the storage and retrieval of information using vector embeddings for semantic search.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-captaincrouton89-knowledge-ad7f4d35",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-captaincrouton89-knowledge-ad7f4d35/badge.svg)](https://tensorblock.co/mcp/servers/github-captaincrouton89-knowledge-ad7f4d35)",
+  "links": {
+    "primary": "https://github.com/CaptainCrouton89/knowledge",
+    "repo": "https://github.com/CaptainCrouton89/knowledge",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

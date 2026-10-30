@@ -1,0 +1,56 @@
+{
+  "id": "github-gscalzo-stackoverflow-mcp-87a47851",
+  "name": "gscalzo/stackoverflow-mcp",
+  "description": "Facilitates AI-driven searches for programming solutions on Stack Overflow by leveraging error messages, tags, and stack traces.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-gscalzo-stackoverflow-mcp-87a47851",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-gscalzo-stackoverflow-mcp-87a47851/badge.svg)](https://tensorblock.co/mcp/servers/github-gscalzo-stackoverflow-mcp-87a47851)",
+  "links": {
+    "primary": "https://github.com/gscalzo/stackoverflow-mcp",
+    "repo": "https://github.com/gscalzo/stackoverflow-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-kompallik-atlassian-mcp-45f95e58",
+  "name": "kompallik/ATLASSIAN-MCP",
+  "description": "Facilitates seamless integration with Atlassian JIRA and Confluence through the Model Context Protocol.",
+  "category": "Marketing, Sales & CRM",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-kompallik-atlassian-mcp-45f95e58",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-kompallik-atlassian-mcp-45f95e58/badge.svg)](https://tensorblock.co/mcp/servers/github-kompallik-atlassian-mcp-45f95e58)",
+  "links": {
+    "primary": "https://github.com/kompallik/ATLASSIAN-MCP",
+    "repo": "https://github.com/kompallik/ATLASSIAN-MCP",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

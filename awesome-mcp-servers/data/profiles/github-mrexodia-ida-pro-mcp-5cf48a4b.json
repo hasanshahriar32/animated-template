@@ -1,0 +1,56 @@
+{
+  "id": "github-mrexodia-ida-pro-mcp-5cf48a4b",
+  "name": "mrexodia/ida-pro-mcp",
+  "description": "Facilitates reverse engineering in IDA Pro by providing a suite of tools for function analysis, metadata retrieval, and code manipulation.",
+  "category": "Code Analysis & Quality",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-mrexodia-ida-pro-mcp-5cf48a4b",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-mrexodia-ida-pro-mcp-5cf48a4b/badge.svg)](https://tensorblock.co/mcp/servers/github-mrexodia-ida-pro-mcp-5cf48a4b)",
+  "links": {
+    "primary": "https://github.com/mrexodia/ida-pro-mcp",
+    "repo": "https://github.com/mrexodia/ida-pro-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-hexix23-shodan-mcp-291baf82",
+  "name": "Hexix23/shodan-mcp",
+  "description": "SHODAN-MCP provides a robust interface to the Shodan API, enabling security professionals to efficiently explore and analyze internet-connected devices using the MCP protocol.",
+  "category": "Security",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-hexix23-shodan-mcp-291baf82",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-hexix23-shodan-mcp-291baf82/badge.svg)](https://tensorblock.co/mcp/servers/github-hexix23-shodan-mcp-291baf82)",
+  "links": {
+    "primary": "https://github.com/Hexix23/shodan-mcp",
+    "repo": "https://github.com/Hexix23/shodan-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

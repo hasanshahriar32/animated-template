@@ -1,0 +1,56 @@
+{
+  "id": "github-shemhamforash23-lightrag-mcp-0f06706c",
+  "name": "shemhamforash23/lightrag-mcp",
+  "description": "Facilitates seamless integration of LightRAG's retrieval-augmented generation capabilities with AI tools via the MCP protocol.",
+  "category": "Code Execution",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-shemhamforash23-lightrag-mcp-0f06706c",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-shemhamforash23-lightrag-mcp-0f06706c/badge.svg)](https://tensorblock.co/mcp/servers/github-shemhamforash23-lightrag-mcp-0f06706c)",
+  "links": {
+    "primary": "https://github.com/shemhamforash23/lightrag-mcp",
+    "repo": "https://github.com/shemhamforash23/lightrag-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

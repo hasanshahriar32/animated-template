@@ -1,0 +1,56 @@
+{
+  "id": "github-anpigon-mcp-server-obsidian-omnisearch-596d51cb",
+  "name": "anpigon/mcp-server-obsidian-omnisearch",
+  "description": "Facilitates seamless search within Obsidian vaults via a REST API, returning absolute paths to matching notes for easy integration.",
+  "category": "Search",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-anpigon-mcp-server-obsidian-omnisearch-596d51cb",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-anpigon-mcp-server-obsidian-omnisearch-596d51cb/badge.svg)](https://tensorblock.co/mcp/servers/github-anpigon-mcp-server-obsidian-omnisearch-596d51cb)",
+  "links": {
+    "primary": "https://github.com/anpigon/mcp-server-obsidian-omnisearch",
+    "repo": "https://github.com/anpigon/mcp-server-obsidian-omnisearch",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

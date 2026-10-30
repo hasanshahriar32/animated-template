@@ -1,0 +1,56 @@
+{
+  "id": "github-infisical-infisical-mcp-server-b6ed5111",
+  "name": "Infisical/infisical-mcp-server",
+  "description": "Integrate with Infisical APIs using the Model Context Protocol for managing secrets and projects.",
+  "category": "Monitoring & Observability",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-infisical-infisical-mcp-server-b6ed5111",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-infisical-infisical-mcp-server-b6ed5111/badge.svg)](https://tensorblock.co/mcp/servers/github-infisical-infisical-mcp-server-b6ed5111)",
+  "links": {
+    "primary": "https://github.com/Infisical/infisical-mcp-server",
+    "repo": "https://github.com/Infisical/infisical-mcp-server",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

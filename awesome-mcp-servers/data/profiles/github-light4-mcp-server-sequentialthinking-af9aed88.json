@@ -1,0 +1,56 @@
+{
+  "id": "github-light4-mcp-server-sequentialthinking-af9aed88",
+  "name": "light4/mcp-server-sequentialthinking",
+  "description": "Facilitates dynamic problem-solving through structured sequential thinking, supporting step-by-step analysis and hypothesis generation.",
+  "category": "Frameworks",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-light4-mcp-server-sequentialthinking-af9aed88",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-light4-mcp-server-sequentialthinking-af9aed88/badge.svg)](https://tensorblock.co/mcp/servers/github-light4-mcp-server-sequentialthinking-af9aed88)",
+  "links": {
+    "primary": "https://github.com/light4/mcp-server-sequentialthinking",
+    "repo": "https://github.com/light4/mcp-server-sequentialthinking",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

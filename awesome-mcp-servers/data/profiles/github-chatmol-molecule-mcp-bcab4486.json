@@ -1,0 +1,58 @@
+{
+  "id": "github-chatmol-molecule-mcp-bcab4486",
+  "name": "ChatMol/molecule-mcp",
+  "description": "Facilitates molecule modeling by integrating molecule science tools with Claude AI through the Model Context Protocol.",
+  "category": "Healthcare & Life Sciences",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-chatmol-molecule-mcp-bcab4486",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-chatmol-molecule-mcp-bcab4486/badge.svg)](https://tensorblock.co/mcp/servers/github-chatmol-molecule-mcp-bcab4486)",
+  "links": {
+    "primary": "https://github.com/ChatMol/molecule-mcp",
+    "repo": "https://github.com/ChatMol/molecule-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "github-burtthecoder-mcp-maigret-066613ac",
+  "name": "BurtTheCoder/mcp-maigret",
+  "description": "Facilitates OSINT research by enabling username searches and URL analysis across social networks using the Maigret tool.",
+  "category": "Security",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-burtthecoder-mcp-maigret-066613ac",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-burtthecoder-mcp-maigret-066613ac/badge.svg)](https://tensorblock.co/mcp/servers/github-burtthecoder-mcp-maigret-066613ac)",
+  "links": {
+    "primary": "https://github.com/BurtTheCoder/mcp-maigret",
+    "repo": "https://github.com/BurtTheCoder/mcp-maigret",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [
+      "URL"
+    ],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

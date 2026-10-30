@@ -1,0 +1,56 @@
+{
+  "id": "github-199-bio-occams-razor-mcp-cc30b49a",
+  "name": "199-bio/occams-razor-mcp",
+  "description": "Guides LLMs through a structured, simplicity-focused problem-solving process for coding tasks, enhancing code quality and alignment with user intent.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-199-bio-occams-razor-mcp-cc30b49a",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-199-bio-occams-razor-mcp-cc30b49a/badge.svg)](https://tensorblock.co/mcp/servers/github-199-bio-occams-razor-mcp-cc30b49a)",
+  "links": {
+    "primary": "https://github.com/199-bio/occams-razor-mcp",
+    "repo": "https://github.com/199-bio/occams-razor-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

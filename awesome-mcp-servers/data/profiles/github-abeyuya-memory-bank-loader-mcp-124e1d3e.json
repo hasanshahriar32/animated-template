@@ -1,0 +1,56 @@
+{
+  "id": "github-abeyuya-memory-bank-loader-mcp-124e1d3e",
+  "name": "abeyuya/memory-bank-loader-mcp",
+  "description": "Efficiently retrieves and organizes files from a memory-bank directory to streamline AI tool usage and reduce operational costs.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-abeyuya-memory-bank-loader-mcp-124e1d3e",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-abeyuya-memory-bank-loader-mcp-124e1d3e/badge.svg)](https://tensorblock.co/mcp/servers/github-abeyuya-memory-bank-loader-mcp-124e1d3e)",
+  "links": {
+    "primary": "https://github.com/abeyuya/memory-bank-loader-mcp",
+    "repo": "https://github.com/abeyuya/memory-bank-loader-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

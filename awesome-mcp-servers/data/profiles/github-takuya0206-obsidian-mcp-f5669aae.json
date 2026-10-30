@@ -1,0 +1,56 @@
+{
+  "id": "github-takuya0206-obsidian-mcp-f5669aae",
+  "name": "takuya0206/obsidian-mcp",
+  "description": "Facilitates AI-driven interactions with Obsidian vaults via a standardized protocol, enabling note manipulation and retrieval.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-takuya0206-obsidian-mcp-f5669aae",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-takuya0206-obsidian-mcp-f5669aae/badge.svg)](https://tensorblock.co/mcp/servers/github-takuya0206-obsidian-mcp-f5669aae)",
+  "links": {
+    "primary": "https://github.com/takuya0206/obsidian-mcp",
+    "repo": "https://github.com/takuya0206/obsidian-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

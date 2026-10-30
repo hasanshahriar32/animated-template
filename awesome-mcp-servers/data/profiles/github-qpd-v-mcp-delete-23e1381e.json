@@ -1,0 +1,58 @@
+{
+  "id": "github-qpd-v-mcp-delete-23e1381e",
+  "name": "qpd-v/mcp-delete",
+  "description": "Facilitates secure file deletion for AI assistants with smart path resolution and compatibility with Claude and other MCP-compatible tools.",
+  "category": "AI & LLM Integration",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-qpd-v-mcp-delete-23e1381e",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-qpd-v-mcp-delete-23e1381e/badge.svg)](https://tensorblock.co/mcp/servers/github-qpd-v-mcp-delete-23e1381e)",
+  "links": {
+    "primary": "https://github.com/qpd-v/mcp-delete",
+    "repo": "https://github.com/qpd-v/mcp-delete",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-hanon-games-midi-control-mcp-fec6aac0",
+  "name": "HANON-games/midi-control-mcp",
+  "description": "Facilitates MIDI message transmission to output devices via a TypeScript-based MCP server.",
+  "category": "Multimedia Processing",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-hanon-games-midi-control-mcp-fec6aac0",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-hanon-games-midi-control-mcp-fec6aac0/badge.svg)](https://tensorblock.co/mcp/servers/github-hanon-games-midi-control-mcp-fec6aac0)",
+  "links": {
+    "primary": "https://github.com/HANON-games/midi-control-mcp",
+    "repo": "https://github.com/HANON-games/midi-control-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

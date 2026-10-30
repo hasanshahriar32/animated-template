@@ -1,0 +1,56 @@
+{
+  "id": "github-mkhalusova-unstructured-mcp-10a319d0",
+  "name": "MKhalusova/unstructured-mcp",
+  "description": "Facilitates LLMs in extracting and utilizing content from unstructured documents across various file types.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-mkhalusova-unstructured-mcp-10a319d0",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-mkhalusova-unstructured-mcp-10a319d0/badge.svg)](https://tensorblock.co/mcp/servers/github-mkhalusova-unstructured-mcp-10a319d0)",
+  "links": {
+    "primary": "https://github.com/MKhalusova/unstructured-mcp",
+    "repo": "https://github.com/MKhalusova/unstructured-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-spyfree-hologres-mcp-server-sse-72d79a93",
+  "name": "spyfree/hologres-mcp-server-sse",
+  "description": "Facilitates seamless interaction between AI agents and Hologres databases, enabling metadata retrieval and SQL operations via dual transport modes.",
+  "category": "Databases",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-spyfree-hologres-mcp-server-sse-72d79a93",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-spyfree-hologres-mcp-server-sse-72d79a93/badge.svg)](https://tensorblock.co/mcp/servers/github-spyfree-hologres-mcp-server-sse-72d79a93)",
+  "links": {
+    "primary": "https://github.com/spyfree/hologres-mcp-server-sse",
+    "repo": "https://github.com/spyfree/hologres-mcp-server-sse",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

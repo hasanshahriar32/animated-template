@@ -1,0 +1,26 @@
+name: circleci
+type: remote
+dynamic:
+  tools: true
+meta:
+  category: devops
+  tags:
+    - circleci
+    - devops
+    - ci-cd
+    - remote
+about:
+  title: CircleCI
+  description: >-
+    Connect AI agents to CircleCI's hosted MCP server to diagnose pipeline
+    failures, pull build and test logs, detect flaky tests, and answer CI/CD
+    questions in natural language, with zero local install and centralized
+    OAuth authentication.
+  icon: https://avatars.githubusercontent.com/u/26607840?s=200&v=4
+remote:
+  transport_type: streamable-http
+  url: https://mcp.circleci.com/v1/mcp
+oauth:
+  - provider: circleci
+    secret: circleci.personal_access_token
+    env: CIRCLECI_PERSONAL_ACCESS_TOKEN

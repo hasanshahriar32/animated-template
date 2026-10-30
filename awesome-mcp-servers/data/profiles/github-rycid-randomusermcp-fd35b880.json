@@ -1,0 +1,56 @@
+{
+  "id": "github-rycid-randomusermcp-fd35b880",
+  "name": "rycid/randomuserMCP",
+  "description": "Enhances randomuser.me API access with custom formatting, password generation, and weighted nationality distribution.",
+  "category": "Utilities & Helpers",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-rycid-randomusermcp-fd35b880",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-rycid-randomusermcp-fd35b880/badge.svg)](https://tensorblock.co/mcp/servers/github-rycid-randomusermcp-fd35b880)",
+  "links": {
+    "primary": "https://github.com/rycid/randomuserMCP",
+    "repo": "https://github.com/rycid/randomuserMCP",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

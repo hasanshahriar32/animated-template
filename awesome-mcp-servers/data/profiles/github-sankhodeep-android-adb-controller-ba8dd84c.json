@@ -1,0 +1,56 @@
+{
+  "id": "github-sankhodeep-android-adb-controller-ba8dd84c",
+  "name": "sankhodeep/android-adb-controller",
+  "description": "Facilitates AI-driven control of Android devices through ADB commands, enabling functionalities like device listing and screen tapping.",
+  "category": "Hardware & IoT",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-sankhodeep-android-adb-controller-ba8dd84c",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-sankhodeep-android-adb-controller-ba8dd84c/badge.svg)](https://tensorblock.co/mcp/servers/github-sankhodeep-android-adb-controller-ba8dd84c)",
+  "links": {
+    "primary": "https://github.com/sankhodeep/android-adb-controller",
+    "repo": "https://github.com/sankhodeep/android-adb-controller",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

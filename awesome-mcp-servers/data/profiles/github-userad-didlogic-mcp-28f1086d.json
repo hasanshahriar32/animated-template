@@ -1,0 +1,56 @@
+{
+  "id": "github-userad-didlogic-mcp-28f1086d",
+  "name": "UserAd/didlogic_mcp",
+  "description": "Facilitates LLM interactions with Didlogic services via a standardized MCP interface, offering tools for balance, SIP account, and transaction management.",
+  "category": "Communication & Messaging",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-userad-didlogic-mcp-28f1086d",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-userad-didlogic-mcp-28f1086d/badge.svg)](https://tensorblock.co/mcp/servers/github-userad-didlogic-mcp-28f1086d)",
+  "links": {
+    "primary": "https://github.com/UserAd/didlogic_mcp",
+    "repo": "https://github.com/UserAd/didlogic_mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

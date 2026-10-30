@@ -1,0 +1,56 @@
+{
+  "id": "github-nathannj-mcp-notes-cd64e17d",
+  "name": "nathannj/mcp-notes",
+  "description": "Facilitates the management of markdown notes with capabilities to create, read, update, and list notes using the stdio transport.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-nathannj-mcp-notes-cd64e17d",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-nathannj-mcp-notes-cd64e17d/badge.svg)](https://tensorblock.co/mcp/servers/github-nathannj-mcp-notes-cd64e17d)",
+  "links": {
+    "primary": "https://github.com/nathannj/mcp-notes",
+    "repo": "https://github.com/nathannj/mcp-notes",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "stdio"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "stdio"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

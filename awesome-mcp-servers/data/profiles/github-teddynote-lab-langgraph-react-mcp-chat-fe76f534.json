@@ -1,0 +1,56 @@
+{
+  "id": "github-teddynote-lab-langgraph-react-mcp-chat-fe76f534",
+  "name": "teddynote-lab/langgraph-react-mcp-chat",
+  "description": "LangGraph ReAct MCP Chat enables seamless integration with external tools and data sources using a ReAct agent built on LangGraph, offering real-time tool management and conversation tracking.",
+  "category": "Communication & Messaging",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-teddynote-lab-langgraph-react-mcp-chat-fe76f534",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-teddynote-lab-langgraph-react-mcp-chat-fe76f534/badge.svg)](https://tensorblock.co/mcp/servers/github-teddynote-lab-langgraph-react-mcp-chat-fe76f534)",
+  "links": {
+    "primary": "https://github.com/teddynote-lab/langgraph-react-mcp-chat",
+    "repo": "https://github.com/teddynote-lab/langgraph-react-mcp-chat",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

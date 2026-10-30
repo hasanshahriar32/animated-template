@@ -1,0 +1,56 @@
+{
+  "id": "github-ryojerryyu-mcp-server-memos-py-c6e3ac07",
+  "name": "RyoJerryYu/mcp-server-memos-py",
+  "description": "Enables LLM models to interact with the Memos server for memo management via the MCP interface.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-ryojerryyu-mcp-server-memos-py-c6e3ac07",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-ryojerryyu-mcp-server-memos-py-c6e3ac07/badge.svg)](https://tensorblock.co/mcp/servers/github-ryojerryyu-mcp-server-memos-py-c6e3ac07)",
+  "links": {
+    "primary": "https://github.com/RyoJerryYu/mcp-server-memos-py",
+    "repo": "https://github.com/RyoJerryYu/mcp-server-memos-py",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

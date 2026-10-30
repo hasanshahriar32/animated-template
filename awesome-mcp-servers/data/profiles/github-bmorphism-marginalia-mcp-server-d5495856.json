@@ -1,0 +1,56 @@
+{
+  "id": "github-bmorphism-marginalia-mcp-server-d5495856",
+  "name": "bmorphism/marginalia-mcp-server",
+  "description": "Facilitates web searches for non-commercial content using Marginalia Search API with configurable parameters and robust error handling.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-bmorphism-marginalia-mcp-server-d5495856",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-bmorphism-marginalia-mcp-server-d5495856/badge.svg)](https://tensorblock.co/mcp/servers/github-bmorphism-marginalia-mcp-server-d5495856)",
+  "links": {
+    "primary": "https://github.com/bmorphism/marginalia-mcp-server",
+    "repo": "https://github.com/bmorphism/marginalia-mcp-server",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

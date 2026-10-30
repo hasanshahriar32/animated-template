@@ -1,0 +1,28 @@
+{
+  "$schema": "../../schemas/server-metadata.schema.json",
+  "id": "github-xquik-dev-x-twitter-scraper-95ed8f41",
+  "source": {
+    "projectUrl": "https://github.com/Xquik-dev/x-twitter-scraper"
+  },
+  "links": {
+    "docs": "https://docs.xquik.com/mcp/overview",
+    "endpoint": "https://xquik.com/mcp"
+  },
+  "transport": [
+    "streamable-http"
+  ],
+  "auth": {
+    "type": "oauth",
+    "notes": [
+      "OAuth 2.1 is primary. API key fallback supports x-api-key or Bearer authentication."
+    ]
+  },
+  "tools": {
+    "count": 2,
+    "names": [
+      "explore",
+      "xquik"
+    ],
+    "source": "self_reported"
+  }
+}

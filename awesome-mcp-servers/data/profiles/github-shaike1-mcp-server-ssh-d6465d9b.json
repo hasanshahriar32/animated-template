@@ -1,0 +1,56 @@
+{
+  "id": "github-shaike1-mcp-server-ssh-d6465d9b",
+  "name": "shaike1/mcp-server-ssh",
+  "description": "Facilitates secure remote command execution and file operations via SSH for MCP environments.",
+  "category": "Operating System & Command Line",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-shaike1-mcp-server-ssh-d6465d9b",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-shaike1-mcp-server-ssh-d6465d9b/badge.svg)](https://tensorblock.co/mcp/servers/github-shaike1-mcp-server-ssh-d6465d9b)",
+  "links": {
+    "primary": "https://github.com/shaike1/mcp-server-ssh",
+    "repo": "https://github.com/shaike1/mcp-server-ssh",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "github-technavii-mcp-sample-4c6419bb",
+  "name": "TechNavii/mcp_sample",
+  "description": "A Claude MCP server enabling text saving to local files with robust security and error handling features.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-technavii-mcp-sample-4c6419bb",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-technavii-mcp-sample-4c6419bb/badge.svg)](https://tensorblock.co/mcp/servers/github-technavii-mcp-sample-4c6419bb)",
+  "links": {
+    "primary": "https://github.com/TechNavii/mcp_sample",
+    "repo": "https://github.com/TechNavii/mcp_sample",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

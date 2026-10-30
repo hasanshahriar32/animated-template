@@ -1,0 +1,56 @@
+{
+  "id": "github-andrew-beniash-mcp-command-server-362b51a0",
+  "name": "Andrew-Beniash/mcp-command-server",
+  "description": "A secure MCP server enabling system command execution through LLM applications with features like command whitelisting and audit logging.",
+  "category": "Operating System & Command Line",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-andrew-beniash-mcp-command-server-362b51a0",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-andrew-beniash-mcp-command-server-362b51a0/badge.svg)](https://tensorblock.co/mcp/servers/github-andrew-beniash-mcp-command-server-362b51a0)",
+  "links": {
+    "primary": "https://github.com/Andrew-Beniash/mcp-command-server",
+    "repo": "https://github.com/Andrew-Beniash/mcp-command-server",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

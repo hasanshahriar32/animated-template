@@ -1,0 +1,56 @@
+{
+  "id": "github-barry166-figma-to-cursor-60af9281",
+  "name": "barry166/figma-to-cursor",
+  "description": "Transforms Figma designs into executable code using MCP integration for seamless development workflows.",
+  "category": "Art, Culture & Media",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-barry166-figma-to-cursor-60af9281",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-barry166-figma-to-cursor-60af9281/badge.svg)](https://tensorblock.co/mcp/servers/github-barry166-figma-to-cursor-60af9281)",
+  "links": {
+    "primary": "https://github.com/barry166/figma-to-cursor",
+    "repo": "https://github.com/barry166/figma-to-cursor",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

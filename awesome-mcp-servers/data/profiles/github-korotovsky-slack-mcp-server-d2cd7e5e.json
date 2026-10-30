@@ -1,0 +1,58 @@
+{
+  "id": "github-korotovsky-slack-mcp-server-d2cd7e5e",
+  "name": "korotovsky/slack-mcp-server",
+  "description": "A robust Slack integration utilizing MCP for seamless communication without requiring workspace permissions, featuring Stdio and SSE transports with proxy support.",
+  "category": "Communication & Messaging",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-korotovsky-slack-mcp-server-d2cd7e5e",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-korotovsky-slack-mcp-server-d2cd7e5e/badge.svg)](https://tensorblock.co/mcp/servers/github-korotovsky-slack-mcp-server-d2cd7e5e)",
+  "links": {
+    "primary": "https://github.com/korotovsky/slack-mcp-server",
+    "repo": "https://github.com/korotovsky/slack-mcp-server",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "stdio",
+    "sse"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "stdio",
+      "sse"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

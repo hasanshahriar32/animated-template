@@ -1,0 +1,56 @@
+{
+  "id": "github-sergeyprk2010-serve-e1402e9b",
+  "name": "sergeyprk2010/serve",
+  "description": "Enables LLMs to automate browser tasks using Puppeteer for web interaction, screenshot capture, and JavaScript execution.",
+  "category": "Utilities & Helpers",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-sergeyprk2010-serve-e1402e9b",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-sergeyprk2010-serve-e1402e9b/badge.svg)](https://tensorblock.co/mcp/servers/github-sergeyprk2010-serve-e1402e9b)",
+  "links": {
+    "primary": "https://github.com/sergeyprk2010/serve",
+    "repo": "https://github.com/sergeyprk2010/serve",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

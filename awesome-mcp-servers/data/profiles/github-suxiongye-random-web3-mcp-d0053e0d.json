@@ -1,0 +1,56 @@
+{
+  "id": "github-suxiongye-random-web3-mcp-d0053e0d",
+  "name": "suxiongye/random-web3-mcp",
+  "description": "RandomWeb3MCP offers verifiable and diverse random element generation using blockchain technology for applications in gaming, finance, and testing.",
+  "category": "Finance & Crypto",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-suxiongye-random-web3-mcp-d0053e0d",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-suxiongye-random-web3-mcp-d0053e0d/badge.svg)](https://tensorblock.co/mcp/servers/github-suxiongye-random-web3-mcp-d0053e0d)",
+  "links": {
+    "primary": "https://github.com/suxiongye/random-web3-mcp",
+    "repo": "https://github.com/suxiongye/random-web3-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

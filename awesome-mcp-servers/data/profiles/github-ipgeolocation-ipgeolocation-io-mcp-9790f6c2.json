@@ -1,0 +1,56 @@
+{
+  "id": "github-ipgeolocation-ipgeolocation-io-mcp-9790f6c2",
+  "name": "IPGeolocation/ipgeolocation-io-mcp",
+  "description": "Official MCP server for IP geolocation, IP security, abuse contacts, ASN, timezone, astronomy, and user-agent parsing using ipgeolocation.io APIs.",
+  "category": "Location & Maps",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-ipgeolocation-ipgeolocation-io-mcp-9790f6c2",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-ipgeolocation-ipgeolocation-io-mcp-9790f6c2/badge.svg)](https://tensorblock.co/mcp/servers/github-ipgeolocation-ipgeolocation-io-mcp-9790f6c2)",
+  "links": {
+    "primary": "https://github.com/IPGeolocation/ipgeolocation-io-mcp",
+    "repo": "https://github.com/IPGeolocation/ipgeolocation-io-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

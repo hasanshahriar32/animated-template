@@ -1,0 +1,56 @@
+{
+  "id": "github-narphorium-mcp-memex-c309b8cc",
+  "name": "narphorium/mcp-memex",
+  "description": "Memex enhances web content analysis and integration into a knowledge base using the Model Context Protocol.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-narphorium-mcp-memex-c309b8cc",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-narphorium-mcp-memex-c309b8cc/badge.svg)](https://tensorblock.co/mcp/servers/github-narphorium-mcp-memex-c309b8cc)",
+  "links": {
+    "primary": "https://github.com/narphorium/mcp-memex",
+    "repo": "https://github.com/narphorium/mcp-memex",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

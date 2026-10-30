@@ -1,0 +1,56 @@
+{
+  "id": "github-aaronsb-google-workspace-mcp-be8293ff",
+  "name": "aaronsb/google-workspace-mcp",
+  "description": "Provides authenticated access to Google Workspace APIs, integrating Gmail, Calendar, and Drive functionalities for streamlined management and automation.",
+  "category": "Cloud Platforms & Services",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-aaronsb-google-workspace-mcp-be8293ff",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-aaronsb-google-workspace-mcp-be8293ff/badge.svg)](https://tensorblock.co/mcp/servers/github-aaronsb-google-workspace-mcp-be8293ff)",
+  "links": {
+    "primary": "https://github.com/aaronsb/google-workspace-mcp",
+    "repo": "https://github.com/aaronsb/google-workspace-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

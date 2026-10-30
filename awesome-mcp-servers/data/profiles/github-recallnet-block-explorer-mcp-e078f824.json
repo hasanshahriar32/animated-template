@@ -1,0 +1,56 @@
+{
+  "id": "github-recallnet-block-explorer-mcp-e078f824",
+  "name": "recallnet/block-explorer-mcp",
+  "description": "Facilitates AI assistants in querying the Recall block explorer through MCP integration, enhancing knowledge access.",
+  "category": "Finance & Crypto",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-recallnet-block-explorer-mcp-e078f824",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-recallnet-block-explorer-mcp-e078f824/badge.svg)](https://tensorblock.co/mcp/servers/github-recallnet-block-explorer-mcp-e078f824)",
+  "links": {
+    "primary": "https://github.com/recallnet/block-explorer-mcp",
+    "repo": "https://github.com/recallnet/block-explorer-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

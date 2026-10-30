@@ -1,0 +1,58 @@
+{
+  "id": "github-walkojas-boop-ghostdom-a420266c",
+  "name": "walkojas-boop/ghostdom",
+  "description": "Headless-browser-as-JSON for AI agents. POST a URL, get rendered DOM + text + screenshot from real Chromium. Memorymarket pricing: first agent to render a URL earns 90% of cache-hit fees from subsequent agents within a 10-min TTL. Stack: Cloudflare Workers + Durable Objects + KV + x402. Live at https://ghostdom.jason-12c.workers.dev/.",
+  "category": "Developer Productivity & Utilities",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-walkojas-boop-ghostdom-a420266c",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-walkojas-boop-ghostdom-a420266c/badge.svg)](https://tensorblock.co/mcp/servers/github-walkojas-boop-ghostdom-a420266c)",
+  "links": {
+    "primary": "https://github.com/walkojas-boop/ghostdom",
+    "repo": "https://github.com/walkojas-boop/ghostdom",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [
+      "URL"
+    ],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

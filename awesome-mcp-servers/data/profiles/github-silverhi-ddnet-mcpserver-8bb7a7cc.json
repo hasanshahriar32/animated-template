@@ -1,0 +1,56 @@
+{
+  "id": "github-silverhi-ddnet-mcpserver-8bb7a7cc",
+  "name": "SilverHi/ddnet-mcpserver",
+  "description": "Facilitates DDNet game process management and configuration file operations via a FastMCP-based server.",
+  "category": "Gaming",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-silverhi-ddnet-mcpserver-8bb7a7cc",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-silverhi-ddnet-mcpserver-8bb7a7cc/badge.svg)](https://tensorblock.co/mcp/servers/github-silverhi-ddnet-mcpserver-8bb7a7cc)",
+  "links": {
+    "primary": "https://github.com/SilverHi/ddnet-mcpserver",
+    "repo": "https://github.com/SilverHi/ddnet-mcpserver",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

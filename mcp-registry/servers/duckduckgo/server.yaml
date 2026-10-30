@@ -1,0 +1,18 @@
+name: duckduckgo
+image: mcp/duckduckgo
+type: server
+meta:
+  category: devops
+  tags:
+    - duckduckgo
+    - devops
+about:
+  title: Private Web Search
+  icon: https://avatars.githubusercontent.com/u/182288589?s=200&v=4
+  description: "Community-maintained server for DuckDuckGo search. Not published by or affiliated with DuckDuckGo."
+source:
+  project: https://github.com/nickclyde/duckduckgo-mcp-server
+  commit: 8992977d65a086995c82826ceead42e890aa17c1
+run:
+  allowHosts:
+    - html.duckduckgo.com:443

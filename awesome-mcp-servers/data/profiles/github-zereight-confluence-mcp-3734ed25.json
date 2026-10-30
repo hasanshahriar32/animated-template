@@ -1,0 +1,56 @@
+{
+  "id": "github-zereight-confluence-mcp-3734ed25",
+  "name": "zereight/confluence-mcp",
+  "description": "Enhances Confluence and Jira integration by providing a stable MCP server for executing queries and managing content.",
+  "category": "Project & Task Management",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-zereight-confluence-mcp-3734ed25",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-zereight-confluence-mcp-3734ed25/badge.svg)](https://tensorblock.co/mcp/servers/github-zereight-confluence-mcp-3734ed25)",
+  "links": {
+    "primary": "https://github.com/zereight/confluence-mcp",
+    "repo": "https://github.com/zereight/confluence-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

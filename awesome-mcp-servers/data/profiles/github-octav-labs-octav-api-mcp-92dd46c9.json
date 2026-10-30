@@ -1,0 +1,56 @@
+{
+  "id": "github-octav-labs-octav-api-mcp-92dd46c9",
+  "name": "Octav-Labs/octav-api-mcp",
+  "description": "MCP server for cryptocurrency portfolio tracking, transaction history, and DeFi analytics across 20+ blockchains.",
+  "category": "Finance & Crypto",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-octav-labs-octav-api-mcp-92dd46c9",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-octav-labs-octav-api-mcp-92dd46c9/badge.svg)](https://tensorblock.co/mcp/servers/github-octav-labs-octav-api-mcp-92dd46c9)",
+  "links": {
+    "primary": "https://github.com/Octav-Labs/octav-api-mcp",
+    "repo": "https://github.com/Octav-Labs/octav-api-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

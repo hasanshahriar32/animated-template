@@ -1,0 +1,56 @@
+{
+  "id": "github-qcasares-tfl-6ebc6a14",
+  "name": "Qcasares/tfl",
+  "description": "Facilitates note storage and summarization for London Transport data with customizable prompts and tools.",
+  "category": "Utilities & Helpers",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-qcasares-tfl-6ebc6a14",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-qcasares-tfl-6ebc6a14/badge.svg)](https://tensorblock.co/mcp/servers/github-qcasares-tfl-6ebc6a14)",
+  "links": {
+    "primary": "https://github.com/Qcasares/tfl",
+    "repo": "https://github.com/Qcasares/tfl",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

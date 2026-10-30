@@ -1,0 +1,56 @@
+{
+  "id": "github-toru-takagi-togello-mcp-server-bf207197",
+  "name": "Toru-Takagi/togello-mcp-server",
+  "description": "Facilitates task management and calendar integration using the Model Context Protocol.",
+  "category": "Project & Task Management",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-toru-takagi-togello-mcp-server-bf207197",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-toru-takagi-togello-mcp-server-bf207197/badge.svg)](https://tensorblock.co/mcp/servers/github-toru-takagi-togello-mcp-server-bf207197)",
+  "links": {
+    "primary": "https://github.com/Toru-Takagi/togello-mcp-server",
+    "repo": "https://github.com/Toru-Takagi/togello-mcp-server",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-omedia-mcp-server-drupal-b68e6640",
+  "name": "Omedia/mcp-server-drupal",
+  "description": "A TypeScript-based MCP server designed to integrate with the Drupal MCP module using STDIO transport.",
+  "category": "Content Management Systems",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-omedia-mcp-server-drupal-b68e6640",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-omedia-mcp-server-drupal-b68e6640/badge.svg)](https://tensorblock.co/mcp/servers/github-omedia-mcp-server-drupal-b68e6640)",
+  "links": {
+    "primary": "https://github.com/Omedia/mcp-server-drupal",
+    "repo": "https://github.com/Omedia/mcp-server-drupal",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "stdio"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "stdio"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-jacck-mcp-ortools-7030576b",
+  "name": "Jacck/mcp-ortools",
+  "description": "Integrates Google's OR-Tools with Large Language Models for solving constraint satisfaction and optimization problems.",
+  "category": "Science & Research",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-jacck-mcp-ortools-7030576b",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-jacck-mcp-ortools-7030576b/badge.svg)](https://tensorblock.co/mcp/servers/github-jacck-mcp-ortools-7030576b)",
+  "links": {
+    "primary": "https://github.com/Jacck/mcp-ortools",
+    "repo": "https://github.com/Jacck/mcp-ortools",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

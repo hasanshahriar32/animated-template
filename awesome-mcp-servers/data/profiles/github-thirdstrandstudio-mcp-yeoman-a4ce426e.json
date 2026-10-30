@@ -1,0 +1,56 @@
+{
+  "id": "github-thirdstrandstudio-mcp-yeoman-a4ce426e",
+  "name": "thirdstrandstudio/mcp-yeoman",
+  "description": "Integrates AI agents with Yeoman generators to programmatically search for and execute project scaffolding templates.",
+  "category": "Developer Productivity & Utilities",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-thirdstrandstudio-mcp-yeoman-a4ce426e",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-thirdstrandstudio-mcp-yeoman-a4ce426e/badge.svg)](https://tensorblock.co/mcp/servers/github-thirdstrandstudio-mcp-yeoman-a4ce426e)",
+  "links": {
+    "primary": "https://github.com/thirdstrandstudio/mcp-yeoman",
+    "repo": "https://github.com/thirdstrandstudio/mcp-yeoman",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

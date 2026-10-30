@@ -1,0 +1,56 @@
+{
+  "id": "github-anoncam-linear-mcp-3cb15432",
+  "name": "anoncam/linear-mcp",
+  "description": "A Linear MCP server enabling AI assistants to interact with Linear's project management resources and tools.",
+  "category": "Project & Task Management",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-anoncam-linear-mcp-3cb15432",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-anoncam-linear-mcp-3cb15432/badge.svg)](https://tensorblock.co/mcp/servers/github-anoncam-linear-mcp-3cb15432)",
+  "links": {
+    "primary": "https://github.com/anoncam/linear-mcp",
+    "repo": "https://github.com/anoncam/linear-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

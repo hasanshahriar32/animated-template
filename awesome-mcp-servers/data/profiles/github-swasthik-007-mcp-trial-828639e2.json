@@ -1,0 +1,58 @@
+{
+  "id": "github-swasthik-007-mcp-trial-828639e2",
+  "name": "swasthik-007/MCP_trial",
+  "description": "Integrates Playwright, Airbnb, and DuckDuckGo Search agents for automation, real estate search, and web queries within the Cursor IDE.",
+  "category": "Browser Automation & Web Scraping",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-swasthik-007-mcp-trial-828639e2",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-swasthik-007-mcp-trial-828639e2/badge.svg)](https://tensorblock.co/mcp/servers/github-swasthik-007-mcp-trial-828639e2)",
+  "links": {
+    "primary": "https://github.com/swasthik-007/MCP_trial",
+    "repo": "https://github.com/swasthik-007/MCP_trial",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Cursor"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

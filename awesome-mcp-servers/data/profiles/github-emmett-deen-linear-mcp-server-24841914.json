@@ -1,0 +1,56 @@
+{
+  "id": "github-emmett-deen-linear-mcp-server-24841914",
+  "name": "emmett-deen/Linear-MCP-Server",
+  "description": "Facilitates seamless interaction between AI assistants and Linear project management systems through the MCP protocol.",
+  "category": "Project & Task Management",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-emmett-deen-linear-mcp-server-24841914",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-emmett-deen-linear-mcp-server-24841914/badge.svg)](https://tensorblock.co/mcp/servers/github-emmett-deen-linear-mcp-server-24841914)",
+  "links": {
+    "primary": "https://github.com/emmett-deen/Linear-MCP-Server",
+    "repo": "https://github.com/emmett-deen/Linear-MCP-Server",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

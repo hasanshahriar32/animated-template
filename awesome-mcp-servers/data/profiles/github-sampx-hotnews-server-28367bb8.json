@@ -1,0 +1,56 @@
+{
+  "id": "github-sampx-hotnews-server-28367bb8",
+  "name": "sampx/hotnews-server",
+  "description": "Provides real-time trending topics from major Chinese social platforms and news sites, compatible with AI model integration.",
+  "category": "Communication & Messaging",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-sampx-hotnews-server-28367bb8",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-sampx-hotnews-server-28367bb8/badge.svg)](https://tensorblock.co/mcp/servers/github-sampx-hotnews-server-28367bb8)",
+  "links": {
+    "primary": "https://github.com/sampx/hotnews-server",
+    "repo": "https://github.com/sampx/hotnews-server",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

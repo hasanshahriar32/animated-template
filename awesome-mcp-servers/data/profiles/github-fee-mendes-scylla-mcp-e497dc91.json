@@ -1,0 +1,56 @@
+{
+  "id": "github-fee-mendes-scylla-mcp-e497dc91",
+  "name": "fee-mendes/scylla-mcp",
+  "description": "Facilitates integration of ScyllaDB with Model Context Protocol using Python `uv` for seamless data management.",
+  "category": "Databases",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-fee-mendes-scylla-mcp-e497dc91",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-fee-mendes-scylla-mcp-e497dc91/badge.svg)](https://tensorblock.co/mcp/servers/github-fee-mendes-scylla-mcp-e497dc91)",
+  "links": {
+    "primary": "https://github.com/fee-mendes/scylla-mcp",
+    "repo": "https://github.com/fee-mendes/scylla-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

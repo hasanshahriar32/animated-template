@@ -1,0 +1,56 @@
+{
+  "id": "github-andyanalog-mcp-ffmpeg-livestream-aws-9027c05c",
+  "name": "andyanalog/mcp-ffmpeg-livestream-aws",
+  "description": "A toolkit for FFmpeg video processing and live streaming with AWS integration.",
+  "category": "Multimedia Processing",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-andyanalog-mcp-ffmpeg-livestream-aws-9027c05c",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-andyanalog-mcp-ffmpeg-livestream-aws-9027c05c/badge.svg)](https://tensorblock.co/mcp/servers/github-andyanalog-mcp-ffmpeg-livestream-aws-9027c05c)",
+  "links": {
+    "primary": "https://github.com/andyanalog/mcp-ffmpeg-livestream-aws",
+    "repo": "https://github.com/andyanalog/mcp-ffmpeg-livestream-aws",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

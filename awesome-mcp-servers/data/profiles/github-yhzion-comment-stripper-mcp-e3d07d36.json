@@ -1,0 +1,56 @@
+{
+  "id": "github-yhzion-comment-stripper-mcp-e3d07d36",
+  "name": "yhzion/comment-stripper-mcp",
+  "description": "Efficiently batch processes code files to remove comments across multiple languages, enhancing code maintenance and preparation.",
+  "category": "Code Analysis & Quality",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-yhzion-comment-stripper-mcp-e3d07d36",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-yhzion-comment-stripper-mcp-e3d07d36/badge.svg)](https://tensorblock.co/mcp/servers/github-yhzion-comment-stripper-mcp-e3d07d36)",
+  "links": {
+    "primary": "https://github.com/yhzion/comment-stripper-mcp",
+    "repo": "https://github.com/yhzion/comment-stripper-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "sse"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "sse"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

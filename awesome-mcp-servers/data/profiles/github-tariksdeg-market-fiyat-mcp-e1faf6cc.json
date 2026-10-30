@@ -1,0 +1,56 @@
+{
+  "id": "github-tariksdeg-market-fiyat-mcp-e1faf6cc",
+  "name": "tariksdeg/market-fiyat-mcp",
+  "description": "Monitor and compare market prices using Model Context Protocol with location-based data.",
+  "category": "Finance & Crypto",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-tariksdeg-market-fiyat-mcp-e1faf6cc",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-tariksdeg-market-fiyat-mcp-e1faf6cc/badge.svg)](https://tensorblock.co/mcp/servers/github-tariksdeg-market-fiyat-mcp-e1faf6cc)",
+  "links": {
+    "primary": "https://github.com/tariksdeg/market-fiyat-mcp",
+    "repo": "https://github.com/tariksdeg/market-fiyat-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

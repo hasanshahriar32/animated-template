@@ -1,0 +1,56 @@
+{
+  "id": "ipaas-sigparser-com-api-mcp-13199c6e",
+  "name": "SigParser",
+  "description": "Email contact extraction, relationship warmth scoring, and CRM enrichment from email signatures and calendar data. MCP server providing AI-powered access to contact, company, and relationship data. Syncs to Salesforce, HubSpot, and Dynamics.",
+  "category": "Marketing, Sales & CRM",
+  "profileUrl": "https://tensorblock.co/mcp/servers/ipaas-sigparser-com-api-mcp-13199c6e",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/ipaas-sigparser-com-api-mcp-13199c6e/badge.svg)](https://tensorblock.co/mcp/servers/ipaas-sigparser-com-api-mcp-13199c6e)",
+  "links": {
+    "primary": "https://ipaas.sigparser.com/api/mcp",
+    "repo": null,
+    "homepage": "https://ipaas.sigparser.com/api/mcp",
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

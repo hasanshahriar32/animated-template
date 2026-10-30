@@ -1,0 +1,29 @@
+name: Validate Urls
+
+on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2.2
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Install Bot
+      run: gem install awesome_bot
+    - name: Run Bot
+      run: awesome_bot README.md --allow-dupe --allow-redirect --white-list "memberspace.com,oracle.com,autocode.com"

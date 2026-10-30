@@ -1,0 +1,56 @@
+{
+  "id": "github-chrishayuk-mcp-cli-1e5f9dd0",
+  "name": "chrishayuk/mcp-cli",
+  "description": "A command-line interface for interacting with Model Context Provider servers, enabling seamless communication with LLMs through a robust tool system and advanced conversation management.",
+  "category": "Code Execution",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-chrishayuk-mcp-cli-1e5f9dd0",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-chrishayuk-mcp-cli-1e5f9dd0/badge.svg)](https://tensorblock.co/mcp/servers/github-chrishayuk-mcp-cli-1e5f9dd0)",
+  "links": {
+    "primary": "https://github.com/chrishayuk/mcp-cli",
+    "repo": "https://github.com/chrishayuk/mcp-cli",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-cloudmcp-dev-connect-9a480ca8",
+  "name": "cloudmcp-dev/connect",
+  "description": "Facilitates connections to MCP SSE servers, enabling proxying to standard input/output with authentication and logging capabilities.",
+  "category": "Cloud Platforms & Services",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-cloudmcp-dev-connect-9a480ca8",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-cloudmcp-dev-connect-9a480ca8/badge.svg)](https://tensorblock.co/mcp/servers/github-cloudmcp-dev-connect-9a480ca8)",
+  "links": {
+    "primary": "https://github.com/cloudmcp-dev/connect",
+    "repo": "https://github.com/cloudmcp-dev/connect",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "sse"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "sse"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

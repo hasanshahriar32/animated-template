@@ -1,0 +1,70 @@
+{
+  "$schema": "../../schemas/server-metadata.schema.json",
+  "id": "github-hjqcan-goodmemory-29833c3d",
+  "source": {
+    "issue": 1534,
+    "projectUrl": "https://github.com/hjqcan/GoodMemory"
+  },
+  "description": "Local-first, auditable memory layer for Codex, Claude Code, AI apps, and any MCP client, with durable SQLite, embedding-free recall, and opt-in governed writeback.",
+  "category": "Knowledge Management & Memory",
+  "links": {
+    "docs": "https://github.com/hjqcan/GoodMemory#standalone-mcp-for-any-client"
+  },
+  "install": {
+    "commands": [
+      "npx -y goodmemory@0.7.5 mcp serve --standalone --user-id YOUR_USER_ID"
+    ],
+    "env": [],
+    "confidence": "medium"
+  },
+  "transport": [
+    "stdio"
+  ],
+  "auth": {
+    "type": "none",
+    "notes": [
+      "The local standalone MCP server requires no authentication; goodmemory_remember is exposed only with --allow-write."
+    ]
+  },
+  "clients": [
+    "Codex",
+    "Claude Code",
+    "Cursor",
+    "Windsurf",
+    "Cline",
+    "Claude Desktop",
+    "Gemini CLI",
+    "OpenCode",
+    "other MCP clients with stdio support"
+  ],
+  "tools": {
+    "count": 8,
+    "names": [
+      "goodmemory_get_context",
+      "goodmemory_get_records",
+      "goodmemory_inspect_memory",
+      "goodmemory_read_artifacts",
+      "goodmemory_search_index",
+      "goodmemory_stats",
+      "goodmemory_timeline",
+      "goodmemory_trace_recall"
+    ],
+    "source": "self_reported"
+  },
+  "license": "MIT",
+  "verification": {
+    "status": "self_reported",
+    "notes": [
+      "Profile claimed by @hjqcan in #1287 under the community profile-claim process.",
+      "GoodMemory metadata has been refreshed across public capability descriptors and releases through v0.7.5. Transport remains stdio, local standalone mode has no required API key, and the default profile remains read-only unless --allow-write is enabled.",
+      "Install commands refreshed to the published GoodMemory v0.7.5 release. Sources: https://github.com/hjqcan/GoodMemory/blob/v0.7.5/.well-known/goodmemory.json, https://github.com/hjqcan/GoodMemory/releases/tag/v0.7.5, and https://www.npmjs.com/package/goodmemory/v/0.7.5."
+    ]
+  },
+  "community": {
+    "maintainedBy": [
+      "@hjqcan"
+    ],
+    "verifiedBy": [],
+    "claimed": true
+  }
+}

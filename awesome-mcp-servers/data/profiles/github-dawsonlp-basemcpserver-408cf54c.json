@@ -1,0 +1,60 @@
+{
+  "id": "github-dawsonlp-basemcpserver-408cf54c",
+  "name": "dawsonlp/BaseMcpServer",
+  "description": "A minimal Docker-based foundation for building MCP servers using the MCP Python SDK, supporting both HTTP+SSE and stdio protocols.",
+  "category": "Frameworks",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-dawsonlp-basemcpserver-408cf54c",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-dawsonlp-basemcpserver-408cf54c/badge.svg)](https://tensorblock.co/mcp/servers/github-dawsonlp-basemcpserver-408cf54c)",
+  "links": {
+    "primary": "https://github.com/dawsonlp/BaseMcpServer",
+    "repo": "https://github.com/dawsonlp/BaseMcpServer",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "stdio",
+    "streamable-http",
+    "sse"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "stdio",
+      "streamable-http",
+      "sse"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

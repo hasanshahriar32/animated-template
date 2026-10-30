@@ -1,0 +1,56 @@
+{
+  "id": "github-mybuddyandrew-rails-api-search-2bd5769a",
+  "name": "mybuddyandrew/rails_api_search",
+  "description": "Facilitates efficient search across Rails API documentation with comprehensive support for all major framework components.",
+  "category": "Search",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-mybuddyandrew-rails-api-search-2bd5769a",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-mybuddyandrew-rails-api-search-2bd5769a/badge.svg)](https://tensorblock.co/mcp/servers/github-mybuddyandrew-rails-api-search-2bd5769a)",
+  "links": {
+    "primary": "https://github.com/mybuddyandrew/rails_api_search",
+    "repo": "https://github.com/mybuddyandrew/rails_api_search",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

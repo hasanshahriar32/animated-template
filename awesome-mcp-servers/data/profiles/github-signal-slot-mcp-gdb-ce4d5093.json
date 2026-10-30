@@ -1,0 +1,58 @@
+{
+  "id": "github-signal-slot-mcp-gdb-ce4d5093",
+  "name": "signal-slot/mcp-gdb",
+  "description": "Facilitates GDB debugging sessions through MCP for seamless integration with AI assistants like Claude.",
+  "category": "Code Analysis & Quality",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-signal-slot-mcp-gdb-ce4d5093",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-signal-slot-mcp-gdb-ce4d5093/badge.svg)](https://tensorblock.co/mcp/servers/github-signal-slot-mcp-gdb-ce4d5093)",
+  "links": {
+    "primary": "https://github.com/signal-slot/mcp-gdb",
+    "repo": "https://github.com/signal-slot/mcp-gdb",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "github-flyer103-notion-mcp-ccc0203c",
+  "name": "flyer103/notion-mcp",
+  "description": "Facilitates AI model interactions with Notion documents and data through a Model Context Protocol server.",
+  "category": "Knowledge Management & Memory",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-flyer103-notion-mcp-ccc0203c",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-flyer103-notion-mcp-ccc0203c/badge.svg)](https://tensorblock.co/mcp/servers/github-flyer103-notion-mcp-ccc0203c)",
+  "links": {
+    "primary": "https://github.com/flyer103/notion-mcp",
+    "repo": "https://github.com/flyer103/notion-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

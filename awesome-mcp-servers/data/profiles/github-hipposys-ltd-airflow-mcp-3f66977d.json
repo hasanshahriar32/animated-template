@@ -1,0 +1,56 @@
+{
+  "id": "github-hipposys-ltd-airflow-mcp-3f66977d",
+  "name": "hipposys-ltd/airflow-mcp",
+  "description": "Enhance your Apache Airflow management with natural language queries and troubleshooting using a custom MCP server.",
+  "category": "Build & Deployment Tools",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-hipposys-ltd-airflow-mcp-3f66977d",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-hipposys-ltd-airflow-mcp-3f66977d/badge.svg)](https://tensorblock.co/mcp/servers/github-hipposys-ltd-airflow-mcp-3f66977d)",
+  "links": {
+    "primary": "https://github.com/hipposys-ltd/airflow-mcp",
+    "repo": "https://github.com/hipposys-ltd/airflow-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

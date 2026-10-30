@@ -1,0 +1,56 @@
+{
+  "id": "github-naotaka3-mcp-proxy-hub-3861eb32",
+  "name": "naotaka3/mcp-proxy-hub",
+  "description": "A central hub that aggregates and serves multiple MCP resource servers through a unified interface, enabling efficient resource management and tool aggregation.",
+  "category": "Utilities & Helpers",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-naotaka3-mcp-proxy-hub-3861eb32",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-naotaka3-mcp-proxy-hub-3861eb32/badge.svg)](https://tensorblock.co/mcp/servers/github-naotaka3-mcp-proxy-hub-3861eb32)",
+  "links": {
+    "primary": "https://github.com/naotaka3/mcp-proxy-hub",
+    "repo": "https://github.com/naotaka3/mcp-proxy-hub",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

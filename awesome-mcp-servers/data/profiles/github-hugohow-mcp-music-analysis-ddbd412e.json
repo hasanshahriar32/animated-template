@@ -1,0 +1,56 @@
+{
+  "id": "github-hugohow-mcp-music-analysis-ddbd412e",
+  "name": "hugohow/mcp-music-analysis",
+  "description": "Leverage librosa and Whisper to analyze music audio through an MCP server, integrating seamlessly with LLMs for enhanced audio insights.",
+  "category": "Multimedia Processing",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-hugohow-mcp-music-analysis-ddbd412e",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-hugohow-mcp-music-analysis-ddbd412e/badge.svg)](https://tensorblock.co/mcp/servers/github-hugohow-mcp-music-analysis-ddbd412e)",
+  "links": {
+    "primary": "https://github.com/hugohow/mcp-music-analysis",
+    "repo": "https://github.com/hugohow/mcp-music-analysis",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

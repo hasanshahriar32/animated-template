@@ -1,0 +1,56 @@
+{
+  "id": "github-marcusjellinghaus-mcp-code-checker-9a406adf",
+  "name": "MarcusJellinghaus/mcp-code-checker",
+  "description": "Facilitates AI-driven code quality checks using pylint and pytest, enhancing debugging workflows with smart LLM prompts.",
+  "category": "Code Analysis & Quality",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-marcusjellinghaus-mcp-code-checker-9a406adf",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-marcusjellinghaus-mcp-code-checker-9a406adf/badge.svg)](https://tensorblock.co/mcp/servers/github-marcusjellinghaus-mcp-code-checker-9a406adf)",
+  "links": {
+    "primary": "https://github.com/MarcusJellinghaus/mcp-code-checker",
+    "repo": "https://github.com/MarcusJellinghaus/mcp-code-checker",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

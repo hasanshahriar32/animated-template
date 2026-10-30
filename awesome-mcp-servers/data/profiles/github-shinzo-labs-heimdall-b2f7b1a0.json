@@ -1,0 +1,56 @@
+{
+  "id": "github-shinzo-labs-heimdall-b2f7b1a0",
+  "name": "shinzo-labs/heimdall",
+  "description": "Heimdall acts as a guardian proxy to manage and authorize MCP server tools for multiple clients on a single device.",
+  "category": "Security",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-shinzo-labs-heimdall-b2f7b1a0",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-shinzo-labs-heimdall-b2f7b1a0/badge.svg)](https://tensorblock.co/mcp/servers/github-shinzo-labs-heimdall-b2f7b1a0)",
+  "links": {
+    "primary": "https://github.com/shinzo-labs/heimdall",
+    "repo": "https://github.com/shinzo-labs/heimdall",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

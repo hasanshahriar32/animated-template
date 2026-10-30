@@ -1,0 +1,56 @@
+{
+  "id": "github-operation-hp-wa-mcp-9a5fae73",
+  "name": "operation-hp/WA-MCP",
+  "description": "Facilitates interaction with MCP servers through WhatsApp using chat messages, leveraging whatsapp-web.js.",
+  "category": "Communication & Messaging",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-operation-hp-wa-mcp-9a5fae73",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-operation-hp-wa-mcp-9a5fae73/badge.svg)](https://tensorblock.co/mcp/servers/github-operation-hp-wa-mcp-9a5fae73)",
+  "links": {
+    "primary": "https://github.com/operation-hp/WA-MCP",
+    "repo": "https://github.com/operation-hp/WA-MCP",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

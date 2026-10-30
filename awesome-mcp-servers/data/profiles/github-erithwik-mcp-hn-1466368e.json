@@ -1,0 +1,56 @@
+{
+  "id": "github-erithwik-mcp-hn-1466368e",
+  "name": "erithwik/mcp-hn",
+  "description": "Facilitates interaction with Hacker News by fetching stories, comments, and user information through a Model Context Protocol server.",
+  "category": "Social Media & Content Platforms",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-erithwik-mcp-hn-1466368e",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-erithwik-mcp-hn-1466368e/badge.svg)](https://tensorblock.co/mcp/servers/github-erithwik-mcp-hn-1466368e)",
+  "links": {
+    "primary": "https://github.com/erithwik/mcp-hn",
+    "repo": "https://github.com/erithwik/mcp-hn",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

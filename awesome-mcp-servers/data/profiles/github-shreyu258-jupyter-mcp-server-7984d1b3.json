@@ -1,0 +1,58 @@
+{
+  "id": "github-shreyu258-jupyter-mcp-server-7984d1b3",
+  "name": "shreyu258/Jupyter_MCP_Server",
+  "description": "Facilitates AI-assisted code execution and data analysis by integrating Jupyter Notebooks with Claude AI via the Model Context Protocol.",
+  "category": "Data Analysis & Business Intelligence",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-shreyu258-jupyter-mcp-server-7984d1b3",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-shreyu258-jupyter-mcp-server-7984d1b3/badge.svg)](https://tensorblock.co/mcp/servers/github-shreyu258-jupyter-mcp-server-7984d1b3)",
+  "links": {
+    "primary": "https://github.com/shreyu258/Jupyter_MCP_Server",
+    "repo": "https://github.com/shreyu258/Jupyter_MCP_Server",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

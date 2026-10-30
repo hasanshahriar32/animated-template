@@ -1,0 +1,56 @@
+{
+  "id": "github-rokudone-codebase-rag-ruby-bde1039a",
+  "name": "rokudone/codebase-rag-ruby",
+  "description": "Facilitates retrieval-augmented generation for Ruby codebases by analyzing code, building a vector database, and providing an MCP server interface for natural language queries.",
+  "category": "Code Analysis & Quality",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-rokudone-codebase-rag-ruby-bde1039a",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-rokudone-codebase-rag-ruby-bde1039a/badge.svg)](https://tensorblock.co/mcp/servers/github-rokudone-codebase-rag-ruby-bde1039a)",
+  "links": {
+    "primary": "https://github.com/rokudone/codebase-rag-ruby",
+    "repo": "https://github.com/rokudone/codebase-rag-ruby",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

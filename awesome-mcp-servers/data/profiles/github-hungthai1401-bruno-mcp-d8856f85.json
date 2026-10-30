@@ -1,0 +1,56 @@
+{
+  "id": "github-hungthai1401-bruno-mcp-d8856f85",
+  "name": "hungthai1401/bruno-mcp",
+  "description": "Facilitates API testing by running Bruno collections and delivering detailed results through a standardized interface.",
+  "category": "Code Execution",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-hungthai1401-bruno-mcp-d8856f85",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-hungthai1401-bruno-mcp-d8856f85/badge.svg)](https://tensorblock.co/mcp/servers/github-hungthai1401-bruno-mcp-d8856f85)",
+  "links": {
+    "primary": "https://github.com/hungthai1401/bruno-mcp",
+    "repo": "https://github.com/hungthai1401/bruno-mcp",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}

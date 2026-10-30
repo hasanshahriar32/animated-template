@@ -1,0 +1,58 @@
+{
+  "id": "github-karateboss-mcp-pdf-reader-49faab90",
+  "name": "karateboss/mcp_pdf_reader",
+  "description": "Enables reading of PDF documents through an MCP server, tested with Claude Desktop and LibreChat.",
+  "category": "Utilities & Helpers",
+  "profileUrl": "https://tensorblock.co/mcp/servers/github-karateboss-mcp-pdf-reader-49faab90",
+  "badgeMarkdown": "[![Indexed on TensorBlock MCP Index](https://mcp-index.tensorblock.co/v1/servers/github-karateboss-mcp-pdf-reader-49faab90/badge.svg)](https://tensorblock.co/mcp/servers/github-karateboss-mcp-pdf-reader-49faab90)",
+  "links": {
+    "primary": "https://github.com/karateboss/mcp_pdf_reader",
+    "repo": "https://github.com/karateboss/mcp_pdf_reader",
+    "homepage": null,
+    "docs": null,
+    "endpoint": null
+  },
+  "install": {
+    "commands": [],
+    "env": [],
+    "confidence": "low"
+  },
+  "transport": [
+    "unknown"
+  ],
+  "auth": {
+    "type": "unknown",
+    "notes": []
+  },
+  "clients": [
+    "Claude"
+  ],
+  "license": "unknown",
+  "installReady": false,
+  "verifiedAt": null,
+  "health": {
+    "repoPublic": null,
+    "packageFound": null,
+    "endpointReachable": null,
+    "lastCheckedAt": null
+  },
+  "verification": {
+    "status": "unknown",
+    "notes": []
+  },
+  "community": {
+    "maintainedBy": [],
+    "verifiedBy": [],
+    "claimed": false
+  },
+  "summary": {
+    "transport": [
+      "unknown"
+    ],
+    "auth": "unknown",
+    "installConfidence": "low",
+    "installReady": false,
+    "verification": "unknown",
+    "toolCount": null
+  }
+}
