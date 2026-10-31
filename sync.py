@@ -38,7 +38,9 @@ IGNORE_ENTRIES = {
     ".github",
     ".git",
     "README.md",
-    ".gitignore"
+    ".gitignore",
+    ".nojekyll",
+    "index.html"
 }
 
 def load_metadata():
