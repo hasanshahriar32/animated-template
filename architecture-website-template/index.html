@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/architecture-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,8 +20,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%231a2430'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23e7a36a'%3EM%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/mozillaheadline/v1/QGY4z-UXahmCOps4kyMKGuSA9pYt2_P-w2kFrS88o6dLYTHNYMU.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/mozillatext/v1/SZc-3FrnJ7S7WZIff2mJ7TbD7xNK.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
 <style>
 /* latin-ext */
@@ -30,7 +29,7 @@
   font-weight: 500 700;
   font-stretch: 75%;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/mozillaheadline/v1/QGY4z-UXahmCOps4kyMKGuSA9pYt2_P-w2kFrS88o6dLYTHDYMVmJQ.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/l/font?kit=QGYez-UXahmCOps4kyMKGuSA9pYt2_P-w2kFrS88o6dLYRvBSDSOuerB_FOB0oZ3bj6fbVaIV-ylzu14cYFNag&skey=523b0818d0b52296&v=v1) format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -40,7 +39,7 @@
   font-weight: 500 700;
   font-stretch: 75%;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/mozillaheadline/v1/QGY4z-UXahmCOps4kyMKGuSA9pYt2_P-w2kFrS88o6dLYTHNYMU.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/l/font?kit=QGYez-UXahmCOps4kyMKGuSA9pYt2_P-w2kFrS88o6dLYRvBSDSOuerB_FOB0oZ3bj6fbVaIV-ylzu14cY9Nag&skey=523b0818d0b52296&v=v1) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* latin-ext */
@@ -49,7 +48,7 @@
   font-style: normal;
   font-weight: 400 600;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/mozillatext/v1/SZc-3FrnJ7S7WZIff2mJ7TbD4RNKuCc.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/l/font?kit=SZcY3FrnJ7S7WZIff2mJ7Tbp4zu7ULu3HkPOB4UcXttzpVE0mnxxlfnZBaApizc&skey=54da1218099dcf20&v=v1) format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -58,7 +57,7 @@
   font-style: normal;
   font-weight: 400 600;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/mozillatext/v1/SZc-3FrnJ7S7WZIff2mJ7TbD7xNK.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/l/font?kit=SZcY3FrnJ7S7WZIff2mJ7Tbp4zu7ULu3HkPOB4UcXttzpVE0mnxxlfnZBaAnizc&skey=54da1218099dcf20&v=v1) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 </style>
@@ -96,10 +95,6 @@
   /* end font fallbacks */
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-  .lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-smooth iframe { pointer-events: none; }
   body { margin: 0; background: var(--color-1); color: var(--color-2); }
   img { display: block; max-width: 100%; }
   h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
@@ -265,7 +260,6 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
     #opening .op__slab:nth-of-type(6) .op__img { --dur: 10s; --d: 6; }
     #opening .op__slab:nth-of-type(7) .op__img { --dur: 7.5s; --d: -8; }
     #opening .op__floor .op__img { --dur: 11s; --d: 22; }
-    #opening .op__stage[data-paused] .op__img { animation-play-state: paused; }
     #opening .op__rise { animation: op-rise .9s cubic-bezier(.2, .7, .2, 1) backwards; }
     #opening .op__slab:nth-of-type(3) .op__rise { animation-delay: .08s; }
     #opening .op__slab:nth-of-type(4) .op__rise { animation-delay: .16s; }
@@ -281,13 +275,6 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
   @keyframes op-rise { from { clip-path: inset(100% 0% 0% 0%); } to { clip-path: inset(0% 0% 0% 0%); } }
   @keyframes op-floor { from { clip-path: inset(0% 100% 0% 0%); } to { clip-path: inset(0% 0% 0% 0%); } }
   @keyframes op-step { from { transform: translateX(var(--dx, -40px)); } }
-}
-</style>
-<style data-8b-part="scene-style:opening">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #opening[data-opening] .op__hold { height: 70svh; }
-  }
 }
 </style>
 <style data-8b-part="section:buildings">
@@ -310,19 +297,6 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
     #buildings .bl__item--head, #buildings .bl__item--end { width: 84vw; }
     #buildings .bl__photo { height: calc(var(--h) * .9svh); }
     #buildings .bl__plate { height: 214px; }
-  }
-}
-</style>
-<style data-8b-part="scene-style:buildings">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #buildings[data-walk] { padding: 0; }
-    #buildings[data-walk] .bl__pin { height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 6svh; overflow: hidden; }
-    #buildings[data-walk] .bl__track { flex-wrap: nowrap; width: max-content; }
-    #buildings[data-walk] .bl__pavement { margin-top: 0; }
-  }
-  @media (prefers-reduced-motion: no-preference) and (max-width: 900px) {
-    #buildings[data-walk] .bl__pin { justify-content: center; padding-bottom: 0; }
   }
 }
 </style>
@@ -553,13 +527,186 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
   }
 }
 </style>
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] [data-8b-motion~="band"] { animation-name: motion-band-scale; animation-duration: 0.9s; animation-delay: 0s; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="band"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="resolve"] .m-photo__img { animation-name: motion-resolve-m-photo-img-scale; animation-duration: 1.1s; animation-delay: 0s; animation-timing-function: linear; animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="resolve"].is-in .m-photo__img { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="step"] > * { --motion-step-i: 0; animation-name: motion-step; animation-duration: .9s; animation-delay: calc(var(--motion-step-i) * .09s); animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="step"] > :nth-child(2) { --motion-step-i: 1; }
+[data-8b-live] [data-8b-motion~="step"] > :nth-child(3) { --motion-step-i: 2; }
+[data-8b-live] [data-8b-motion~="step"] > :nth-child(4) { --motion-step-i: 3; }
+[data-8b-live] [data-8b-motion~="step"] > :nth-child(5) { --motion-step-i: 4; }
+[data-8b-live] [data-8b-motion~="step"] > :nth-child(6) { --motion-step-i: 5; }
+[data-8b-live] [data-8b-motion~="step"] > :nth-child(7) { --motion-step-i: 6; }
+[data-8b-live] [data-8b-motion~="step"] > :nth-child(8) { --motion-step-i: 7; }
+[data-8b-live] [data-8b-motion~="step"] > :nth-child(n + 9) { --motion-step-i: 8; }
+[data-8b-live] [data-8b-motion~="step"].is-in > * { animation-play-state: running; }
+@keyframes motion-step { from { translate: calc((36px + var(--motion-step-i) * 18px) * (2 * mod(var(--motion-step-i), 2) - 1)) 0; } }
+@keyframes motion-band-scale { 0% { scale: 1 0.06; } 100% { scale: 1; } }
+@keyframes motion-resolve-m-photo-img-scale { 0% { scale: 48 1; } 0.0091% { scale: 48 1; } 1.6666% { scale: 48 1; } 3.3334% { scale: 47.9995 1; } 5% { scale: 47.9977 1; } 6.6666% { scale: 47.9926 1; } 8.3334% { scale: 47.9819 1; } 10% { scale: 47.9624 1; } 11.6666% { scale: 47.9303 1; } 13.3334% { scale: 47.8812 1; } 15% { scale: 47.8097 1; } 16.6666% { scale: 47.7099 1; } 18.3334% { scale: 47.5752 1; } 20% { scale: 47.3984 1; } 21.6666% { scale: 47.1714 1; } 23.3334% { scale: 46.8855 1; } 25% { scale: 46.5313 1; } 26.6666% { scale: 46.0987 1; } 28.3334% { scale: 45.5768 1; } 30% { scale: 44.9544 1; } 31.6666% { scale: 44.2191 1; } 33.3334% { scale: 43.358 1; } 35% { scale: 42.3577 1; } 36.6666% { scale: 41.2037 1; } 38.3334% { scale: 39.8811 1; } 40% { scale: 38.3744 1; } 41.6666% { scale: 36.6671 1; } 43.3334% { scale: 34.742 1; } 45% { scale: 32.5817 1; } 46.6666% { scale: 30.1674 1; } 48.3334% { scale: 27.4801 1; } 50% { scale: 24.5 1; } 51.6666% { scale: 21.5199 1; } 53.3334% { scale: 18.8326 1; } 55% { scale: 16.4184 1; } 56.6666% { scale: 14.258 1; } 58.3334% { scale: 12.3329 1; } 60% { scale: 10.6256 1; } 61.6666% { scale: 9.1189 1; } 63.3334% { scale: 7.7963 1; } 65% { scale: 6.6424 1; } 66.6666% { scale: 5.642 1; } 68.3334% { scale: 4.7809 1; } 70% { scale: 4.0456 1; } 71.6666% { scale: 3.4232 1; } 73.3334% { scale: 2.9013 1; } 75% { scale: 2.4688 1; } 76.6666% { scale: 2.1145 1; } 78.3334% { scale: 1.8286 1; } 80% { scale: 1.6016 1; } 81.6666% { scale: 1.4248 1; } 83.3334% { scale: 1.2901 1; } 85% { scale: 1.1904 1; } 86.6666% { scale: 1.1188 1; } 88.3334% { scale: 1.0697 1; } 90% { scale: 1.0376 1; } 91.6666% { scale: 1.0181 1; } 93.3334% { scale: 1.0074 1; } 95% { scale: 1.0023 1; } 96.6666% { scale: 1.0005 1; } 98.3334% { scale: 1; } 99.9909% { scale: 1; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-8b-live] #opening .op__hold { height: 70svh; }
+  }
+}
+@layer scenes {
+[data-8b-live] #opening { view-timeline: --opening-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #opening .op__stage > div:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5), :nth-of-type(6), :nth-of-type(7)), [data-8b-live] #opening .op__slab--gap, [data-8b-live] #opening .op__floor { animation-timeline: --opening-t1; animation-fill-mode: both; }
+[data-8b-live] #opening .op__stage > div:nth-of-type(2) { animation-range: cover calc(3% + 94vh) cover calc(33% + 34vh); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #opening .op__stage > div:nth-of-type(3) { animation-range: cover calc(5.2% + 89.6vh) cover calc(35.2% + 29.6vh); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #opening .op__stage > div:nth-of-type(4) { animation-range: cover calc(7.4% + 85.2vh) cover calc(37.4% + 25.2vh); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #opening .op__stage > div:nth-of-type(5) { animation-range: cover calc(9.6% + 80.8vh) cover calc(39.6% + 20.8vh); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #opening .op__stage > div:nth-of-type(6) { animation-range: cover calc(11.8% + 76.4vh) cover calc(41.8% + 16.4vh); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #opening .op__stage > div:nth-of-type(7) { animation-range: cover calc(14% + 72vh) cover calc(44% + 12vh); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #opening .op__slab--gap { animation-range: cover calc(16% + 68vh) cover calc(42% + 16vh); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #opening .op__floor { animation-range: cover calc(56% - 12vh) cover calc(100% - 100vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+@property --opening-p { syntax: '<number>'; inherits: false; initial-value: 0; }
+@keyframes opening-p { from { --opening-p: 0; } to { --opening-p: 1; } }
+@keyframes opening-lift { from { translate: 0 0; } to { translate: 0 calc(var(--opening-lift) * -1vh); } }
+[data-8b-live] #opening .op__copy > .op__block { animation-name: op-step, opening-lift; animation-duration: .8s, auto; animation-delay: 0s, 0s; animation-iteration-count: 1; animation-direction: normal; animation-timing-function: cubic-bezier(.2, .7, .2, 1), cubic-bezier(0.3333, 0, 0.6667, 0.3333); animation-fill-mode: backwards, both; animation-timeline: auto, --opening-t1; animation-range: normal, cover 100vh cover calc(40% + 20vh); }
+[data-8b-live] #opening .op__block--a { --opening-lift: 26; }
+[data-8b-live] #opening .op__block--b { --opening-lift: 17; animation-delay: .1s, 0s; }
+[data-8b-live] #opening .op__block--c { --opening-lift: 8; animation-delay: .2s, 0s; }
+[data-8b-live] #opening .op__slab:not(.op__slab--gap) .op__img { animation-name: op-drift, opening-p; animation-duration: var(--dur, 8s), auto; animation-iteration-count: infinite, 1; animation-direction: alternate, normal; animation-timing-function: ease-in-out, linear; animation-fill-mode: none, both; animation-timeline: auto, --opening-t1; transform: none; scale: calc(64 - 63 * (8 * pow(min(var(--opening-p), .5), 4) + .5 - 8 * pow(1 - max(var(--opening-p), .5), 4))) 1; }
+[data-8b-live] #opening .op__slab:nth-of-type(2) .op__img { animation-range: normal, cover calc(9% + 82vh) cover calc(39% + 22vh); }
+[data-8b-live] #opening .op__slab:nth-of-type(3) .op__img { animation-range: normal, cover calc(10.8% + 78.4vh) cover calc(40.8% + 18.4vh); }
+[data-8b-live] #opening .op__slab:nth-of-type(4) .op__img { animation-range: normal, cover calc(12.6% + 74.8vh) cover calc(42.6% + 14.8vh); }
+[data-8b-live] #opening .op__slab:nth-of-type(5) .op__img { animation-range: normal, cover calc(14.4% + 71.2vh) cover calc(44.4% + 11.2vh); }
+[data-8b-live] #opening .op__slab:nth-of-type(6) .op__img { animation-range: normal, cover calc(16.2% + 67.6vh) cover calc(46.2% + 7.6vh); }
+[data-8b-live] #opening .op__slab:nth-of-type(7) .op__img { animation-range: normal, cover calc(18% + 64vh) cover calc(48% + 4vh); }
+@keyframes opening-div-op-slab-clippath-d { 0% { clip-path: inset(13% 88.8% 16% 0%); } 100% { clip-path: inset(0% 88.8% 0% 0%); } }
+@keyframes opening-div-op-slab-clippath-m { 0% { clip-path: inset(10% 89.8% 30% 0%); } 100% { clip-path: inset(0% 89.8% 0% 0%); } }
+@keyframes opening-div-op-slab-clippath-2-d { 0% { clip-path: inset(20% 79.3% 26% 11%); } 100% { clip-path: inset(0% 79.3% 0% 11%); } }
+@keyframes opening-div-op-slab-clippath-2-m { 0% { clip-path: inset(19% 81.8% 26% 10%); } 100% { clip-path: inset(0% 81.8% 0% 10%); } }
+@keyframes opening-div-op-slab-clippath-3-d { 0% { clip-path: inset(41% 72.3% 21% 20.5%); } 100% { clip-path: inset(0% 72.3% 0% 20.5%); } }
+@keyframes opening-div-op-slab-clippath-3-m { 0% { clip-path: inset(29% 74.8% 34% 18%); } 100% { clip-path: inset(0% 74.8% 0% 18%); } }
+@keyframes opening-div-op-slab-clippath-4-d { 0% { clip-path: inset(31% 21.8% 29% 70%); } 100% { clip-path: inset(0% 21.8% 0% 70%); } }
+@keyframes opening-div-op-slab-clippath-4-m { 0% { clip-path: inset(23% 16.8% 28% 75%); } 100% { clip-path: inset(0% 16.8% 0% 75%); } }
+@keyframes opening-div-op-slab-clippath-5-d { 0% { clip-path: inset(11% 9.8% 22% 78%); } 100% { clip-path: inset(0% 9.8% 0% 78%); } }
+@keyframes opening-div-op-slab-clippath-5-m { 0% { clip-path: inset(13% 8.8% 22% 83%); } 100% { clip-path: inset(0% 8.8% 0% 83%); } }
+@keyframes opening-div-op-slab-clippath-6-d { 0% { clip-path: inset(0% -0.2% 16% 90%); } 100% { clip-path: inset(0% -0.2% 0% 90%); } }
+@keyframes opening-div-op-slab-clippath-6-m { 0% { clip-path: inset(8% -0.2% 18% 91%); } 100% { clip-path: inset(0% -0.2% 0% 91%); } }
+@keyframes opening-div-op-slab-clippath-7-d { 0% { clip-path: inset(0% 51.25% 0% 48.75%); } 100% { clip-path: inset(0% 30% 0% 27.5%); } }
+@keyframes opening-div-op-slab-clippath-7-m { 0% { clip-path: inset(0% 50%); } 100% { clip-path: inset(0% 25%); } }
+@keyframes opening-div-op-floor-clippath-d { 0% { clip-path: inset(84% 0% 0%); } 100% { clip-path: inset(0%); } }
+@keyframes opening-div-op-floor-clippath-m { 0% { clip-path: inset(88% 0% 0%); } 100% { clip-path: inset(0%); } }
+@media (min-width: 901px) {
+  [data-8b-live] #opening .op__stage > div:nth-of-type(2) { animation-name: opening-div-op-slab-clippath-d; }
+  [data-8b-live] #opening .op__stage > div:nth-of-type(3) { animation-name: opening-div-op-slab-clippath-2-d; }
+  [data-8b-live] #opening .op__stage > div:nth-of-type(4) { animation-name: opening-div-op-slab-clippath-3-d; }
+  [data-8b-live] #opening .op__stage > div:nth-of-type(5) { animation-name: opening-div-op-slab-clippath-4-d; }
+  [data-8b-live] #opening .op__stage > div:nth-of-type(6) { animation-name: opening-div-op-slab-clippath-5-d; }
+  [data-8b-live] #opening .op__stage > div:nth-of-type(7) { animation-name: opening-div-op-slab-clippath-6-d; }
+  [data-8b-live] #opening .op__slab--gap { animation-name: opening-div-op-slab-clippath-7-d; }
+  [data-8b-live] #opening .op__floor { animation-name: opening-div-op-floor-clippath-d; }
+}
+@media (max-width: 900px) {
+  [data-8b-live] #opening .op__stage > div:nth-of-type(2) { animation-name: opening-div-op-slab-clippath-m; }
+  [data-8b-live] #opening .op__stage > div:nth-of-type(3) { animation-name: opening-div-op-slab-clippath-2-m; }
+  [data-8b-live] #opening .op__stage > div:nth-of-type(4) { animation-name: opening-div-op-slab-clippath-3-m; }
+  [data-8b-live] #opening .op__stage > div:nth-of-type(5) { animation-name: opening-div-op-slab-clippath-4-m; }
+  [data-8b-live] #opening .op__stage > div:nth-of-type(6) { animation-name: opening-div-op-slab-clippath-5-m; }
+  [data-8b-live] #opening .op__stage > div:nth-of-type(7) { animation-name: opening-div-op-slab-clippath-6-m; }
+  [data-8b-live] #opening .op__slab--gap { animation-name: opening-div-op-slab-clippath-7-m; }
+  [data-8b-live] #opening .op__floor { animation-name: opening-div-op-floor-clippath-m; }
+}
+}
+</style>
+<style data-8b-part="scene:buildings">
+@layer scenes {
+@property --buildings-depth { syntax: '<number>'; inherits: false; initial-value: 0; }
+@property --buildings-resolve { syntax: '<number>'; inherits: false; initial-value: 0; }
+@keyframes buildings-walk { from { translate: 0 0; } to { translate: calc(-1 * var(--buildings-d, 0px)) 0; } }
+@keyframes buildings-depth { from { --buildings-depth: var(--buildings-depth-from, 0); } to { --buildings-depth: var(--buildings-depth-to, 1); } }
+@keyframes buildings-resolve { from { --buildings-resolve: var(--buildings-resolve-from, 0); } to { --buildings-resolve: var(--buildings-resolve-to, 1); } }
+[data-8b-live] #buildings { padding: 0; height: calc(100svh + var(--buildings-d, 0px)); view-timeline: --buildings-walk block; }
+[data-8b-live] #buildings .bl__pin { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 6svh; overflow: clip; }
+[data-8b-live] #buildings .bl__track { flex-wrap: nowrap; width: max-content; animation: buildings-walk linear both; animation-timeline: --buildings-walk; animation-range: contain 0px contain max(1px, var(--buildings-d, 0px)); }
+[data-8b-live] #buildings .bl__pavement { margin-top: 0; }
+[data-8b-live] #buildings .bl__shift { animation: buildings-depth linear both; animation-timeline: --buildings-walk; animation-range: contain var(--buildings-depth-a, 0px) contain var(--buildings-depth-b, 1px); translate: calc((12 * var(--buildings-depth) - 6) * 1%) 0; }
+[data-8b-live] #buildings .bl__shift > .bl__img { animation: buildings-resolve linear both; animation-timeline: --buildings-walk; animation-range: contain var(--buildings-resolve-a, 0px) contain var(--buildings-resolve-b, 1px); scale: calc(1 + 35 * pow(1 - var(--buildings-resolve), 3)) 1; }
+@media (max-width: 900px) {
+  [data-8b-live] #buildings .bl__pin { justify-content: center; padding-bottom: 0; }
+}
+}
+</style>
+<style data-8b-part="scene:scan">
+@layer scenes {
+[data-8b-live] #scan { timeline-scope: --scan-t1; }
+[data-8b-live] #scan .sc__steps { view-timeline: --scan-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #scan .sc__line, [data-8b-live] #scan .sc__smear, [data-8b-live] #scan .sc__smear > img { animation-timeline: --scan-t1; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #scan .sc__line { animation-name: scan-line; animation-range: cover 30vh cover calc(80% - 38vh); transform: none; }
+[data-8b-live] #scan .sc__smear { animation-name: scan-div-sc-smear-clippath; animation-range: cover 30vh cover calc(80% - 38vh); }
+[data-8b-live] #scan .sc__smear > img { animation-name: scan-p, scan-div-sc-smear-img-transform-origin; scale: calc(24 - 23 * (4 * pow(min(var(--scan-p), .5), 3) + .5 - 4 * pow(1 - max(var(--scan-p), .5), 3))) 1; animation-range: cover calc(80% - 38vh) cover calc(100% - 55vh), cover 30vh cover calc(100% - 55vh); transform: none; transform-origin: 100% 50%; }
+@property --scan-p { syntax: '<number>'; inherits: false; initial-value: 0; }
+@keyframes scan-p { from { --scan-p: 0; } to { --scan-p: 1; } }
+@keyframes scan-line { from { translate: 0 0; } to { translate: var(--scan-frame-w, 0px) 0; } }
+@keyframes scan-div-sc-smear-clippath { 0% { clip-path: inset(0% 100% 0% 0%); } 99.998% { clip-path: inset(0% 0.0125% 0% 0%); } 100% { clip-path: inset(0%); } }
+@keyframes scan-div-sc-smear-img-transform-origin { 0% { transform-origin: 0% 50%; } 0.8333% { transform-origin: 100% 50%; } 100% { transform-origin: 100% 50%; } }
+}
+</style>
+<style data-8b-part="scene:colours">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #colours .co__bands { view-timeline: --colours-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #colours .co__bands > li > .co__fill { animation-name: colours-div-co-fill-scale; animation-timeline: --colours-t1; animation-range: cover calc(16vh - 13.9726vh * var(--i) + 13.6986% * var(--i)) cover calc(27.3973% + 13.6986% * var(--i) - 11.9452vh - 13.9726vh * var(--i)); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #colours .co__bands > li > .co__label { animation-name: colours-div-co-label-clippath, colours-div-co-label-translate; animation-timeline: --colours-t1; animation-range: cover calc(9.589% + 13.6987% * var(--i) + 6.2192vh - 13.9726vh * var(--i)) cover calc(31.5068% + 13.6987% * var(--i) - 16.137vh - 13.9726vh * var(--i)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes colours-div-co-fill-scale { 0% { scale: 1 0.035; } 100% { scale: 1; } }
+@keyframes colours-div-co-label-clippath { 0% { clip-path: inset(0% 100% 0% 0%); } 100% { clip-path: inset(0%); } }
+@keyframes colours-div-co-label-translate { 0% { translate: -48px 0px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:floors">
+@layer scenes {
+[data-8b-live] #floors .fl__slice { will-change: translate; }
+}
+</style>
+<style data-8b-part="scene:studio">
+@layer scenes {
+[data-8b-live] #studio .st__row { view-timeline: --studio-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #studio .st__row > li > .m-photo { animation-timeline: --studio-t1; animation-range: cover calc(12vh + 3.5152vh * var(--i)) cover calc(55.9394vh + 3.5151vh * var(--i)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #studio .st__row > li > .m-photo > .m-photo__img { animation-name: studio-p; scale: calc(40 - 39 * (8 * pow(min(var(--studio-p), .5), 4) + .5 - 8 * pow(1 - max(var(--studio-p), .5), 4))) 1; animation-timeline: --studio-t1; animation-range: cover calc(25.1818vh + 3.5152vh * var(--i)) cover calc(55.9394vh + 3.5151vh * var(--i)); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@property --studio-p { syntax: '<number>'; inherits: false; initial-value: 0; }
+@keyframes studio-p { from { --studio-p: 0; } to { --studio-p: 1; } }
+@keyframes studio-div-m-photo-translate-d { 0% { translate: 0px var(--studio-div-m-photo-translate-from-2, -34.483%); } 100% { translate: 0px 0px; } }
+@keyframes studio-div-m-photo-translate-m { 0% { translate: 0px var(--studio-div-m-photo-translate-from-2-m, -55.619%); } 100% { translate: 0px 0px; } }
+@media (min-width: 901px) {
+  [data-8b-live] #studio .st__row > li > .m-photo { animation-name: studio-div-m-photo-translate-d; }
+}
+@media (max-width: 900px) {
+  [data-8b-live] #studio .st__row > li > .m-photo { animation-name: studio-div-m-photo-translate-m; }
+}
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] #contact .ct__stage { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact .ct__slab--l, [data-8b-live] #contact .ct__slab--r { animation-range: cover 15vh cover 80vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] #contact .ct__slab--l { animation-name: contact-div-ct-slab-translate; animation-timeline: --contact-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #contact .ct__slab--r { animation-name: contact-div-ct-slab-translate-2; animation-timeline: --contact-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #contact .ct__slab--l > img, [data-8b-live] #contact .ct__slab--r > img { animation-name: contact-p; scale: calc(50 - 49 * (8 * pow(min(var(--contact-p), .5), 4) + .5 - 8 * pow(1 - max(var(--contact-p), .5), 4))) 1; animation-timeline: --contact-t1; animation-range: cover 31.25vh cover 80vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@property --contact-p { syntax: '<number>'; inherits: false; initial-value: 0; }
+@keyframes contact-p { from { --contact-p: 0; } to { --contact-p: 1; } }
+@keyframes contact-div-ct-slab-translate { 0% { translate: -75% 0px; } 100% { translate: 0px 0px; } }
+@keyframes contact-div-ct-slab-translate-2 { 0% { translate: 75% 0px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body class="m-text">
 <!-- navigation: top bar: wordmark, four section links, Bring us a plot button; phone menu overlay -->
 <header id="navigation" data-8b-section="navigation">
   <a class="nav__brand" href="#opening"><span class="nav__mark" aria-hidden="true"><span></span><span></span><span></span></span>Midblock</a>
   <nav aria-label="Main">
-    <ul class="nav__links">
+    <ul class="nav__links" data-8b-items=":scope > li">
       <li><a class="m-link" href="#buildings">Buildings</a></li>
       <li><a class="m-link" href="#scan">Method</a></li>
       <li><a class="m-link" href="#register">Register</a></li>
@@ -568,10 +715,10 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
   </nav>
   <a class="m-btn nav__cta" href="#contact"><span class="m-btn__label">Bring us a plot</span></a>
   <button class="m-icon-btn nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu"><span class="m-icon-btn__bar"></span><span class="m-icon-btn__bar"></span></button>
-  <div class="nav__menu" id="nav-menu" data-lenis-prevent hidden>
+  <div class="nav__menu" id="nav-menu" hidden>
     <button class="m-icon-btn nav__close" type="button" aria-label="Close menu"><span class="m-icon-btn__bar"></span><span class="m-icon-btn__bar"></span></button>
     <div class="nav__menu-stripe" aria-hidden="true"></div>
-    <ul class="nav__menu-links">
+    <ul class="nav__menu-links" data-8b-items=":scope > li">
       <li><a href="#buildings">Buildings</a></li>
       <li><a href="#scan">Method</a></li>
       <li><a href="#register">Register</a></li>
@@ -585,14 +732,14 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
 <section id="opening" data-8b-section="opening" aria-labelledby="op-title">
   <div class="op__stage" role="img" aria-label="A street of pastel apartment blocks under a pale sky, smeared into vertical slabs of colour">
     <div class="op__sky"></div>
-    <div class="op__slab"><div class="op__rise"><img style="background:#a6d9d9" class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067" fetchpriority="high"></div></div>
-    <div class="op__slab"><div class="op__rise"><img style="background:#a6d9d9" class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
-    <div class="op__slab"><div class="op__rise"><img style="background:#a6d9d9" class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
-    <div class="op__slab"><div class="op__rise"><img style="background:#a6d9d9" class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
-    <div class="op__slab"><div class="op__rise"><img style="background:#a6d9d9" class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
-    <div class="op__slab"><div class="op__rise"><img style="background:#a6d9d9" class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
-    <div class="op__slab op__slab--gap"><div class="op__rise"><img style="background:#a6d9d9" class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
-    <div class="op__floor"><div class="op__rise"><img style="background:#a6d9d9" class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
+    <div class="op__slab"><div class="op__rise"><img class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067" fetchpriority="high"></div></div>
+    <div class="op__slab"><div class="op__rise"><img class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
+    <div class="op__slab"><div class="op__rise"><img class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
+    <div class="op__slab"><div class="op__rise"><img class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
+    <div class="op__slab"><div class="op__rise"><img class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
+    <div class="op__slab"><div class="op__rise"><img class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
+    <div class="op__slab op__slab--gap"><div class="op__rise"><img class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
+    <div class="op__floor"><div class="op__rise"><img class="op__img" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div></div>
   </div>
   <div class="op__first">
     <div class="op__copy">
@@ -607,7 +754,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
       <h2 class="m-text-3">A street takes a century to build and a second to see.</h2>
       <p class="m-text">Before we draw a line, we film the plot’s street from first light to midnight and read it as one long exposure: where the sun reaches, who walks past, which colours the neighbours have worn for decades. Then we design the building the gap was waiting for.</p>
     </div>
-    <dl class="m-block op__facts">
+    <dl class="m-block op__facts" data-8b-items=":scope > div">
       <div class="op__fact"><dt class="m-text-4">Narrowest so far</dt><dd>2.9 metres at 9 Ropewalk: seven floors with a bike workshop at the bottom.</dd></div>
       <div class="op__fact"><dt class="m-text-4">On our register</dt><dd>Forty-one gaps mapped across the city, open to anyone who owns one or lives beside it.</dd></div>
       <div class="op__fact"><dt class="m-text-4">Since 2014</dt><dd>Eleven buildings, each one on a plot somebody called unbuildable.</dd></div>
@@ -617,13 +764,13 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
 <!-- buildings: projects walked sideways: five buildings at their relative plot widths, each with a plate (animation: scene:buildings) -->
 <section id="buildings" data-8b-section="buildings" aria-labelledby="bl-title">
   <div class="bl__pin">
-    <div class="bl__track">
+    <div class="bl__track" data-8b-items=":scope > .bl__item:not(.bl__item--head):not(.bl__item--end)">
       <div class="m-block-3 bl__item bl__item--head">
         <h2 class="m-text-3" id="bl-title">Five buildings, none wider than a bus</h2>
         <p class="m-text-5">Walk the frontage. Each one stands at its real width, on a plot that had been empty for decades.</p>
       </div>
       <article class="bl__item" style="--plot: 4.1; --h: 60">
-        <div class="bl__photo"><div class="bl__shift"><img style="background:#595940" class="bl__img" src="https://images.unsplash.com/photo-1746426693858-0b7096bbe90d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=550&amp;q=60" alt="A narrow white building with one tall recessed window between two older houses" width="1600" height="2137" loading="lazy"></div></div>
+        <div class="bl__photo"><div class="bl__shift"><img class="bl__img" src="https://images.unsplash.com/photo-1746426693858-0b7096bbe90d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A narrow white building with one tall recessed window between two older houses" width="1600" height="2137" loading="lazy"></div></div>
         <div class="bl__plate">
           <h3 class="m-text-6">11 Kerr Lane</h3>
           <p class="m-text-4">4.1 m plot · 5 floors · 2023</p>
@@ -631,7 +778,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
         </div>
       </article>
       <article class="bl__item" style="--plot: 6.2; --h: 50">
-        <div class="bl__photo"><div class="bl__shift"><img style="background:#c0a6a6" class="bl__img" src="https://images.unsplash.com/photo-1726000164777-1e9b9a523f79?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="A slim house with three cantilevered glass balconies above a garage" width="1600" height="2400" loading="lazy"></div></div>
+        <div class="bl__photo"><div class="bl__shift"><img class="bl__img" src="https://images.unsplash.com/photo-1726000164777-1e9b9a523f79?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A slim house with three cantilevered glass balconies above a garage" width="1600" height="2400" loading="lazy"></div></div>
         <div class="bl__plate">
           <h3 class="m-text-6">4 Saltmarket Row</h3>
           <p class="m-text-4">6.2 m plot · 4 floors · 2021</p>
@@ -639,7 +786,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
         </div>
       </article>
       <article class="bl__item" style="--plot: 7.8; --h: 44">
-        <div class="bl__photo"><div class="bl__shift"><img class="bl__img" src="https://images.unsplash.com/photo-1750360563453-1c02464f2e97?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A pale house with a deep timber-framed window above a planted terrace by the water" width="1600" height="2135" loading="lazy" style="background:#a68c8c;object-position: 50% 38%"></div></div>
+        <div class="bl__photo"><div class="bl__shift"><img class="bl__img" src="https://images.unsplash.com/photo-1750360563453-1c02464f2e97?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A pale house with a deep timber-framed window above a planted terrace by the water" width="1600" height="2135" loading="lazy" style="object-position: 50% 38%"></div></div>
         <div class="bl__plate">
           <h3 class="m-text-6">Quay 27</h3>
           <p class="m-text-4">7.8 m plot · 3 floors · 2022</p>
@@ -647,7 +794,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
         </div>
       </article>
       <article class="bl__item" style="--plot: 5.5; --h: 56">
-        <div class="bl__photo"><div class="bl__shift"><img style="background:#d9d9f3" class="bl__img" src="https://images.unsplash.com/photo-1730117574369-4aa95bebf655?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="A small folded grey concrete house with one large window over a parking space" width="1600" height="2400" loading="lazy"></div></div>
+        <div class="bl__photo"><div class="bl__shift"><img class="bl__img" src="https://images.unsplash.com/photo-1730117574369-4aa95bebf655?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A small folded grey concrete house with one large window over a parking space" width="1600" height="2400" loading="lazy"></div></div>
         <div class="bl__plate">
           <h3 class="m-text-6">Mill &amp; Ash corner</h3>
           <p class="m-text-4">5.5 m plot · 2 floors · 2019</p>
@@ -655,7 +802,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
         </div>
       </article>
       <article class="bl__item" style="--plot: 9; --h: 48">
-        <div class="bl__photo"><div class="bl__shift"><img class="bl__img" src="https://images.unsplash.com/photo-1582586587646-b55bb2058ea4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bW9kZXJuJTIwYXBhcnRtZW50JTIwZmFjYWRlJTIwdGltYmVyfGVufDF8MXx8fDE3OTEyOTczNTV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="A narrow house clad in dark timber with tall dark-framed windows" width="1600" height="2400" loading="lazy" style="background:#c0c0d9;object-position: 50% 40%"></div></div>
+        <div class="bl__photo"><div class="bl__shift"><img class="bl__img" src="https://images.unsplash.com/photo-1582586587646-b55bb2058ea4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bW9kZXJuJTIwYXBhcnRtZW50JTIwZmFjYWRlJTIwdGltYmVyfGVufDF8MXx8fDE3OTEyOTczNTV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A narrow house clad in dark timber with tall dark-framed windows" width="1600" height="2400" loading="lazy" style="object-position: 50% 40%"></div></div>
         <div class="bl__plate">
           <h3 class="m-text-6">18 Weir Road</h3>
           <p class="m-text-4">9 m plot · 4 floors · 2024</p>
@@ -680,8 +827,8 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
     </div>
     <div class="sc__stage">
       <div class="sc__frame">
-        <div class="m-photo sc__photo"><img style="background:#c0c0c0" class="m-photo__img" src="https://images.unsplash.com/photo-1764237769304-fc44eb3109e5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8bWluaW1hbCUyMGZhY2FkZSUyMHN0cmVldCUyMHdhbGtpbmclMjBwZXJzb258ZW58MXwwfHx8MTc5MTI5NTIyM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="Two people walk past a long white wall under a striped red and grey roof" width="1600" height="1030" loading="lazy"></div>
-        <div class="sc__smear" aria-hidden="true"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1764237769304-fc44eb3109e5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8bWluaW1hbCUyMGZhY2FkZSUyMHN0cmVldCUyMHdhbGtpbmclMjBwZXJzb258ZW58MXwwfHx8MTc5MTI5NTIyM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1030" loading="lazy"></div>
+        <div class="m-photo sc__photo"><img class="m-photo__img" src="https://images.unsplash.com/photo-1764237769304-fc44eb3109e5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8bWluaW1hbCUyMGZhY2FkZSUyMHN0cmVldCUyMHdhbGtpbmclMjBwZXJzb258ZW58MXwwfHx8MTc5MTI5NTIyM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="Two people walk past a long white wall under a striped red and grey roof" width="1600" height="1030" loading="lazy"></div>
+        <div class="sc__smear" aria-hidden="true"><img src="https://images.unsplash.com/photo-1764237769304-fc44eb3109e5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8bWluaW1hbCUyMGZhY2FkZSUyMHN0cmVldCUyMHdhbGtpbmclMjBwZXJzb258ZW58MXwwfHx8MTc5MTI5NTIyM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1030" loading="lazy"></div>
         <div class="sc__line" aria-hidden="true"></div>
         <ol class="sc__axis" aria-hidden="true">
           <li class="m-text-4 sc__tick">First light</li>
@@ -691,7 +838,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
         </ol>
       </div>
     </div>
-    <ol class="sc__steps">
+    <ol class="sc__steps" data-8b-items=":scope > li" data-8b-fixed="4">
       <li class="sc__step">
         <h3 class="m-text-6">Scan</h3>
         <p class="m-text-4 sc__time">05:40 · first light</p>
@@ -730,7 +877,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
       <thead>
         <tr><th class="m-text-4" scope="col">Plot</th><th class="m-text-4" scope="col">Width</th><th class="m-text-4" scope="col">Depth</th><th class="m-text-4" scope="col">Faces</th><th class="m-text-4" scope="col">Status</th></tr>
       </thead>
-      <tbody>
+      <tbody data-8b-items=":scope > tr">
         <tr><td>Behind 3 Cooper Street</td><td data-label="Width">3.6 m</td><td data-label="Depth">22 m</td><td data-label="Faces">North</td><td><span class="m-badge">Mapped</span></td></tr>
         <tr><td>Between 18 and 20 Weir Road</td><td data-label="Width">4.8 m</td><td data-label="Depth">31 m</td><td data-label="Faces">South-west</td><td><span class="m-badge">Owner contacted</span></td></tr>
         <tr><td>Former substation, Hale Lane</td><td data-label="Width">6.1 m</td><td data-label="Depth">12 m</td><td data-label="Faces">East</td><td><span class="m-badge">In design</span></td></tr>
@@ -751,7 +898,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
     <h2 class="m-text-3" id="co-title">Borrowed colours</h2>
     <p class="m-text-5">We never choose a colour from a fan deck. Each building takes its colours from the street it stands in, measured off the day-long scan.</p>
   </div>
-  <ol class="co__bands">
+  <ol class="co__bands" data-8b-items=":scope > li">
     <li class="co__band co__band--sand"><div class="co__fill" aria-hidden="true"></div><div class="co__label"><h3 class="m-text-6">Ropewalk sand</h3><p>The render of No. 7, painted in 1932 and repainted the same colour four times since.</p><p class="m-text-4">9 Ropewalk, ground floor</p></div></li>
     <li class="co__band co__band--brick"><div class="co__fill" aria-hidden="true"></div><div class="co__label"><h3 class="m-text-6">Quay brick</h3><p>The fired brick of the warehouse next door, matched in a glazed tile.</p><p class="m-text-4">Quay 27, window frame</p></div></li>
     <li class="co__band co__band--door"><div class="co__fill" aria-hidden="true"></div><div class="co__label"><h3 class="m-text-6">Weir Road door</h3><p>A front door painted in 1958, the only green on the street.</p><p class="m-text-4">18 Weir Road, stair</p></div></li>
@@ -765,7 +912,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
 <section id="neighbours" data-8b-section="neighbours" aria-labelledby="nb-title">
   <div class="nb__inner">
     <h2 class="m-text-3 nb__title" id="nb-title">What the neighbours said</h2>
-    <div class="nb__quotes" data-8b-motion="step">
+    <div class="nb__quotes" data-8b-motion="step" data-8b-items=":scope > figure">
       <figure class="m-block nb__quote">
         <blockquote><p>“They filmed my shopfront for a whole day, then asked what colour I would paint it if I could. The house next door is that colour now.”</p></blockquote>
         <figcaption><strong class="m-text-6">Ines Calder</strong><span>Florist, Ropewalk</span></figcaption>
@@ -779,7 +926,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
         <figcaption><strong class="m-text-6">Margit Holm</strong><span>Weir Road</span></figcaption>
       </figure>
     </div>
-    <div class="m-photo nb__photo" data-8b-motion="resolve"><img style="background:#f3f3f3" class="m-photo__img" src="https://images.unsplash.com/photo-1764866261011-1fdfb1b45c4b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGFzdGVsJTIwZmFjYWRlJTIwc2h1dHRlcnN8ZW58MXwxfHx8MTc5MTI5NzM1Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="Two terraced houses side by side, one painted yellow and one pale blue" width="1600" height="1994" loading="lazy"></div>
+    <div class="m-photo nb__photo" data-8b-motion="resolve"><img class="m-photo__img" src="https://images.unsplash.com/photo-1764866261011-1fdfb1b45c4b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGFzdGVsJTIwZmFjYWRlJTIwc2h1dHRlcnN8ZW58MXwxfHx8MTc5MTI5NzM1Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="Two terraced houses side by side, one painted yellow and one pale blue" width="1600" height="1994" loading="lazy"></div>
     <div class="nb__floor" aria-hidden="true"></div>
   </div>
 </section>
@@ -793,16 +940,16 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
     </div>
     <div class="fl__stage">
       <div class="fl__frame" role="img" aria-label="A narrow seven-storey building with vertical orange timber fins between two low houses">
-        <div class="fl__slice"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
-        <div class="fl__slice"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
-        <div class="fl__slice"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
-        <div class="fl__slice"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
-        <div class="fl__slice"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
-        <div class="fl__slice"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
-        <div class="fl__slice"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
+        <div class="fl__slice"><img src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
+        <div class="fl__slice"><img src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
+        <div class="fl__slice"><img src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
+        <div class="fl__slice"><img src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
+        <div class="fl__slice"><img src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
+        <div class="fl__slice"><img src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
+        <div class="fl__slice"><img src="https://images.unsplash.com/photo-1656917861513-0092a6401afd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bW9kZXJuJTIwbmFycm93JTIwaG91c2UlMjBmYWNhZGV8ZW58MXwxfHx8MTc5MTI5NTQ0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="" width="1600" height="2409" loading="lazy"></div>
       </div>
     </div>
-    <ol class="fl__list">
+    <ol class="fl__list" data-8b-items=":scope > li" data-8b-fixed="7">
       <li class="fl__floor"><h3 class="m-text-6">A garden behind the fins</h3><p class="m-text-4 fl__level">Roof</p><p>Planters between the timber fins, a table for six and the best view of the river on the street.</p></li>
       <li class="fl__floor"><h3 class="m-text-6">One-bedroom flat</h3><p class="m-text-4 fl__level">Floor 6</p><p>The bedroom faces east; the fins shade it from nine in the morning.</p></li>
       <li class="fl__floor"><h3 class="m-text-6">Duplex, upper level</h3><p class="m-text-4 fl__level">Floor 5</p><p>Two bedrooms and a bath under a skylight that runs the full depth of the plot.</p></li>
@@ -820,12 +967,12 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
     <h2 class="m-text-3" id="st-title">Five people, one long table</h2>
     <p class="m-text-5">We keep the office small on purpose: every plot is designed by the person who walked it.</p>
   </div>
-  <ul class="st__row">
-    <li class="st__person"><div class="m-photo st__frame"><img class="m-photo__img" src="https://images.unsplash.com/photo-1772442198907-765685249ea4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YXJjaGl0ZWN0JTIwcG9ydHJhaXQlMjBzdHVkaW98ZW58MXwxfHx8MTc5MTI5NTQ3M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=370&amp;q=60" alt="A bearded man in a blue jacket studies a white architectural model at his desk" width="1600" height="2133" loading="lazy" style="background:#f3f3f3;object-position: 70% 40%"></div><p class="st__name"><strong class="m-text-6">Owen Marsh</strong><span>Founder, architect</span></p></li>
-    <li class="st__person"><div class="m-photo st__frame"><img class="m-photo__img" src="https://images.unsplash.com/photo-1625642336708-0e401083494e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBvcnRyYWl0JTIwd29tYW4lMjBwbGFpbiUyMHdhbGwlMjBuYXR1cmFsJTIwbGlnaHR8ZW58MXwxfHx8MTc5MTI5NTQ3MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="A woman with long dark hair in profile against a sunlit stone wall" width="1600" height="2400" loading="lazy" style="background:#595940;object-position: 62% 70%"></div><p class="st__name"><strong class="m-text-6">Hana Okafor</strong><span>Architect, scans and site</span></p></li>
-    <li class="st__person"><div class="m-photo st__frame"><img style="background:#738c73" class="m-photo__img" src="https://images.unsplash.com/photo-1714023498720-ccb2fdaa6a7d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBvcnRyYWl0JTIwbWFuJTIwcGxhaW4lMjB3YWxsJTIwZGF5bGlnaHR8ZW58MXwxfHx8MTc5MTI5NTQ3Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="A young man in a pale blue sweater against a sage green wall" width="1600" height="2400" loading="lazy"></div><p class="st__name"><strong class="m-text-6">Leo Varga</strong><span>Architect, structure</span></p></li>
-    <li class="st__person"><div class="m-photo st__frame"><img class="m-photo__img" src="https://images.unsplash.com/photo-1625642336668-3d806204b975?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cG9ydHJhaXQlMjB3b21hbiUyMHBsYWluJTIwd2FsbCUyMG5hdHVyYWwlMjBsaWdodHxlbnwxfDF8fHwxNzkxMjk1NDcxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="A woman in a white shirt beside a pale curtain" width="1600" height="2400" loading="lazy" style="background:#c0c0c0;object-position: 60% 40%"></div><p class="st__name"><strong class="m-text-6">Mei Lindqvist</strong><span>Project lead, planning</span></p></li>
-    <li class="st__person"><div class="m-photo st__frame"><img style="background:#c0a68c" class="m-photo__img" src="https://images.unsplash.com/photo-1620058833760-3655c04bbf16?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cG9ydHJhaXQlMjBtYW4lMjBwbGFpbiUyMHdhbGwlMjBkYXlsaWdodHxlbnwxfDF8fHwxNzkxMjk1NDcyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="A young person in a dark T-shirt against a grey wall" width="1600" height="2400" loading="lazy"></div><p class="st__name"><strong class="m-text-6">Jun Park</strong><span>Model maker</span></p></li>
+  <ul class="st__row" data-8b-items=":scope > li" data-8b-fixed="5">
+    <li class="st__person" style="--studio-div-m-photo-translate-from-2: -34.483%; --studio-div-m-photo-translate-from-2-m: -55.619%"><div class="m-photo st__frame"><img class="m-photo__img" src="https://images.unsplash.com/photo-1772442198907-765685249ea4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YXJjaGl0ZWN0JTIwcG9ydHJhaXQlMjBzdHVkaW98ZW58MXwxfHx8MTc5MTI5NTQ3M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A bearded man in a blue jacket studies a white architectural model at his desk" width="1600" height="2133" loading="lazy" style="object-position: 70% 40%"></div><p class="st__name"><strong class="m-text-6">Owen Marsh</strong><span>Founder, architect</span></p></li>
+    <li class="st__person" style="--studio-div-m-photo-translate-from-2: 36.364%; --studio-div-m-photo-translate-from-2-m: 58.655%"><div class="m-photo st__frame"><img class="m-photo__img" src="https://images.unsplash.com/photo-1625642336708-0e401083494e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBvcnRyYWl0JTIwd29tYW4lMjBwbGFpbiUyMHdhbGwlMjBuYXR1cmFsJTIwbGlnaHR8ZW58MXwxfHx8MTc5MTI5NTQ3MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A woman with long dark hair in profile against a sunlit stone wall" width="1600" height="2400" loading="lazy" style="object-position: 62% 70%"></div><p class="st__name"><strong class="m-text-6">Hana Okafor</strong><span>Architect, scans and site</span></p></li>
+    <li class="st__person" style="--studio-div-m-photo-translate-from-2: -19.231%; --studio-div-m-photo-translate-from-2-m: -31.018%"><div class="m-photo st__frame"><img class="m-photo__img" src="https://images.unsplash.com/photo-1714023498720-ccb2fdaa6a7d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBvcnRyYWl0JTIwbWFuJTIwcGxhaW4lMjB3YWxsJTIwZGF5bGlnaHR8ZW58MXwxfHx8MTc5MTI5NTQ3Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A young man in a pale blue sweater against a sage green wall" width="1600" height="2400" loading="lazy"></div><p class="st__name"><strong class="m-text-6">Leo Varga</strong><span>Architect, structure</span></p></li>
+    <li class="st__person" style="--studio-div-m-photo-translate-from-2: 61.538%; --studio-div-m-photo-translate-from-2-m: 99.262%"><div class="m-photo st__frame"><img class="m-photo__img" src="https://images.unsplash.com/photo-1625642336668-3d806204b975?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cG9ydHJhaXQlMjB3b21hbiUyMHBsYWluJTIwd2FsbCUyMG5hdHVyYWwlMjBsaWdodHxlbnwxfDF8fHwxNzkxMjk1NDcxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A woman in a white shirt beside a pale curtain" width="1600" height="2400" loading="lazy" style="object-position: 60% 40%"></div><p class="st__name"><strong class="m-text-6">Mei Lindqvist</strong><span>Project lead, planning</span></p></li>
+    <li class="st__person" style="--studio-div-m-photo-translate-from-2: -31.25%; --studio-div-m-photo-translate-from-2-m: -50.405%"><div class="m-photo st__frame"><img class="m-photo__img" src="https://images.unsplash.com/photo-1620058833760-3655c04bbf16?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cG9ydHJhaXQlMjBtYW4lMjBwbGFpbiUyMHdhbGwlMjBkYXlsaWdodHxlbnwxfDF8fHwxNzkxMjk1NDcyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A young person in a dark T-shirt against a grey wall" width="1600" height="2400" loading="lazy"></div><p class="st__name"><strong class="m-text-6">Jun Park</strong><span>Model maker</span></p></li>
   </ul>
 </section>
 
@@ -836,7 +983,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
       <h2 class="m-text-3" id="fq-title">Questions we hear on site</h2>
       <p class="m-text-5">The short answers. The long ones we give on the pavement, in front of your plot.</p>
     </div>
-    <div class="fq__list">
+    <div class="fq__list" data-8b-items=":scope > details">
       <details class="fq__item"><summary><span class="m-text-6">How narrow is too narrow?</span><span class="fq__icon" aria-hidden="true"></span></summary><p>We have built on 2.9 metres. Below about 2.4 metres a stair and a room no longer fit side by side, so we look at the plot behind or above instead.</p></details>
       <details class="fq__item"><summary><span class="m-text-6">What does a first visit cost?</span><span class="fq__icon" aria-hidden="true"></span></summary><p>Nothing. We walk the plot with you and tell you what the rules allow; only then do we quote for a scan and a feasibility study.</p></details>
       <details class="fq__item"><summary><span class="m-text-6">Do you only work in this city?</span><span class="fq__icon" aria-hidden="true"></span></summary><p>Most of our buildings are within an hour of the studio, because we want to be on site every week. We take on one plot further away each year.</p></details>
@@ -849,7 +996,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
 <!-- contact: enquiry form between two street-photo slabs, then address, phone, email and hours (animation: scene:contact) -->
 <section id="contact" data-8b-section="contact" data-tone="dark" aria-labelledby="ct-title">
   <div class="ct__stage">
-    <div class="ct__slab ct__slab--l" aria-hidden="true"><img style="background:#a6d9d9" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div>
+    <div class="ct__slab ct__slab--l" aria-hidden="true"><img src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div>
     <form data-8b-placeholder="form" class="m-block ct__form" action="#" method="post" novalidate>
       <h2 class="m-text-3" id="ct-title">Bring us a plot</h2>
       <p class="m-text-5">Send an address and a rough width. We reply within a week, usually with a date to walk it together.</p>
@@ -864,7 +1011,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
       <p><button class="m-btn" type="submit"><span class="m-btn__label">Send the plot</span></button></p>
       <p class="ct__status" role="status" hidden data-sent-text="Thank you. We will write within a week with a date to walk the plot." data-error-text="Please add your name, an email address and the address of the plot."></p>
     </form>
-    <div class="ct__slab ct__slab--r" aria-hidden="true"><img style="background:#a6d9d9" src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div>
+    <div class="ct__slab ct__slab--r" aria-hidden="true"><img src="https://images.unsplash.com/photo-1788263191133-f97e2749972d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFzdGVsJTIwYnVpbGRpbmclMjBzdHJlZXQlMjBwZWRlc3RyaWFufGVufDF8MHx8fDE3OTEyOTUyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="" width="1600" height="1067"></div>
   </div>
   <dl class="ct__details">
     <div><dt class="m-text-4">Studio</dt><dd>Ropewalk Yard 9<br>Bristol BS1 6XN</dd></div>
@@ -882,7 +1029,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
     <p class="m-text-5">Architecture for the narrow plots a city leaves: gaps, yards and corners under ten metres wide.</p>
     <div>
       <h2 class="m-text-4">Pages</h2>
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><a class="m-link" href="#buildings">Buildings</a></li>
         <li><a class="m-link" href="#scan">Method</a></li>
         <li><a class="m-link" href="#register">Register</a></li>
@@ -895,7 +1042,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
     </div>
     <div>
       <h2 class="m-text-4">Write</h2>
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><a data-8b-placeholder="email" class="m-link" href="mailto:studio@midblock.example">studio@midblock.example</a></li>
         <li><a data-8b-placeholder="phone" class="m-link" href="tel:+441170000000">+44 117 000 0000</a></li>
         <li><a class="m-link" href="#contact">Bring us a plot</a></li>
@@ -904,9 +1051,6 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
   </div>
   <p class="ft__legal">© 2026 Midblock Architects Ltd. Registered in England. · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></p>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
 <script data-8b-part="section-script:navigation">
 (() => {
   const header = document.getElementById('navigation');
@@ -917,11 +1061,11 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
     menu.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
     document.documentElement.style.overflow = open ? 'hidden' : '';
-    if (open) { window.lenis?.stop(); close.focus(); } else { window.lenis?.start(); toggle.focus(); }
+    if (open) { window.motionKit?.wheel?.stop(); close.focus(); } else { window.motionKit?.wheel?.start(); toggle.focus(); }
   };
   toggle.addEventListener('click', () => setOpen(true));
   close.addEventListener('click', () => setOpen(false));
-  menu.addEventListener('click', event => { if (event.target.closest('a')) { menu.hidden = true; toggle.setAttribute('aria-expanded', 'false'); document.documentElement.style.overflow = ''; window.lenis?.start(); } });
+  menu.addEventListener('click', event => { if (event.target.closest('a')) { menu.hidden = true; toggle.setAttribute('aria-expanded', 'false'); document.documentElement.style.overflow = ''; window.motionKit?.wheel?.start(); } });
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !menu.hidden) setOpen(false); });
   let last = window.scrollY, ticking = false;
   const update = () => {
@@ -935,149 +1079,6 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
   window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   header.addEventListener('focusin', () => header.removeAttribute('data-hidden'));
 })();
-</script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function refreshScroll() {
-  const nav = document.getElementById('navigation');
-  document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const nav = document.getElementById('navigation');
-  const lenis = window.lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95, anchors: { offset: -nav.offsetHeight } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-let resizeTimer;
-window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(refreshScroll, 200); });
-</script>
-<script data-8b-part="motion">
-const effects = {
-  resolve(frame, vars = {}) {
-    const img = frame.matches('img') ? frame : frame.querySelector('img');
-    const { k = 48, duration = 1.1, ease = 'power3.inOut', ...rest } = vars;
-    return gsap.timeline(rest).fromTo(img, { scaleX: k }, { scaleX: 1, duration, ease }, 0);
-  },
-  step(block, vars = {}) {
-    const items = block.children.length ? [...block.children] : [block];
-    return gsap.timeline(vars).from(items, { x: i => (i % 2 ? 1 : -1) * (36 + i * 18), duration: .9, ease: 'power3.out', stagger: .09 }, 0);
-  },
-  band(stripe, vars = {}) {
-    const { from = .06, duration = .9, ease = 'power2.inOut', ...rest } = vars;
-    return gsap.timeline(rest).fromTo(stripe, { scaleY: from }, { scaleY: 1, duration, ease }, 0);
-  }
-};
-['resolve', 'step', 'band'].forEach(name => {
-  document.querySelectorAll('[data-8b-section]').forEach(section => {
-    const elements = [...section.querySelectorAll(`[data-8b-motion~="${name}"]`)];
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => ScrollTrigger.create({
-        id: `${id}:${index}`, trigger: element, start: 'top 88%', once: true,
-        animation: effects[name](element, { paused: true })
-      }));
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-</script>
-<script data-8b-part="scene:opening">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('opening');
-    const slabs = [...section.querySelectorAll('.op__slab:not(.op__slab--gap)')];
-    const gap = section.querySelector('.op__slab--gap');
-    const floor = section.querySelector('.op__floor');
-    const blocks = [...section.querySelectorAll('.op__block')];
-    section.setAttribute('data-opening', '');
-    const stage = section.querySelector('.op__stage');
-    ScrollTrigger.create({ id: 'opening:loop', trigger: section, start: 'top bottom', end: 'bottom top', onToggle: self => stage.toggleAttribute('data-paused', !self.isActive) });
-    const num = (element, name) => parseFloat(getComputedStyle(element).getPropertyValue(name)) || 0;
-    const inset = (t, r, b, l) => `inset(${t}% ${r}% ${b}% ${l}%)`;
-    const right = el => +(99.8 - num(el, '--l') - num(el, '--w')).toFixed(2);
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'opening', trigger: section, start: 'top top', end: 'bottom bottom', scrub: .7, invalidateOnRefresh: true }
-    });
-    blocks.forEach((block, index) => {
-      timeline.fromTo(block, { y: 0 }, { y: () => -innerHeight * (.26 - index * .09), duration: .4, ease: 'power1.in' }, 0);
-    });
-    slabs.forEach((slab, index) => {
-      const img = slab.querySelector('.op__img');
-      timeline.fromTo(slab,
-        { clipPath: () => inset(num(slab, '--t'), right(slab), num(slab, '--b'), num(slab, '--l')) },
-        { clipPath: () => inset(0, right(slab), 0, num(slab, '--l')), duration: .3, ease: 'power2.inOut' }, .03 + index * .022);
-      timeline.add(effects.resolve(img, { k: 64, duration: .3 }), .09 + index * .018);
-    });
-    timeline.fromTo(gap,
-      { clipPath: () => { const c = num(gap, '--l') + num(gap, '--w') / 2; return inset(0, +(100 - c).toFixed(2), 0, +c.toFixed(2)); } },
-      { clipPath: () => inset(0, +(100 - num(gap, '--l') - num(gap, '--w')).toFixed(2), 0, num(gap, '--l')), duration: .26, ease: 'power2.inOut' }, .16);
-    timeline.fromTo(floor,
-      { clipPath: () => inset(num(floor, '--f'), 0, 0, 0) },
-      { clipPath: 'inset(0% 0% 0% 0%)', duration: .44, ease: 'power1.inOut' }, .56);
-    return () => { section.removeAttribute('data-opening'); stage.removeAttribute('data-paused'); };
-  });
-}, { first: true });
 </script>
 <script data-8b-part="section-script:contact">
 (() => {
@@ -1093,137 +1094,197 @@ queueMotion(() => {
   });
 })();
 </script>
-<script data-8b-part="scene:buildings">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('buildings');
-    const pin = section.querySelector('.bl__pin');
-    const track = section.querySelector('.bl__track');
-    const items = [...track.querySelectorAll('.bl__item')];
-    section.setAttribute('data-walk', '');
-    const distance = () => Math.max(0, track.scrollWidth - pin.clientWidth);
-    const walk = gsap.to(track, {
-      x: () => -distance(), ease: 'none',
-      scrollTrigger: { id: 'buildings', trigger: pin, start: 'top top', end: () => '+=' + distance(), pin: true, scrub: .6, invalidateOnRefresh: true, anticipatePin: 1 }
-    });
-    items.forEach((item, index) => {
-      const shift = item.querySelector('.bl__shift');
-      const img = shift && shift.querySelector('img');
-      if (!shift) return;
-      gsap.fromTo(shift, { xPercent: -6 }, { xPercent: 6, ease: 'none', scrollTrigger: { id: `buildings:depth-${index}`, trigger: item, containerAnimation: walk, start: 'left right', end: 'right left', scrub: true } });
-      effects.resolve(img, { k: 36, ease: 'power2.out', scrollTrigger: { id: `buildings:resolve-${index}`, trigger: item, containerAnimation: walk, start: 'left 102%', end: 'left 58%', scrub: true } });
-    });
-    return () => section.removeAttribute('data-walk');
-  });
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
 });
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
 </script>
-<script data-8b-part="scene:scan">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('scan');
-    const frame = section.querySelector('.sc__frame');
-    const smear = section.querySelector('.sc__smear');
-    const smearImg = smear.querySelector('img');
-    const line = section.querySelector('.sc__line');
-    const ticks = [...section.querySelectorAll('.sc__tick')];
-    const steps = [...section.querySelectorAll('.sc__step')];
-    const light = progress => {
-      const lit = Math.min(steps.length - 1, Math.floor(Math.min(progress / .8, .999) * steps.length));
-      steps.forEach((step, index) => step.toggleAttribute('data-lit', index === lit));
-      ticks.forEach((tick, index) => tick.toggleAttribute('data-lit', index <= lit));
+<script data-8b-part="scene-script:buildings">
+motionKit.scene('buildings', () => {
+  const section = document.getElementById('buildings');
+  const pin = section.querySelector('.bl__pin');
+  const track = section.querySelector('.bl__track');
+  const items = [...track.querySelectorAll('.bl__item')].filter(item => item.querySelector('.bl__shift > .bl__img'));
+  const span = (name, a, b, d) => {
+    const start = Math.min(Math.max(a, 0), d), end = Math.max(Math.min(Math.max(b, 0), d), start + 1);
+    return {
+      [`--buildings-${name}-a`]: start.toFixed(1) + 'px', [`--buildings-${name}-b`]: end.toFixed(1) + 'px',
+      [`--buildings-${name}-from`]: Math.min(1, Math.max(0, (start - a) / (b - a))).toFixed(4),
+      [`--buildings-${name}-to`]: Math.min(1, Math.max(0, (Math.min(end, d) - a) / (b - a))).toFixed(4)
     };
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'scan', trigger: section.querySelector('.sc__steps'), start: 'top 70%', end: 'bottom 55%', scrub: .5, invalidateOnRefresh: true, onUpdate: self => light(self.progress) }
-    });
-    timeline
-      .fromTo(line, { x: 0 }, { x: () => frame.clientWidth, duration: .8 }, 0)
-      .fromTo(smear, { clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: .8 }, 0)
-      .fromTo(smearImg, { transformOrigin: '0% 50%' }, { transformOrigin: '100% 50%', duration: .8 }, 0)
-      .add(effects.resolve(smearImg, { k: 24, duration: .2, ease: 'power2.inOut' }), .8);
-    return () => { steps.forEach(step => step.removeAttribute('data-lit')); ticks.forEach(tick => tick.removeAttribute('data-lit')); };
-  });
-});
-</script>
-<script data-8b-part="scene:colours">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('colours');
-    const bands = [...section.querySelectorAll('.co__band')];
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'colours', trigger: section.querySelector('.co__bands'), start: 'top 84%', end: 'bottom 86%', scrub: .6 }
-    });
-    bands.forEach((band, index) => {
-      const fill = band.querySelector('.co__fill');
-      const label = band.querySelector('.co__label');
-      timeline
-        .add(effects.band(fill, { from: .035, duration: 1 }), index * .5)
-        .fromTo(label, { clipPath: 'inset(0% 100% 0% 0%)', x: -48 }, { clipPath: 'inset(0% 0% 0% 0%)', x: 0, duration: .8, ease: 'power2.out' }, index * .5 + .35);
+  };
+  motionKit.measure(() => {
+    const d = Math.max(0, track.scrollWidth - pin.clientWidth), view = innerWidth, row = track.getBoundingClientRect().left;
+    motionKit.set(section, { '--buildings-d': d + 'px' });
+    items.forEach(item => {
+      const box = item.getBoundingClientRect(), left = track.offsetLeft + box.left - row, w = box.width;
+      motionKit.set(item, { ...span('depth', left - view, left + w, d), ...span('resolve', left - view * 1.02, left - view * .58, d) });
     });
   });
 });
 </script>
-<script data-8b-part="scene:floors">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('floors');
-    const frame = section.querySelector('.fl__frame');
-    const slices = [...section.querySelectorAll('.fl__slice')];
-    const floors = [...section.querySelectorAll('.fl__floor')];
-    const setters = slices.map(slice => gsap.quickSetter(slice, 'x', 'px'));
-    const last = slices.length - 1;
-    const apply = progress => {
-      const amplitude = Math.min(64, frame.clientWidth * .16);
-      const reading = progress * last;
-      const envelope = Math.sin(Math.PI * progress);
-      slices.forEach((slice, index) => setters[index](envelope * amplitude * Math.min(1, Math.abs(index - reading)) * (index % 2 ? 1 : -1)));
-      const active = Math.round(reading);
-      floors.forEach((floor, index) => floor.toggleAttribute('data-active', index === active));
-    };
-    ScrollTrigger.create({
-      id: 'floors', trigger: section.querySelector('.fl__list'), start: 'top 62%', end: 'bottom 62%',
-      onUpdate: self => apply(self.progress), onRefresh: self => apply(self.progress)
-    });
-    return () => { floors.forEach(floor => floor.removeAttribute('data-active')); gsap.set(slices, { clearProps: 'transform' }); };
+<script data-8b-part="scene-script:scan">
+motionKit.scene('scan', () => {
+  const section = document.getElementById('scan');
+  const frame = section.querySelector('.sc__frame');
+  const line = section.querySelector('.sc__line');
+  const list = section.querySelector('.sc__steps');
+  const steps = [...section.querySelectorAll('.sc__step')];
+  const ticks = [...section.querySelectorAll('.sc__tick')];
+  let started = false;
+  motionKit.measure(() => motionKit.set(line, { '--scan-frame-w': frame.clientWidth + 'px' }));
+  motionKit.track(list, 'top 70%', 'bottom 55%', progress => {
+    if (!started && progress <= 0) return;
+    started = true;
+    const lit = Math.min(steps.length - 1, Math.floor(Math.min(progress / .8, .999) * steps.length));
+    steps.forEach((step, index) => step.toggleAttribute('data-lit', index === lit));
+    ticks.forEach((tick, index) => tick.toggleAttribute('data-lit', index <= lit));
   });
 });
 </script>
-<script data-8b-part="scene:studio">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('studio');
-    const people = [...section.querySelectorAll('.st__person')];
-    const lifts = [-.2, .16, -.1, .24, -.15];
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'studio', trigger: section.querySelector('.st__row'), start: 'top 88%', end: 'top 30%', scrub: .6, invalidateOnRefresh: true }
-    });
-    people.forEach((person, index) => {
-      const frame = person.querySelector('.st__frame');
-      const img = frame.querySelector('img');
-      timeline
-        .fromTo(frame, { y: () => innerHeight * lifts[index % lifts.length] }, { y: 0, duration: 1, ease: 'power2.out' }, index * .08)
-        .add(effects.resolve(img, { k: 40, duration: .7 }), .3 + index * .08);
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const left = section.querySelector('.ct__slab--l');
-    const right = section.querySelector('.ct__slab--r');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'contact', trigger: section.querySelector('.ct__stage'), start: 'top 85%', end: 'top 20%', scrub: .6 }
-    });
-    timeline
-      .fromTo(left, { xPercent: -75 }, { xPercent: 0, duration: 1, ease: 'power2.out' }, 0)
-      .fromTo(right, { xPercent: 75 }, { xPercent: 0, duration: 1, ease: 'power2.out' }, 0)
-      .add(effects.resolve(left, { k: 50, duration: .75 }), .25)
-      .add(effects.resolve(right, { k: 50, duration: .75 }), .25);
+<script data-8b-part="scene-script:floors">
+motionKit.scene('floors', () => {
+  const section = document.getElementById('floors');
+  const frame = section.querySelector('.fl__frame');
+  const list = section.querySelector('.fl__list');
+  const slices = [...section.querySelectorAll('.fl__slice')];
+  const floors = [...section.querySelectorAll('.fl__floor')];
+  const last = slices.length - 1;
+  let amplitude = 0;
+  motionKit.measure(() => { amplitude = Math.min(64, frame.clientWidth * .16); });
+  motionKit.track(list, 'top 62%', 'bottom 62%', progress => {
+    const reading = progress * last;
+    const envelope = Math.sin(Math.PI * progress);
+    slices.forEach((slice, index) => motionKit.set(slice, { translate: `${(envelope * amplitude * Math.min(1, Math.abs(index - reading)) * (index % 2 ? 1 : -1)).toFixed(2)}px 0` }));
+    const active = Math.round(reading);
+    floors.forEach((floor, index) => floor.toggleAttribute('data-active', index === active));
   });
 });
 </script>

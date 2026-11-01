@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/product-landing-page-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,8 +20,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%23232427'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23e4e5e8'%3EH%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/mozillaheadline/v1/QGYLz-UXahmCOps4kyMKGuSA9pYt2_P-w2kFrS88o6dLYRvBSDSOuerB_FOBB4ElYhZu.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/mozillatext/v1/SZc-3FrnJ7S7WZIff2mJ7TbD7xNK.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://fonts.gstatic.com/s/mozillaheadline/v1/QGYLz-UXahmCOps4kyMKGuSA9pYt2_P-w2kFrS88o6dLYRvBSDSOuerB_FOBB4ElYhZu.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* latin-ext */
 @font-face {
@@ -30,7 +31,7 @@
   font-stretch: 75%;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/mozillaheadline/v1/QGYLz-UXahmCOps4kyMKGuSA9pYt2_P-w2kFrS88o6dLYRvBSDSOuerB_FOBB4ElbBZuhco.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -49,7 +50,7 @@
   font-weight: 300 600;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/mozillatext/v1/SZc-3FrnJ7S7WZIff2mJ7TbD4RNKuCc.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -98,10 +99,6 @@
 @layer base {
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: clip; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body { margin: 0; background: var(--color-1); color: var(--color-2); font-family: var(--font-2); font-size: 17px; line-height: 1.55; font-weight: 400; overflow-x: clip; }
 h1, h2, h3, p, ul, ol, figure, dl, dd { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
@@ -331,25 +328,6 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
 }
 }
 </style>
-<style data-8b-part="scene-style:modes">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #modes[data-stage] .modes__track { block-size: 340vh; }
-  #modes[data-stage] .modes__stage { position: sticky; top: 0; block-size: 100vh; padding-top: 100px; padding-bottom: 32px; align-items: center; }
-  #modes[data-stage] .modes__list { position: relative; display: block; block-size: min(64vh, 560px); border-radius: var(--radius-3); }
-  #modes[data-stage] .modes__item { position: absolute; inset: 0; }
-  #modes[data-stage] .modes__photo { position: absolute; inset: 0; aspect-ratio: auto; }
-  #modes[data-stage] .modes__caption { position: absolute; left: 22px; bottom: 22px; margin: 0; max-inline-size: 340px; }
-  @media (max-width: 899px) {
-    #modes[data-stage] .modes__stage { padding-top: 90px; padding-bottom: 20px; gap: 18px; align-content: start; }
-    #modes[data-stage] .modes__list { block-size: min(50svh, 420px); order: -1; }
-    #modes[data-stage] .modes__pad { font-size: min(8px, calc((100svh - 560px) / 26)); }
-    #modes[data-stage] .modes__caption { left: 12px; right: 12px; bottom: 12px; padding: 14px 16px 16px; }
-    #modes[data-stage] .modes__hint { display: none; }
-  }
-}
-}
-</style>
 <style data-8b-part="section:dimmer">
 @layer sections {
 #dimmer { position: relative; padding: var(--space-1) 0; }
@@ -426,14 +404,6 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
   #chords .chords__head { grid-template-columns: minmax(0, 1fr); }
   #chords .chords__art { font-size: min(9.4px, calc((100vw - 32px) / 36)); }
   #chords .chords__list { grid-template-columns: minmax(0, 1fr); gap: 26px; }
-}
-}
-</style>
-<style data-8b-part="scene-style:chords">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #chords[data-stage] .chords__track { block-size: 250vh; }
-  #chords[data-stage] .chords__stage { position: sticky; top: 0; block-size: 100vh; align-content: center; padding: 90px 0 24px; }
 }
 }
 </style>
@@ -525,13 +495,6 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
 }
 }
 </style>
-<style data-8b-part="scene-style:faq">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #faq[data-flood] .faq__flood { top: calc(-1 * var(--faq-reach, 0px)); }
-}
-}
-</style>
 <style data-8b-part="section:contact">
 @layer sections {
 #contact { position: relative; margin-top: -1px; padding: var(--space-1) 0; background: var(--color-7); color: var(--color-1); }
@@ -562,6 +525,200 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
 #footer :focus-visible { outline-color: var(--color-1); }
 }
 </style>
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] [data-8b-motion~="rise"] { animation-name: motion-rise-scale, motion-rise-translate; animation-duration: 1s; animation-delay: calc(0s + var(--rise-delay, 0s)); animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"].is-in { animation-play-state: running; }
+@keyframes motion-rise-scale { 0% { scale: 0.9; } 100% { scale: 1; } }
+@keyframes motion-rise-translate { 0% { translate: 0px 26px; } 100% { translate: 0px 0px; } }
+@property --motion-deboss-k { syntax: '<number>'; inherits: false; initial-value: 1; }
+[data-8b-live] [data-8b-motion~="deboss"] { text-shadow: 0 calc(2px * var(--motion-deboss-k)) 1px var(--color-3), 0 calc(-1px * var(--motion-deboss-k)) 1px color-mix(in srgb, var(--color-2) 30%, transparent); animation-name: motion-deboss-light, motion-deboss-settle; animation-duration: .9s; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1), cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] :is(.m-text-6, .m-text-6 *)[data-8b-motion~="deboss"] { text-shadow: 0 calc(2px * var(--motion-deboss-k)) 1px color-mix(in srgb, var(--color-3) 12%, transparent), 0 calc(-1px * var(--motion-deboss-k)) 1px var(--color-9); }
+[data-8b-live] [data-8b-motion~="deboss"].is-in { animation-play-state: running; }
+@keyframes motion-deboss-light { 0% { --motion-deboss-k: -1; } 100% { --motion-deboss-k: 1; } }
+@keyframes motion-deboss-settle { 0% { translate: 0px -8px; } 100% { translate: 0px 0px; } }
+[data-8b-live] [data-8b-motion~="contour"] :is(path, line), [data-8b-live] :is(path, line)[data-8b-motion~="contour"] { stroke-dasharray: var(--contour-length); animation-name: motion-contour-draw; animation-duration: 1.1s; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="contour"] .m-tick__line { animation-name: motion-contour-lead; animation-duration: .7s; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="contour"].is-in :is(path, line, .m-tick__line), [data-8b-live] :is(path, line)[data-8b-motion~="contour"].is-in { animation-play-state: running; }
+@keyframes motion-contour-draw { 0% { stroke-dashoffset: var(--contour-length); } 100% { stroke-dashoffset: 0; } }
+@keyframes motion-contour-lead { 0% { scale: 1 0; } 100% { scale: 1 1; } }
+}
+</style>
+<style data-8b-part="scene:hero">
+@layer scenes {
+[data-8b-live] #hero { view-timeline: --hero-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #hero .hero__panel { animation-timeline: --hero-t1; animation-range: cover calc(100% - 100vh) cover calc(100% - 25vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; transform-origin: 50% 100%; }
+[data-8b-live] #hero .hero__k-up > .m-key__cap > .m-key__dent { animation-name: hero-span-m-key-dent-opacity; animation-timeline: --hero-t1; animation-range: cover calc(100% - 97vh) cover calc(100% - 74.5vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #hero .hero__k-up > .m-key__cap { animation-name: hero-span-m-key-cap-scale; animation-timeline: --hero-t1; animation-range: cover calc(100% - 97vh) cover calc(100% - 74.5vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #hero .hero__k-left > .m-key__cap > .m-key__dent { animation-name: hero-span-m-key-dent-opacity; animation-timeline: --hero-t1; animation-range: cover calc(100% - 92.35vh) cover calc(100% - 69.85vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #hero .hero__k-left > .m-key__cap { animation-name: hero-span-m-key-cap-scale; animation-timeline: --hero-t1; animation-range: cover calc(100% - 92.35vh) cover calc(100% - 69.85vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #hero .hero__k-ok > .m-key__cap > .m-key__dent { animation-name: hero-span-m-key-dent-opacity; animation-timeline: --hero-t1; animation-range: cover calc(100% - 87.7vh) cover calc(100% - 65.2vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #hero .hero__k-ok > .m-key__cap { animation-name: hero-span-m-key-cap-scale; animation-timeline: --hero-t1; animation-range: cover calc(100% - 87.7vh) cover calc(100% - 65.2vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #hero .hero__k-right > .m-key__cap > .m-key__dent { animation-name: hero-span-m-key-dent-opacity; animation-timeline: --hero-t1; animation-range: cover calc(100% - 83.05vh) cover calc(100% - 60.55vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #hero .hero__k-right > .m-key__cap { animation-name: hero-span-m-key-cap-scale; animation-timeline: --hero-t1; animation-range: cover calc(100% - 83.05vh) cover calc(100% - 60.55vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #hero .hero__k-down > .m-key__cap > .m-key__dent { animation-name: hero-span-m-key-dent-opacity; animation-timeline: --hero-t1; animation-range: cover calc(100% - 78.4vh) cover calc(100% - 55.9vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #hero .hero__k-down > .m-key__cap { animation-name: hero-span-m-key-cap-scale; animation-timeline: --hero-t1; animation-range: cover calc(100% - 78.4vh) cover calc(100% - 55.9vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #hero .hero__seg > .m-well > span:nth-of-type(1) > .m-key__cap > .m-key__dent { animation-name: hero-span-m-key-dent-opacity; animation-timeline: --hero-t1; animation-range: cover calc(100% - 73.75vh) cover calc(100% - 51.25vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #hero .hero__seg > .m-well > span:nth-of-type(1) > .m-key__cap { animation-name: hero-span-m-key-cap-scale; animation-timeline: --hero-t1; animation-range: cover calc(100% - 73.75vh) cover calc(100% - 51.25vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #hero .hero__seg > .m-well > span:nth-of-type(2) > .m-key__cap > .m-key__dent { animation-name: hero-span-m-key-dent-opacity; animation-timeline: --hero-t1; animation-range: cover calc(100% - 69.1vh) cover calc(100% - 46.6vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #hero .hero__seg > .m-well > span:nth-of-type(2) > .m-key__cap { animation-name: hero-span-m-key-cap-scale; animation-timeline: --hero-t1; animation-range: cover calc(100% - 69.1vh) cover calc(100% - 46.6vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #hero .hero__k-play > .m-key__cap > .m-key__dent { animation-name: hero-span-m-key-dent-opacity; animation-timeline: --hero-t1; animation-range: cover calc(100% - 64.45vh) cover calc(100% - 41.95vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #hero .hero__k-play > .m-key__cap { animation-name: hero-span-m-key-cap-scale; animation-timeline: --hero-t1; animation-range: cover calc(100% - 64.45vh) cover calc(100% - 41.95vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #hero .hero__k-pause > .m-key__cap > .m-key__dent { animation-name: hero-span-m-key-dent-opacity; animation-timeline: --hero-t1; animation-range: cover calc(100% - 59.8vh) cover calc(100% - 37.3vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #hero .hero__k-pause > .m-key__cap { animation-name: hero-span-m-key-cap-scale; animation-timeline: --hero-t1; animation-range: cover calc(100% - 59.8vh) cover calc(100% - 37.3vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #hero .hero__steps > .m-well > span:nth-of-type(1) > .m-key__cap > .m-key__dent { animation-name: hero-span-m-key-dent-opacity; animation-timeline: --hero-t1; animation-range: cover calc(100% - 55.15vh) cover calc(100% - 32.65vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #hero .hero__steps > .m-well > span:nth-of-type(1) > .m-key__cap { animation-name: hero-span-m-key-cap-scale; animation-timeline: --hero-t1; animation-range: cover calc(100% - 55.15vh) cover calc(100% - 32.65vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; }
+@keyframes hero-div-hero-panel-translate { 0% { translate: 0px 0px; } 100% { translate: 0px var(--hero-sink, 26vh); } }
+@keyframes hero-div-hero-panel-scale { 0% { scale: 1; } 100% { scale: 0.82; } }
+@keyframes hero-span-m-key-dent-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes hero-span-m-key-cap-scale { 0% { scale: 1; } 100% { scale: 0.965; } }
+[data-8b-live] #hero .hero__panel { animation-name: hero-div-hero-panel-translate, hero-div-hero-panel-scale; will-change: transform; }
+}
+</style>
+<style data-8b-part="scene:states">
+@layer scenes {
+[data-8b-live] #states { view-timeline: --states-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #states .states__keys > li { --states-wave: calc(mod(var(--i, 0), 4) + round(down, var(--i, 0) / 4)); }
+[data-8b-live] #states .states__keys > li > .m-key-2 { animation-name: states-key-swell, states-key-lift; animation-timeline: --states-t1; animation-range: cover calc(75vh * (0.08 + var(--states-wave) * 0.09) / 1.01) cover calc(75vh * (0.58 + var(--states-wave) * 0.09) / 1.01); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; will-change: transform; }
+@keyframes states-key-swell { 0% { scale: 0.58; } 100% { scale: 1; } }
+@keyframes states-key-lift { 0% { translate: 0px 34px; } 100% { translate: 0px 0px; } }
+@media (max-width: 899px) {
+  [data-8b-live] #states .states__keys > li { --states-wave: calc(mod(var(--i, 0), 2) + round(down, var(--i, 0) / 2)); }
+}
+}
+</style>
+<style data-8b-part="scene:modes">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #modes .modes__track { block-size: 340vh; }
+  [data-8b-live] #modes .modes__stage { position: sticky; top: 0; block-size: 100vh; padding-top: 100px; padding-bottom: 32px; align-items: center; }
+  [data-8b-live] #modes .modes__list { position: relative; display: block; block-size: min(64vh, 560px); border-radius: var(--radius-3); }
+  [data-8b-live] #modes .modes__item { position: absolute; inset: 0; }
+  [data-8b-live] #modes .modes__photo { position: absolute; inset: 0; aspect-ratio: auto; }
+  [data-8b-live] #modes .modes__caption { position: absolute; left: 22px; bottom: 22px; margin: 0; max-inline-size: 340px; }
+  @media (max-width: 899px) {
+    [data-8b-live] #modes .modes__stage { padding-top: 90px; padding-bottom: 20px; gap: 18px; align-content: start; }
+    [data-8b-live] #modes .modes__list { block-size: min(50svh, 420px); order: -1; }
+    [data-8b-live] #modes .modes__pad { font-size: min(8px, calc((100svh - 560px) / 26)); }
+    [data-8b-live] #modes .modes__caption { left: 12px; right: 12px; bottom: 12px; padding: 14px 16px 16px; }
+    [data-8b-live] #modes .modes__hint { display: none; }
+  }
+}
+}
+@layer scenes {
+[data-8b-live] #modes { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #modes .modes__track { view-timeline: --modes-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #modes .modes__k-up > .m-key__cap > .m-key__dent, [data-8b-live] #modes .modes__k-up > .m-key__cap, [data-8b-live] #modes .modes__k-right > .m-key__cap > .m-key__dent, [data-8b-live] #modes .modes__k-right > .m-key__cap, [data-8b-live] #modes .modes__list > li:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4)), [data-8b-live] #modes .modes__list > li:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4)) > .m-photo > img, [data-8b-live] #modes .modes__k-down > .m-key__cap > .m-key__dent, [data-8b-live] #modes .modes__k-down > .m-key__cap, [data-8b-live] #modes .modes__k-left > .m-key__cap > .m-key__dent, [data-8b-live] #modes .modes__k-left > .m-key__cap { animation-timeline: --modes-t1; animation-fill-mode: both; }
+[data-8b-live] #modes .modes__k-up > .m-key__cap > .m-key__dent { animation-name: modes-span-m-key-dent-opacity; animation-range: cover 100vh cover calc(16.8161% + 66.3677vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+[data-8b-live] #modes .modes__k-up > .m-key__cap { animation-name: modes-span-m-key-cap-scale; animation-range: cover 100vh cover calc(16.8161% + 66.3677vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); transform: none; }
+[data-8b-live] #modes .modes__k-right > .m-key__cap > .m-key__dent { animation-name: modes-span-m-key-dent-opacity-2; animation-range: cover calc(14.1256% + 71.7489vh) cover calc(44.843% + 10.3139vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+[data-8b-live] #modes .modes__k-right > .m-key__cap { animation-name: modes-span-m-key-cap-scale-2; animation-range: cover calc(14.1256% + 71.7489vh) cover calc(44.843% + 10.3139vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); transform: none; }
+[data-8b-live] #modes .modes__list > li:nth-of-type(2) { animation-name: modes-li-modes-item-clippath; animation-range: cover calc(16.8161% + 66.3677vh) cover calc(36.0987% + 27.8027vh); animation-timing-function: var(--ease-power2-inout); }
+[data-8b-live] #modes .modes__list > li:nth-of-type(2) > .m-photo > img { animation-name: modes-figure-m-photo-img-scale; animation-range: cover calc(16.8161% + 66.3677vh) cover calc(35.8744% + 28.2511vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); transform: none; }
+[data-8b-live] #modes .modes__k-down > .m-key__cap > .m-key__dent { animation-name: modes-span-m-key-dent-opacity-2; animation-range: cover calc(42.1525% + 15.6951vh) cover calc(72.87% - 45.7399vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+[data-8b-live] #modes .modes__k-down > .m-key__cap { animation-name: modes-span-m-key-cap-scale-2; animation-range: cover calc(42.1525% + 15.6951vh) cover calc(72.87% - 45.7399vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); transform: none; }
+[data-8b-live] #modes .modes__list > li:nth-of-type(3) { animation-name: modes-li-modes-item-clippath-2; animation-range: cover calc(44.843% + 10.3139vh) cover calc(64.1256% - 28.2511vh); animation-timing-function: var(--ease-power2-inout); }
+[data-8b-live] #modes .modes__list > li:nth-of-type(3) > .m-photo > img { animation-name: modes-figure-m-photo-img-scale; animation-range: cover calc(44.843% + 10.3139vh) cover calc(63.9013% - 27.8027vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); transform: none; }
+[data-8b-live] #modes .modes__k-left > .m-key__cap > .m-key__dent { animation-name: modes-span-m-key-dent-opacity-4; animation-range: cover calc(70.1794% - 40.3587vh) cover calc(74.6637% - 49.3274vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+[data-8b-live] #modes .modes__k-left > .m-key__cap { animation-name: modes-span-m-key-cap-scale-4; animation-range: cover calc(70.1794% - 40.3587vh) cover calc(74.6637% - 49.3274vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); transform: none; }
+[data-8b-live] #modes .modes__list > li:nth-of-type(4) { animation-name: modes-li-modes-item-clippath-3; animation-range: cover calc(72.87% - 45.7399vh) cover calc(92.1525% - 84.3049vh); animation-timing-function: var(--ease-power2-inout); }
+[data-8b-live] #modes .modes__list > li:nth-of-type(4) > .m-photo > img { animation-name: modes-figure-m-photo-img-scale; animation-range: cover calc(72.87% - 45.7399vh) cover calc(91.9283% - 83.8565vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); transform: none; }
+@keyframes modes-span-m-key-dent-opacity { 0% { opacity: 0; } 33.3333% { opacity: 1; } 73.3333% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes modes-span-m-key-cap-scale { 0% { scale: 1; } 33.3333% { scale: 0.965; } 73.3333% { scale: 0.965; } 100% { scale: 1; } }
+@keyframes modes-span-m-key-dent-opacity-2 { 0% { opacity: 0; } 14.5985% { opacity: 1; } 85.4015% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes modes-span-m-key-cap-scale-2 { 0% { scale: 1; } 14.5985% { scale: 0.965; } 85.4015% { scale: 0.965; } 100% { scale: 1; } }
+@keyframes modes-li-modes-item-clippath { 0% { clip-path: inset(0% 0% 0% 100%); } 98.8372% { clip-path: inset(0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes modes-figure-m-photo-img-scale { 0% { scale: 1.14; } 100% { scale: 1; } }
+@keyframes modes-li-modes-item-clippath-2 { 0% { clip-path: inset(100% 0% 0%); } 98.8372% { clip-path: inset(0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes modes-span-m-key-dent-opacity-4 { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes modes-span-m-key-cap-scale-4 { 0% { scale: 1; } 100% { scale: 0.965; } }
+@keyframes modes-li-modes-item-clippath-3 { 0% { clip-path: inset(0% 100% 0% 0%); } 98.8372% { clip-path: inset(0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+}
+</style>
+<style data-8b-part="scene:dimmer">
+@layer scenes {
+[data-8b-live] #dimmer .dimmer__rig { view-timeline: --dimmer-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #dimmer .m-photo > img, [data-8b-live] #dimmer .dimmer__thumb, [data-8b-live] #dimmer .dimmer__plus > .m-key__cap > .m-key__dent, [data-8b-live] #dimmer .dimmer__plus > .m-key__cap { animation-timeline: --dimmer-t1; animation-range: cover 15vh cover 86vh; animation-fill-mode: both; }
+[data-8b-live] #dimmer .m-photo > img { animation-name: dimmer-figure-m-photo-img-filter; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); }
+[data-8b-live] #dimmer .dimmer__thumb { animation-timing-function: linear; transform: none; }
+[data-8b-live] #dimmer .dimmer__plus > .m-key__cap > .m-key__dent { animation-name: dimmer-span-m-key-dent-opacity; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+[data-8b-live] #dimmer .dimmer__plus > .m-key__cap { animation-name: dimmer-span-m-key-cap-scale; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); transform: none; }
+@keyframes dimmer-figure-m-photo-img-filter { 0% { filter: grayscale(1) brightness(0.34); } 100% { filter: grayscale(0) brightness(1); } }
+@keyframes dimmer-span-dimmer-thumb-translate-d { 0% { translate: 0px var(--dimmer-travel, 0px); } 100% { translate: 0px 0px; } }
+@keyframes dimmer-span-dimmer-thumb-translate-m { 0% { translate: var(--dimmer-travel, 0px) 0px; } 100% { translate: 0px 0px; } }
+@keyframes dimmer-span-m-key-dent-opacity { 0% { opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes dimmer-span-m-key-cap-scale { 0% { scale: 1; } 8% { scale: 0.965; } 92% { scale: 0.965; } 100% { scale: 1; } }
+@media (min-width: 900px) {
+  [data-8b-live] #dimmer .dimmer__thumb { animation-name: dimmer-span-dimmer-thumb-translate-d; }
+}
+@media (max-width: 899px) {
+  [data-8b-live] #dimmer .dimmer__thumb { animation-name: dimmer-span-dimmer-thumb-translate-m; }
+}
+}
+</style>
+<style data-8b-part="scene:chords">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #chords .chords__track { block-size: 250vh; }
+  [data-8b-live] #chords .chords__stage { position: sticky; top: 0; block-size: 100vh; align-content: center; padding: 90px 0 24px; }
+}
+}
+@layer scenes {
+[data-8b-live] #chords { --ease-power1-inout: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #chords .chords__track { view-timeline: --chords-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #chords .chords__a { animation-name: chords-a-glide; animation-timeline: --chords-t1; animation-range: cover 100vh cover calc(72% - 44vh); animation-timing-function: var(--ease-power1-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #chords .chords__b { animation-name: chords-b-glide; animation-timeline: --chords-t1; animation-range: cover 100vh cover calc(72% - 44vh); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #chords .chords__a > .m-key__cap > .m-key__dent, [data-8b-live] #chords .chords__b > .m-key__cap > .m-key__dent { animation-name: chords-span-m-key-dent-opacity; animation-timeline: --chords-t1; animation-range: cover calc(78% - 56vh) cover calc(86% - 72vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #chords .chords__a > .m-key__cap, [data-8b-live] #chords .chords__b > .m-key__cap { animation-name: chords-span-m-key-cap-scale; animation-timeline: --chords-t1; animation-range: cover calc(78% - 56vh) cover calc(86% - 72vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #chords .chords__result { animation-name: chords-span-m-key-dent-opacity, chords-p-m-text-5-translate; animation-timeline: --chords-t1; animation-range: cover calc(82% - 64vh) cover calc(96% - 92vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes chords-a-glide { 0% { translate: var(--chords-ax, 0px) var(--chords-ay, 0px); } 100% { translate: 0px 0px; } }
+@keyframes chords-b-glide { 0% { translate: var(--chords-bx, 0px) var(--chords-by, 0px); } 100% { translate: 0px 0px; } }
+@keyframes chords-span-m-key-dent-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes chords-span-m-key-cap-scale { 0% { scale: 1; } 100% { scale: 0.965; } }
+@keyframes chords-p-m-text-5-translate { 0% { translate: 0px 22px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:editions">
+@layer scenes {
+[data-8b-live] #editions { view-timeline: --editions-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #editions .editions__list > li { view-timeline: --editions-item block; view-timeline-inset: 0; }
+[data-8b-live] #editions .editions__key > .m-key__cap > .m-key__dent, [data-8b-live] #editions .editions__key > .m-key__cap, [data-8b-live] #editions .editions__key { animation-timeline: --editions-t1; animation-range: cover calc(100% - 100vh) cover calc(100% - 88.8vh); }
+[data-8b-live] #editions .editions__key > .m-key__cap > .m-key__dent { animation-name: editions-span-m-key-dent-opacity; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #editions .editions__key > .m-key__cap { animation-name: editions-span-m-key-cap-scale; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #editions .editions__key { animation-name: editions-span-m-key-translate; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #editions .editions__list > li > .editions__panel { animation-name: editions-div-editions-panel-rotatex, editions-div-editions-panel-translate, editions-div-editions-panel-scale; animation-timeline: --editions-item; animation-range: cover 6vh cover 60vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes editions-span-m-key-dent-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes editions-span-m-key-cap-scale { 0% { scale: 1; } 100% { scale: 0.965; } }
+@keyframes editions-span-m-key-translate { 0% { translate: 0px 0px; } 100% { translate: 0px 8px; } }
+@keyframes editions-div-editions-panel-rotatex { 0% { rotate: x 66deg; } 100% { rotate: x 0deg; } }
+@keyframes editions-div-editions-panel-translate { 0% { translate: 0px 60px; } 100% { translate: 0px 0px; } }
+@keyframes editions-div-editions-panel-scale { 0% { scale: 0.9; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:faq">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #faq .faq__flood { top: calc(-1 * var(--faq-reach, 0px)); }
+}
+}
+@layer scenes {
+[data-8b-live] #faq { view-timeline: --faq-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #faq .faq__flood { animation-name: faq-flood-pour, faq-flood-spread; animation-timeline: --faq-t1, --faq-t1; animation-range: cover 0% cover calc(70vh * var(--faq-split, .34)), cover calc(70vh * var(--faq-split, .34)) cover 70vh; animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0), linear; animation-fill-mode: both, forwards; }
+@keyframes faq-flood-pour { 0% { clip-path: circle(var(--faq-r0, 40px) at var(--faq-x, 50%) 0px); } 100% { clip-path: circle(var(--faq-mid, 600px) at var(--faq-x, 50%) 0px); } }
+@keyframes faq-flood-spread { 0% { clip-path: circle(var(--faq-mid, 600px) at var(--faq-x, 50%) 0px); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 99.998% { clip-path: circle(var(--faq-r1, 2000px) at var(--faq-x, 50%) 0px); } 100% { clip-path: none; } }
+}
+</style>
+<style data-8b-part="scene:footer">
+@layer scenes {
+@property --footer-k { syntax: '<number>'; inherits: false; initial-value: 1; }
+[data-8b-live] #footer { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); view-timeline: --footer-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #footer .footer__mark .c { --footer-span: calc((var(--n) - 1) * 0.1 + 0.36); text-shadow: 0 calc(2px * var(--footer-k)) 1px color-mix(in srgb, var(--color-3) 12%, transparent), 0 calc(-1px * var(--footer-k)) 1px var(--color-9); display: inline-block; position: relative; animation-name: footer-letter-press; animation-timeline: --footer-t1; animation-range: cover calc(15vh + (100% - 115vh) * var(--i) * 0.1 / var(--footer-span)) cover calc(15vh + (100% - 115vh) * (var(--i) * 0.1 + 0.36) / var(--footer-span)); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; }
+@keyframes footer-letter-press { 0% { translate: 0px -0.16em; color: var(--color-8); --footer-k: -1; } 100% { translate: 0px 0px; --footer-k: 1; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: top bar: wordmark, section links, Pre-order button; phone menu overlay -->
@@ -573,7 +730,7 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
         <span class="nav__menu-title" aria-hidden="true">HUSHKEY</span>
         <button class="m-key nav__close" type="button" aria-label="Close menu"><span class="m-key__cap" aria-hidden="true"><span class="m-key__dent"></span></span><span class="m-key__label" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.3 4.9 12 10.6l5.7-5.7 1.4 1.4-5.7 5.7 5.7 5.7-1.4 1.4-5.7-5.7-5.7 5.7-1.4-1.4 5.7-5.7-5.7-5.7z"/></svg></span></button>
       </div>
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><a class="m-link" href="#states">Keys</a></li>
         <li><a class="m-link" href="#modes">Modes</a></li>
         <li><a class="m-link" href="#chords">Chords</a></li>
@@ -642,7 +799,7 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
       <p class="m-text">Every Hushkey key has two positions you can feel in the dark. Raised waits for you; pressed is running. Your thumb reads the panel before your eyes do — try the keys.</p>
       <p class="m-text-8">A pressed key stays down until a second press lifts it. All off lifts everything at once.</p>
     </header>
-    <ul class="states__keys">
+    <ul class="states__keys" data-8b-items=":scope > li">
       <li class="states__slot"><button class="m-key-2" type="button" aria-pressed="false"><span class="m-key-2__cap" aria-hidden="true"><span class="m-key-2__dent"></span></span><span class="m-key-2__label">Hall light</span><span class="m-key-2__state" aria-hidden="true"><span class="m-key-2__off">Ready</span><span class="m-key-2__on">On</span></span></button></li>
       <li class="states__slot"><button class="m-key-2" type="button" aria-pressed="true"><span class="m-key-2__cap" aria-hidden="true"><span class="m-key-2__dent"></span></span><span class="m-key-2__label">Reading lamp</span><span class="m-key-2__state" aria-hidden="true"><span class="m-key-2__off">Ready</span><span class="m-key-2__on">On</span></span></button></li>
       <li class="states__slot"><button class="m-key-2" type="button" aria-pressed="false"><span class="m-key-2__cap" aria-hidden="true"><span class="m-key-2__dent"></span></span><span class="m-key-2__label">Kitchen</span><span class="m-key-2__state" aria-hidden="true"><span class="m-key-2__off">Ready</span><span class="m-key-2__on">On</span></span></button></li>
@@ -679,9 +836,9 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
           </div>
           <p class="m-text-8 modes__hint">Hold OK for two seconds to save a mode.</p>
         </div>
-        <ol class="modes__list">
+        <ol class="modes__list" data-8b-items=":scope > .modes__item" data-8b-fixed="4">
           <li class="modes__item" data-dir="up">
-            <figure class="m-photo modes__photo"><img srcset="https://images.unsplash.com/photo-1759523621990-58a409b68fad?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bW9ybmluZyUyMGxpZ2h0JTIwYmVkcm9vbSUyMHdpbmRvdyUyMG1pbmltYWx8ZW58MXwwfHx8MTc5MTIxMDQ1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=360&amp;q=80 360w, https://images.unsplash.com/photo-1759523621990-58a409b68fad?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bW9ybmluZyUyMGxpZ2h0JTIwYmVkcm9vbSUyMHdpbmRvdyUyMG1pbmltYWx8ZW58MXwwfHx8MTc5MTIxMDQ1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1759523621990-58a409b68fad?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bW9ybmluZyUyMGxpZ2h0JTIwYmVkcm9vbSUyMHdpbmRvdyUyMG1pbmltYWx8ZW58MXwwfHx8MTc5MTIxMDQ1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1759523621990-58a409b68fad?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bW9ybmluZyUyMGxpZ2h0JTIwYmVkcm9vbSUyMHdpbmRvdyUyMG1pbmltYWx8ZW58MXwwfHx8MTc5MTIxMDQ1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w" sizes="(max-width: 767px) 95vw, 28vw" style="background:#c0a68c" src="https://images.unsplash.com/photo-1759523621990-58a409b68fad?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bW9ybmluZyUyMGxpZ2h0JTIwYmVkcm9vbSUyMHdpbmRvdyUyMG1pbmltYWx8ZW58MXwwfHx8MTc5MTIxMDQ1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Morning light coming through sheer curtains into a dim bedroom" width="1600" height="1067" loading="lazy" decoding="async"></figure>
+            <figure class="m-photo modes__photo"><img src="https://images.unsplash.com/photo-1759523621990-58a409b68fad?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bW9ybmluZyUyMGxpZ2h0JTIwYmVkcm9vbSUyMHdpbmRvdyUyMG1pbmltYWx8ZW58MXwwfHx8MTc5MTIxMDQ1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="Morning light coming through sheer curtains into a dim bedroom" width="1600" height="1067" loading="lazy" decoding="async"></figure>
             <div class="m-surface modes__caption">
               <span class="m-text-4">Up</span>
               <h3 class="m-text-5">Morning</h3>
@@ -689,7 +846,7 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
             </div>
           </li>
           <li class="modes__item" data-dir="right">
-            <figure class="m-photo modes__photo"><img srcset="https://images.unsplash.com/photo-1601642964568-1917224f4e4d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWluaW1hbCUyMGRlc2slMjB3b3Jrc3BhY2UlMjBncmV5fGVufDF8MHx8fDE3OTEyMTA0NDR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=360&amp;q=80 360w, https://images.unsplash.com/photo-1601642964568-1917224f4e4d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWluaW1hbCUyMGRlc2slMjB3b3Jrc3BhY2UlMjBncmV5fGVufDF8MHx8fDE3OTEyMTA0NDR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1601642964568-1917224f4e4d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWluaW1hbCUyMGRlc2slMjB3b3Jrc3BhY2UlMjBncmV5fGVufDF8MHx8fDE3OTEyMTA0NDR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1601642964568-1917224f4e4d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWluaW1hbCUyMGRlc2slMjB3b3Jrc3BhY2UlMjBncmV5fGVufDF8MHx8fDE3OTEyMTA0NDR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w" sizes="(max-width: 767px) 95vw, 28vw" style="background:#f3f3d9" src="https://images.unsplash.com/photo-1601642964568-1917224f4e4d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWluaW1hbCUyMGRlc2slMjB3b3Jrc3BhY2UlMjBncmV5fGVufDF8MHx8fDE3OTEyMTA0NDR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A grey desk lamp and a cup on a white desk in low sunlight" width="1600" height="1067" loading="lazy" decoding="async"></figure>
+            <figure class="m-photo modes__photo"><img src="https://images.unsplash.com/photo-1601642964568-1917224f4e4d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWluaW1hbCUyMGRlc2slMjB3b3Jrc3BhY2UlMjBncmV5fGVufDF8MHx8fDE3OTEyMTA0NDR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=670&amp;q=60" alt="A grey desk lamp and a cup on a white desk in low sunlight" width="1600" height="1067" loading="lazy" decoding="async"></figure>
             <div class="m-surface modes__caption">
               <span class="m-text-4">Right</span>
               <h3 class="m-text-5">Desk</h3>
@@ -697,7 +854,7 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
             </div>
           </li>
           <li class="modes__item" data-dir="down">
-            <figure class="m-photo modes__photo"><img srcset="https://images.unsplash.com/photo-1772208392358-19e96bee3a73?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=360&amp;q=80 360w, https://images.unsplash.com/photo-1772208392358-19e96bee3a73?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1772208392358-19e96bee3a73?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1772208392358-19e96bee3a73?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w" sizes="(max-width: 767px) 95vw, 28vw" style="background:#40260c" src="https://images.unsplash.com/photo-1772208392358-19e96bee3a73?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A corduroy sofa beside a floor lamp in warm evening light" width="1600" height="1067" loading="lazy" decoding="async"></figure>
+            <figure class="m-photo modes__photo"><img src="https://images.unsplash.com/photo-1772208392358-19e96bee3a73?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=670&amp;q=60" alt="A corduroy sofa beside a floor lamp in warm evening light" width="1600" height="1067" loading="lazy" decoding="async"></figure>
             <div class="m-surface modes__caption">
               <span class="m-text-4">Down</span>
               <h3 class="m-text-5">Evening</h3>
@@ -705,7 +862,7 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
             </div>
           </li>
           <li class="modes__item" data-dir="left">
-            <figure class="m-photo modes__photo"><img srcset="https://images.unsplash.com/photo-1787539386321-b1a220fe24b6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8ZW1wdHklMjBoYWxsd2F5JTIwZnJvbnQlMjBkb29yJTIwbWluaW1hbHxlbnwxfDB8fHwxNzkxMjEwNDQ1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=360&amp;q=80 360w, https://images.unsplash.com/photo-1787539386321-b1a220fe24b6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8ZW1wdHklMjBoYWxsd2F5JTIwZnJvbnQlMjBkb29yJTIwbWluaW1hbHxlbnwxfDB8fHwxNzkxMjEwNDQ1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1787539386321-b1a220fe24b6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8ZW1wdHklMjBoYWxsd2F5JTIwZnJvbnQlMjBkb29yJTIwbWluaW1hbHxlbnwxfDB8fHwxNzkxMjEwNDQ1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1787539386321-b1a220fe24b6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8ZW1wdHklMjBoYWxsd2F5JTIwZnJvbnQlMjBkb29yJTIwbWluaW1hbHxlbnwxfDB8fHwxNzkxMjEwNDQ1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w" sizes="(max-width: 767px) 95vw, 28vw" style="background:#404040" src="https://images.unsplash.com/photo-1787539386321-b1a220fe24b6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8ZW1wdHklMjBoYWxsd2F5JTIwZnJvbnQlMjBkb29yJTIwbWluaW1hbHxlbnwxfDB8fHwxNzkxMjEwNDQ1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="An open white door casting a long shadow across a pale wooden floor" width="1600" height="1067" loading="lazy" decoding="async"></figure>
+            <figure class="m-photo modes__photo"><img src="https://images.unsplash.com/photo-1787539386321-b1a220fe24b6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8ZW1wdHklMjBoYWxsd2F5JTIwZnJvbnQlMjBkb29yJTIwbWluaW1hbHxlbnwxfDB8fHwxNzkxMjEwNDQ1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=670&amp;q=60" alt="An open white door casting a long shadow across a pale wooden floor" width="1600" height="1067" loading="lazy" decoding="async"></figure>
             <div class="m-surface modes__caption">
               <span class="m-text-4">Left</span>
               <h3 class="m-text-5">Away</h3>
@@ -726,14 +883,14 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
       <p class="m-text">Keep a thumb on plus and the room brightens as gently as you like — a short hold for a nudge, a long one for a sunrise. Minus does the same in reverse, down to a glow.</p>
     </header>
     <div class="dimmer__rig">
-      <figure class="m-photo dimmer__photo"><img srcset="https://images.unsplash.com/photo-1773098587088-f0a3aaab48a8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=410&amp;q=80 410w, https://images.unsplash.com/photo-1773098587088-f0a3aaab48a8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1773098587088-f0a3aaab48a8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=820&amp;q=80 820w, https://images.unsplash.com/photo-1773098587088-f0a3aaab48a8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w, https://images.unsplash.com/photo-1773098587088-f0a3aaab48a8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1060&amp;q=80 1060w, https://images.unsplash.com/photo-1773098587088-f0a3aaab48a8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1280&amp;q=80 1280w, https://images.unsplash.com/photo-1773098587088-f0a3aaab48a8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80 1600w" sizes="(max-width: 767px) 109vw, 83vw" style="background:#40260c" src="https://images.unsplash.com/photo-1773098587088-f0a3aaab48a8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A living room with a sofa, a reading chair and a lamp in warm evening light" width="1600" height="1067" loading="lazy" decoding="async"></figure>
+      <figure class="m-photo dimmer__photo"><img src="https://images.unsplash.com/photo-1773098587088-f0a3aaab48a8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bGl2aW5nJTIwcm9vbSUyMGxhbXAlMjBldmVuaW5nfGVufDF8MHx8fDE3OTEyMTA0NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1060&amp;q=60" alt="A living room with a sofa, a reading chair and a lamp in warm evening light" width="1600" height="1067" loading="lazy" decoding="async"></figure>
       <div class="dimmer__fader" aria-hidden="true">
         <span class="m-tick"><span class="m-tick__label">Level</span><span class="m-tick__line" aria-hidden="true"></span></span>
         <div class="dimmer__groove"><span class="dimmer__thumb"></span></div>
         <span class="m-well dimmer__steps"><span class="m-key dimmer__plus"><span class="m-key__cap"><span class="m-key__dent"></span></span><span class="m-key__label"><svg viewBox="0 0 24 24"><path d="M11 5h2v14h-2zM5 11h14v2H5z"/></svg></span></span><span class="m-key dimmer__minus"><span class="m-key__cap"><span class="m-key__dent"></span></span><span class="m-key__label"><svg viewBox="0 0 24 24"><path d="M5 11h14v2H5z"/></svg></span></span></span>
       </div>
     </div>
-    <ul class="dimmer__notes">
+    <ul class="dimmer__notes" data-8b-items=":scope > li">
       <li class="dimmer__note"><span class="m-text-4">Tap</span><p class="m-text-8">One step brighter or darker, the way a dimmer should feel.</p></li>
       <li class="dimmer__note"><span class="m-text-4">Hold</span><p class="m-text-8">The longer you hold, the slower the fade: two seconds become a whole minute.</p></li>
       <li class="dimmer__note"><span class="m-text-4">Double minus</span><p class="m-text-8">Leaves a low night glow in the hall instead of darkness.</p></li>
@@ -744,7 +901,7 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
 <!-- quiet: short statement: no screen, no app -->
 <section id="quiet" class="quiet" data-8b-section="quiet" aria-labelledby="quiet-title">
   <div class="quiet__inner wrap">
-    <div class="quiet__lines">
+    <div class="quiet__lines" data-8b-items=":scope > .quiet__line">
       <h2 id="quiet-title" class="m-text-2 quiet__line"><span data-8b-motion="deboss">No screen to wake.</span><span class="quiet__off" aria-hidden="true" data-8b-motion="contour"><span class="m-tick"><span class="m-tick__label">Off</span><span class="m-tick__line" aria-hidden="true"></span></span><span class="m-key is-on"><span class="m-key__cap"><span class="m-key__dent"></span></span><span class="m-key__label"></span></span></span></h2>
       <p class="m-text-2 quiet__line"><span data-8b-motion="deboss">No glow at night.</span><span class="quiet__off" aria-hidden="true" data-8b-motion="contour"><span class="m-tick"><span class="m-tick__label">Off</span><span class="m-tick__line" aria-hidden="true"></span></span><span class="m-key is-on"><span class="m-key__cap"><span class="m-key__dent"></span></span><span class="m-key__label"></span></span></span></p>
       <p class="m-text-2 quiet__line"><span data-8b-motion="deboss">No app to open first.</span><span class="quiet__off" aria-hidden="true" data-8b-motion="contour"><span class="m-tick"><span class="m-tick__label">Off</span><span class="m-tick__line" aria-hidden="true"></span></span><span class="m-key is-on"><span class="m-key__cap"><span class="m-key__dent"></span></span><span class="m-key__label"></span></span></span></p>
@@ -770,17 +927,17 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
         <p class="m-text-5 chords__result">Lamp + Lock = <strong>Goodnight</strong></p>
       </div>
     </div>
-    <ul class="chords__list">
+    <ul class="chords__list" data-8b-items=":scope > li">
       <li class="chords__item">
-        <svg class="chords__mini" viewBox="0 0 20 20" aria-hidden="true" data-8b-motion="contour"><path d="M 5.4 9 C 5.5 11 5.3 11.2 4.4 12 A 3.6 3.6 0 1 0 10 16.2 C 10.5 15 10.7 14.7 12.6 14.2 A 5.8 5.8 0 1 0 5.4 9 Z"/><circle cx="11.2" cy="8.6" r="4.6"/><circle cx="6.73" cy="14.74" r="2.6"/></svg>
+        <svg class="chords__mini" viewBox="0 0 20 20" aria-hidden="true" data-8b-motion="contour" style="--contour-length: 46.1686"><path d="M 5.4 9 C 5.5 11 5.3 11.2 4.4 12 A 3.6 3.6 0 1 0 10 16.2 C 10.5 15 10.7 14.7 12.6 14.2 A 5.8 5.8 0 1 0 5.4 9 Z"/><circle cx="11.2" cy="8.6" r="4.6"/><circle cx="6.73" cy="14.74" r="2.6"/></svg>
         <div><h3 class="m-text-5">Goodnight</h3><p class="m-text-8"><span class="m-text-4">Lamp + Lock</span> — Lights down to a glow, doors locked, heat set for the night.</p></div>
       </li>
       <li class="chords__item">
-        <svg class="chords__mini" viewBox="0 0 20 20" aria-hidden="true" data-8b-motion="contour"><path d="M 5.4 9 C 5.5 11 5.3 11.2 4.4 12 A 3.6 3.6 0 1 0 10 16.2 C 10.5 15 10.7 14.7 12.6 14.2 A 5.8 5.8 0 1 0 5.4 9 Z"/><circle cx="11.2" cy="8.6" r="4.6"/><circle cx="6.73" cy="14.74" r="2.6"/></svg>
+        <svg class="chords__mini" viewBox="0 0 20 20" aria-hidden="true" data-8b-motion="contour" style="--contour-length: 46.1686"><path d="M 5.4 9 C 5.5 11 5.3 11.2 4.4 12 A 3.6 3.6 0 1 0 10 16.2 C 10.5 15 10.7 14.7 12.6 14.2 A 5.8 5.8 0 1 0 5.4 9 Z"/><circle cx="11.2" cy="8.6" r="4.6"/><circle cx="6.73" cy="14.74" r="2.6"/></svg>
         <div><h3 class="m-text-5">Cinema</h3><p class="m-text-8"><span class="m-text-4">Music + Blinds</span> — Blinds shut, lamps low, the speaker turns up by two steps.</p></div>
       </li>
       <li class="chords__item">
-        <svg class="chords__mini" viewBox="0 0 20 20" aria-hidden="true" data-8b-motion="contour"><path d="M 5.4 9 C 5.5 11 5.3 11.2 4.4 12 A 3.6 3.6 0 1 0 10 16.2 C 10.5 15 10.7 14.7 12.6 14.2 A 5.8 5.8 0 1 0 5.4 9 Z"/><circle cx="11.2" cy="8.6" r="4.6"/><circle cx="6.73" cy="14.74" r="2.6"/></svg>
+        <svg class="chords__mini" viewBox="0 0 20 20" aria-hidden="true" data-8b-motion="contour" style="--contour-length: 46.1686"><path d="M 5.4 9 C 5.5 11 5.3 11.2 4.4 12 A 3.6 3.6 0 1 0 10 16.2 C 10.5 15 10.7 14.7 12.6 14.2 A 5.8 5.8 0 1 0 5.4 9 Z"/><circle cx="11.2" cy="8.6" r="4.6"/><circle cx="6.73" cy="14.74" r="2.6"/></svg>
         <div><h3 class="m-text-5">Sunday</h3><p class="m-text-8"><span class="m-text-4">Heat + Kettle</span> — Warm floors and the kettle on at nine, with no alarm at all.</p></div>
       </li>
     </ul>
@@ -794,22 +951,22 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
       <h2 id="material-title" class="m-text-2" data-8b-motion="deboss">Made to be found in the dark.</h2>
       <p class="m-text">Three materials, each chosen for how it feels under a thumb at two in the morning, when the panel is found by touch alone.</p>
     </header>
-    <ul class="material__list">
+    <ul class="material__list" data-8b-items=":scope > li" data-8b-fixed="3">
       <li class="material__item material__item--pill">
         <span class="m-tick" data-8b-motion="contour"><span class="m-tick__label">Cap</span><span class="m-tick__line" aria-hidden="true"></span></span>
-        <figure class="m-photo material__photo" data-8b-motion="rise"><img srcset="https://images.unsplash.com/photo-1784982090927-c47b40ccf794?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c29mdCUyMHJ1YmJlciUyMHRleHR1cmUlMjBtYWNyb3xlbnwxfDJ8fHwxNzkxMjEwNDcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=80 320w, https://images.unsplash.com/photo-1784982090927-c47b40ccf794?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c29mdCUyMHJ1YmJlciUyMHRleHR1cmUlMjBtYWNyb3xlbnwxfDJ8fHwxNzkxMjEwNDcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1784982090927-c47b40ccf794?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c29mdCUyMHJ1YmJlciUyMHRleHR1cmUlMjBtYWNyb3xlbnwxfDJ8fHwxNzkxMjEwNDcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=80 490w, https://images.unsplash.com/photo-1784982090927-c47b40ccf794?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c29mdCUyMHJ1YmJlciUyMHRleHR1cmUlMjBtYWNyb3xlbnwxfDJ8fHwxNzkxMjEwNDcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1784982090927-c47b40ccf794?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c29mdCUyMHJ1YmJlciUyMHRleHR1cmUlMjBtYWNyb3xlbnwxfDJ8fHwxNzkxMjEwNDcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=980&amp;q=80 980w, https://images.unsplash.com/photo-1784982090927-c47b40ccf794?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c29mdCUyMHJ1YmJlciUyMHRleHR1cmUlMjBtYWNyb3xlbnwxfDJ8fHwxNzkxMjEwNDcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1280&amp;q=80 1280w" sizes="(max-width: 767px) 84vw, 38vw" style="background:#737373" src="https://images.unsplash.com/photo-1784982090927-c47b40ccf794?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c29mdCUyMHJ1YmJlciUyMHRleHR1cmUlMjBtYWNyb3xlbnwxfDJ8fHwxNzkxMjEwNDcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Soft grey material folded into deep rippling ridges" width="1600" height="1600" loading="lazy" decoding="async"></figure>
+        <figure class="m-photo material__photo" data-8b-motion="rise" style="--rise-delay: 0s"><img src="https://images.unsplash.com/photo-1784982090927-c47b40ccf794?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c29mdCUyMHJ1YmJlciUyMHRleHR1cmUlMjBtYWNyb3xlbnwxfDJ8fHwxNzkxMjEwNDcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="Soft grey material folded into deep rippling ridges" width="1600" height="1600" loading="lazy" decoding="async"></figure>
         <h3 class="m-text-5">Soft-touch caps</h3>
         <p class="m-text-8">Each cap gives a little before it clicks, so a press is never a surprise and a raised key is never mistaken for a pressed one.</p>
       </li>
       <li class="material__item material__item--circle">
         <span class="m-tick" data-8b-motion="contour"><span class="m-tick__label">Back</span><span class="m-tick__line" aria-hidden="true"></span></span>
-        <figure class="m-photo material__photo" data-8b-motion="rise"><img srcset="https://images.unsplash.com/photo-1602913268078-f740e8fa7ac5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bGluZW4lMjBmYWJyaWMlMjB0ZXh0dXJlJTIwZ3JleXxlbnwxfDJ8fHwxNzkxMjEwNDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=280&amp;q=80 280w, https://images.unsplash.com/photo-1602913268078-f740e8fa7ac5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bGluZW4lMjBmYWJyaWMlMjB0ZXh0dXJlJTIwZ3JleXxlbnwxfDJ8fHwxNzkxMjEwNDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1602913268078-f740e8fa7ac5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bGluZW4lMjBmYWJyaWMlMjB0ZXh0dXJlJTIwZ3JleXxlbnwxfDJ8fHwxNzkxMjEwNDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=550&amp;q=80 550w, https://images.unsplash.com/photo-1602913268078-f740e8fa7ac5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bGluZW4lMjBmYWJyaWMlMjB0ZXh0dXJlJTIwZ3JleXxlbnwxfDJ8fHwxNzkxMjEwNDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1602913268078-f740e8fa7ac5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bGluZW4lMjBmYWJyaWMlMjB0ZXh0dXJlJTIwZ3JleXxlbnwxfDJ8fHwxNzkxMjEwNDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w" sizes="(max-width: 767px) 73vw, 31vw" style="background:#404040" src="https://images.unsplash.com/photo-1602913268078-f740e8fa7ac5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bGluZW4lMjBmYWJyaWMlMjB0ZXh0dXJlJTIwZ3JleXxlbnwxfDJ8fHwxNzkxMjEwNDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A close fold of grey woven textile" width="1600" height="1600" loading="lazy" decoding="async"></figure>
+        <figure class="m-photo material__photo" data-8b-motion="rise" style="--rise-delay: 0.08s"><img src="https://images.unsplash.com/photo-1602913268078-f740e8fa7ac5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bGluZW4lMjBmYWJyaWMlMjB0ZXh0dXJlJTIwZ3JleXxlbnwxfDJ8fHwxNzkxMjEwNDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=410&amp;q=60" alt="A close fold of grey woven textile" width="1600" height="1600" loading="lazy" decoding="async"></figure>
         <h3 class="m-text-5">Woven back</h3>
         <p class="m-text-8">A felted back holds to plaster, tile and glass without a mark, and lifts away when the room changes.</p>
       </li>
       <li class="material__item material__item--square">
         <span class="m-tick" data-8b-motion="contour"><span class="m-tick__label">Body</span><span class="m-tick__line" aria-hidden="true"></span></span>
-        <figure class="m-photo material__photo" data-8b-motion="rise"><img srcset="https://images.unsplash.com/photo-1737034164563-eb7bc29da702?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z3JleSUyMHdvb2wlMjBmZWx0JTIwdGV4dHVyZSUyMGNsb3NlfGVufDF8Mnx8fDE3OTEyMTA0NTZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=80 330w, https://images.unsplash.com/photo-1737034164563-eb7bc29da702?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z3JleSUyMHdvb2wlMjBmZWx0JTIwdGV4dHVyZSUyMGNsb3NlfGVufDF8Mnx8fDE3OTEyMTA0NTZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=360&amp;q=80 360w, https://images.unsplash.com/photo-1737034164563-eb7bc29da702?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z3JleSUyMHdvb2wlMjBmZWx0JTIwdGV4dHVyZSUyMGNsb3NlfGVufDF8Mnx8fDE3OTEyMTA0NTZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1737034164563-eb7bc29da702?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z3JleSUyMHdvb2wlMjBmZWx0JTIwdGV4dHVyZSUyMGNsb3NlfGVufDF8Mnx8fDE3OTEyMTA0NTZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=80 650w, https://images.unsplash.com/photo-1737034164563-eb7bc29da702?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z3JleSUyMHdvb2wlMjBmZWx0JTIwdGV4dHVyZSUyMGNsb3NlfGVufDF8Mnx8fDE3OTEyMTA0NTZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=710&amp;q=80 710w, https://images.unsplash.com/photo-1737034164563-eb7bc29da702?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z3JleSUyMHdvb2wlMjBmZWx0JTIwdGV4dHVyZSUyMGNsb3NlfGVufDF8Mnx8fDE3OTEyMTA0NTZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w" sizes="(max-width: 767px) 86vw, 28vw" style="background:#a6a6a6" src="https://images.unsplash.com/photo-1737034164563-eb7bc29da702?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z3JleSUyMHdvb2wlMjBmZWx0JTIwdGV4dHVyZSUyMGNsb3NlfGVufDF8Mnx8fDE3OTEyMTA0NTZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Fine grey speckled mineral surface" width="1600" height="1600" loading="lazy" decoding="async"></figure>
+        <figure class="m-photo material__photo" data-8b-motion="rise" style="--rise-delay: 0.16s"><img src="https://images.unsplash.com/photo-1737034164563-eb7bc29da702?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z3JleSUyMHdvb2wlMjBmZWx0JTIwdGV4dHVyZSUyMGNsb3NlfGVufDF8Mnx8fDE3OTEyMTA0NTZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="Fine grey speckled mineral surface" width="1600" height="1600" loading="lazy" decoding="async"></figure>
         <h3 class="m-text-5">Mineral body</h3>
         <p class="m-text-8">The slab is cast with stone dust: heavy enough to stay put on a table, cool to the touch, quiet when set down.</p>
       </li>
@@ -824,7 +981,7 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
       <h2 id="editions-title" class="m-text-2" data-8b-motion="deboss">Two finishes. The same eleven keys.</h2>
       <p class="m-text">Chalk disappears into pale walls. Graphite settles into dark wood and slate. Both ship with the woven back, a charging cable and a battery that lasts about two years.</p>
     </header>
-    <ul class="editions__list">
+    <ul class="editions__list" data-8b-items=":scope > li" data-8b-fixed="2">
       <li class="editions__item editions__item--chalk">
         <div class="editions__panel" aria-hidden="true">
           <span class="editions__diamond"></span>
@@ -887,28 +1044,28 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
       <h2 id="faq-title" class="m-text-6" data-8b-motion="deboss">Before you press order.</h2>
       <p class="m-text-9">Short answers to what people ask the studio most. Anything else, ask a person below.</p>
     </header>
-    <div class="faq__list">
-      <details class="faq__item" data-8b-motion="rise">
+    <div class="faq__list" data-8b-items=":scope > details">
+      <details class="faq__item" data-8b-motion="rise" style="--rise-delay: 0s">
         <summary><span>Does Hushkey need its own hub?</span><span class="m-key-3" aria-hidden="true"><span class="m-key-3__cap"><span class="m-key-3__dent"></span></span><span class="m-key-3__label"><svg class="is-plus" viewBox="0 0 24 24"><path d="M11 5h2v14h-2zM5 11h14v2H5z"/></svg><svg class="is-minus" viewBox="0 0 24 24"><path d="M5 11h14v2H5z"/></svg></span></span></summary>
         <p class="m-text">No. It joins the hub your home already has over the open smart-home standards, and it keeps working on its own when the internet drops.</p>
       </details>
-      <details class="faq__item" data-8b-motion="rise">
+      <details class="faq__item" data-8b-motion="rise" style="--rise-delay: 0.08s">
         <summary><span>How long does the battery last?</span><span class="m-key-3" aria-hidden="true"><span class="m-key-3__cap"><span class="m-key-3__dent"></span></span><span class="m-key-3__label"><svg class="is-plus" viewBox="0 0 24 24"><path d="M11 5h2v14h-2zM5 11h14v2H5z"/></svg><svg class="is-minus" viewBox="0 0 24 24"><path d="M5 11h14v2H5z"/></svg></span></span></summary>
         <p class="m-text">About two years of everyday pressing. It charges over USB-C in an afternoon, and the keys keep their positions while it does.</p>
       </details>
-      <details class="faq__item" data-8b-motion="rise">
+      <details class="faq__item" data-8b-motion="rise" style="--rise-delay: 0.16s">
         <summary><span>Can I change what each key does?</span><span class="m-key-3" aria-hidden="true"><span class="m-key-3__cap"><span class="m-key-3__dent"></span></span><span class="m-key-3__label"><svg class="is-plus" viewBox="0 0 24 24"><path d="M11 5h2v14h-2zM5 11h14v2H5z"/></svg><svg class="is-minus" viewBox="0 0 24 24"><path d="M5 11h14v2H5z"/></svg></span></span></summary>
         <p class="m-text">Yes, once, on a setup page on your phone. After that the panel works without the app — that is rather the point.</p>
       </details>
-      <details class="faq__item" data-8b-motion="rise">
+      <details class="faq__item" data-8b-motion="rise" style="--rise-delay: 0s">
         <summary><span>How do chords work?</span><span class="m-key-3" aria-hidden="true"><span class="m-key-3__cap"><span class="m-key-3__dent"></span></span><span class="m-key-3__label"><svg class="is-plus" viewBox="0 0 24 24"><path d="M11 5h2v14h-2zM5 11h14v2H5z"/></svg><svg class="is-minus" viewBox="0 0 24 24"><path d="M5 11h14v2H5z"/></svg></span></span></summary>
         <p class="m-text">Hold any two keys for a second and Hushkey saves what the room is doing as a chord. Press the same pair again and the room returns to it.</p>
       </details>
-      <details class="faq__item" data-8b-motion="rise">
+      <details class="faq__item" data-8b-motion="rise" style="--rise-delay: 0.08s">
         <summary><span>How does it mount?</span><span class="m-key-3" aria-hidden="true"><span class="m-key-3__cap"><span class="m-key-3__dent"></span></span><span class="m-key-3__label"><svg class="is-plus" viewBox="0 0 24 24"><path d="M11 5h2v14h-2zM5 11h14v2H5z"/></svg><svg class="is-minus" viewBox="0 0 24 24"><path d="M5 11h14v2H5z"/></svg></span></span></summary>
         <p class="m-text">The woven back holds to smooth walls, glass and tile. Lift from the bottom edge to move it: no screws, no marks, no adhesive.</p>
       </details>
-      <details class="faq__item" data-8b-motion="rise">
+      <details class="faq__item" data-8b-motion="rise" style="--rise-delay: 0.16s">
         <summary><span>When does it ship?</span><span class="m-key-3" aria-hidden="true"><span class="m-key-3__cap"><span class="m-key-3__dent"></span></span><span class="m-key-3__label"><svg class="is-plus" viewBox="0 0 24 24"><path d="M11 5h2v14h-2zM5 11h14v2H5z"/></svg><svg class="is-minus" viewBox="0 0 24 24"><path d="M5 11h14v2H5z"/></svg></span></span></summary>
         <p class="m-text">The first Chalk and Graphite panels ship in March. Pre-orders are charged only when your panel leaves the studio.</p>
       </details>
@@ -922,17 +1079,17 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
     <div class="contact__head">
       <h2 id="contact-title" class="m-text-6" data-8b-motion="deboss">Ask someone who has pressed every key.</h2>
       <p class="m-text">Questions about your hub, a house with many rooms or a trade order — the studio answers within a working day.</p>
-      <dl class="contact__details">
+      <dl class="contact__details" data-8b-items=":scope > div">
         <div><dt class="m-text-9">Email</dt><dd><a data-8b-placeholder="email" class="m-link" href="mailto:hello@hushkey.example">hello@hushkey.example</a></dd></div>
         <div><dt class="m-text-9">Phone</dt><dd><a data-8b-placeholder="phone" class="m-link" href="tel:+31100000000">+31 10 000 0000</a></dd></div>
         <div><dt class="m-text-9">Studio</dt><dd class="m-text">Rotterdam, open Thursdays by appointment</dd></div>
       </dl>
     </div>
     <form data-8b-placeholder="form" class="contact__form" novalidate data-sent="Thank you — the studio will reply within a working day." data-invalid="Please add your name, a valid email and a few words.">
-      <div class="contact__field" data-8b-motion="rise"><label class="m-text-4" for="contact-name">Name</label><input class="m-field" id="contact-name" name="name" type="text" autocomplete="name" required></div>
-      <div class="contact__field" data-8b-motion="rise"><label class="m-text-4" for="contact-email">Email</label><input class="m-field" id="contact-email" name="email" type="email" autocomplete="email" required></div>
-      <div class="contact__field contact__field--wide" data-8b-motion="rise"><label class="m-text-4" for="contact-topic">About</label><select class="m-field" id="contact-topic" name="topic"><option>A pre-order</option><option>Setting up with my hub</option><option>A trade or multi-room order</option><option>Something else</option></select></div>
-      <div class="contact__field contact__field--wide" data-8b-motion="rise"><label class="m-text-4" for="contact-message">Message</label><textarea class="m-field" id="contact-message" name="message" rows="5" required></textarea></div>
+      <div class="contact__field" data-8b-motion="rise" style="--rise-delay: 0s"><label class="m-text-4" for="contact-name">Name</label><input class="m-field" id="contact-name" name="name" type="text" autocomplete="name" required></div>
+      <div class="contact__field" data-8b-motion="rise" style="--rise-delay: 0.08s"><label class="m-text-4" for="contact-email">Email</label><input class="m-field" id="contact-email" name="email" type="email" autocomplete="email" required></div>
+      <div class="contact__field contact__field--wide" data-8b-motion="rise" style="--rise-delay: 0.16s"><label class="m-text-4" for="contact-topic">About</label><select class="m-field" id="contact-topic" name="topic"><option>A pre-order</option><option>Setting up with my hub</option><option>A trade or multi-room order</option><option>Something else</option></select></div>
+      <div class="contact__field contact__field--wide" data-8b-motion="rise" style="--rise-delay: 0s"><label class="m-text-4" for="contact-message">Message</label><textarea class="m-field" id="contact-message" name="message" rows="5" required></textarea></div>
       <div class="contact__actions">
         <button class="m-btn-2" type="submit"><span class="m-btn-2__dent" aria-hidden="true"></span><span class="m-btn-2__label">Send message</span></button>
         <p class="m-text-9 contact__status" role="status" aria-live="polite"></p>
@@ -945,11 +1102,11 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
 <!-- footer: width-filling HUSHKEY wordmark, links, copyright and the Design: 8B credit (animation: scene:footer) -->
 <footer id="footer" class="footer" data-8b-section="footer">
   <div class="footer__inner wrap">
-    <p class="m-text-6 footer__mark" style="--len:7">HUSHKEY</p>
+    <p class="m-text-6 footer__mark" style="--len:7" data-8b-split="chars">HUSHKEY</p>
     <div class="footer__row">
       <p class="m-text-3">Tactile home controls</p>
       <nav class="footer__links" aria-label="Footer">
-        <ul>
+        <ul data-8b-items=":scope > li">
           <li><a class="m-link" href="#states">Keys</a></li>
           <li><a class="m-link" href="#modes">Modes</a></li>
           <li><a class="m-link" href="#chords">Chords</a></li>
@@ -974,7 +1131,7 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
   const setOpen = open => {
     if (open) nav.setAttribute('data-open', ''); else nav.removeAttribute('data-open');
     openButton.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); closeButton.focus(); } else { window.lenis?.start(); }
+    if (open) { window.motionKit?.wheel?.stop(); closeButton.focus(); } else { window.motionKit?.wheel?.start(); }
   };
   openButton.addEventListener('click', () => setOpen(true));
   closeButton.addEventListener('click', () => { setOpen(false); openButton.focus(); });
@@ -1027,123 +1184,265 @@ select.m-field { background-image: linear-gradient(45deg, transparent 50%, var(-
 })();
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
+<script data-8b-part="motion-kit">
 (() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0;
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); });
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-  window.adjacent = (a, b) => {
-    const order = [...document.querySelectorAll('[data-8b-section]')].filter(section => section.getAttribute('data-8b-section') !== 'navigation').map(section => section.id);
-    return order.indexOf(a) >= 0 && order[order.indexOf(a) + 1] === b;
-  };
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}.line:not(:last-child){margin-bottom:0}.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = typeof Intl.Segmenter === 'function'
+? text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment)
+: text => [...text];
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split');
+if (sources.has(element)) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px 100% 0px' });
+(document.fonts?.ready ?? Promise.resolve()).then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function refreshScroll() {
-  const bar = document.querySelector('#nav .nav__bar');
-  if (bar && window.lenis) window.lenis.options.anchors = { offset: -(bar.getBoundingClientRect().bottom + 16) };
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const bar = document.querySelector('#nav .nav__bar');
-  const lenis = window.lenis = new Lenis({ lerp: .085, wheelMultiplier: .9, anchors: { offset: -((bar ? bar.getBoundingClientRect().bottom : 80) + 16) } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
+<script data-8b-part="scene-script:hero">
+motionKit.scene('hero', () => {
+  const hero = document.getElementById('hero');
+  const stage = hero.querySelector('.hero__stage');
+  const states = document.getElementById('states');
+  const ring = states?.querySelector('.states__slot');
+  motionKit.measure(() => {
+    const most = innerHeight * .26;
+    let sink = most;
+    if (ring) {
+      const below = motionKit.box(ring).y + (parseFloat(getComputedStyle(ring, '::before').top) || 0) - motionKit.box(states).y;
+      const heroBox = motionKit.box(hero), box = motionKit.box(stage);
+      sink = Math.max(0, Math.min(most, heroBox.y + heroBox.h + below - (box.y + box.h) - 18));
+    }
+    motionKit.set(hero, { '--hero-sink': `${sink}px` });
+  });
 });
 </script>
-<script data-8b-part="motion">
-const effects = {
-  deboss(element, vars = {}) {
-    const rest = getComputedStyle(element).textShadow;
-    const timeline = gsap.timeline(vars);
-    if (rest && rest !== 'none') timeline.fromTo(element, { textShadow: motionHelpers.flipShadow(rest) }, { textShadow: rest, duration: .9, ease: 'power2.inOut' }, 0);
-    return timeline.fromTo(element, { y: -8 }, { y: 0, duration: .9, ease: 'power3.out' }, 0);
-  },
-  rise(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { scale: .9, y: 26 }, { scale: 1, y: 0, duration: 1, ease: 'power3.out' });
-  },
-  contour(element, vars = {}) {
-    const timeline = gsap.timeline(vars);
-    const paths = element.matches('path, line, circle, rect') ? [element] : [...element.querySelectorAll('path, line')];
-    paths.forEach(path => {
-      const length = path.getTotalLength ? path.getTotalLength() : 0;
-      if (length) timeline.fromTo(path, { strokeDasharray: length, strokeDashoffset: length }, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut' }, 0);
-    });
-    element.querySelectorAll('.m-tick__line').forEach(line => timeline.fromTo(line, { scaleY: 0 }, { scaleY: 1, duration: .7, ease: 'power2.out' }, 0));
-    return timeline;
-  }
-};
-const motionHelpers = {
-  press(key, on = true, duration = .3) {
-    const dent = key.querySelector('[class$="__dent"]');
-    const cap = key.querySelector('[class$="__cap"]');
-    return gsap.timeline()
-      .to(dent, { opacity: on ? 1 : 0, duration, ease: 'power1.inOut' }, 0)
-      .to(cap, { scale: on ? .965 : 1, duration, ease: 'power1.inOut' }, 0);
-  },
-  flipShadow(value) {
-    return value.split(/,(?![^(]*\))/).map(part => part.replace(/(-?[\d.]+)px\s+(-?[\d.]+)px/, (match, x, y) => `${x}px ${-parseFloat(y)}px`)).join(',');
-  },
-  contourPath(c1, r1, c2, r2, v = .5, handle = 2.4) {
-    const f = n => Math.round(n * 100) / 100;
-    const point = p => `${f(p[0])} ${f(p[1])}`;
-    const circle = (c, r) => `M ${f(c[0] - r)} ${f(c[1])} a ${f(r)} ${f(r)} 0 1 0 ${f(2 * r)} 0 a ${f(r)} ${f(r)} 0 1 0 ${f(-2 * r)} 0 Z`;
-    if (r2 > r1) return motionHelpers.contourPath(c2, r2, c1, r1, v, handle);
+<script data-8b-part="scene-script:dimmer">
+motionKit.scene('dimmer', () => {
+  const rig = document.querySelector('#dimmer .dimmer__rig');
+  const groove = rig.querySelector('.dimmer__groove');
+  const thumb = rig.querySelector('.dimmer__thumb');
+  const wide = matchMedia('(min-width: 900px)');
+  motionKit.measure(() => motionKit.set(rig, {
+    '--dimmer-travel': `${wide.matches ? groove.clientHeight - 16 - thumb.offsetHeight : -(groove.clientWidth - 16 - thumb.offsetWidth)}px`
+  }));
+});
+</script>
+<script data-8b-part="scene-script:chords">
+motionKit.scene('chords', () => {
+  const chords = document.getElementById('chords');
+  const track = chords.querySelector('.chords__track');
+  const art = chords.querySelector('.chords__art');
+  const path = art.querySelector('.chords__contour path');
+  const A = { x: 20, y: 15, r: 10.2 };
+  const B = { x: 12.35, y: 25.51, r: 6.1 };
+  let from = { ax: 0, ay: 0, bx: 0, by: 0 };
+  motionKit.measure(() => {
+    const em = parseFloat(getComputedStyle(art).fontSize) || 10;
+    const spread = Math.min(17, innerWidth / em * .3);
+    from = { ax: spread * .5, ay: -3, bx: -spread, by: -9 };
+    motionKit.set(chords, { '--chords-ax': `${from.ax * em}px`, '--chords-ay': `${from.ay * em}px`, '--chords-bx': `${from.bx * em}px`, '--chords-by': `${from.by * em}px` });
+  });
+  const inOut = (t, power) => t < .5 ? (2 * t) ** power / 2 : 1 - (2 - 2 * t) ** power / 2;
+  const f = n => Math.round(n * 100) / 100;
+  const point = p => `${f(p[0])} ${f(p[1])}`;
+  const circle = (c, r) => `M ${f(c[0] - r)} ${f(c[1])} a ${f(r)} ${f(r)} 0 1 0 ${f(2 * r)} 0 a ${f(r)} ${f(r)} 0 1 0 ${f(-2 * r)} 0 Z`;
+  const contour = (c1, r1, c2, r2, v = .5, handle = 2.4) => {
+    if (r2 > r1) return contour(c2, r2, c1, r1, v, handle);
     const d = Math.hypot(c2[0] - c1[0], c2[1] - c1[1]);
     if (d <= r1 - r2 + .05) return circle(c1, r1);
     if (d > r1 + r2 * 2.5) return `${circle(c1, r1)} ${circle(c2, r2)}`;
@@ -1163,224 +1462,35 @@ const motionHelpers = {
     const h1 = at(p1, a1 - Math.PI / 2, r1 * k), h2 = at(p2, a2 + Math.PI / 2, r1 * k);
     const h3 = at(p3, a3 + Math.PI / 2, r2 * k), h4 = at(p4, a4 - Math.PI / 2, r2 * k);
     return `M ${point(p1)} C ${point(h1)} ${point(h3)} ${point(p3)} A ${f(r2)} ${f(r2)} 0 ${d > r1 ? 1 : 0} 0 ${point(p4)} C ${point(h4)} ${point(h2)} ${point(p2)} A ${f(r1)} ${f(r1)} 0 1 0 ${point(p1)} Z`;
-  }
-};
-['deboss', 'rise', 'contour'].forEach(name => {
-  document.querySelectorAll('[data-8b-section]').forEach(section => {
-    const elements = [...section.querySelectorAll(`[data-8b-motion~="${name}"]`)];
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => ScrollTrigger.create({
-        id: `${id}:${index}`, trigger: element, start: 'top 88%', once: true,
-        animation: effects[name](element, { delay: name === 'rise' ? (index % 3) * .08 : 0 })
-      }));
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
+  };
+  motionKit.track(track, 'top 0%', 'bottom 100%', progress => {
+    const t = Math.min(1, progress / .72);
+    const a = 1 - inOut(t, 2), b = 1 - inOut(t, 3);
+    path.setAttribute('d', contour([A.x + from.ax * a, A.y + from.ay * a], A.r, [B.x + from.bx * b, B.y + from.by * b], B.r));
   });
 });
 </script>
-<script data-8b-part="scene:hero">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    if (!adjacent('hero', 'states')) return;
-    const hero = document.getElementById('hero');
-    const stage = hero.querySelector('.hero__stage');
-    const panel = hero.querySelector('.hero__panel');
-    const ring = document.querySelector('#states .states__slot');
-    const order = ['.hero__k-up', '.hero__k-left', '.hero__k-ok', '.hero__k-right', '.hero__k-down', '.hero__seg .m-key', '.hero__k-play', '.hero__k-pause', '.hero__steps .m-key:not(.is-on)'];
-    const keys = order.flatMap(selector => [...hero.querySelectorAll(selector)]);
-    const sink = () => {
-      const most = innerHeight * .26;
-      if (!ring) return most;
-      const top = ring.getBoundingClientRect().top + (parseFloat(getComputedStyle(ring, '::before').top) || 0);
-      return Math.max(0, Math.min(most, top - stage.getBoundingClientRect().bottom - 18));
-    };
-    gsap.set(panel, { willChange: 'transform' });
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'hero:exit', trigger: hero, start: 'bottom bottom', end: 'bottom 25%', scrub: true, invalidateOnRefresh: true
-    } });
-    timeline.fromTo(panel, { y: 0, scale: 1 }, { y: sink, scale: .82, transformOrigin: '50% 100%', duration: 1 }, 0);
-    keys.forEach((key, index) => timeline.add(motionHelpers.press(key, true, .3), .04 + index * (.62 / keys.length)));
-  });
-}, { first: true, id: 'scene:hero' });
-</script>
-<script data-8b-part="scene:states">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    if (!adjacent('hero', 'states')) return;
-    const states = document.getElementById('states');
-    const keys = [...states.querySelectorAll('.states__keys .m-key-2')];
-    const columns = () => getComputedStyle(states.querySelector('.states__keys')).gridTemplateColumns.split(' ').length;
-    const layer = on => keys.forEach(key => { key.style.willChange = on ? 'transform' : ''; });
-    const hint = self => layer(self.progress < 1);
-    layer(true);
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'states:entry', trigger: states, start: 'top bottom', end: 'top 25%', scrub: true, invalidateOnRefresh: true,
-      onEnter: hint, onLeave: hint, onEnterBack: hint, onLeaveBack: hint, onRefresh: hint
-    } });
-    const count = columns();
-    keys.forEach((key, index) => {
-      const wave = (index % count) + Math.floor(index / count);
-      timeline.fromTo(key, { scale: .58, y: 34 }, { scale: 1, y: 0, duration: .5, ease: 'power2.out' }, .08 + wave * .09);
-    });
-    timeline.to({}, { duration: .01 }, 1);
-    return () => layer(false);
-  });
-}, { first: true, id: 'scene:states' });
-</script>
-<script data-8b-part="scene:modes">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const modes = document.getElementById('modes');
-    const track = modes.querySelector('.modes__track');
-    const items = [...modes.querySelectorAll('.modes__item')];
-    const keyFor = item => modes.querySelector(`.modes__k-${item.dataset.dir}`);
-    const from = { up: 'inset(0% 0% 100% 0%)', right: 'inset(0% 0% 0% 100%)', down: 'inset(100% 0% 0% 0%)', left: 'inset(0% 100% 0% 0%)' };
-    modes.setAttribute('data-stage', '');
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'modes', trigger: track, start: 'top top', end: 'bottom bottom', scrub: true, invalidateOnRefresh: true
-    } });
-    timeline.add(motionHelpers.press(keyFor(items[0]), true, .25), 0);
-    items.slice(1).forEach((item, index) => {
-      const at = .55 + index * 1.25;
-      timeline.add(motionHelpers.press(keyFor(items[index]), false, .2), at)
-        .add(motionHelpers.press(keyFor(item), true, .2), at + .08)
-        .fromTo(item, { clipPath: from[item.dataset.dir] || from.right }, { clipPath: 'inset(0% 0% 0% 0%)', duration: .85, ease: 'power2.inOut' }, at + .2)
-        .fromTo(item.querySelector('img'), { scale: 1.14 }, { scale: 1, duration: .85, ease: 'power2.out' }, at + .2)
-        .set(item, { clipPath: 'none' }, at + 1.06);
-    });
-    timeline.to({}, { duration: .35 });
-    return () => modes.removeAttribute('data-stage');
-  });
-}, { id: 'scene:modes' });
-</script>
-<script data-8b-part="scene:dimmer">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(prefers-reduced-motion: no-preference) and (min-width: 900px)',
-    narrow: '(prefers-reduced-motion: no-preference) and (max-width: 899px)'
-  }, context => {
-    const rig = document.querySelector('#dimmer .dimmer__rig');
-    const img = rig.querySelector('.dimmer__photo img');
-    const groove = rig.querySelector('.dimmer__groove');
-    const thumb = rig.querySelector('.dimmer__thumb');
-    const plus = rig.querySelector('.dimmer__plus');
-    const wide = context.conditions.wide;
-    const travel = () => wide ? groove.clientHeight - 16 - thumb.offsetHeight : -(groove.clientWidth - 16 - thumb.offsetWidth);
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'dimmer', trigger: rig, start: 'top 85%', end: 'top 14%', scrub: true, invalidateOnRefresh: true
-    } });
-    timeline.fromTo(img, { filter: 'grayscale(1) brightness(0.34)' }, { filter: 'grayscale(0) brightness(1)', duration: 1, ease: 'power1.in' }, 0)
-      .fromTo(thumb, wide ? { y: travel } : { x: travel }, wide ? { y: 0, duration: 1 } : { x: 0, duration: 1 }, 0)
-      .add(motionHelpers.press(plus, true, .08), 0)
-      .add(motionHelpers.press(plus, false, .08), .92);
-  });
-}, { id: 'scene:dimmer' });
-</script>
-<script data-8b-part="scene:chords">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const chords = document.getElementById('chords');
-    const track = chords.querySelector('.chords__track');
-    const art = chords.querySelector('.chords__art');
-    const a = art.querySelector('.chords__a');
-    const b = art.querySelector('.chords__b');
-    const path = art.querySelector('.chords__contour path');
-    const result = chords.querySelector('.chords__result');
-    const restPath = path.getAttribute('d');
-    const A = { x: 20, y: 15, r: 10.2 };
-    const B = { x: 12.35, y: 25.51, r: 6.1 };
-    let em = parseFloat(getComputedStyle(art).fontSize) || 10;
-    const spread = () => Math.min(17, innerWidth / em * .3);
-    const draw = () => {
-      const ax = A.x + gsap.getProperty(a, 'x') / em, ay = A.y + gsap.getProperty(a, 'y') / em;
-      const bx = B.x + gsap.getProperty(b, 'x') / em, by = B.y + gsap.getProperty(b, 'y') / em;
-      path.setAttribute('d', motionHelpers.contourPath([ax, ay], A.r, [bx, by], B.r));
-    };
-    chords.setAttribute('data-stage', '');
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, onUpdate: draw, scrollTrigger: {
-      id: 'chords', trigger: track, start: 'top top', end: 'bottom bottom', scrub: true, invalidateOnRefresh: true,
-      onRefreshInit: () => { em = parseFloat(getComputedStyle(art).fontSize) || em; }, onRefresh: draw
-    } });
-    timeline.fromTo(a, { x: () => spread() * em * .5, y: () => -3 * em }, { x: 0, y: 0, duration: .72, ease: 'power1.inOut' }, 0)
-      .fromTo(b, { x: () => -spread() * em, y: () => -9 * em }, { x: 0, y: 0, duration: .72, ease: 'power2.inOut' }, 0)
-      .fromTo([a, b].map(key => key.querySelector('.m-key__dent')), { opacity: 0 }, { opacity: 1, duration: .08 }, .78)
-      .fromTo([a, b].map(key => key.querySelector('.m-key__cap')), { scale: 1 }, { scale: .965, duration: .08 }, .78)
-      .fromTo(result, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: .14, ease: 'power2.out' }, .82)
-      .to({}, { duration: .04 }, .96);
-    draw();
-    return () => { chords.removeAttribute('data-stage'); path.setAttribute('d', restPath); };
-  });
-}, { id: 'scene:chords' });
-</script>
-<script data-8b-part="scene:editions">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const editions = document.getElementById('editions');
-    editions.querySelectorAll('.editions__item').forEach((item, index) => {
-      gsap.fromTo(item.querySelector('.editions__panel'), { rotateX: 66, y: 60, scale: .9 }, { rotateX: 0, y: 0, scale: 1, ease: 'none', scrollTrigger: {
-        id: `editions:panel-${index}`, trigger: item, start: 'top 94%', end: 'top 40%', scrub: true
-      } });
-    });
-    if (adjacent('editions', 'faq')) {
-      const key = editions.querySelector('.editions__key');
-      gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-        id: 'editions:exit', trigger: editions, start: 'bottom bottom', end: 'bottom 30%', scrub: true
-      } })
-        .add(motionHelpers.press(key, true, .16), 0)
-        .fromTo(key, { y: 0 }, { y: 8, duration: .16, ease: 'power2.out' }, 0)
-        .to({}, { duration: .84 }, .16);
+<script data-8b-part="scene-script:faq">
+motionKit.scene('faq', () => {
+  const faq = document.getElementById('faq');
+  const editions = document.getElementById('editions');
+  const key = editions?.querySelector('.editions__key');
+  motionKit.measure(() => {
+    const box = motionKit.box(faq);
+    let x = box.w / 2, reach = 0, r0 = 40;
+    if (key) {
+      const k = motionKit.box(key), e = motionKit.box(editions);
+      x = k.x + k.w / 2 - e.x;
+      reach = Math.max(0, e.y + e.h - (k.y + k.h / 2));
+      r0 = k.w * .42;
     }
+    const far = Math.max(x, box.w - x);
+    motionKit.set(faq, {
+      '--faq-x': `${x}px`, '--faq-reach': `${reach}px`, '--faq-r0': `${r0}px`, '--faq-mid': `${far * 1.08}px`,
+      '--faq-r1': `${Math.hypot(far, reach + box.h) + 2}px`, '--faq-split': Math.min(.34, Math.max(.1, faq.clientWidth / 3600))
+    });
   });
-}, { id: 'scene:editions' });
-</script>
-<script data-8b-part="scene:faq">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    if (!adjacent('editions', 'faq')) return;
-    const faq = document.getElementById('faq');
-    const flood = faq.querySelector('.faq__flood');
-    const key = document.querySelector('#editions .editions__key');
-    let geo = { x: 0, reach: 0, r0: 40, mid: 600, r1: 2000 };
-    const measure = () => {
-      const keyBox = key.getBoundingClientRect();
-      const faqBox = faq.getBoundingClientRect();
-      const x = keyBox.left + keyBox.width / 2 - faqBox.left;
-      const reach = Math.max(0, faqBox.top - (keyBox.top + keyBox.height / 2 - gsap.getProperty(key, 'y')));
-      geo = { x, reach, r0: keyBox.width * .42, mid: Math.max(x, faqBox.width - x) * 1.08, r1: Math.hypot(Math.max(x, faqBox.width - x), reach + faqBox.height) + 2 };
-      faq.style.setProperty('--faq-reach', `${reach}px`);
-    };
-    faq.setAttribute('data-flood', '');
-    measure();
-    const clip = radius => `circle(${radius}px at ${geo.x}px 0px)`;
-    const split = Math.min(.34, Math.max(.1, faq.clientWidth / 3600));
-    gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'faq:entry', trigger: faq, start: 'top bottom', end: 'top 30%', scrub: true, invalidateOnRefresh: true, onRefreshInit: measure
-    } })
-      .fromTo(flood, { clipPath: () => clip(geo.r0) }, { clipPath: () => clip(geo.mid), duration: split, ease: 'sine.in' }, 0)
-      .fromTo(flood, { clipPath: () => clip(geo.mid) }, { clipPath: () => clip(geo.r1), duration: 1 - split, ease: 'power2.out', immediateRender: false }, split)
-      .set(flood, { clipPath: 'none' }, 1);
-    return () => { faq.removeAttribute('data-flood'); faq.style.removeProperty('--faq-reach'); };
-  });
-}, { id: 'scene:faq' });
-</script>
-<script data-8b-part="scene:footer">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const footer = document.getElementById('footer');
-    const mark = footer.querySelector('.footer__mark');
-    const split = SplitText.create(mark, { type: 'chars' });
-    const rest = getComputedStyle(mark).textShadow;
-    const raised = motionHelpers.flipShadow(rest);
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'footer', trigger: footer, start: 'top 85%', end: 'bottom bottom', scrub: true
-    } });
-    const restColor = getComputedStyle(mark).color;
-    const liftColor = getComputedStyle(document.documentElement).getPropertyValue('--color-8').trim();
-    split.chars.forEach((char, index) => timeline.fromTo(char, { y: '-0.16em', color: liftColor, textShadow: raised }, { y: 0, color: restColor, textShadow: rest, duration: .36, ease: 'power2.inOut' }, index * .1));
-    return () => split.revert();
-  });
-}, { near: document.getElementById('footer'), id: 'scene:footer' });
+});
 </script>
 </body>
 </html>

@@ -1,8 +1,8 @@
-# Free HTML print studio website template with GSAP scroll animations
+# Free HTML print studio website template with scroll animations and no libraries
 
-Print studio website template: a free one-page site for a risograph studio, print shop or small press, with a live price calculator, a shelf of eight editions, five dated workshops and a contact form. The look is two flat inks, ultramarine and fluorescent pink, with halftone dots drawn in CSS. It is one HTML file with an AGENTS.md, so an AI agent such as Claude Code can adapt it to your own studio.
+Print studio website template: a free one-page site for a risograph studio, print shop or small press, with a live price calculator, a shelf of eight editions, five dated workshops and a contact form. The look is two flat inks, ultramarine and fluorescent pink, with halftone dots drawn in CSS. Its scroll motion runs on CSS with no libraries, in one file of about 26 KB gzipped that Claude Code reads whole.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/print-studio-website-template/)** · **[Use this template](https://github.com/new?template_name=print-studio-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/print-studio-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/dotdrum/)**
 
@@ -24,19 +24,19 @@ curl -LO https://raw.githubusercontent.com/8bsite/print-studio-website-template/
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make it the site for <my print studio: inks, formats, papers, town and address, opening hours, rates per copy, setup fee, turnaround by run size, editions with prices, workshops with dates and prices, past clients, how people order and book>. Replace first the studio name, ink names, colours, calculator rates, editions and workshops. Set each display line's length number to its new character count. Keep the opening's drum lanes and pink bands equal in number, the calculator's data attributes, and the section ids and classes AGENTS.md lists. Ask me for any missing fact and never invent prices, dates, hours, addresses, clients, reviews or contacts.
+Read AGENTS.md, then edit index.html. Make it the site for <my print studio: inks, formats, papers, town and address, opening hours, rates per copy, setup fee, turnaround by run size, editions with prices, workshops with dates and prices, past clients, how people order and book>. Set each display line's length number to its new character count. Motion is CSS scroll-driven animation plus the inline motion kit: keep the gate script in the head, the data-8b-section and data-8b-motion attributes, the calculator's data attributes and equal numbers of drum lanes and pink bands; add no animation library. Never invent prices, dates, hours, addresses, clients or contacts; ask me.
 ```
 
-In a vibe coding session with Claude Code, Cursor or Codex, ask the agent to collect your rate per copy by format, the setup fee, the paper stocks, the largest sheet, turnaround by run size and opening hours. Rates, setup fee and turnaround go into the quote form's data attributes, the rest into the text. Next it searches for the old name in any letter case and resets the length number on the headline lines and the footer wordmark. Keep the opening's drum lanes and pink bands equal, four in the layout: when they differ, the print script throws, its scroll animation stays off and the console logs an error. The agent must never invent clients, prices or dates.
+With this print studio website template for Claude Code, Cursor or Codex, a vibe coding session starts by asking the agent for your rate per copy by format, the setup fee, the paper stocks, the largest sheet, turnaround by run size and opening hours. Rates, setup fee and turnaround go into the quote form's data attributes, the rest into the text. The agent searches for the old name in any letter case and resets the length number on the headline lines and the footer wordmark. Keep the opening's drum lanes and pink bands equal, four each: when they differ, the console logs an error and the opening stays still while the other sections keep moving.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=print-studio-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
 - **Navigation**: top bar: wordmark, section links, Price a run button; phone menu overlay.
-- **Two inks, ten thousand dots.**: two-screen opening: big two-line headline and four drums with halftone trails, then a pink panel with the studio statement, a photo and three facts. Smooth scrolling throughout. Scrolling down, four pink drums roll onto the panel below and print it band by band; the photo appears through growing halftone dots.
+- **Two inks, ten thousand dots.**: two-screen opening: big two-line headline and four drums with halftone trails, then a pink panel with the studio statement, a photo and three facts. Smooth wheel scrolling throughout; on load the headline lines wipe up and four pink drums drop in and bob, then scrolling down rolls them onto the panel below to print it band by band, and the photo appears through growing halftone dots.
 - **Two inks. Sixteen colours.**: colour chart: two ink plates overprint into a 4×4 grid of tints (demo: blue and pink). The heading starts with an offset ghost that slides into register. Tied to scroll, the tilted blue and pink plates slide together into the chart.
-- **One sheet, two passes.**: how it works: five numbered steps on a horizontal track beside a sheet that gets printed step by step. Pinned, the five stations slide sideways while the sheet beside them takes a blue pass, then a pink pass that nudges into register.
+- **One sheet, two passes.**: how it works: five numbered steps on a horizontal track beside a sheet that gets printed step by step. The stage holds in place while the five stations slide sideways and the sheet beside them takes a blue pass, then a pink pass that nudges into register.
 - **A small room with a loud machine.**: about the studio: paragraph, list of four machines, three photos at alternating heights.
 - **From our own drum.**: shop: eight products in four staggered lanes, each with photo, title, format, price and Order link (demo: zines, prints and books). Tied to scroll, alternate product lanes slide up and down like pistons into their staggered places, printing dotted trails.
 - **Learn the drum.**: event list: five dated sessions with price, places left and a Book link, beside a lane where a drum inks each date. A pink drum rolls down beside the list as you scroll, and each date fills solid pink as the drum passes.
@@ -68,7 +68,7 @@ Partly. Rates, setup fee and turnaround are plain data, so the prices adapt. The
 
 ## Is it the right base?
 
-Choose this base when the studio sells by the run and by the edition, and the pitch is a look made from two inks. As a print company website template it suits a small shop, not a plant with sales reps and a long product catalogue. A shop whose stock changes every week and goes out in delivery windows, like a [flower shop](https://8b.com/templates/moth-marigold/) with standing orders, needs a different template. The weak spot is checkout: the calculator prices a job and Send this ticket opens an email, with no file upload, cart or card payment.
+Choose this base when the studio sells by the run and by the edition, and the pitch is a look made from two inks. This is the light build: the same look and scroll behaviour, with no animation library and no script from a CDN. Measured here, it downloads about 26 KB of code gzipped in one file; the GSAP version needs about 73 KB and three extra requests. As a print company website template it suits a small shop; a [flower shop](https://8b.com/templates/moth-marigold/) with weekly stock needs another. Checkout is the weak spot: Send this ticket opens an email, with no file upload, cart or card payment.
 
 ## Before you publish
 
@@ -77,7 +77,9 @@ Choose this base when the studio sells by the run and by the edition, and the pi
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 99 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 121+ (it uses color-mix(), container query units, :has(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 105 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 121+ (it uses color-mix(), container query units, :has(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout, while any load-in or looping animation still plays; with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 101 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

@@ -1,6 +1,6 @@
 # AGENTS.md: accountant website template
 
-Website for a small accountancy practice that does bookkeeping, tax returns and payroll. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+Website for a small accountancy practice that does bookkeeping, tax returns and payroll. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,19 +14,19 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:nav`: `.nav__menu` `.menu` `.menu__close`
   - `section-script:opening`: `.op-stage`
   - `section-script:month`: `.mo-bar`
   - `section-script:fees`: `.fe-plan` `.fe-price`
   - `section-script:contact`: `.ct-form` `.ct-status`
-  - `scene:opening-cover`: `.op-stage` `.op-ground` `.op-cover` `.op-year` `.op-tile` `.op-statement` `.m-mark`
-  - `scene:month-walk`: `.mo-sheet` `.mo-part` `.mo-note` `.mo-key` `.mo-bar__fill`
-  - `scene:services-clarity`: `.sv-slabs` `.sv-slab` `.sv-dots` `.sv-photo` `.m-photo__img`
-  - `scene:year-filed`: `.yr-pin` `.yr-view` `.yr-track` `.yr-chip` `.yr-chip__fill`
-  - `scene:people-settle`: `.pp-grid` `.pp-person`
-  - `scene:fees-rise`: `.fe-plan` `.fe-plans` `.fe-fill` `.fe-top`
-  - `scene:footer-close`: `.ft-mark` `.ft-year`
+  - `scene-script:opening-cover`: `.op-stage` `.op-cover` `.op-year` `.op-tile`
+  - `scene-script:month-walk`: `.mo-sheet` `.mo-part` `.mo-note` `.mo-key` `.mo-bar__fill`
+  - `scene-script:services-clarity`: `.sv-slabs` `.sv-slab`
+  - `scene-script:year-filed`: `.yr-view` `.yr-track` `.yr-chip` `.yr-chip__fill`
+  - `scene-script:fees-rise`: `.fe-plan` `.fe-fill`
+  - `scene-script:footer-close`: `.ft-year`
 - `style="--len:N"` = characters in that display line, spaces included: `Tallyhouse` is 10.
 - The bar chart in the sample report and the fee blocks read their numbers from <data value="…"> elements: when you change a figure, change the value too and the heights follow.
 - The colour tint and the dot screen on the photos are CSS over ordinary photos, so a new photo takes the slab colours on its own; the three slab colours are --color-3, --color-4 and --color-5 in :root.
@@ -39,7 +39,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - Book a free call buttons in the nav, the phone menu and the first screen: now #contact; owner's target: your booking page (Calendly, Cal.com) or keep them on the contact form.
 - Start as a sole trader / Start as a company / Start with your team in fees: now #contact; owner's target: your sign-up or onboarding URL for each plan.
 - Start the switch in switching: now #contact; owner's target: your onboarding form or booking page.
-- The form in `#contact` (fields `name`, `email`, `phone`, `need`, `message`) sends nothing; `section-script:contact` validates it and shows the thank-you text. Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
+- The form in `#contact` (fields `name`, `email`, `phone`, `need`, `message`) sends nothing; `section-script:contact` handles its submit in the page (read it before you connect a service). Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
 - The name Tallyhouse (any letter case); the favicon letter and colours in `<link rel="icon">`.
 - Photos (19, Unsplash: opening 8, services 3, switching 1, client-stories 3, accountants 4): `src`, no `srcset`/`sizes`, `width`/`height` to the ratio, `alt`, CREDITS.md.
 - `<title>`, meta description, og tags.
@@ -59,7 +59,8 @@ All demo text, never to be invented:
 
 ## Known limits
 - Without JavaScript the report bars and the fee blocks have a uniform height (the figures stay in the text), and the phone menu button cannot open the overlay; the first screen and the footer still link the month, services, the tax year, fees and contact, but Questions (#faq) is reachable only through the overlay.
-- The tax-year track is pinned for about 2.7 screens of scroll on desktop and about 4 on phones, so that each of the twelve months gets its moment; cut months or chips to shorten it.
+- With motion, the tax-year track is held in place (CSS sticky) for about three screens of scroll on desktop and about four on phones, the width the track overflows its box, so that each of the twelve months gets its moment; cut months or chips to shorten it. Without scroll-driven animation support or with reduced motion it is not held: the track scrolls sideways in its box with every chip filled.
+- The statement under the first screen times its colour highlights for exactly three marked phrases (one :nth-of-type rule each in the opening scene's CSS); a fourth highlight needs its own animation-range rule.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Tallyhouse left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Tallyhouse left only in class names.

@@ -1,6 +1,6 @@
 # AGENTS.md: product landing page template
 
-Product launch and pre-order page for a physical device. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+Product launch and pre-order page for a physical device. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,19 +14,15 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:nav`: `.nav__open` `.nav__close`
   - `section-script:states`: `.m-key-2`
   - `section-script:contact`: `.contact__form` `.contact__status` `data-sent` `data-invalid`
-  - `scene:hero`: `.hero__stage` `.hero__panel` `.states__slot` `.hero__k-up` `.hero__k-left` `.hero__k-ok` `.hero__k-right` `.hero__k-down` `.hero__seg` `.m-key` `.hero__k-play` `.hero__k-pause` `.hero__steps` `.is-on`
-  - `scene:states`: `.states__keys` `.m-key-2`
-  - `scene:modes`: `.modes__track` `.modes__item` `.modes__k-` `data-dir`
-  - `scene:dimmer`: `.dimmer__rig` `.dimmer__photo` `.dimmer__groove` `.dimmer__thumb` `.dimmer__plus`
-  - `scene:chords`: `.chords__track` `.chords__art` `.chords__a` `.chords__b` `.chords__contour` `.chords__result` `.m-key__dent` `.m-key__cap`
-  - `scene:editions`: `.editions__item` `.editions__panel` `.editions__key`
-  - `scene:faq`: `.faq__flood` `.editions__key`
-  - `scene:footer`: `.footer__mark`
-- `hero` directly above `states`, `editions` directly above `faq`: the animation crosses that border and stops if they are split.
+  - `scene-script:hero`: `.hero__stage` `.states__slot`
+  - `scene-script:dimmer`: `.dimmer__rig` `.dimmer__groove` `.dimmer__thumb`
+  - `scene-script:chords`: `.chords__track` `.chords__art` `.chords__contour`
+  - `scene-script:faq`: `.editions__key`
 - `style="--len:N"` = characters in that display line, spaces included: `HUSHKEY` is 7.
 - The product panel, the keys and the switches are HTML and CSS (with SVG outlines), not images: restyle them through the CSS variables and the .m-key* classes.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #e4e5e8 (page background, key faces), `--color-2` #232427 (body text, shadows), `--color-3` #fbfbfc (highlights on keys and headings), `--color-4` #8d8e93 (hairline outlines and contour lines), `--color-5` #55565b (embossed headings), `--color-6` #b4b5b9 (upper edge of the hero gradient), `--color-7` #2c2d31 (graphite FAQ, contact and footer bands), `--color-8` #a9abb0 (muted text on graphite), `--color-9` #121315 (deep shadows under graphite keys, buttons and headings); body text needs 4.5:1 contrast.
@@ -37,7 +33,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - `data-8b-placeholder` (og-image, favicon, email, phone, form): real value in, attribute out; no value, remove the row (no image: drop `og:image`, set `twitter:card` to `summary`).
 - Pre-order buttons in the hero and the nav: now #editions; owner's target: your checkout, waitlist or store URL.
 - Pre-order Chalk / Pre-order Graphite in editions: now #contact; owner's target: the checkout URL of each finish.
-- The form in `#contact` (fields `name`, `email`, `topic`, `message`) sends nothing; `section-script:contact` validates it and shows the thank-you text. Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
+- The form in `#contact` (fields `name`, `email`, `topic`, `message`) sends nothing; `section-script:contact` handles its submit in the page (read it before you connect a service). Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
 - The name Hushkey (any letter case); the favicon letter and colours in `<link rel="icon">`.
 - Photos (8, Unsplash: modes 4, dimmer 1, material 3): `src`, no `srcset`/`sizes`, `width`/`height` to the ratio, `alt`, CREDITS.md.
 - `<title>`, meta description, og tags.
@@ -53,10 +49,10 @@ All demo text, never to be invented:
 - Place and hours: "Rotterdam, open Thursdays by appointment" (contact) and "© 2026 Hushkey Studio, Rotterdam" (footer).
 
 ## Known limits
-- Lighthouse lists gsap and ScrollTrigger as render-blocking (about 0.8–0.95 s); they sit at the end of body and the motion scripts after them need them loaded.
 - Without JavaScript the phone menu button cannot open the overlay; the links stay reachable in the hero and the footer.
 - Mid-wipe frames in modes show two half captions; it resolves within the wipe.
-- Resizing across 900 px keeps the previous order of the states wave until reload (cosmetic).
+- The modes stage wipes exactly four rooms: the CSS has one wipe rule per item (`#modes .modes__list > li:nth-of-type(2)` to `(4)`), so a fifth room needs its own rule and keyframes.
+- Without scroll-driven animations or with reduced motion, modes shows its four rooms as a grid (two by two, one column on phones) and chords shows the two keys already joined and pressed.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Hushkey left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Hushkey left only in class names.

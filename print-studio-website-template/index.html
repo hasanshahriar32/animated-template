@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/print-studio-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,8 +20,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%2311138d'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23ed008e'%3ED%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/gabarito/v9/QGYtz_0dZAGKJJ4t3HtoW4U.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/rethinksans/v7/AMOWz4SDuXOMCPfdoglY9JQEVFi3.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://fonts.gstatic.com/s/gabarito/v9/QGYtz_0dZAGKJJ4t3HtoW4U.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* latin-ext */
 @font-face {
@@ -97,11 +98,6 @@
   [data-8b-motion~="screen"].is-screening {
     mask: radial-gradient(circle closest-side, currentColor var(--screen-dot, 0%), transparent calc(var(--screen-dot, 0%) + 10%)) 0 0 / 14px 14px;
   }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-  .lenis [data-lenis-prevent], .lenis [data-lenis-prevent-wheel], .lenis [data-lenis-prevent-touch] { overscroll-behavior: contain; }
-  .lenis.lenis-smooth iframe { pointer-events: none; }
-  .lenis.lenis-autoToggle { transition-property: overflow; transition-duration: 1ms; transition-behavior: allow-discrete; }
 }
 </style>
 <style data-8b-part="system">
@@ -329,26 +325,6 @@
   }
 }
 </style>
-<style data-8b-part="scene-style:process-run">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #process[data-run] { height: var(--process-height, auto); }
-    #process[data-run] .process__stage { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; flex-direction: column; padding-block: 104px 48px; }
-    #process[data-run] .process__body { flex: 1 1 auto; min-height: 0; align-items: center; }
-    #process[data-run] .process__sheet { width: min(340px, (100svh - 390px) / 1.414); }
-    #process[data-run] .process__window { overflow: hidden; margin-right: calc(-1 * var(--space-1)); }
-    #process[data-run] .process__track { display: flex; gap: 18px; width: max-content; border-top: 0; }
-    #process[data-run] .station { width: min(340px, 74vw); align-content: start; padding: 26px 24px; border: 1px solid color-mix(in srgb, var(--color-3) 30%, transparent); }
-    @media (max-width: 899px) {
-      #process[data-run] .process__stage { padding-block: 84px 28px; }
-      #process[data-run] .process__head { gap: 12px; }
-      #process[data-run] .process__body { margin-top: 20px; gap: 22px; align-items: start; align-content: start; }
-      #process[data-run] .process__sheet { width: min(48%, (100svh - 590px) / 1.414); }
-      #process[data-run] .station { padding: 20px 18px; }
-    }
-  }
-}
-</style>
 <style data-8b-part="section:studio">
 @layer sections {
   #studio { padding-block: var(--space-2); background: var(--color-2); color: var(--color-4); }
@@ -421,13 +397,6 @@
   }
 }
 </style>
-<style data-8b-part="scene-style:workshops-index">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #workshops .session[data-waiting] .session__date { border-color: var(--color-1); background: transparent; color: var(--color-1); }
-  }
-}
-</style>
 <style data-8b-part="section:quote">
 @layer sections {
   #quote { padding-block: var(--space-2); background: var(--color-1); color: var(--color-3); }
@@ -471,13 +440,6 @@
     #runs .runs__head .m-text-2, #runs .runs__head .m-text-5 { grid-column: 1 / -1; }
     #runs .run { grid-template-columns: minmax(0, 1fr); }
     #runs .run__job { text-align: left; }
-  }
-}
-</style>
-<style data-8b-part="scene-style:runs-lens">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #runs[data-lens] .run__client { text-shadow: var(--lens-x, 0px) var(--lens-y, 0px) 0 color-mix(in srgb, var(--color-2) calc(var(--lens-a, 0) * 100%), transparent); }
   }
 }
 </style>
@@ -532,6 +494,183 @@
   }
 }
 </style>
+<style data-8b-part="motion">
+@layer scenes {
+  @property --motion-register-x { syntax: "<length>"; inherits: false; initial-value: 0px; }
+  @property --motion-register-y { syntax: "<length>"; inherits: false; initial-value: 0px; }
+  @property --motion-register-a { syntax: "<number>"; inherits: false; initial-value: 0; }
+  @property --motion-screen-dot { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+  @keyframes motion-register { from { --motion-register-x: 0.11em; --motion-register-y: 0.06em; --motion-register-a: 1; } to { --motion-register-x: 0em; --motion-register-y: 0em; --motion-register-a: 0; } }
+  @keyframes motion-screen { from { --motion-screen-dot: 0%; --motion-screen-on: repeat; } to { --motion-screen-dot: 150%; --motion-screen-on: repeat; } }
+  [data-8b-live] [data-8b-motion~="register"] {
+    --register-x: var(--motion-register-x); --register-y: var(--motion-register-y); --register-a: var(--motion-register-a);
+    animation: motion-register linear both;
+    animation-timeline: view(); animation-range: cover 5vh cover 45vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1);
+  }
+  /* The dot mask exists while --motion-screen-on is defined: before the entry and while the dots grow; then it reverts to the element's own mask. */
+  [data-8b-live] [data-8b-motion~="screen"] {
+    --motion-screen-mask: radial-gradient(circle closest-side, currentColor var(--motion-screen-dot), transparent calc(var(--motion-screen-dot) + 10%)) 0 0 / 14px 14px var(--motion-screen-on);
+    mask: var(--motion-screen-mask, revert-layer);
+  }
+  [data-8b-live] [data-8b-motion~="screen"]:not(.is-in) { --motion-screen-on: repeat; }
+  [data-8b-live] [data-8b-motion~="screen"].is-in { animation: motion-screen 1.2s cubic-bezier(0.3333, 0, 0.6667, 0.3333); }
+}
+</style>
+<style data-8b-part="scene:press-pass">
+@layer scenes {
+  @property --press-t { syntax: "<number>"; inherits: true; initial-value: 0; }
+  @keyframes press-pass { from { --press-t: 0; } to { --press-t: 1; } }
+  [data-8b-live] #press {
+    animation: press-pass linear both;
+    animation-timeline: view(); animation-range: cover 100vh cover calc(100vh + var(--press-run, 1px)); animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1);
+  }
+  [data-8b-live] #press .press__art .drum { translate: calc(var(--press-t) * var(--press-dx, 0px)) calc(var(--press-t) * var(--press-dy, 0px)); }
+  [data-8b-live] #press .press__art .drum__disc { scale: calc(1 - clamp(0, (var(--press-t) - 0.84) / 0.16, 1)); }
+  [data-8b-live] #press .press__band { clip-path: inset(0 0 clamp(0px, (1 - var(--press-t)) * var(--press-d, 0px), var(--press-h, 0px)) 0); }
+}
+</style>
+<style data-8b-part="scene:inks-register">
+@layer scenes {
+[data-8b-live] #inks .inks__stage { view-timeline: --inks-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #inks .inks__plate--blue, [data-8b-live] #inks .inks__plate--pink { animation-timeline: --inks-t1; animation-range: cover 5vh cover calc(50% - 2vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes inks-div-inks-plate-translate-d { 0% { translate: 70% -10%; } 100% { translate: 0px 0px; } }
+@keyframes inks-div-inks-plate-translate-m { 0% { translate: 52% -10%; } 100% { translate: 0px 0px; } }
+@keyframes inks-div-inks-plate-rotate { 0% { rotate: 7deg; } 100% { rotate: 0deg; } }
+@keyframes inks-div-inks-plate-translate-2-d { 0% { translate: -70% 10%; } 100% { translate: 0px 0px; } }
+@keyframes inks-div-inks-plate-translate-2-m { 0% { translate: -52% 10%; } 100% { translate: 0px 0px; } }
+@keyframes inks-div-inks-plate-rotate-2 { 0% { rotate: -6deg; } 100% { rotate: 0deg; } }
+@media (min-width: 900px) {
+  [data-8b-live] #inks .inks__plate--blue { animation-name: inks-div-inks-plate-translate-d, inks-div-inks-plate-rotate; }
+  [data-8b-live] #inks .inks__plate--pink { animation-name: inks-div-inks-plate-translate-2-d, inks-div-inks-plate-rotate-2; }
+}
+@media (max-width: 899px) {
+  [data-8b-live] #inks .inks__plate--blue { animation-name: inks-div-inks-plate-translate-m, inks-div-inks-plate-rotate; }
+  [data-8b-live] #inks .inks__plate--pink { animation-name: inks-div-inks-plate-translate-2-m, inks-div-inks-plate-rotate-2; }
+}
+}
+</style>
+<style data-8b-part="scene:process-run">
+@layer scenes {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-8b-live] #process { height: var(--process-height, auto); }
+    [data-8b-live] #process .process__stage { position: sticky; top: 0; height: 100svh; overflow: clip; display: flex; flex-direction: column; padding-block: 104px 48px; }
+    [data-8b-live] #process .process__body { flex: 1 1 auto; min-height: 0; align-items: center; }
+    [data-8b-live] #process .process__sheet { width: min(340px, (100svh - 390px) / 1.414); }
+    [data-8b-live] #process .process__window { overflow: hidden; margin-right: calc(-1 * var(--space-1)); }
+    [data-8b-live] #process .process__track { display: flex; gap: 18px; width: max-content; border-top: 0; }
+    [data-8b-live] #process .station { width: min(340px, 74vw); align-content: start; padding: 26px 24px; border: 1px solid color-mix(in srgb, var(--color-3) 30%, transparent); }
+    @media (max-width: 899px) {
+      [data-8b-live] #process .process__stage { padding-block: 84px 28px; }
+      [data-8b-live] #process .process__head { gap: 12px; }
+      [data-8b-live] #process .process__body { margin-top: 20px; gap: 22px; align-items: start; align-content: start; }
+      [data-8b-live] #process .process__sheet { width: min(48%, (100svh - 590px) / 1.414); }
+      [data-8b-live] #process .station { padding: 20px 18px; }
+    }
+  }
+}
+@layer scenes {
+[data-8b-live] #process { view-timeline: --process-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #process .process__track, [data-8b-live] #process .sheet__plate--blue, [data-8b-live] #process .sheet__plate--pink, [data-8b-live] #process .process__sheet > span:nth-of-type(-n+2) { animation-timeline: --process-t1; animation-fill-mode: both; }
+[data-8b-live] #process .process__track { animation-range: cover 100vh cover calc(100% - 100vh); animation-timing-function: linear; transform: none; }
+[data-8b-live] #process .sheet__plate--blue { animation-name: process-div-sheet-plate-clippath; animation-range: cover calc(30% + 40vh) cover calc(48% + 4vh); animation-timing-function: linear; }
+[data-8b-live] #process .sheet__plate--pink { animation-name: process-div-sheet-plate-clippath-2, process-div-sheet-plate-translate; animation-range: cover calc(52% - 4vh) cover calc(68% - 36vh), cover calc(62% - 24vh) cover calc(82% - 64vh); animation-timing-function: linear, cubic-bezier(0.65, 0, 0.35, 1); transform: none; }
+[data-8b-live] #process .process__sheet > span:nth-of-type(-n+2) { animation-range: cover calc(84% - 68vh) cover calc(100% - 100vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] #process .process__sheet > span:nth-of-type(1) { animation-name: process-span-sheet-under-translate, process-span-sheet-under-rotate; transform: none; }
+[data-8b-live] #process .process__sheet > span:nth-of-type(2) { animation-name: process-span-sheet-under-translate-2, process-span-sheet-under-rotate-2; transform: none; }
+@keyframes process-ol-process-track-translate { 0% { translate: 0px 0px; } 100% { translate: calc(-1 * var(--process-travel, 0px)) 0px; } }
+@keyframes process-div-sheet-plate-clippath { 0% { clip-path: inset(0% 0% 100%); } 99.998% { clip-path: inset(0% 0% 0.0556%); } 100% { clip-path: inset(0%); } }
+@keyframes process-div-sheet-plate-clippath-2 { 0% { clip-path: inset(0% 0% 100%); } 99.998% { clip-path: inset(0% 0% 0.0625%); } 100% { clip-path: inset(0%); } }
+@keyframes process-div-sheet-plate-translate { 0% { translate: 16px -10px; } 100% { translate: 0px 0px; } }
+@keyframes process-span-sheet-under-translate { 0% { translate: 0px 0px; } 100% { translate: 26px 22px; } }
+@keyframes process-span-sheet-under-rotate { 0% { rotate: 0deg; } 100% { rotate: -2deg; } }
+@keyframes process-span-sheet-under-translate-2 { 0% { translate: 0px 0px; } 100% { translate: 13px 11px; } }
+@keyframes process-span-sheet-under-rotate-2 { 0% { rotate: 0deg; } 100% { rotate: 1.5deg; } }
+[data-8b-live] #process .process__track { animation-name: process-ol-process-track-translate; }
+}
+</style>
+<style data-8b-part="scene:editions-pistons">
+@layer scenes {
+[data-8b-live] { --ease-power1-inout: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); }
+[data-8b-live] #editions .editions__rack { view-timeline: --editions-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #editions .editions__rack > div:nth-of-type(-n+4) { animation-timeline: --editions-t1; animation-range: cover 5vh cover 60vh; animation-fill-mode: both; transform: none; }
+[data-8b-live] #editions .editions__rack > div:is(:nth-of-type(1), :nth-of-type(3)) > .editions__trail { animation-name: editions-div-editions-trail-clippath; animation-timeline: --editions-t1; animation-range: cover 5vh cover 60vh; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #editions .editions__rack > div:is(:nth-of-type(2), :nth-of-type(4)) > .editions__trail { animation-name: editions-div-editions-trail-clippath-3; animation-timeline: --editions-t1; animation-range: cover 5vh cover 60vh; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+@keyframes editions-div-editions-lane-translate-d { 0% { translate: 0px -150px; } 100% { translate: 0px 0px; } }
+@keyframes editions-div-editions-lane-translate-m { 0% { translate: 0px -96px; } 100% { translate: 0px 0px; } }
+@keyframes editions-div-editions-lane-translate-3-d { 0% { translate: 0px 150px; } 100% { translate: 0px 0px; } }
+@keyframes editions-div-editions-lane-translate-3-m { 0% { translate: 0px 96px; } 100% { translate: 0px 0px; } }
+@keyframes editions-div-editions-trail-clippath { 0% { clip-path: inset(100% 0% 0%); } 100% { clip-path: inset(0%); } }
+@keyframes editions-div-editions-trail-clippath-3 { 0% { clip-path: inset(0% 0% 100%); } 100% { clip-path: inset(0%); } }
+@media (min-width: 900px) {
+  [data-8b-live] #editions .editions__rack > div:is(:nth-of-type(1), :nth-of-type(3)) { animation-name: editions-div-editions-lane-translate-d; animation-timing-function: var(--ease-power1-inout); }
+  [data-8b-live] #editions .editions__rack > div:is(:nth-of-type(2), :nth-of-type(4)) { animation-name: editions-div-editions-lane-translate-3-d; animation-timing-function: var(--ease-power1-inout); }
+}
+@media (max-width: 899px) {
+  [data-8b-live] #editions .editions__rack > div:is(:nth-of-type(1), :nth-of-type(3)) { animation-name: editions-div-editions-lane-translate-m; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+  [data-8b-live] #editions .editions__rack > div:is(:nth-of-type(2), :nth-of-type(4)) { animation-name: editions-div-editions-lane-translate-3-m; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+}
+}
+</style>
+<style data-8b-part="scene:workshops-index">
+@layer scenes {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-8b-live] #workshops .session[data-waiting] .session__date { border-color: var(--color-1); background: transparent; color: var(--color-1); }
+  }
+}
+@layer scenes {
+[data-8b-live] #workshops .workshops__lane { view-timeline: --workshops-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #workshops .workshops__carriage { animation-timeline: --workshops-t1; animation-range: cover 38vh cover calc(100% - 62vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes workshops-div-workshops-carriage-translate { 0% { translate: 0px calc(-1 * var(--workshops-travel, 0px)); } 100% { translate: 0px 0px; } }
+[data-8b-live] #workshops .workshops__carriage { animation-name: workshops-div-workshops-carriage-translate; }
+}
+</style>
+<style data-8b-part="scene:runs-lens">
+@layer scenes {
+  @property --runs-lens-x { syntax: "<length>"; inherits: false; initial-value: 0px; }
+  @property --runs-lens-y { syntax: "<length>"; inherits: false; initial-value: 0px; }
+  @property --runs-lens-a { syntax: "<number>"; inherits: false; initial-value: 0; }
+  @keyframes runs-lens-push {
+    0% { translate: calc(var(--runs-reach) * var(--runs-side)) 0px; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); }
+    50% { translate: 0px 0px; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); }
+    100% { translate: calc(-1 * var(--runs-reach) * var(--runs-side)) 0px; }
+  }
+  @keyframes runs-lens-plate {
+    0%, 100% { --runs-lens-x: calc(var(--runs-plate) * var(--runs-side)); --runs-lens-y: calc(var(--runs-plate) / 2); --runs-lens-a: 1; }
+    22.2222%, 77.7778% { --runs-lens-a: 1; }
+    50% { --runs-lens-x: 0px; --runs-lens-y: 0px; --runs-lens-a: 0; }
+  }
+  [data-8b-live] #runs .run__client {
+    --runs-reach: 72px; --runs-plate: 12px; --runs-side: calc(1 - 2 * mod(var(--i, 0), 2));
+    text-shadow: var(--runs-lens-x) var(--runs-lens-y) 0 color-mix(in srgb, var(--color-2) calc(var(--runs-lens-a) * 100%), transparent);
+    animation: runs-lens-push linear both, runs-lens-plate linear both;
+    animation-timeline: view(); animation-range: entry 50% exit 50%;
+  }
+  @media (max-width: 899px) {
+    [data-8b-live] #runs .run__client { --runs-reach: 22px; --runs-plate: 6px; }
+  }
+}
+</style>
+<style data-8b-part="scene:contact-landing">
+@layer scenes {
+[data-8b-live] #contact .contact__lanes { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact .contact__lanes > div:nth-of-type(-n+4) > .drum, [data-8b-live] #contact .contact__lanes > div:nth-of-type(-n+4) > .lane__print { animation-timeline: --contact-t1; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0); animation-fill-mode: both; }
+[data-8b-live] #contact .contact__lanes > div:nth-of-type(1) > .drum { animation-range: cover 4vh cover calc(70% - 56.2vh); transform: none; }
+[data-8b-live] #contact .contact__lanes > div:nth-of-type(1) > .lane__print { animation-range: cover 4vh cover calc(70% - 56.2vh); }
+[data-8b-live] #contact .contact__lanes > div:nth-of-type(3) > .drum { animation-range: cover calc(8% - 2.88vh) cover calc(78% - 63.08vh); transform: none; }
+[data-8b-live] #contact .contact__lanes > div:nth-of-type(3) > .lane__print { animation-range: cover calc(8% - 2.88vh) cover calc(78% - 63.08vh); }
+[data-8b-live] #contact .contact__lanes > div:nth-of-type(2) > .drum { animation-range: cover calc(20% - 13.2vh) cover calc(90% - 73.4vh); transform: none; }
+[data-8b-live] #contact .contact__lanes > div:nth-of-type(2) > .lane__print { animation-range: cover calc(20% - 13.2vh) cover calc(90% - 73.4vh); }
+[data-8b-live] #contact .contact__lanes > div:nth-of-type(4) > .drum { animation-range: cover calc(28% - 20.08vh) cover calc(98% - 80.28vh); transform: none; }
+[data-8b-live] #contact .contact__lanes > div:nth-of-type(4) > .lane__print { animation-range: cover calc(28% - 20.08vh) cover calc(98% - 80.28vh); }
+@keyframes contact-div-drum-translate { 0% { translate: 0px calc(-1 * var(--contact-travel, 0px)); } 100% { translate: 0px 0px; } }
+@keyframes contact-div-lane-print-clippath { 0% { clip-path: inset(0px 0px var(--contact-travel, 0px)); } 100% { clip-path: inset(0px); } }
+[data-8b-live] #contact .contact__lanes > div:nth-of-type(-n+4) > .drum { animation-name: contact-div-drum-translate; }
+[data-8b-live] #contact .contact__lanes > div:nth-of-type(-n+4) > .lane__print { animation-name: contact-div-lane-print-clippath; }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body class="m-text">
 <!-- navigation: top bar: wordmark, section links, Price a run button; phone menu overlay -->
@@ -551,7 +690,7 @@
       <button class="m-icon-btn nav__toggle" type="button" aria-expanded="false" aria-controls="menu"><span class="m-icon-btn__dot" aria-hidden="true"></span><span class="m-icon-btn__name">Open menu</span></button>
     </div>
   </div>
-  <div id="menu" class="nav__menu" data-lenis-prevent hidden>
+  <div id="menu" class="nav__menu" hidden>
     <div class="nav__menu-top">
       <span class="m-text-6">dotdrum</span>
       <button class="m-icon-btn nav__close" type="button"><span class="m-icon-btn__dot" aria-hidden="true"></span><span class="m-icon-btn__name">Close menu</span></button>
@@ -595,7 +734,7 @@
       <p class="press__note">Medium Blue goes down first and dries for a minute; Fluorescent Pink follows on the same sheet. The order never changes, and neither do the drums.</p>
     </div>
     <div class="press__more">
-      <figure class="press__photo m-photo" data-8b-motion="screen"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1778690133450-ddb08af48d76?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8aW5rJTIwcm9sbGVyfGVufDF8MHx8fDE3OTEyOTU0NTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A hand rolling black ink across a slab with a rubber brayer" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="press__photo m-photo" data-8b-motion="screen"><img src="https://images.unsplash.com/photo-1778690133450-ddb08af48d76?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8aW5rJTIwcm9sbGVyfGVufDF8MHx8fDE3OTEyOTU0NTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A hand rolling black ink across a slab with a rubber brayer" width="1600" height="1067" loading="lazy"></figure>
       <p>We started with one secondhand duplicator and a box of misprinted flyers. Six years on we run short editions for artists, bands, galleries and anyone with a PDF and a deadline.</p>
       <ul class="press__facts">
         <li>Runs from 30 to 3,000 copies</li>
@@ -612,7 +751,7 @@
     <div class="inks__copy">
       <h2 id="inks-title" class="m-text-2" data-8b-motion="register">Two inks. Sixteen colours.</h2>
       <p class="m-text-5">Blue under pink makes a violet neither drum holds. Screen each ink at 30 or 60 percent and the overlaps hand you a whole palette.</p>
-      <dl class="inks__list">
+      <dl class="inks__list" data-8b-items=":scope > div">
         <div><dt class="m-text-6">Medium Blue</dt><dd>The first pass. Dense and cool; it carries type, line and shadow.</dd></div>
         <div><dt class="m-text-6">Fluorescent Pink</dt><dd>The second pass. It glows under shop lights and is brightest on uncoated paper.</dd></div>
         <div><dt class="m-text-6">Overprint</dt><dd>Where the two meet. We proof every overlap on your paper before the run.</dd></div>
@@ -646,7 +785,7 @@
         </div>
       </div>
       <div class="process__window">
-        <ol class="process__track">
+        <ol class="process__track" data-8b-items=":scope > li">
           <li class="station">
             <span class="station__no">1</span>
             <h3 class="m-text-6">Artwork</h3>
@@ -688,7 +827,7 @@
     <div class="studio__copy">
       <h2 id="studio-title" class="m-text-2" data-8b-motion="register">A small room with a loud machine.</h2>
       <p class="m-text-5">Ines and Tom run the studio from a former bicycle workshop off Inkwell Yard. Most days one of them feeds paper while the other talks someone out of a fifth colour.</p>
-      <dl class="studio__kit">
+      <dl class="studio__kit" data-8b-items=":scope > div">
         <div><dt class="m-text-6">Two-drum duplicator</dt><dd>Prints both inks in one feed, up to 130 sheets a minute, A3 at most.</dd></div>
         <div><dt class="m-text-6">Guillotine</dt><dd>Cuts a 500-sheet stack square to within half a millimetre.</dd></div>
         <div><dt class="m-text-6">Long-arm stapler</dt><dd>Saddle-stitches zines up to 64 pages, one by one.</dd></div>
@@ -696,9 +835,9 @@
       </dl>
     </div>
     <div class="studio__photos">
-      <figure class="m-photo studio__photo studio__photo--wide" data-8b-motion="screen"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1778690142874-af0794fc5470?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8aW5rJTIwcm9sbGVyfGVufDF8MHx8fDE3OTEyOTU0NTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="A freshly inked print being peeled away from the block" width="1600" height="1067" loading="lazy"></figure>
-      <figure class="m-photo studio__photo" data-8b-motion="screen"><img style="background:#594026" src="https://images.unsplash.com/photo-1764025851210-9ad5ed83e01f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c3RhcGxlciUyMHBhcGVyfGVufDF8MHx8fDE3OTEyOTU0NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A heavy stapler resting on a stack of printed sheets" width="1600" height="1068" loading="lazy"></figure>
-      <figure class="m-photo studio__photo studio__photo--low" data-8b-motion="screen"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1771440047775-5a20019f0091?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8c3RhcGxlciUyMHBhcGVyfGVufDF8MHx8fDE3OTEyOTU0NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="Hands trimming a printed sheet on a cutting mat among tape and tools" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="m-photo studio__photo studio__photo--wide" data-8b-motion="screen"><img src="https://images.unsplash.com/photo-1778690142874-af0794fc5470?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8aW5rJTIwcm9sbGVyfGVufDF8MHx8fDE3OTEyOTU0NTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="A freshly inked print being peeled away from the block" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="m-photo studio__photo" data-8b-motion="screen"><img src="https://images.unsplash.com/photo-1764025851210-9ad5ed83e01f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c3RhcGxlciUyMHBhcGVyfGVufDF8MHx8fDE3OTEyOTU0NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A heavy stapler resting on a stack of printed sheets" width="1600" height="1068" loading="lazy"></figure>
+      <figure class="m-photo studio__photo studio__photo--low" data-8b-motion="screen"><img src="https://images.unsplash.com/photo-1771440047775-5a20019f0091?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8c3RhcGxlciUyMHBhcGVyfGVufDF8MHx8fDE3OTEyOTU0NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="Hands trimming a printed sheet on a cutting mat among tape and tools" width="1600" height="1067" loading="lazy"></figure>
     </div>
   </div>
 </section>
@@ -709,60 +848,60 @@
     <p class="m-text-5">Small editions we publish ourselves, in the same two inks. When a run sells out, it stays sold out.</p>
   </div>
   <div class="wrap editions__rack">
-    <div class="editions__lane editions__lane--low">
+    <div class="editions__lane editions__lane--low" data-8b-items=":scope > .edition">
       <div class="editions__trail m-trail" aria-hidden="true"></div>
       <article class="edition">
-        <figure class="m-photo edition__photo"><img style="background:#c0c0a6" src="https://images.unsplash.com/photo-1721709384897-5afd4684eb93?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8emluZXxlbnwxfDF8fHwxNzkxMjk1NDQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="An open zine with a gradient cover lying on a desk among notebooks" width="1600" height="2400" loading="lazy"></figure>
+        <figure class="m-photo edition__photo"><img src="https://images.unsplash.com/photo-1721709384897-5afd4684eb93?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8emluZXxlbnwxfDF8fHwxNzkxMjk1NDQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="An open zine with a gradient cover lying on a desk among notebooks" width="1600" height="2400" loading="lazy"></figure>
         <h3 class="m-text-6">Soft Machines</h3>
         <p class="edition__meta m-text-4">Zine · 32 pp · A5</p>
         <p class="edition__buy"><span class="edition__price">£9</span><a data-8b-placeholder="email" class="m-link" href="mailto:shop@dotdrum.example?subject=Order%3A%20Soft%20Machines">Order</a></p>
       </article>
       <article class="edition">
-        <figure class="m-photo edition__photo"><img style="background:#d9590c" src="https://images.unsplash.com/photo-1723588131343-ad089b18cf80?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGFydCUyMHByaW50fGVufDF8MXx8fDE3OTEyOTU0NjZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="A scatter of bright printed cards with blotted textures" width="1600" height="2133" loading="lazy"></figure>
+        <figure class="m-photo edition__photo"><img src="https://images.unsplash.com/photo-1723588131343-ad089b18cf80?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGFydCUyMHByaW50fGVufDF8MXx8fDE3OTEyOTU0NjZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="A scatter of bright printed cards with blotted textures" width="1600" height="2133" loading="lazy"></figure>
         <h3 class="m-text-6">Pink Weather</h3>
         <p class="edition__meta m-text-4">Postcards · set of 12</p>
         <p class="edition__buy"><span class="edition__price">£14</span><a data-8b-placeholder="email" class="m-link" href="mailto:shop@dotdrum.example?subject=Order%3A%20Pink%20Weather">Order</a></p>
       </article>
     </div>
-    <div class="editions__lane editions__lane--high">
+    <div class="editions__lane editions__lane--high" data-8b-items=":scope > .edition">
       <article class="edition">
-        <figure class="m-photo edition__photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1669690972278-2680553fe7bd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Ym9va2xldHxlbnwxfDF8fHwxNzkxMjk1NDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Two slim booklets casting long shadows on a pale surface" width="1600" height="2133" loading="lazy"></figure>
+        <figure class="m-photo edition__photo"><img src="https://images.unsplash.com/photo-1669690972278-2680553fe7bd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Ym9va2xldHxlbnwxfDF8fHwxNzkxMjk1NDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Two slim booklets casting long shadows on a pale surface" width="1600" height="2133" loading="lazy"></figure>
         <h3 class="m-text-6">Quiet Pages</h3>
         <p class="edition__meta m-text-4">Booklet · 24 pp · A6</p>
         <p class="edition__buy"><span class="edition__price">£6</span><a data-8b-placeholder="email" class="m-link" href="mailto:shop@dotdrum.example?subject=Order%3A%20Quiet%20Pages">Order</a></p>
       </article>
       <article class="edition">
-        <figure class="m-photo edition__photo"><img style="background:#404040" src="https://images.unsplash.com/photo-1707989515901-e31084a89a37?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bWFnYXppbmUlMjBzdGFja3xlbnwxfDF8fHwxNzkxMjk1NDY2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="A loose pile of printed pamphlets on a wooden table" width="1600" height="2400" loading="lazy"></figure>
+        <figure class="m-photo edition__photo"><img src="https://images.unsplash.com/photo-1707989515901-e31084a89a37?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bWFnYXppbmUlMjBzdGFja3xlbnwxfDF8fHwxNzkxMjk1NDY2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="A loose pile of printed pamphlets on a wooden table" width="1600" height="2400" loading="lazy"></figure>
         <h3 class="m-text-6">Overprint Almanac</h3>
         <p class="edition__meta m-text-4">Book · 96 pp · A5</p>
         <p class="edition__buy"><span class="edition__price">£22</span><a data-8b-placeholder="email" class="m-link" href="mailto:shop@dotdrum.example?subject=Order%3A%20Overprint%20Almanac">Order</a></p>
       </article>
       <div class="editions__trail m-trail" aria-hidden="true"></div>
     </div>
-    <div class="editions__lane editions__lane--low">
+    <div class="editions__lane editions__lane--low" data-8b-items=":scope > .edition">
       <div class="editions__trail m-trail" aria-hidden="true"></div>
       <article class="edition">
-        <figure class="m-photo edition__photo"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1712640365578-fbdf50b55ddc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Ym9va2xldHxlbnwxfDF8fHwxNzkxMjk1NDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="The pages of a thin publication fanned open in a curl" width="1600" height="2408" loading="lazy"></figure>
+        <figure class="m-photo edition__photo"><img src="https://images.unsplash.com/photo-1712640365578-fbdf50b55ddc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Ym9va2xldHxlbnwxfDF8fHwxNzkxMjk1NDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="The pages of a thin publication fanned open in a curl" width="1600" height="2408" loading="lazy"></figure>
         <h3 class="m-text-6">Fold Here</h3>
         <p class="edition__meta m-text-4">Zine · 16 pp · A6</p>
         <p class="edition__buy"><span class="edition__price">£5</span><a data-8b-placeholder="email" class="m-link" href="mailto:shop@dotdrum.example?subject=Order%3A%20Fold%20Here">Order</a></p>
       </article>
       <article class="edition">
-        <figure class="m-photo edition__photo"><img style="background:#d9590c" src="https://images.unsplash.com/photo-1767652723573-161f1c223d63?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjN8fHBvc3RlciUyMGRlc2lnbnxlbnwxfDF8fHwxNzkxMjk1NDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Four bold posters pasted side by side on a brick wall" width="1600" height="2400" loading="lazy"></figure>
+        <figure class="m-photo edition__photo"><img src="https://images.unsplash.com/photo-1767652723573-161f1c223d63?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjN8fHBvc3RlciUyMGRlc2lnbnxlbnwxfDF8fHwxNzkxMjk1NDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Four bold posters pasted side by side on a brick wall" width="1600" height="2400" loading="lazy"></figure>
         <h3 class="m-text-6">Night Buses</h3>
         <p class="edition__meta m-text-4">Posters · 3 × A3</p>
         <p class="edition__buy"><span class="edition__price">£30</span><a data-8b-placeholder="email" class="m-link" href="mailto:shop@dotdrum.example?subject=Order%3A%20Night%20Buses">Order</a></p>
       </article>
     </div>
-    <div class="editions__lane editions__lane--high">
+    <div class="editions__lane editions__lane--high" data-8b-items=":scope > .edition">
       <article class="edition">
-        <figure class="m-photo edition__photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1789811870656-7eba4d7a9acb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fG1hZ2F6aW5lJTIwc3RhY2t8ZW58MXwxfHx8MTc5MTI5NTQ2Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Stacks of independent magazines laid out on a table" width="1600" height="2400" loading="lazy"></figure>
+        <figure class="m-photo edition__photo"><img src="https://images.unsplash.com/photo-1789811870656-7eba4d7a9acb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fG1hZ2F6aW5lJTIwc3RhY2t8ZW58MXwxfHx8MTc5MTI5NTQ2Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Stacks of independent magazines laid out on a table" width="1600" height="2400" loading="lazy"></figure>
         <h3 class="m-text-6">Back Issues</h3>
         <p class="edition__meta m-text-4">Magazine · 64 pp · A4</p>
         <p class="edition__buy"><span class="edition__price">£12</span><a data-8b-placeholder="email" class="m-link" href="mailto:shop@dotdrum.example?subject=Order%3A%20Back%20Issues">Order</a></p>
       </article>
       <article class="edition">
-        <figure class="m-photo edition__photo"><img style="background:#594026" src="https://images.unsplash.com/photo-1790715077259-3be59b05110e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fG1hZ2F6aW5lJTIwc3RhY2t8ZW58MXwxfHx8MTc5MTI5NTQ2Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="A tall stack of weathered magazines seen from the spines" width="1600" height="2400" loading="lazy"></figure>
+        <figure class="m-photo edition__photo"><img src="https://images.unsplash.com/photo-1790715077259-3be59b05110e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fG1hZ2F6aW5lJTIwc3RhY2t8ZW58MXwxfHx8MTc5MTI5NTQ2Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="A tall stack of weathered magazines seen from the spines" width="1600" height="2400" loading="lazy"></figure>
         <h3 class="m-text-6">Spine Index</h3>
         <p class="edition__meta m-text-4">Box of ten zines</p>
         <p class="edition__buy"><span class="edition__price">£45</span><a data-8b-placeholder="email" class="m-link" href="mailto:shop@dotdrum.example?subject=Order%3A%20Spine%20Index">Order</a></p>
@@ -777,11 +916,11 @@
     <div class="workshops__head">
       <h2 id="workshops-title" class="m-text-2" data-8b-motion="register">Learn the drum.</h2>
       <p class="m-text-5">Evening sessions for six people at a time. You leave with an edition of your own and ink under your nails.</p>
-      <figure class="m-photo workshops__photo" data-8b-motion="screen"><img style="background:#262626" src="https://images.unsplash.com/photo-1766932901295-d4185660341b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8d29ya3Nob3AlMjB0YWJsZSUyMGhhbmRzfGVufDF8MHx8fDE3OTEyOTU0Njd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="People of all ages working side by side at long craft tables" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="m-photo workshops__photo" data-8b-motion="screen"><img src="https://images.unsplash.com/photo-1766932901295-d4185660341b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8d29ya3Nob3AlMjB0YWJsZSUyMGhhbmRzfGVufDF8MHx8fDE3OTEyOTU0Njd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="People of all ages working side by side at long craft tables" width="1600" height="1067" loading="lazy"></figure>
     </div>
     <div class="workshops__sheet">
       <div class="workshops__lane" aria-hidden="true"><div class="workshops__carriage"><div class="workshops__trail m-trail"></div><span class="workshops__drum m-disc"></span></div></div>
-      <ol class="workshops__list">
+      <ol class="workshops__list" data-8b-items=":scope > li">
         <li class="session">
           <p class="session__date"><time datetime="2026-10-15">Thu 15 Oct</time></p>
           <h3 class="m-text-6">First pass</h3>
@@ -882,7 +1021,7 @@
       <h2 id="runs-title" class="m-text-2" data-8b-motion="register">Lately on the drum.</h2>
       <p class="m-text-5">A page from the press log: who came in, what went through, and in which ink.</p>
     </div>
-    <ol class="runs__log">
+    <ol class="runs__log" data-8b-items=":scope > li">
       <li class="run"><p class="run__client m-text-6">Low Tide Records</p><p class="run__job">Sleeve inserts · 500 copies · blue and pink</p></li>
       <li class="run"><p class="run__client m-text-6">Hollow Oak Poetry Night</p><p class="run__job">Programmes · 120 copies · blue</p></li>
       <li class="run"><p class="run__client m-text-6">Gallery Seven</p><p class="run__job">Exhibition posters · 80 × A3 · blue and pink</p></li>
@@ -896,7 +1035,7 @@
 <section id="faq" class="faq" data-8b-section="faq" aria-labelledby="faq-title">
   <div class="wrap grid faq__grid">
     <h2 id="faq-title" class="m-text-2" data-8b-motion="register">Before you send a file.</h2>
-    <div class="faq__list">
+    <div class="faq__list" data-8b-items=":scope > details">
       <details class="faq__item">
         <summary><span class="m-text-6">What file should I send?</span><span class="m-icon-btn" aria-hidden="true"><span class="m-icon-btn__dot"></span></span></summary>
         <div class="faq__answer"><p>A PDF with one page per ink, everything in black. Make page one the blue and page two the pink; we turn greys into halftone on the machine.</p></div>
@@ -929,7 +1068,7 @@
   <div class="wrap grid contact__grid">
     <div class="contact__copy">
       <h2 id="contact-title" class="m-text-2" data-8b-motion="register">Bring a file. Leave with a stack.</h2>
-      <dl class="contact__details">
+      <dl class="contact__details" data-8b-items=":scope > div">
         <div><dt class="m-text-4">Studio</dt><dd>Unit 4, Inkwell Yard Works<br>Sheffield S0 0AA</dd></div>
         <div><dt class="m-text-4">Open</dt><dd>Tuesday to Friday 10–6<br>Saturday 11–4</dd></div>
         <div><dt class="m-text-4">Email</dt><dd><a data-8b-placeholder="email" class="m-link" href="mailto:hello@dotdrum.example">hello@dotdrum.example</a></dd></div>
@@ -958,7 +1097,7 @@
     <p class="footer__word m-text-3" style="--len:7" data-8b-motion="register">dotdrum</p>
     <div class="footer__cols">
       <nav class="footer__nav" aria-label="Footer">
-        <ul>
+        <ul data-8b-items=":scope > li">
           <li><a class="m-link" href="#inks">Inks</a></li>
           <li><a class="m-link" href="#process">Process</a></li>
           <li><a class="m-link" href="#editions">Editions</a></li>
@@ -968,7 +1107,7 @@
         </ul>
       </nav>
       <p class="footer__address">Unit 4, Inkwell Yard Works<br>Sheffield S0 0AA<br><a data-8b-placeholder="email" class="m-link" href="mailto:hello@dotdrum.example">hello@dotdrum.example</a></p>
-      <ul class="footer__social">
+      <ul class="footer__social" data-8b-items=":scope > li">
         <li><a data-8b-placeholder="social" class="m-link" href="https://www.instagram.com/">Instagram</a></li>
         <li><a data-8b-placeholder="social" class="m-link" href="https://www.are.na/">Are.na</a></li>
         <li><a data-8b-placeholder="social" class="m-link" href="https://www.youtube.com/">YouTube</a></li>
@@ -980,123 +1119,6 @@
     </div>
   </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function navOffset() {
-  const shell = document.querySelector('#nav .nav__shell');
-  return shell ? shell.offsetHeight : 0;
-}
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.09, anchors: { offset: -navOffset() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  register(element, vars = {}) {
-    return gsap.fromTo(element,
-      { '--register-x': '0.11em', '--register-y': '0.06em', '--register-a': 1 },
-      { '--register-x': '0em', '--register-y': '0em', '--register-a': 0, ease: 'power2.out', ...vars });
-  },
-  screen(element, vars = {}) {
-    return gsap.fromTo(element, { '--screen-dot': '0%' }, { '--screen-dot': '150%', duration: 1.2, ease: 'power1.in', ...vars });
-  }
-};
-function registerEnd(element) {
-  const top = element.getBoundingClientRect().top + window.scrollY;
-  return Math.min(top - innerHeight * 0.55, ScrollTrigger.maxScroll(window) - 1);
-}
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  const plates = section.querySelectorAll('[data-8b-motion~="register"]');
-  if (plates.length) {
-    const id = `effect:register:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      plates.forEach((element, index) => ScrollTrigger.create({
-        id: `${id}:${index}`, trigger: element, start: 'top 95%', end: () => registerEnd(element),
-        scrub: 0.5, animation: effects.register(element)
-      }));
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  }
-  const screens = section.querySelectorAll('[data-8b-motion~="screen"]');
-  if (screens.length) {
-    const id = `effect:screen:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      screens.forEach((element, index) => {
-        element.classList.add('is-screening');
-        const tween = effects.screen(element, { paused: true, onComplete: () => element.classList.remove('is-screening') });
-        ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top 88%', once: true, onEnter: () => tween.play() });
-      });
-      return () => screens.forEach(element => element.classList.remove('is-screening'));
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  }
-});
-</script>
 <script data-8b-part="section-script:nav">
 (() => {
   const nav = document.getElementById('nav');
@@ -1117,7 +1139,7 @@ document.querySelectorAll('[data-8b-section]').forEach(section => {
   const setOpen = open => {
     menu.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); close.focus(); } else { window.lenis?.start(); }
+    if (open) { window.motionKit?.wheel?.stop(); close.focus(); } else { window.motionKit?.wheel?.start(); }
   };
   toggle.addEventListener('click', () => setOpen(true));
   close.addEventListener('click', () => { setOpen(false); toggle.focus(); });
@@ -1131,69 +1153,6 @@ document.querySelectorAll('[data-8b-section]').forEach(section => {
   if (!section || !('IntersectionObserver' in window)) return;
   new IntersectionObserver(([entry]) => section.toggleAttribute('data-offscreen', !entry.isIntersecting)).observe(section);
 })();
-</script>
-<script data-8b-part="scene:press-pass">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('press');
-    const lanes = [...section.querySelectorAll('.press__art .lane')];
-    const bands = [...section.querySelectorAll('.press__band')];
-    const panel = section.querySelector('.press__panel');
-    if (!panel || !lanes.length || lanes.length !== bands.length) throw new Error('press-pass: lanes and bands must match');
-    const drums = lanes.map(lane => lane.querySelector('.drum'));
-    const discs = lanes.map(lane => lane.querySelector('.drum__disc'));
-    const setX = drums.map(drum => gsap.quickSetter(drum, 'x', 'px'));
-    const setY = drums.map(drum => gsap.quickSetter(drum, 'y', 'px'));
-    const setScaleX = discs.map(disc => gsap.quickSetter(disc, 'scaleX'));
-    const setScaleY = discs.map(disc => gsap.quickSetter(disc, 'scaleY'));
-    const ease = gsap.parseEase('sine.inOut');
-    let geometry = null;
-    const measure = () => {
-      gsap.set(drums, { x: 0, y: 0 });
-      gsap.set(discs, { scale: 1 });
-      bands.forEach(band => { band.style.clipPath = ''; });
-      const top = section.getBoundingClientRect().top + window.scrollY;
-      const box = panel.getBoundingClientRect();
-      const panelTop = box.top + window.scrollY - top;
-      const panelBottom = box.bottom + window.scrollY - top;
-      const distance = Math.max(1, section.offsetHeight - innerHeight);
-      geometry = {
-        panelTop, panelBottom,
-        end: gsap.utils.clamp(0.55, 1, (panelBottom - innerHeight * 0.85) / distance),
-        items: drums.map((drum, index) => {
-          const rect = drum.getBoundingClientRect();
-          const band = bands[index].getBoundingClientRect();
-          return { centre: rect.top + rect.height / 2 + window.scrollY - top, dx: band.left + band.width / 2 - (rect.left + rect.width / 2), height: band.height };
-        })
-      };
-    };
-    const render = progress => {
-      if (!geometry) return;
-      const t = ease(Math.min(1, progress / geometry.end));
-      const scale = 1 - gsap.utils.clamp(0, 1, (t - 0.84) / 0.16);
-      geometry.items.forEach((item, index) => {
-        const y = t * (geometry.panelBottom - item.centre);
-        setX[index](t * item.dx);
-        setY[index](y);
-        setScaleX[index](scale);
-        setScaleY[index](scale);
-        const printed = item.centre + y - geometry.panelTop;
-        bands[index].style.clipPath = printed >= item.height - 0.5 ? '' : `inset(0 0 ${(item.height - Math.max(0, printed)).toFixed(1)}px 0)`;
-      });
-    };
-    const trigger = ScrollTrigger.create({
-      id: 'press-pass', trigger: section, start: 'top top', end: 'bottom bottom',
-      onUpdate: self => render(self.progress),
-      onRefresh: self => { measure(); render(self.progress); }
-    });
-    return () => {
-      trigger.kill();
-      gsap.set(drums, { clearProps: 'transform' });
-      gsap.set(discs, { clearProps: 'transform' });
-      bands.forEach(band => { band.style.clipPath = ''; });
-    };
-  });
-}, { first: true });
 </script>
 <script data-8b-part="section-script:quote">
 (() => {
@@ -1247,171 +1206,208 @@ queueMotion(() => {
   });
 })();
 </script>
-<script data-8b-part="scene:inks-register">
-queueMotion(() => {
-  gsap.matchMedia().add({ motion: '(prefers-reduced-motion: no-preference)', narrow: '(max-width: 899px)' }, context => {
-    if (!context.conditions.motion) return;
-    const section = document.getElementById('inks');
-    const stage = section.querySelector('.inks__stage');
-    const blue = section.querySelector('.inks__plate--blue');
-    const pink = section.querySelector('.inks__plate--pink');
-    if (!stage || !blue || !pink) throw new Error('inks-register: plates missing');
-    const far = context.conditions.narrow ? 52 : 70;
-    gsap.timeline({ scrollTrigger: { id: 'inks-register', trigger: stage, start: 'top 95%', end: 'center 52%', scrub: 0.6 } })
-      .fromTo(blue, { xPercent: far, yPercent: -10, rotation: 7 }, { xPercent: 0, yPercent: 0, rotation: 0, ease: 'power2.out' }, 0)
-      .fromTo(pink, { xPercent: -far, yPercent: 10, rotation: -6 }, { xPercent: 0, yPercent: 0, rotation: 0, ease: 'power2.out' }, 0);
-  });
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
 });
-</script>
-<script data-8b-part="scene:process-run">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('process');
-    const windowBox = section.querySelector('.process__window');
-    const track = section.querySelector('.process__track');
-    const blue = section.querySelector('.sheet__plate--blue');
-    const pink = section.querySelector('.sheet__plate--pink');
-    const unders = section.querySelectorAll('.sheet__under');
-    if (!windowBox || !track || !blue || !pink) throw new Error('process-run: stage parts missing');
-    section.setAttribute('data-run', '');
-    const travel = () => Math.max(0, track.scrollWidth - windowBox.clientWidth);
-    const setHeight = () => section.style.setProperty('--process-height', `${Math.round(innerHeight + Math.max(travel() * 1.2, innerHeight * 0.9))}px`);
-    setHeight();
-    ScrollTrigger.addEventListener('refreshInit', setHeight);
-    gsap.timeline({ scrollTrigger: { id: 'process-run', trigger: section, start: 'top top', end: 'bottom bottom', scrub: true, invalidateOnRefresh: true } })
-      .fromTo(track, { x: 0 }, { x: () => -travel(), ease: 'none', duration: 1 }, 0)
-      .fromTo(blue, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', duration: 0.18 }, 0.3)
-      .fromTo(pink, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', duration: 0.16 }, 0.52)
-      .fromTo(pink, { x: 16, y: -10 }, { x: 0, y: 0, ease: 'power2.inOut', duration: 0.2 }, 0.62)
-      .from(unders, { x: 0, y: 0, rotation: 0, ease: 'power2.out', duration: 0.16 }, 0.84);
-    return () => {
-      ScrollTrigger.removeEventListener('refreshInit', setHeight);
-      section.removeAttribute('data-run');
-      section.style.removeProperty('--process-height');
-    };
-  });
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
 });
-</script>
-<script data-8b-part="scene:editions-pistons">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('editions');
-    const rack = section.querySelector('.editions__rack');
-    const low = section.querySelectorAll('.editions__lane--low');
-    const high = section.querySelectorAll('.editions__lane--high');
-    if (!rack || !low.length || !high.length) throw new Error('editions-pistons: lanes missing');
-    const offset = () => parseFloat(getComputedStyle(rack).getPropertyValue('--rack-offset')) || 0;
-    gsap.timeline({ scrollTrigger: { id: 'editions-pistons', trigger: rack, start: 'top 95%', end: 'top 40%', scrub: 0.7, invalidateOnRefresh: true } })
-      .fromTo(low, { y: () => -offset() }, { y: 0, ease: 'power1.inOut' }, 0)
-      .fromTo(high, { y: () => offset() }, { y: 0, ease: 'power1.inOut' }, 0)
-      .fromTo(section.querySelectorAll('.editions__lane--low .editions__trail'), { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power1.inOut' }, 0)
-      .fromTo(section.querySelectorAll('.editions__lane--high .editions__trail'), { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power1.inOut' }, 0);
-  });
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
 });
-</script>
-<script data-8b-part="scene:workshops-index">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('workshops');
-    const lane = section.querySelector('.workshops__lane');
-    const carriage = section.querySelector('.workshops__carriage');
-    const rows = [...section.querySelectorAll('.session')];
-    if (!lane || !carriage || !rows.length) throw new Error('workshops-index: lane parts missing');
-    const setY = gsap.quickSetter(carriage, 'y', 'px');
-    let geometry = null;
-    const measure = () => {
-      setY(0);
-      const top = lane.getBoundingClientRect().top;
-      const size = carriage.offsetHeight;
-      geometry = {
-        size, travel: Math.max(0, lane.offsetHeight - size),
-        rows: rows.map(row => { const box = row.getBoundingClientRect(); return box.top - top + Math.min(44, box.height / 2); })
-      };
-    };
-    const render = progress => {
-      if (!geometry) return;
-      setY(-geometry.travel * (1 - progress));
-      const centre = geometry.size / 2 + geometry.travel * progress;
-      rows.forEach((row, index) => row.toggleAttribute('data-waiting', centre < geometry.rows[index]));
-    };
-    const trigger = ScrollTrigger.create({
-      id: 'workshops-index', trigger: lane, start: 'top 62%', end: 'bottom 62%',
-      onUpdate: self => render(self.progress),
-      onRefresh: self => { measure(); render(self.progress); }
-    });
-    return () => {
-      trigger.kill();
-      gsap.set(carriage, { clearProps: 'transform' });
-      rows.forEach(row => row.removeAttribute('data-waiting'));
-    };
-  });
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
 });
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
 </script>
-<script data-8b-part="scene:runs-lens">
-queueMotion(() => {
-  gsap.matchMedia().add({ motion: '(prefers-reduced-motion: no-preference)', narrow: '(max-width: 899px)' }, context => {
-    if (!context.conditions.motion) return;
-    const section = document.getElementById('runs');
-    const names = [...section.querySelectorAll('.run__client')];
-    if (!names.length) throw new Error('runs-lens: no rows');
-    const reach = context.conditions.narrow ? 22 : 72;
-    const plate = context.conditions.narrow ? 6 : 12;
-    const setX = names.map(name => gsap.quickSetter(name, 'x', 'px'));
-    const setPlateX = names.map(name => gsap.quickSetter(name, '--lens-x', 'px'));
-    const setPlateY = names.map(name => gsap.quickSetter(name, '--lens-y', 'px'));
-    const setPlateA = names.map(name => gsap.quickSetter(name, '--lens-a'));
-    let centres = [];
-    const measure = () => {
-      names.forEach((name, index) => setX[index](0));
-      centres = names.map(name => { const box = name.getBoundingClientRect(); return box.top + box.height / 2 + window.scrollY; });
-    };
-    const render = scroll => {
-      const middle = scroll + innerHeight / 2;
-      names.forEach((name, index) => {
-        const distance = gsap.utils.clamp(-1, 1, (centres[index] - middle) / (innerHeight * 0.5));
-        const side = index % 2 ? -1 : 1;
-        const eased = Math.sign(distance) * distance * distance;
-        setX[index](eased * reach * side);
-        setPlateX[index](Math.abs(distance) * plate * side);
-        setPlateY[index](Math.abs(distance) * plate * 0.5);
-        setPlateA[index](Math.min(1, Math.abs(distance) * 1.8));
+<script data-8b-part="scene-script:press-pass">
+motionKit.scene('press-pass', () => {
+  const section = document.getElementById('press');
+  const lanes = [...section.querySelectorAll('.press__art .lane')];
+  const bands = [...section.querySelectorAll('.press__band')];
+  const panel = section.querySelector('.press__panel');
+  const drums = lanes.map(lane => lane.querySelector('.drum'));
+  if (!panel || !lanes.length || lanes.length !== bands.length || drums.includes(null)) throw new Error('press-pass: lanes and bands must match');
+  motionKit.measure(() => {
+    const top = section.getBoundingClientRect().top;
+    const box = panel.getBoundingClientRect();
+    const panelBottom = box.bottom - top;
+    const distance = Math.max(1, section.offsetHeight - innerHeight);
+    const end = Math.min(1, Math.max(0.55, (panelBottom - innerHeight * 0.85) / distance));
+    motionKit.set(section, { '--press-run': `${(end * distance).toFixed(1)}px` });
+    drums.forEach((drum, index) => {
+      const rect = motionKit.box(drum);
+      const band = bands[index].getBoundingClientRect();
+      const centre = rect.y + rect.h / 2 - top - scrollY;
+      motionKit.set(drum, {
+        '--press-dx': `${(band.left + scrollX + band.width / 2 - rect.x - rect.w / 2).toFixed(2)}px`,
+        '--press-dy': `${(panelBottom - centre).toFixed(2)}px`
       });
-    };
-    section.setAttribute('data-lens', '');
-    const trigger = ScrollTrigger.create({
-      id: 'runs-lens', trigger: section, start: 'top bottom', end: 'bottom top',
-      onUpdate: self => render(self.scroll()),
-      onRefresh: self => { measure(); render(self.scroll()); }
+      motionKit.set(bands[index], { '--press-d': `${(panelBottom - centre).toFixed(2)}px`, '--press-h': `${band.height.toFixed(2)}px` });
     });
-    return () => {
-      trigger.kill();
-      gsap.set(names, { clearProps: 'transform' });
-      names.forEach(name => ['--lens-x', '--lens-y', '--lens-a'].forEach(property => name.style.removeProperty(property)));
-      section.removeAttribute('data-lens');
-    };
   });
 });
 </script>
-<script data-8b-part="scene:contact-landing">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const box = section.querySelector('.contact__lanes');
-    const lanes = box ? [...box.querySelectorAll('.lane')] : [];
-    if (!lanes.length) throw new Error('contact-landing: lanes missing');
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'contact-landing', trigger: box, start: 'top 96%', end: 'bottom 82%', scrub: 0.5, invalidateOnRefresh: true } });
-    const starts = [0, 0.2, 0.08, 0.28];
-    lanes.forEach((lane, index) => {
-      const drum = lane.querySelector('.drum');
-      const print = lane.querySelector('.lane__print');
-      const travel = () => Math.max(0, lane.offsetHeight - drum.offsetHeight);
-      const at = starts[index % starts.length];
-      timeline
-        .fromTo(drum, { y: () => -travel() }, { y: 0, ease: 'power2.in', duration: 0.7 }, at)
-        .fromTo(print, { clipPath: () => `inset(0px 0px ${travel()}px 0px)` }, { clipPath: 'inset(0px 0px 0px 0px)', ease: 'power2.in', duration: 0.7 }, at);
-    });
-    timeline.to({}, { duration: 0.02 }, 0.98);
+<script data-8b-part="scene-script:process-run">
+motionKit.scene('process-run', () => {
+  const section = document.getElementById('process');
+  const windowBox = section.querySelector('.process__window');
+  const track = section.querySelector('.process__track');
+  if (!windowBox || !track) throw new Error('process-run: stage parts missing');
+  motionKit.measure(() => {
+    const travel = Math.max(0, track.scrollWidth - windowBox.clientWidth);
+    motionKit.set(section, { '--process-travel': `${travel}px`, '--process-height': `${Math.round(innerHeight + Math.max(travel * 1.2, innerHeight * 0.9))}px` });
   });
+});
+</script>
+<script data-8b-part="scene-script:workshops-index">
+motionKit.scene('workshops-index', () => {
+  const section = document.getElementById('workshops');
+  const lane = section.querySelector('.workshops__lane');
+  const carriage = section.querySelector('.workshops__carriage');
+  if (!lane || !carriage || !section.querySelector('.session')) throw new Error('workshops-index: lane parts missing');
+  let geometry = null, last = 0;
+  const render = progress => {
+    last = progress;
+    if (!geometry) return;
+    const centre = geometry.size / 2 + geometry.travel * progress;
+    geometry.rows.forEach(({ row, at }) => row.toggleAttribute('data-waiting', centre < at));
+  };
+  motionKit.measure(() => {
+    const top = motionKit.box(lane).y;
+    const size = carriage.offsetHeight;
+    const travel = Math.max(0, lane.offsetHeight - size);
+    geometry = { size, travel, rows: [...section.querySelectorAll('.session')].map(row => { const box = motionKit.box(row); return { row, at: box.y - top + Math.min(44, box.h / 2) }; }) };
+    motionKit.set(section, { '--workshops-travel': `${travel}px` });
+    render(last);
+  });
+  motionKit.track(lane, 'top 62%', 'bottom 62%', render);
+});
+</script>
+<script data-8b-part="scene-script:contact-landing">
+motionKit.scene('contact-landing', () => {
+  const box = document.querySelector('#contact .contact__lanes');
+  const lanes = box ? [...box.querySelectorAll('.lane')] : [];
+  if (!lanes.length || lanes.some(lane => !lane.querySelector('.drum'))) throw new Error('contact-landing: lanes missing');
+  motionKit.measure(() => lanes.forEach(lane => motionKit.set(lane, { '--contact-travel': `${Math.max(0, lane.offsetHeight - lane.querySelector('.drum').offsetHeight)}px` })));
 });
 </script>
 </body>

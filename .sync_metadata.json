@@ -34,8 +34,8 @@
     "topics": []
   },
   "accountant-website-template": {
-    "description": "Free HTML accountant website template with GSAP scroll animations, for a bookkeeping or tax practice, in flat colour blocks and big type. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:21:13Z",
+    "description": "Free HTML accountant website template with scroll animations and no libraries (GSAP build included), for a bookkeeping or tax practice, in flat colour blocks and big type. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:57:24Z",
     "topics": [
       "accountant-template",
       "accountant-website",
@@ -43,72 +43,72 @@
       "ai-agents",
       "bookkeeping-website",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "accounting-firm-website-template": {
-    "description": "Free HTML accounting firm website template with GSAP scroll animations, for bookkeepers, tax advisers and small practices. Swiss black-and-white type. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:20:07Z",
+    "description": "Free HTML accounting firm website template with scroll animations and no libraries (GSAP build included), for bookkeepers, tax advisers and small practices. Swiss black-and-white type. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:50:14Z",
     "topics": [
       "accounting-firm-website",
       "agents-md",
       "ai-agents",
       "bookkeeping-website",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "swiss-design",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "app-landing-page-template": {
-    "description": "Free HTML app landing page template with GSAP scroll animations, for a mobile app or SaaS product with a free plan. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:20:25Z",
+    "description": "Free HTML app landing page template with scroll animations and no libraries (GSAP build included), for a mobile app or SaaS product with a free plan. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:52:04Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "app-landing-page",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "landing-page-template",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "saas-landing-page",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "arcade-bar-website-template": {
@@ -138,8 +138,8 @@
     ]
   },
   "architecture-website-template": {
-    "description": "Free HTML architecture website template with GSAP scroll animations, for an architecture office or studio. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:20:33Z",
+    "description": "Free HTML architecture website template with scroll animations and no libraries (GSAP build included), for an architecture office or studio. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:53:07Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -147,20 +147,20 @@
       "architecture-template",
       "architecture-website",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "art-gallery-website-template": {
@@ -396,8 +396,8 @@
     ]
   },
   "brewery-website-template": {
-    "description": "Free HTML brewery website template with GSAP scroll animations, for a craft brewery, taproom or bar. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:20:29Z",
+    "description": "Free HTML brewery website template with scroll animations and no libraries (GSAP build included), for a craft brewery, taproom or bar. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:52:32Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -405,20 +405,20 @@
       "brewery-website",
       "claude-code",
       "craft-beer",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "bubble-tea-shop-website-template": {
@@ -661,55 +661,55 @@
     ]
   },
   "community-website-template": {
-    "description": "Free HTML community website template with GSAP scroll animations, for a members' club, women's network or social house. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:21:08Z",
+    "description": "Free HTML community website template with scroll animations and no libraries (GSAP build included), for a members' club, women's network or social house. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:56:58Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
       "community-website",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "members-club",
       "membership-website",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "construction-company-website-template": {
-    "description": "Free HTML construction company website template with GSAP scroll animations, for a builder, renovation or extension contractor. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:19:54Z",
+    "description": "Free HTML construction company website template with scroll animations and no libraries (GSAP build included), for a builder, renovation or extension contractor. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:49:23Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
       "construction-website",
       "contractor-website",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "renovation-website",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "cooking-school-website-template": {
@@ -739,8 +739,8 @@
     ]
   },
   "coworking-website-template": {
-    "description": "Free HTML coworking website template with GSAP scroll animations, for a coworking space, shared office or members' workspace. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:20:20Z",
+    "description": "Free HTML coworking website template with scroll animations and no libraries (GSAP build included), for a coworking space, shared office or members' workspace. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:51:38Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -748,46 +748,46 @@
       "coworking",
       "coworking-space",
       "coworking-website",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "creative-agency-website-template": {
-    "description": "Free HTML creative agency website template with GSAP scroll animations, for an agency, production house or studio with a portfolio. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:21:04Z",
+    "description": "Free HTML creative agency website template with scroll animations and no libraries (GSAP build included), for an agency, production house or studio with a portfolio. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:56:31Z",
     "topics": [
       "agency-website",
       "agents-md",
       "ai-agents",
       "claude-code",
       "creative-agency",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "portfolio-website",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "dance-studio-website-template": {
@@ -843,29 +843,29 @@
     ]
   },
   "design-studio-website-template": {
-    "description": "Free HTML design studio website template with GSAP scroll animations, for a design, brand or digital agency. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:20:47Z",
+    "description": "Free HTML design studio website template with scroll animations and no libraries (GSAP build included), for a design, brand or digital agency. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:54:29Z",
     "topics": [
       "agency-website",
       "agents-md",
       "ai-agents",
       "claude-code",
       "creative-agency",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "design-studio",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "driving-school-website-template": {
@@ -947,29 +947,29 @@
     ]
   },
   "event-website-template": {
-    "description": "Free HTML event website template with GSAP scroll animations, for a festival, concert or fan event with a lineup, schedule and passes. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:20:51Z",
+    "description": "Free HTML event website template with scroll animations and no libraries (GSAP build included), for a festival, concert or fan event with a lineup, schedule and passes. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:55:12Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "event-template",
       "event-website",
       "festival-website",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "farm-delivery-website-template": {
@@ -1051,55 +1051,55 @@
     ]
   },
   "fitness-website-template": {
-    "description": "Free HTML fitness website template with GSAP scroll animations, for a gym, training club or coaching studio. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:19:49Z",
+    "description": "Free HTML fitness website template with scroll animations and no libraries (GSAP build included), for a gym, training club or coaching studio. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:48:57Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "fitness-website",
       "gsap",
       "gym-website",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "sports-club",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "florist-website-template": {
-    "description": "Free HTML florist website template with GSAP scroll animations, for a flower shop with delivery, weekly orders and events. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:20:38Z",
+    "description": "Free HTML florist website template with scroll animations and no libraries (GSAP build included), for a flower shop with delivery, weekly orders and events. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:53:36Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "florist-template",
       "florist-website",
       "flower-shop",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "football-club-website-template": {
@@ -1841,20 +1841,21 @@
     ]
   },
   "pet-boarding-website-template": {
-    "description": "Free HTML pet boarding website template with GSAP scroll animations, for a cattery, pet hotel or pet sitter. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:21:00Z",
+    "description": "Free HTML pet boarding website template with scroll animations and no libraries (GSAP build included), for a cattery, pet hotel or pet sitter. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:56:04Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "cat-boarding",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "pet-boarding",
       "pet-website",
       "scroll-animation",
@@ -1862,8 +1863,7 @@
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "pharmacy-website-template": {
@@ -2101,19 +2101,20 @@
     ]
   },
   "print-studio-website-template": {
-    "description": "Free HTML print studio website template with GSAP scroll animations, for a risograph studio, print shop or small press. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:20:03Z",
+    "description": "Free HTML print studio website template with scroll animations and no libraries (GSAP build included), for a risograph studio, print shop or small press. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:48:20Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "print-shop",
       "print-studio",
       "risograph",
@@ -2122,25 +2123,25 @@
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "product-landing-page-template": {
-    "description": "Free HTML product landing page template with GSAP scroll animations, for a product launch or pre-order. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:20:16Z",
+    "description": "Free HTML product landing page template with scroll animations and no libraries (GSAP build included), for a product launch or pre-order. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:51:12Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "landing-page-template",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "product-landing-page",
       "product-launch",
       "scroll-animation",
@@ -2148,25 +2149,25 @@
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "repair-shop-website-template": {
-    "description": "Free HTML repair shop website template with GSAP scroll animations, for a phone, laptop or electronics repair business. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:20:56Z",
+    "description": "Free HTML repair shop website template with scroll animations and no libraries (GSAP build included), for a phone, laptop or electronics repair business. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:55:38Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "local-business",
       "mit-license",
+      "no-dependencies",
       "phone-repair",
       "repair-shop",
       "scroll-animation",
@@ -2174,25 +2175,25 @@
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "restaurant-website-template": {
-    "description": "Free HTML restaurant website template with GSAP scroll animations, for a brasserie, bistro, caf\u00e9 or bar with a menu and table booking. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:20:42Z",
+    "description": "Free HTML restaurant website template with scroll animations and no libraries (GSAP build included), for a brasserie, bistro, caf\u00e9 or bar with a menu and table booking. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:54:02Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "bistro",
       "cafe-website",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "restaurant-template",
       "restaurant-website",
       "scroll-animation",
@@ -2200,8 +2201,7 @@
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "roller-rink-website-template": {
@@ -2569,20 +2569,21 @@
     ]
   },
   "trampoline-park-website-template": {
-    "description": "Free HTML trampoline park website template with GSAP scroll animations, for a trampoline park, play centre or family activity venue. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:20:12Z",
+    "description": "Free HTML trampoline park website template with scroll animations and no libraries (GSAP build included), for a trampoline park, play centre or family activity venue. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:50:46Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "family-entertainment-center",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
@@ -2590,8 +2591,7 @@
       "trampoline-park",
       "trampoline-park-website",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "travel-agency-website-template": {
@@ -2626,19 +2626,20 @@
     "topics": []
   },
   "veterinary-website-template": {
-    "description": "Free HTML veterinary website template with GSAP scroll animations, for a vet clinic, animal hospital or pet-care practice. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-21T13:19:59Z",
+    "description": "Free HTML veterinary website template with scroll animations and no libraries (GSAP build included), for a vet clinic, animal hospital or pet-care practice. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-01T14:49:49Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
@@ -2647,8 +2648,7 @@
       "veterinary-template",
       "veterinary-website",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "wedding-planner-website-template": {
