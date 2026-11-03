@@ -1,8 +1,8 @@
-# Free HTML wedding planner website template with GSAP scroll animations
+# Free HTML wedding planner website template with scroll animations and no libraries
 
-Wedding planner website template: one free HTML file for a studio that plans garden weddings, with three priced packages, a four-season flower scroll, a timed wedding day, four wedding stories and an enquiry form. Orange colour fields on a pale grey ground carry the garden photography. AGENTS.md is included, so Claude Code, Cursor or Codex can adapt it.
+Wedding planner website template: one free HTML file for a studio that plans garden weddings, with three priced packages, a four-season flower scroll, a timed wedding day, four wedding stories and an enquiry form. Orange colour fields carry the garden photography. The scroll motion is CSS with no libraries, about 30 KB gzipped, ready for Claude Code, Cursor or Codex.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/wedding-planner-website-template/)** · **[Use this template](https://github.com/new?template_name=wedding-planner-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/wedding-planner-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/aubade/)**
 
@@ -24,10 +24,10 @@ curl -LO https://raw.githubusercontent.com/8bsite/wedding-planner-website-templa
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my studio: name, town and the area I cover, packages with prices and lead times, team, real weddings, couples' quotes, reply time, how people enquire>. Replace first the studio name, the logo SVG, the packages, the timed day, the weddings, the planners and the journal. Keep the section ids, the classes AGENTS.md lists, the --len numbers and one season field per slide. Ask me for missing facts and never invent prices, weddings, quotes or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my studio: name, area I cover, packages with prices and lead times, team, real weddings, quotes, reply time, how people enquire>. Replace first the studio name, the logo SVG, the packages, the timed day and the weddings. Motion is CSS scroll-driven animation plus the inline kit: keep the gate script, section ids, data-8b attributes, the --len numbers and the classes AGENTS.md lists, and add no library. Ask me for missing facts; never invent prices, weddings, quotes or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex starts with facts only the studio has: package names, prices and lead times, the team, venues, real weddings, quotes and a reply time. The demo invents all of them, plus a Bath address and three journal posts. Swap the name, the logo SVG and the prices first. Keep the section ids, the listed classes and each --len number, and update --len when a name changes.
+Vibe coding with Claude Code, Cursor or Codex starts with facts only the studio has: package names, prices and lead times, the team, venues, real weddings, quotes and a reply time. The demo invents all of them, plus a Bath address and three journal posts. Swap the name, the logo SVG and the prices first. Keep the section ids, the listed classes and each --len number, and update --len when a name changes. The steps for [opening the files in Claude Code](https://8b.com/templates/for-claude-code/) are laid out on one page.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=wedding-planner-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -36,8 +36,8 @@ No agent? Click **[Use this template](https://github.com/new?template_name=weddi
 - **Navigation**: top bar with the logo, a Check your date button and a dot-grid menu button; full-screen menu with ten links, email and phone. The header bar hides when you scroll down and returns when you scroll up, and the nine dots of the menu button shift on hover.
 - **Two planners, eighteen weddings a year, and every one of them started before the sun was up.**: orange colour field with the h1, a booking button, a tall couple photo and three facts. On load the heading, paragraph, buttons and facts rise in turn and the photo settles from a slight zoom.
 - **Three ways to plan a garden wedding**: three planning packages as rows with price, inclusions and timing. The heading rises line by line and a hairline above each package draws across as the row arrives.
-- **Every wedding starts with a flower in season**: four colour fields in a horizontal track, one per season, with a flower photo and a giant season word. Pinned: the four season fields slide left as a track for three screen widths of scroll; from the second field on, each photo opens from a narrow strip to full width while the giant season word slides against the track.
-- **Hand it over**: a heap of ten task labels carried into an ordered list, beside what stays with the couple. Pinned on wide screens: ten task labels start scattered and tilted over the couple's half and are carried one by one into the list on the right; on phones each label slides in as it rises.
+- **Every wedding starts with a flower in season**: four colour fields in a horizontal track, one per season, with a flower photo and a giant season word. Held on screen: the four season fields slide left as a track for three screen widths of scroll; from the second field on, each photo opens from a narrow strip to full width while the giant season word slides against the track.
+- **Hand it over**: a heap of ten task labels carried into an ordered list, beside what stays with the couple. Held on screen on wide screens: ten task labels start scattered and tilted over the couple's half and are carried one by one into the list on the right; on phones each label slides in as it rises.
 - **From first light to the last song**: a wedding day hour by hour beside a sticky frame of eight photos that change with the hour. Each hour's time swells to display size while its row crosses the screen, and the sticky photo frame slides the previous photo up to uncover the next.
 - **Weddings we have planned**: four weddings as a mosaic of colour cards and photos. In each pair the colour card and the photo start swapped and slide past each other into the mosaic as they rise.
 - **Two planners, both on the day**: two portraits and short bios of the planners. The heading rises and each portrait is revealed in four stair steps.
@@ -61,18 +61,18 @@ No agent? Click **[Use this template](https://github.com/new?template_name=weddi
 
 ## Questions
 
+**Does this version need GSAP, and what do Firefox and reduced motion show?**  
+No. The motion is CSS scroll-driven animation plus a small inline script, about 30 KB gzipped against 77 KB and four extra requests for the GSAP version. Without that support, Firefox today, and with reduced motion, every section shows its finished layout and the seasons stack; the opening load-in still plays in Firefox, and the header still hides on scroll.
+
 **Does the enquiry form send anything?**  
 No. The script checks the required fields, clears the form and shows a thank-you line, and nothing leaves the page. Connect it to Formspree or Netlify Forms, or your own handler. The Check your date and Tell us your date buttons only jump to the form.
 
 **Can I use it for an event planner or a florist?**  
 Yes, with new copy. The packages, the four seasons and the timed day work for any studio selling tiers around dates, such as an event planning template for parties. The wording is about weddings throughout, so an agent rewrites every section, not only the prices.
 
-**Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). You describe the site in a sentence and it designs a new one, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
-
 ## Is it the right base?
 
-As a wedding planning website it fits a small studio that sells fixed packages and wants an editorial feel. A party or celebration business with a lineup and ticket passes is closer to the [festival and event](https://8b.com/templates/ondo/) template. The weak spots: the journal links lead to pages that do not exist, and the enquiry form sends nothing. A studio that wants no code can use the 8B builder.
+As a wedding planning website it fits a small studio that sells fixed packages and wants an editorial feel. A party business with a lineup and ticket passes is closer to the [festival and event](https://8b.com/templates/ondo/) template. This is the light build: the same look and scroll behaviour, no animation library, about 30 KB gzipped against 77 KB for the GSAP version. The weak spots: the journal links lead nowhere and the enquiry form sends nothing.
 
 ## Before you publish
 
@@ -81,7 +81,9 @@ As a wedding planning website it fits a small studio that sells fixed packages a
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 108 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 101+ (it uses cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 122 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 101+ (it uses cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 108 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

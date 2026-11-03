@@ -1,6 +1,6 @@
 # AGENTS.md: language course website template
 
-One-page website for a language school or course provider that teaches adults in small evening groups. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a language school or course provider that teaches adults in small evening groups. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,21 +14,18 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__bar` `.nav__menu-btn` `.menu__close` `.menu__link`
-  - `scene:opening`: `.op__head` `.op__lid-wrap` `.op__bubble` `.op__statement`
-  - `scene:syllabus`: `.sy__plan` `.sy__card`
-  - `scene:teachers`: `.te__counter` `.te__person` `.te__pop` `.te__hello`
-  - `scene:voices`: `.vo__board` `.vo__pad` `.vo__note`
-  - `scene:trips`: `.tr__stage` `.tr__track` `.tr__trip` `.tr__stamp`
   - `section-script:level`: `.le__q` `.le__answer` `.le__wait` `aria-pressed` `.le__reply` `data-score` `data-from` `data-to`
-  - `scene:fees`: `.fe__print` `.fe__print-wrap`
-  - `scene:footer`: `.fo__peek` `.fo__say`
   - `section-script:contact`: `.co__form` `.co__thanks`
+  - `scene-script:opening`: `.op__head` `.op__bubble` `.op__statement`
+  - `scene-script:voices`: `.vo__board` `.vo__pad` `.vo__note`
+  - `scene-script:trips`: `.tr__stage` `.tr__track` `.tr__trip` `.tr__stamp`
 - `style="--len:N"` = characters in that display line, spaces included: `Small Talk` is 10.
 - The wordmark in the first screen is sized from style="--len:10", the number of characters of "Small Talk"; update it when you rename the brand, or the wordmark overflows or leaves a gap.
 - The torn edges are SVG paths in the hidden defs block (tear-1 to tear-4, lid, base, note) used as rims and clip paths; recolour the page through the variables in :root and keep the ids, since stickers and the quote notes reference them.
-- Counts the scripts and CSS depend on: eight greeting bubbles in the opening, six cards in the syllabus (the scatter list has six entries and repeats past that), four teachers in a 4 column grid, four notes with nth-child rotations, and exactly three questions in the level finder (the result ranges add up to a score of 0 to 6). The trips track simply measures its width, so cards can be added or removed.
+- Counts the CSS and scripts depend on: eight greeting bubbles in the opening (their places are nth-child rules), six cards in the syllabus (each card's starting scatter is an inline style on its li; a new card without one starts from the default place), four teachers in a 4 column grid, exactly four student notes (the CSS times each note and rotates it by nth-child), and exactly three questions in the level finder (the result ranges add up to a score of 0 to 6). The trips track measures its width, so cards can be added or removed.
 - The level finder, the form message and the menu are driven by section scripts that read class names (le__q, le__reply, le__answer, co__thanks, menu__link); keep those classes when editing.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #1d2440 (navy ground of the opening, syllabus, languages, voices, level and contact sections, and the dark text on pink and cream), `--color-2` #f9fcf4 (body text on navy, the fees ground, sticker rims, quote notes, cream buttons and the second kind of bubble), `--color-3` #ff9bb4 (the accent: wordmark, heading accent words, bubbles, badge, trips ground, teacher name bars, club dates, the small-print note, button sweep and focus ring), `--color-4` #2b2b2b (charcoal ground of the teachers and after-class sections), `--color-5` #a7b0d6 (lead paragraphs, captions, teacher bios and club texts on navy or charcoal), `--color-6` #6f7ba9 (hairlines between rows, form field borders, menu and footer link dividers, the peeled corner's shade), `--color-7` #151b33 (deep navy of the full-screen menu, the contact form panel, field fills and the footer); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
@@ -65,9 +62,10 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the menu button cannot open the overlay and the level finder does nothing. The footer links cover Syllabus, Languages, Teachers, Trips, Fees and the form, but After class has no other link, and the student quotes are in neither the menu nor the footer.
 - The form does not send anything: it posts to the same page, and without JavaScript submitting reloads at #contact. Connect a form service before publishing.
-- The voices and trips sections pin the screen while they play; on a short screen the stage is tight and the notes or the postcards sit close to the heading. Both fall back to plain grids without the scripts.
+- The voices and trips sections hold the screen (CSS sticky) while they play; on a short screen the stage is tight and the notes or the postcards sit close to the heading.
+- Without scroll-driven animation support (Firefox today) the page shows its finished layout: voices and trips stand as plain grids and the bubbles, photos and notes sit in place; only the opening load-in, the cap's jiggle and the bubble's bob still play. With reduced motion on, nothing moves on its own; the bar still hides on scroll down.
 - The big wordmark and the torn top depend on the first screen being tall; on very wide, short windows the portrait and the intro sit close together.
 - The syllabus promises twelve weeks (six cards plus six situations in its closing line) while the languages lead and the group fee say ten-week courses: reconcile them with your real course.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Small Talk left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Small Talk left only in class names.

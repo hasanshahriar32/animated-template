@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my plumbing and heating firm: trading and legal name, towns, services, fixed and emergency prices, hours, engineers and registration numbers, jobs, reviews, guarantees, phone, email, address>. Start with the prices, service tags, area select and emergency number. Keep ids, data-8b attributes except data-8b-placeholder, the classes AGENTS.md lists and the data-area-text span; reset each giant line's --len to its character count. Ask me for anything missing; never invent prices, hours, addresses, licence or Gas Safe numbers, reviews or contacts.
 ```
 
-When vibe coding with Claude Code or Cursor, start with what customers hold the firm to: the eight prices, the seven services' tags, the call-back and 90 minute emergency promises, guarantees and zeroed Gas Safe numbers. Sheffield sits in the title, headline, emergency line and footer; the area select lists five towns. Each giant line's --len must equal its character count. Keep the ids, data-8b attributes except data-8b-placeholder, the classes AGENTS.md lists and the data-area-text span. Every specific in this plumbing website template is demo content: ask the owner.
+As a plumber website template for Claude Code and Cursor, or if you vibe code the firm's site by hand, start with the eight prices, the call-back and 90 minute emergency promises, guarantees and zeroed Gas Safe numbers. Each giant line's --len must equal its character count. Keep the ids, data-8b attributes except data-8b-placeholder, the classes AGENTS.md lists and the data-area-text span. Every specific here is demo content: ask the owner, since real prices and promises keep it from reading as [filler a model made up](https://8b.com/templates/not-ai-generated/).
 
 No agent? Click **[Use this template](https://github.com/new?template_name=plumber-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -69,7 +69,7 @@ Nowhere yet. A script stops the submit, checks that name and phone are filled, s
 Partly. The hot side covers boilers, radiators, underfloor heating, heat pumps, flues and smart controls, but the page never mentions air conditioning or ventilation. For HVAC website design in the US, the services and the price board need rewriting for cooling work, and the pounds, VAT, Gas Safe and CP12 references need local equivalents.
 
 **Can I get a plumbing site without editing any code?**  
-Yes: [8B's AI website builder](https://8b.com/templates/8b/) turns a one-sentence description into a new site with its own design, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
+Yes: [8B's AI website builder](https://8b.com/) turns a one-sentence description into a new site with its own design, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
 
 ## Is it the right base?
 

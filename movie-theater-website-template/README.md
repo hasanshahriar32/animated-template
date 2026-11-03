@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my cinema or club: name, screens and seat counts, this week's films with times, ticket and member prices, membership terms, bar menu and hours, programmers, address, ticketing link>. Replace the films, showings, prices and photos first. Keep the section ids, the classes AGENTS.md lists and one still per programme day, and set the footer wordmark's len to the new name's character count. Ask for missing facts; never invent showtimes, prices, ratings, reviews or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when you supply the facts only the venue has: film titles and times, screen sizes, ticket and member prices, the bar menu, access details and opening hours. The demo invents all of it, including the 12A rating, the Leith address and both programmers. Point each of the 14 showing links at its booking page. Keep one still per programme day, because the script pairs days and stills by position.
+A movie theater website template for Claude Code, Cursor or Codex goes fastest, as in any [agent-led build](https://8b.com/templates/vibe-coding/), when you supply the facts only the venue has: film titles and times, screen sizes, ticket and member prices, the bar menu and hours. The demo invents all of it, including the 12A rating, the Leith address and both programmers. Point each of the 14 showing links at its booking page. Keep one still per programme day, because the script pairs days and stills by position.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=movie-theater-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -64,7 +64,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=movie
 No. Nothing checks seats or takes payment. The Book tickets and Book a seat buttons scroll to the programme and the 14 showing links scroll to the visit section until you point them at your ticketing page. The visit form shows a thank-you line and sends nothing until you connect Formspree or Netlify Forms.
 
 **Can I get a site like this without editing code?**  
-Yes, in another form. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence about your cinema, in its own design rather than this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs in Claude and ChatGPT.
+Yes, in another form. [8B's AI website builder](https://8b.com/) designs a new site from a sentence about your cinema, in its own design rather than this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs in Claude and ChatGPT.
 
 **What happens on a phone, with reduced motion or without JavaScript?**  
 On a phone the nav links give way to a menu button with a five-link overlay, and the programme photo becomes a short band pinned above the days. With reduced motion, entrance and scroll animations and smooth scrolling are off. Without JavaScript the menu cannot open, but the Book tickets button, the six footer links and the questions work.

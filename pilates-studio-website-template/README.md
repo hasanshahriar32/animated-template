@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Adapt it to <my studio: name, address, class formats, teachers, timetable, prices, booking terms, hours, contacts, legal name>. Replace the studio name, Leith address, teachers, timetable and prices first. The opening heading, lead and first class plan block name a Pilates warm-up sharing the demo's name: keep or rewrite them deliberately. Keep the section ids, the classes AGENTS.md lists and each class plan block's data-from and data-to. Ask me for missing facts; never invent prices, hours, addresses, teacher training, health claims or contacts.
 ```
 
-When vibe coding in Claude Code, start with the four formats (length, level, class size), the teachers, the 24 timetable chips, the three prices and the form's class menu, which repeats the format names. Filled chips (m-surface-2) mark Reformer classes, as the line above the week says: change both together. Keep the section ids, the classes AGENTS.md lists and the data-from and data-to that time each class plan block's fill. Teacher training, cancelling rules and promises about backs, pregnancy or bone strength must come from the owner.
+When vibe coding this pilates studio website template for Claude Code, start with the four formats, the teachers, the 24 timetable chips, the three prices and the form's class menu, which repeats the format names. Filled chips (m-surface-2) mark Reformer classes, as the line above the week says: change both together. Keep the section ids, the classes AGENTS.md lists and the data-from and data-to that time each class plan block's fill. Teacher training, cancelling rules and promises about backs, pregnancy or bone strength must come from the owner.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=pilates-studio-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -61,10 +61,10 @@ No agent? Click **[Use this template](https://github.com/new?template_name=pilat
 Yes, after a copy pass. Websites for yoga studios need what this page already has: class styles with levels, teachers, a week of times and passes. Rename the four rails and the form's class menu, replace the apparatus photos and the class plan blocks, and rewrite the line that says filled slots are Reformer classes.
 
 **Should I give the agent the demo link or the files?**  
-The files. Run the four curl lines on this page in your project folder, open it in Claude Code or Cursor and paste the prompt above with the angle brackets filled in. A demo link reaches the agent as a summary, while index.html and AGENTS.md give it the real markup and the list of classes the motion reads.
+The files. Run the four curl lines in your project folder, open it in Claude Code or Cursor and paste the prompt above with the angle brackets filled in. Lovable, v0 or Bolt build their own code, so paste the Pilates studio website design prompt below into them. A demo link reaches the agent only as a summary.
 
 **Can I get a Pilates studio site without editing any code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/): describe your studio in a sentence and its engine designs a new site, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro, $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
+Yes, with [8B's AI website builder](https://8b.com/): describe your studio in a sentence and its engine designs a new site, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro, $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
 
 ## Is it the right base?
 

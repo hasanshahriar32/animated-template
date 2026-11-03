@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/boutique-hotel-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -20,7 +21,6 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%23191615'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23f3efea'%3EO%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/hostgrotesk/v5/co3BmWBnlCJ3U42vbbfdwMjZpFjm.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/sourceserif4/v15/vEFI2_tTDB4M7-auWDN0ahZJW1gb8tc.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* latin-ext */
 @font-face {
@@ -187,11 +187,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .skip:focus { top: var(--space-1); }
 .skip:focus-visible { outline-color: var(--color-2); }
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: clip; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 }
 </style>
 <style data-8b-part="system">
@@ -326,36 +321,6 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
 @keyframes opening-drift { from { transform: translate3d(-40px, 0, 0); } to { transform: translate3d(40px, 0, 0); } }
 }
 </style>
-<style data-8b-part="scene-style:opening">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #opening[data-open] .opening__stage { position: sticky; }
-  #opening[data-open] .opening__first { margin-top: -100svh; }
-  #opening[data-open] .opening__second { background: transparent; }
-}
-}
-</style>
-<style data-8b-part="scene-style:rooms">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #rooms[data-stepper] .rooms__track { height: calc(var(--rooms-n) * 100svh); }
-  #rooms[data-stepper] .rooms__stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
-  #rooms[data-stepper] .rooms__stage::after { content: ""; position: absolute; inset: auto 0 0 0; z-index: 2; height: 48svh; background: linear-gradient(to top, color-mix(in srgb, var(--color-2) 90%, transparent), color-mix(in srgb, var(--color-2) 55%, transparent) 45%, transparent); pointer-events: none; }
-  #rooms[data-stepper] .rooms__panels { position: absolute; inset: 0; display: block; }
-  #rooms[data-stepper] .rooms__panel { position: absolute; inset: 0; height: auto; min-height: 0; }
-  #rooms[data-stepper] .rooms__line { position: absolute; left: 0; bottom: 0; z-index: 3; padding: 0 var(--space-1) 7svh; white-space: nowrap; text-align: left; color: color-mix(in srgb, var(--color-5) 55%, var(--color-2)); pointer-events: none; }
-  #rooms[data-stepper] .rooms__name { transition: color .5s cubic-bezier(.6, 0, .2, 1); }
-  #rooms[data-stepper] .rooms__name.is-current { color: var(--color-5); }
-}
-}
-</style>
-<style data-8b-part="scene-style:hours">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #hours[data-day] .hours__row { background: transparent; color: inherit; }
-}
-}
-</style>
 <style data-8b-part="section:house">
 @layer sections {
 #house { padding: var(--space-2) var(--space-1); background: var(--color-1); }
@@ -435,6 +400,9 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
   #table { grid-template-columns: 1fr; }
   #table .table__held { position: relative; height: 72svh; }
   #table .table__menu li { grid-template-columns: 1fr; }
+}
+@media (min-width: 861px) {
+  #table .table__held [data-8b-motion~="drift"] { --motion-drift-end: cover 200svh; }
 }
 }
 </style>
@@ -546,6 +514,158 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
 }
 }
 </style>
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] [data-8b-motion~="aperture"] { animation-name: motion-aperture-clippath; animation-duration: 1.1s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="aperture"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="aperture"] img { animation-name: motion-aperture-img-scale; animation-duration: 1.5s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="aperture"].is-in img { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="drift"] { view-timeline: --motion-drift block; view-timeline-inset: 0; }
+[data-8b-live] [data-8b-motion~="drift"] .ph__in { animation-name: motion-drift-ph-in-translate; animation-timeline: --motion-drift; animation-range: cover 0% var(--motion-drift-end, cover 100%); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] [data-8b-motion~="tide"] .line { --motion-tide-side: -1; animation-name: motion-tide; animation-duration: 1.1s; animation-delay: calc(var(--i) * .09s); animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="tide"] .line:nth-child(even) { --motion-tide-side: 1; }
+[data-8b-live] [data-8b-motion~="tide"].is-in .line { animation-play-state: running; }
+@keyframes motion-aperture-clippath { 0% { clip-path: inset(34% 32%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes motion-aperture-img-scale { 0% { scale: 1.22; } 100% { scale: 1; } }
+@keyframes motion-tide { 0% { translate: calc(var(--motion-tide-side) * min(90px, 7vw)) 0px; opacity: 0; } 100% { translate: 0px 0px; opacity: 1; } }
+@keyframes motion-drift-ph-in-translate { 0% { translate: 0px -6%; } 100% { translate: 0px 6%; } }
+}
+</style>
+<style data-8b-part="scene:opening">
+@property --opening-p { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #opening .opening__stage { position: sticky; }
+  [data-8b-live] #opening .opening__first { margin-top: -100svh; }
+  [data-8b-live] #opening .opening__second { background: transparent; }
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #opening { view-timeline: --opening-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #opening .opening__view { animation-name: opening-div-opening-view---opening-p; animation-timeline: --opening-t1; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; }
+[data-8b-live] #opening .opening__zoom { animation-name: opening-div-opening-zoom-scale; animation-timeline: --opening-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #opening .opening__upper, [data-8b-live] #opening .opening__lower, [data-8b-live] #opening .opening__after { animation-timeline: --opening-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #opening .opening__scrim { animation-name: opening-div-opening-scrim-opacity; animation-timeline: --opening-t1; animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes opening-div-opening-view---opening-p { 0% { --opening-p: 0; } 100% { --opening-p: 1; } }
+@keyframes opening-div-opening-zoom-scale { 0% { scale: 1.18; } 100% { scale: 1; } }
+@keyframes opening-span-opening-upper-translate { 0% { translate: 0px 0px; } 100% { translate: 0px -30vh; } }
+@keyframes opening-span-opening-lower-translate { 0% { translate: 0px 0px; } 100% { translate: 0px 90vh; } }
+@keyframes opening-span-opening-lower-opacity { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes opening-div-opening-scrim-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+[data-8b-live] #opening .opening__view { animation-range: cover 100vh cover 158vh; }
+[data-8b-live] #opening .opening__zoom { animation-range: cover 100vh cover 200vh; }
+[data-8b-live] #opening .opening__upper { animation-name: opening-span-opening-upper-translate; animation-range: cover 100vh cover 150vh; }
+[data-8b-live] #opening .opening__lower, [data-8b-live] #opening .opening__after { animation-name: opening-span-opening-lower-translate, opening-span-opening-lower-opacity; }
+[data-8b-live] #opening .opening__lower { animation-range: cover 100vh cover 150vh, cover 100vh cover 140vh; }
+[data-8b-live] #opening .opening__after { animation-range: cover 100vh cover 150vh, cover 100vh cover 128vh; }
+[data-8b-live] #opening .opening__scrim { animation-range: cover 130vh cover 170vh; }
+}
+</style>
+<style data-8b-part="scene:rooms">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #rooms .rooms__track { height: calc(var(--rooms-n) * 100svh); }
+  [data-8b-live] #rooms .rooms__stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+  [data-8b-live] #rooms .rooms__stage::after { content: ""; position: absolute; inset: auto 0 0 0; z-index: 2; height: 48svh; background: linear-gradient(to top, color-mix(in srgb, var(--color-2) 90%, transparent), color-mix(in srgb, var(--color-2) 55%, transparent) 45%, transparent); pointer-events: none; }
+  [data-8b-live] #rooms .rooms__panels { position: absolute; inset: 0; display: block; }
+  [data-8b-live] #rooms .rooms__panel { position: absolute; inset: 0; height: auto; min-height: 0; }
+  [data-8b-live] #rooms .rooms__line { position: absolute; left: 0; bottom: 0; z-index: 3; padding: 0 var(--space-1) 7svh; white-space: nowrap; text-align: left; color: color-mix(in srgb, var(--color-5) 55%, var(--color-2)); pointer-events: none; }
+  [data-8b-live] #rooms .rooms__name { transition: color .5s cubic-bezier(.6, 0, .2, 1); }
+  [data-8b-live] #rooms .rooms__name.is-current { color: var(--color-5); }
+}
+}
+@layer scenes {
+[data-8b-live] #rooms .rooms__track { --rooms-n: 3; }
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #rooms .rooms__track { view-timeline: --rooms-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #rooms .rooms__panels > article:is(:nth-of-type(2), :nth-of-type(3)), [data-8b-live] #rooms .rooms__panels > article > .rooms__ph > picture > img, [data-8b-live] #rooms .rooms__panels > article:nth-of-type(-n+2) > .rooms__facts, [data-8b-live] #rooms .m-text-2 { animation-timeline: --rooms-t1; animation-fill-mode: both; }
+[data-8b-live] #rooms .rooms__panels > article:nth-of-type(2) { animation-name: rooms-article-rooms-panel-clippath; animation-range: cover 100vh cover 50%; animation-timing-function: var(--ease-power2-inout); }
+[data-8b-live] #rooms .rooms__panels > article:nth-of-type(2) > .rooms__ph > picture > img { animation-name: rooms-div-rooms-ph-img-translate; }
+[data-8b-live] #rooms .rooms__panels > article > .rooms__ph > picture > img { animation-range-start: cover 100vh; animation-range-end: cover calc(100% - 100vh); animation-timing-function: var(--ease-power2-inout); transform: none; }
+[data-8b-live] #rooms .rooms__panels > article:last-of-type > .rooms__ph > picture > img { animation-range-start: cover 50%; }
+[data-8b-live] #rooms .rooms__panels > article:first-of-type > .rooms__ph > picture > img { animation-range-end: cover 50%; }
+[data-8b-live] #rooms .rooms__panels > article:nth-of-type(1) > .rooms__ph > picture > img { animation-name: rooms-div-rooms-ph-img-translate-2; }
+[data-8b-live] #rooms .rooms__panels > article:nth-of-type(1) > .rooms__facts { animation-name: rooms-div-rooms-facts-opacity; animation-range: cover 100vh cover calc(22.5% + 55vh); animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); }
+[data-8b-live] #rooms .m-text-2 { animation-range: cover 100vh cover calc(100% - 100vh); transform: none; }
+[data-8b-live] #rooms .rooms__panels > article:nth-of-type(3) { animation-name: rooms-article-rooms-panel-clippath; animation-range: cover 50% cover calc(100% - 100vh); animation-timing-function: var(--ease-power2-inout); }
+[data-8b-live] #rooms .rooms__panels > article:nth-of-type(3) > .rooms__ph > picture > img { animation-name: rooms-div-rooms-ph-img-translate-3; }
+[data-8b-live] #rooms .rooms__panels > article:nth-of-type(2) > .rooms__facts { animation-name: rooms-div-rooms-facts-opacity; animation-range: cover 50% cover calc(72.5% - 45vh); animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); }
+@keyframes rooms-article-rooms-panel-clippath { 0% { clip-path: inset(0% 0% 0% 100%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes rooms-div-rooms-ph-img-translate { 0% { translate: 14% 0px; } 50% { translate: 0px 0px; } 100% { translate: -10% 0px; } }
+@keyframes rooms-div-rooms-ph-img-translate-2 { 0% { translate: 0px 0px; } 100% { translate: -10% 0px; } }
+@keyframes rooms-div-rooms-facts-opacity { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes rooms-h2-m-text-2-translate { 0% { translate: 0px 0px; } 50% { translate: var(--rooms-x-1) 0px; } 100% { translate: var(--rooms-x-2) 0px; } }
+@keyframes rooms-div-rooms-ph-img-translate-3 { 0% { translate: 14% 0px; } 100% { translate: 0px 0px; } }
+[data-8b-live] #rooms .m-text-2 { animation-name: rooms-h2-m-text-2-translate; animation-timing-function: var(--ease-power2-inout); }
+}
+</style>
+<style data-8b-part="scene:hours">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #hours .hours__row { background: transparent; color: inherit; }
+}
+}
+@layer scenes {
+[data-8b-live] #hours { timeline-scope: --hours-t1; animation-name: hours-hours-backgroundcolor, hours-hours-color; animation-timeline: --hours-t1; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #hours .hours__list { view-timeline: --hours-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #hours .hours__list > li { view-timeline: --hours-item block; view-timeline-inset: 0; }
+[data-8b-live] #hours .hours__list > li > .m-text-2 { animation-timeline: --hours-item; animation-range: cover 0% cover 100%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes hours-hours-backgroundcolor { 0% { background-color: var(--color-1); } 6.9767% { background-color: var(--color-5); } 23.2558% { background-color: var(--color-5); } 26.7442% { background-color: color-mix(in srgb, var(--color-5), color-mix(in srgb, var(--color-3) 16%, var(--color-5))); } 30.2326% { background-color: color-mix(in srgb, var(--color-3) 16%, var(--color-5)); } 46.5116% { background-color: color-mix(in srgb, var(--color-3) 16%, var(--color-5)); } 50% { background-color: color-mix(in srgb, color-mix(in srgb, var(--color-3) 16%, var(--color-5)), var(--color-3)); } 53.4884% { background-color: var(--color-3); } 69.7674% { background-color: var(--color-3); } 73.2558% { background-color: color-mix(in srgb, var(--color-3), color-mix(in srgb, var(--color-3) 45%, var(--color-2))); } 76.7442% { background-color: color-mix(in srgb, var(--color-3) 45%, var(--color-2)); } 93.0233% { background-color: color-mix(in srgb, var(--color-3) 45%, var(--color-2)); } 96.5116% { background-color: color-mix(in srgb, color-mix(in srgb, var(--color-3) 45%, var(--color-2)), var(--color-2)); } 100% { background-color: var(--color-2); } }
+@keyframes hours-hours-color { 0% { color: var(--color-2); } 100% { color: var(--color-5); } }
+@keyframes hours-p-m-text-2-translate { 0% { translate: 5vw 0px; } 100% { translate: -5vw 0px; } }
+[data-8b-live] #hours { animation-range: cover calc(14.1667% + 35.8333vh) cover calc(85.8333% - 35.8333vh), cover calc(51.1529% - 1.1529vh) cover calc(51.8196% - 1.8196vh); }
+[data-8b-live] #hours .hours__list > li > .m-text-2 { animation-name: hours-p-m-text-2-translate; }
+}
+</style>
+<style data-8b-part="scene:sea">
+@layer scenes {
+[data-8b-live] #sea { timeline-scope: --sea-t1, --sea-t2, --sea-t3; }
+[data-8b-live] #sea .sea__stack > article:nth-of-type(-n+3) { animation-name: sea-article-sea-plate-scale, sea-article-sea-plate-filter; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #sea .sea__stack > article:nth-of-type(2) { view-timeline: --sea-t1 block; view-timeline-inset: 0; animation-timeline: --sea-t2; }
+[data-8b-live] #sea .sea__stack > article:nth-of-type(3) { view-timeline: --sea-t2 block; view-timeline-inset: 0; animation-timeline: --sea-t3; }
+[data-8b-live] #sea .sea__stack > article:nth-of-type(4) { view-timeline: --sea-t3 block; view-timeline-inset: 0; }
+[data-8b-live] #sea .sea__stack > article:nth-of-type(1) { animation-timeline: --sea-t1; }
+@keyframes sea-article-sea-plate-scale { 0% { scale: 1; } 100% { scale: 0.9; } }
+@keyframes sea-article-sea-plate-filter { 0% { filter: brightness(1); } 100% { filter: brightness(0.6); } }
+@media (min-width: 761px) {
+  [data-8b-live] #sea .sea__stack > article:nth-of-type(2) { animation-range: cover 0% cover calc(100vh - 124px); }
+  [data-8b-live] #sea .sea__stack > article:nth-of-type(3) { animation-range: cover 0% cover calc(100vh - 142px); }
+  [data-8b-live] #sea .sea__stack > article:nth-of-type(1) { animation-range: cover 0% cover calc(100vh - 106px); }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #sea .sea__stack > article:nth-of-type(2) { animation-range: cover 0% cover calc(100vh - 97.1px); }
+  [data-8b-live] #sea .sea__stack > article:nth-of-type(3) { animation-range: cover 0% cover calc(100vh - 109.1px); }
+  [data-8b-live] #sea .sea__stack > article:nth-of-type(1) { animation-range: cover 0% cover calc(100vh - 85.1px); }
+}
+}
+</style>
+<style data-8b-part="scene:harbour">
+@layer scenes {
+[data-8b-live] #harbour .harbour__tile { view-timeline: --harbour-tile block; view-timeline-inset: 0; animation-name: harbour-tile-translate; }
+[data-8b-live] #harbour .harbour__tile > figure { animation-name: harbour-figure-scale; }
+[data-8b-live] #harbour .harbour__tile, [data-8b-live] #harbour .harbour__tile > figure { animation-timeline: --harbour-tile; animation-range: cover calc(50% - 42vh) cover calc(50% + 42vh); animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes harbour-tile-translate { 0% { translate: 0px 0px; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 50% { translate: calc(var(--harbour-side, 0) * min(7.5vw, 120px)) 0px; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 100% { translate: 0px 0px; } }
+@keyframes harbour-figure-scale { 0% { scale: 1; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 50% { scale: calc(1 - .42 * var(--harbour-mid, 0)); animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:guestbook">
+@layer scenes {
+[data-8b-live] #guestbook { view-timeline: --guestbook-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #guestbook .guestbook__line .w { --guestbook-d: calc(1 + (var(--guestbook-ln) - 1) * .12); --guestbook-a: calc(var(--guestbook-l) * .12 / var(--guestbook-d)); --guestbook-b: calc((var(--guestbook-l) * .12 + 1) / var(--guestbook-d)); display: inline-block; animation-name: guestbook-word-translate; animation-timeline: --guestbook-t1; animation-range: cover calc(15vh + var(--guestbook-a) * (50% - 20vh)) cover calc(15vh + var(--guestbook-b) * (50% - 20vh)); animation-timing-function: linear(0, 0.1426, 0.271, 0.3859, 0.488, 0.5781, 0.657, 0.7254, 0.784, 0.8336, 0.875, 0.9089, 0.936, 0.9571, 0.973, 0.9844, 0.992, 0.9966, 0.999, 0.9999, 1); animation-fill-mode: both; }
+@keyframes guestbook-word-translate { 0% { translate: calc(clamp(-1, (var(--i) + .5 - var(--n) / 2) * 99, 1) * 30vw) 0px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:footer">
+@layer scenes {
+[data-8b-live] #footer .footer__mark { view-timeline: --footer-t1 block; view-timeline-inset: 0; animation-name: footer-p-footer-mark-clippath, footer-p-footer-mark-scale; animation-timeline: --footer-t1; animation-range: cover 0% cover calc(100% - 100vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes footer-p-footer-mark-clippath { 0% { clip-path: inset(0% 40%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes footer-p-footer-mark-scale { 0% { scale: 1.12; } 100% { scale: 1; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to the content</a>
@@ -556,13 +676,13 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
     <a class="nav__logo" href="#opening" aria-label="Hotel Ostro, back to the top"><span class="nav__logo-word">Ostro</span></a>
     <a class="m-btn nav__book" href="#contact"><span class="m-btn__label">Book a room</span></a>
   </div>
-  <div class="menu" id="menu" data-lenis-prevent hidden>
+  <div class="menu" id="menu" hidden>
     <div class="menu__head">
       <p class="m-text-4">Hotel Ostro · Marina di Serra</p>
       <button class="m-icon-btn menu__close" type="button" aria-label="Close the menu"><span class="m-icon-btn__bar"></span><span class="m-icon-btn__bar"></span></button>
     </div>
     <nav aria-label="Main">
-      <ul class="menu__list">
+      <ul class="menu__list" data-8b-items=":scope > li">
         <li><a class="m-text-2 m-link menu__link" href="#house">The house</a></li>
         <li><a class="m-text-2 m-link menu__link" href="#rooms">Rooms</a></li>
         <li><a class="m-text-2 m-link menu__link" href="#hours">A day here</a></li>
@@ -583,7 +703,7 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
     <div class="opening__view">
       <div class="opening__zoom">
         <div class="opening__drift">
-          <img style="background:#c0a6c0" src="https://images.unsplash.com/photo-1782716583223-5c464eac06d3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8d2luZG93JTIwc2h1dHRlcnMlMjBzZWElMjB2aWV3fGVufDF8MHx8fDE3OTEzODEyMDR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="The bay at dusk through an open shutter: green hills, a yacht at anchor, still water" width="1600" height="1067" fetchpriority="high">
+          <img src="https://images.unsplash.com/photo-1782716583223-5c464eac06d3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8d2luZG93JTIwc2h1dHRlcnMlMjBzZWElMjB2aWV3fGVufDF8MHx8fDE3OTEzODEyMDR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="The bay at dusk through an open shutter: green hills, a yacht at anchor, still water" width="1600" height="1067" fetchpriority="high">
         </div>
       </div>
       <div class="opening__scrim"></div>
@@ -604,7 +724,7 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
   </div>
   <div class="opening__second">
     <p class="m-text-3 opening__statement">Shutters open at seven. The boats come in at half past nine. Nothing else in the house keeps a schedule.</p>
-    <ul class="opening__facts m-text-4">
+    <ul class="opening__facts m-text-4" data-8b-items=":scope > li">
       <li>Eleven rooms, six over the open sea</li>
       <li>Breakfast until noon under the vaults</li>
       <li>Four minutes on foot from the ferry</li>
@@ -613,19 +733,19 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
 </section>
 <!-- house: a history of the building as three dated photos with captions, then two paragraphs -->
 <section id="house" class="house" data-8b-section="house">
-  <h2 class="m-text-2 house__title" data-8b-motion="tide">A customs house of 1908</h2>
+  <h2 class="m-text-2 house__title" data-8b-motion="tide" data-8b-split="lines">A customs house of 1908</h2>
   <p class="m-text-3 house__statement">For sixty years the Dogana weighed salt, wine and almonds at the end of the mole. We kept its vaults, its ledger shelves and the iron rings in the wall, and opened eleven rooms above them.</p>
-  <div class="house__ledger">
+  <div class="house__ledger" data-8b-items=":scope > figure" data-8b-fixed="3">
     <figure class="house__entry">
-      <div class="ph" data-8b-motion="aperture drift"><div class="ph__in"><img style="background:#73a6f3" src="https://images.unsplash.com/photo-1771454174712-d2c0cfb78244?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8b2xkJTIwc3RvbmUlMjBidWlsZGluZyUyMGhhcmJvdXIlMjB3YXRlcmZyb250fGVufDF8MHx8fDE3OTEzODEzMjl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="Stone houses with tall chimneys on the harbour wall, boats moored in calm blue water" width="1600" height="1067" loading="lazy"></div></div>
+      <div class="ph" data-8b-motion="aperture drift"><div class="ph__in"><img src="https://images.unsplash.com/photo-1771454174712-d2c0cfb78244?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8b2xkJTIwc3RvbmUlMjBidWlsZGluZyUyMGhhcmJvdXIlMjB3YXRlcmZyb250fGVufDF8MHx8fDE3OTEzODEzMjl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=790&amp;q=60" alt="Stone houses with tall chimneys on the harbour wall, boats moored in calm blue water" width="1600" height="1067" loading="lazy"></div></div>
       <figcaption class="m-text-4">1908 · Built at the end of the mole to weigh what the boats carried</figcaption>
     </figure>
     <figure class="house__entry">
-      <div class="ph" data-8b-motion="aperture"><div class="ph__in"><img style="background:#73260c" src="https://images.unsplash.com/photo-1790090511965-736351a10ef8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8dGVycmFjb3R0YSUyMGJlZHJvb20lMjBtZWRpdGVycmFuZWFufGVufDF8MHx8fDE3OTEzODEyNDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=580&amp;q=60" alt="The vaulted ground floor: two arched wooden doors in a plastered stone wall, terracotta tiles, a patch of sun" width="1600" height="1067" loading="lazy"></div></div>
+      <div class="ph" data-8b-motion="aperture"><div class="ph__in"><img src="https://images.unsplash.com/photo-1790090511965-736351a10ef8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8dGVycmFjb3R0YSUyMGJlZHJvb20lMjBtZWRpdGVycmFuZWFufGVufDF8MHx8fDE3OTEzODEyNDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=710&amp;q=60" alt="The vaulted ground floor: two arched wooden doors in a plastered stone wall, terracotta tiles, a patch of sun" width="1600" height="1067" loading="lazy"></div></div>
       <figcaption class="m-text-4">1961 · Closed when the lorries took the coast road</figcaption>
     </figure>
     <figure class="house__entry">
-      <div class="ph" data-8b-motion="aperture"><div class="ph__in"><img style="background:#c0a68c" src="https://images.unsplash.com/photo-1638456687252-e10829f12343?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8YmVkcm9vbSUyMHRlcnJhY290dGElMjBmbG9vcnxlbnwxfDB8fHwxNzkxMzgxMjkyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=550&amp;q=60" alt="A small barred window in a lime-plastered wall beside a terracotta parapet in low sun" width="1600" height="1186" loading="lazy"></div></div>
+      <div class="ph" data-8b-motion="aperture"><div class="ph__in"><img src="https://images.unsplash.com/photo-1638456687252-e10829f12343?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8YmVkcm9vbSUyMHRlcnJhY290dGElMjBmbG9vcnxlbnwxfDB8fHwxNzkxMzgxMjkyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=680&amp;q=60" alt="A small barred window in a lime-plastered wall beside a terracotta parapet in low sun" width="1600" height="1186" loading="lazy"></div></div>
       <figcaption class="m-text-4">2019 · Restored by masons from the town in lime and old roof tiles</figcaption>
     </figure>
   </div>
@@ -640,9 +760,9 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
   <div class="rooms__track">
     <div class="rooms__stage">
       <h2 class="m-text-2 rooms__line"><span class="rooms__name">The sea rooms,</span> <span class="rooms__name">the harbour rooms,</span> <span class="rooms__name">the tower.</span></h2>
-      <div class="rooms__panels">
+      <div class="rooms__panels" data-8b-items=":scope > article" data-8b-fixed="3">
         <article class="rooms__panel">
-          <div class="rooms__ph"><picture><source media="(max-width: 640px)" srcset="https://images.unsplash.com/photo-1783176337084-b1a3142cc55f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8YmVkJTIwYnklMjB0aGUlMjB3aW5kb3clMjBzZWF8ZW58MXwwfHx8MTc5MTM4MTI2MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;h=1386&amp;q=60" width="640" height="1386"><img style="background:#262626" src="https://images.unsplash.com/photo-1783176337084-b1a3142cc55f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8YmVkJTIwYnklMjB0aGUlMjB3aW5kb3clMjBzZWF8ZW58MXwwfHx8MTc5MTM4MTI2MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A long window seat with white cushions under a wide window onto the open sea at dusk" width="1600" height="1092" loading="lazy"></picture></div>
+          <div class="rooms__ph"><picture><source media="(max-width: 640px)" srcset="https://images.unsplash.com/photo-1783176337084-b1a3142cc55f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8YmVkJTIwYnklMjB0aGUlMjB3aW5kb3clMjBzZWF8ZW58MXwwfHx8MTc5MTM4MTI2MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;h=1386&amp;q=60" width="640" height="1386"><img src="https://images.unsplash.com/photo-1783176337084-b1a3142cc55f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8YmVkJTIwYnklMjB0aGUlMjB3aW5kb3clMjBzZWF8ZW58MXwwfHx8MTc5MTM4MTI2MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A long window seat with white cushions under a wide window onto the open sea at dusk" width="1600" height="1092" loading="lazy"></picture></div>
           <div class="rooms__facts m-surface">
             <h3 class="m-text-4 rooms__kind">Sea rooms · six</h3>
             <p class="m-text">A window seat as wide as the room and the open sea in it, from the pillows to the horizon. Shutters, linen, a shower in lime plaster.</p>
@@ -655,7 +775,7 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
           </div>
         </article>
         <article class="rooms__panel">
-          <div class="rooms__ph"><picture><source media="(max-width: 640px)" srcset="https://images.unsplash.com/photo-1765421617367-4b6f88423be9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bWVkaXRlcnJhbmVhbiUyMGJlZHJvb218ZW58MXwwfHx8MTc5MTM4MTI1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;h=1386&amp;q=60" width="640" height="1386"><img style="background:#735940" src="https://images.unsplash.com/photo-1765421617367-4b6f88423be9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bWVkaXRlcnJhbmVhbiUyMGJlZHJvb218ZW58MXwwfHx8MTc5MTM4MTI1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A reading corner with a blue armchair, framed photographs and an arched window onto the water" width="1600" height="1067" loading="lazy"></picture></div>
+          <div class="rooms__ph"><picture><source media="(max-width: 640px)" srcset="https://images.unsplash.com/photo-1765421617367-4b6f88423be9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bWVkaXRlcnJhbmVhbiUyMGJlZHJvb218ZW58MXwwfHx8MTc5MTM4MTI1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;h=1386&amp;q=60" width="640" height="1386"><img src="https://images.unsplash.com/photo-1765421617367-4b6f88423be9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bWVkaXRlcnJhbmVhbiUyMGJlZHJvb218ZW58MXwwfHx8MTc5MTM4MTI1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A reading corner with a blue armchair, framed photographs and an arched window onto the water" width="1600" height="1067" loading="lazy"></picture></div>
           <div class="rooms__facts m-surface">
             <h3 class="m-text-4 rooms__kind">Harbour rooms · four</h3>
             <p class="m-text">Arched windows over the basin and the boats, a reading corner, floors laid from the old roof. The livelier side of the house until about ten at night.</p>
@@ -668,7 +788,7 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
           </div>
         </article>
         <article class="rooms__panel">
-          <div class="rooms__ph"><picture><source media="(max-width: 640px)" srcset="https://images.unsplash.com/photo-1621626802138-544f167e2c7f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cnVzdGljJTIwaG90ZWwlMjBzdWl0ZSUyMHN0b25lfGVufDF8MHx8fDE3OTEzODEyOTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;h=1386&amp;q=60" width="640" height="1386"><img style="background:#59260c" src="https://images.unsplash.com/photo-1621626802138-544f167e2c7f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cnVzdGljJTIwaG90ZWwlMjBzdWl0ZSUyMHN0b25lfGVufDF8MHx8fDE3OTEzODEyOTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A round stone bath under a skylight between walls of irregular limestone" width="1600" height="1067" loading="lazy"></picture></div>
+          <div class="rooms__ph"><picture><source media="(max-width: 640px)" srcset="https://images.unsplash.com/photo-1621626802138-544f167e2c7f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cnVzdGljJTIwaG90ZWwlMjBzdWl0ZSUyMHN0b25lfGVufDF8MHx8fDE3OTEzODEyOTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;h=1386&amp;q=60" width="640" height="1386"><img src="https://images.unsplash.com/photo-1621626802138-544f167e2c7f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cnVzdGljJTIwaG90ZWwlMjBzdWl0ZSUyMHN0b25lfGVufDF8MHx8fDE3OTEzODEyOTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A round stone bath under a skylight between walls of irregular limestone" width="1600" height="1067" loading="lazy"></picture></div>
           <div class="rooms__facts m-surface">
             <h3 class="m-text-4 rooms__kind">The tower · one suite</h3>
             <p class="m-text">The old weighing tower on two floors: a bed under the beams upstairs, a stone bath under the skylight below. Breakfast is carried up.</p>
@@ -686,8 +806,8 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
 </section>
 <!-- hours: six hours of the day as tall rows; the whole section takes each hour's colour as it reaches the middle of the screen (animation: scene:hours) -->
 <section id="hours" class="hours" data-8b-section="hours">
-  <h2 class="m-text-2 hours__title" data-8b-motion="tide">A day kept by the sea</h2>
-  <ol class="hours__list">
+  <h2 class="m-text-2 hours__title" data-8b-motion="tide" data-8b-split="lines">A day kept by the sea</h2>
+  <ol class="hours__list" data-8b-items=":scope > li">
     <li class="hours__row" style="--hours-ground: var(--color-1); --hours-ink: var(--color-2)">
       <time class="m-text-4 hours__time" datetime="07:00">07:00</time>
       <p class="m-text-2 hours__what">The shutters open</p>
@@ -723,20 +843,20 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
 <!-- table: a large held photo beside a text column: four meals, two photos, the cook's quote and a booking button -->
 <section id="table" class="table" data-8b-section="table">
   <div class="table__held">
-    <div class="ph" data-8b-motion="drift"><div class="ph__in"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1772352214475-12f9a75618d8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YnJlYWtmYXN0JTIwdGFibGUlMjB0ZXJyYWNlJTIwc2VhfGVufDF8MHx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A wooden table and chairs on a terrace above the sea, waves breaking on the beach below" width="1600" height="1067" loading="lazy"></div></div>
+    <div class="ph" data-8b-motion="drift"><div class="ph__in"><img src="https://images.unsplash.com/photo-1772352214475-12f9a75618d8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YnJlYWtmYXN0JTIwdGFibGUlMjB0ZXJyYWNlJTIwc2VhfGVufDF8MHx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A wooden table and chairs on a terrace above the sea, waves breaking on the beach below" width="1600" height="1067" loading="lazy"></div></div>
   </div>
   <div class="table__col">
-    <h2 class="m-text-2 table__title" data-8b-motion="tide">Lunch is what the boats bring</h2>
+    <h2 class="m-text-2 table__title" data-8b-motion="tide" data-8b-split="lines">Lunch is what the boats bring</h2>
     <p class="m-text-3">The kitchen writes the menu at ten, after the mole. Breakfast is long, dinner is late, and both keep the house's own time.</p>
-    <ol class="table__menu">
+    <ol class="table__menu" data-8b-items=":scope > li">
       <li><span class="m-text-4">Breakfast · 7:30 to noon</span><p class="m-text">Ricotta and figs, bread from Via del Forno, eggs however you ask, coffee until you stop.</p></li>
       <li><span class="m-text-4">Lunch · from 13:00</span><p class="m-text">Two dishes from the morning's catch, a salad from the hill, bread for the oil.</p></li>
       <li><span class="m-text-4">Aperitivo · 18:30, roof</span><p class="m-text">Cold white from the cellar, olives, courgette flowers fried to order.</p></li>
       <li><span class="m-text-4">Dinner · 20:30, the mole</span><p class="m-text">Four courses, one sitting, eleven tables. Guests of the house first; the harbour may book what is left.</p></li>
     </ol>
     <div class="table__pair">
-      <div class="ph" data-8b-motion="aperture"><div class="ph__in"><img style="background:#594026" src="https://images.unsplash.com/photo-1773417461034-75e751de40ba?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Z3JpbGxlZCUyMGZpc2glMjBsdW5jaHxlbnwxfDB8fHwxNzkxMzgxMzQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" alt="A whole roasted fish with lemon slices, potatoes and grilled courgette" width="1600" height="1200" loading="lazy"></div></div>
-      <div class="ph" data-8b-motion="aperture"><div class="ph__in"><img style="background:#262626" src="https://images.unsplash.com/photo-1790618785801-69c68c4d70e7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZXNwcmVzc28lMjBjdXAlMjBtb3JuaW5nJTIwbGlnaHR8ZW58MXwwfHx8MTc5MTM4MTM1MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=580&amp;q=60" alt="A cup of coffee and a small vase of daisies on a breakfast table" width="1600" height="899" loading="lazy"></div></div>
+      <div class="ph" data-8b-motion="aperture"><div class="ph__in"><img src="https://images.unsplash.com/photo-1773417461034-75e751de40ba?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Z3JpbGxlZCUyMGZpc2glMjBsdW5jaHxlbnwxfDB8fHwxNzkxMzgxMzQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=660&amp;q=60" alt="A whole roasted fish with lemon slices, potatoes and grilled courgette" width="1600" height="1200" loading="lazy"></div></div>
+      <div class="ph" data-8b-motion="aperture"><div class="ph__in"><img src="https://images.unsplash.com/photo-1790618785801-69c68c4d70e7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZXNwcmVzc28lMjBjdXAlMjBtb3JuaW5nJTIwbGlnaHR8ZW58MXwwfHx8MTc5MTM4MTM1MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=700&amp;q=60" alt="A cup of coffee and a small vase of daisies on a breakfast table" width="1600" height="899" loading="lazy"></div></div>
     </div>
     <blockquote class="table__quote">
       <p class="m-text-3">“I write the menu when I know what came in. Before ten, nobody can tell you what lunch is.”</p>
@@ -747,10 +867,10 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
 </section>
 <!-- sea: four outings as plates that stack like cards: each held plate settles back, smaller and darker, while the next rises over it (animation: scene:sea) -->
 <section id="sea" class="sea" data-8b-section="sea">
-  <h2 class="m-text-2 sea__title" data-8b-motion="tide">Out from the mole</h2>
-  <div class="sea__stack">
+  <h2 class="m-text-2 sea__title" data-8b-motion="tide" data-8b-split="lines">Out from the mole</h2>
+  <div class="sea__stack" data-8b-items=":scope > article" data-8b-fixed="4">
     <article class="sea__plate">
-      <div class="sea__ph"><img style="background:#8ca68c" src="https://images.unsplash.com/photo-1782179284031-6a6df0f9288b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8d29vZGVuJTIwZmlzaGluZyUyMGJvYXQlMjBtZWRpdGVycmFuZWFufGVufDF8MHx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="A white wooden fishing boat moored in clear turquoise water below a rocky shore" width="1600" height="1067" loading="lazy"></div>
+      <div class="sea__ph"><img src="https://images.unsplash.com/photo-1782179284031-6a6df0f9288b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8d29vZGVuJTIwZmlzaGluZyUyMGJvYXQlMjBtZWRpdGVycmFuZWFufGVufDF8MHx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="A white wooden fishing boat moored in clear turquoise water below a rocky shore" width="1600" height="1067" loading="lazy"></div>
       <div class="sea__text">
         <p class="m-text-4 sea__when">10:00 · daily, May to October</p>
         <div class="sea__body">
@@ -760,7 +880,7 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
       </div>
     </article>
     <article class="sea__plate">
-      <div class="sea__ph"><img style="background:#2673c0" src="https://images.unsplash.com/photo-1565248728198-b3ab877c5042?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c3dpbW1pbmclMjBsYWRkZXIlMjBzZWElMjByb2Nrc3xlbnwxfDB8fHwxNzkxMzgxMzQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="A steel ladder down a rocky shore into clear rippling water" width="1600" height="1067" loading="lazy"></div>
+      <div class="sea__ph"><img src="https://images.unsplash.com/photo-1565248728198-b3ab877c5042?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c3dpbW1pbmclMjBsYWRkZXIlMjBzZWElMjByb2Nrc3xlbnwxfDB8fHwxNzkxMzgxMzQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="A steel ladder down a rocky shore into clear rippling water" width="1600" height="1067" loading="lazy"></div>
       <div class="sea__text">
         <p class="m-text-4 sea__when">Any hour · at the foot of the house</p>
         <div class="sea__body">
@@ -770,7 +890,7 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
       </div>
     </article>
     <article class="sea__plate">
-      <div class="sea__ph"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1768828327216-a3cf6a9f84b9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bGlnaHRob3VzZSUyMGNvYXN0JTIwcGF0aHxlbnwxfDB8fHwxNzkxMzgxMzQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="A small orange lighthouse on a green headland above a grey sea" width="1600" height="1066" loading="lazy"></div>
+      <div class="sea__ph"><img src="https://images.unsplash.com/photo-1768828327216-a3cf6a9f84b9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bGlnaHRob3VzZSUyMGNvYXN0JTIwcGF0aHxlbnwxfDB8fHwxNzkxMzgxMzQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="A small orange lighthouse on a green headland above a grey sea" width="1600" height="1066" loading="lazy"></div>
       <div class="sea__text">
         <p class="m-text-4 sea__when">17:00 · Tuesdays and Fridays</p>
         <div class="sea__body">
@@ -780,7 +900,7 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
       </div>
     </article>
     <article class="sea__plate">
-      <div class="sea__ph"><img style="background:#404040" src="https://images.unsplash.com/photo-1779517935352-0e232f9a84fe?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZmlzaCUyMG1hcmtldCUyMGNyYXRlc3xlbnwxfDB8fHwxNzkxMzgxMzUwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=60" alt="Two fishermen sorting the catch into stacked orange crates on the quay" width="1600" height="977" loading="lazy"></div>
+      <div class="sea__ph"><img src="https://images.unsplash.com/photo-1779517935352-0e232f9a84fe?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZmlzaCUyMG1hcmtldCUyMGNyYXRlc3xlbnwxfDB8fHwxNzkxMzgxMzUwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=60" alt="Two fishermen sorting the catch into stacked orange crates on the quay" width="1600" height="977" loading="lazy"></div>
       <div class="sea__text">
         <p class="m-text-4 sea__when">06:30 · Thursdays</p>
         <div class="sea__body">
@@ -793,36 +913,36 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
 </section>
 <!-- harbour: a grid of fifteen small photos of the town around a held button; the tiles part to leave a clearing as each row passes the middle (animation: scene:harbour) -->
 <section id="harbour" class="harbour" data-8b-section="harbour">
-  <h2 class="m-text-2 harbour__title" data-8b-motion="tide">Around the harbour</h2>
+  <h2 class="m-text-2 harbour__title" data-8b-motion="tide" data-8b-split="lines">Around the harbour</h2>
   <p class="m-text harbour__lede">Marina di Serra is four streets deep. Everything here is ten minutes from the door, and most of it is downhill.</p>
   <div class="harbour__field">
     <div class="harbour__label"><a class="m-btn" href="#contact"><span class="m-btn__label">Ask for the harbour map</span></a></div>
-    <ul class="harbour__grid">
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#404040" src="https://images.unsplash.com/photo-1765717790376-4e92a14899b7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8ZmlzaGluZyUyMG5ldHMlMjBoYXJib3VyfGVufDF8MXx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Nets spread to dry along the quay, small boats moored beyond" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">Nets on the mole</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1782178393243-22826c58ecb5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8ZmlzaGluZyUyMG5ldHMlMjBoYXJib3VyfGVufDF8MXx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="The deck of a fishing boat piled with yellow nets and blue crates" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">Back at half past nine</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1787767296646-8bbc96b3ef8f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGZpc2hpbmclMjBuZXRzJTIwaGFyYm91cnxlbnwxfDF8fHwxNzkxMzgxMzQ4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="An old fisherman in a white vest mending red nets on the pier" width="1067" height="1334" loading="lazy"></div><figcaption class="m-text-4">Tonino and the red nets</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#262626" src="https://images.unsplash.com/photo-1786338342263-b080421b7326?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWVkaXRlcnJhbmVhbiUyMGFsbGV5JTIwc3RhaXJzfGVufDF8MXx8fDE3OTEzODEzNDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="Stone steps climbing into a dark arched passage between plastered walls" width="1067" height="1215" loading="lazy"></div><figcaption class="m-text-4">Arco della Dogana</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#f3d9d9" src="https://images.unsplash.com/photo-1779720987559-96adf0484bc3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bWVkaXRlcnJhbmVhbiUyMGFsbGV5JTIwc3RhaXJzfGVufDF8MXx8fDE3OTEzODEzNDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A narrow stone alley of shallow steps under a clear sky" width="1067" height="1628" loading="lazy"></div><figcaption class="m-text-4">The hundred steps</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#a65926" src="https://images.unsplash.com/photo-1759612291131-587ccee7df3d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bWVkaXRlcnJhbmVhbiUyMGFsbGV5JTIwc3RhaXJzfGVufDF8MXx8fDE3OTEzODEzNDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A man climbing a narrow street of orange and ochre houses" width="1067" height="1423" loading="lazy"></div><figcaption class="m-text-4">Via del Forno, uphill</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#8c5940" src="https://images.unsplash.com/photo-1786339283115-aae9f815ac78?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bGF1bmRyeSUyMGJhbGNvbnklMjBvbGQlMjB0b3dufGVufDF8MXx8fDE3OTEzODEzNTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Washing hung from a window of a yellow stucco house" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">Washing day, Via Lunga</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#0c2626" src="https://images.unsplash.com/photo-1787350568719-f1dfffdaf939?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGVtb25zJTIwbWFya2V0JTIwc3RhbGx8ZW58MXwxfHx8MTc5MTM4MTM1MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Crates of cherries, peaches and melons at a street market" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">Thursday market</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#0c4040" src="https://images.unsplash.com/photo-1648675163877-c8d12f344fc4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c21hbGwlMjBib2F0cyUyMGhhcmJvdXIlMjBhZXJpYWx8ZW58MXwxfHx8MTc5MTM4MTM1MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="The breakwater from above, white rocks in deep green water" width="1067" height="1423" loading="lazy"></div><figcaption class="m-text-4">The breakwater</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#265959" src="https://images.unsplash.com/photo-1685404432495-bcd43f922ace?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c21hbGwlMjBib2F0cyUyMGhhcmJvdXIlMjBhZXJpYWx8ZW58MXwxfHx8MTc5MTM4MTM1MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Rows of small wooden boats moored in the basin, seen from above" width="1067" height="1897" loading="lazy"></div><figcaption class="m-text-4">Gozzi in the old basin</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#738c8c" src="https://images.unsplash.com/photo-1790360053417-70a375a6e4dd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c3dpbW1lcnMlMjByb2NrcyUyMHNlYXxlbnwxfDF8fHwxNzkxMzgxMzUyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A yellow umbrella and two chairs on a small rock in the sea" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">A rock for two</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#8ca6a6" src="https://images.unsplash.com/photo-1790360053419-89a258489723?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8c3dpbW1lcnMlMjByb2NrcyUyMHNlYXxlbnwxfDF8fHwxNzkxMzgxMzUyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Swimmers in the sea below a wooded limestone cliff" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">Under Monte Serra</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#262626" src="https://images.unsplash.com/photo-1772199054750-44b333ba2a66?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGZpc2hpbmclMjBuZXRzJTIwaGFyYm91cnxlbnwxfDF8fHwxNzkxMzgxMzQ4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A blue and orange trawler with its rigging, tied up at a weathered pier" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">The trawler quay</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#0c73c0" src="https://images.unsplash.com/photo-1747479024713-c40bdc0abf58?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZmlzaGluZyUyMG5ldHMlMjBoYXJib3VyfGVufDF8MXx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A concrete landing below a green cliff, sun glittering on the water" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">The ferry landing</figcaption></figure></li>
-      <li class="harbour__tile"><figure><div class="harbour__ph"><img style="background:#262626" src="https://images.unsplash.com/photo-1786892669115-ba35f79c0b64?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZmlzaGluZyUyMG5ldHMlMjBoYXJib3VyfGVufDF8MXx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Fishing nets and floats in plastic crates on a wooden dock" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">Floats and crates</figcaption></figure></li>
+    <ul class="harbour__grid" data-8b-items=":scope > li">
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1765717790376-4e92a14899b7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8ZmlzaGluZyUyMG5ldHMlMjBoYXJib3VyfGVufDF8MXx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Nets spread to dry along the quay, small boats moored beyond" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">Nets on the mole</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1782178393243-22826c58ecb5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8ZmlzaGluZyUyMG5ldHMlMjBoYXJib3VyfGVufDF8MXx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="The deck of a fishing boat piled with yellow nets and blue crates" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">Back at half past nine</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1787767296646-8bbc96b3ef8f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGZpc2hpbmclMjBuZXRzJTIwaGFyYm91cnxlbnwxfDF8fHwxNzkxMzgxMzQ4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="An old fisherman in a white vest mending red nets on the pier" width="1067" height="1334" loading="lazy"></div><figcaption class="m-text-4">Tonino and the red nets</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1786338342263-b080421b7326?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWVkaXRlcnJhbmVhbiUyMGFsbGV5JTIwc3RhaXJzfGVufDF8MXx8fDE3OTEzODEzNDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="Stone steps climbing into a dark arched passage between plastered walls" width="1067" height="1215" loading="lazy"></div><figcaption class="m-text-4">Arco della Dogana</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1779720987559-96adf0484bc3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8bWVkaXRlcnJhbmVhbiUyMGFsbGV5JTIwc3RhaXJzfGVufDF8MXx8fDE3OTEzODEzNDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A narrow stone alley of shallow steps under a clear sky" width="1067" height="1628" loading="lazy"></div><figcaption class="m-text-4">The hundred steps</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1759612291131-587ccee7df3d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bWVkaXRlcnJhbmVhbiUyMGFsbGV5JTIwc3RhaXJzfGVufDF8MXx8fDE3OTEzODEzNDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A man climbing a narrow street of orange and ochre houses" width="1067" height="1423" loading="lazy"></div><figcaption class="m-text-4">Via del Forno, uphill</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1786339283115-aae9f815ac78?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bGF1bmRyeSUyMGJhbGNvbnklMjBvbGQlMjB0b3dufGVufDF8MXx8fDE3OTEzODEzNTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Washing hung from a window of a yellow stucco house" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">Washing day, Via Lunga</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1787350568719-f1dfffdaf939?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGVtb25zJTIwbWFya2V0JTIwc3RhbGx8ZW58MXwxfHx8MTc5MTM4MTM1MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Crates of cherries, peaches and melons at a street market" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">Thursday market</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1648675163877-c8d12f344fc4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c21hbGwlMjBib2F0cyUyMGhhcmJvdXIlMjBhZXJpYWx8ZW58MXwxfHx8MTc5MTM4MTM1MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="The breakwater from above, white rocks in deep green water" width="1067" height="1423" loading="lazy"></div><figcaption class="m-text-4">The breakwater</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1685404432495-bcd43f922ace?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c21hbGwlMjBib2F0cyUyMGhhcmJvdXIlMjBhZXJpYWx8ZW58MXwxfHx8MTc5MTM4MTM1MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Rows of small wooden boats moored in the basin, seen from above" width="1067" height="1897" loading="lazy"></div><figcaption class="m-text-4">Gozzi in the old basin</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1790360053417-70a375a6e4dd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c3dpbW1lcnMlMjByb2NrcyUyMHNlYXxlbnwxfDF8fHwxNzkxMzgxMzUyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A yellow umbrella and two chairs on a small rock in the sea" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">A rock for two</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1790360053419-89a258489723?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8c3dpbW1lcnMlMjByb2NrcyUyMHNlYXxlbnwxfDF8fHwxNzkxMzgxMzUyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Swimmers in the sea below a wooded limestone cliff" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">Under Monte Serra</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1772199054750-44b333ba2a66?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGZpc2hpbmclMjBuZXRzJTIwaGFyYm91cnxlbnwxfDF8fHwxNzkxMzgxMzQ4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A blue and orange trawler with its rigging, tied up at a weathered pier" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">The trawler quay</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1747479024713-c40bdc0abf58?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZmlzaGluZyUyMG5ldHMlMjBoYXJib3VyfGVufDF8MXx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A concrete landing below a green cliff, sun glittering on the water" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">The ferry landing</figcaption></figure></li>
+      <li class="harbour__tile"><figure><div class="harbour__ph"><img src="https://images.unsplash.com/photo-1786892669115-ba35f79c0b64?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZmlzaGluZyUyMG5ldHMlMjBoYXJib3VyfGVufDF8MXx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Fishing nets and floats in plastic crates on a wooden dock" width="1067" height="1600" loading="lazy"></div><figcaption class="m-text-4">Floats and crates</figcaption></figure></li>
     </ul>
   </div>
 </section>
 <!-- faq: seven questions in native details elements beside a heading and a phone note -->
 <section id="faq" class="faq" data-8b-section="faq">
   <div class="faq__intro">
-    <h2 class="m-text-2 faq__title" data-8b-motion="tide">Before you come</h2>
+    <h2 class="m-text-2 faq__title" data-8b-motion="tide" data-8b-split="lines">Before you come</h2>
     <p class="m-text faq__note">Anything not answered here, ask Davide at the desk or by telephone on <a data-8b-placeholder="phone" class="m-link" href="tel:+390830000000">+39 0833 000 000</a>, any day from eight to eight.</p>
   </div>
-  <div class="faq__list">
+  <div class="faq__list" data-8b-items=":scope > details">
     <details class="faq__item"><summary class="m-btn-3"><span class="m-btn-3__label">When are check-in and check-out?</span><span class="m-btn-3__icon" aria-hidden="true"></span></summary><p class="m-text faq__answer">Rooms are ready from two in the afternoon. Leave when the ferry or the train suits you; bags wait on the ground floor as long as you need.</p></details>
     <details class="faq__item"><summary class="m-btn-3"><span class="m-btn-3__label">Where do we leave the car?</span><span class="m-btn-3__icon" aria-hidden="true"></span></summary><p class="m-text faq__answer">The old town is closed to cars. Leave yours at the station car park for €12 a day; we collect you and your bags with the hand cart, which is quicker than it sounds.</p></details>
     <details class="faq__item"><summary class="m-btn-3"><span class="m-btn-3__label">Can we bring children or a dog?</span><span class="m-btn-3__icon" aria-hidden="true"></span></summary><p class="m-text faq__answer">Children are welcome in the harbour rooms and the tower. Well-mannered dogs stay in the harbour rooms for €20 a night.</p></details>
@@ -836,7 +956,7 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
 <section id="guestbook" class="guestbook" data-8b-section="guestbook">
   <figure class="guestbook__entry">
     <blockquote class="m-text-2 guestbook__quote">
-      <p><span class="guestbook__line">We came for</span> <span class="guestbook__line">two nights and</span> <span class="guestbook__line">stayed until</span> <span class="guestbook__line">the figs</span> <span class="guestbook__line">were ripe.</span></p>
+      <p><span class="guestbook__line" data-8b-split="words">We came for</span> <span class="guestbook__line" data-8b-split="words">two nights and</span> <span class="guestbook__line" data-8b-split="words">stayed until</span> <span class="guestbook__line" data-8b-split="words">the figs</span> <span class="guestbook__line" data-8b-split="words">were ripe.</span></p>
     </blockquote>
     <figcaption class="guestbook__sign">
       <h2 class="m-text-4">From the guest book</h2>
@@ -847,15 +967,15 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
 <!-- contact: a heading, an aperture photo, address lines and three ways to arrive, beside a stay request form -->
 <section id="contact" class="contact" data-8b-section="contact">
   <div class="contact__intro">
-    <h2 class="m-text-2 contact__title" data-8b-motion="tide">Write to the house</h2>
+    <h2 class="m-text-2 contact__title" data-8b-motion="tide" data-8b-split="lines">Write to the house</h2>
     <p class="m-text-3">Tell us your dates and the kind of quiet you are after. Rosa or Davide answers within a day.</p>
-    <div class="ph contact__ph" data-8b-motion="aperture"><div class="ph__in"><img style="background:#c08c73" src="https://images.unsplash.com/photo-1664546046715-e039cfce393a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d29vZGVuJTIwZmlzaGluZyUyMGJvYXQlMjBtZWRpdGVycmFuZWFufGVufDF8MHx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=660&amp;q=60" alt="A fishing boat at anchor on still water under a pink evening sky" width="1600" height="1067" loading="lazy"></div></div>
+    <div class="ph contact__ph" data-8b-motion="aperture"><div class="ph__in"><img src="https://images.unsplash.com/photo-1664546046715-e039cfce393a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d29vZGVuJTIwZmlzaGluZyUyMGJvYXQlMjBtZWRpdGVycmFuZWFufGVufDF8MHx8fDE3OTEzODEzNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60" alt="A fishing boat at anchor on still water under a pink evening sky" width="1600" height="1067" loading="lazy"></div></div>
     <dl class="contact__lines">
       <dt class="m-text-4">Address</dt><dd>Example Mole 1, Marina di Serra</dd>
       <dt class="m-text-4">Telephone</dt><dd><a data-8b-placeholder="phone" class="m-link" href="tel:+390830000000">+39 0833 000 000</a></dd>
       <dt class="m-text-4">Email</dt><dd><a data-8b-placeholder="email" class="m-link" href="mailto:stay@ostro.example">stay@ostro.example</a></dd>
     </dl>
-    <ul class="contact__ways">
+    <ul class="contact__ways" data-8b-items=":scope > li">
       <li><span class="m-text-4">By train</span><p class="m-text">Serra station, then eight minutes on foot down Via del Forno. We meet you with the hand cart.</p></li>
       <li><span class="m-text-4">By ferry</span><p class="m-text">The morning boat from the islands lands four minutes from the door.</p></li>
       <li><span class="m-text-4">By car</span><p class="m-text">Leave it at the station car park; the old town is closed to traffic.</p></li>
@@ -907,322 +1027,6 @@ textarea.m-field__input { min-height: 96px; resize: vertical; }
   <p class="footer__mark" style="--len:5" aria-hidden="true">Ostro</p>
   <div class="footer__base m-text-4"><span>Hotel Ostro · open from March to November</span><span>© 2026 Hotel Ostro · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></span></div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.9, anchors: { offset: 0 } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  aperture(element, vars = {}) {
-    const img = element.querySelector('img');
-    return gsap.timeline(vars)
-      .fromTo(element, { clipPath: 'inset(34% 32% 34% 32%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.1, ease: 'power3.inOut', clearProps: 'clipPath' }, 0)
-      .fromTo(img, { scale: 1.22 }, { scale: 1, duration: 1.5, ease: 'power3.out', clearProps: 'scale' }, 0);
-  },
-  tide(lines, vars = {}) {
-    return gsap.timeline(vars)
-      .from(lines, { x: i => (i % 2 ? 1 : -1) * Math.min(90, innerWidth * .07), opacity: 0, duration: 1.1, ease: 'power3.out', stagger: .09 });
-  },
-  drift(element, vars = {}) {
-    return gsap.timeline(vars)
-      .fromTo(element.querySelector('.ph__in'), { yPercent: -6 }, { yPercent: 6, ease: 'none' });
-  }
-};
-const bindEffect = (name, make) => document.querySelectorAll('[data-8b-section]').forEach(section => {
-  const elements = [...section.querySelectorAll(`[data-8b-motion~="${name}"]`)];
-  if (!elements.length) return;
-  const id = `effect:${name}:${section.id}`;
-  queueMotion(() => {
-    gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, i) => make(element, `${id}:${i}`));
-    });
-  }, { first: section.getBoundingClientRect().top < innerHeight, id });
-});
-bindEffect('aperture', (element, id) => effects.aperture(element, { scrollTrigger: { id, trigger: element, start: 'top 88%', once: true } }));
-bindEffect('drift', (element, id) => effects.drift(element, { scrollTrigger: { id, trigger: element, start: 'top bottom', end: 'bottom top', scrub: true } }));
-bindEffect('tide', (element, id) => {
-  let played = false, current = null;
-  SplitText.create(element, {
-    type: 'lines', linesClass: 'tide-line', autoSplit: true,
-    onSplit: self => {
-      current = effects.tide(self.lines, { paused: true });
-      if (played) current.progress(1);
-      return current;
-    }
-  });
-  ScrollTrigger.create({ id, trigger: element, start: 'top 88%', once: true, onEnter: () => { played = true; current?.play(); } });
-});
-</script>
-<script data-8b-part="scene:opening">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('opening');
-    const view = section.querySelector('.opening__view');
-    const zoom = section.querySelector('.opening__zoom');
-    const scrim = section.querySelector('.opening__scrim');
-    const upper = section.querySelector('.opening__upper');
-    const lower = section.querySelector('.opening__lower');
-    const after = section.querySelector('.opening__after');
-    const second = section.querySelector('.opening__second');
-    if (!view || !zoom || !scrim || !upper || !lower || !after || !second) throw new Error('opening: markup changed');
-    section.setAttribute('data-open', '');
-    gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'opening', trigger: section, start: 'top top', endTrigger: second, end: 'top top', scrub: .5, invalidateOnRefresh: true }
-    })
-      .fromTo(view, { '--opening-p': 0 }, { '--opening-p': 1, duration: .58, ease: 'power2.inOut' }, 0)
-      .fromTo(zoom, { scale: 1.18 }, { scale: 1, duration: 1 }, 0)
-      .fromTo(upper, { y: 0 }, { y: () => -innerHeight * .3, duration: .5 }, 0)
-      .fromTo(lower, { y: 0 }, { y: () => innerHeight * .9, duration: .5 }, 0)
-      .fromTo(lower, { opacity: 1 }, { opacity: 0, duration: .4 }, 0)
-      .fromTo(after, { y: 0 }, { y: () => innerHeight * .9, duration: .5 }, 0)
-      .fromTo(after, { opacity: 1 }, { opacity: 0, duration: .28 }, 0)
-      .fromTo(scrim, { opacity: 0 }, { opacity: 1, duration: .4 }, .3);
-    return () => section.removeAttribute('data-open');
-  });
-}, { first: true });
-</script>
-<script data-8b-part="scene:rooms">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('rooms');
-    const track = section.querySelector('.rooms__track');
-    const line = section.querySelector('.rooms__line');
-    const panels = [...section.querySelectorAll('.rooms__panel')];
-    const names = line ? [...line.querySelectorAll('.rooms__name')] : [];
-    if (!track || panels.length < 2 || names.length !== panels.length) throw new Error('rooms: one name per panel, at least two');
-    section.setAttribute('data-stepper', '');
-    track.style.setProperty('--rooms-n', panels.length);
-    const setCurrent = index => names.forEach((name, i) => name.classList.toggle('is-current', i === index));
-    setCurrent(0);
-    const timeline = gsap.timeline({
-      defaults: { ease: 'power2.inOut', duration: 1 },
-      scrollTrigger: {
-        id: 'rooms', trigger: track, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true,
-        onUpdate: self => setCurrent(Math.round(self.progress * (panels.length - 1)))
-      }
-    });
-    panels.forEach((panel, i) => {
-      if (!i) return;
-      const at = i - 1;
-      timeline
-        .fromTo(panel, { clipPath: 'inset(0% 0% 0% 100%)' }, { clipPath: 'inset(0% 0% 0% 0%)' }, at)
-        .fromTo(panel.querySelector('img'), { xPercent: 14 }, { xPercent: 0 }, at)
-        .to(panels[i - 1].querySelector('img'), { xPercent: -10 }, at)
-        .to(panels[i - 1].querySelector('.rooms__facts'), { opacity: 0, duration: .45, ease: 'power1.out' }, at)
-        .to(line, { x: () => names[0].offsetLeft - names[i].offsetLeft }, at)
-        .set(panel, { clipPath: 'none' }, at + 1);
-    });
-    return () => {
-      section.removeAttribute('data-stepper');
-      track.style.removeProperty('--rooms-n');
-      names.forEach(name => name.classList.remove('is-current'));
-    };
-  });
-});
-</script>
-<script data-8b-part="scene:hours">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('hours');
-    const rows = [...section.querySelectorAll('.hours__row')];
-    if (rows.length < 2) throw new Error('hours: needs at least two rows');
-    const toRgb = value => {
-      const srgb = value.match(/color\(srgb ([\d.e-]+) ([\d.e-]+) ([\d.e-]+)/);
-      return srgb ? `rgb(${srgb.slice(1).map(c => Math.round(Math.min(1, Math.max(0, +c)) * 255)).join(', ')})` : value;
-    };
-    const colours = rows.map(row => {
-      const style = getComputedStyle(row);
-      return { backgroundColor: toRgb(style.backgroundColor), color: toRgb(style.color) };
-    });
-    section.setAttribute('data-day', '');
-    gsap.set(section, { ...colours[0] });
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none', duration: 1 },
-      scrollTrigger: { id: 'hours', trigger: rows[0], start: 'center center', endTrigger: rows[rows.length - 1], end: 'center center', scrub: .3 }
-    });
-    const channels = value => (value.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
-    const luminance = ([r, g, b]) => [r, g, b].map(c => { c /= 255; return c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4; }).reduce((sum, c, k) => sum + c * [.2126, .7152, .0722][k], 0);
-    const crossing = (from, to) => {
-      const a = channels(from), b = channels(to);
-      let lo = 0, hi = 1;
-      for (let step = 0; step < 20; step++) {
-        const mid = (lo + hi) / 2, mix = a.map((c, k) => c + (b[k] - c) * mid);
-        if ((luminance(mix) > .18) === (luminance(a) > .18)) lo = mid; else hi = mid;
-      }
-      return lo;
-    };
-    colours.slice(1).forEach((colour, i) => {
-      timeline.to(section, { backgroundColor: colour.backgroundColor, duration: .3 }, i + .35);
-      if (colour.color !== colours[i].color) timeline.to(section, { color: colour.color, duration: .04 }, i + .35 + .3 * Math.max(0, Math.min(.86, crossing(colours[i].backgroundColor, colour.backgroundColor) - .07)));
-    });
-    timeline.set({}, {}, rows.length - 1);
-    rows.forEach((row, i) => gsap.fromTo(row.querySelector('.hours__what'), { x: () => innerWidth * .05 }, {
-      x: () => -innerWidth * .05, ease: 'none',
-      scrollTrigger: { id: `hours:row-${i + 1}`, trigger: row, start: 'top bottom', end: 'bottom top', scrub: .4, invalidateOnRefresh: true }
-    }));
-    return () => section.removeAttribute('data-day');
-  });
-});
-</script>
-<script data-8b-part="scene:sea">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('sea');
-    const plates = [...section.querySelectorAll('.sea__plate')];
-    if (plates.length < 2) throw new Error('sea: needs at least two plates');
-    plates.slice(0, -1).forEach((plate, i) => {
-      const next = plates[i + 1];
-      gsap.fromTo(plate, { scale: 1, filter: 'brightness(1)' }, {
-        scale: .9, filter: 'brightness(.6)', ease: 'none',
-        scrollTrigger: { id: `sea:plate-${i + 1}`, trigger: next, start: 'top bottom', end: () => `top ${parseFloat(getComputedStyle(next).top) || 0}px`, scrub: .4, invalidateOnRefresh: true }
-      });
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:harbour">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('harbour');
-    const field = section.querySelector('.harbour__field');
-    const grid = section.querySelector('.harbour__grid');
-    const tiles = grid ? [...grid.querySelectorAll('.harbour__tile')] : [];
-    if (!field || !tiles.length || tiles.some(tile => !tile.firstElementChild)) throw new Error('harbour: markup changed');
-    let layout = [];
-    const measure = () => {
-      const top = field.getBoundingClientRect().top + scrollY;
-      const columns = getComputedStyle(grid).gridTemplateColumns.split(' ').length;
-      const middle = (columns - 1) / 2;
-      layout = tiles.map((tile, i) => ({
-        x: gsap.quickSetter(tile, 'x', 'px'),
-        scaleX: gsap.quickSetter(tile.firstElementChild, 'scaleX'),
-        scaleY: gsap.quickSetter(tile.firstElementChild, 'scaleY'),
-        y: top + tile.offsetTop + tile.offsetHeight / 2,
-        side: (i % columns) - middle
-      }));
-    };
-    const update = () => {
-      const centre = scrollY + innerHeight / 2, reach = innerHeight * .42, push = Math.min(innerWidth * .075, 120);
-      layout.forEach(tile => {
-        const near = Math.max(0, 1 - Math.abs(tile.y - centre) / reach) ** 2;
-        tile.x(tile.side ? Math.sign(tile.side) * Math.min(1, Math.abs(tile.side)) * near * push : 0);
-        const scale = tile.side ? 1 : 1 - .42 * near;
-        tile.scaleX(scale);
-        tile.scaleY(scale);
-      });
-    };
-    ScrollTrigger.create({ id: 'harbour', trigger: field, start: 'top bottom', end: 'bottom top', onRefresh: () => { measure(); update(); }, onUpdate: update });
-    measure();
-    update();
-    return () => gsap.set([...tiles, ...tiles.map(tile => tile.firstElementChild)], { clearProps: 'transform' });
-  });
-});
-</script>
-<script data-8b-part="scene:guestbook">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('guestbook');
-    const lines = [...section.querySelectorAll('.guestbook__line')];
-    if (!lines.length) throw new Error('guestbook: no lines');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'power2.out', duration: 1 },
-      scrollTrigger: { id: 'guestbook', trigger: section, start: 'top 85%', end: 'center 55%', scrub: .6, invalidateOnRefresh: true }
-    });
-    lines.forEach((line, i) => {
-      const words = SplitText.create(line, { type: 'words', wordsClass: 'guestbook__word' }).words;
-      const half = words.length / 2;
-      words.forEach((word, k) => {
-        if (k + .5 === half) return;
-        const left = k < half;
-        timeline.fromTo(word, { x: () => (left ? -1 : 1) * innerWidth * .3 }, { x: 0 }, i * .12);
-      });
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:footer">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const mark = document.querySelector('#footer .footer__mark');
-    if (!mark) throw new Error('footer: wordmark missing');
-    gsap.timeline({ defaults: { ease: 'power2.out', duration: 1 }, scrollTrigger: { id: 'footer', trigger: mark, start: 'top bottom', end: 'bottom bottom', scrub: .5 } })
-      .fromTo(mark, { clipPath: 'inset(0% 40% 0% 40%)' }, { clipPath: 'inset(0% 0% 0% 0%)' }, 0)
-      .fromTo(mark, { scale: 1.12 }, { scale: 1 }, 0)
-      .set(mark, { clipPath: 'none' }, 1);
-  });
-});
-</script>
 <script data-8b-part="section-script:contact">
 (() => {
   const form = document.querySelector('#contact .contact__form');
@@ -1244,13 +1048,13 @@ queueMotion(() => {
   const open = () => {
     menu.hidden = false;
     toggle.setAttribute('aria-expanded', 'true');
-    window.lenis?.stop();
+    window.motionKit?.wheel?.stop();
     menu.querySelector('a')?.focus();
   };
   const shut = (returnFocus = true) => {
     menu.hidden = true;
     toggle.setAttribute('aria-expanded', 'false');
-    window.lenis?.start();
+    window.motionKit?.wheel?.start();
     if (returnFocus) toggle.focus();
   };
   toggle.addEventListener('click', () => (menu.hidden ? open() : shut()));
@@ -1296,6 +1100,242 @@ queueMotion(() => {
     form.reset();
   });
 })();
+</script>
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}.line:not(:last-child){margin-bottom:0}.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = typeof Intl.Segmenter === 'function'
+? text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment)
+: text => [...text];
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split');
+if (sources.has(element)) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px 100% 0px' });
+(document.fonts?.ready ?? Promise.resolve()).then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:rooms">
+motionKit.scene("rooms", () => {
+  const line = document.querySelector("#rooms .rooms__line"), names = [...line.querySelectorAll(".rooms__name")];
+  motionKit.measure(() => names.forEach((name, i) => motionKit.set(line, { [`--rooms-x-${i}`]: `${names[0].offsetLeft - name.offsetLeft}px` })));
+  { const items = [["#rooms .m-text-2 > span:nth-of-type(1)", "is-current", true, [0.25]], ["#rooms .m-text-2 > span:nth-of-type(3)", "is-current", false, [0.75]], ["#rooms .m-text-2 > span:nth-of-type(2)", "is-current", false, [0.25,0.75]]].map(([s, c, initial, at]) => [document.querySelector(s), c, initial, at]); motionKit.track(document.querySelector("#rooms .rooms__track"), "0% 0%", "100% 100%", p => items.forEach(([el, c, initial, at]) => el.classList.toggle(c, at.reduce((on, x) => p >= x ? !on : on, initial)))); }
+});
+</script>
+<script data-8b-part="scene-script:harbour">
+motionKit.scene("harbour", () => {
+  const grid = document.querySelector("#harbour .harbour__grid"), tiles = [...grid.querySelectorAll(".harbour__tile")];
+  if (!tiles.length) throw new Error("harbour: markup changed");
+  motionKit.measure(() => {
+    const columns = getComputedStyle(grid).gridTemplateColumns.split(" ").length, middle = (columns - 1) / 2;
+    tiles.forEach((tile, i) => {
+      const side = (i % columns) - middle;
+      motionKit.set(tile, { "--harbour-side": Math.sign(side) * Math.min(1, Math.abs(side)), "--harbour-mid": side ? 0 : 1 });
+    });
+  });
+});
+</script>
+<script data-8b-part="scene-script:guestbook">
+motionKit.scene("guestbook", () => {
+  const lines = [...document.querySelectorAll("#guestbook .guestbook__line")];
+  if (!lines.length) throw new Error("guestbook: no lines");
+  lines.forEach((line, i) => motionKit.set(line, { "--guestbook-l": i, "--guestbook-ln": lines.length }));
+});
 </script>
 </body>
 </html>

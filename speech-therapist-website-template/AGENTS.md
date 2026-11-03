@@ -37,7 +37,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - The contact form (Request a call): now action="#contact"; a script checks that name and phone or email are filled, shows a thank-you line and nothing is sent; owner's target: a form endpoint (Formspree, Netlify Forms, your own) and remove the preventDefault script.
 - Phone links in the top bar, menu, contact and footer: now tel: the placeholder number; owner's target: your number.
 - Email links in the contact section and footer: now mailto: the placeholder address; owner's target: your address.
-- The form in `#contact` (fields `name`, `reach`, `age`, `note`) sends nothing; `section-script:contact` validates it and shows the thank-you text. Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
+- The form in `#contact` (fields `name`, `reach`, `age`, `note`) sends nothing; `section-script:contact` handles its submit in the page (read it before you connect a service). Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
 - The name Pipit (any letter case); the favicon letter and colours in `<link rel="icon">`.
 - Photos (21, Unsplash: help 2, visit 4, play 4, team 4, places 4, stories 3): `src`, no `srcset`/`sizes`, `width`/`height` to the ratio, `alt`, CREDITS.md.
 - `<title>`, meta description, og tags.

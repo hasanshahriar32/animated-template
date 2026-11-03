@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my shop: name, town, address, what I print, job types with sizes, paper and turnaround, prices, hours, same-day cutoff, delivery terms>. Replace first the shop name, the Leicester address, the pound prices, the counter rows, the paper table, the recent jobs and the contacts. Keep the section ids, the tab, photo and panel names and the seven size items. Point the quote form at my form service. Ask for any missing fact; never invent prices, hours or contacts.
 ```
 
-Vibe coding goes fastest when the agent starts from the shop's real facts: what you print, the price per job, paper stocks, opening hours, the same-day cutoff, delivery terms and file rules. Claude Code, Cursor or Codex should replace those first, then the six counter rows, the paper table and the six recent jobs. It must keep the section ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the selectors AGENTS.md lists. The demo's prices, hours and jobs are invented.
+Vibe coding goes fastest when the agent starts from the shop's real facts: what you print, the price per job, paper stocks, opening hours, the same-day cutoff, delivery terms and file rules. As a print shop website template for Claude Code, Cursor or Codex, it needs those replaced first, then the six counter rows, the paper table and the six recent jobs. Keep the section ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the selectors AGENTS.md lists. The demo's prices, hours and jobs are invented.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=print-shop-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -68,7 +68,7 @@ Yes, after a text pass. The layout suits any shop, but the demo is a Leicester s
 No. It usually opens the visitor's email program with the entered text, addressed to the demo address, so it fails for visitors with no mail app. There is no file upload field. Point the form at Formspree or Netlify Forms, or at your own endpoint.
 
 **Can I get a site like this without editing code?**  
-Yes. Describe the shop to [8B's AI website builder](https://8b.com/templates/8b/) and its engine designs a new site, its own design and not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes. Describe the shop to [8B's AI website builder](https://8b.com/) and its engine designs a new site, its own design and not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

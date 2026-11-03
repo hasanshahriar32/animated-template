@@ -1,6 +1,6 @@
 # AGENTS.md: football club website template
 
-One-page website for a volunteer-run youth football club, for parents looking for a team. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a volunteer-run youth football club, for parents looking for a team. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,16 +14,15 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
-  - `scene:squads`: `.squads__deck` `.squads__card`
-  - `scene:week`: `.week__stage` `.week__rail` `.week__big` `.week__day`
-  - `scene:promises`: `.promises__item` `.promises__band`
-  - `scene:coaches`: `.coaches__row` `.coaches__name` `.coaches__first` `.coaches__last` `.coaches__photo`
-  - `scene:join`: `.join__steps` `.join__step` `.join__num` `.join__title` `.join__text`
-  - `scene:fees`: `.fees__stage` `.fees__field--2` `.fees__col--1` `.fees__col--3`
-  - `scene:contact`: `.contact__rows` `.contact__row` `.contact__text` `aria-hidden`
   - `section-script:nav`: `.nav__menu` `.menu__close`
   - `section-script:contact`: `.contact__form` `.contact__status`
+  - `scene-script:squads`: `.squads__deck` `.squads__card`
+  - `scene-script:week`: `.week__stage` `.week__rail` `.week__big` `.week__day`
+  - `scene-script:coaches`: `.coaches__row` `.coaches__name` `.coaches__first` `.coaches__last`
+  - `scene-script:join`: `.join__steps` `.join__step` `.join__num`
+  - `scene-script:contact`: `.contact__row` `.contact__text` `aria-hidden`
 - `style="--len:N"` = characters in that display line, spaces included: `Everybody plays.` is 16, `No trials under 13.` is 19, `First kit is free.` is 18, `Coaches who stay.` is 17, `Come and play.` is 14, `First session free.` is 19, `See you Saturday.` is 17, `Kilnfield` is 9.
 - The promise lines, the three contact rows and the footer wordmark each have style="--len:N" equal to their character count; CSS sizes the type from it, so update N when you change the words.
 - Each week day holds its own huge day name (.week__big, aria-hidden) and each join step its own .join__num inside the item, so copy a whole item to add a day or step. scene:week measures the rail, so more days lengthen the pin; the join steps sit in a 4-column grid (2 columns up to 1080 px), so a fifth step starts a new row.
@@ -42,7 +41,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - "Volunteer with us", "Safeguarding" and "Privacy" links in the footer: now #contact, #faq and #contact; owner's target: your volunteer page, safeguarding policy and privacy policy.
 - Phone and email links in the contact section: now tel: and mailto: with placeholders; owner's target: your real number and address.
 - Booking form in the contact section: now action="#": nothing is sent, the script only shows a thank-you line; owner's target: a form service address (Formspree, Netlify Forms).
-- The form in `#contact` (fields `child`, `squad`, `email`, `phone`) sends nothing; `section-script:contact` validates it and shows the thank-you text. Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
+- The form in `#contact` (fields `child`, `squad`, `email`, `phone`) sends nothing; `section-script:contact` handles its submit in the page (read it before you connect a service). Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
 - The name Kilnfield Colts FC (any letter case); the favicon letter and colours in `<link rel="icon">`.
 - Photos (16, Unsplash: opening 1, squads 4, week 7, coaches 4): `src`, no `srcset`/`sizes`, `width`/`height` to the ratio, `alt`, CREDITS.md.
 - `<title>`, meta description, og tags.
@@ -64,9 +63,11 @@ All demo text, never to be invented:
 
 ## Known limits
 - Without JavaScript the menu button cannot open the overlay on narrow screens, the quote row does not loop and the form sends nothing; the FAQ still opens.
+- Without scroll-driven animation support (Firefox today) and with reduced motion on, the page shows its finished static layout: no opening load-in, no pins, the week and the quotes as plain grids, ordinary scrolling. The nav bar still slides away on scroll and hover transitions still run.
 - The booking form has action="#" and nothing is sent; connect a form service before publishing.
 - The week track pins the section and the deck and the join steps pin from 1081 px; each pin adds scroll length, so the page is long on desktop.
+- The four promise lines each have their own scroll timeline in CSS :nth-of-type rules; a fifth line would not sweep unless those rules get a fifth entry. The week days and coach rows are also marked data-8b-fixed, but their motion is measured per item, so days or coaches can be added.
 - The huge day names in the week track are decorative and hidden from assistive technology; the day label in each card carries the information.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Kilnfield Colts FC left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Kilnfield Colts FC left only in class names.

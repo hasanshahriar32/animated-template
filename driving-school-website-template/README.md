@@ -1,8 +1,8 @@
-# Free HTML driving school website template with GSAP scroll animations
+# Free HTML driving school website template with scroll animations and no libraries
 
-Driving school website template: one free HTML file for a school or an independent instructor who sells lessons by the hour. It has five lesson stages, an all-inclusive price card, four instructor cards, a pick-up zone board, three packages and a booking form, in bright colour tiles. AGENTS.md is included, so Claude Code, Cursor or Codex can adapt it.
+Driving school website template: one free HTML file for a school or an independent instructor who sells lessons by the hour. It has five lesson stages, an all-inclusive price card, four instructor cards, a pick-up zone board, three packages and a booking form, in bright colour tiles, with scroll motion in CSS and no JavaScript libraries.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/driving-school-website-template/)** · **[Use this template](https://github.com/new?template_name=driving-school-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/driving-school-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/merge/)**
 
@@ -24,17 +24,17 @@ curl -LO https://raw.githubusercontent.com/8bsite/driving-school-website-templat
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my driving school: name, city, lesson stages and typical hours, what the price covers, cars and gearboxes, instructors and languages, pick-up districts and test centres, packages and prices, office hours, how people book>. Replace first the prices, instructors, districts, pass figures and quotes. Keep the section ids, data-8b-section, data-8b-motion and data-8b-part, the classes AGENTS.md lists and each --len set to its word's character count. Ask me for missing facts and never invent prices, approvals, pass rates, reviews or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my driving school: name, city, lesson stages and typical hours, what the price covers, cars and gearboxes, instructors and languages, pick-up districts and test centres, packages and prices, office hours, how people book>. Replace prices, instructors, districts, pass figures and quotes first. Motion is CSS scroll-driven animation plus the inline kit: keep the gate script, the data-8b attributes, the classes AGENTS.md lists and each --len; add no library. Never invent prices, approvals, pass rates, reviews or contacts; ask me.
 ```
 
-Replace the school facts first: prices and package hours, instructor names, languages and free slots, the 24 district names, the three test centres, pass figures and learner quotes. The demo is British, which makes it one of the driving school website templates UK schools can start from, but DVSA, pounds and the test centres are demo content to replace. For vibe coding in Claude Code or Cursor, tell the agent to keep data-8b-section, data-8b-motion and data-8b-part.
+Replace the school facts: prices and package hours, instructor names, languages and free slots, the 24 district names, the three test centres, pass figures and learner quotes. The demo is British, which makes it one of the driving school website templates UK schools can start from, but DVSA, pounds and the test centres are demo content to replace. As a driving school website template for Claude Code, Cursor or Codex, it suits vibe coding if the agent keeps the data-8b attributes; [the Codex CLI](https://8b.com/templates/for-codex/) reads AGENTS.md by itself.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=driving-school-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
-- **Navigation**: top bar with wordmark, Book a lesson button and menu button; from 1024 px a left side rail of four colour tiles, the button and the phone number. The top bar, and on wide screens the side rail, slides up out of view when you scroll down and returns on a move up, a class toggle with a CSS transition that keeps running with reduced motion.
-- **Five lanes to a licence.**: headline "Five lanes to a licence.", intro, two buttons, and five coloured lesson stages with hours. On load the headline and its side text fade and rise, and the five stage rows slide in from alternate sides one after another, in CSS that reduced motion switches off.
+- **Navigation**: top bar with wordmark, Book a lesson button and menu button; from 1024 px a left side rail of four colour tiles, the button and the phone number. The top bar, and on wide screens the side rail, slides up out of view when you scroll down and returns on a move up, a class toggle with a CSS transition that keeps running with reduced motion; with a mouse the wheel scrolls smoothly.
+- **Five lanes to a licence.**: headline "Five lanes to a licence.", intro, two buttons, and five coloured lesson stages with hours. On load the headline and its side text fade and rise, and the five stage rows slide in from alternate sides one after another; this load-in runs only where the scroll motion runs.
 - **One price. Everything in the car.**: bento of tiles: one orange all-inclusive price card, two list tiles, a photo and an hours tile. Scrubbed as the section arrives: four tiles start small behind the orange card and slide out to their places one after another.
 - **Dual controls in every car.**: text card about the cars beside a 3D tunnel of colour cells and photos. Scrubbed while the tunnel crosses the screen: its four perspective walls, grid lines and cells together, glide six grid units toward you and settle at their depth.
 - **The calm voice in the passenger seat.**: four instructor cards with a portrait, bio, gearbox and languages, and next free slots. Heading lines arrive from alternate sides and each instructor card opens from its top left corner as it arrives.
@@ -67,15 +67,15 @@ No agent? Click **[Use this template](https://github.com/new?template_name=drivi
 **Where does the booking form send requests?**  
 Nowhere yet. The form needs a name and a phone number, then shows a thank-you line and sends nothing, because its action is #. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or link to your booking system. Also edit the line that promises a call back within one working day.
 
-**Can I get a site like this without editing code?**  
-Yes, in a different way. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence, in its own design, not this template. Designing and restyling are free; hosting with SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
+**Does this version need GSAP, SplitText or Lenis?**  
+No. The tunnel, the district board and the nervous panels are CSS scroll-driven animations, and a short inline kit measures the page and smooths the wheel. Nothing changes for the visitor: 26 KB gzipped against 75 KB. Keep the gate script, the data-8b attributes, the classes AGENTS.md lists, each --len and each package card's hours value.
 
-**What works on a phone, with reduced motion or without JavaScript?**  
-On a phone the four section links sit in the menu sheet. With reduced motion the scroll scenes, entrance effects and smooth scrolling are off, while the bar's hide on scroll and the hover fills keep running. Without JavaScript the menu button cannot open, the hour squares are not drawn and the photo reel does not loop.
+**Can I get a site like this without editing code?**  
+Yes, in a different way. [8B's AI website builder](https://8b.com/) designs a new site from a sentence, in its own design, not this template. Designing and restyling are free; hosting with SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
 
 ## Is it the right base?
 
-Choose this when the business sells hours of tuition, has a few named people and a pick-up area. A shop or a restaurant needs another shape, and an online teacher with mentors and plans sits closer to the [music school](https://8b.com/templates/overtone/) template. The weak spot is booking: the form sends nothing and the next free times on the cards are typed by hand, not a live calendar. An owner who does not code can describe a new site to the 8B builder instead.
+Choose this when the business sells hours of tuition, has a few named people and a pick-up area. This light build keeps the look and scroll behaviour with no animation library and no script from a CDN: about 26 KB gzipped in one file, against 75 KB and four extra requests for the GSAP version. An online teacher with mentors and plans sits closer to the [music school](https://8b.com/templates/overtone/) template. The weak spot is booking: the form sends nothing and free times are typed in.
 
 ## Before you publish
 
@@ -84,7 +84,9 @@ Choose this when the business sells hours of tuition, has a few named people and
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 99 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 109 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 99 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

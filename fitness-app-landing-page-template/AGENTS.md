@@ -1,6 +1,6 @@
 # AGENTS.md: fitness app landing page template
 
-One-page website for a fitness training app that sells adaptive plans and coaching to people who train around busy weeks. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a fitness training app that sells adaptive plans and coaching to people who train around busy weeks. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,18 +14,15 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:nav`: `.nav-menu` `.menu__close` `.op-hero`
-  - `scene:curve`: `.cv-chart` `.cv-days` `.cv-bar` `.cv-line`
-  - `scene:disciplines`: `.ds-rows` `.ds-row`
-  - `scene:app`: `.ap-strip` `.ap-note` `.ap-stage` `.ap-view`
-  - `scene:challenge`: `.ch-map` `.ch-svg--wide` `.ch-svg--tall` `.ch-route` `.ch-dot` `.ch-points`
-  - `scene:pricing`: `.pr-plans` `.pr-plan`
-  - `scene:contact`: `.ct-shade`
+  - `scene-script:app`: `.ap-stage` `.ap-notes` `.ap-note` `.ap-view`
+  - `scene-script:challenge`: `.ch-map` `.ch-dot` `.ch-points` `.ch-route` `.ch-svg--wide` `.ch-svg--tall`
 - `style="--len:N"` = characters in that display line, spaces included: `Strength` is 8, `Cycling` is 7, `HIIT` is 4, `Yoga` is 4, `Kurvo` is 5.
-- The week chart is set by hand in two places: each day's bar height is its inline style="--cv-h" (minutes divided by the longest day's 75), and the line over the bars is an SVG polyline with seven points (x = 50 + 100 per day, y = 400 × (1 minus --cv-h)). Change the minutes, --cv-h and the points together; the grid has seven columns and scene:curve computes the flat start from --cv-h.
-- The five challenge checkpoints are tied to the route: each label sits on it by inline --ch-x and --ch-y (percent of the 700 × 360 drawing), the dot's rest place is the route's end (.ch-dot in the CSS), and scene:challenge lists the same five route points to light them on wide screens. Keep five, or change the path, the positions and the script's list together.
-- The app phone holds three views and three notes stand beside it: scene:app wipes in the second and third views at set points and lights the note by the number of notes, so keep three of each. The phone, the recovery ring, the corner tabs and the contact shade are CSS and SVG: recolour them through the variables in :root.
+- The week chart is set by hand in two places: each day's bar height is its inline style="--cv-h" (minutes divided by the longest day's 75), and the line over the bars is an SVG polyline with seven points (x = 50 + 100 per day, y = 400 × (1 minus --cv-h)). Change the minutes, --cv-h and the points together; the grid has seven columns and the motion CSS computes the bars' flat start from --cv-h.
+- The five challenge checkpoints are tied to the route: each label sits on it by inline --ch-x and --ch-y (percent of the 700 × 360 drawing), the dot's rest place is the route's end (.ch-dot in the CSS), and the challenge scene script lights each label where the route passes nearest to it on wide screens, and in list order on phones. A moved checkpoint needs its --ch-x and --ch-y on the path.
+- The app phone holds three views and three notes stand beside it: the app scene script spaces the view wipes and lights the notes by their counts, timed for three of each, so keep three. The phone, the recovery ring, the corner tabs and the contact shade are CSS and SVG: recolour them through the variables in :root.
 - The discipline names (style="--len:N") and the footer wordmark (--len:5) are sized from their character counts; the four coach portraits overlap through nth-child rules written for four items.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #232323 (charcoal frame and footer, corner tabs, dark buttons, the drawn phone, text on light panels, the line over the chart bars), `--color-2` #c5d8d8 (mint: the app and run club panels, the HIIT row, member story cards, the free plan card, the rows, ring track and coach's bubbles inside the phone), `--color-3` #f2f4f5 (off-white: the first screen, member stories and pricing panels, the Cycling row, the phone's screen, text on graphite and charcoal), `--color-4` #8d91e6 (lilac: the disciplines panel, the regular chart bars, the session card, recovery ring and your own chat bubbles in the phone, sparklines, the challenge route), `--color-5` #d8f45f (lime: today's bar, the recommended plan, the contact panel, the small filled tags (class counts, member results, Today and Ready in the phone) and the buttons on dark panels, the challenge dot and checkpoints, the active note marker), `--color-6` #444444 (graphite: the coaches, challenge and questions panels, the Strength and Yoga rows, the two-person plan, coach portrait rings, the contact shade), `--color-7` #a4c3bd (sage: the bars of the easy days in the week chart), `--color-8` #c2c2c2 (light grey: secondary text on graphite panels, the dashed ghost route, unlit checkpoints, rules between questions, footer text, and the grey the chart bars start from), `--color-9` #4f5552 (dark grey-green: day labels and caption under the chart, the rest day's dashed outline, membership lengths, meeting points, the price note); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
@@ -63,8 +60,9 @@ All demo text, never to be invented:
 - Without JavaScript the menu button (up to 900 px, where the top links are hidden) cannot open the overlay; the footer links reach every section. The questions are native <details> and open without it, and there is no form.
 - The page has no app store buttons or QR code: every Get the app, Find my coach, Join the hundred and plan button scrolls to the plans list until you add your store and sign-up links.
 - The two crossed-out rows of the free plan are at 55% opacity, about 3.2:1 on the mint card.
-- On desktop windows shorter than about 660 px the held phone in the app section (620 px tall) does not fit, so its top slides under the window edge while it is held; on phones the held phone takes about a screen of scrolling of its own.
-- gsap, ScrollTrigger and Lenis load from jsDelivr at the end of body; Lighthouse lists them as render-blocking and the motion scripts need them.
+- While the motion runs, on desktop windows shorter than about 660 px the held phone in the app section (620 px tall) does not fit, so its top slides under the window edge while it is held; on phones the held phone takes about a screen of scrolling of its own.
+- Without scroll-driven animation support (Firefox today) or with reduced motion on, nothing animates on load or on scroll and each section shows its finished layout: headings at full width, chart bars at their minutes, discipline rows open, the three phone views one under another, the route drawn with every checkpoint lit, the plans in a row and the contact panel lime. The wheel scrolls natively; hover effects and the hiding nav bar stay.
+- Four groups carry data-8b-fixed: the seven chart days (seven grid columns and seven line points), the four discipline rows (their scroll timing is spaced for four), the five checkpoints (placed on the route) and the three plans (a three-column row). Change those counts only with the matching CSS and drawing.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Kurvo left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Kurvo left only in class names.

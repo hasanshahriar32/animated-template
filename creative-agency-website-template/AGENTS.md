@@ -18,7 +18,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__toggle` `.nav__menu` `.nav__close`
   - `section-script:works`: `.works__cell` `.works__card` `.works__status` `data-filter` `data-tags` `data-template`
-  - `scene-script:works`: `.w3` `.org` `.works__grid` `.works__plate` `.works__frame`
+  - `scene-script:works`: `.works__grid` `.works__plate` `.works__frame`
   - `scene-script:clients`: `data-row-loop`
   - `scene-script:method`: `.method__track` `.method__frame` `.method__stage`
   - `scene-script:crew`: `.crew__grid` `.crew__card`

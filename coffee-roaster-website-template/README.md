@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my roastery or coffee shop: name, town, address, hours, roast day, coffees with origin, process, notes and prices, drinks and prices, refill or tin offer, tasting dates, owners, postage terms>. Replace first the name, the five coffees, the farms, the drinks board and the Sheffield address, then the photos. Keep the ids, the selectors AGENTS.md lists, one photo per coffee and four ticket cells for four steps. Ask me for missing facts; never invent prices, hours, reviews or contacts.
 ```
 
-Vibe coding with Claude Code goes fastest when the agent gets the owner's facts first: coffees with origin, process and price, roast day and times, drink prices, refill terms, tasting dates, hours and address. The demo's farms, owners, batch numbers and figures such as 4,120 bags saved are invented, so the agent must ask rather than guess. It then replaces the name wherever it appears and keeps the selectors AGENTS.md lists.
+Vibe coding with Claude Code goes fastest when the agent gets the owner's facts first: coffees with origin, process and price, roast day and times, drink prices, refill terms, tasting dates, hours and address. The demo's farms, owners, batch numbers and figures such as 4,120 bags saved are invented, so the agent must ask rather than guess. It then replaces the name wherever it appears and keeps the selectors AGENTS.md lists. Bolt users can skip the download: [its one-click Bolt card](https://8b.com/templates/for-bolt/) hands over the repository.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=coffee-roaster-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -63,7 +63,7 @@ Yes, if the cafe also sells beans or has a roasting story. Most cafe websites st
 Not as shipped. The Add to bag buttons link to the visit section, and the 0 beside the bag icon is plain text, not a cart. Point each button at a Shopify, Stripe or Square checkout link. The Book a seat links on the tasting dates are email links with a subject per date.
 
 **Can I get a site like this without editing code?**  
-Yes, with a different tool than this file. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence, in its own design; designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, with a different tool than this file. [8B's AI website builder](https://8b.com/) designs a new site from a sentence, in its own design; designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

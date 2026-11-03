@@ -1,6 +1,6 @@
 # AGENTS.md: hair salon website template
 
-One-page website for a hair salon or colour studio with a price list, a team of stylists and a booking form. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a hair salon or colour studio with a price list, a team of stylists and a booking form. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,14 +14,13 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:nav`: `.nav__toggle` `.nav__menu` `.nav__close`
-  - `scene:shades`: `.shades__row` `.shades__strip` `.shades__photo`
-  - `scene:cut`: `.cut__stage` `.cut__line--1` `.cut__half--top` `.cut__half--bottom` `.cut__line--2` `.cut__rule`
-  - `scene:late`: `.late__track` `.late__mask` `.late__word` `.late__photo`
-  - `scene:transform`: `.transform__stage` `.transform__spray` `.transform__photo`
-  - `scene:care`: `.care__strip` `.care__photo` `.care__marker` `.care__badge` `.care__rule`
   - `section-script:contact`: `.contact__form` `.contact__status` `data-missing` `data-sent`
+  - `scene-script:shades`: `.shades__row` `.shades__strip`
+  - `scene-script:late`: `.late__mask` `.late__word`
+  - `scene-script:transform`: `.transform__spray` `.transform__photo`
 - `style="--len:N"` = characters in that display line, spaces included: `Late` is 4, `Louder` is 6, `Undertone` is 9.
 - The shades row and the aftercare rules are built for exactly six and five items (repeat(6, 1fr) and repeat(5, 1fr) grid columns; the scenes read whatever count is there). Change the copy, not the number, or change the grid columns with it.
 - The words Late, Louder and Undertone (footer) carry style="--len:N", the number of characters, which sizes the type to the width. Update it when you change the word.
@@ -39,7 +38,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - Book with Ama, Book with Jess, Book with Theo and Book with Dez links in the chairs section: now #contact; owner's target: each stylist's own booking page.
 - Request a chair button in the contact form: now a form with action "#" that checks the two required fields and shows a thank-you line; nothing is sent; owner's target: your form service, or your booking system's widget.
 - Instagram and TikTok links in the footer: now the networks' home pages (https://www.instagram.com/ and https://www.tiktok.com/); owner's target: your own profile addresses.
-- The form in `#contact` (fields `name`, `contact`, `service`, `day`, `note`) sends nothing; `section-script:contact` validates it and shows the thank-you text. Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
+- The form in `#contact` (fields `name`, `contact`, `service`, `day`, `note`) sends nothing; `section-script:contact` handles its submit in the page (read it before you connect a service). Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
 - The name Undertone (any letter case); the favicon letter and colours in `<link rel="icon">`.
 - Photos (19, Unsplash: opening 1, shades 6, cut 1, consult 1, late 1, chairs 4, transform 1, prices 1, care 1, contact 1, footer 1): `src`, no `srcset`/`sizes`, `width`/`height` to the ratio, `alt`, CREDITS.md.
 - `<title>`, meta description, og tags.
@@ -63,7 +62,8 @@ All demo text, never to be invented:
 - Without JavaScript the phone menu button cannot open the overlay, and below 900px the section links and the phone number in the bar are hidden. The footer repeats most section links.
 - The form does not send anything yet: it only checks the name and the phone or email and shows a message. Connect a form service or a booking widget before publishing.
 - The Instagram and TikTok links point at the networks' home pages until you replace them.
-- The Late section needs scrolling inside a pinned screen on phones; the knockout word depends on JavaScript to scale, and the photo inside the letters is dark, so check it after swapping the photo.
+- The Late section holds its screen in place for about one and a third screens of scrolling, on phones too; the word is sized by CSS from its --len, and the photo inside the letters is dark, so check it after swapping the photo.
+- Without scroll-driven animation support (Firefox today) or with reduced motion on, the scroll effects do not run: the shades sit in a plain row in colour, the word Late stays at its normal size in one screen, Louder stays one word, photos show without the torn reveal and the wheel scrolls natively. The opening load-in still plays in Firefox, not with reduced motion; the bar still hides on scroll.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Undertone left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Undertone left only in class names.

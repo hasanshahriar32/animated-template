@@ -1,6 +1,6 @@
 # AGENTS.md: music school website template
 
-One-page website for an online music school or lesson studio, with instrument programs, mentors, masterclasses, a sheet-music shop, plans and a free-lesson booking form. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for an online music school or lesson studio, with instrument programs, mentors, masterclasses, a sheet-music shop, plans and a free-lesson booking form. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.11 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,19 +14,18 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:site-nav`: `.nav__menu-btn` `.nav__close`
-  - `scene:programs-deal`: `.deck` `.program`
-  - `scene:masterclass-zoom`: `.mc__hold` `.mc__stage` `.ticket--featured` `.ticket__photo` `.ticket__main` `.ticket__stub`
-  - `scene:covers-iris`: `.track` `.covers__layer`
-  - `scene:path-hop`: `.stairs` `.stair` `.stair__slot` `.path__marker`
-  - `scene:reviews-ink`: `.reviews__quote` `.reviews__rating` `.m-diamond`
-  - `scene:pricing-bridges`: `.plans` `.plan` `.plan-bridge`
-  - `scene:contact-fold`: `.contact__cascade` `.contact__sq`
   - `section-script:contact`: `.contact__form` `.form-status`
+  - `scene-script:programs-deal`: `.deck` `.program`
+  - `scene-script:masterclass-zoom`: `.mc__hold` `.mc__stage` `.ticket--featured` `.ticket__photo`
+  - `scene-script:covers-iris`: `.track`
+  - `scene-script:path-hop`: `.stair__slot` `.path__marker`
+  - `scene-script:pricing-bridges`: `.plans` `.plan`
+  - `scene-script:contact-fold`: `.contact__cascade` `.contact__sq`
 - `style="--len:N"` = characters in that display line, spaces included: `Overtone` is 8.
 - The footer wordmark size comes from style="--len:8", the number of characters in "Overtone". After a rename set --len to the new length. The name also appears in the nav logo, the phone overlay, the footer brand block and the copyright.
-- Fixed counts: the path has exactly four steps and the pricing exactly three plans with two bridge drawings between them; the covers list has six rows and the disc six layers in the same order, and the scene matches them by position. Keep the numbers equal or edit the scene.
 - The three-square logo, the cascade of squares, the disc's orange backdrop and centre hole, the barcode, the diamonds and the bridges are CSS and SVG, not images: recolour them through the colour variables in :root (--color-4 is the orange accent, --color-5 the pale yellow).
 - Each cover appears twice, as a small image in its row and as a layer of the big disc; replace both with the same photo.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #ffffff (page background, nav pill, the odd program cards, the outer plan cards, the outer review cards and text on the dark lesson panel), `--color-2` #131313 (text, all outlines, primary buttons, the dark lesson panel, the mobile menu overlay, the active covers row), `--color-3` #e5dcd2 (beige cards: the two small tickets, middle plan, contact card, even program cards, the middle review card, alternate FAQ rows and the path band), `--color-4` #ff5714 (the accent: diamonds, the disc backdrop in the covers shop and the favicon tile), `--color-5` #f4f0a1 (pale yellow fill of the small buttons, discount badges and round icon buttons, plus the colour of a program card or small ticket while its button is hovered), `--color-6` #57524c (struck-through old prices and the mentors' one-line bios); body text needs 4.5:1 contrast.
@@ -43,7 +42,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - Start monthly, Start a term and Start family buttons in the plans: now #contact; owner's target: your checkout or subscription link for each plan.
 - Ask a mentor link beside the FAQ heading: now #contact; owner's target: a support email or chat link.
 - Book a free lesson submit button in the contact form: now no request: a script checks the required fields and shows the thank-you line; owner's target: your form service (the form action is #contact with method post).
-- The form in `#contact` (fields `name`, `email`, `instrument`, `message`) sends nothing; `section-script:contact` validates it and shows the thank-you text. Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
+- The form in `#contact` (fields `name`, `email`, `instrument`, `message`) sends nothing; `section-script:contact` handles its submit in the page (read it before you connect a service). Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
 - The name Overtone (any letter case); the favicon letter and colours in `<link rel="icon">`.
 - Photos (21, Unsplash: opening 1, programs 5, mentors 5, masterclasses 3, covers 6, stage 1): `src`, no `srcset`/`sizes`, `width`/`height` to the ratio, `alt`, CREDITS.md.
 - `<title>`, meta description, og tags.
@@ -66,10 +65,10 @@ All demo text, never to be invented:
 
 ## Known limits
 - Without JavaScript the Menu button on phones cannot open the overlay. The footer repeats the section links, so every section stays reachable.
+- Fixed counts: the CSS scenes animate items by :nth-of-type, so keep five program cards, four path steps, three plans with two bridge drawings between them, six covers rows with six disc layers in the same order, and six squares in the contact cascade. A different number needs matching rules in the scene CSS.
 - The contact form posts to #contact and sends nothing; the thank-you line appears only through the small script. Connect a form service before publishing.
-- In the covers shop the static, no-script and reduced-motion views show the disc with the last cover; the first row's cover shows only while the scene runs.
-- The featured masterclass photo is loaded at 590 px wide and starts the scene scaled up, so the first frames of the shrink are soft. Use a larger photo for a sharper start.
+- Without scroll-driven animation support (Firefox today) or with reduced motion on, the page shows its finished layout: the dark opening panel appears without its load-in, the programs and masterclass sections are not held, no covers row turns black and the disc shows the last cover. The nav bar still hides on scroll down and the hover effects stay.
 - The reviews quote begins in a pale grey while it inks in; with the scene running the words are pale until they pass the middle of the screen.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Overtone left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Overtone left only in class names.

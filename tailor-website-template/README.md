@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my workroom: name, city, garments and prices, fittings and weeks, deposit, cloth mills, cutters, trunk show cities and dates, hours, address, how people book, legal name>. Replace first the brand name, cloth names, prices, cities, dates, people and the footer line. Keep the section ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the classes AGENTS.md lists, and set each --len to the new text's character count. Ask me for missing facts; never invent prices, dates, hours or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes quickest when the agent gets the facts only the workroom has: prices with weeks and fittings, the deposit, cloth mills and weights, cutters and roles, trunk show dates, hours and legal name. The agent then replaces the brand name wherever it appears, including the text ring on the gold stamp, and sets --len on the four trait words, the Come in headline and the footer wordmark.
+If you vibe code the site in Claude Code, Cursor or Codex, it goes quickest when the agent gets the facts only the workroom has: prices with weeks and fittings, the deposit, cloth mills and weights, cutters and roles, trunk show dates, hours and legal name. The agent then replaces the brand name everywhere, including the text ring on the gold stamp, and sets --len on the four trait words, the Come in headline and the footer wordmark. The finished file can go live [on a free github.io address](https://8b.com/templates/github/).
 
 No agent? Click **[Use this template](https://github.com/new?template_name=tailor-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -67,7 +67,7 @@ Yes, after a text pass. The five commission rows, the four fitting steps, the fo
 Nowhere yet. It requires a name and an email, then shows a thank-you line and clears the fields without sending anything. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or delete the form and keep the email link. Also edit the line that promises a reply within one working day.
 
 **Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). You describe the site in a sentence and its engine designs a new site, its own design, not this template. Designing is free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, with [8B's AI website builder](https://8b.com/). You describe the site in a sentence and its engine designs a new site, its own design, not this template. Designing is free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

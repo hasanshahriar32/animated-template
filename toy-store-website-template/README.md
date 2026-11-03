@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my toy shop: what we sell, town and address, hours, repair prices, workshop dates with the year, swap rules, gift-list service, phone, email, legal name>. Replace first the shop name, promise, shelves, prices, dates, hours and photos. Keep the section ids, the classes AGENTS.md lists, nine puzzle tiles in a 3 by 3 grid and the footer wordmark's len set to the new name's length. Ask me for missing facts; never invent prices, dates, tester names, hours or contacts.
 ```
 
-Vibe coding goes fastest when you give the agent the shop's own facts: what you sell, repair prices, workshop dates with the year, swap rules, hours, address, phone and email. Replace those first, then the 23 photos. The demo's five testers are stock pictures of children, so swap in real ones only with the parents' permission. The workshop dates carry no year, and their weekdays fit 2024, not 2026.
+For a toy store website template for Claude Code or Cursor, vibe coding goes fastest when you give the agent the shop's own facts: what you sell, repair prices, workshop dates with the year, swap rules, hours, address, phone and email. Replace those first, then the 23 photos. The demo's five testers are stock pictures of children, so swap in real ones only with the parents' permission. The workshop dates carry no year, and their weekdays fit 2024, not 2026.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=toy-store-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -65,7 +65,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=toy-s
 No. The form posts to # and no script handles it, so it sends nothing and shows no thank-you line. Connect Formspree or Netlify Forms, or delete the form and keep the phone and email links. Name, email and message are required fields.
 
 **Can I get a site like this without editing code?**  
-Not this exact file. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a one-sentence description, in its own design. Designing and restyling are free. Publishing with hosting and SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Not this exact file. [8B's AI website builder](https://8b.com/) designs a new site from a one-sentence description, in its own design. Designing and restyling are free. Publishing with hosting and SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 **What happens with reduced motion or without JavaScript?**  
 With reduced motion the entrance and scroll animations and smooth scrolling are off: the puzzle shows solved and the shelves sit in a grid. The nav bar still hides on scroll and hover effects still run. Without JavaScript the phone Menu button cannot open and the workshop ribbon is missing; the questions still open.

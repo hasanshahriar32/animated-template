@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/marketing-agency-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -18,7 +19,6 @@
 <meta property="og:image" content="https://your-domain.example/preview.png" data-8b-placeholder="og-image">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%23f83a1d'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23141211'%3EH%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwcGFU.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/sourceserif4/v15/vEFF2_tTDB4M7-auWDN0ahZJW3IX2ih5nk3AucvUDf2kDXr4.woff2" as="font" type="font/woff2" crossorigin>
@@ -57,7 +57,7 @@
   font-weight: 200 600;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwSGFWfOw.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -111,7 +111,7 @@
   font-weight: 300 700;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/sourceserif4/v15/vEFF2_tTDB4M7-auWDN0ahZJW3IX2ih5nk3AucvUDf2kA3r4cXk.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -155,10 +155,6 @@
 @font-face { font-family: "Geist Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Bold"); font-weight: 550 799; size-adjust: 94.5%; ascent-override: 106.9%; descent-override: 31.8%; line-gap-override: 0%; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body {
   margin: 0;
   background: var(--color-1);
@@ -652,6 +648,17 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
   #thesis { grid-template-columns: minmax(0, 1fr); row-gap: 28px; padding-top: 10svh; }
   #thesis .thesis__dock { height: 34svh; }
   #thesis .thesis__body { padding-top: 0; gap: 24px; }
+}
+#thesis { min-height: 100svh; padding-top: 92px; }
+#thesis .thesis__dock { position: relative; container-type: size; }
+#thesis .thesis__arrow { position: absolute; left: 50%; top: 50%; width: 100cqh; height: min(100cqw, 34cqh); transform: translate(-50%, -50%) rotate(90deg); }
+#thesis .thesis__body { padding-top: 6svh; }
+#thesis .thesis__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 760px) {
+  #thesis { padding-top: 76px; row-gap: 20px; }
+  #thesis .thesis__dock { height: 22svh; }
+  #thesis .thesis__arrow { height: min(100cqw, 46cqh); left: calc(min(100cqw, 46cqh) / 2); }
+  #thesis .thesis__body { padding-top: 0; }
 }
 }
 </style>
@@ -1163,55 +1170,207 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="scene-style:signals">
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); }
+[data-8b-live] [data-8b-motion~="strip"] .line { animation-name: motion-strip-line-clippath, motion-strip-line-translate; animation-duration: 1s; animation-delay: calc(0s + 0.1s * var(--i)); animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="strip"].is-in .line { animation-play-state: running; }
+[data-8b-live] .m-wordmark[data-8b-motion~="strip"] .line { overflow-clip-margin: .25em; }
+[data-8b-live] [data-8b-motion~="rule"] { animation-name: motion-rule-scale; animation-duration: 1.2s; animation-delay: 0s; animation-timing-function: var(--ease-power3-inout); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rule"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="drift"] { view-timeline: --motion-drift block; view-timeline-inset: 0; animation-name: motion-drift-translate, motion-drift-rotate; animation-timeline: --motion-drift; animation-range: cover 0% cover 100%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes motion-strip-line-clippath { 0% { clip-path: inset(-25% 100% -25% 0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes motion-strip-line-translate { 0% { translate: -36px 0px; } 100% { translate: 0px 0px; } }
+@keyframes motion-rule-scale { 0% { scale: 0 1; } 100% { scale: 1; } }
+@keyframes motion-drift-translate { 0% { translate: 0px var(--drift-translate-y-from, 144px); } 100% { translate: 0px var(--drift-translate-y-to, -144px); } }
+@keyframes motion-drift-rotate { 0% { rotate: var(--drift-rotate-from, -12.8deg); } 100% { rotate: var(--drift-rotate-to, 12.8deg); } }
+}
+</style>
+<style data-8b-part="scene:thesis">
+@layer scenes {
+[data-8b-live] #thesis .thesis__arrow { animation: thesis-drop 1.1s cubic-bezier(.16, .84, .24, 1) backwards; }
+[data-8b-live] #thesis .thesis__body > * { animation: thesis-slide .9s cubic-bezier(.2, .8, .2, 1) backwards; }
+[data-8b-live] #thesis .thesis__body > :nth-child(2) { animation-delay: .08s; }
+[data-8b-live] #thesis .thesis__body > :nth-child(3) { animation-delay: .14s; }
+[data-8b-live] #thesis .thesis__body > :nth-child(4) { animation-delay: .2s; }
+@keyframes thesis-drop { from { translate: 0 -24svh; opacity: 0; } }
+@keyframes thesis-slide { from { transform: translateX(64px); opacity: 0; } }
+}
+</style>
+<style data-8b-part="scene:signals">
 @layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #signals[data-compass] .signals__name { color: var(--color-9); }
-  #signals[data-compass] .signals__item.is-active .signals__name { color: var(--color-2); }
+  [data-8b-live] #signals .signals__name { color: var(--color-9); }
+  [data-8b-live] #signals .signals__item.is-active .signals__name { color: var(--color-2); }
+}
+}
+@layer scenes {
+[data-8b-live] #signals { timeline-scope: --signals-t1; }
+[data-8b-live] #signals .signals__list { view-timeline: --signals-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #signals .signals__arrow { animation-name: signals-div-m-arrow-rotate; animation-timeline: --signals-t1; animation-range: cover 50vh cover calc(100% - 50vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes signals-div-m-arrow-rotate { 0% { rotate: 0deg; animation-timing-function: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); } 8.3333% { rotate: -38deg; } 11.5% { rotate: -38deg; animation-timing-function: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); } 21.8333% { rotate: -24deg; } 28.1667% { rotate: -24deg; animation-timing-function: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); } 38.5% { rotate: -12deg; } 44.8333% { rotate: -12deg; animation-timing-function: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); } 55.1667% { rotate: 30deg; } 61.5% { rotate: 30deg; animation-timing-function: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); } 71.8333% { rotate: -56deg; } 78.1667% { rotate: -56deg; animation-timing-function: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); } 88.5% { rotate: 46deg; } 91.6667% { rotate: 46deg; animation-timing-function: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); } 100% { rotate: 0deg; } }
+}
+</style>
+<style data-8b-part="scene:shifts">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] #shifts .shifts__list > li { view-timeline: --shifts-item block; view-timeline-inset: 0; }
+[data-8b-live] #shifts .shifts__list > li > .shifts__from > .shifts__word > .shifts__tape { animation-name: shifts-span-shifts-tape-scale; animation-timeline: --shifts-item; animation-range: cover 10vh cover 37.7895vh; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; rotate: -2.2deg; }
+[data-8b-live] #shifts .shifts__list > li > .m-arrow { animation-timeline: --shifts-item; animation-range: cover 25.1579vh cover 50.4211vh; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1), var(--ease-power3-out); animation-fill-mode: both; transform: none; transform-origin: 0% 50%; }
+[data-8b-live] #shifts .shifts__list > li > .shifts__to { animation-name: shifts-p-m-text-5-translate, shifts-p-m-text-5-opacity; animation-timeline: --shifts-item; animation-range: cover 35.2632vh cover 58vh; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; transform: none; }
+@keyframes shifts-span-shifts-tape-scale { 0% { scale: 0 1; } 100% { scale: 1; } }
+@keyframes shifts-span-m-arrow-translate-d { 0% { translate: -59.902% 0px; } 100% { translate: 0px 0px; } }
+@keyframes shifts-span-m-arrow-translate-m { 0% { translate: -34.8px 0px; } 100% { translate: 0px 0px; } }
+@keyframes shifts-span-m-arrow-scale { 0% { scale: 0.2 1; } 100% { scale: 1; } }
+@keyframes shifts-p-m-text-5-translate { 0% { translate: 56px 0px; } 100% { translate: 0px 0px; } }
+@keyframes shifts-p-m-text-5-opacity { 0% { opacity: 0.15; } 100% { opacity: 1; } }
+@media (min-width: 761px) {
+  [data-8b-live] #shifts .shifts__list > li > .m-arrow { animation-name: shifts-span-m-arrow-translate-d, shifts-span-m-arrow-scale; }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #shifts .shifts__list > li > .m-arrow { animation-name: shifts-span-m-arrow-translate-m, shifts-span-m-arrow-scale; }
 }
 }
 </style>
-<style data-8b-part="scene-style:field">
+<style data-8b-part="scene:field">
 @layer scenes {
 @media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
-  #field[data-staged] { min-height: 240svh; }
-  #field[data-staged] .field__stage { position: sticky; top: 0; }
+  @media (min-width: 761px) {
+  [data-8b-live] #field { min-height: 240svh; }
+}
+  @media (min-width: 761px) {
+  [data-8b-live] #field .field__stage { position: sticky; top: 0; }
 }
 }
-</style>
-<style data-8b-part="scene-style:voices">
+}
 @layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #voices[data-track] .voices__track { width: max-content; }
-  #voices[data-track] .voices__list { display: flex; gap: 7vw; padding-right: 8vw; }
-  #voices[data-track] .voices__card { width: min(30vw, 400px); }
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #field { view-timeline: --field-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #field .field__stage { view-timeline: --field-t2 block; view-timeline-inset: 0; }
+[data-8b-live] #field .field__shards > li > .field__lift { animation-name: field-div-field-lift-translate, field-div-field-lift-rotate; animation-timeline: --field-t1; animation-range: cover calc(100% - 100vh) cover calc(100% - 40vh); animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); animation-fill-mode: both; transform: none; }
+[data-8b-live] #field .field__shards > li > .field__lift > .field__piece { animation-timeline: --field-t2; animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1), cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; transform: none; }
+@keyframes field-div-field-lift-translate { 0% { translate: 0px 0px; } 100% { translate: 0px var(--field-div-field-lift-translate-to-2, -200px); } }
+@keyframes field-div-field-lift-rotate { 0% { rotate: 0deg; } 100% { rotate: var(--field-div-field-lift-rotate-to, -7deg); } }
+@keyframes field-figure-field-piece-translate { 0% { translate: var(--field-piece-x, 0px) var(--field-piece-y, 0px); } 100% { translate: 0px 0px; } }
+@keyframes field-figure-field-piece-rotate { 0% { rotate: var(--field-figure-field-piece-rotate-from, -16deg); } 100% { rotate: 0deg; } }
+@keyframes field-figure-field-piece-scale { 0% { scale: 0.82; } 100% { scale: 1; } }
+@media (min-width: 761px) {
+  [data-8b-live] #field .field__shards > li > .field__lift > .field__piece { --field-part: calc(100% - 200vh - var(--field-stage-top, 0px)); animation-name: field-figure-field-piece-translate, field-figure-field-piece-rotate, field-figure-field-piece-scale; animation-timeline: --field-t1; animation-range: cover calc(100vh + var(--field-stage-top, 0px) + var(--field-part) * 0.044304 * var(--i)) cover calc(100vh + var(--field-stage-top, 0px) + var(--field-part) * (0.632911 + 0.044304 * var(--i))); }
 }
-@media (max-width: 960px) and (prefers-reduced-motion: no-preference) {
-  #voices[data-track] .voices__card { width: 74vw; }
+@media (max-width: 760px) {
+  [data-8b-live] #field .field__shards > li > .field__lift > .field__piece { animation-name: field-figure-field-piece-translate, field-figure-field-piece-rotate, field-figure-field-piece-scale; animation-range: cover calc(20vh - 0.8203vh * var(--i) + 2.7344% * var(--i)) cover calc(39.0625% + 2.7344% * var(--i) + 8.2813vh - 0.8204vh * var(--i)); }
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#thesis { min-height: 100svh; padding-top: 92px; }
-#thesis .thesis__dock { position: relative; container-type: size; }
-#thesis .thesis__arrow { position: absolute; left: 50%; top: 50%; width: 100cqh; height: min(100cqw, 34cqh); transform: translate(-50%, -50%) rotate(90deg); }
-#thesis .thesis__body { padding-top: 6svh; }
-#thesis .thesis__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+<style data-8b-part="scene:sessions">
+@layer scenes {
+[data-8b-live] #sessions { view-timeline: --sessions-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #sessions .sessions__list > li { view-timeline: --sessions-item block; view-timeline-inset: 0; animation-timeline: --sessions-item; animation-range: cover 2vh cover 42vh; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #sessions .sessions__sheet { animation-timeline: --sessions-t1; animation-range: cover 0% cover 60vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes sessions-div-sessions-sheet-rotate-d { 0% { rotate: -10deg; } 100% { rotate: 0deg; } }
+@keyframes sessions-div-sessions-sheet-rotate-m { 0% { rotate: -17deg; } 100% { rotate: 0deg; } }
+@keyframes sessions-li-sessions-strip-rotate-d { 0% { rotate: -5deg; } 100% { rotate: 0deg; } }
+@keyframes sessions-li-sessions-strip-rotate-m { 0% { rotate: -3deg; } 100% { rotate: 0deg; } }
+@keyframes sessions-li-sessions-strip-translate-d { 0% { translate: -16% 60px; } 100% { translate: 0px 0px; } }
+@keyframes sessions-li-sessions-strip-translate-m { 0% { translate: -10% 60px; } 100% { translate: 0px 0px; } }
+@keyframes sessions-li-sessions-strip-rotate-2-d { 0% { rotate: 5deg; } 100% { rotate: 0deg; } }
+@keyframes sessions-li-sessions-strip-rotate-2-m { 0% { rotate: 3deg; } 100% { rotate: 0deg; } }
+@keyframes sessions-li-sessions-strip-translate-2-d { 0% { translate: 16% 60px; } 100% { translate: 0px 0px; } }
+@keyframes sessions-li-sessions-strip-translate-2-m { 0% { translate: 10% 60px; } 100% { translate: 0px 0px; } }
+@media (min-width: 761px) {
+  [data-8b-live] #sessions .sessions__list > li:nth-of-type(2n+1) { animation-name: sessions-li-sessions-strip-rotate-d, sessions-li-sessions-strip-translate-d; }
+  [data-8b-live] #sessions .sessions__list > li:nth-of-type(2n+2) { animation-name: sessions-li-sessions-strip-rotate-2-d, sessions-li-sessions-strip-translate-2-d; }
+  [data-8b-live] #sessions .sessions__sheet { animation-name: sessions-div-sessions-sheet-rotate-d; }
+}
 @media (max-width: 760px) {
-  #thesis { padding-top: 76px; row-gap: 20px; }
-  #thesis .thesis__dock { height: 22svh; }
-  #thesis .thesis__arrow { height: min(100cqw, 46cqh); left: calc(min(100cqw, 46cqh) / 2); }
-  #thesis .thesis__body { padding-top: 0; }
+  [data-8b-live] #sessions .sessions__list > li:nth-of-type(2n+1) { animation-name: sessions-li-sessions-strip-rotate-m, sessions-li-sessions-strip-translate-m; }
+  [data-8b-live] #sessions .sessions__list > li:nth-of-type(2n+2) { animation-name: sessions-li-sessions-strip-rotate-2-m, sessions-li-sessions-strip-translate-2-m; }
+  [data-8b-live] #sessions .sessions__sheet { animation-name: sessions-div-sessions-sheet-rotate-m; }
 }
-@media (prefers-reduced-motion: no-preference) {
-  #thesis .thesis__arrow { animation: rw-drop 1.1s cubic-bezier(.16, .84, .24, 1) backwards; }
-  #thesis .thesis__body > * { animation: rw-slide .9s cubic-bezier(.2, .8, .2, 1) backwards; }
-  #thesis .thesis__body > :nth-child(2) { animation-delay: .08s; }
-  #thesis .thesis__body > :nth-child(3) { animation-delay: .14s; }
-  #thesis .thesis__body > :nth-child(4) { animation-delay: .2s; }
 }
-@keyframes rw-drop { from { translate: 0 -24svh; opacity: 0; } }
-@keyframes rw-slide { from { transform: translateX(64px); opacity: 0; } }</style>
+</style>
+<style data-8b-part="scene:voices">
+@layer scenes {
+[data-8b-live] #voices { view-timeline: --voices-t block; view-timeline-inset: 0; }
+[data-8b-live] #voices::after { content: ""; display: block; height: var(--voices-travel, 0px); }
+[data-8b-live] #voices .voices__pin { position: sticky; top: 0; }
+[data-8b-live] #voices .voices__track { width: max-content; animation-name: voices-track; animation-timeline: --voices-t; animation-range: cover 100vh cover calc(100vh + max(var(--voices-travel, 0px), 1px)); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #voices .voices__list { display: flex; gap: 7vw; padding-right: 8vw; }
+[data-8b-live] #voices .voices__card { width: min(30vw, 400px); }
+[data-8b-live] #voices .m-shard__tint { animation-name: voices-tint, voices-tint-hold; animation-timeline: --voices-t, --voices-t; animation-range: cover calc(100vh + var(--voices-tint-start, 0px)) cover calc(100vh + var(--voices-tint-end, 1px)), cover 0% cover 100vh; animation-timing-function: linear(0, 0.0731, 0.1426, 0.2085, 0.271, 0.3301, 0.3859, 0.4385, 0.488, 0.5345, 0.5781, 0.6189, 0.657, 0.6925, 0.7254, 0.7559, 0.784, 0.8099, 0.8336, 0.8553, 0.875, 0.8928, 0.9089, 0.9232, 0.936, 0.9473, 0.9571, 0.9657, 0.973, 0.9792, 0.9844, 0.9886, 0.992, 0.9946, 0.9966, 0.998, 0.999, 0.9996, 0.9999, 1, 1), linear; animation-fill-mode: both, backwards; }
+@media (max-width: 960px) {
+  [data-8b-live] #voices .voices__card { width: 74vw; }
+}
+@keyframes voices-track { 0% { translate: 0px 0px; } 100% { translate: calc(-1 * var(--voices-travel, 0px)) 0px; } }
+@keyframes voices-tint { 0% { translate: 30% 0px; } 100% { translate: 0% 0px; } }
+@keyframes voices-tint-hold { 0%, 100% { translate: var(--voices-tint-hold, 30%) 0px; } }
+}
+</style>
+<style data-8b-part="scene:report">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #report .report__cover { view-timeline: --report-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #report .m-arrow__shaft, [data-8b-live] #report .m-arrow__upper, [data-8b-live] #report .m-arrow__lower, [data-8b-live] #report .report__cover > i:nth-of-type(-n+3) { animation-timeline: --report-t1; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #report .m-arrow__shaft { animation-range: cover 18vh cover calc(41.6667% + 1.3333vh); }
+[data-8b-live] #report .m-arrow__upper { animation-range: cover calc(3.3333% + 16.6667vh) cover 45%; }
+[data-8b-live] #report .m-arrow__lower { animation-range: cover calc(5.8333% + 15.6667vh) cover calc(47.5% - 1vh); }
+[data-8b-live] #report .report__cover > i:nth-of-type(-n+3) { animation-range: cover calc(8.3333% + 14.6667vh) cover calc(50% - 2vh); }
+@keyframes report-span-m-arrow-part-translate-d { 0% { translate: -57.676% -22vh; } 100% { translate: 0px 0px; } }
+@keyframes report-span-m-arrow-part-translate-m { 0% { translate: -20vw -22vh; } 100% { translate: 0px 0px; } }
+@keyframes report-span-m-arrow-part-rotate { 0% { rotate: -32deg; } 100% { rotate: 0deg; } }
+@keyframes report-span-m-arrow-part-translate-2-d { 0% { translate: 86.514% -30vh; } 100% { translate: 0px 0px; } }
+@keyframes report-span-m-arrow-part-translate-2-m { 0% { translate: 30vw -30vh; } 100% { translate: 0px 0px; } }
+@keyframes report-span-m-arrow-part-rotate-2 { 0% { rotate: 72deg; } 100% { rotate: 0deg; } }
+@keyframes report-span-m-arrow-part-translate-3-d { 0% { translate: 74.979% 20vh; } 100% { translate: 0px 0px; } }
+@keyframes report-span-m-arrow-part-translate-3-m { 0% { translate: 26vw 20vh; } 100% { translate: 0px 0px; } }
+@keyframes report-span-m-arrow-part-rotate-3 { 0% { rotate: -84deg; } 100% { rotate: 0deg; } }
+@keyframes report-i-m-bit-translate-d { 0% { translate: -253.007% -34vh; } 100% { translate: 0px 0px; } }
+@keyframes report-i-m-bit-translate-m { 0% { translate: -14vw -34vh; } 100% { translate: 0px 0px; } }
+@keyframes report-i-m-bit-rotate { 0% { rotate: -40deg; } 100% { rotate: 0deg; } }
+@keyframes report-i-m-bit-translate-2-d { 0% { translate: 1024.377% -12vh; } 100% { translate: 0px 0px; } }
+@keyframes report-i-m-bit-translate-2-m { 0% { translate: 34vw -12vh; } 100% { translate: 0px 0px; } }
+@keyframes report-i-m-bit-rotate-2 { 0% { rotate: 50deg; } 100% { rotate: 0deg; } }
+@keyframes report-i-m-bit-translate-3-d { 0% { translate: 497.033% 22vh; } 100% { translate: 0px 0px; } }
+@keyframes report-i-m-bit-translate-3-m { 0% { translate: 22vw 22vh; } 100% { translate: 0px 0px; } }
+@keyframes report-i-m-bit-rotate-3 { 0% { rotate: -60deg; } 100% { rotate: 0deg; } }
+@media (min-width: 861px) {
+  [data-8b-live] #report .m-arrow__shaft { animation-name: report-span-m-arrow-part-translate-d, report-span-m-arrow-part-rotate; }
+  [data-8b-live] #report .m-arrow__upper { animation-name: report-span-m-arrow-part-translate-2-d, report-span-m-arrow-part-rotate-2; }
+  [data-8b-live] #report .m-arrow__lower { animation-name: report-span-m-arrow-part-translate-3-d, report-span-m-arrow-part-rotate-3; }
+  [data-8b-live] #report .report__cover > i:nth-of-type(1) { animation-name: report-i-m-bit-translate-d, report-i-m-bit-rotate; }
+  [data-8b-live] #report .report__cover > i:nth-of-type(2) { animation-name: report-i-m-bit-translate-2-d, report-i-m-bit-rotate-2; }
+  [data-8b-live] #report .report__cover > i:nth-of-type(3) { animation-name: report-i-m-bit-translate-3-d, report-i-m-bit-rotate-3; }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #report .m-arrow__shaft { animation-name: report-span-m-arrow-part-translate-m, report-span-m-arrow-part-rotate; }
+  [data-8b-live] #report .m-arrow__upper { animation-name: report-span-m-arrow-part-translate-2-m, report-span-m-arrow-part-rotate-2; }
+  [data-8b-live] #report .m-arrow__lower { animation-name: report-span-m-arrow-part-translate-3-m, report-span-m-arrow-part-rotate-3; }
+  [data-8b-live] #report .report__cover > i:nth-of-type(1) { animation-name: report-i-m-bit-translate-m, report-i-m-bit-rotate; }
+  [data-8b-live] #report .report__cover > i:nth-of-type(2) { animation-name: report-i-m-bit-translate-2-m, report-i-m-bit-rotate-2; }
+  [data-8b-live] #report .report__cover > i:nth-of-type(3) { animation-name: report-i-m-bit-translate-3-m, report-i-m-bit-rotate-3; }
+}
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #contact .contact__line { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact .m-arrow__shaft { animation-name: contact-span-m-arrow-part-scale; animation-timeline: --contact-t1; animation-range: cover 12vh cover 60vh; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; transform-origin: 0% 50%; }
+[data-8b-live] #contact .m-arrow__upper, [data-8b-live] #contact .m-arrow__lower { animation-timeline: --contact-t1; animation-range: cover 12vh cover 60vh; animation-fill-mode: both; transform: none; }
+@keyframes contact-span-m-arrow-part-scale { 0% { scale: 0.06 1; } 100% { scale: 1; } }
+@keyframes contact-span-m-arrow-part-translate-d { 0% { translate: -91.894% 0px; } 8.3333% { translate: -91.682% 0px; } 13.3333% { translate: -91.023% 0px; } 18.3333% { translate: -89.629% 0px; } 21.6667% { translate: -88.155% 0px; } 25% { translate: -86.151% 0px; } 28.3333% { translate: -83.534% 0px; } 31.6667% { translate: -80.222% 0px; } 33.3333% { translate: -78.28% 0px; } 35% { translate: -76.134% 0px; } 36.6667% { translate: -73.774% 0px; } 38.3333% { translate: -71.189% 0px; } 40% { translate: -68.369% 0px; } 41.6667% { translate: -65.304% 0px; } 43.3333% { translate: -61.984% 0px; } 45% { translate: -58.399% 0px; } 46.6667% { translate: -54.537% 0px; } 48.3333% { translate: -50.39% 0px; } 51.6667% { translate: -41.504% 0px; } 53.3333% { translate: -37.357% 0px; } 55% { translate: -33.495% 0px; } 56.6667% { translate: -29.91% 0px; } 58.3333% { translate: -26.59% 0px; } 60% { translate: -23.525% 0px; } 61.6667% { translate: -20.705% 0px; } 63.3333% { translate: -18.12% 0px; } 65% { translate: -15.76% 0px; } 66.6667% { translate: -13.614% 0px; } 70% { translate: -9.925% 0px; } 73.3333% { translate: -6.97% 0px; } 76.6667% { translate: -4.67% 0px; } 80% { translate: -2.941% 0px; } 83.3333% { translate: -1.702% 0px; } 88.3333% { translate: -0.584% 0px; } 93.3333% { translate: -0.109% 0px; } 100% { translate: 0px 0px; } }
+@keyframes contact-span-m-arrow-part-translate-m { 0% { translate: -89.996% 0px; } 100% { translate: 0px 0px; } }
+@media (min-width: 861px) {
+  [data-8b-live] #contact .m-arrow__upper, [data-8b-live] #contact .m-arrow__lower { animation-name: contact-span-m-arrow-part-translate-d; animation-timing-function: linear; }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #contact .m-arrow__upper, [data-8b-live] #contact .m-arrow__lower { animation-name: contact-span-m-arrow-part-translate-m; animation-timing-function: var(--ease-power2-inout); }
+}
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: fixed top bar: logo, six section links, a red live link; hides on scroll down; phone menu overlay -->
@@ -1229,7 +1388,7 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
     <a class="m-btn-3 nav__live" href="#sessions"><span class="m-btn-3__label">Live · 21 Oct</span></a>
     <button class="m-btn-2 nav__menu" type="button" aria-expanded="false" aria-controls="nav-menu"><span class="m-btn-2__label">Menu</span></button>
   </div>
-  <div id="nav-menu" class="nav__panel" data-lenis-prevent hidden>
+  <div id="nav-menu" class="nav__panel" hidden>
     <div class="nav__panel-top">
       <span class="m-logo">Halyard</span>
       <button class="m-btn-2 nav__close" type="button"><span class="m-btn-2__label">Close</span></button>
@@ -1249,7 +1408,7 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
 <main>
   
 
-  <!-- thesis: first screen: a tall collage arrow on the left, the h1 "Attention doesn't drift. It turns.", a lead, a facts line and two buttons -->
+  <!-- thesis: first screen: a tall collage arrow on the left, the h1 "Attention doesn't drift. It turns.", a lead, a facts line and two buttons (animation: scene:thesis) -->
   <section id="thesis" class="thesis" data-8b-section="thesis" aria-labelledby="thesis-title">
     <div class="thesis__dock" aria-hidden="true"><div class="m-arrow thesis__arrow" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"><span class="m-arrow__flow"><span class="m-arrow__band"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="m-arrow__band"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="m-arrow__band"><i></i><i></i><i></i><i></i><i></i><i></i></span></span></span><span class="m-arrow__part m-arrow__upper"><i></i><i></i><i></i></span><span class="m-arrow__part m-arrow__lower"><i></i><i></i><i></i></span></div></div>
     <div class="thesis__body">
@@ -1266,7 +1425,7 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
   <!-- signals: six numbered trends as a list beside a sticky dial with one big arrow that swings to each trend's bearing (animation: scene:signals) -->
   <section id="signals" class="signals" data-8b-section="signals" aria-labelledby="signals-title">
     <div class="signals__head">
-      <h2 id="signals-title" class="m-text-2" data-8b-motion="strip">Six signals for 2027</h2>
+      <h2 id="signals-title" class="m-text-2" data-8b-motion="strip" data-8b-split="lines">Six signals for 2027</h2>
       <p class="m-text-3 signals__stack" aria-hidden="true">Read<br>the<br>bearing</p>
       <p class="m-text signals__intro">Each signal carries a bearing: how steeply it is rising or cooling across our nine markets. The arrow takes the bearing of the signal in front of you.</p>
     </div>
@@ -1275,39 +1434,39 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
         <div class="signals__dial" aria-hidden="true"></div>
         <div class="m-arrow signals__arrow" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"><span class="m-arrow__flow"><span class="m-arrow__band"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="m-arrow__band"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="m-arrow__band"><i></i><i></i><i></i><i></i><i></i><i></i></span></span></span><span class="m-arrow__part m-arrow__upper"><i></i><i></i><i></i></span><span class="m-arrow__part m-arrow__lower"><i></i><i></i><i></i></span></div>
       </div>
-      <ol class="signals__list">
+      <ol class="signals__list" data-8b-items=":scope > li">
         <li class="signals__item" style="--signals-bearing:38">
-          <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+          <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
           <p class="signals__meta"><span class="m-arrow signals__glyph" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"></span><span class="m-arrow__part m-arrow__upper"></span><span class="m-arrow__part m-arrow__lower"></span></span><span class="m-text-4">Rising · 8 of 9 markets</span></p>
           <h3 class="m-text-5 signals__name">Smaller rooms</h3>
           <p class="m-text signals__copy">Audiences are leaving the open feed for group chats, close-friends lists and paid circles. Influence now travels through rooms of thirty, not crowds of millions.</p>
         </li>
         <li class="signals__item" style="--signals-bearing:24">
-          <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+          <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
           <p class="signals__meta"><span class="m-arrow signals__glyph" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"></span><span class="m-arrow__part m-arrow__upper"></span><span class="m-arrow__part m-arrow__lower"></span></span><span class="m-text-4">Rising · 7 of 9 markets</span></p>
           <h3 class="m-text-5 signals__name">Slow proof</h3>
           <p class="m-text signals__copy">The review filmed a year after purchase now outperforms the unboxing. People trust what has survived real life — and they are willing to wait for it.</p>
         </li>
         <li class="signals__item" style="--signals-bearing:12">
-          <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+          <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
           <p class="signals__meta"><span class="m-arrow signals__glyph" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"></span><span class="m-arrow__part m-arrow__upper"></span><span class="m-arrow__part m-arrow__lower"></span></span><span class="m-text-4">Rising · 6 of 9 markets</span></p>
           <h3 class="m-text-5 signals__name">The unpolished premium</h3>
           <p class="m-text signals__copy">Lo-fi is no longer the cheap option. Kept mistakes and one-take answers read as respect for the viewer’s time; heavy polish now reads as distance.</p>
         </li>
         <li class="signals__item" style="--signals-bearing:-30">
-          <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+          <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
           <p class="signals__meta"><span class="m-arrow signals__glyph" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"></span><span class="m-arrow__part m-arrow__upper"></span><span class="m-arrow__part m-arrow__lower"></span></span><span class="m-text-4">Cooling · 7 of 9 markets</span></p>
           <h3 class="m-text-5 signals__name">Borrowed authority</h3>
           <p class="m-text signals__copy">Generalists who endorse everything are losing pull. People now ask who has spent ten years on one narrow thing, and they listen to that person instead.</p>
         </li>
         <li class="signals__item" style="--signals-bearing:56">
-          <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+          <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
           <p class="signals__meta"><span class="m-arrow signals__glyph" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"></span><span class="m-arrow__part m-arrow__upper"></span><span class="m-arrow__part m-arrow__lower"></span></span><span class="m-text-4">Rising fast · 9 of 9 markets</span></p>
           <h3 class="m-text-5 signals__name">Questions go out loud</h3>
           <p class="m-text signals__copy">What used to be typed into a search bar is now asked in comment threads, voice notes and assistants. Brands need answers that people can quote back.</p>
         </li>
         <li class="signals__item" style="--signals-bearing:-46">
-          <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+          <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
           <p class="signals__meta"><span class="m-arrow signals__glyph" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"></span><span class="m-arrow__part m-arrow__upper"></span><span class="m-arrow__part m-arrow__lower"></span></span><span class="m-text-4">Cooling · 8 of 9 markets</span></p>
           <h3 class="m-text-5 signals__name">Reach without recall</h3>
           <p class="m-text signals__copy">Impressions are up and memory is down. Media bought without a reason to remember is, in one respondent’s words, paying for weather.</p>
@@ -1319,47 +1478,47 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
   <!-- shifts: ledger of six old measures struck out and replaced by new ones, each with a one-line note (animation: scene:shifts) -->
   <section id="shifts" class="shifts" data-8b-section="shifts" aria-labelledby="shifts-title">
     <div class="shifts__head">
-      <h2 id="shifts-title" class="m-text-2" data-8b-motion="strip">What brands count, and what people act on</h2>
+      <h2 id="shifts-title" class="m-text-2" data-8b-motion="strip" data-8b-split="lines">What brands count, and what people act on</h2>
       <p class="m-text-6 shifts__lead">Six measures still head most reports. Our respondents act on something else. Here is the trade, one line at a time.</p>
     </div>
-    <ol class="shifts__list">
+    <ol class="shifts__list" data-8b-items=":scope > li">
       <li class="shifts__row">
-        <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+        <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
         <p class="m-text-5 shifts__from"><span class="u-sr">From </span><span class="shifts__word">Follower count<span class="shifts__tape" aria-hidden="true"></span></span></p>
         <span class="m-arrow shifts__arrow" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"></span><span class="m-arrow__part m-arrow__upper"></span><span class="m-arrow__part m-arrow__lower"></span></span>
         <p class="m-text-5 shifts__to"><span class="u-sr">to </span>Reply rate</p>
         <p class="m-text shifts__note">A reply is a promise somebody kept. In our panel it predicted purchase twice as well as audience size.</p>
       </li>
       <li class="shifts__row">
-        <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+        <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
         <p class="m-text-5 shifts__from"><span class="u-sr">From </span><span class="shifts__word">Launch day<span class="shifts__tape" aria-hidden="true"></span></span></p>
         <span class="m-arrow shifts__arrow" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"></span><span class="m-arrow__part m-arrow__upper"></span><span class="m-arrow__part m-arrow__lower"></span></span>
         <p class="m-text-5 shifts__to"><span class="u-sr">to </span>Day 400</p>
         <p class="m-text shifts__note">The second wave of reviews, filmed after a year of use, now moves more people than the launch itself.</p>
       </li>
       <li class="shifts__row">
-        <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+        <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
         <p class="m-text-5 shifts__from"><span class="u-sr">From </span><span class="shifts__word">Celebrity<span class="shifts__tape" aria-hidden="true"></span></span></p>
         <span class="m-arrow shifts__arrow" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"></span><span class="m-arrow__part m-arrow__upper"></span><span class="m-arrow__part m-arrow__lower"></span></span>
         <p class="m-text-5 shifts__to"><span class="u-sr">to </span>Specialist</p>
         <p class="m-text shifts__note">Fame still opens the door. A decade spent on one narrow subject is what gets people to walk through it.</p>
       </li>
       <li class="shifts__row">
-        <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+        <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
         <p class="m-text-5 shifts__from"><span class="u-sr">From </span><span class="shifts__word">Feed<span class="shifts__tape" aria-hidden="true"></span></span></p>
         <span class="m-arrow shifts__arrow" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"></span><span class="m-arrow__part m-arrow__upper"></span><span class="m-arrow__part m-arrow__lower"></span></span>
         <p class="m-text-5 shifts__to"><span class="u-sr">to </span>Room</p>
         <p class="m-text shifts__note">Things are discovered in public and decided in private. The group chat is where the verdict happens.</p>
       </li>
       <li class="shifts__row">
-        <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+        <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
         <p class="m-text-5 shifts__from"><span class="u-sr">From </span><span class="shifts__word">Script<span class="shifts__tape" aria-hidden="true"></span></span></p>
         <span class="m-arrow shifts__arrow" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"></span><span class="m-arrow__part m-arrow__upper"></span><span class="m-arrow__part m-arrow__lower"></span></span>
         <p class="m-text-5 shifts__to"><span class="u-sr">to </span>Draft</p>
         <p class="m-text shifts__note">Answers that look unrehearsed beat finished ones, as long as the facts hold up.</p>
       </li>
       <li class="shifts__row">
-        <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+        <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
         <p class="m-text-5 shifts__from"><span class="u-sr">From </span><span class="shifts__word">Reach<span class="shifts__tape" aria-hidden="true"></span></span></p>
         <span class="m-arrow shifts__arrow" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"></span><span class="m-arrow__part m-arrow__upper"></span><span class="m-arrow__part m-arrow__lower"></span></span>
         <p class="m-text-5 shifts__to"><span class="u-sr">to </span>Recall</p>
@@ -1371,7 +1530,7 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
   <!-- field: a quote over five torn photos that start piled on top of it and part toward the edges, each with a city caption (animation: scene:field) -->
   <section id="field" class="field" data-8b-section="field" aria-labelledby="field-title">
     <div class="field__head">
-      <h2 id="field-title" class="m-text-2" data-8b-motion="strip">Field notes</h2>
+      <h2 id="field-title" class="m-text-2" data-8b-motion="strip" data-8b-split="lines">Field notes</h2>
       <p class="m-text field__intro">3,200 conversations in nine markets, from Lagos to Seoul. We asked people to show us their phones, not to describe them.</p>
     </div>
     <div class="field__stage">
@@ -1379,25 +1538,25 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
         <p class="m-text-2 field__words">“I don’t follow people who talk at me. I follow the ones who answer back.”</p>
         <footer class="m-text-4 field__who">Respondent, 26, Leeds</footer>
       </blockquote>
-      <ul class="field__shards">
-        <li class="field__shard"><div class="field__lift"><figure class="field__piece">
-          <div class="m-shard" data-cut="a"><img srcset="https://images.unsplash.com/photo-1636349757751-8546dcad2369?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1636349757751-8546dcad2369?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=80 440w, https://images.unsplash.com/photo-1636349757751-8546dcad2369?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1636349757751-8546dcad2369?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=750&amp;q=80 750w, https://images.unsplash.com/photo-1636349757751-8546dcad2369?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w" sizes="(max-width: 767px) 99vw, 34vw" style="background:#262626" class="m-shard__img" src="https://images.unsplash.com/photo-1636349757751-8546dcad2369?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="A concert crowd with almost every raised hand holding a phone" width="1200" height="800" loading="lazy" decoding="async"></div>
+      <ul class="field__shards" data-8b-items=":scope > li" data-8b-fixed="5">
+        <li class="field__shard" style="--field-div-field-lift-translate-to-2: -200px; --field-div-field-lift-rotate-to: -7deg; --field-figure-field-piece-rotate-from: -16deg"><div class="field__lift"><figure class="field__piece">
+          <div class="m-shard" data-cut="a"><img class="m-shard__img" src="https://images.unsplash.com/photo-1636349757751-8546dcad2369?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=580&amp;q=60" alt="A concert crowd with almost every raised hand holding a phone" width="1200" height="800" loading="lazy" decoding="async"></div>
           <figcaption class="m-text-4 field__cap">Manchester — a show watched through four hundred screens</figcaption>
         </figure></div></li>
-        <li class="field__shard"><div class="field__lift"><figure class="field__piece">
-          <div class="m-shard" data-cut="b"><img srcset="https://images.unsplash.com/photo-1532356884227-66d7c0e9e4c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=80 250w, https://images.unsplash.com/photo-1532356884227-66d7c0e9e4c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=80 290w, https://images.unsplash.com/photo-1532356884227-66d7c0e9e4c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1532356884227-66d7c0e9e4c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=80 490w, https://images.unsplash.com/photo-1532356884227-66d7c0e9e4c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 65vw, 22vw" style="background:#262626" class="m-shard__img" src="https://images.unsplash.com/photo-1532356884227-66d7c0e9e4c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Two hands holding a phone mid-scroll, a cable trailing from it" width="1200" height="800" loading="lazy" decoding="async"><span class="m-shard__tint" aria-hidden="true"></span></div>
+        <li class="field__shard" style="--field-div-field-lift-translate-to-2: -300px; --field-div-field-lift-rotate-to: 6deg; --field-figure-field-piece-rotate-from: 11deg"><div class="field__lift"><figure class="field__piece">
+          <div class="m-shard" data-cut="b"><img class="m-shard__img" src="https://images.unsplash.com/photo-1532356884227-66d7c0e9e4c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=390&amp;q=60" alt="Two hands holding a phone mid-scroll, a cable trailing from it" width="1200" height="800" loading="lazy" decoding="async"><span class="m-shard__tint" aria-hidden="true"></span></div>
           <figcaption class="m-text-4 field__cap">Leeds, 26 — reads the comments before the caption</figcaption>
         </figure></div></li>
-        <li class="field__shard"><div class="field__lift"><figure class="field__piece">
-          <div class="m-shard" data-cut="c"><img srcset="https://images.unsplash.com/photo-1544082646-12fd181f4809?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=80 250w, https://images.unsplash.com/photo-1544082646-12fd181f4809?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1544082646-12fd181f4809?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=80 490w, https://images.unsplash.com/photo-1544082646-12fd181f4809?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1544082646-12fd181f4809?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w" sizes="(max-width: 767px) 65vw, 30vw" style="background:#260c0c" class="m-shard__img" src="https://images.unsplash.com/photo-1544082646-12fd181f4809?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Young people on a train bench, each bent over a phone" width="1200" height="800" loading="lazy" decoding="async"></div>
+        <li class="field__shard" style="--field-div-field-lift-translate-to-2: -250px; --field-div-field-lift-rotate-to: -5deg; --field-figure-field-piece-rotate-from: -7deg"><div class="field__lift"><figure class="field__piece">
+          <div class="m-shard" data-cut="c"><img class="m-shard__img" src="https://images.unsplash.com/photo-1544082646-12fd181f4809?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGVlbmFnZXJzJTIwcGhvbmVzJTIwZ3JvdXB8ZW58MXwwfHx8MTc5MTIxMDMwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=370&amp;q=60" alt="Young people on a train bench, each bent over a phone" width="1200" height="800" loading="lazy" decoding="async"></div>
           <figcaption class="m-text-4 field__cap">Seoul — four friends, one group chat, no talking</figcaption>
         </figure></div></li>
-        <li class="field__shard"><div class="field__lift"><figure class="field__piece">
-          <div class="m-shard" data-cut="d"><img srcset="https://images.unsplash.com/photo-1718030021211-26404142ef22?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=80 250w, https://images.unsplash.com/photo-1718030021211-26404142ef22?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1718030021211-26404142ef22?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=80 490w, https://images.unsplash.com/photo-1718030021211-26404142ef22?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1718030021211-26404142ef22?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w, https://images.unsplash.com/photo-1718030021211-26404142ef22?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=80 1200w" sizes="(max-width: 767px) 65vw, 49vw" style="background:#405959" class="m-shard__img" src="https://images.unsplash.com/photo-1718030021211-26404142ef22?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="A street crowd filming a passing procession on their phones" width="1200" height="800" loading="lazy" decoding="async"><span class="m-shard__tint" aria-hidden="true"></span></div>
+        <li class="field__shard" style="--field-div-field-lift-translate-to-2: -340px; --field-div-field-lift-rotate-to: 8deg; --field-figure-field-piece-rotate-from: 14deg"><div class="field__lift"><figure class="field__piece">
+          <div class="m-shard" data-cut="d"><img class="m-shard__img" src="https://images.unsplash.com/photo-1718030021211-26404142ef22?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y3Jvd2QlMjBob2xkaW5nJTIwcGhvbmVzJTIwY29uY2VydHxlbnwxfDB8fHwxNzkxMjEwMzAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=550&amp;q=60" alt="A street crowd filming a passing procession on their phones" width="1200" height="800" loading="lazy" decoding="async"><span class="m-shard__tint" aria-hidden="true"></span></div>
           <figcaption class="m-text-4 field__cap">London — everyone filming, nobody posting until later</figcaption>
         </figure></div></li>
-        <li class="field__shard"><div class="field__lift"><figure class="field__piece">
-          <div class="m-shard" data-cut="a"><img srcset="https://images.unsplash.com/photo-1589878722745-a808de2fe798?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cGVvcGxlJTIwcmVhZGluZyUyMG5ld3NwYXBlciUyMHN0cmVldHxlbnwxfDB8fHwxNzkxMjEwMzAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=80 250w, https://images.unsplash.com/photo-1589878722745-a808de2fe798?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cGVvcGxlJTIwcmVhZGluZyUyMG5ld3NwYXBlciUyMHN0cmVldHxlbnwxfDB8fHwxNzkxMjEwMzAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1589878722745-a808de2fe798?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cGVvcGxlJTIwcmVhZGluZyUyMG5ld3NwYXBlciUyMHN0cmVldHxlbnwxfDB8fHwxNzkxMjEwMzAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=80 490w, https://images.unsplash.com/photo-1589878722745-a808de2fe798?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cGVvcGxlJTIwcmVhZGluZyUyMG5ld3NwYXBlciUyMHN0cmVldHxlbnwxfDB8fHwxNzkxMjEwMzAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1589878722745-a808de2fe798?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cGVvcGxlJTIwcmVhZGluZyUyMG5ld3NwYXBlciUyMHN0cmVldHxlbnwxfDB8fHwxNzkxMjEwMzAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w" sizes="(max-width: 767px) 65vw, 30vw" style="background:#262626" class="m-shard__img" src="https://images.unsplash.com/photo-1589878722745-a808de2fe798?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cGVvcGxlJTIwcmVhZGluZyUyMG5ld3NwYXBlciUyMHN0cmVldHxlbnwxfDB8fHwxNzkxMjEwMzAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Two people reading newspaper pages pinned up in a shop window" width="1200" height="800" loading="lazy" decoding="async"></div>
+        <li class="field__shard" style="--field-div-field-lift-translate-to-2: -260px; --field-div-field-lift-rotate-to: -6deg; --field-figure-field-piece-rotate-from: -10deg"><div class="field__lift"><figure class="field__piece">
+          <div class="m-shard" data-cut="a"><img class="m-shard__img" src="https://images.unsplash.com/photo-1589878722745-a808de2fe798?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cGVvcGxlJTIwcmVhZGluZyUyMG5ld3NwYXBlciUyMHN0cmVldHxlbnwxfDB8fHwxNzkxMjEwMzAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Two people reading newspaper pages pinned up in a shop window" width="1200" height="800" loading="lazy" decoding="async"></div>
           <figcaption class="m-text-4 field__cap">Lisbon — the front page, read through a shop window</figcaption>
         </figure></div></li>
       </ul>
@@ -1408,10 +1567,10 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
   <section id="sessions" class="sessions" data-8b-section="sessions" aria-labelledby="sessions-title">
     <div class="sessions__sheet" aria-hidden="true"></div>
     <div class="sessions__head">
-      <h2 id="sessions-title" class="m-text-2" data-8b-motion="strip">Halyard Ahead: four evenings, argued live</h2>
+      <h2 id="sessions-title" class="m-text-2" data-8b-motion="strip" data-8b-split="lines">Halyard Ahead: four evenings, argued live</h2>
       <p class="m-text-6 sessions__lead">Each evening takes one signal from the forecast and puts it in front of the people it describes. The broadcast is free; the Bristol studio has sixty seats.</p>
     </div>
-    <ol class="sessions__list">
+    <ol class="sessions__list" data-8b-items=":scope > li">
       <li class="sessions__strip">
         <div class="sessions__when"><span class="m-badge">Next live</span><p class="m-text-4"><time datetime="2026-10-21T18:00+01:00">Wed 21 Oct · 18:00 BST</time></p></div>
         <h3 class="m-text-5 sessions__title">Smaller rooms: influence after the feed</h3>
@@ -1443,32 +1602,32 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
   <section id="voices" class="voices" data-8b-section="voices" aria-labelledby="voices-title">
     <div class="voices__pin">
       <div class="voices__head">
-        <h2 id="voices-title" class="m-text-2" data-8b-motion="strip">The people reading the wind</h2>
+        <h2 id="voices-title" class="m-text-2" data-8b-motion="strip" data-8b-split="lines">The people reading the wind</h2>
         <p class="m-text voices__intro">Four people write the forecast. They spend most of the year inside other people’s group chats — always with permission.</p>
       </div>
       <div class="voices__track">
         <span class="m-arrow voices__thread" aria-hidden="true"><span class="m-arrow__part m-arrow__shaft"></span><span class="m-arrow__part m-arrow__upper"></span><span class="m-arrow__part m-arrow__lower"></span></span>
-        <ul class="voices__list">
+        <ul class="voices__list" data-8b-items=":scope > li">
           <li class="voices__card">
-            <div class="m-shard voices__photo" data-cut="b"><img srcset="https://images.unsplash.com/photo-1620122303020-87ec826cf70d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=80 170w, https://images.unsplash.com/photo-1620122303020-87ec826cf70d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=80 270w, https://images.unsplash.com/photo-1620122303020-87ec826cf70d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=80 330w, https://images.unsplash.com/photo-1620122303020-87ec826cf70d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1620122303020-87ec826cf70d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 43vw, 21vw" style="background:#262626" class="m-shard__img" src="https://images.unsplash.com/photo-1620122303020-87ec826cf70d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Mara Ilves, head of strategy, looking into the camera" width="900" height="1350" loading="lazy" decoding="async"><span class="m-shard__tint" aria-hidden="true"></span></div>
+            <div class="m-shard voices__photo" data-cut="b"><img class="m-shard__img" src="https://images.unsplash.com/photo-1620122303020-87ec826cf70d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=60" alt="Mara Ilves, head of strategy, looking into the camera" width="900" height="1350" loading="lazy" decoding="async"><span class="m-shard__tint" aria-hidden="true"></span></div>
             <h3 class="m-text-5 voices__name">Mara Ilves</h3>
             <p class="m-text-4 voices__role">Head of strategy · forecast lead</p>
             <p class="m-text voices__line">Hosts “Smaller rooms”. Read 140 group chats this year, every one by invitation.</p>
           </li>
           <li class="voices__card">
-            <div class="m-shard voices__photo" data-cut="d"><img srcset="https://images.unsplash.com/photo-1684607776189-24a70a10a804?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGJsYWNrJTIwYW5kJTIwd2hpdGUlMjBwb3J0cmFpdCUyMG1hbnxlbnwxfDF8fHwxNzkxMjEwMzIyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=80 170w, https://images.unsplash.com/photo-1684607776189-24a70a10a804?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGJsYWNrJTIwYW5kJTIwd2hpdGUlMjBwb3J0cmFpdCUyMG1hbnxlbnwxfDF8fHwxNzkxMjEwMzIyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=80 270w, https://images.unsplash.com/photo-1684607776189-24a70a10a804?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGJsYWNrJTIwYW5kJTIwd2hpdGUlMjBwb3J0cmFpdCUyMG1hbnxlbnwxfDF8fHwxNzkxMjEwMzIyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=80 330w, https://images.unsplash.com/photo-1684607776189-24a70a10a804?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGJsYWNrJTIwYW5kJTIwd2hpdGUlMjBwb3J0cmFpdCUyMG1hbnxlbnwxfDF8fHwxNzkxMjEwMzIyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1684607776189-24a70a10a804?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGJsYWNrJTIwYW5kJTIwd2hpdGUlMjBwb3J0cmFpdCUyMG1hbnxlbnwxfDF8fHwxNzkxMjEwMzIyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 43vw, 21vw" style="background:#262626" class="m-shard__img" src="https://images.unsplash.com/photo-1684607776189-24a70a10a804?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGJsYWNrJTIwYW5kJTIwd2hpdGUlMjBwb3J0cmFpdCUyMG1hbnxlbnwxfDF8fHwxNzkxMjEwMzIyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Jonah Achebe, director of research, in glasses" width="900" height="1382" loading="lazy" decoding="async"><span class="m-shard__tint" aria-hidden="true"></span></div>
+            <div class="m-shard voices__photo" data-cut="d"><img class="m-shard__img" src="https://images.unsplash.com/photo-1684607776189-24a70a10a804?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGJsYWNrJTIwYW5kJTIwd2hpdGUlMjBwb3J0cmFpdCUyMG1hbnxlbnwxfDF8fHwxNzkxMjEwMzIyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=60" alt="Jonah Achebe, director of research, in glasses" width="900" height="1382" loading="lazy" decoding="async"><span class="m-shard__tint" aria-hidden="true"></span></div>
             <h3 class="m-text-5 voices__name">Jonah Achebe</h3>
             <p class="m-text-4 voices__role">Director of research</p>
             <p class="m-text voices__line">Runs the nine-market panel and the 41,000 hours of viewing diaries behind every bearing.</p>
           </li>
           <li class="voices__card">
-            <div class="m-shard voices__photo" data-cut="a"><img srcset="https://images.unsplash.com/photo-1641901960200-1e878f0cbf63?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=80 170w, https://images.unsplash.com/photo-1641901960200-1e878f0cbf63?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=80 270w, https://images.unsplash.com/photo-1641901960200-1e878f0cbf63?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=80 330w, https://images.unsplash.com/photo-1641901960200-1e878f0cbf63?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1641901960200-1e878f0cbf63?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 43vw, 21vw" style="background:#262626" class="m-shard__img" src="https://images.unsplash.com/photo-1641901960200-1e878f0cbf63?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Inès Duarte, creator partnerships, glancing to the side" width="900" height="1194" loading="lazy" decoding="async"><span class="m-shard__tint" aria-hidden="true"></span></div>
+            <div class="m-shard voices__photo" data-cut="a"><img class="m-shard__img" src="https://images.unsplash.com/photo-1641901960200-1e878f0cbf63?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTIxMDMyMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=60" alt="Inès Duarte, creator partnerships, glancing to the side" width="900" height="1194" loading="lazy" decoding="async"><span class="m-shard__tint" aria-hidden="true"></span></div>
             <h3 class="m-text-5 voices__name">Inès Duarte</h3>
             <p class="m-text-4 voices__role">Creator partnerships</p>
             <p class="m-text voices__line">Works with three hundred creators a year and argues for the unpolished take.</p>
           </li>
           <li class="voices__card">
-            <div class="m-shard voices__photo" data-cut="c"><img srcset="https://images.unsplash.com/photo-1676439777386-d67cd2b32e7b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwbWFufGVufDF8MXx8fDE3OTEyMTAzMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=80 170w, https://images.unsplash.com/photo-1676439777386-d67cd2b32e7b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwbWFufGVufDF8MXx8fDE3OTEyMTAzMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=80 270w, https://images.unsplash.com/photo-1676439777386-d67cd2b32e7b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwbWFufGVufDF8MXx8fDE3OTEyMTAzMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=80 330w, https://images.unsplash.com/photo-1676439777386-d67cd2b32e7b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwbWFufGVufDF8MXx8fDE3OTEyMTAzMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1676439777386-d67cd2b32e7b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwbWFufGVufDF8MXx8fDE3OTEyMTAzMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 43vw, 21vw" style="background:#8c8c8c" class="m-shard__img" src="https://images.unsplash.com/photo-1676439777386-d67cd2b32e7b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwbWFufGVufDF8MXx8fDE3OTEyMTAzMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Callum Reyes, measurement lead, glancing to one side" width="900" height="1350" loading="lazy" decoding="async"><span class="m-shard__tint" aria-hidden="true"></span></div>
+            <div class="m-shard voices__photo" data-cut="c"><img class="m-shard__img" src="https://images.unsplash.com/photo-1676439777386-d67cd2b32e7b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMHBvcnRyYWl0JTIwbWFufGVufDF8MXx8fDE3OTEyMTAzMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=60" alt="Callum Reyes, measurement lead, glancing to one side" width="900" height="1350" loading="lazy" decoding="async"><span class="m-shard__tint" aria-hidden="true"></span></div>
             <h3 class="m-text-5 voices__name">Callum Reyes</h3>
             <p class="m-text-4 voices__role">Measurement lead</p>
             <p class="m-text voices__line">Turns recall into a number a finance director will sign off.</p>
@@ -1490,16 +1649,16 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
       <span class="m-logo report__logo">Halyard</span>
     </div>
     <div class="report__body">
-      <h2 id="report-title" class="m-text-2" data-8b-motion="strip">The full forecast, free</h2>
+      <h2 id="report-title" class="m-text-2" data-8b-motion="strip" data-8b-split="lines">The full forecast, free</h2>
       <p class="m-text-6 report__lead">Sixty-four pages: the six signals, the data behind every bearing, and a one-page brief for each team that has to act on it.</p>
-      <ol class="report__chapters">
-        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span><span class="m-text-4 report__num">1</span><span class="m-text">Smaller rooms</span></li>
-        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span><span class="m-text-4 report__num">2</span><span class="m-text">Slow proof</span></li>
-        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span><span class="m-text-4 report__num">3</span><span class="m-text">The unpolished premium</span></li>
-        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span><span class="m-text-4 report__num">4</span><span class="m-text">Borrowed authority</span></li>
-        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span><span class="m-text-4 report__num">5</span><span class="m-text">Questions go out loud</span></li>
-        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span><span class="m-text-4 report__num">6</span><span class="m-text">Reach without recall</span></li>
-        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span><span class="m-text-4 report__num">7</span><span class="m-text">Method, panel and data</span></li>
+      <ol class="report__chapters" data-8b-items=":scope > li">
+        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span><span class="m-text-4 report__num">1</span><span class="m-text">Smaller rooms</span></li>
+        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span><span class="m-text-4 report__num">2</span><span class="m-text">Slow proof</span></li>
+        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span><span class="m-text-4 report__num">3</span><span class="m-text">The unpolished premium</span></li>
+        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span><span class="m-text-4 report__num">4</span><span class="m-text">Borrowed authority</span></li>
+        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span><span class="m-text-4 report__num">5</span><span class="m-text">Questions go out loud</span></li>
+        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span><span class="m-text-4 report__num">6</span><span class="m-text">Reach without recall</span></li>
+        <li class="report__chapter"><span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span><span class="m-text-4 report__num">7</span><span class="m-text">Method, panel and data</span></li>
       </ol>
       <form data-8b-placeholder="form" class="report__form" action="#report" method="post" novalidate>
         <label class="m-field"><span class="m-field__label">Work email</span><input class="m-field__control" type="email" name="email" autocomplete="email" required></label>
@@ -1513,54 +1672,54 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
   <!-- faq: five questions and answers (native <details>) with a thin stack and two loose paper bits -->
   <section id="faq" class="faq" data-8b-section="faq" aria-labelledby="faq-title">
     <div class="faq__head">
-      <h2 id="faq-title" class="m-text-2" data-8b-motion="strip">Before you ask</h2>
+      <h2 id="faq-title" class="m-text-2" data-8b-motion="strip" data-8b-split="lines">Before you ask</h2>
       <p class="m-text-3 faq__stack" aria-hidden="true">Five<br>straight<br>answers</p>
     </div>
-    <div class="faq__list">
+    <div class="faq__list" data-8b-items=":scope > .faq__item">
       <div class="faq__item">
-        <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+        <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
         <details>
           <summary class="faq__q"><span class="m-text-5">Is the forecast really free?</span><span class="faq__icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M1 8h12M9 3.5 13.5 8 9 12.5"/></svg></span></summary>
           <div class="faq__a"><p class="m-text">Yes. Leave a work email and the PDF arrives within a minute. We write once more when the next edition is out, and that is all.</p></div>
         </details>
       </div>
       <div class="faq__item">
-        <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+        <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
         <details>
           <summary class="faq__q"><span class="m-text-5">Can I attend a session in person?</span><span class="faq__icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M1 8h12M9 3.5 13.5 8 9 12.5"/></svg></span></summary>
           <div class="faq__a"><p class="m-text">Each evening has sixty seats in our Bristol studio, given out in the order requests arrive. Everyone else watches the free broadcast.</p></div>
         </details>
       </div>
       <div class="faq__item">
-        <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+        <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
         <details>
           <summary class="faq__q"><span class="m-text-5">Will the sessions be recorded?</span><span class="faq__icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M1 8h12M9 3.5 13.5 8 9 12.5"/></svg></span></summary>
           <div class="faq__a"><p class="m-text">Yes. Recordings go up within two days, with chapters, so you can jump straight to the argument you care about.</p></div>
         </details>
       </div>
       <div class="faq__item">
-        <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+        <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
         <details>
           <summary class="faq__q"><span class="m-text-5">How is the research done?</span><span class="faq__icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M1 8h12M9 3.5 13.5 8 9 12.5"/></svg></span></summary>
           <div class="faq__a"><p class="m-text">A panel of 3,200 people in nine markets, interviewed twice a year, plus 41,000 hours of viewing diaries and screen recordings people chose to share. The method chapter lists every source.</p></div>
         </details>
       </div>
       <div class="faq__item">
-        <span class="m-rule" data-8b-motion="rule" aria-hidden="true"></span>
+        <span class="m-rule" data-8b-motion="rule" aria-hidden="true" data-8b-enter="94%"></span>
         <details>
           <summary class="faq__q"><span class="m-text-5">Can you present it to my team?</span><span class="faq__icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M1 8h12M9 3.5 13.5 8 9 12.5"/></svg></span></summary>
           <div class="faq__a"><p class="m-text">We run a ninety-minute working session for up to forty people, in person or online, built around the two signals that matter most to your brand.</p></div>
         </details>
       </div>
     </div>
-    <i class="m-bit faq__bit" data-8b-motion="drift" aria-hidden="true"></i>
-    <i class="m-bit faq__bit" data-paper="ink" data-depth="1.6" data-8b-motion="drift" aria-hidden="true"></i>
+    <i class="m-bit faq__bit" data-8b-motion="drift" aria-hidden="true" style="--drift-translate-y-from: 90px; --drift-translate-y-to: -90px; --drift-rotate-from: -8deg; --drift-rotate-to: 8deg"></i>
+    <i class="m-bit faq__bit" data-paper="ink" data-depth="1.6" data-8b-motion="drift" aria-hidden="true" style="--drift-translate-y-from: 144px; --drift-translate-y-to: -144px; --drift-rotate-from: -12.8deg; --drift-rotate-to: 12.8deg"></i>
   </section>
 
   <!-- contact: contact form and address block under a long arrow that extends across the section (animation: scene:contact) -->
   <section id="contact" class="contact" data-8b-section="contact" aria-labelledby="contact-title">
     <div class="contact__head">
-      <h2 id="contact-title" class="m-text-2" data-8b-motion="strip">Point us somewhere</h2>
+      <h2 id="contact-title" class="m-text-2" data-8b-motion="strip" data-8b-split="lines">Point us somewhere</h2>
       <p class="m-text-6 contact__lead">Briefs, invitations and arguments with the forecast are all welcome. We answer within two working days.</p>
     </div>
     <div class="contact__line">
@@ -1581,12 +1740,12 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
         <p class="m-text">Studio hours: Monday to Friday, 9:30–18:00</p>
       </address>
     </div>
-    <i class="m-bit contact__bit" data-paper="pink" data-8b-motion="drift" aria-hidden="true"></i>
+    <i class="m-bit contact__bit" data-paper="pink" data-8b-motion="drift" aria-hidden="true" style="--drift-translate-y-from: 90px; --drift-translate-y-to: -90px; --drift-rotate-from: -8deg; --drift-rotate-to: 8deg"></i>
   </section>
 </main>
 <!-- footer: large wordmark, four links, a note about the studio, copyright with the Design: 8B credit and a back-to-top button -->
 <footer id="footer" class="footer" data-8b-section="footer">
-  <p class="m-wordmark footer__word" style="--len:7" data-8b-motion="strip">Halyard</p>
+  <p class="m-wordmark footer__word" style="--len:7" data-8b-motion="strip" data-8b-split="lines">Halyard</p>
   <div class="footer__row">
     <nav class="footer__links m-text" aria-label="Footer">
       <a class="m-link" href="#signals">Signals</a>
@@ -1601,10 +1760,6 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
     <a class="m-iconbtn footer__top" href="#thesis" aria-label="Back to top"><svg class="m-iconbtn__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8h12M9 3.5 13.5 8 9 12.5"/></svg></a>
   </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
 <script data-8b-part="atom-script:m-arrow">
 (() => {
   const arrows = [...document.querySelectorAll('.m-arrow')].filter(arrow => arrow.querySelector('.m-arrow__flow'));
@@ -1645,7 +1800,7 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
     nav.setAttribute('data-open', '');
     nav.removeAttribute('data-hidden');
     button.setAttribute('aria-expanded', 'true');
-    window.lenis?.stop();
+    window.motionKit?.wheel?.stop();
     document.documentElement.style.overflow = 'hidden';
     close.focus();
   };
@@ -1654,7 +1809,7 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
     nav.removeAttribute('data-open');
     button.setAttribute('aria-expanded', 'false');
     document.documentElement.style.overflow = '';
-    window.lenis?.start();
+    window.motionKit?.wheel?.start();
     if (returnFocus) button.focus();
   };
   button.addEventListener('click', open);
@@ -1702,327 +1857,262 @@ textarea.m-field__control { min-height: 132px; resize: vertical; }
   });
 })();
 </script>
-<script data-8b-part="motion-queue">
+
+
+<script data-8b-part="motion-kit">
 (() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0;
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); });
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-  window.adjacent = (a, b) => {
-    const order = [...document.querySelectorAll('[data-8b-section]')].filter(section => section.getAttribute('data-8b-section') !== 'navigation').map(section => section.id);
-    return order.indexOf(a) >= 0 && order[order.indexOf(a) + 1] === b;
-  };
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}.line:not(:last-child){margin-bottom:0}.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = typeof Intl.Segmenter === 'function'
+? text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment)
+: text => [...text];
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split');
+if (sources.has(element)) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px 100% 0px' });
+(document.fonts?.ready ?? Promise.resolve()).then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const bar = document.querySelector('#nav .nav__bar');
-  const lenis = window.lenis = new Lenis({ lerp: 0.085, anchors: { offset: -(bar ? bar.offsetHeight : 0) } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => {
-    gsap.ticker.remove(tick);
-    gsap.ticker.lagSmoothing(500, 33);
-    lenis.destroy();
-    window.lenis = null;
-  };
+<script data-8b-part="scene-script:signals">
+motionKit.scene("signals", () => {
+  const make = (tag, attrs, ...children) => { const el = tag.startsWith('svg:') ? document.createElementNS('http://www.w3.org/2000/svg', tag.slice(4)) : document.createElement(tag); for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v); el.append(...children); return el; };
+  document.querySelector("#signals .signals__dial").append(...Array.from({ length: 6 }, (_, i) => make("span", { class: "signals__tick", style: `transform: rotate(${["-38","-24","-12","30","-56","46"][i]}deg)` })));
+  { const targets = ["#signals .signals__list > li:nth-of-type(1)", "#signals .signals__dial > span:nth-child(1)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#signals .signals__list > li:nth-of-type(1)"), "0% 50%", "100% 50%", p => targets.forEach(t => t.classList.toggle("is-active", p > 0 && p < 1))); }
+  { const targets = ["#signals .signals__list > li:nth-of-type(2)", "#signals .signals__dial > span:nth-child(2)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#signals .signals__list > li:nth-of-type(2)"), "0% 50%", "100% 50%", p => targets.forEach(t => t.classList.toggle("is-active", p > 0 && p < 1))); }
+  { const targets = ["#signals .signals__list > li:nth-of-type(3)", "#signals .signals__dial > span:nth-child(3)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#signals .signals__list > li:nth-of-type(3)"), "0% 50%", "100% 50%", p => targets.forEach(t => t.classList.toggle("is-active", p > 0 && p < 1))); }
+  { const targets = ["#signals .signals__list > li:nth-of-type(4)", "#signals .signals__dial > span:nth-child(4)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#signals .signals__list > li:nth-of-type(4)"), "0% 50%", "100% 50%", p => targets.forEach(t => t.classList.toggle("is-active", p > 0 && p < 1))); }
+  { const targets = ["#signals .signals__list > li:nth-of-type(5)", "#signals .signals__dial > span:nth-child(5)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#signals .signals__list > li:nth-of-type(5)"), "0% 50%", "100% 50%", p => targets.forEach(t => t.classList.toggle("is-active", p > 0 && p < 1))); }
+  { const targets = ["#signals .signals__list > li:nth-of-type(6)", "#signals .signals__dial > span:nth-child(6)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#signals .signals__list > li:nth-of-type(6)"), "0% 50%", "100% 50%", p => targets.forEach(t => t.classList.toggle("is-active", p > 0 && p < 1))); }
 });
 </script>
-<script data-8b-part="motion">
-const effects = {
-  strip(lines, vars = {}) {
-    return gsap.timeline(vars).from(lines, {
-      clipPath: 'inset(-25% 100% -25% 0%)',
-      x: -36,
-      duration: 1,
-      ease: 'power3.out',
-      stagger: 0.1
-    });
-  },
-  rule(element, vars = {}) {
-    return gsap.timeline(vars).from(element, { scaleX: 0, duration: 1.2, ease: 'power3.inOut' });
-  },
-  drift(element, vars = {}) {
-    const depth = parseFloat(element.dataset.depth || '1');
-    return gsap.timeline(vars).fromTo(element,
-      { y: 90 * depth, rotation: -8 * depth },
-      { y: -90 * depth, rotation: 8 * depth, ease: 'none' });
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  const first = section.getBoundingClientRect().top < window.innerHeight;
-  const strips = section.querySelectorAll('[data-8b-motion~="strip"]');
-  if (strips.length) {
-    const id = `effect:strip:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      const splits = [...strips].map((element, index) => SplitText.create(element, {
-        type: 'lines',
-        autoSplit: true,
-        onSplit(self) {
-          return effects.strip(self.lines, {
-            scrollTrigger: { id: `${id}:${index}`, trigger: element, start: 'top 88%', once: true },
-            onComplete: () => self.revert()
-          });
-        }
-      }));
-      return () => splits.forEach(split => split.revert());
-    }), { first, id });
-  }
-  const rules = section.querySelectorAll('[data-8b-motion~="rule"]');
-  if (rules.length) {
-    const id = `effect:rule:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      rules.forEach((element, index) => ScrollTrigger.create({
-        id: `${id}:${index}`, trigger: element, start: 'top 94%', once: true, animation: effects.rule(element)
-      }));
-    }), { first, id });
-  }
-  const drifts = section.querySelectorAll('[data-8b-motion~="drift"]');
-  if (drifts.length) {
-    const id = `effect:drift:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      drifts.forEach((element, index) => ScrollTrigger.create({
-        id: `${id}:${index}`, trigger: element, start: 'top bottom', end: 'bottom top', scrub: true, animation: effects.drift(element)
-      }));
-    }), { first, id });
-  }
-});
-</script>
-
-
-<script data-8b-part="scene:signals">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('signals');
-    const arrow = section.querySelector('.signals__arrow');
-    const dial = section.querySelector('.signals__dial');
-    const list = section.querySelector('.signals__list');
-    const items = [...list.querySelectorAll(':scope > .signals__item')];
-    if (!items.length) return;
-    const bearings = items.map(item => parseFloat(getComputedStyle(item).getPropertyValue('--signals-bearing')) || 0);
-    const ticks = bearings.map(bearing => {
-      const tick = document.createElement('span');
-      tick.className = 'signals__tick';
-      tick.style.transform = `rotate(${-bearing}deg)`;
-      dial.append(tick);
-      return tick;
-    });
-    section.setAttribute('data-compass', '');
-    const timeline = gsap.timeline({
-      scrollTrigger: { id: 'signals', trigger: list, start: 'top center', end: 'bottom center', scrub: 0.8 }
-    });
-    timeline.fromTo(arrow, { rotation: 0 }, { rotation: -bearings[0], ease: 'power2.inOut', duration: 0.5 }, 0);
-    for (let i = 1; i < bearings.length; i++) {
-      timeline.to(arrow, { rotation: -bearings[i], ease: 'power3.inOut', duration: 0.62 }, i - 0.31);
-    }
-    timeline.to(arrow, { rotation: 0, ease: 'power2.inOut', duration: 0.5 }, bearings.length - 0.5);
-    items.forEach((item, index) => ScrollTrigger.create({
-      id: `signals:item${index}`, trigger: item, start: 'top center', end: 'bottom center',
-      toggleClass: { targets: [item, ticks[index]], className: 'is-active' }
-    }));
-    return () => {
-      section.removeAttribute('data-compass');
-      ticks.forEach(tick => tick.remove());
-    };
-  });
-});
-</script>
-<script data-8b-part="scene:shifts">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    document.querySelectorAll('#shifts .shifts__row').forEach((row, index) => {
-      const tape = row.querySelector('.shifts__tape');
-      const arrow = row.querySelector('.shifts__arrow');
-      const to = row.querySelector('.shifts__to');
-      gsap.timeline({ scrollTrigger: { id: `shifts:row${index}`, trigger: row, start: 'top 90%', end: 'top 42%', scrub: 0.5 } })
-        .from(tape, { scaleX: 0, ease: 'power2.inOut', duration: 0.55 }, 0)
-        .from(arrow, { x: () => -arrow.offsetWidth * 0.6, scaleX: 0.2, transformOrigin: '0% 50%', ease: 'power3.out', duration: 0.5 }, 0.3)
-        .from(to, { x: 56, opacity: 0.15, ease: 'power3.out', duration: 0.45 }, 0.5);
+<script data-8b-part="scene-script:field">
+motionKit.scene("field", () => {
+  const section = document.getElementById("field");
+  const head = section.querySelector(".field__head");
+  const stage = section.querySelector(".field__stage");
+  const shards = [...section.querySelectorAll(".field__shard")];
+  motionKit.measure(() => {
+    motionKit.set(section, { "--field-stage-top": head.offsetTop + head.offsetHeight + parseFloat(getComputedStyle(head).marginBottom) + "px" });
+    const s = motionKit.box(stage);
+    shards.forEach(shard => {
+      const r = motionKit.box(shard);
+      motionKit.set(shard, { "--field-piece-x": (s.x + s.w / 2 - (r.x + r.w / 2)) * 0.92 + "px", "--field-piece-y": (s.y + s.h / 2 - (r.y + r.h / 2)) * 0.92 + "px" });
     });
   });
 });
 </script>
-<script data-8b-part="scene:field">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 761px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 760px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const { wide } = context.conditions;
-    const section = document.getElementById('field');
-    const stage = section.querySelector('.field__stage');
-    const shards = [...section.querySelectorAll('.field__shard')];
-    const turns = [-16, 11, -7, 14, -10];
-    if (wide) section.setAttribute('data-staged', '');
-    const offset = (shard, axis) => {
-      const s = stage.getBoundingClientRect(), r = shard.getBoundingClientRect();
-      return axis === 'x' ? s.left + s.width / 2 - (r.left + r.width / 2) : s.top + s.height / 2 - (r.top + r.height / 2);
-    };
-    const parting = gsap.timeline({
-      scrollTrigger: wide
-        ? { id: 'field', trigger: stage, start: 'top top', endTrigger: section, end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true }
-        : { id: 'field', trigger: stage, start: 'top 80%', end: 'center 45%', scrub: 0.6, invalidateOnRefresh: true }
+<script data-8b-part="scene-script:voices">
+motionKit.scene("voices", () => {
+  const section = document.getElementById("voices");
+  const pin = section.querySelector(".voices__pin");
+  const track = section.querySelector(".voices__track");
+  const cards = [...section.querySelectorAll(".voices__card")];
+  motionKit.measure(() => {
+    const style = getComputedStyle(pin);
+    const inner = pin.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+    motionKit.set(section, { "--voices-travel": Math.max(0, track.scrollWidth - inner) + "px" });
+    const view = document.documentElement.clientWidth;
+    cards.forEach(card => {
+      const box = motionKit.box(card);
+      const start = box.x - view, end = box.x + box.w - view * 0.97;
+      const passed = Math.min(1, Math.max(0, -start / (end - start)));
+      motionKit.set(card, { "--voices-tint-start": start + "px", "--voices-tint-end": end + "px", "--voices-tint-hold": 30 * (1 - passed) ** 3 + "%" });
     });
-    shards.forEach((shard, index) => parting.from(shard.querySelector('.field__piece'), {
-      x: () => offset(shard, 'x') * 0.92,
-      y: () => offset(shard, 'y') * 0.92,
-      rotation: turns[index % turns.length],
-      scale: 0.82,
-      ease: 'power2.inOut',
-      duration: 1
-    }, index * 0.07));
-    if (wide) parting.to({}, { duration: 0.3 });
-    if (adjacent('field', 'sessions')) {
-      gsap.timeline({ scrollTrigger: { id: 'field:exit', trigger: section, start: 'bottom bottom', end: 'bottom 40%', scrub: 0.6 } })
-        .to(section.querySelectorAll('.field__lift'), {
-          y: index => -[200, 300, 250, 340, 260][index % 5],
-          rotation: index => [-7, 6, -5, 8, -6][index % 5],
-          ease: 'power1.in',
-          duration: 1
-        }, 0);
-    }
-    return () => section.removeAttribute('data-staged');
-  });
-});
-</script>
-<script data-8b-part="scene:sessions">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 761px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 760px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const { wide } = context.conditions;
-    const section = document.getElementById('sessions');
-    const sheet = section.querySelector('.sessions__sheet');
-    if (adjacent('field', 'sessions')) {
-      gsap.timeline({ scrollTrigger: { id: 'sessions:entry', trigger: section, start: 'top bottom', end: 'top 40%', scrub: 0.6 } })
-        .from(sheet, { rotation: wide ? -10 : -17, ease: 'power2.out', duration: 1 }, 0);
-    }
-    section.querySelectorAll('.sessions__strip').forEach((strip, index) => {
-      const side = index % 2 ? 1 : -1;
-      gsap.timeline({ scrollTrigger: { id: `sessions:strip${index}`, trigger: strip, start: 'top 98%', end: 'top 58%', scrub: 0.5 } })
-        .from(strip, { rotation: side * (wide ? 5 : 3), xPercent: side * (wide ? 16 : 10), y: 60, ease: 'power3.out', duration: 1 });
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:voices">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('voices');
-    const pin = section.querySelector('.voices__pin');
-    const track = section.querySelector('.voices__track');
-    section.setAttribute('data-track', '');
-    const distance = () => {
-      const style = getComputedStyle(pin);
-      const inner = pin.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
-      return Math.max(0, track.scrollWidth - inner);
-    };
-    const travel = gsap.to(track, {
-      x: () => -distance(),
-      ease: 'none',
-      scrollTrigger: { id: 'voices', trigger: pin, start: 'top top', end: () => '+=' + distance(), pin: true, scrub: 0.6, invalidateOnRefresh: true }
-    });
-    section.querySelectorAll('.voices__card').forEach((card, index) => {
-      const tint = card.querySelector('.m-shard__tint');
-      if (!tint) return;
-      gsap.fromTo(tint, { xPercent: 30 }, {
-        xPercent: 0,
-        ease: 'power2.out',
-        scrollTrigger: { id: `voices:tint${index}`, trigger: card, containerAnimation: travel, start: 'left right', end: 'right 97%', scrub: true }
-      });
-    });
-    return () => section.removeAttribute('data-track');
-  });
-});
-</script>
-<script data-8b-part="scene:report">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('report');
-    const arrow = section.querySelector('.report__arrow');
-    const [shaft, upper, lower] = arrow.querySelectorAll(':scope > .m-arrow__part');
-    const bits = section.querySelectorAll('.report__bit');
-    const vw = () => window.innerWidth;
-    const vh = () => window.innerHeight;
-    const cover = section.querySelector('.report__cover');
-    const scatter = [[-0.14, -0.34, -40], [0.34, -0.12, 50], [0.22, 0.22, -60]];
-    gsap.timeline({ scrollTrigger: { id: 'report', trigger: cover, start: 'top 82%', end: 'center 52%', scrub: 0.7, invalidateOnRefresh: true } })
-      .from(shaft, { x: () => -vw() * 0.2, y: () => -vh() * 0.22, rotation: -32, ease: 'power2.inOut', duration: 1 }, 0)
-      .from(upper, { x: () => vw() * 0.3, y: () => -vh() * 0.3, rotation: 72, ease: 'power2.inOut', duration: 1 }, 0.08)
-      .from(lower, { x: () => vw() * 0.26, y: () => vh() * 0.2, rotation: -84, ease: 'power2.inOut', duration: 1 }, 0.14)
-      .from(bits, {
-        x: index => vw() * scatter[index % 3][0],
-        y: index => vh() * scatter[index % 3][1],
-        rotation: index => scatter[index % 3][2],
-        ease: 'power2.inOut',
-        duration: 1
-      }, 0.2);
-  });
-});
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const line = document.querySelector('#contact .contact__line');
-    const arrow = line.querySelector('.contact__arrow');
-    const [shaft, upper, lower] = arrow.querySelectorAll(':scope > .m-arrow__part');
-    const reach = () => arrow.offsetWidth - arrow.offsetHeight * 0.18;
-    gsap.timeline({ scrollTrigger: { id: 'contact', trigger: line, start: 'top 88%', end: 'top 40%', scrub: 0.6, invalidateOnRefresh: true } })
-      .from(shaft, { scaleX: 0.06, transformOrigin: '0% 50%', ease: 'power2.inOut', duration: 1 }, 0)
-      .from([upper, lower], { x: () => -reach() * 0.94, ease: 'power2.inOut', duration: 1 }, 0);
   });
 });
 </script>

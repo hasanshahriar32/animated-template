@@ -64,7 +64,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=pharm
 No. The script checks the fields, shows a thank-you line and clears the form; nothing leaves the page. Connect Formspree, Netlify Forms or your own secure endpoint and add a privacy notice, because the form asks for name, date of birth, phone and medicines, which is health data.
 
 **How to create a pharmacy website like this without editing code?**  
-Use [8B's AI website builder](https://8b.com/templates/8b/). You describe the site in a sentence and it designs a new one, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Use [8B's AI website builder](https://8b.com/). You describe the site in a sentence and it designs a new one, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 **Can a US or Canadian pharmacy use it?**  
 Yes, after a text pass. The layout suits any counter-based practice, but the demo is British: pounds, NHS Pharmacy First, a Leeds address and a 0113 phone number. Replace those, and the eligibility lines for the flu and Covid jabs, with your own region's rules.

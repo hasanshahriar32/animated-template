@@ -39,7 +39,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - `data-8b-placeholder` (og-image, favicon, phone, email, form): real value in, attribute out; no value, remove the row (no image: drop `og:image`, set `twitter:card` to `summary`).
 - Book a visit buttons in the nav bar, the phone menu, the first screen and the footer: now #contact; owner's target: your online booking page, or keep #contact once the form is connected.
 - Send request button of the call-back form in contact: now nothing is sent: a script checks name and phone and shows a thank-you line; owner's target: your form endpoint (Formspree, Netlify Forms) or the form of your booking system.
-- The form in `#contact` (fields `name`, `phone`, `postcode`, `job`, `message`) sends nothing; `section-script:contact` validates it and shows the thank-you text. Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
+- The form in `#contact` (fields `name`, `phone`, `postcode`, `job`, `message`) sends nothing; `section-script:contact` handles its submit in the page (read it before you connect a service). Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
 - The name Ferrule (any letter case); the favicon letter and colours in `<link rel="icon">`.
 - Photos (19, Unsplash: opening 1, services 7, work 4, team 4, heat 1, emergency 1, contact 1): `src`, no `srcset`/`sizes`, `width`/`height` to the ratio, `alt`, CREDITS.md.
 - `<title>`, meta description, og tags.

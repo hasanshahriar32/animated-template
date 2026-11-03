@@ -1,6 +1,6 @@
 # AGENTS.md: running race website template
 
-One-page website for a mountain trail race or other yearly outdoor sports event, with the course, race categories, entry rules and results history. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a mountain trail race or other yearly outdoor sports event, with the course, race categories, entry rules and results history. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,20 +14,20 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__bar` `.nav__overlay` `.nav__menu` `.nav__close`
-  - `scene:course-climb`: `.course__stage` `.course__track` `.course__part` `.part__alt` `.m-photo__light`
-  - `scene:races-deal`: `.races__deck` `.race`
-  - `scene:kit-zoom`: `.kit__photo` `.kit__list`
-  - `scene:orvalle-close`: `.orvalle__mosaic` `.orvalle__tile` `.orvalle__light`
-  - `scene:editions-sky`: `.editions__sky` `.ed__layer` `.ed__word` `.ed__year` `.ed__table` `.ed__day` `.ed__drift` `data-sky`
-  - `scene:trailday-stretch`: `.td__word` `.td__line`
-  - `scene:contact-dusk`: `.contact__tile` `.m-surface-3__sky` `.contact__glow` `.contact__night`
+  - `scene-script:course-climb`: `.course__track` `.course__part` `.part__alt`
+  - `scene-script:races-deal`: `.races__deck` `.race`
+  - `scene-script:kit-zoom`: `.kit__list`
+  - `scene-script:editions-sky`: `.editions__sky` `.ed__layer` `.ed__word` `.ed__year` `.ed__table` `.ed__day` `data-sky`
+  - `scene-script:trailday-stretch`: `.td__line`
 - `style="--len:N"` = characters in that display line, spaces included: `First light` is 11, `to last light` is 13, `Long` is 4, `Half` is 4, `Vertical` is 8, `Clear` is 5, `One` is 3, `day` is 3, `Solsta` is 6.
 - Headings with a character count in style="--len:N" must be updated when the words change: the two headline lines on the first screen, the race names, the two words "One day" and the footer wordmark. The editions scene rewrites its own word's --len.
-- The course scene reads the altitude from the value attribute of each data element with the class part__alt (a plain number of metres), not from the visible text; keep both in step. It also reads the part tiles, so tiles can be added or removed.
+- The course scene reads the altitude from the value attribute of each data element with the class part__alt (a plain number of metres), not from the visible text; keep both in step. It measures the part tiles, so tiles can be added or removed (no CSS rule counts them).
 - Each table row in the editions section has a data-sky value (clear, fog, snow, wind, heat, none or storm) that must match one of the seven sky layers in the held tile; the scene copies the weather word and the year from the row.
 - The three race cards sit on a three-column grid, and the sky tiles of the first screen, the race cards and the contact tile take their colours from their own --hour value (the contact scene animates it from .6 to .78; the editions tile is covered by its data-sky layers); the kit scene reads its list items, so items can be added.
+- The night photo in the finish village section is six tiles of one image, each placed by its --c and --r values; the motion CSS times them in pairs by :nth-of-type, so keep six tiles.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #111111 (page ground, text on lime buttons and badges, borders and the hard shadows), `--color-2` #ececea (body text on the black ground, the light cards (entry board, trail day card, race office cards) and part of the fog, storm and not-run skies), `--color-3` #ff4a14 (orange: the light that crosses photos, the button sweep, the heat sky and the glow behind the contact cards), `--color-4` #c2f47c (lime: buttons, badges, link underlines, course part numbers, kit boxes, focus outline and hover colour), `--color-5` #8e6cf5 (violet: the ends of the sky gradient and the snow, wind and storm skies), `--color-6` #f6b5e3 (pink in the sky gradient and the wind and storm skies), `--color-7` #c9f2e3 (mint: base of the sky tiles and the clear and snow skies), `--color-8` #ffc58c (peach in the sky gradient and the clear and heat skies), `--color-9` #a3a3a3 (grey for labels, course facts, table heads, hairlines and the quote credit), `--color-10` #ffffff (white in the sky gradient and skies, and the form field background), `--color-11` #241a4a (deep violet of the night that closes over the contact tile), `--color-12` #1d1d1d (dark card surfaces: course cards, question boxes, the quote card, photo backing, the current table row and table hairlines); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -69,7 +69,8 @@ All demo text, never to be invented:
 - The race office form posts to a mailto: address as plain text. It opens the visitor's mail program and does nothing on devices without one; replace it with a form service before launch.
 - The Download the GPX link points at a file that is not in the package, so it fails until you add the file.
 - The course is held while its row slides sideways, about one and a half to two screens of scroll on a laptop or a phone, and its tiles are lifted by up to 30% of the screen height, so on short windows the highest tiles can reach the top edge and be cut off.
+- Without scroll-driven animation support (Firefox today) the page shows its finished layout: the course row is a plain grid, the race cards sit in their row, every kit box is ticked, the night photo is whole, the editions tile keeps its first sky and the wheel scrolls natively; only the first screen load-in plays. With reduced motion on, that stops too; hovers and the top bar sliding away on scroll still run.
 - The fonts are variable (TikTok Sans for display and Google Sans for text) loaded from Google; the widening words depend on the display font having a width axis, and a fallback font will not widen.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and SOLSTA left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and SOLSTA left only in class names.

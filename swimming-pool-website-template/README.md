@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my pool: name, address, session times and prices, lesson levels with fees, ticket and pass prices, kiosk menu, event dates, opening hours, charity number>. Replace first the pool name, demo history, prices and photos. Keep the section ids, the classes AGENTS.md lists and the four photos in the kiosk chain; set --len on the big word and footer wordmark to the new character count. Ask for any missing fact; never invent prices, hours, dates, safety rules or contacts.
 ```
 
-Give Claude Code, Cursor or Codex the facts only the pool has: the session timetable, ticket and pass prices, lesson ages and fees, kiosk menu, event dates, opening hours and the charity or company number. The demo invents all of them, including the history. Replace the name, then update --len on the big word and the footer wordmark. The deck section's real heading sits in a hidden span, so change both. Vibe coding works well when the agent asks about safety rules.
+Give Claude Code, Cursor or Codex the facts only the pool has: the session timetable, ticket and pass prices, lesson ages and fees, kiosk menu, event dates, opening hours and the charity or company number. The demo invents all of them, including the history. Replace the name, then update --len on the big word and the footer wordmark. The deck section's real heading sits in a hidden span, so change both. The agent should ask about safety rules and leave [the scroll-driven motion](https://8b.com/templates/animated/) as built.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=swimming-pool-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -69,7 +69,7 @@ Yes. It is one index.html under the MIT license, so a lido, a swim club or a fre
 Not yet. Book a swim only scrolls to the prices or visit section, and the form checks its fields, shows a thank-you line and sends nothing. Point the buttons at your booking page and connect Formspree or Netlify Forms, or delete the form. Also edit the thank-you line, which promises an answer within two days.
 
 **Can I get a site like this without editing code?**  
-Yes, in a different way. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence describing the pool, and it will not be this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat need Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, in a different way. [8B's AI website builder](https://8b.com/) designs a new site from a sentence describing the pool, and it will not be this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat need Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

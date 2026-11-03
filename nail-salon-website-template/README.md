@@ -68,7 +68,7 @@ Yes, after a text pass. The finishes, price sheet, artist strips and club card s
 Nowhere yet. The form checks that name and phone are filled, shows its thank-you line and clears itself without sending anything. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or point the Book a chair and Join at your visit buttons at your own booking page. There is no calendar and no live availability.
 
 **Can I get a salon site like this without editing code?**  
-Not this page, which is an HTML file that a person or an AI agent edits. [8B's AI website builder](https://8b.com/templates/8b/) is the no-code route: describe the salon in a sentence and its engine designs a new site, its own design. Designing is free; publishing with hosting, HTML export and AI edits are on Pro at $9 a month billed yearly.
+Not this page, which is an HTML file that a person or an AI agent edits. [8B's AI website builder](https://8b.com/) is the no-code route: describe the salon in a sentence and its engine designs a new site, its own design. Designing is free; publishing with hosting, HTML export and AI edits are on Pro at $9 a month billed yearly.
 
 ## Is it the right base?
 

@@ -63,10 +63,10 @@ No agent? Click **[Use this template](https://github.com/new?template_name=board
 Nowhere yet. It checks the required fields, shows a thank-you line and clears itself, with no handler behind it. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or delete the form and keep the phone and email. Also change the promise in the thank-you line to match your real reply time.
 
 **What happens with reduced motion, on a phone or without JavaScript?**  
-With reduced motion, entrance and scroll animations and smooth scrolling are off, so the week and shelves read in place, while hover fills and the bar's hide on scroll keep running. On phones the pinned week needs a tall screen. Without JavaScript the menu button cannot open, and below 861 pixels the bar links are hidden.
+With reduced motion, entrance animations, [motion tied to scrolling](https://8b.com/templates/animated/) and smooth scrolling are off, so the week and shelves read in place, while hover fills and the bar's hide on scroll keep running. On phones the pinned week needs a tall screen. Without JavaScript the menu button cannot open, and below 861 pixels the bar links are hidden.
 
 **Can I get a site like this without editing code?**  
-Not this exact file, but [8B's AI website builder](https://8b.com/templates/8b/) makes a site from a sentence, in a new design of its own. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
+Not this exact file, but [8B's AI website builder](https://8b.com/) makes a site from a sentence, in a new design of its own. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
 
 ## Is it the right base?
 

@@ -1,8 +1,8 @@
-# Free HTML daycare website template with GSAP scroll animations
+# Free HTML daycare website template with scroll animations and no libraries
 
-Daycare website template: one free HTML file for a day nursery, preschool or childminder, with four rooms by age, a settling-in plan, a weekly lunch menu, fees with funded hours and an open-morning booking form. Photos and price cards roll and squash on pink, yellow and lilac slabs. AGENTS.md lets Claude Code, Cursor or Codex adapt it.
+Daycare website template: one free HTML file for a day nursery, preschool or childminder, with four rooms by age, a settling-in plan, a weekly lunch menu, fees with funded hours and an open-morning booking form. Photos and cards squash on pink, yellow and lilac slabs. Motion is CSS with no libraries, about 25 KB gzipped, for Claude Code or Cursor.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/daycare-website-template/)** · **[Use this template](https://github.com/new?template_name=daycare-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/daycare-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/mallow-house/)**
 
@@ -24,17 +24,17 @@ curl -LO https://raw.githubusercontent.com/8bsite/daycare-website-template/main/
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my nursery: name, address, ages taken, rooms with ratios, fees and funded hours, opening hours, garden, settling plan, menu, open-morning dates, legal name>. Replace first the name, rooms, fees, menu, staff and the footer registration line. Keep the ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the classes AGENTS.md lists, and set the wordmark --len to the new name's length. Ask me for missing facts; never invent ratios, prices, funding rules, hours, staff, inspections or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my nursery: name, address, ages taken, rooms with ratios, fees and funded hours, opening hours, garden, settling plan, menu, open-morning dates, legal name>. Replace first the name, rooms, fees, menu, staff and the footer registration line. Motion is CSS plus the inline kit: keep the gate script, ids, data-8b attributes and listed classes, add no library, and set the wordmark --len. Ask me for missing facts; never invent ratios, prices, funding rules, hours, staff, inspections or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when you hand the agent the facts only the setting has: ages taken, rooms and ratios, fees, funded hours, opening times, the menu week, open-morning dates and the registered name. The demo invents all of them, including the staff names, the Ofsted registration line in the footer and the funding rules. Ratios and funding differ by country, so the agent should ask rather than guess.
+If you [vibe code the site with an agent](https://8b.com/templates/vibe-coding/), a daycare website template for Claude Code, Cursor or Codex goes fastest when you hand the agent the facts only the setting has: ages taken, rooms and ratios, fees, funded hours, opening times, the menu week, open-morning dates and the registered name. The demo invents all of them, including the staff names, the Ofsted registration line in the footer and the funding rules. Ratios and funding differ by country, so the agent should ask rather than guess.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=daycare-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
 - **Navigation**: top bar with the brand, four links, a Book a visit button and a menu button; full-screen menu. The bar hides when you scroll down and returns when you scroll up, floats after 40 px, and the round icon buttons squash on hover.
-- **Four rooms, growing up together**: the h1, a booking button and four rooms by age as columns of rising height. On load the heading block rises and the four coloured grounds grow from small, with each room's contents following 0.16 s apart.
+- **Four rooms, growing up together**: the h1, a booking button and four rooms by age as columns of rising height. On load the heading block rises and the four coloured grounds grow from small, with each room's contents following 0.16 s apart; as the rooms scroll away, their photos drift inside their frames.
 - **The making table**: a slab with the making table text and six craft photos that roll out like dough. Six photos start piled in the middle of the table, turned and shrunk, and roll out to their grid places as you scroll.
 - **Out in all weathers**: two garden photos and a slab listing what is in the garden. The slab swells out from its lower left corner, and the small wellies photo and the badges squash down as they arrive.
 - **Settling in, one step at a time**: four settling-in steps beside a portrait stage where the parent moves away and the key person comes close. As the four steps scroll past, the parent's portrait steps away and shrinks while the key person's comes beside the child, the dashed lines follow them and a lilac fill sweeps across the active step.
@@ -53,7 +53,6 @@ No agent? Click **[Use this template](https://github.com/new?template_name=dayca
 ![#ae9aea](https://img.shields.io/badge/-%23ae9aea-ae9aea?style=flat-square) lilac: the Buds room ground, the fee tray, the full-screen menu, the footer ground, the first logo dot, the plus discs in the questions, the settling step fill and the nav link pill on hover and for the section in view  
 ![#7a5bd0](https://img.shields.io/badge/-%237a5bd0-7a5bd0?style=flat-square) violet: the main buttons and the chosen Saturday pill  
 ![#bfe6b0](https://img.shields.io/badge/-%23bfe6b0-bfe6b0?style=flat-square) mint: the Blooms room ground, the garden slab, the booking form, the six craft photo labels and the nut-free badge  
-![#3e9a55](https://img.shields.io/badge/-%233e9a55-3e9a55?style=flat-square) declared in :root but used by no rule in the shipped page; free for a new accent  
 ![#f6d167](https://img.shields.io/badge/-%23f6d167-f6d167?style=flat-square) butter yellow: the Meadow room ground, the lunch slab, the small badges and the fourth logo dot  
 ![#f8c8d9](https://img.shields.io/badge/-%23f8c8d9-f8c8d9?style=flat-square) pale pink: the Shoots room ground, the making-table slab and the settling stage  
 ![#ffffff](https://img.shields.io/badge/-%23ffffff-ffffff?style=flat-square) text on violet and pink buttons, the arrow discs, the rings round the bowls and portraits, and the highlight in the inner shadows  
@@ -69,14 +68,14 @@ No agent? Click **[Use this template](https://github.com/new?template_name=dayca
 No. As shipped, it checks the fields, shows a thank-you line and clears itself, but sends nothing. Point it at Formspree or Netlify Forms, or at your booking system, before you publish. The three Saturday choices are fixed radio buttons, so edit their dates too.
 
 **Can I get a daycare site like this without editing code?**  
-Yes, with a different tool: [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
+Yes, with a different tool: [8B's AI website builder](https://8b.com/) designs a new site from a sentence, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
 
-**What happens with reduced motion or without JavaScript?**  
-With reduced motion on, the entrance animations, the scroll animations and smooth scrolling are off and the page reads in full, though the nav bar still hides as you scroll down. Without JavaScript the menu button cannot open its overlay and the form posts to the page itself, sending nothing and showing no thank-you line; the parents' questions still open.
+**What happens in Firefox, with reduced motion or without JavaScript?**  
+In Firefox, which lacks scroll-driven animations today, and with reduced motion, the scroll and arrival animations and the smooth wheel are off and every section shows its finished layout; the first screen's load-in still plays in Firefox, and the nav bar still hides on scroll. Without JavaScript the menu cannot open and the form sends nothing.
 
 ## Is it the right base?
 
-Choose this base when one friendly page should show rooms, fees and a route to book a visit. For daycare web design where families book sessions and parties, the [indoor play venue](https://8b.com/templates/hopla/) template fits better, and a group with several sites or a parent login needs more than one page. The no-code route is the 8B builder. One weak spot: the scroll effects move many rounded photos at once, which can feel heavy on weak phones.
+Choose it when one friendly page should show rooms, fees and a way to book a visit. For daycare web design where families book sessions and parties, the [indoor play venue](https://8b.com/templates/hopla/) template fits better. This is the light build: the same look and motion with no animation library or CDN script, about 25 KB of code gzipped against 70 KB and three extra requests for the GSAP version. One weak spot: many rounded photos move at once, which can feel heavy on weak phones.
 
 ## Before you publish
 
@@ -85,7 +84,9 @@ Choose this base when one friendly page should show rooms, fees and a route to b
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 89 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 121+ (it uses color-mix(), :has(), cascade layers). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 97 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 121+ (it uses color-mix(), :has(), cascade layers). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 89 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

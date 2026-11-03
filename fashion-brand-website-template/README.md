@@ -1,8 +1,8 @@
-# Free HTML fashion brand website template with GSAP scroll animations
+# Free HTML fashion brand website template with scroll animations and no libraries
 
-Fashion brand website template: one free HTML file for a clothing label that sells a seasonal collection and runs a few stores, with four priced looks, five colour bands, a street photo notebook and three store cards. The look is white and ink. AGENTS.md is included, so Claude Code, Cursor or Codex can adapt it.
+Fashion brand website template: one free HTML file for a clothing label that sells a seasonal collection and runs a few stores, with four priced looks, five colour bands, a street photo notebook and three store cards. The look is white and ink, and the scroll motion runs on CSS with no JavaScript libraries.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/fashion-brand-website-template/)** · **[Use this template](https://github.com/new?template_name=fashion-brand-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/fashion-brand-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/outre/)**
 
@@ -24,17 +24,17 @@ curl -LO https://raw.githubusercontent.com/8bsite/fashion-brand-website-template
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my label: name, city, season, products with prices and fabrics, sizing, delivery and returns terms, store addresses and hours, social profiles>. Replace first the label name, the four looks and prices, the colour descriptions, the stores and the FAQ. Update every --len to the new word's character count and edit outline copies with the visible ones. Keep the section ids and the classes AGENTS.md lists. Ask me for missing facts and never invent prices, policies, reviews, addresses or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my label: name, city, season, products with prices and fabrics, sizing, delivery and returns terms, store addresses and hours, social profiles>. Replace the name, looks, prices, colours, stores and FAQ. Update every --len and edit outline copies with the visible ones. Motion is CSS scroll-driven animation plus the inline kit: keep the gate script, the data-8b attributes and five bands; add no library. Never invent prices, policies, reviews, addresses or contacts; ask me.
 ```
 
-If you are working out how to make a clothing brand website with an agent, give Claude Code, Cursor or Codex the real facts first: name, season, products with prices, fabric claims, sizing, delivery, returns, repairs and store hours. The demo invents every one of them. The agent then replaces the name everywhere and updates each --len, the character count that sizes a large word. Vibe coding the rest is safe while the section ids and listed classes stay.
+If you are working out how to make a clothing brand website, take this fashion brand website template for Claude Code, Cursor or Codex and give the agent the real facts first: name, season, products with prices, fabric claims, sizing, delivery, returns and store hours. The demo invents every one. The agent then replaces the name everywhere and updates each --len, the character count that sizes a large word. Vibe coding the rest is safe while the section ids and listed classes stay.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=fashion-brand-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
 - **Navigation**: fixed bar: logo mark and wordmark, three links, search, bag with a counter and a menu button; full-screen sheet with four links; hides on scroll down.
-- **Fearless Layers**: two screens: a giant two-line title with a portrait panel and corner captions, then a brand statement over a brand row and two stacked photo cards. Lenis smooths the scroll page-wide; on scroll the portrait panel slides down through the title as a lens that outlines each letter it crosses, then shrinks, tilts and lands on a stack of two photos while the statement fills from grey to ink.
+- **Fearless Layers**: two screens: a giant two-line title with a portrait panel and corner captions, then a brand statement over a brand row and two stacked photo cards. With a mouse the wheel scrolls smoothly page-wide; on scroll the portrait panel slides down through the title as a lens that outlines each letter it crosses, then shrinks, tilts and lands on a stack of two photos while the statement fills from grey to ink.
 - **Four looks built from one season of colour, made to swap, stack and wear every single day.**: a statement and four looks with name, price and Add to bag, dealt from a pile behind a giant word. The four looks start as a tilted pile and deal out to their columns as you scroll while the giant Colour word rises, and Add to bag raises the nav counter.
 - **Index**: a category list of four rows with a tilted photo preview that follows the active row. As you scroll or point at a row it turns from grey to ink and wipes in a new tilted photo that follows it.
 - **Voice**: a customer quote beside a photo and a rotating burst. The photo slides up from a tilt into place, the quote fills from grey to ink word by word and the burst icon spins on a slow loop.
@@ -68,15 +68,15 @@ No agent? Click **[Use this template](https://github.com/new?template_name=fashi
 **Do Add to bag and the forms work?**  
 Not yet. Add to bag only raises the bag counter in the nav and shows Added to bag; there is no cart. The contact and newsletter forms check their fields, show a thank-you line and send nothing. Connect Shopify, Snipcart or a Stripe button per product, and Formspree, Netlify Forms or your mailing list provider, using AGENTS.md.
 
-**Can I get a site like this without editing code?**  
-Yes, with 8B instead of this file. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a one-sentence description, in its own design, not this one. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+**Does this version need GSAP, SplitText or Lenis?**  
+No. The lens, the dealt looks and the stacking bands are CSS scroll-driven animations, and a short inline kit measures the page and smooths the wheel. Nothing changes for the visitor: 27 KB gzipped against 75 KB. Keep the gate script, the data-8b attributes, the classes AGENTS.md lists and each --len, the character count that sizes a large word.
 
-**What happens on a phone, with reduced motion or with scripts off?**  
-On a phone the nav links move into a full-screen menu of four links and the looks sit two to a row. With reduced motion on, entrance and scroll animations and smooth scrolling are off, while hover fills and the nav hiding on scroll keep running. Without JavaScript the phone menu cannot open and the forms reload the page.
+**Can I get a site like this without editing code?**  
+Yes, with 8B instead of this file. [8B's AI website builder](https://8b.com/) designs a new site from a one-sentence description, in its own design, not this one. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 
-As an apparel website template it suits a label that sells a small seasonal edit and wants a loud, colour-led look. A label that sells limited drops and credits its artists is closer to the [streetwear](https://8b.com/templates/scrawl/) template. A catalogue of hundreds of products needs a shop platform behind it, because Add to bag here only counts clicks. If you would rather not touch code, 8B can design a site from a sentence.
+As an apparel website template it suits a label that sells a small seasonal edit and wants a loud, colour-led look. This light build keeps the look and motion with no animation library and no script from a CDN: about 27 KB gzipped in one file, against 75 KB and four extra requests for the GSAP version. A label that credits its artists is closer to the [streetwear](https://8b.com/templates/scrawl/) template, and Add to bag here only counts clicks. 8B can design a site from a sentence.
 
 ## Before you publish
 
@@ -85,7 +85,9 @@ As an apparel website template it suits a label that sells a small seasonal edit
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 86 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), container query units, cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 99 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), container query units, cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 86 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

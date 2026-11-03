@@ -17,13 +17,13 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - Selectors the scripts use:
   - `section-script:tabs`: `.tabs__tab` `data-8b-section`
   - `scene:reading-window`: `.archives__inner` `.archives__frame` `.archives__ledger` `.archives__name`
-  - `scene:thread`: `.method__slips` `.w3` `.org`
+  - `scene:thread`: `.method__slips`
   - `scene:generations`: `.case__track` `.case__chart` `.case__person--g` `.case__lines` `data-gen` `.case__dot`
   - `scene:stamps-part`: `.people__grid` `.people__stamp`
   - `scene:room-opens`: `.room__frame`
   - `scene:fee-slip`: `.fees__body` `.fees__item` `.fees__name` `.fees__amount`
   - `scene:footer-press`: `.footer__word` `.footer__light`
-  - `section-script:case`: `.case__chart` `.case__person` `.w3` `.org` `.case__dot`
+  - `section-script:case`: `.case__chart` `.case__person` `.case__dot`
   - `section-script:contact`: `.contact__form` `.contact__status` `.contact__copy` `data-copy` `data-done` `data-sent`
 - The pedigree chart is read by index: the first entry is the client, then two parents for each entry in order (entries 2n+1 and 2n+2), and the generation of a line comes from its position. Keep fifteen entries or rework the generations in the scene and the section script.
 - The stamps scene measures the portraits and gathers them into a block two wide before they part; the grid is four columns on wide screens and two on phones, so four portraits fill it evenly; the four process slips and the three fee packages are plain lists the scenes read.

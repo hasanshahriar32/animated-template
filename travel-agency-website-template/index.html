@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/travel-agency-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,8 +20,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%23465016'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23e6dcbf'%3E3%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/schibstedgrotesk/v7/Jqz55SSPQuCQF3t8uOwiUL-taUTtap9Gayo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/tiktoksans/v8/70l9u7g-Lm8OXGnh_Ow1sUfFMmlnhbRF425wxXH-UGeud7XItbaHtxhgqsbDdQ.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://fonts.gstatic.com/s/schibstedgrotesk/v7/Jqz55SSPQuCQF3t8uOwiUL-taUTtap9Gayo.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* latin-ext */
 @font-face {
@@ -133,11 +134,8 @@
 @font-face { font-family: "Schibsted Grotesk Fallback"; src: local("Arial"), local("ArialMT"), local("Helvetica"); font-weight: 100 549; size-adjust: 105.8%; ascent-override: 92.6%; descent-override: 24.6%; line-gap-override: 0%; }
 /* end fallback faces */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-padding-top: 5rem; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
+html { -webkit-text-size-adjust: 100%; }
+[data-8b-section] { scroll-margin-top: 5rem; }
 body { margin: 0; background: var(--color-1); color: var(--color-2); font-family: var(--font-2); font-size: 1.0625rem; line-height: 1.55; font-weight: 400; overflow-x: clip; }
 h1, h2, h3, h4, p, figure, dl, dd, ol, ul, blockquote { margin: 0; }
 ol, ul { padding: 0; list-style: none; }
@@ -263,13 +261,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @keyframes op-rails { from { transform: translateX(0) skewX(-9deg); } to { transform: translateX(-13.5rem) skewX(-9deg); } }
 }
 </style>
-<style data-8b-part="scene-style:opening">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #opening.is-riding .op__view { z-index: 3; will-change: clip-path; }
-}
-}
-</style>
 <style data-8b-part="section:route">
 @layer sections {
 #route { padding: var(--space-2) var(--space-1); background: var(--color-1); }
@@ -295,16 +286,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   #route .rt__marker { left: 50%; top: calc(100% - 3.8rem); width: 1.7rem; height: 3.8rem; margin: 0 0 0 -0.85rem; }
   #route .rt__stops { grid-template-columns: 100%; gap: 3.5rem; padding-left: 3.6rem; }
   #route .rt__stop::before { left: -2.95rem; top: 0.4rem; margin-left: 0; }
-}
-}
-</style>
-<style data-8b-part="scene-style:route">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #route .rt__lock { position: absolute; inset: -0.4rem -0.6rem; z-index: 2; display: flex; overflow: hidden; pointer-events: none; border-radius: var(--radius-1); background: var(--color-1); }
-  #route .rt__lock span { flex: 1 0 auto; width: 15%; margin: 0 -1px; transform-origin: 50% 100%; background: var(--color-4); }
-  #route .rt__lock span:nth-child(3n + 1) { background: var(--color-2); }
-  #route .rt__lock span:nth-child(3n + 2) { background: var(--color-3); }
 }
 }
 </style>
@@ -374,14 +355,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   #day .dy__stage { top: 0.75rem; height: 28vh; z-index: 2; }
   #day .dy__copy { padding-top: 2.5rem; }
   #day .dy__step { min-height: 52vh; align-content: end; }
-}
-}
-</style>
-<style data-8b-part="scene-style:day">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #day.is-touring .dy__view:nth-child(1) { z-index: 1; }
-  #day.is-touring .dy__view:nth-child(3) { z-index: 3; }
 }
 }
 </style>
@@ -506,6 +479,189 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @media (max-width: 760px) { #footer .ft__cols { grid-template-columns: 100%; } }
 }
 </style>
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] [data-8b-motion~="glide"] { animation-duration: 1s; animation-delay: 0s; animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="glide"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="window"] { animation-name: motion-window-clippath; animation-duration: 1.1s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="window"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="window"] img { animation-name: motion-window-img-scale; animation-duration: 1.5s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="window"].is-in img { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rails"] { view-timeline: --motion-rails block; view-timeline-inset: 0; }
+[data-8b-live] [data-8b-motion~="rails"] .m-bars__run { animation-name: motion-rails-m-bars-run-translate; animation-timeline: --motion-rails; animation-range: cover 0% cover calc(50% - 5vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes motion-glide-translate-d { 0% { translate: -220px 0px; } 100% { translate: 0px 0px; } }
+@keyframes motion-glide-translate-m { 0% { translate: -19.78% 0px; } 100% { translate: 0px 0px; } }
+@keyframes motion-glide-skew { 0% { transform: skew(10deg, 0deg); } 100% { transform: skew(0deg, 0deg); } }
+@keyframes motion-glide-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes motion-window-clippath { 0% { clip-path: inset(100% 0% 0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes motion-window-img-scale { 0% { scale: 1.18; } 100% { scale: 1; } }
+@keyframes motion-rails-m-bars-run-translate { 0% { translate: 9% 0px; } 100% { translate: 0px 0px; } }
+@media (min-width: 861px) {
+  [data-8b-live] [data-8b-motion~="glide"] { animation-name: motion-glide-translate-d, motion-glide-skew, motion-glide-opacity; animation-timing-function: var(--ease-power3-out), cubic-bezier(0.25, 1, 0.5, 1), cubic-bezier(0.25, 1, 0.5, 1); }
+}
+@media (max-width: 860px) {
+  [data-8b-live] [data-8b-motion~="glide"] { animation-name: motion-glide-translate-m, motion-glide-skew, motion-glide-opacity; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); }
+}
+}
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #opening .op__view { z-index: 3; will-change: clip-path; }
+}
+}
+@layer scenes {
+[data-8b-live] #opening { timeline-scope: --opening-t1; }
+[data-8b-live] #opening .op__two { view-timeline: --opening-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #opening .op__photo, [data-8b-live] #opening-title > span:nth-of-type(-n+2), [data-8b-live] #opening .m-bars__run, [data-8b-live] #opening .op__shade { animation-timeline: --opening-t1; animation-fill-mode: both; }
+[data-8b-live] #opening .op__photo { animation-name: opening-img-op-photo-translate; animation-range: cover 0% cover 100vh; animation-timing-function: linear; transform: none; }
+[data-8b-live] #opening-title > span:nth-of-type(-n+2) { animation-range: cover 0% cover 70vh; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); transform: none; }
+[data-8b-live] #opening .m-bars__run { animation-name: opening-span-m-bars-run-translate; animation-range: cover 0% cover 60vh; animation-timing-function: linear; transform: none; }
+[data-8b-live] #opening .op__shade { animation-name: opening-div-op-shade-opacity; animation-range: cover 20vh cover 100vh; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); }
+@keyframes opening-img-op-photo-translate { 0% { translate: 0px 0px; } 100% { translate: -9% var(--opening-lift, 0px); } }
+@keyframes opening-span-op-line-translate { 0% { translate: 0px 0px; } 100% { translate: -28vw 0px; } }
+@keyframes opening-span-op-line-translate-2 { 0% { translate: 0px 0px; } 100% { translate: 28vw 0px; } }
+@keyframes opening-span-m-bars-run-translate { 0% { translate: 0px 0px; } 100% { translate: -10% 0px; } }
+@keyframes opening-div-op-shade-opacity { 0% { opacity: 1; } 100% { opacity: 0; } }
+[data-8b-live] #opening-title > span:nth-of-type(1) { animation-name: opening-span-op-line-translate; }
+[data-8b-live] #opening-title > span:nth-of-type(2) { animation-name: opening-span-op-line-translate-2; }
+}
+</style>
+<style data-8b-part="scene:route">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #route .rt__lock { position: absolute; inset: -0.4rem -0.6rem; z-index: 2; display: flex; overflow: hidden; pointer-events: none; border-radius: var(--radius-1); background: var(--color-1); }
+  [data-8b-live] #route .rt__lock span { flex: 1 0 auto; width: 15%; margin: 0 -1px; transform-origin: 50% 100%; background: var(--color-4); }
+  [data-8b-live] #route .rt__lock span:nth-child(3n + 1) { background: var(--color-2); }
+  [data-8b-live] #route .rt__lock span:nth-child(3n + 2) { background: var(--color-3); }
+}
+}
+@layer scenes {
+[data-8b-live] #route { timeline-scope: --route-t1; }
+[data-8b-live] #route .rt__track { view-timeline: --route-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #route .rt__marker, [data-8b-live] #route .rt__done { animation-timeline: --route-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(-n+8) { animation-timeline: --route-t1; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0); animation-fill-mode: both; transform: none; }
+[data-8b-live] #route .rt__stops > .rt__stop .rt__lock { animation-name: route-li-rt-stop-div-rt-lock-opacity, route-li-rt-stop-div-rt-lock-visibility; animation-timeline: --route-t1; animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes route-span-rt-marker-translate-d { 0% { translate: var(--route-from) 0px; animation-timing-function: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); } 15.2439% { translate: var(--route-at-0) 0px; } 29.2683% { translate: var(--route-at-0) 0px; animation-timing-function: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); } 44.5122% { translate: var(--route-at-1) 0px; } 58.5366% { translate: var(--route-at-1) 0px; animation-timing-function: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); } 73.7805% { translate: var(--route-at-2) 0px; } 90.8537% { translate: var(--route-at-2) 0px; animation-timing-function: linear(0, 0.0494, 0.0975, 0.1444, 0.19, 0.2344, 0.2775, 0.3194, 0.36, 0.3994, 0.4375, 0.4744, 0.51, 0.5444, 0.5775, 0.6094, 0.64, 0.6694, 0.6975, 0.7244, 0.75, 0.7744, 0.7975, 0.8194, 0.84, 0.8594, 0.8775, 0.8944, 0.91, 0.9244, 0.9375, 0.9494, 0.96, 0.9694, 0.9775, 0.9844, 0.99, 0.9944, 0.9975, 0.9994, 1); } 100% { translate: 0px 0px; } }
+@keyframes route-span-rt-marker-translate-m { 0% { translate: 0px var(--route-from); animation-timing-function: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); } 15.2439% { translate: 0px var(--route-at-0); } 29.2683% { translate: 0px var(--route-at-0); animation-timing-function: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); } 44.5122% { translate: 0px var(--route-at-1); } 58.5366% { translate: 0px var(--route-at-1); animation-timing-function: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); } 73.7805% { translate: 0px var(--route-at-2); } 90.8537% { translate: 0px var(--route-at-2); animation-timing-function: linear(0, 0.0494, 0.0975, 0.1444, 0.19, 0.2344, 0.2775, 0.3194, 0.36, 0.3994, 0.4375, 0.4744, 0.51, 0.5444, 0.5775, 0.6094, 0.64, 0.6694, 0.6975, 0.7244, 0.75, 0.7744, 0.7975, 0.8194, 0.84, 0.8594, 0.8775, 0.8944, 0.91, 0.9244, 0.9375, 0.9494, 0.96, 0.9694, 0.9775, 0.9844, 0.99, 0.9944, 0.9975, 0.9994, 1); } 100% { translate: 0px 0px; } }
+@keyframes route-span-rt-done-scale-d { 0% { scale: 0 1; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); } 15.2439% { scale: var(--route-done-0) 1; } 29.2683% { scale: var(--route-done-0) 1; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); } 44.5122% { scale: var(--route-done-1) 1; } 58.5366% { scale: var(--route-done-1) 1; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); } 73.7805% { scale: var(--route-done-2) 1; } 90.8537% { scale: var(--route-done-2) 1; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 100% { scale: 1; } }
+@keyframes route-span-rt-done-scale-m { 0% { scale: 1 0; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); } 15.2439% { scale: 1 var(--route-done-0); } 29.2683% { scale: 1 var(--route-done-0); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); } 44.5122% { scale: 1 var(--route-done-1); } 58.5366% { scale: 1 var(--route-done-1); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); } 73.7805% { scale: 1 var(--route-done-2); } 90.8537% { scale: 1 var(--route-done-2); animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 100% { scale: 1; } }
+@keyframes route-li-rt-stop-span-rotate-d { 0% { rotate: 0deg; } 100% { rotate: 74deg; } }
+@keyframes route-li-rt-stop-span-rotate-m { 0% { rotate: 0deg; } 100% { rotate: 62deg; } }
+@keyframes route-li-rt-stop-span-translate { 0% { translate: 0px 0px; } 100% { translate: 0px 115%; } }
+@keyframes route-li-rt-stop-span-rotate-2-d { 0% { rotate: 0deg; } 100% { rotate: 62deg; } }
+@keyframes route-li-rt-stop-span-rotate-2-m { 0% { rotate: 0deg; } 100% { rotate: 74deg; } }
+@keyframes route-li-rt-stop-div-rt-lock-opacity { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes route-li-rt-stop-div-rt-lock-visibility { 0% { visibility: visible; } 100% { visibility: hidden; } }
+@media (min-width: 861px) {
+  [data-8b-live] #route .rt__marker { animation-name: route-span-rt-marker-translate-d; animation-range: cover 20vh cover calc(92.9178% - 84.068vh); }
+  [data-8b-live] #route .rt__done { animation-name: route-span-rt-done-scale-d; animation-range: cover 20vh cover calc(92.9178% - 84.068vh); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(1) { animation-name: route-li-rt-stop-span-rotate-d, route-li-rt-stop-span-translate; animation-range: cover calc(14.1643% + 27.1955% * var(--i) + 4.136vh - 30.4589vh * var(--i)) cover calc(24.0793% + 27.1955% * var(--i) - 6.9688vh - 30.459vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(2) { animation-name: route-li-rt-stop-span-rotate-2-d, route-li-rt-stop-span-translate; animation-range: cover calc(15.0142% + 27.1954% * var(--i) + 3.1841vh - 30.4589vh * var(--i)) cover calc(24.9292% + 27.1954% * var(--i) - 7.9207vh - 30.4589vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(3) { animation-name: route-li-rt-stop-span-rotate-d, route-li-rt-stop-span-translate; animation-range: cover calc(15.864% + 27.1955% * var(--i) + 2.2323vh - 30.4589vh * var(--i)) cover calc(25.779% + 27.1955% * var(--i) - 8.8725vh - 30.4589vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(4) { animation-name: route-li-rt-stop-span-rotate-2-d, route-li-rt-stop-span-translate; animation-range: cover calc(16.7139% + 27.1954% * var(--i) + 1.2805vh - 30.459vh * var(--i)) cover calc(26.6289% + 27.1955% * var(--i) - 9.8244vh - 30.4589vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(5) { animation-name: route-li-rt-stop-span-rotate-d, route-li-rt-stop-span-translate; animation-range: cover calc(17.5637% + 27.1955% * var(--i) + 0.3286vh - 30.4589vh * var(--i)) cover calc(27.4788% + 27.1954% * var(--i) - 10.7762vh - 30.4589vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(6) { animation-name: route-li-rt-stop-span-rotate-2-d, route-li-rt-stop-span-translate; animation-range: cover calc(18.4136% + 27.1955% * var(--i) - 0.6232vh - 30.459vh * var(--i)) cover calc(28.3286% + 27.1955% * var(--i) - 11.728vh - 30.459vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(7) { animation-name: route-li-rt-stop-span-rotate-d, route-li-rt-stop-span-translate; animation-range: cover calc(19.2635% + 27.1954% * var(--i) - 1.5751vh - 30.4589vh * var(--i)) cover calc(29.1785% + 27.1954% * var(--i) - 12.6799vh - 30.4589vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(8) { animation-name: route-li-rt-stop-span-rotate-2-d, route-li-rt-stop-span-translate; animation-range: cover calc(20.1133% + 27.1955% * var(--i) - 2.5269vh - 30.4589vh * var(--i)) cover calc(30.0283% + 27.1955% * var(--i) - 13.6317vh - 30.459vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop .rt__lock { animation-range: cover calc(30.0283% + 27.1955% * var(--i) - 13.6317vh - 30.459vh * var(--i) - 1px) cover calc(30.0283% + 27.1955% * var(--i) - 13.6317vh - 30.459vh * var(--i)); }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #route .rt__marker { animation-name: route-span-rt-marker-translate-m; animation-range: cover 28vh cover calc(92.9178% - 81.6431vh); }
+  [data-8b-live] #route .rt__done { animation-name: route-span-rt-done-scale-m; animation-range: cover 28vh cover calc(92.9178% - 81.6431vh); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(1) { animation-name: route-li-rt-stop-span-rotate-2-m, route-li-rt-stop-span-translate; animation-range: cover calc(20.1133% + 27.1955% * var(--i) + 4.2663vh - 32.0907vh * var(--i)) cover calc(30.0283% + 27.1955% * var(--i) - 7.4334vh - 32.0907vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(2) { animation-name: route-li-rt-stop-span-rotate-m, route-li-rt-stop-span-translate; animation-range: cover calc(18.1303% + 27.1955% * var(--i) + 6.6062vh - 32.0906vh * var(--i)) cover calc(28.0453% + 27.1955% * var(--i) - 5.0935vh - 32.0906vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(3) { animation-name: route-li-rt-stop-span-rotate-2-m, route-li-rt-stop-span-translate; animation-range: cover calc(16.1473% + 27.1955% * var(--i) + 8.9462vh - 32.0907vh * var(--i)) cover calc(26.0623% + 27.1955% * var(--i) - 2.7535vh - 32.0907vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:is(:nth-child(4), :nth-child(5)) { animation-range: cover calc(14.1643% + 27.1955% * var(--i) + 11.2861vh - 32.0906vh * var(--i)) cover calc(24.0793% + 27.1955% * var(--i) - 0.4136vh - 32.0906vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(4) { animation-name: route-li-rt-stop-span-rotate-m, route-li-rt-stop-span-translate; }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(5) { animation-name: route-li-rt-stop-span-rotate-2-m, route-li-rt-stop-span-translate; }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(6) { animation-name: route-li-rt-stop-span-rotate-m, route-li-rt-stop-span-translate; animation-range: cover calc(16.1473% + 27.1955% * var(--i) + 8.9462vh - 32.0907vh * var(--i)) cover calc(26.0623% + 27.1955% * var(--i) - 2.7535vh - 32.0907vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(7) { animation-name: route-li-rt-stop-span-rotate-2-m, route-li-rt-stop-span-translate; animation-range: cover calc(18.1303% + 27.1955% * var(--i) + 6.6062vh - 32.0906vh * var(--i)) cover calc(28.0453% + 27.1955% * var(--i) - 5.0935vh - 32.0906vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop > div:nth-child(5) > span:nth-child(8) { animation-name: route-li-rt-stop-span-rotate-m, route-li-rt-stop-span-translate; animation-range: cover calc(20.1133% + 27.1955% * var(--i) + 4.2663vh - 32.0907vh * var(--i)) cover calc(30.0283% + 27.1955% * var(--i) - 7.4334vh - 32.0907vh * var(--i)); }
+  [data-8b-live] #route .rt__stops > .rt__stop .rt__lock { animation-range: cover calc(30.0283% + 27.1955% * var(--i) - 7.4334vh - 32.0907vh * var(--i) - 1px) cover calc(30.0283% + 27.1955% * var(--i) - 7.4334vh - 32.0907vh * var(--i)); }
+}
+}
+</style>
+<style data-8b-part="scene:journeys">
+@layer scenes {
+[data-8b-live] #journeys .jr__table > .jr__ticket { z-index: calc(4 + var(--i) * -1); }
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #journeys .jr__table > .jr__ticket { animation-name: journeys-article-m-surface-translate, journeys-article-m-surface-rotate; animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; transform: none; }
+@keyframes journeys-article-m-surface-translate { 0% { translate: var(--journeys-from-x, 0px) var(--journeys-from-y, 0px); } 100% { translate: 0px 0px; } }
+@keyframes journeys-article-m-surface-rotate { 0% { rotate: var(--journeys-article-m-surface-rotate-from, -13.2deg); } 100% { rotate: var(--journeys-article-m-surface-rotate-to, -1.2deg); } }
+@media (min-width: 861px) {
+  [data-8b-live] #journeys .jr__table { view-timeline: --journeys-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #journeys .jr__table > .jr__ticket { animation-timeline: --journeys-t1; animation-range: cover calc(18vh - 21.0638vh * var(--i) + 19.1489% * var(--i)) cover calc(42.5532% + 19.1489% * var(--i) - 28.8085vh - 21.0638vh * var(--i)); }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #journeys .jr__table > .jr__ticket { view-timeline: --journeys-item block; view-timeline-inset: 0; animation-timeline: --journeys-item; animation-range: cover 0% cover 38vh; }
+}
+}
+</style>
+<style data-8b-part="scene:day">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #day .dy__view:nth-child(1) { z-index: 1; }
+  [data-8b-live] #day .dy__view:nth-child(3) { z-index: 3; }
+}
+}
+@layer scenes {
+[data-8b-live] #day, [data-8b-live] #day .dy__steps > .dy__step > .dy__rule, [data-8b-live] #day .m-window > img:is(:nth-of-type(2), :nth-of-type(3)) { animation-timeline: --day-t1; animation-fill-mode: both; }
+[data-8b-live] #day { timeline-scope: --day-t1; animation-name: day-day-backgroundcolor; animation-range: cover 38vh cover calc(75% - 43vh); animation-timing-function: linear; }
+[data-8b-live] #day .dy__steps { view-timeline: --day-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #day .dy__steps > .dy__step > .dy__rule { animation-name: day-span-dy-rule-scale; animation-range: cover calc(1.7858% + 35.7142% * var(--i) + 36.0714vh - 38.5714vh * var(--i)) cover calc(21.4286% + 35.7142% * var(--i) + 14.8571vh - 38.5713vh * var(--i)); animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); transform: none; }
+[data-8b-live] #day .m-window > img:is(:nth-of-type(2), :nth-of-type(3)) { animation-name: day-img-dy-view-clippath; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #day .m-window > img:nth-of-type(2) { animation-range: cover calc(26.7857% + 9.0714vh) cover calc(40.3572% - 5.5858vh); }
+[data-8b-live] #day .m-window > img:nth-of-type(3) { animation-range: cover calc(62.5% - 29.5vh) cover calc(76.0714% - 44.1571vh); }
+@keyframes day-day-backgroundcolor { 0% { background-color: var(--color-1); animation-timing-function: linear(0, 0.0494, 0.0975, 0.1444, 0.19, 0.2344, 0.2775, 0.3194, 0.36, 0.3994, 0.4375, 0.4744, 0.51, 0.5444, 0.5775, 0.6094, 0.64, 0.6694, 0.6975, 0.7244, 0.75, 0.7744, 0.7975, 0.8194, 0.84, 0.8594, 0.8775, 0.8944, 0.91, 0.9244, 0.9375, 0.9494, 0.96, 0.9694, 0.9775, 0.9844, 0.99, 0.9944, 0.9975, 0.9994, 1); } 1.4286% { background-color: var(--color-1); } 33.3333% { background-color: var(--color-1); } 52.381% { background-color: var(--color-5); } 80.9524% { background-color: var(--color-5); } 100% { background-color: var(--color-3); } }
+@keyframes day-span-dy-rule-scale { 0% { scale: 0 1; } 0.002% { scale: 0.0011 1; } 100% { scale: 1; } }
+@keyframes day-img-dy-view-clippath { 0% { clip-path: inset(100% 0% 0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+}
+</style>
+<style data-8b-part="scene:included">
+@layer scenes {
+[data-8b-live] { --ease-640c4e: linear(0, 0.1444, 0.278, 0.4011, 0.514, 0.6172, 0.711, 0.7958, 0.872, 0.9399, 1, 1.0526, 1.098, 1.1367, 1.169, 1.1953, 1.216, 1.2314, 1.242, 1.2481, 1.25, 1.2482, 1.243, 1.2348, 1.224, 1.2109, 1.196, 1.1796, 1.162, 1.1437, 1.125, 1.1063, 1.088, 1.0704, 1.054, 1.0391, 1.026, 1.0152, 1.007, 1.0018, 1); --ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); }
+[data-8b-live] #included .in__ticket { view-timeline: --included-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #included .in__list > li:nth-of-type(-n+6) > .in__hole { animation-name: included-span-in-hole-scale; animation-timing-function: var(--ease-640c4e); }
+[data-8b-live] #included .in__list > li:nth-of-type(-n+6) > .in__hole, [data-8b-live] #included .in__stub { animation-timeline: --included-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #included .in__list > li:nth-of-type(1) > .in__hole { animation-range: cover 22vh cover calc(12.963% + 18.3704vh); }
+[data-8b-live] #included .in__list > li:nth-of-type(2) > .in__hole { animation-range: cover calc(3.3333% + 21.0667vh) cover calc(16.2963% + 17.437vh); }
+[data-8b-live] #included .in__list > li:nth-of-type(3) > .in__hole { animation-range: cover calc(6.6667% + 20.1333vh) cover calc(19.6296% + 16.5037vh); }
+[data-8b-live] #included .in__list > li:nth-of-type(4) > .in__hole { animation-range: cover calc(10% + 19.2vh) cover calc(22.963% + 15.5704vh); }
+[data-8b-live] #included .in__list > li:nth-of-type(5) > .in__hole { animation-range: cover calc(13.3333% + 18.2667vh) cover calc(26.2963% + 14.637vh); }
+[data-8b-live] #included .in__list > li:nth-of-type(6) > .in__hole { animation-range: cover calc(16.6667% + 17.3333vh) cover calc(29.6296% + 13.7037vh); }
+[data-8b-live] #included .in__stub { animation-range: cover calc(20.3704% + 16.2963vh) cover calc(50% + 8vh); animation-timing-function: var(--ease-power3-inout), cubic-bezier(0.76, 0, 0.24, 1); }
+@keyframes included-span-in-hole-scale { 0% { scale: 0; } 0.002% { scale: 0.0017; } 100% { scale: 1; } }
+@keyframes included-div-m-surface-translate-d { 0% { translate: var(--included-stub-x, 0px) 0px; } 100% { translate: 0px 1.5rem; } }
+@keyframes included-div-m-surface-translate-m { 0% { translate: 0px var(--included-stub-y, 0px); } 100% { translate: 0px 0.5rem; } }
+@keyframes included-div-m-surface-rotate-d { 0% { rotate: 0deg; } 100% { rotate: 4deg; } }
+@keyframes included-div-m-surface-rotate-m { 0% { rotate: 0deg; } 100% { rotate: 2.5deg; } }
+@media (min-width: 861px) {
+  [data-8b-live] #included .in__stub { animation-name: included-div-m-surface-translate-d, included-div-m-surface-rotate-d; }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #included .in__stub { animation-name: included-div-m-surface-translate-m, included-div-m-surface-rotate-m; }
+}
+}
+</style>
+<style data-8b-part="scene:private">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #private .pv__stage { view-timeline: --private-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #private .pv__band, [data-8b-live] #private .pv__ribbon, [data-8b-live] #private .pv__photo > img { animation-timeline: --private-t1; animation-range: cover 15vh cover calc(50% + 5vh); animation-fill-mode: both; transform: none; }
+[data-8b-live] #private .pv__band { animation-name: private-div-pv-band-rotate; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #private .pv__ribbon { animation-name: private-div-pv-ribbon-rotate, private-div-pv-ribbon-translate; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1), var(--ease-power2-inout); }
+[data-8b-live] #private .pv__photo > img { animation-name: private-figure-pv-photo-img-scale; animation-timing-function: linear; }
+@keyframes private-div-pv-band-rotate { 0% { rotate: 0deg; } 100% { rotate: -5deg; } }
+@keyframes private-div-pv-ribbon-rotate { 0% { rotate: 0deg; } 100% { rotate: 7deg; } }
+@keyframes private-div-pv-ribbon-translate { 0% { translate: 0px var(--private-ribbon-y, 0px); } 100% { translate: 0px 0px; } }
+@keyframes private-figure-pv-photo-img-scale { 0% { scale: 1.22; } 100% { scale: 1; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: fixed bar: numbered badge and name, six links, Ask for a seat button and a menu button; a menu panel with seven links; hides on scroll down -->
@@ -523,7 +679,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
     <a class="m-btn nav__cta" href="#contact"><span class="m-btn__label" data-label="Ask for a seat">Ask for a seat</span></a>
     <button class="m-btn nav__menu" type="button" aria-expanded="false" aria-controls="nav-panel"><span class="m-btn__label" data-label="Menu">Menu</span></button>
   </nav>
-  <div class="nav__panel" id="nav-panel" data-lenis-prevent hidden>
+  <div class="nav__panel" id="nav-panel" hidden>
     <button class="m-btn nav__close" type="button"><span class="m-btn__label" data-label="Close">Close</span></button>
     <a href="#route">Stops</a>
     <a href="#journeys">Lines</a>
@@ -539,7 +695,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 <section id="opening" data-8b-section="opening" aria-labelledby="opening-title">
   <div class="op__view">
     <div class="op__intro"><div class="op__drift">
-      <img style="background:#262626" class="op__photo" src="https://images.unsplash.com/photo-1657544942407-5917cda9dd0e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dmFsJTIwZCUyN29yY2lhfGVufDF8MHx8fDE3OTEzNjU4Mjl8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="Morning mist over green Tuscan hills, a farmhouse among cypresses" width="1600" height="1000" fetchpriority="high">
+      <img class="op__photo" src="https://images.unsplash.com/photo-1657544942407-5917cda9dd0e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dmFsJTIwZCUyN29yY2lhfGVufDF8MHx8fDE3OTEzNjU4Mjl8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="Morning mist over green Tuscan hills, a farmhouse among cypresses" width="1600" height="1000" fetchpriority="high">
     </div></div>
     <div class="op__shade"></div>
   </div>
@@ -557,7 +713,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
     <div class="m-bars op__band" aria-hidden="true"><span class="m-bars__run"><span class="m-bars__track"></span></span></div>
   </div>
   <div class="op__two">
-    <figure class="m-window op__window"><img style="background:#262626" class="op__still" src="https://images.unsplash.com/photo-1657544942407-5917cda9dd0e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dmFsJTIwZCUyN29yY2lhfGVufDF8MHx8fDE3OTEzNjU4Mjl8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="" width="1600" height="1000"></figure>
+    <figure class="m-window op__window"><img class="op__still" src="https://images.unsplash.com/photo-1657544942407-5917cda9dd0e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dmFsJTIwZCUyN29yY2lhfGVufDF8MHx8fDE3OTEzNjU4Mjl8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="" width="1600" height="1000"></figure>
     <div class="op__text">
       <h2 class="m-text-2">Every line runs the same way</h2>
       <p class="m-text">We leave Florence on a Monday morning by regional train. Three towns, a day and a half in each, a working studio opened for us at every one, family-run rooms and long dinners. Back on platform three on Friday afternoon.</p>
@@ -577,21 +733,21 @@ button, input, select, textarea { font: inherit; color: inherit; }
   </div>
   <div class="rt__track">
     <div class="rt__line" aria-hidden="true"><span class="rt__rail"></span><span class="rt__done"></span><span class="rt__marker"></span></div>
-    <ol class="rt__stops">
+    <ol class="rt__stops" data-8b-items=":scope > .rt__stop">
       <li class="rt__stop">
-        <figure class="rt__photo"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1632932580949-3182167aaebb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8d29vbCUyMGZhYnJpYyUyMGxvb218ZW58MXwwfHx8MTc5MTM2NTg1MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=580&q=60" alt="Bales of spun wool stacked on an old wooden cart in a mill" width="1600" height="1067" loading="lazy"></figure>
+        <figure class="rt__photo"><img src="https://images.unsplash.com/photo-1632932580949-3182167aaebb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8d29vbCUyMGZhYnJpYyUyMGxvb218ZW58MXwwfHx8MTc5MTM2NTg1MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=580&q=60" alt="Bales of spun wool stacked on an old wooden cart in a mill" width="1600" height="1067" loading="lazy"></figure>
         <p class="m-text-3 rt__when">Stop 1 · Monday 09:41</p>
         <h3 class="m-text-5">Prato</h3>
         <p class="m-text">The wool mill. Old coats have been carded and re-spun here since 1890; Elena opens the carding room and an archive of forty thousand swatches kept in shoe boxes.</p>
       </li>
       <li class="rt__stop">
-        <figure class="rt__photo"><img style="background:#595959" src="https://images.unsplash.com/photo-1772543983082-a8a8051ab612?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bWFyYmxlJTIwYmxvY2tzJTIwcXVhcnJ5fGVufDF8MHx8fDE3OTEzNjU4NTN8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=580&q=60" alt="A white marble quarry cut into terraces, machines working on the floor" width="1600" height="1068" loading="lazy"></figure>
+        <figure class="rt__photo"><img src="https://images.unsplash.com/photo-1772543983082-a8a8051ab612?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bWFyYmxlJTIwYmxvY2tzJTIwcXVhcnJ5fGVufDF8MHx8fDE3OTEzNjU4NTN8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=580&q=60" alt="A white marble quarry cut into terraces, machines working on the floor" width="1600" height="1068" loading="lazy"></figure>
         <p class="m-text-3 rt__when">Stop 2 · Tuesday 14:20</p>
         <h3 class="m-text-5">Carrara</h3>
         <p class="m-text">The quarry and the bench. Up to the Colonnata faces by jeep, then down to Marco's studio, where you rough out a small block of your own.</p>
       </li>
       <li class="rt__stop">
-        <figure class="rt__photo"><img style="background:#594026" src="https://images.unsplash.com/photo-1650274962056-d05ef8d11262?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8aGlsbCUyMHRvd24lMjB0dXNjYW55JTIwZXZlbmluZ3xlbnwxfDB8fHwxNzkxMzY1ODgxfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=580&q=60" alt="A hill town of towers in golden evening haze above vineyards" width="1600" height="1067" loading="lazy"></figure>
+        <figure class="rt__photo"><img src="https://images.unsplash.com/photo-1650274962056-d05ef8d11262?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8aGlsbCUyMHRvd24lMjB0dXNjYW55JTIwZXZlbmluZ3xlbnwxfDB8fHwxNzkxMzY1ODgxfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=580&q=60" alt="A hill town of towers in golden evening haze above vineyards" width="1600" height="1067" loading="lazy"></figure>
         <p class="m-text-3 rt__when">Stop 3 · Thursday 10:05</p>
         <h3 class="m-text-5">San Miniato</h3>
         <p class="m-text">The leather bench. Giulia makes twenty pairs of shoes a year; you trace, cut and edge a card wallet that goes home in your pocket.</p>
@@ -605,10 +761,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
     <h2 class="m-text-2" id="journeys-title">Four lines for 2027</h2>
     <p class="m-text-4">Every line runs Monday to Friday from Florence. Prices are per person sharing a room, trains, rooms and studios included.</p>
   </div>
-  <div class="jr__table">
-    <article class="m-surface jr__ticket">
+  <div class="jr__table" data-8b-items=":scope > .jr__ticket" data-8b-fixed="4">
+    <article class="m-surface jr__ticket" style="--journeys-article-m-surface-rotate-from: -13.2deg; --journeys-article-m-surface-rotate-to: -1.2deg">
       <div class="m-surface__body">
-        <figure class="jr__photo"><img style="background:#73a6c0" src="https://images.unsplash.com/photo-1653843034003-467e337f4c99?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8dmFsJTIwZCUyN29yY2lhfGVufDF8MHx8fDE3OTEzNjU4Mjl8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=520&q=60" alt="A road lined with cypress trees winding across golden Tuscan fields" width="1600" height="901" loading="lazy"></figure>
+        <figure class="jr__photo"><img src="https://images.unsplash.com/photo-1653843034003-467e337f4c99?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8dmFsJTIwZCUyN29yY2lhfGVufDF8MHx8fDE3OTEzNjU4Mjl8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=690&q=60" alt="A road lined with cypress trees winding across golden Tuscan fields" width="1600" height="901" loading="lazy"></figure>
         <div class="jr__info">
           <h3 class="m-text-5">The Tuscan Line</h3>
           <p class="m-text-3 jr__stops">Prato · Carrara · San Miniato</p>
@@ -617,9 +773,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
         </div>
       </div>
     </article>
-    <article class="m-surface jr__ticket">
+    <article class="m-surface jr__ticket" style="--journeys-article-m-surface-rotate-from: 10.4deg; --journeys-article-m-surface-rotate-to: 1.4deg">
       <div class="m-surface__body">
-        <figure class="jr__photo"><img style="background:#73a6c0" src="https://images.unsplash.com/photo-1595359170695-7d7df4f23d4a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8dW1icmlhfGVufDF8MHx8fDE3OTEzNjc1NTF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="An Umbrian hill town above a field of red poppies" width="1600" height="1118" loading="lazy"></figure>
+        <figure class="jr__photo"><img src="https://images.unsplash.com/photo-1595359170695-7d7df4f23d4a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8dW1icmlhfGVufDF8MHx8fDE3OTEzNjc1NTF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=540&q=60" alt="An Umbrian hill town above a field of red poppies" width="1600" height="1118" loading="lazy"></figure>
         <div class="jr__info">
           <h3 class="m-text-5">The Umbrian Line</h3>
           <p class="m-text-3 jr__stops">Deruta · Montefalco · Spello</p>
@@ -628,9 +784,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
         </div>
       </div>
     </article>
-    <article class="m-surface jr__ticket">
+    <article class="m-surface jr__ticket" style="--journeys-article-m-surface-rotate-from: -5.2deg; --journeys-article-m-surface-rotate-to: 0.8deg">
       <div class="m-surface__body">
-        <figure class="jr__photo"><img style="background:#d9c0a6" src="https://images.unsplash.com/photo-1786339904237-65732cd9a192?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8aXRhbGlhbiUyMHRyYWluJTIwc3RhdGlvbiUyMHBsYXRmb3JtfGVufDF8MHx8fDE3OTEzNjU4Nzh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="A small station platform above the sea on the Ligurian coast" width="1600" height="1067" loading="lazy"></figure>
+        <figure class="jr__photo"><img src="https://images.unsplash.com/photo-1786339904237-65732cd9a192?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8aXRhbGlhbiUyMHRyYWluJTIwc3RhdGlvbiUyMHBsYXRmb3JtfGVufDF8MHx8fDE3OTEzNjU4Nzh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=520&q=60" alt="A small station platform above the sea on the Ligurian coast" width="1600" height="1067" loading="lazy"></figure>
         <div class="jr__info">
           <h3 class="m-text-5">The Riviera Line</h3>
           <p class="m-text-3 jr__stops">Camogli · Chiavari · Manarola</p>
@@ -639,9 +795,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
         </div>
       </div>
     </article>
-    <article class="m-surface jr__ticket">
+    <article class="m-surface jr__ticket" style="--journeys-article-m-surface-rotate-from: 15.4deg; --journeys-article-m-surface-rotate-to: 1.4deg">
       <div class="m-surface__body">
-        <figure class="jr__photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1606075160216-aeaa1b0aa1ec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bGFuZ2hlJTIwdmluZXlhcmRzfGVufDF8MHx8fDE3OTEzNjc1MTh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="Rows of autumn vines running toward distant hills" width="1600" height="1060" loading="lazy"></figure>
+        <figure class="jr__photo"><img src="https://images.unsplash.com/photo-1606075160216-aeaa1b0aa1ec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bGFuZ2hlJTIwdmluZXlhcmRzfGVufDF8MHx8fDE3OTEzNjc1MTh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=610&q=60" alt="Rows of autumn vines running toward distant hills" width="1600" height="1060" loading="lazy"></figure>
         <div class="jr__info">
           <h3 class="m-text-5">The Langhe Line</h3>
           <p class="m-text-3 jr__stops">Alba · Barolo · Bra</p>
@@ -658,21 +814,21 @@ button, input, select, textarea { font: inherit; color: inherit; }
     <h2 class="m-text-2" id="hosts-title" data-8b-motion="glide">Who waits at each stop</h2>
     <p class="m-text-4">Not guides: people at work, who let twelve strangers into the room for a morning and keep working while they explain.</p>
   </div>
-  <ul class="hs__list">
+  <ul class="hs__list" data-8b-items=":scope > .hs__host">
     <li class="hs__host">
-      <figure class="m-window hs__photo" data-8b-motion="window"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1597371140946-cfd3dd5a76b9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8d29vbCUyMGZhYnJpYyUyMGxvb218ZW58MXwwfHx8MTc5MTM2NTg1MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=670&q=60" alt="Hands guiding white warp threads at a wooden hand loom" width="1600" height="1040" loading="lazy"></figure>
+      <figure class="m-window hs__photo" data-8b-motion="window"><img src="https://images.unsplash.com/photo-1597371140946-cfd3dd5a76b9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8d29vbCUyMGZhYnJpYyUyMGxvb218ZW58MXwwfHx8MTc5MTM2NTg1MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=790&q=60" alt="Hands guiding white warp threads at a wooden hand loom" width="1600" height="1040" loading="lazy"></figure>
       <h3 class="m-text-5">Elena Mati</h3>
       <p class="m-text-3 hs__role">Mill archivist · Prato</p>
       <p class="m-text hs__quote">“Every swatch in here was cut from a coat somebody wore out. I can tell you whose.”</p>
     </li>
     <li class="hs__host">
-      <figure class="m-window hs__photo" data-8b-motion="window"><img style="background:#262626" src="https://images.unsplash.com/photo-1694438058376-f7af2f661ac2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c3RvbmUlMjBjYXJ2aW5nJTIwY2hpc2VsJTIwaGFuZHN8ZW58MXwwfHx8MTc5MTM2ODU0MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=650&q=60" alt="Hands working a dark stone carving with a hand tool" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="m-window hs__photo" data-8b-motion="window"><img src="https://images.unsplash.com/photo-1694438058376-f7af2f661ac2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c3RvbmUlMjBjYXJ2aW5nJTIwY2hpc2VsJTIwaGFuZHN8ZW58MXwwfHx8MTc5MTM2ODU0MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=770&q=60" alt="Hands working a dark stone carving with a hand tool" width="1600" height="1067" loading="lazy"></figure>
       <h3 class="m-text-5">Marco Bertozzi</h3>
       <p class="m-text-3 hs__role">Stone carver · Carrara</p>
       <p class="m-text hs__quote">“The block tells you where it wants to split. I just listen a little faster than most.”</p>
     </li>
     <li class="hs__host">
-      <figure class="m-window hs__photo" data-8b-motion="window"><img style="background:#594026" src="https://images.unsplash.com/photo-1787005241178-c9006ea9610b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2hvZW1ha2VyJTIwd29ya3Nob3AlMjBoYW5kc3xlbnwxfDB8fHwxNzkxMzY1ODU0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=650&q=60" alt="A hand tracing a paper pattern onto brown leather with a pen" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="m-window hs__photo" data-8b-motion="window"><img src="https://images.unsplash.com/photo-1787005241178-c9006ea9610b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2hvZW1ha2VyJTIwd29ya3Nob3AlMjBoYW5kc3xlbnwxfDB8fHwxNzkxMzY1ODU0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=770&q=60" alt="A hand tracing a paper pattern onto brown leather with a pen" width="1600" height="1067" loading="lazy"></figure>
       <h3 class="m-text-5">Giulia Ferro</h3>
       <p class="m-text-3 hs__role">Shoemaker · San Miniato</p>
       <p class="m-text hs__quote">“A pair takes me forty hours. You will see the first four, and they are the important ones.”</p>
@@ -684,14 +840,14 @@ button, input, select, textarea { font: inherit; color: inherit; }
   <div class="dy__grid">
     <div class="dy__stage">
       <div class="m-window dy__window">
-        <img style="background:#40260c" class="dy__view" src="https://images.unsplash.com/photo-1732654796459-136e0368ad56?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dmludGFnZSUyMHRyYWluJTIwY29tcGFydG1lbnR8ZW58MXwwfHx8MTc5MTM2NTg3OHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=970&q=60" alt="Morning light along the narrow corridor of an old train carriage" width="1600" height="900" loading="lazy">
-        <img style="background:#404026" class="dy__view" src="https://images.unsplash.com/photo-1689781307118-030db9290d38?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bG9uZyUyMHRhYmxlJTIwZGlubmVyJTIwb3V0ZG9vciUyMGl0YWx5fGVufDF8MHx8fDE3OTEzNjU4ODB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=820&q=60" alt="A long table laid for lunch under a vine pergola" width="1600" height="1067" loading="lazy">
-        <img style="background:#402626" class="dy__view" src="https://images.unsplash.com/photo-1785809687970-d9f4478e8c1c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bG9uZyUyMHRhYmxlJTIwZGlubmVyJTIwb3V0ZG9vciUyMGl0YWx5fGVufDF8MHx8fDE3OTEzNjU4ODB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=820&q=60" alt="People dining at tables in a narrow stone street at dusk" width="1600" height="1063" loading="lazy">
+        <img class="dy__view" src="https://images.unsplash.com/photo-1732654796459-136e0368ad56?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dmludGFnZSUyMHRyYWluJTIwY29tcGFydG1lbnR8ZW58MXwwfHx8MTc5MTM2NTg3OHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=970&q=60" alt="Morning light along the narrow corridor of an old train carriage" width="1600" height="900" loading="lazy">
+        <img class="dy__view" src="https://images.unsplash.com/photo-1689781307118-030db9290d38?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bG9uZyUyMHRhYmxlJTIwZGlubmVyJTIwb3V0ZG9vciUyMGl0YWx5fGVufDF8MHx8fDE3OTEzNjU4ODB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=820&q=60" alt="A long table laid for lunch under a vine pergola" width="1600" height="1067" loading="lazy">
+        <img class="dy__view" src="https://images.unsplash.com/photo-1785809687970-d9f4478e8c1c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bG9uZyUyMHRhYmxlJTIwZGlubmVyJTIwb3V0ZG9vciUyMGl0YWx5fGVufDF8MHx8fDE3OTEzNjU4ODB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=820&q=60" alt="People dining at tables in a narrow stone street at dusk" width="1600" height="1063" loading="lazy">
       </div>
     </div>
     <div class="dy__copy">
       <h2 class="m-text-2" id="day-title">A day on the line</h2>
-      <ol class="dy__steps">
+      <ol class="dy__steps" data-8b-items=":scope > .dy__step">
         <li class="dy__step">
           <p class="m-text-5 dy__time"><time>07:52</time></p>
           <h3 class="m-text-5">Platform three</h3>
@@ -726,7 +882,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
       <table>
         <caption class="visually-hidden">Departures in 2027 with seats left and price per person</caption>
         <thead><tr><th class="m-text-3" scope="col">Line</th><th class="m-text-3" scope="col">Dates</th><th class="m-text-3" scope="col">Seats left</th><th class="m-text-3" scope="col">Per person</th><th scope="col"><span class="visually-hidden">Reserve</span></th></tr></thead>
-        <tbody>
+        <tbody data-8b-items=":scope > tr">
           <tr><td class="m-text-5 dp__line">Tuscan</td><td class="m-text">12–16 April</td><td class="m-text">4 of 12</td><td class="m-text dp__price">€2,480</td><td class="dp__go"><a class="m-link" href="#contact">Reserve</a></td></tr>
           <tr><td class="m-text-5 dp__line">Umbrian</td><td class="m-text">3–7 May</td><td class="m-text">7 of 12</td><td class="m-text dp__price">€2,390</td><td class="dp__go"><a class="m-link" href="#contact">Reserve</a></td></tr>
           <tr><td class="m-text-5 dp__line">Riviera</td><td class="m-text">24–28 May</td><td class="m-text">2 of 12</td><td class="m-text dp__price">€2,650</td><td class="dp__go"><a class="m-link" href="#contact">Reserve</a></td></tr>
@@ -780,7 +936,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
     <h2 class="m-text-2" id="faq-title" data-8b-motion="glide">Before you book</h2>
     <p class="m-text-4">The questions people ask us on the phone, answered the way we answer them there.</p>
   </div>
-  <div class="fq__list">
+  <div class="fq__list" data-8b-items=":scope > details">
     <details><summary><span class="m-text-5">How fit do I need to be?</span></summary><p class="m-text">Walks stay under five kilometres a day, mostly on cobbles and some steps. The Carrara quarry is reached by jeep.</p></details>
     <details><summary><span class="m-text-5">What happens to my luggage?</span></summary><p class="m-text">One case each travels by van between hotels, so on the train you only carry a day bag.</p></details>
     <details><summary><span class="m-text-5">Can I come on my own?</span></summary><p class="m-text">About half our travellers do. A single room costs €340 more and we never pair strangers.</p></details>
@@ -792,7 +948,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 <!-- private: a photo of a long table with a crossed paper band and ribbon offering a private line (animation: scene:private) -->
 <section id="private" data-8b-section="private" aria-labelledby="private-title">
   <div class="pv__stage">
-    <figure class="pv__photo"><img style="background:#26260c" src="https://images.unsplash.com/photo-1681407980086-971a5defe219?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bG9uZyUyMHRhYmxlJTIwZGlubmVyJTIwb3V0ZG9vciUyMGl0YWx5fGVufDF8MHx8fDE3OTEzNjU4ODB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="A long outdoor table set with glasses for a large group" width="1600" height="1067" loading="lazy"></figure>
+    <figure class="pv__photo"><img src="https://images.unsplash.com/photo-1681407980086-971a5defe219?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bG9uZyUyMHRhYmxlJTIwZGlubmVyJTIwb3V0ZG9vciUyMGl0YWx5fGVufDF8MHx8fDE3OTEzNjU4ODB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="A long outdoor table set with glasses for a large group" width="1600" height="1067" loading="lazy"></figure>
     <div class="pv__ribbon" aria-hidden="true"></div>
     <div class="pv__band">
       <div class="pv__inner">
@@ -817,7 +973,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
         <div><dt class="m-text-3">Phone</dt><dd class="m-text"><a data-8b-placeholder="phone" class="m-link" href="tel:+390550000000">+39 055 000 0000</a></dd></div>
         <div><dt class="m-text-3">Email</dt><dd class="m-text"><a data-8b-placeholder="email" class="m-link" href="mailto:posti@binario-tre.example">posti@binario-tre.example</a></dd></div>
       </dl>
-      <figure class="m-window ct__photo" data-8b-motion="window"><img style="background:#262626" src="https://images.unsplash.com/photo-1708110874093-eae1241d1b74?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8dmludGFnZSUyMHRyYWluJTIwY29tcGFydG1lbnR8ZW58MXwwfHx8MTc5MTM2NTg3OHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=550&q=60" alt="The open door of an old train carriage looking down its empty aisle" width="1600" height="1065" loading="lazy"></figure>
+      <figure class="m-window ct__photo" data-8b-motion="window"><img src="https://images.unsplash.com/photo-1708110874093-eae1241d1b74?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8dmludGFnZSUyMHRyYWluJTIwY29tcGFydG1lbnR8ZW58MXwwfHx8MTc5MTM2NTg3OHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=640&q=60" alt="The open door of an old train carriage looking down its empty aisle" width="1600" height="1065" loading="lazy"></figure>
     </div>
     <form data-8b-placeholder="form" class="m-surface ct__form" action="#" method="post">
       <div class="m-surface__body">
@@ -848,339 +1004,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   </div>
   <p class="ft__small">© 2026 Binario Tre Viaggi S.r.l. · Licensed tour operator, Regione Toscana · VAT IT 00000000000 · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></p>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function refreshScroll() {
-  const nav = document.getElementById('nav');
-  document.documentElement.style.setProperty('scroll-padding-top', `${(nav ? nav.offsetHeight : 0) + 12}px`);
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const nav = document.getElementById('nav');
-  const lenis = window.lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 0.95, anchors: { offset: -((nav ? nav.offsetHeight : 0) + 12) } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick); gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  window(element, vars = {}) {
-    const img = element.querySelector('img');
-    const timeline = gsap.timeline(vars);
-    timeline.fromTo(element, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.1, ease: 'power3.inOut', clearProps: 'clipPath' }, 0);
-    if (img) timeline.fromTo(img, { scale: 1.18 }, { scale: 1, duration: 1.5, ease: 'power3.out', clearProps: 'transform' }, 0);
-    return timeline;
-  },
-  glide(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { x: () => -Math.min(innerWidth * 0.18, 220), skewX: 10, opacity: 0 }, { x: 0, skewX: 0, opacity: 1, duration: 1, ease: 'power3.out', clearProps: 'transform,opacity' });
-  },
-  rails(element, vars = {}) {
-    const run = element.querySelector('.m-bars__run') || element;
-    return gsap.timeline(vars).fromTo(run, { xPercent: 9 }, { xPercent: 0, ease: 'none' });
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  ['window', 'glide', 'rails'].forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => {
-        if (name === 'rails') {
-          ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top bottom', end: 'center 55%', scrub: 0.6, animation: effects.rails(element) });
-        } else {
-          ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top 88%', once: true, animation: effects[name](element, { paused: true }) });
-        }
-      });
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-</script>
-<script data-8b-part="scene:opening">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('opening');
-    const view = section.querySelector('.op__view');
-    const photo = section.querySelector('.op__photo');
-    const still = section.querySelector('.op__still');
-    const two = section.querySelector('.op__two');
-    const lines = section.querySelectorAll('.op__line');
-    const run = section.querySelector('.op__band .m-bars__run');
-    const shade = section.querySelector('.op__shade');
-    const ease = gsap.parseEase('power2.inOut');
-    const fit = () => {
-      const v = view.getBoundingClientRect();
-      const box = still.getBoundingClientRect();
-      const p = gsap.utils.clamp(0, 1, 1 - two.getBoundingClientRect().top / innerHeight);
-      const e = ease(p);
-      const radius = (parseFloat(getComputedStyle(still).borderTopLeftRadius) || 0) * e;
-      const top = Math.max(0, (box.top - v.top) * e);
-      const bottom = Math.max(0, (v.bottom - box.bottom) * e);
-      const left = Math.max(0, (box.left - v.left) * e);
-      const right = Math.max(0, (v.right - box.right) * e);
-      gsap.set(view, { clipPath: `inset(${top}px ${right}px ${bottom}px ${left}px round ${radius}px)` });
-    };
-    const lift = () => {
-      const box = still.getBoundingClientRect();
-      const wall = two.getBoundingClientRect();
-      const centre = box.top - wall.top + box.height / 2;
-      const hills = photo.offsetTop + photo.offsetHeight * 0.44;
-      return gsap.utils.clamp(-innerHeight * 0.3, innerHeight * 0.3, centre - hills);
-    };
-    section.classList.add('is-riding');
-    ScrollTrigger.create({ id: 'opening:window', trigger: two, start: 'top bottom', end: 'bottom top', onUpdate: fit, onRefresh: fit });
-    const timeline = gsap.timeline({ scrollTrigger: {
-      id: 'opening', trigger: two, start: 'top bottom', end: 'top top', scrub: 0.7, invalidateOnRefresh: true
-    }});
-    timeline
-      .fromTo(photo, { xPercent: 0, y: 0 }, { xPercent: -9, y: lift, ease: 'none', duration: 1 }, 0)
-      .fromTo(shade, { opacity: 1 }, { opacity: 0, ease: 'power1.in', duration: 0.8 }, 0.2)
-      .fromTo(lines[0], { x: 0 }, { x: () => -innerWidth * 0.28, ease: 'power1.in', duration: 0.7 }, 0)
-      .fromTo(lines[1], { x: 0 }, { x: () => innerWidth * 0.28, ease: 'power1.in', duration: 0.7 }, 0)
-      .fromTo(run, { xPercent: 0 }, { xPercent: -10, ease: 'none', duration: 0.6 }, 0);
-    return () => section.classList.remove('is-riding');
-  });
-}, { first: true, id: 'scene:opening' });
-</script>
-<script data-8b-part="scene:route">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 861px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 860px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const wide = context.conditions.wide;
-    const section = document.getElementById('route');
-    const track = section.querySelector('.rt__track');
-    const line = section.querySelector('.rt__line');
-    const done = section.querySelector('.rt__done');
-    const marker = section.querySelector('.rt__marker');
-    const stops = [...section.querySelectorAll('.rt__stop')];
-    const locks = stops.map(stop => {
-      const lock = document.createElement('div');
-      lock.className = 'rt__lock';
-      lock.setAttribute('aria-hidden', 'true');
-      for (let i = 0; i < 8; i++) lock.append(document.createElement('span'));
-      stop.append(lock);
-      return lock;
-    });
-    const axis = wide ? 'x' : 'y';
-    const scale = wide ? 'scaleX' : 'scaleY';
-    const length = () => wide ? line.clientWidth : line.clientHeight;
-    const size = () => wide ? marker.offsetWidth : marker.offsetHeight;
-    const travel = () => length() - size();
-    const at = index => {
-      const stop = stops[index];
-      const spot = wide ? stop.offsetLeft + stop.offsetWidth / 2 - size() / 2 : stop.offsetTop + 6;
-      return gsap.utils.clamp(0, travel(), spot);
-    };
-    const timeline = gsap.timeline({ scrollTrigger: {
-      id: 'route', trigger: track, start: wide ? 'top 80%' : 'top 72%', end: wide ? 'bottom 92%' : 'bottom 90%', scrub: 0.6, invalidateOnRefresh: true
-    }});
-    timeline.fromTo(marker, { [axis]: () => -travel() }, { [axis]: () => at(0) - travel(), duration: 1, ease: 'power1.inOut' }, 0)
-      .fromTo(done, { [scale]: 0 }, { [scale]: () => (at(0) + size()) / length(), duration: 1, ease: 'power1.inOut' }, 0);
-    stops.forEach((stop, index) => {
-      const slats = locks[index].children;
-      const open = gsap.timeline()
-        .to(slats, { rotation: (i) => (i % 2 ? 62 : 74), yPercent: 115, duration: 0.7, ease: 'power2.in', stagger: { each: 0.06, from: wide ? 'start' : 'center' } })
-        .set(locks[index], { autoAlpha: 0 });
-      timeline.add(open, index === 0 ? 1 : '>');
-      if (index < stops.length - 1) {
-        timeline.to(marker, { [axis]: () => at(index + 1) - travel(), duration: 1, ease: 'power1.inOut' }, '>-0.2')
-          .to(done, { [scale]: () => (at(index + 1) + size()) / length(), duration: 1, ease: 'power1.inOut' }, '<');
-      }
-    });
-    timeline.to(marker, { [axis]: 0, duration: 0.6, ease: 'power1.out' }, '>')
-      .to(done, { [scale]: 1, duration: 0.6, ease: 'power1.out' }, '<')
-      .to({}, { duration: 0.5 });
-    return () => locks.forEach(lock => lock.remove());
-  });
-}, { id: 'scene:route' });
-</script>
-<script data-8b-part="scene:journeys">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 861px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 860px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('journeys');
-    const table = section.querySelector('.jr__table');
-    const tickets = [...table.querySelectorAll('.jr__ticket')];
-    if (!tickets.length) return;
-    const turns = [-12, 9, -6, 14, -9, 5];
-    const tilts = tickets.map(ticket => parseFloat(getComputedStyle(ticket).rotate) || 0);
-    tickets.forEach((ticket, index) => gsap.set(ticket, { zIndex: tickets.length - index }));
-    if (context.conditions.wide) {
-      const pile = () => ({ x: table.clientWidth / 2, y: tickets[0].offsetTop + tickets[0].offsetHeight / 2 });
-      const timeline = gsap.timeline({ scrollTrigger: {
-        id: 'journeys', trigger: table, start: 'top 82%', end: 'bottom 92%', scrub: 0.8, invalidateOnRefresh: true
-      }});
-      tickets.forEach((ticket, index) => {
-        timeline.fromTo(ticket, {
-          x: () => pile().x - (ticket.offsetLeft + ticket.offsetWidth / 2),
-          y: () => pile().y - (ticket.offsetTop + ticket.offsetHeight / 2),
-          rotation: tilts[index] + turns[index % turns.length]
-        }, { x: 0, y: 0, rotation: tilts[index], duration: 1, ease: 'power2.inOut' }, index * 0.45);
-      });
-    } else {
-      tickets.forEach((ticket, index) => {
-        const previous = tickets[index - 1];
-        gsap.fromTo(ticket, {
-          y: () => previous ? previous.offsetTop - ticket.offsetTop : 0,
-          rotation: tilts[index] + turns[index % turns.length]
-        }, {
-          y: 0, rotation: tilts[index], ease: 'power2.inOut',
-          scrollTrigger: { id: index ? `journeys:deal-${index}` : 'journeys', trigger: ticket, start: 'top bottom', end: 'top 62%', scrub: 0.6, invalidateOnRefresh: true }
-        });
-      });
-    }
-  });
-}, { id: 'scene:journeys' });
-</script>
-<script data-8b-part="scene:day">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('day');
-    const steps = section.querySelector('.dy__steps');
-    const views = [...section.querySelectorAll('.dy__view')];
-    const rules = [...section.querySelectorAll('.dy__rule')];
-    const root = getComputedStyle(document.documentElement);
-    const grounds = ['--color-1', '--color-5', '--color-3'].map(name => root.getPropertyValue(name).trim());
-    const count = rules.length || 1;
-    section.classList.add('is-touring');
-    const timeline = gsap.timeline({ scrollTrigger: {
-      id: 'day', trigger: steps, start: 'top 62%', end: 'bottom 70%', scrub: 0.5
-    }});
-    timeline.fromTo(section, { backgroundColor: grounds[0] }, { backgroundColor: grounds[0], duration: 0.01 }, 0);
-    rules.forEach((rule, index) => {
-      const start = index / count;
-      timeline.fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 0.55 / count, ease: 'power1.out' }, start + 0.05 / count);
-      if (index > 0) {
-        if (grounds[index]) timeline.to(section, { backgroundColor: grounds[index], duration: 0.4 / count, ease: 'none' }, start - 0.3 / count);
-        if (views[index]) {
-          timeline.fromTo(views[index], { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.38 / count, ease: 'power2.inOut' }, start - 0.25 / count)
-            .set(views[index], { clipPath: 'none' }, '>');
-        }
-      }
-    });
-    timeline.to({}, { duration: 0.2 / count });
-    return () => section.classList.remove('is-touring');
-  });
-}, { id: 'scene:day' });
-</script>
-<script data-8b-part="scene:included">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 861px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 860px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('included');
-    const main = section.querySelector('.in__main');
-    const stub = section.querySelector('.in__stub');
-    const holes = section.querySelectorAll('.in__hole');
-    const wide = () => context.conditions.wide;
-    const rest = () => {
-      const matrix = new DOMMatrixReadOnly(getComputedStyle(stub).transform);
-      return { y: matrix.m42, rotation: Math.atan2(matrix.m12, matrix.m11) * 180 / Math.PI };
-    };
-    const start = rest();
-    const timeline = gsap.timeline({ scrollTrigger: {
-      id: 'included', trigger: section.querySelector('.in__ticket'), start: 'top 78%', end: 'center 42%', scrub: 0.6, invalidateOnRefresh: true
-    }});
-    holes.forEach((hole, index) => timeline.fromTo(hole, { scale: 0 }, { scale: 1, duration: 0.35, ease: 'back.out(3)' }, index * 0.09));
-    timeline.fromTo(stub, {
-        x: () => wide() ? -(stub.offsetLeft - (main.offsetLeft + main.offsetWidth)) : 0,
-        y: () => wide() ? 0 : -(stub.offsetTop - (main.offsetTop + main.offsetHeight)),
-        rotation: 0
-      }, { x: 0, y: start.y, rotation: start.rotation, duration: 0.8, ease: 'power3.inOut' }, 0.55);
-  });
-}, { id: 'scene:included' });
-</script>
-<script data-8b-part="scene:private">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('private');
-    const band = section.querySelector('.pv__band');
-    const ribbon = section.querySelector('.pv__ribbon');
-    const photo = section.querySelector('.pv__photo img');
-    const tilt = node => {
-      const matrix = new DOMMatrixReadOnly(getComputedStyle(node).transform);
-      return Math.atan2(matrix.m12, matrix.m11) * 180 / Math.PI;
-    };
-    const bandTilt = tilt(band);
-    const ribbonTilt = tilt(ribbon);
-    const timeline = gsap.timeline({ scrollTrigger: {
-      id: 'private', trigger: section.querySelector('.pv__stage'), start: 'top 85%', end: 'center 45%', scrub: 0.7, invalidateOnRefresh: true
-    }});
-    timeline.fromTo(band, { rotation: 0 }, { rotation: bandTilt, duration: 1, ease: 'power2.inOut' }, 0)
-      .fromTo(ribbon, {
-        rotation: 0,
-        y: () => (band.offsetTop + band.offsetHeight / 2) - (ribbon.offsetTop + ribbon.offsetHeight / 2)
-      }, { rotation: ribbonTilt, y: 0, duration: 1, ease: 'power2.inOut' }, 0)
-      .fromTo(photo, { scale: 1.22 }, { scale: 1, duration: 1, ease: 'none' }, 0);
-  });
-}, { id: 'scene:private' });
-</script>
 <script data-8b-part="section-script:contact">
 (() => {
   const form = document.querySelector('#contact .ct__form');
@@ -1202,7 +1025,7 @@ queueMotion(() => {
   const setOpen = open => {
     panel.hidden = !open;
     menu.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); close.focus(); } else { window.lenis?.start(); }
+    if (open) { window.motionKit?.wheel?.stop(); close.focus(); } else { window.motionKit?.wheel?.start(); }
   };
   menu.addEventListener('click', () => setOpen(true));
   close.addEventListener('click', () => { setOpen(false); menu.focus(); });
@@ -1230,6 +1053,222 @@ queueMotion(() => {
   watch(section, 'is-view-off');
   watch(section.querySelector('.op__band'), 'is-band-off');
 })();
+</script>
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:opening">
+motionKit.scene("opening", () => {
+  const section = document.getElementById("opening");
+  const view = section.querySelector(".op__view");
+  const photo = section.querySelector(".op__photo");
+  const still = section.querySelector(".op__still");
+  const two = section.querySelector(".op__two");
+  if (!view || !photo || !still || !two) throw new Error("opening: a node of the scene is missing");
+  const ease = p => p < 0.5 ? 4 * p * p * p : 1 - 4 * (1 - p) ** 3;
+  let last;
+  motionKit.track(two, "top bottom", "bottom top", progress => {
+    if (progress === last && (progress === 0 || progress === 1)) return;
+    last = progress;
+    const v = view.getBoundingClientRect(), box = still.getBoundingClientRect();
+    const e = ease(Math.min(1, Math.max(0, 1 - two.getBoundingClientRect().top / innerHeight)));
+    const radius = (parseFloat(getComputedStyle(still).borderTopLeftRadius) || 0) * e;
+    const top = Math.max(0, (box.top - v.top) * e), bottom = Math.max(0, (v.bottom - box.bottom) * e);
+    const left = Math.max(0, (box.left - v.left) * e), right = Math.max(0, (v.right - box.right) * e);
+    motionKit.set(view, { "clip-path": `inset(${top}px ${right}px ${bottom}px ${left}px round ${radius}px)` });
+  });
+  motionKit.measure(() => {
+    const box = still.getBoundingClientRect(), wall = two.getBoundingClientRect();
+    const centre = box.top - wall.top + box.height / 2;
+    const hills = photo.offsetTop + photo.offsetHeight * 0.44;
+    const room = innerHeight * 0.3;
+    motionKit.set(section, { "--opening-lift": `${Math.min(room, Math.max(-room, centre - hills))}px` });
+  });
+});
+</script>
+<script data-8b-part="scene-script:route">
+motionKit.scene("route", () => {
+  const make = (tag, attrs, ...children) => { const el = tag.startsWith('svg:') ? document.createElementNS('http://www.w3.org/2000/svg', tag.slice(4)) : document.createElement(tag); for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v); el.append(...children); return el; };
+  document.querySelectorAll("#route .rt__stops > .rt__stop").forEach((parent, i) => parent.append(make("div", { class: "rt__lock", "aria-hidden": "true" }, ...Array.from({ length: 8 }, (_, j) => make("span", {})))));
+  const line = document.querySelector("#route .rt__line");
+  const marker = line.querySelector(".rt__marker");
+  const stops = [...document.querySelectorAll("#route .rt__stop")];
+  motionKit.measure(() => {
+    const wide = matchMedia("(min-width: 861px)").matches;
+    const length = wide ? line.clientWidth : line.clientHeight;
+    const size = wide ? marker.offsetWidth : marker.offsetHeight;
+    const travel = length - size;
+    const vars = { "--route-from": `${-travel}px` };
+    stops.forEach((stop, i) => {
+      const spot = wide ? stop.offsetLeft + stop.offsetWidth / 2 - size / 2 : stop.offsetTop + 6;
+      const at = Math.min(travel, Math.max(0, spot));
+      vars[`--route-at-${i}`] = `${at - travel}px`;
+      vars[`--route-done-${i}`] = (at + size) / length;
+    });
+    motionKit.set(line, vars);
+  });
+});
+</script>
+<script data-8b-part="scene-script:journeys">
+motionKit.scene("journeys", () => {
+  const table = document.querySelector("#journeys .jr__table");
+  const tickets = [...table.querySelectorAll(".jr__ticket")];
+  motionKit.measure(() => {
+    const wide = matchMedia("(min-width: 861px)").matches;
+    const pileX = table.clientWidth / 2, pileY = tickets[0].offsetTop + tickets[0].offsetHeight / 2;
+    tickets.forEach((ticket, i) => {
+      const x = wide ? pileX - (ticket.offsetLeft + ticket.offsetWidth / 2) : 0;
+      const y = wide ? pileY - (ticket.offsetTop + ticket.offsetHeight / 2) : i ? tickets[i - 1].offsetTop - ticket.offsetTop : 0;
+      motionKit.set(ticket, { "--journeys-from-x": `${x}px`, "--journeys-from-y": `${y}px` });
+    });
+  });
+});
+</script>
+<script data-8b-part="scene-script:included">
+motionKit.scene("included", () => {
+  const main = document.querySelector("#included .in__main");
+  const stub = document.querySelector("#included .in__stub");
+  motionKit.measure(() => motionKit.set(stub, {
+    "--included-stub-x": `${main.offsetLeft + main.offsetWidth - stub.offsetLeft}px`,
+    "--included-stub-y": `${main.offsetTop + main.offsetHeight - stub.offsetTop}px`
+  }));
+});
+</script>
+<script data-8b-part="scene-script:private">
+motionKit.scene("private", () => {
+  const band = document.querySelector("#private .pv__band");
+  const ribbon = document.querySelector("#private .pv__ribbon");
+  motionKit.measure(() => motionKit.set(ribbon, { "--private-ribbon-y": `${band.offsetTop + band.offsetHeight / 2 - (ribbon.offsetTop + ribbon.offsetHeight / 2)}px` }));
+});
 </script>
 </body>
 </html>

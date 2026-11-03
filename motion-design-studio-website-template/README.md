@@ -1,8 +1,8 @@
-# Free HTML motion design studio website template with GSAP scroll animations
+# Free HTML motion design studio website template with scroll animations and no libraries
 
-Motion design studio website template: one free HTML file for a studio that sells motion systems, launch films and social content to brands. It has a two-tone opening statement, a five-project index, a method timeline and three priced engagements, in cool grey with orange light streaks. AGENTS.md is included, so Claude Code, Cursor or Codex can adapt it.
+Motion design studio website template: one free HTML file for a studio that sells motion systems, launch films and social content to brands. It has a two-tone opening, a five-project index, a method timeline and three priced engagements, in cool grey with orange light streaks. Scroll motion is plain CSS, and AGENTS.md lets Claude Code, Cursor or Codex adapt it.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/motion-design-studio-website-template/)** · **[Use this template](https://github.com/new?template_name=motion-design-studio-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/motion-design-studio-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/inertia/)**
 
@@ -24,10 +24,10 @@ curl -LO https://raw.githubusercontent.com/8bsite/motion-design-studio-website-t
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my studio: name, city, team and roles, services, past projects with client, kind and year, engagement types with duration and price, client quotes, how clients book a call, company number>. Replace first the studio name, projects, quotes, prices and team. Keep the section ids, the classes AGENTS.md lists and the data-pace values, and set the footer wordmark's --len to the new name's character count. Ask me for missing facts and never invent clients, prices or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my studio: name, city, team and roles, services, past projects with client, kind and year, engagement types with duration and price, client quotes, how clients book a call, company number>. Replace the studio name, projects, quotes, prices and team first. Keep the gate script, section ids, the classes AGENTS.md lists and the data-pace values, and set the footer wordmark's --len to the name's length. Motion is CSS: add no library. Never invent clients, prices or contacts; ask me.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex starts with facts: studio name, city, people, the five projects with client, kind and year, the three engagements with duration and price, and the quotes. The demo invents all of them, and its photos are stock images, not anyone's work. The agent should also set the wordmark's --len to the name's character count, and leave the data-pace values and the classes AGENTS.md lists alone.
+If you vibe code this motion design studio website template for Claude Code, Cursor or Codex, start with facts: studio name, city, people, the five projects with client, kind and year, the three engagements with duration and price, and the quotes. The demo invents all of them, and its photos are stock images, not anyone's work. The agent should also set the wordmark's --len to the name's character count, and leave the data-pace values and the classes AGENTS.md lists alone.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=motion-design-studio-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -38,7 +38,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=motio
 - **Practice**: four tall cards in a staggered row: a dark card, two photo cards and a light card. On wide screens the four cards start as a tilted pile and are dealt into the row as you scroll, each orange dot streaking in after its card; at 1024 px and below each card slides in from alternating sides.
 - **Moving now**: five launches as a speed index: a huge title, client and kind, and a photo that opens from a pill. As a row crosses the screen its title stretches from condensed to extended while its photo opens from a small pill to the full frame, then both fall back as the row leaves.
 - **Every brand gets a tempo**: dark band with three lanes, each with an orange runner looping at its own pace. Three orange runners loop on their own timing, Glide slow, Snap fast with a hard stop and Pulse with a heartbeat, and pause while the section is off screen.
-- **From first call to final frame**: four project steps with photos that run under a fixed orange playhead as you scroll. The section pins and the four steps slide left under a fixed orange playhead, with the step under it turning from grey to colour and its number badge filling orange.
+- **From first call to final frame**: four project steps with photos that run under a fixed orange playhead as you scroll. The section holds in place and the four steps slide left under a fixed orange playhead, with the step under it turning from grey to colour and its number badge filling orange.
 - **What clients say**: one large two-tone client quote with a photo pill, and two short quotes with faces. The main quote and the two small cards slide in with a braking skew as they arrive, and the portraits drift sideways inside their frames as you scroll.
 - **One room in Rotterdam**: a wide crew photo that lines up from four shifted columns, and four portraits with names and roles. The crew photo arrives cut into four columns out of register and lines up by the middle of the screen, while the four portraits rise at different rates.
 - **The lab, after hours**: dark band with six experiments as staggered tiles of long-exposure photos. The six photos drift sideways inside their frames as you scroll.
@@ -69,11 +69,11 @@ Yes. Rename the practice cards to your services and the five projects become siz
 Nowhere yet. The form needs a name, an email and a message, then shows a thank-you line and clears itself without sending anything. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or delete the form and keep the email link. Also edit the thank-you line, which promises a reply within two working days.
 
 **Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). Describe the site in a sentence and its engine designs a new site, its own design and not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, with [8B's AI website builder](https://8b.com/). Describe the site in a sentence and its engine designs a new site, its own design and not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 
-It suits a studio that sells fixed engagements, wants a monochrome look with one hot accent and can supply five real projects. If you run a general design studio rather than a motion one, [another studio layout](https://8b.com/templates/onda/) is closer. The weak spots: the method section is a pinned full-screen stage, and the scroll animations need scripts from a CDN. Owners who do not code can use a builder instead.
+It suits a studio that sells fixed engagements, wants a monochrome look with one hot accent and can supply five real projects. A general design studio is closer to [another studio layout](https://8b.com/templates/onda/). This is the light build: the same look and motion with no animation library and no script from a CDN, about 29 KB of code gzipped against 75 KB for the GSAP version. The weak spot is the method, a sticky full-screen stage that can crop a step on very short screens.
 
 ## Before you publish
 
@@ -82,7 +82,9 @@ It suits a studio that sells fixed engagements, wants a monochrome look with one
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 93 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 116 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 121+ (it uses color-mix(), container query units, :has(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 93 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

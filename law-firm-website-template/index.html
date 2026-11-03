@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/law-firm-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -117,10 +118,6 @@
   @font-face { font-family: "Host Grotesk Fallback"; src: local("Arial"), local("ArialMT"), local("Helvetica"); font-weight: 100 549; size-adjust: 102.8%; ascent-override: 99.2%; descent-override: 31.1%; line-gap-override: 0%; }
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-  .lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-smooth iframe { pointer-events: none; }
   body { margin: 0; background: var(--color-1); color: var(--color-2); font-family: var(--font-1); font-size: 17px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
   h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
   ul, ol { padding: 0; list-style: none; }
@@ -290,15 +287,6 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
   }
 }
 </style>
-<style data-8b-part="scene-style:practice">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #practice.is-stacked .practice__index { position: sticky; }
-    #practice.is-stacked .area { position: sticky; top: var(--area-stick, 0px); }
-    #practice.is-stacked .area:not(:last-child) { margin-bottom: 45svh; }
-  }
-}
-</style>
 <style data-8b-part="section:principles">
 @layer sections {
   #principles { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 56px 6vw; padding: var(--space-2) var(--space-1); }
@@ -374,18 +362,6 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
   @media (max-width: 760px) {
     #people .people__head { grid-template-columns: minmax(0, 1fr); }
     #people .people__track { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 12px; }
-  }
-}
-</style>
-<style data-8b-part="scene-style:people">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #people.is-track { height: calc(100svh + var(--people-travel, 0px)); }
-    #people.is-track .people__hold { position: sticky; top: 0; display: flex; flex-direction: column; justify-content: center; height: 100svh; padding-top: 80px; padding-bottom: 40px; overflow: clip; }
-    #people.is-track .people__track { display: flex; gap: 16px; width: max-content; }
-    #people.is-track .person { flex: none; width: clamp(210px, 22vw, 310px); }
-    #people.is-track .person__photo { aspect-ratio: auto; height: min(44svh, 430px); }
-    #people.is-track .person__img { position: absolute; left: -9%; top: 0; width: 118%; max-width: none; }
   }
 }
 </style>
@@ -480,6 +456,155 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
   #footer .footer__legal { max-width: 860px; }
 }
 </style>
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > td"] { animation-name: motion-rule-scope-td-backgroundsize; animation-duration: 1s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > td"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > td"] > td { animation-name: motion-rule-scope-td-td-translate, motion-rule-scope-td-td-opacity; animation-duration: 0.8s; animation-delay: calc(0.15s + 0.06s * var(--i)); animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > td"].is-in > td { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > *"] { animation-name: motion-rule-scope-td-backgroundsize; animation-duration: 1s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > *"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > *"] > * { animation-name: motion-rule-scope-td-td-translate, motion-rule-scope-td-td-opacity; animation-duration: 0.8s; animation-delay: calc(0.15s + 0.06s * var(--i)); animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > *"].is-in > * { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"]:not([data-8b-items=":scope > td"], [data-8b-items=":scope > *"]) { animation-name: motion-rule-scope-td-backgroundsize; animation-duration: 1s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="rule"]:not([data-8b-items=":scope > td"], [data-8b-items=":scope > *"]).is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"]:not([data-8b-items=":scope > td"], [data-8b-items=":scope > *"]) .qa__q { animation-name: motion-rule-scope-td-td-translate, motion-rule-scope-td-td-opacity; animation-duration: 0.8s; animation-delay: 0.15s; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rule"]:not([data-8b-items=":scope > td"], [data-8b-items=":scope > *"]).is-in .qa__q { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="ink"] { view-timeline: --motion-ink block; view-timeline-inset: 0; }
+[data-8b-live] [data-8b-motion~="ink"] .w { --motion-ink-t: calc((var(--n) - 1) * 0.07 + 0.3); animation-name: motion-ink; animation-timeline: --motion-ink; animation-range: cover calc(12vh + (50% - 20vh) * (0.07 * var(--i) / var(--motion-ink-t))) cover calc(12vh + (50% - 20vh) * ((0.07 * var(--i) + 0.3) / var(--motion-ink-t))); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #probono .probono__photo { overflow-x: clip; overflow-y: clip; }
+[data-8b-live] [data-8b-motion~="drift"] { view-timeline: --motion-drift block; view-timeline-inset: 0; animation-name: motion-drift-translate; animation-timeline: --motion-drift; animation-range: cover 0% cover 100%; animation-timing-function: linear; animation-fill-mode: both; transform: none; scale: 1.16; }
+@keyframes motion-ink { 0% { color: var(--color-6); } }
+@keyframes motion-rule-scope-td-backgroundsize { 0% { background-size: 0% 1px; } 100% { background-size: 100% 1px; } }
+@keyframes motion-rule-scope-td-td-translate { 0% { translate: 0px 18px; } 100% { translate: 0px 0px; } }
+@keyframes motion-rule-scope-td-td-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes motion-drift-translate { 0% { translate: 0px -6%; } 100% { translate: 0px 6%; } }
+}
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+[data-8b-live] #opening { --opening-reach: 16vw; --opening-blur: 0px; view-timeline: --opening-t1 block; view-timeline-inset: 0; }
+@media (max-width: 760px) { [data-8b-live] #opening { --opening-reach: 7vw; } }
+@media (min-width: 1024px) and (hover: hover) { [data-8b-live] #opening { --opening-blur: 7px; } }
+[data-8b-live] #opening .opening__img { will-change: scale, translate; animation-name: opening-img; animation-timeline: --opening-t1; animation-range: contain 0% contain 100%; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #opening .opening__line { will-change: translate, opacity; animation-timeline: --opening-t1; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #opening .opening__line:nth-child(1) { animation-name: opening-line-1; animation-range: contain 0% contain 55%; }
+[data-8b-live] #opening .opening__line:nth-child(2) { animation-name: opening-line-2; animation-range: contain 3% contain 58%; }
+[data-8b-live] #opening .opening__line:nth-child(3) { animation-name: opening-line-3; animation-range: contain 6% contain 61%; }
+[data-8b-live] #opening .opening__lead { will-change: translate, opacity; animation-name: opening-lead; animation-timeline: --opening-t1; animation-range: contain 0% contain 35%; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #opening .opening__band { animation-name: opening-band; animation-timeline: --opening-t1; animation-range: contain 0% contain 80%; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #opening .opening__band:nth-child(1) { --opening-band-from: 90%; }
+[data-8b-live] #opening .opening__band:nth-child(2) { --opening-band-from: 140%; }
+[data-8b-live] #opening .opening__statement .w { --opening-ink-t: calc((var(--n) - 1) * 0.07 + 0.3); animation-name: motion-ink; animation-timeline: --opening-t1; animation-range: contain calc((0.32 + 0.035 * var(--i) / var(--opening-ink-t)) * 100%) contain calc((0.32 + (0.035 * var(--i) + 0.15) / var(--opening-ink-t)) * 100%); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #opening .opening__about { animation-name: opening-about; animation-timeline: --opening-t1; animation-range: contain 55% contain 90%; animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes opening-img { 0% { scale: 1; translate: 0 0; filter: grayscale(1) contrast(.72) brightness(1.22) blur(0px); } 100% { scale: 1.28; translate: 0 11%; filter: grayscale(1) contrast(.5) brightness(1.55) blur(var(--opening-blur)); } }
+@keyframes opening-line-1 { 100% { translate: calc(var(--opening-reach) * -1) -10vh; opacity: .08; } }
+@keyframes opening-line-2 { 100% { translate: 0 -26vh; opacity: .08; } }
+@keyframes opening-line-3 { 100% { translate: var(--opening-reach) -6vh; opacity: .08; } }
+@keyframes opening-lead { 0% { translate: 0 0; opacity: 1; } 100% { translate: 0 -12vh; opacity: 0; } }
+@keyframes opening-band { 0% { translate: 0 var(--opening-band-from); } 100% { translate: 0 0; } }
+@keyframes opening-about { 0% { translate: 0 50px; } 100% { translate: 0 0; } }
+}
+</style>
+<style data-8b-part="scene:practice">
+@layer scenes {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-8b-live] #practice .practice__index { position: sticky; }
+    [data-8b-live] #practice .area { position: sticky; top: var(--area-stick, 0px); }
+    [data-8b-live] #practice .area:not(:last-child) { margin-bottom: 45svh; }
+  }
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #practice { timeline-scope: --practice-t1; }
+[data-8b-live] #practice .practice__panels { view-timeline: --practice-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #practice .area__piece, [data-8b-live] #practice .area__title, [data-8b-live] #practice .area__img { animation-timeline: --practice-t1; animation-range: cover var(--practice-at, 0px) cover calc(var(--practice-at, 0px) + 100vh); animation-fill-mode: both; }
+[data-8b-live] #practice .area__piece { animation-name: practice-piece; animation-timing-function: var(--ease-power2-inout); }
+[data-8b-live] #practice .area__title { animation-name: practice-title; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] #practice .area__img { animation-name: practice-img; animation-timing-function: linear; }
+[data-8b-live] #area-disputes { --practice-img-y: 16%; }
+[data-8b-live] #practice .area:not(:last-child) > .area__shade { animation-name: practice-shade; animation-timeline: --practice-t1; animation-range: cover var(--practice-next, 0px) cover calc(var(--practice-next, 0px) + 100vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #practice .practice__index { animation-name: practice-nav-practice-index-opacity; animation-timeline: --practice-t1; animation-range: cover calc(100% - 98vh) cover calc(100% - 72vh); animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes practice-piece { 0% { transform: translate(var(--practice-x, 0px), var(--practice-y, 0px)) rotate(var(--practice-r, 0deg)) skewX(var(--practice-skew, 0deg)) scale(var(--practice-sx, 1), var(--practice-sy, 1)); } 100% { transform: translate(0px, 0px) rotate(0deg) skewX(0deg) scale(1, 1); } }
+@keyframes practice-title { 0% { translate: -14% 0px; } 100% { translate: 0px 0px; } }
+@keyframes practice-img { 0% { translate: 0px calc(var(--practice-img-y, 0%) + 9%); } 100% { translate: 0px var(--practice-img-y, 0%); } }
+@keyframes practice-shade { 0% { opacity: 0; } 100% { opacity: 0.5; } }
+@keyframes practice-nav-practice-index-opacity { 0% { opacity: 1; } 100% { opacity: 0; } }
+}
+</style>
+<style data-8b-part="scene:principles">
+@layer scenes {
+@keyframes principles-li-promise-translate-d { 0% { translate: 0px 60px; } 100% { translate: 0px 0px; } }
+@keyframes principles-li-promise-translate-m { 0% { translate: -19.19% 0px; } 100% { translate: 0px 0px; } }
+@keyframes principles-li-promise-translate-2 { 0% { translate: 0px -50%; } 100% { translate: 0px 0px; } }
+@media (min-width: 861px) {
+  [data-8b-live] #principles .principles__stair { view-timeline: --principles-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #principles .principles__stair > li { animation-timeline: --principles-t1; animation-range: cover calc(12vh - 5.8571vh * var(--i) + 7.1429% * var(--i)) cover calc(71.4286% + 7.1428% * var(--i) - 46.5714vh - 5.8572vh * var(--i)); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+  [data-8b-live] #principles .principles__stair > li:nth-of-type(2n+1) { animation-name: principles-li-promise-translate-d; }
+  [data-8b-live] #principles .principles__stair > li:nth-of-type(2n+2) { animation-name: principles-li-promise-translate-2; }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #principles .principles__stair > li:nth-of-type(2) { view-timeline: --principles-t1 block; view-timeline-inset: 0; animation-name: principles-li-promise-translate-m; animation-timeline: --principles-t1; animation-range: cover 4vh cover 42vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+  [data-8b-live] #principles .principles__stair > li:nth-of-type(4) { view-timeline: --principles-t2 block; view-timeline-inset: 0; animation-name: principles-li-promise-translate-m; animation-timeline: --principles-t2; animation-range: cover 4vh cover 42vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+}
+}
+</style>
+<style data-8b-part="scene:offices">
+@layer scenes {
+[data-8b-live] #offices .offices__list > li { background-size: 100% 1px; }
+[data-8b-live] #offices .offices__stage { view-timeline: --offices-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #offices .offices__ring, [data-8b-live] #offices .offices__ring > li > img { animation-timeline: --offices-t1; animation-range: cover 0% cover calc(50% - 5vh); animation-fill-mode: both; transform: none; }
+[data-8b-live] #offices .offices__ring { animation-name: offices-ul-offices-ring-rotate; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); }
+[data-8b-live] #offices .offices__ring > li > img { animation-name: offices-li-city-img-scale; animation-timing-function: linear; }
+@keyframes offices-ul-offices-ring-rotate { 0% { rotate: 40deg; } 100% { rotate: 0deg; } }
+@keyframes offices-li-city-img-scale { 0% { scale: 1.35; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:people">
+@layer scenes {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-8b-live] #people { height: calc(100svh + var(--people-travel, 0px)); }
+    [data-8b-live] #people .people__hold { position: sticky; top: 0; display: flex; flex-direction: column; justify-content: center; height: 100svh; padding-top: 80px; padding-bottom: 40px; overflow: clip; }
+    [data-8b-live] #people .people__track { display: flex; gap: 16px; width: max-content; }
+    [data-8b-live] #people .person { flex: none; width: clamp(210px, 22vw, 310px); }
+    [data-8b-live] #people .person__photo { aspect-ratio: auto; height: min(44svh, 430px); }
+    [data-8b-live] #people .person__img { position: absolute; left: -9%; top: 0; width: 118%; max-width: none; }
+  }
+}
+@layer scenes {
+[data-8b-live] #people { view-timeline: --people-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #people .people__track, [data-8b-live] #people .person__img { animation-timeline: --people-t1; animation-range: cover 100vh cover calc(100vh + var(--people-travel, 0px)); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #people .people__track { animation-name: people-track; }
+[data-8b-live] #people .person__img { animation-name: people-img; }
+@keyframes people-track { 0% { translate: 0px 0px; } 100% { translate: calc(var(--people-travel, 0px) * -1) 0px; } }
+@keyframes people-img { 0% { translate: 6% 0px; } 100% { translate: -6% 0px; } }
+}
+</style>
+<style data-8b-part="scene:fees">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #fees .fees__modes { view-timeline: --fees-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #fees .fees__modes > li > .mode__track > .mode__bar { animation-name: fees-bar; animation-timeline: --fees-t1; animation-range: cover calc(18vh - 24.6154vh * var(--i) + 30.7692% * var(--i)) cover calc(38.4615% + 30.7693% * var(--i) - 12.7692vh - 24.6154vh * var(--i)); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #fees .fees__modes > li > .m-text-5 { animation-name: fees-h3-m-text-5-opacity; animation-timeline: --fees-t1; animation-range: cover calc(18vh - 24.6154vh * var(--i) + 30.7692% * var(--i)) cover calc(19.2308% + 30.7692% * var(--i) + 2.6154vh - 24.6154vh * var(--i)); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #fees .fees__modes > li > .mode__text { animation-name: fees-h3-m-text-5-opacity; animation-timeline: --fees-t1; animation-range: cover calc(11.5385% + 30.7692% * var(--i) + 8.7692vh - 24.6154vh * var(--i)) cover calc(30.7692% + 30.7693% * var(--i) - 6.6154vh - 24.6154vh * var(--i)); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #fees .mode__stop { animation-name: fees-span-mode-stop-scale; animation-timeline: --fees-t1; animation-range: cover calc(59.6154% - 29.6923vh) cover calc(71.1538% - 38.9231vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes fees-bar { 0% { scale: var(--fees-bar-from, 1) 1; } 100% { scale: 1; } }
+@keyframes fees-h3-m-text-5-opacity { 0% { opacity: 0.25; } 100% { opacity: 1; } }
+@keyframes fees-span-mode-stop-scale { 0% { scale: 1 0; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] #contact .contact__fan { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact .contact__fan > figure { animation-name: contact-photo-translate, contact-figure-contact-photo-rotate, contact-figure-contact-photo-scale; animation-timeline: --contact-t1; animation-range: cover calc(8vh - 0.5085vh * var(--i) + 2.5424% * var(--i)) cover calc(42.3729% + 2.5424% * var(--i) - 0.4746vh - 0.5085vh * var(--i)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes contact-photo-translate { 0% { translate: var(--contact-x, 0px) var(--contact-y, 0px); } 100% { translate: 0px 0px; } }
+@keyframes contact-figure-contact-photo-rotate { 0% { rotate: var(--contact-figure-contact-photo-rotate-from, -9deg); } 100% { rotate: 0deg; } }
+@keyframes contact-figure-contact-photo-scale { 0% { scale: 0.86; } 100% { scale: 1; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: fixed bar: logo, seven section links and a Book a first call button; hides on scroll down; full-screen menu below 1000 px -->
@@ -498,7 +623,7 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
     <a class="m-btn nav__cta" href="#contact"><span class="m-btn__label">Book a first call</span></a>
     <button class="m-icon nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu"><span class="sr-only">Open the menu</span><span class="m-icon__glyph" aria-hidden="true"></span></button>
   </div>
-  <div class="nav__menu" id="nav-menu" data-lenis-prevent hidden>
+  <div class="nav__menu" id="nav-menu" hidden>
     <button class="m-icon nav__close" type="button"><span class="sr-only">Close the menu</span><span class="m-icon__glyph" aria-hidden="true"></span></button>
     <nav class="nav__menu-links" aria-label="Menu">
       <a class="m-link-2" href="#practice">Practice</a>
@@ -516,7 +641,7 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
 <!-- opening: two screens: a monochrome mountain photo in fog with the stepped h1 and a lead, then a statement and a paragraph about the firm inked out of the white (animation: scene:opening) -->
 <section id="opening" class="opening" data-8b-section="opening">
   <div class="opening__stage">
-    <div class="opening__photo"><img style="background:#d9d9d9" class="opening__img" src="https://images.unsplash.com/photo-1701483807207-674bfac9f33e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bW91bnRhaW4lMjByaWRnZSUyMGZvZyUyMGJsYWNrJTIwYW5kJTIwd2hpdGV8ZW58MXwwfHx8MTc5MTQwMTE3Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A mountain ridge rising out of low cloud" width="1600" height="1067" fetchpriority="high"></div>
+    <div class="opening__photo"><img class="opening__img" src="https://images.unsplash.com/photo-1701483807207-674bfac9f33e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bW91bnRhaW4lMjByaWRnZSUyMGZvZyUyMGJsYWNrJTIwYW5kJTIwd2hpdGV8ZW58MXwwfHx8MTc5MTQwMTE3Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A mountain ridge rising out of low cloud" width="1600" height="1067" fetchpriority="high"></div>
     <div class="opening__fog opening__fog--1" aria-hidden="true"></div>
     <div class="opening__fog opening__fog--2" aria-hidden="true"></div>
   </div>
@@ -529,7 +654,7 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
   </div>
   <div class="opening__second">
     <div class="opening__mist" aria-hidden="true"><span class="opening__band"></span><span class="opening__band"></span></div>
-    <p class="m-text-3 opening__statement">Fellgate is a commercial law firm of seventy lawyers in Edinburgh, London and Dublin, built to keep growing companies on firm ground when the stakes rise.</p>
+    <p class="m-text-3 opening__statement" data-8b-split="words">Fellgate is a commercial law firm of seventy lawyers in Edinburgh, London and Dublin, built to keep growing companies on firm ground when the stakes rise.</p>
     <div class="opening__about">
       <p class="m-text">Three litigators founded the firm in 2009, tired of advice nobody could act on. We still answer in plain English, in writing, within one working day.</p>
       <a class="m-link" href="#principles">How we practise</a>
@@ -543,18 +668,18 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
     <p class="m-text">Each practice is led by partners who still draft, argue and negotiate themselves. Most of our clients use two of them within their first year.</p>
   </div>
   <nav class="practice__index" aria-label="Practice areas">
-    <ol>
+    <ol data-8b-items=":scope > li">
       <li><a class="m-link-2" href="#area-corporate">Corporate</a></li>
       <li><a class="m-link-2" href="#area-disputes">Disputes</a></li>
       <li><a class="m-link-2" href="#area-employment">Employment</a></li>
       <li><a class="m-link-2" href="#area-property">Real Estate</a></li>
     </ol>
   </nav>
-  <div class="practice__panels">
+  <div class="practice__panels" data-8b-items=":scope > .area" data-8b-fixed="4">
     <article class="area" id="area-corporate" data-figure="split">
       <div class="area__media">
         <div class="area__figure" aria-hidden="true"><span class="area__piece"></span><span class="area__piece"></span></div>
-        <figure class="area__photo"><img style="background:#f3f3f3" class="area__img" src="https://images.unsplash.com/photo-1706601607561-f0b5b26a60e8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YmFyZSUyMGJyYW5jaCUyMGFnYWluc3QlMjB3aGl0ZSUyMHNreXxlbnwxfDF8fHwxNzkxNDAxMjM1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=60" alt="A bare branch against a white sky" width="1067" height="1600" loading="lazy"></figure>
+        <figure class="area__photo"><img class="area__img" src="https://images.unsplash.com/photo-1706601607561-f0b5b26a60e8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YmFyZSUyMGJyYW5jaCUyMGFnYWluc3QlMjB3aGl0ZSUyMHNreXxlbnwxfDF8fHwxNzkxNDAxMjM1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=60" alt="A bare branch against a white sky" width="1067" height="1600" loading="lazy"></figure>
       </div>
       <h3 class="m-text-2 area__title"><span>Corporate &amp;</span> <span>Transactions</span></h3>
       <div class="area__text">
@@ -572,7 +697,7 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
     <article class="area" id="area-disputes" data-figure="skew">
       <div class="area__media">
         <div class="area__figure" aria-hidden="true"><span class="area__piece"></span><span class="area__piece"></span><span class="area__piece"></span><span class="area__piece"></span></div>
-        <figure class="area__photo"><img style="background:#d9d9d9" class="area__img" src="https://images.unsplash.com/photo-1729907919631-02f92b37b0e4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2luZ2xlJTIwZmVhdGhlciUyMHdoaXRlJTIwYmFja2dyb3VuZCUyMG1vbm9jaHJvbWV8ZW58MXwxfHx8MTc5MTQwMTI0Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="A dark feather resting in pale fog" width="1067" height="1600" loading="lazy"></figure>
+        <figure class="area__photo"><img class="area__img" src="https://images.unsplash.com/photo-1729907919631-02f92b37b0e4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2luZ2xlJTIwZmVhdGhlciUyMHdoaXRlJTIwYmFja2dyb3VuZCUyMG1vbm9jaHJvbWV8ZW58MXwxfHx8MTc5MTQwMTI0Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="A dark feather resting in pale fog" width="1067" height="1600" loading="lazy"></figure>
       </div>
       <h3 class="m-text-2 area__title"><span>Disputes &amp;</span> <span>Litigation</span></h3>
       <div class="area__text">
@@ -590,7 +715,7 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
     <article class="area" id="area-employment" data-figure="halves">
       <div class="area__media">
         <div class="area__figure" aria-hidden="true"><span class="area__piece"></span><span class="area__piece"></span></div>
-        <figure class="area__photo"><img style="background:#d9d9d9" class="area__img" src="https://images.unsplash.com/photo-1643781410334-17360bb7bf2f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Z3Jhc3MlMjBzZWVkJTIwaGVhZCUyMHdoaXRlJTIwYmFja2dyb3VuZHxlbnwxfDF8fHwxNzkxNDAxMjQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="Dry grass heads standing against a pale sky" width="1200" height="1600" loading="lazy"></figure>
+        <figure class="area__photo"><img class="area__img" src="https://images.unsplash.com/photo-1643781410334-17360bb7bf2f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Z3Jhc3MlMjBzZWVkJTIwaGVhZCUyMHdoaXRlJTIwYmFja2dyb3VuZHxlbnwxfDF8fHwxNzkxNDAxMjQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="Dry grass heads standing against a pale sky" width="1200" height="1600" loading="lazy"></figure>
       </div>
       <h3 class="m-text-2 area__title"><span>People &amp;</span> <span>Employment</span></h3>
       <div class="area__text">
@@ -608,7 +733,7 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
     <article class="area" id="area-property" data-figure="plots">
       <div class="area__media">
         <div class="area__figure" aria-hidden="true"><span class="area__piece"></span><span class="area__piece"></span><span class="area__piece"></span></div>
-        <figure class="area__photo"><img style="background:#f3f3f3" class="area__img" src="https://images.unsplash.com/photo-1642105152226-1ab362672b18?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8Z3Jhc3MlMjBzZWVkJTIwaGVhZCUyMHdoaXRlJTIwYmFja2dyb3VuZHxlbnwxfDF8fHwxNzkxNDAxMjQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A dried seed head on a thin stem against white" width="1068" height="1600" loading="lazy"></figure>
+        <figure class="area__photo"><img class="area__img" src="https://images.unsplash.com/photo-1642105152226-1ab362672b18?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8Z3Jhc3MlMjBzZWVkJTIwaGVhZCUyMHdoaXRlJTIwYmFja2dyb3VuZHxlbnwxfDF8fHwxNzkxNDAxMjQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A dried seed head on a thin stem against white" width="1068" height="1600" loading="lazy"></figure>
       </div>
       <h3 class="m-text-2 area__title"><span>Real Estate</span> <span>&amp; Planning</span></h3>
       <div class="area__text">
@@ -632,7 +757,7 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
     <p class="m-text">We set them down in 2009 and have not needed to change a word. If we break one, the next month of work on your matter is on us.</p>
     <a class="m-link" href="#fees">How our fees work</a>
   </div>
-  <ol class="principles__stair">
+  <ol class="principles__stair" data-8b-items=":scope > li" data-8b-fixed="5">
     <li class="promise"><h3 class="m-text-5">A partner answers.</h3><p class="m-text-7">Every matter is led by a named partner whose direct line is printed on your letter, from the first call to the last invoice.</p></li>
     <li class="promise"><h3 class="m-text-5">Fees before work.</h3><p class="m-text-7">You approve a fixed or capped fee before we start. Any change reaches you in writing, with its reason, before it is spent.</p></li>
     <li class="promise"><h3 class="m-text-5">Advice you can act on.</h3><p class="m-text-7">A recommendation and the reasons for it, in plain English, never a memo of options to decode.</p></li>
@@ -648,13 +773,13 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
   </div>
   <table class="matters__table">
     <thead><tr><th class="m-text-4" scope="col">Year</th><th class="m-text-4" scope="col">Client</th><th class="m-text-4" scope="col">Matter</th><th class="m-text-4" scope="col">Outcome</th></tr></thead>
-    <tbody>
-      <tr data-8b-motion="rule"><td>2026</td><td>Robotics manufacturer, Leeds</td><td>£48m Series C led by a US growth fund, with a secondary sale for early staff</td><td>Closed in nine weeks</td></tr>
-      <tr data-8b-motion="rule"><td>2025</td><td>Family hotel group, Highlands</td><td>Shareholder dispute between three generations of owners</td><td>Settled by mediation, no hearing</td></tr>
-      <tr data-8b-motion="rule"><td>2025</td><td>Software company, Dublin</td><td>Restructure of a 140-person team across four countries</td><td>No tribunal claims</td></tr>
-      <tr data-8b-motion="rule"><td>2024</td><td>Logistics operator, Midlands</td><td>Acquisition of six warehouse sites and their leases</td><td>Completed on the agreed day</td></tr>
-      <tr data-8b-motion="rule"><td>2024</td><td>Fintech founder, London</td><td>Exit of a co-founder and a buy-back of her shares</td><td>Agreed in one meeting</td></tr>
-      <tr data-8b-motion="rule"><td>2023</td><td>Food producer, Fife</td><td>£2.1m supply contract claim against a national retailer</td><td>Recovered in full before trial</td></tr>
+    <tbody data-8b-items=":scope > tr">
+      <tr data-8b-motion="rule" data-8b-enter="90%" data-8b-items=":scope > td"><td>2026</td><td>Robotics manufacturer, Leeds</td><td>£48m Series C led by a US growth fund, with a secondary sale for early staff</td><td>Closed in nine weeks</td></tr>
+      <tr data-8b-motion="rule" data-8b-enter="90%" data-8b-items=":scope > td"><td>2025</td><td>Family hotel group, Highlands</td><td>Shareholder dispute between three generations of owners</td><td>Settled by mediation, no hearing</td></tr>
+      <tr data-8b-motion="rule" data-8b-enter="90%" data-8b-items=":scope > td"><td>2025</td><td>Software company, Dublin</td><td>Restructure of a 140-person team across four countries</td><td>No tribunal claims</td></tr>
+      <tr data-8b-motion="rule" data-8b-enter="90%" data-8b-items=":scope > td"><td>2024</td><td>Logistics operator, Midlands</td><td>Acquisition of six warehouse sites and their leases</td><td>Completed on the agreed day</td></tr>
+      <tr data-8b-motion="rule" data-8b-enter="90%" data-8b-items=":scope > td"><td>2024</td><td>Fintech founder, London</td><td>Exit of a co-founder and a buy-back of her shares</td><td>Agreed in one meeting</td></tr>
+      <tr data-8b-motion="rule" data-8b-enter="90%" data-8b-items=":scope > td"><td>2023</td><td>Food producer, Fife</td><td>£2.1m supply contract claim against a national retailer</td><td>Recovered in full before trial</td></tr>
     </tbody>
   </table>
 </section>
@@ -662,24 +787,24 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
 <section id="offices" class="offices" data-8b-section="offices">
   <h2 class="m-text-3 offices__title">Three offices, and partner firms in twelve more countries.</h2>
   <div class="offices__stage">
-    <ul class="offices__ring">
-      <li class="city" style="--city-i: -4.5"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1758441395607-28172cc8d663?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8TGlzYm9uJTIwdHJhbSUyMHN0cmVldHxlbnwxfDJ8fHwxNzkxNDAxMjgxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=60" alt="A red and yellow tram in a Lisbon street" width="1600" height="1600" loading="lazy"></li>
-      <li class="city" style="--city-i: -3.5"><img style="background:#597373" src="https://images.unsplash.com/photo-1739890806725-e9b82aeeb9ca?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8TWFkcmlkJTIwc3RyZWV0JTIwYnVpbGRpbmd8ZW58MXwyfHx8MTc5MTQwMTMwNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="A domed corner building in Madrid" width="1600" height="1600" loading="lazy"></li>
-      <li class="city" style="--city-i: -2.5"><img style="background:#c0c0d9" src="https://images.unsplash.com/photo-1754138343152-c9be9eb2b30f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8UGFyaXMlMjByb29mdG9wc3xlbnwxfDJ8fHwxNzkxNDAxMzAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=240&amp;q=60" alt="Paris rooftops below Sacré-Cœur" width="1600" height="1460" loading="lazy"></li>
-      <li class="city" style="--city-i: -1.5"><img style="background:#d9f3f3" src="https://images.unsplash.com/photo-1644518877761-cfcc7b9f05fc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8TG9uZG9uJTIwc3RyZWV0JTIwYXJjaGl0ZWN0dXJlfGVufDF8Mnx8fDE3OTE0MDEyNzh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="The Millennium Bridge leading to St Paul's in London" width="1600" height="1760" loading="lazy"></li>
-      <li class="city" style="--city-i: -.5"><img style="background:#c0d9d9" src="https://images.unsplash.com/photo-1634565055864-06ac02738f15?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8RWRpbmJ1cmdoJTIwb2xkJTIwdG93bnxlbnwxfDJ8fHwxNzkxNDAxMjc3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Edinburgh Castle on its rock" width="1600" height="1740" loading="lazy"></li>
-      <li class="city" style="--city-i: .5"><img style="background:#737373" src="https://images.unsplash.com/photo-1699791912534-007c6ea82878?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8RHVibGluJTIwR2VvcmdpYW4lMjBkb29yc3xlbnwxfDJ8fHwxNzkxNDAxMjc5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="An ivy-covered Georgian building in Dublin" width="1600" height="1600" loading="lazy"></li>
-      <li class="city" style="--city-i: 1.5"><img style="background:#404040" src="https://images.unsplash.com/photo-1703870604716-70fa10dd2b3e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8QW1zdGVyZGFtJTIwY2FuYWwlMjBob3VzZXN8ZW58MXwyfHx8MTc5MTQwMTI3OXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="Canal houses and a bicycle by the water in Amsterdam" width="1600" height="1600" loading="lazy"></li>
-      <li class="city" style="--city-i: 2.5"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1736247150811-689481e7a778?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Q29wZW5oYWdlbiUyMGhhcmJvdXJ8ZW58MXwyfHx8MTc5MTQwMTI4MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="Coloured harbour houses and a red boat in Copenhagen" width="1600" height="1600" loading="lazy"></li>
-      <li class="city" style="--city-i: 3.5"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1595036969386-a68369442612?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8U3RvY2tob2xtJTIwb2xkJTIwdG93bnxlbnwxfDJ8fHwxNzkxNDAxMzAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="A narrow lane of ochre houses in Stockholm's old town" width="1600" height="1600" loading="lazy"></li>
-      <li class="city" style="--city-i: 4.5"><img style="background:#40260c" src="https://images.unsplash.com/photo-1722089239079-562e29bac049?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8TWlsYW4lMjBhcmNoaXRlY3R1cmV8ZW58MXwyfHx8MTc5MTQwMTMwNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=60" alt="Milan Cathedral against a blue sky" width="1600" height="1600" loading="lazy"></li>
+    <ul class="offices__ring" data-8b-items=":scope > li">
+      <li class="city" style="--city-i: -4.5"><img src="https://images.unsplash.com/photo-1758441395607-28172cc8d663?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8TGlzYm9uJTIwdHJhbSUyMHN0cmVldHxlbnwxfDJ8fHwxNzkxNDAxMjgxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=60" alt="A red and yellow tram in a Lisbon street" width="1600" height="1600" loading="lazy"></li>
+      <li class="city" style="--city-i: -3.5"><img src="https://images.unsplash.com/photo-1739890806725-e9b82aeeb9ca?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8TWFkcmlkJTIwc3RyZWV0JTIwYnVpbGRpbmd8ZW58MXwyfHx8MTc5MTQwMTMwNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=280&amp;q=60" alt="A domed corner building in Madrid" width="1600" height="1600" loading="lazy"></li>
+      <li class="city" style="--city-i: -2.5"><img src="https://images.unsplash.com/photo-1754138343152-c9be9eb2b30f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8UGFyaXMlMjByb29mdG9wc3xlbnwxfDJ8fHwxNzkxNDAxMzAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=260&amp;q=60" alt="Paris rooftops below Sacré-Cœur" width="1600" height="1460" loading="lazy"></li>
+      <li class="city" style="--city-i: -1.5"><img src="https://images.unsplash.com/photo-1644518877761-cfcc7b9f05fc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8TG9uZG9uJTIwc3RyZWV0JTIwYXJjaGl0ZWN0dXJlfGVufDF8Mnx8fDE3OTE0MDEyNzh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" alt="The Millennium Bridge leading to St Paul's in London" width="1600" height="1760" loading="lazy"></li>
+      <li class="city" style="--city-i: -.5"><img src="https://images.unsplash.com/photo-1634565055864-06ac02738f15?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8RWRpbmJ1cmdoJTIwb2xkJTIwdG93bnxlbnwxfDJ8fHwxNzkxNDAxMjc3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Edinburgh Castle on its rock" width="1600" height="1740" loading="lazy"></li>
+      <li class="city" style="--city-i: .5"><img src="https://images.unsplash.com/photo-1699791912534-007c6ea82878?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8RHVibGluJTIwR2VvcmdpYW4lMjBkb29yc3xlbnwxfDJ8fHwxNzkxNDAxMjc5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="An ivy-covered Georgian building in Dublin" width="1600" height="1600" loading="lazy"></li>
+      <li class="city" style="--city-i: 1.5"><img src="https://images.unsplash.com/photo-1703870604716-70fa10dd2b3e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8QW1zdGVyZGFtJTIwY2FuYWwlMjBob3VzZXN8ZW58MXwyfHx8MTc5MTQwMTI3OXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="Canal houses and a bicycle by the water in Amsterdam" width="1600" height="1600" loading="lazy"></li>
+      <li class="city" style="--city-i: 2.5"><img src="https://images.unsplash.com/photo-1736247150811-689481e7a778?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Q29wZW5oYWdlbiUyMGhhcmJvdXJ8ZW58MXwyfHx8MTc5MTQwMTI4MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="Coloured harbour houses and a red boat in Copenhagen" width="1600" height="1600" loading="lazy"></li>
+      <li class="city" style="--city-i: 3.5"><img src="https://images.unsplash.com/photo-1595036969386-a68369442612?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8U3RvY2tob2xtJTIwb2xkJTIwdG93bnxlbnwxfDJ8fHwxNzkxNDAxMzAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=260&amp;q=60" alt="A narrow lane of ochre houses in Stockholm's old town" width="1600" height="1600" loading="lazy"></li>
+      <li class="city" style="--city-i: 4.5"><img src="https://images.unsplash.com/photo-1722089239079-562e29bac049?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8TWlsYW4lMjBhcmNoaXRlY3R1cmV8ZW58MXwyfHx8MTc5MTQwMTMwNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Milan Cathedral against a blue sky" width="1600" height="1600" loading="lazy"></li>
     </ul>
     <p class="m-text-6 offices__note">From Edinburgh, London and Dublin we act across Europe, with partner firms in Lisbon, Madrid, Paris, Amsterdam, Copenhagen, Stockholm, Milan and five more countries, briefed in one call and billed through us.</p>
   </div>
-  <ul class="offices__list">
-    <li data-8b-motion="rule"><h3 class="offices__city" data-rule-part>Edinburgh</h3><p class="m-text-7" data-rule-part>1 Example Street, Edinburgh EH1 0ZZ</p><a data-8b-placeholder="phone" class="m-link" href="tel:+441310000000" data-rule-part>+44 131 000 0000</a></li>
-    <li data-8b-motion="rule"><h3 class="offices__city" data-rule-part>London</h3><p class="m-text-7" data-rule-part>1 Example Street, London WC1R 0ZZ</p><a data-8b-placeholder="phone" class="m-link" href="tel:+442000000000" data-rule-part>+44 20 0000 0000</a></li>
-    <li data-8b-motion="rule"><h3 class="offices__city" data-rule-part>Dublin</h3><p class="m-text-7" data-rule-part>1 Example Street, Dublin 2</p><a data-8b-placeholder="phone" class="m-link" href="tel:+35310000000" data-rule-part>+353 1 000 0000</a></li>
+  <ul class="offices__list" data-8b-items=":scope > li">
+    <li data-8b-motion="rule" data-8b-enter="90%" data-8b-items=":scope > *"><h3 class="offices__city" data-rule-part>Edinburgh</h3><p class="m-text-7" data-rule-part>1 Example Street, Edinburgh EH1 0ZZ</p><a data-8b-placeholder="phone" class="m-link" href="tel:+441310000000" data-rule-part>+44 131 000 0000</a></li>
+    <li data-8b-motion="rule" data-8b-enter="90%" data-8b-items=":scope > *"><h3 class="offices__city" data-rule-part>London</h3><p class="m-text-7" data-rule-part>1 Example Street, London WC1R 0ZZ</p><a data-8b-placeholder="phone" class="m-link" href="tel:+442000000000" data-rule-part>+44 20 0000 0000</a></li>
+    <li data-8b-motion="rule" data-8b-enter="90%" data-8b-items=":scope > *"><h3 class="offices__city" data-rule-part>Dublin</h3><p class="m-text-7" data-rule-part>1 Example Street, Dublin 2</p><a data-8b-placeholder="phone" class="m-link" href="tel:+35310000000" data-rule-part>+353 1 000 0000</a></li>
   </ul>
 </section>
 <!-- partners: six partner portraits with practice, city and direct line, carried sideways by the scroll (animation: scene:people) -->
@@ -689,29 +814,29 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
       <h2 class="m-text-3">Seventy lawyers. Six partners sign the letters.</h2>
       <p class="m-text-7">Every client has one of these direct lines from the first call. Their teams do the drafting; they do the deciding.</p>
     </div>
-    <ul class="people__track">
+    <ul class="people__track" data-8b-items=":scope > li">
       <li class="person">
-        <figure class="person__photo"><img style="background:#8c8c8c" class="person__img" src="https://images.unsplash.com/photo-1713190477173-2368e1291193?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWF0dXJlJTIwbWFuJTIwcG9ydHJhaXQlMjB3aGl0ZSUyMGJhY2tncm91bmQlMjBzdWl0fGVufDF8MXx8fDE3OTE0MDEzMzl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Anders Holm, founding partner" width="1067" height="1600" loading="lazy"></figure>
+        <figure class="person__photo"><img class="person__img" src="https://images.unsplash.com/photo-1713190477173-2368e1291193?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWF0dXJlJTIwbWFuJTIwcG9ydHJhaXQlMjB3aGl0ZSUyMGJhY2tncm91bmQlMjBzdWl0fGVufDF8MXx8fDE3OTE0MDEzMzl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Anders Holm, founding partner" width="1067" height="1600" loading="lazy"></figure>
         <div class="person__text"><p class="m-text-4">Disputes · Edinburgh</p><h3 class="person__name">Anders Holm</h3><a data-8b-placeholder="phone" class="m-link" href="tel:+441310000000">+44 131 000 0000</a></div>
       </li>
       <li class="person">
-        <figure class="person__photo"><img style="background:#404040" class="person__img" src="https://images.unsplash.com/photo-1655249481446-25d575f1c054?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d29tYW4lMjBleGVjdXRpdmUlMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDF8fHwxNzkxNDAxMzU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Fiona Strachan, founding partner" width="1067" height="1600" loading="lazy"></figure>
+        <figure class="person__photo"><img class="person__img" src="https://images.unsplash.com/photo-1655249481446-25d575f1c054?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d29tYW4lMjBleGVjdXRpdmUlMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDF8fHwxNzkxNDAxMzU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Fiona Strachan, founding partner" width="1067" height="1600" loading="lazy"></figure>
         <div class="person__text"><p class="m-text-4">Corporate · Edinburgh</p><h3 class="person__name">Fiona Strachan</h3><a data-8b-placeholder="phone" class="m-link" href="tel:+441310000000">+44 131 000 0000</a></div>
       </li>
       <li class="person">
-        <figure class="person__photo"><img style="background:#f3f3f3" class="person__img" src="https://images.unsplash.com/photo-1612813560949-e1d3f2774c31?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bWF0dXJlJTIwbWFuJTIwcG9ydHJhaXQlMjB3aGl0ZSUyMGJhY2tncm91bmQlMjBzdWl0fGVufDF8MXx8fDE3OTE0MDEzMzl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Samuel Adeyemi, managing partner" width="1067" height="1600" loading="lazy"></figure>
+        <figure class="person__photo"><img class="person__img" src="https://images.unsplash.com/photo-1612813560949-e1d3f2774c31?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bWF0dXJlJTIwbWFuJTIwcG9ydHJhaXQlMjB3aGl0ZSUyMGJhY2tncm91bmQlMjBzdWl0fGVufDF8MXx8fDE3OTE0MDEzMzl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Samuel Adeyemi, managing partner" width="1067" height="1600" loading="lazy"></figure>
         <div class="person__text"><p class="m-text-4">Disputes · London</p><h3 class="person__name">Samuel Adeyemi</h3><a data-8b-placeholder="phone" class="m-link" href="tel:+442000000000">+44 20 0000 0000</a></div>
       </li>
       <li class="person">
-        <figure class="person__photo"><img style="background:#737373" class="person__img" src="https://images.unsplash.com/photo-1648757766966-43d24bf7a264?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bWF0dXJlJTIwbWFuJTIwcG9ydHJhaXQlMjB3aGl0ZSUyMGJhY2tncm91bmQlMjBzdWl0fGVufDF8MXx8fDE3OTE0MDEzMzl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Callum Rennie, partner" width="1067" height="1600" loading="lazy"></figure>
+        <figure class="person__photo"><img class="person__img" src="https://images.unsplash.com/photo-1648757766966-43d24bf7a264?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bWF0dXJlJTIwbWFuJTIwcG9ydHJhaXQlMjB3aGl0ZSUyMGJhY2tncm91bmQlMjBzdWl0fGVufDF8MXx8fDE3OTE0MDEzMzl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Callum Rennie, partner" width="1067" height="1600" loading="lazy"></figure>
         <div class="person__text"><p class="m-text-4">Corporate · Edinburgh</p><h3 class="person__name">Callum Rennie</h3><a data-8b-placeholder="phone" class="m-link" href="tel:+441310000000">+44 131 000 0000</a></div>
       </li>
       <li class="person">
-        <figure class="person__photo"><img style="background:#a6a6a6" class="person__img" src="https://images.unsplash.com/photo-1760543998147-117ae5649c5c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8d29tYW4lMjBleGVjdXRpdmUlMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDF8fHwxNzkxNDAxMzU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Inés Carvalho, partner" width="1067" height="1600" loading="lazy"></figure>
+        <figure class="person__photo"><img class="person__img" src="https://images.unsplash.com/photo-1760543998147-117ae5649c5c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8d29tYW4lMjBleGVjdXRpdmUlMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDF8fHwxNzkxNDAxMzU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Inés Carvalho, partner" width="1067" height="1600" loading="lazy"></figure>
         <div class="person__text"><p class="m-text-4">Real Estate · London</p><h3 class="person__name">Inés Carvalho</h3><a data-8b-placeholder="phone" class="m-link" href="tel:+442000000000">+44 20 0000 0000</a></div>
       </li>
       <li class="person">
-        <figure class="person__photo"><img style="background:#a6f3f3" class="person__img" src="https://images.unsplash.com/photo-1784652952109-3004215f6303?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29uZmlkZW50JTIwYnVzaW5lc3N3b21hbiUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTE0MDEzNTh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Grace Nwosu, partner" width="1067" height="1600" loading="lazy"></figure>
+        <figure class="person__photo"><img class="person__img" src="https://images.unsplash.com/photo-1784652952109-3004215f6303?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29uZmlkZW50JTIwYnVzaW5lc3N3b21hbiUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTE0MDEzNTh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Grace Nwosu, partner" width="1067" height="1600" loading="lazy"></figure>
         <div class="person__text"><p class="m-text-4">Employment · Dublin</p><h3 class="person__name">Grace Nwosu</h3><a data-8b-placeholder="phone" class="m-link" href="tel:+35310000000">+353 1 000 0000</a></div>
       </li>
     </ul>
@@ -719,10 +844,10 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
 </section>
 <!-- pro bono: a photo beside a large statement and three items of pro bono work -->
 <section id="probono" class="probono" data-8b-section="pro bono">
-  <figure class="probono__photo"><img style="background:#262626" class="probono__img" data-8b-motion="drift" src="https://images.unsplash.com/photo-1764075832652-c05d571af505?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bW91bnRhaW4lMjByaWRnZSUyMGZvZyUyMGJsYWNrJTIwYW5kJTIwd2hpdGV8ZW58MXwwfHx8MTc5MTQwMTE3Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=940&amp;q=60" alt="Layered mountain ridges under a pale sky" width="1600" height="1087" loading="lazy"></figure>
+  <figure class="probono__photo"><img class="probono__img" data-8b-motion="drift" src="https://images.unsplash.com/photo-1764075832652-c05d571af505?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bW91bnRhaW4lMjByaWRnZSUyMGZvZyUyMGJsYWNrJTIwYW5kJTIwd2hpdGV8ZW58MXwwfHx8MTc5MTQwMTE3Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=940&amp;q=60" alt="Layered mountain ridges under a pale sky" width="1600" height="1087" loading="lazy"></figure>
   <div class="probono__text">
-    <h2 class="m-text-3" data-8b-motion="ink">One working day in ten belongs to people who could never pay for it.</h2>
-    <ul class="probono__list">
+    <h2 class="m-text-3" data-8b-motion="ink" data-8b-split="words">One working day in ten belongs to people who could never pay for it.</h2>
+    <ul class="probono__list" data-8b-items=":scope > li">
       <li><p class="m-text-4">Tenants</p><p class="m-text-7">Defending families against unlawful evictions, with the law centres of Glasgow and Dublin.</p></li>
       <li><p class="m-text-4">Charities</p><p class="m-text-7">Governance and contracts for forty small trusts that could never retain a firm.</p></li>
       <li><p class="m-text-4">Founders</p><p class="m-text-7">A free first-contract clinic every second Thursday, for founders who have not yet raised money.</p></li>
@@ -736,7 +861,7 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
     <p class="m-text">Most matters run on a fixed or capped fee. Hourly work comes with an estimate we hold ourselves to. Each bar shows how far the bill can move from what you agreed.</p>
   </div>
   <div class="fees__axis" aria-hidden="true"><div class="fees__axis-line"><span class="m-text-4">What you agreed</span><span class="m-text-4">How far it can move</span></div></div>
-  <ol class="fees__modes">
+  <ol class="fees__modes" data-8b-items=":scope > li">
     <li class="mode" data-reach="exact">
       <h3 class="m-text-5">Fixed</h3>
       <div class="mode__track" aria-hidden="true"><span class="mode__bar"></span></div>
@@ -761,23 +886,23 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
     <p class="m-text">Anything else, ask the partner on the call. It takes thirty minutes and costs nothing.</p>
     <a class="m-btn" href="#contact"><span class="m-btn__label">Book a first call</span></a>
   </div>
-  <div class="faq__list">
-    <details class="qa" data-8b-motion="rule"><summary class="qa__q"><span>Is the first call charged?</span><span class="qa__mark" aria-hidden="true"></span></summary><div class="qa__a"><p class="m-text">No. The first thirty minutes with a partner are free. On that call we tell you whether we are the right firm and what a fixed or capped fee would be.</p></div></details>
-    <details class="qa" data-8b-motion="rule"><summary class="qa__q"><span>Do you act for individuals?</span><span class="qa__mark" aria-hidden="true"></span></summary><div class="qa__a"><p class="m-text">For founders, directors and senior executives, in matters connected to their companies: exits, disputes with co-founders and employment terms. We do not handle family or criminal matters.</p></div></details>
-    <details class="qa" data-8b-motion="rule"><summary class="qa__q"><span>How quickly can you start?</span><span class="qa__mark" aria-hidden="true"></span></summary><div class="qa__a"><p class="m-text">Usually within the same week. For an urgent injunction or a deal with a deadline, the same day: say so when you call.</p></div></details>
-    <details class="qa" data-8b-motion="rule"><summary class="qa__q"><span>Can you act across borders?</span><span class="qa__mark" aria-hidden="true"></span></summary><div class="qa__a"><p class="m-text">Yes. Our teams cover Scots, English and Irish law, and our partner firms cover twelve more countries under the same engagement letter and one invoice.</p></div></details>
-    <details class="qa" data-8b-motion="rule"><summary class="qa__q"><span>What if the estimate turns out wrong?</span><span class="qa__mark" aria-hidden="true"></span></summary><div class="qa__a"><p class="m-text">Then it is our problem first. Capped fees stay capped. On hourly work we tell you before an estimate is reached, and you decide whether we go on.</p></div></details>
-    <details class="qa" data-8b-motion="rule"><summary class="qa__q"><span>Who will do the work?</span><span class="qa__mark" aria-hidden="true"></span></summary><div class="qa__a"><p class="m-text">The partner you meet leads it and signs off every piece of advice. Associates draft where that saves you money, and you will know their names from the first day.</p></div></details>
+  <div class="faq__list" data-8b-items=":scope > details">
+    <details class="qa" data-8b-motion="rule" data-8b-enter="90%"><summary class="qa__q"><span>Is the first call charged?</span><span class="qa__mark" aria-hidden="true"></span></summary><div class="qa__a"><p class="m-text">No. The first thirty minutes with a partner are free. On that call we tell you whether we are the right firm and what a fixed or capped fee would be.</p></div></details>
+    <details class="qa" data-8b-motion="rule" data-8b-enter="90%"><summary class="qa__q"><span>Do you act for individuals?</span><span class="qa__mark" aria-hidden="true"></span></summary><div class="qa__a"><p class="m-text">For founders, directors and senior executives, in matters connected to their companies: exits, disputes with co-founders and employment terms. We do not handle family or criminal matters.</p></div></details>
+    <details class="qa" data-8b-motion="rule" data-8b-enter="90%"><summary class="qa__q"><span>How quickly can you start?</span><span class="qa__mark" aria-hidden="true"></span></summary><div class="qa__a"><p class="m-text">Usually within the same week. For an urgent injunction or a deal with a deadline, the same day: say so when you call.</p></div></details>
+    <details class="qa" data-8b-motion="rule" data-8b-enter="90%"><summary class="qa__q"><span>Can you act across borders?</span><span class="qa__mark" aria-hidden="true"></span></summary><div class="qa__a"><p class="m-text">Yes. Our teams cover Scots, English and Irish law, and our partner firms cover twelve more countries under the same engagement letter and one invoice.</p></div></details>
+    <details class="qa" data-8b-motion="rule" data-8b-enter="90%"><summary class="qa__q"><span>What if the estimate turns out wrong?</span><span class="qa__mark" aria-hidden="true"></span></summary><div class="qa__a"><p class="m-text">Then it is our problem first. Capped fees stay capped. On hourly work we tell you before an estimate is reached, and you decide whether we go on.</p></div></details>
+    <details class="qa" data-8b-motion="rule" data-8b-enter="90%"><summary class="qa__q"><span>Who will do the work?</span><span class="qa__mark" aria-hidden="true"></span></summary><div class="qa__a"><p class="m-text">The partner you meet leads it and signs off every piece of advice. Associates draft where that saves you money, and you will know their names from the first day.</p></div></details>
   </div>
 </section>
 <!-- contact: closing statement, four office photos dealt into a row, a contact form (no back end yet) and phone, email and out-of-hours line (animation: scene:contact) -->
 <section id="contact" class="contact" data-8b-section="contact">
-  <h2 class="m-text-3 contact__statement" data-8b-motion="ink">Tell us where you need to stand. A partner will call you back within one working day.</h2>
-  <div class="contact__fan">
-    <figure class="contact__photo"><img style="background:#c0c0a6" src="https://images.unsplash.com/photo-1719220231909-e79c5c9d4871?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8b2ZmaWNlJTIwaW50ZXJpb3IlMjBtaW5pbWFsJTIwd2hpdGV8ZW58MXwxfHx8MTc5MTQwMTM1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="A quiet meeting corner in the Edinburgh office" width="1200" height="1600" loading="lazy"></figure>
-    <figure class="contact__photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1765371512707-9e0e96fd9e5b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8b2ZmaWNlJTIwaW50ZXJpb3IlMjBtaW5pbWFsJTIwd2hpdGV8ZW58MXwxfHx8MTc5MTQwMTM1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="A client room with wood panelling in the London office" width="1115" height="1600" loading="lazy"></figure>
-    <figure class="contact__photo"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1771270759486-1f7703945072?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fG1lZXRpbmclMjByb29tJTIwbWluaW1hbHxlbnwxfDF8fHwxNzkxNDAxMzU5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="The boardroom of the Dublin office" width="1067" height="1600" loading="lazy"></figure>
-    <figure class="contact__photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1662261896193-b4f8a02a9773?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bWVldGluZyUyMHJvb20lMjBtaW5pbWFsfGVufDF8MXx8fDE3OTE0MDEzNTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="The open floor where the Edinburgh teams work" width="1200" height="1600" loading="lazy"></figure>
+  <h2 class="m-text-3 contact__statement" data-8b-motion="ink" data-8b-split="words">Tell us where you need to stand. A partner will call you back within one working day.</h2>
+  <div class="contact__fan" data-8b-items=":scope > figure">
+    <figure class="contact__photo" style="--contact-figure-contact-photo-rotate-from: -9deg"><img src="https://images.unsplash.com/photo-1719220231909-e79c5c9d4871?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8b2ZmaWNlJTIwaW50ZXJpb3IlMjBtaW5pbWFsJTIwd2hpdGV8ZW58MXwxfHx8MTc5MTQwMTM1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="A quiet meeting corner in the Edinburgh office" width="1200" height="1600" loading="lazy"></figure>
+    <figure class="contact__photo" style="--contact-figure-contact-photo-rotate-from: 6deg"><img src="https://images.unsplash.com/photo-1765371512707-9e0e96fd9e5b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8b2ZmaWNlJTIwaW50ZXJpb3IlMjBtaW5pbWFsJTIwd2hpdGV8ZW58MXwxfHx8MTc5MTQwMTM1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=260&amp;q=60" alt="A client room with wood panelling in the London office" width="1115" height="1600" loading="lazy"></figure>
+    <figure class="contact__photo" style="--contact-figure-contact-photo-rotate-from: -4deg"><img src="https://images.unsplash.com/photo-1771270759486-1f7703945072?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fG1lZXRpbmclMjByb29tJTIwbWluaW1hbHxlbnwxfDF8fHwxNzkxNDAxMzU5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" alt="The boardroom of the Dublin office" width="1067" height="1600" loading="lazy"></figure>
+    <figure class="contact__photo" style="--contact-figure-contact-photo-rotate-from: 8deg"><img src="https://images.unsplash.com/photo-1662261896193-b4f8a02a9773?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bWVldGluZyUyMHJvb20lMjBtaW5pbWFsfGVufDF8MXx8fDE3OTE0MDEzNTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="The open floor where the Edinburgh teams work" width="1200" height="1600" loading="lazy"></figure>
   </div>
   <div class="contact__grid">
     <form data-8b-placeholder="form" class="contact__form" action="#contact" method="post">
@@ -835,7 +960,7 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
   const setMenu = open => {
     menu.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); close.focus(); } else { window.lenis?.start(); }
+    if (open) { window.motionKit?.wheel?.stop(); close.focus(); } else { window.motionKit?.wheel?.start(); }
   };
   toggle.addEventListener('click', () => setMenu(true));
   close.addEventListener('click', () => { setMenu(false); toggle.focus(); });
@@ -862,348 +987,293 @@ select.m-field__input { appearance: none; background: linear-gradient(45deg, tra
   });
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
+<script data-8b-part="motion-kit">
 (() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}.line:not(:last-child){margin-bottom:0}.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = typeof Intl.Segmenter === 'function'
+? text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment)
+: text => [...text];
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split');
+if (sources.has(element)) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px 100% 0px' });
+(document.fonts?.ready ?? Promise.resolve()).then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function navHeight() {
-  const bar = document.querySelector('#nav .nav__bar');
-  return bar ? bar.offsetHeight : 0;
-}
-function refreshScroll() {
-  if (window.lenis) window.lenis.options.anchors = { offset: -navHeight() };
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: .085, anchors: { offset: -navHeight() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-let resizeTimer;
-window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(refreshScroll, 200); });
-</script>
-<script data-8b-part="motion">
-const effects = {
-  ink(element, vars = {}) {
-    const split = SplitText.create(element, { type: 'words', wordsClass: 'ink-word' });
-    const pale = getComputedStyle(document.documentElement).getPropertyValue('--color-6').trim();
-    const timeline = gsap.timeline(vars);
-    split.words.forEach((word, index) => timeline.from(word, { color: pale, duration: .3, ease: 'none' }, index * .07));
-    timeline.data = split;
-    return timeline;
-  },
-  rule(element, vars = {}) {
-    const timeline = gsap.timeline(vars);
-    timeline.fromTo(element, { backgroundSize: '0% 1px' }, { backgroundSize: '100% 1px', duration: 1, ease: 'power3.inOut' }, 0);
-    element.querySelectorAll(':scope > td, :scope > summary, :scope > [data-rule-part]').forEach((part, index) => {
-      timeline.from(part, { y: 18, opacity: 0, duration: .8, ease: 'power3.out' }, .15 + index * .06);
-    });
-    return timeline;
-  },
-  drift(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { yPercent: -6 }, { yPercent: 6, ease: 'none', duration: 1 });
-  }
-};
-const effectRanges = {
-  ink: { start: 'top 88%', end: 'center 58%', scrub: .5 },
-  rule: { start: 'top 90%', once: true },
-  drift: { start: 'top bottom', end: 'bottom top', scrub: true }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  Object.keys(effects).forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      const created = [];
-      elements.forEach((element, index) => {
-        const animation = effects[name](element);
-        created.push(animation);
-        ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, ...effectRanges[name], animation });
-      });
-      return () => created.forEach(animation => animation.data?.revert?.());
-    }), { first: section.getBoundingClientRect().top < window.innerHeight, id });
-  });
-});
-</script>
-<script data-8b-part="scene:opening">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('opening');
-    const img = section.querySelector('.opening__img');
-    const lines = section.querySelectorAll('.opening__line');
-    const lead = section.querySelector('.opening__lead');
-    const bands = section.querySelectorAll('.opening__band');
-    const statement = section.querySelector('.opening__statement');
-    const about = section.querySelector('.opening__about');
-    const reach = () => (window.innerWidth > 760 ? .16 : .07);
-    const blur = window.matchMedia('(min-width: 1024px) and (hover: hover)').matches ? 7 : 0;
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'opening', trigger: section, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true
-    }});
-    timeline.to(img, { scale: 1.28, yPercent: 11, filter: `grayscale(1) contrast(.5) brightness(1.55) blur(${blur}px)`, duration: 1 }, 0);
-    timeline.to(lines[0], { x: () => -window.innerWidth * reach(), y: () => -window.innerHeight * .1, opacity: .08, duration: .55 }, 0);
-    timeline.to(lines[1], { y: () => -window.innerHeight * .26, opacity: .08, duration: .55 }, .03);
-    timeline.to(lines[2], { x: () => window.innerWidth * reach(), y: () => -window.innerHeight * .06, opacity: .08, duration: .55 }, .06);
-    timeline.fromTo(lead, { y: 0, opacity: 1 }, { y: () => -window.innerHeight * .12, opacity: 0, duration: .35 }, 0);
-    bands.forEach((band, index) => timeline.fromTo(band, { yPercent: 90 + index * 50 }, { yPercent: 0, duration: .8 }, 0));
-    const ink = effects.ink(statement);
-    timeline.add(ink.duration(.5), .32);
-    timeline.from(about, { y: 50, duration: .35 }, .55);
-    return () => ink.data?.revert?.();
-  });
-}, { first: true });
-</script>
-<script data-8b-part="scene:practice">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('practice');
-    const stack = section.querySelector('.practice__panels');
-    const panels = [...stack.querySelectorAll(':scope > .area')];
-    const links = [...section.querySelectorAll('.practice__index a')];
-    const starts = {
-      split: [[0, 0, 1, .5], [0, .5, 1, .5]],
-      skew: [[0, 0, .48, .48, -20], [.52, 0, .48, .48, -20], [0, .52, .48, .48, -20], [.52, .52, .48, .48, -20]],
-      halves: [[0, 0, 1, .5], [0, .5, 1, .5]],
-      plots: [[.2, .2, .6, .6, 0, 45], [.2, .2, .6, .6, 0, 45], [.2, .2, .6, .6, 0, 45]]
-    };
-    const place = () => panels.forEach(panel => panel.style.setProperty('--area-stick', `${Math.min(0, window.innerHeight - panel.offsetHeight)}px`));
-    const offset = count => panels.slice(0, count).reduce((sum, panel) => sum + panel.offsetHeight + parseFloat(getComputedStyle(panel).marginBottom || 0), 0);
-    const from = (figure, piece, rect) => {
-      const unit = figure.offsetWidth;
-      const [left, top, width, height] = rect;
-      return {
-        x: (left + width / 2) * unit - (piece.offsetLeft + piece.offsetWidth / 2),
-        y: (top + height / 2) * unit - (piece.offsetTop + piece.offsetHeight / 2),
-        scaleX: width * unit / piece.offsetWidth,
-        scaleY: height * unit / piece.offsetHeight
-      };
-    };
-    section.classList.add('is-stacked');
-    place();
-    ScrollTrigger.addEventListener('refreshInit', place);
+<script data-8b-part="scene-script:practice">
+motionKit.scene('practice', () => {
+  const section = document.getElementById('practice');
+  const stack = section.querySelector('.practice__panels');
+  const panels = [...stack.querySelectorAll(':scope > .area')];
+  const links = panels.map(panel => section.querySelector(`.practice__index a[href="#${panel.id}"]`));
+  const starts = {
+    split: [[0, 0, 1, .5], [0, .5, 1, .5]],
+    skew: [[0, 0, .48, .48, -20], [.52, 0, .48, .48, -20], [0, .52, .48, .48, -20], [.52, .52, .48, .48, -20]],
+    halves: [[0, 0, 1, .5], [0, .5, 1, .5]],
+    plots: [[.2, .2, .6, .6, 0, 45], [.2, .2, .6, .6, 0, 45], [.2, .2, .6, .6, 0, 45]]
+  };
+  let offsets = [0];
+  motionKit.measure(() => {
+    offsets = [0];
+    panels.forEach(panel => offsets.push(offsets.at(-1) + panel.offsetHeight + parseFloat(getComputedStyle(panel).marginBottom || 0)));
     panels.forEach((panel, index) => {
-      const figure = panel.querySelector('.area__figure');
+      motionKit.set(panel, {
+        '--area-stick': `${Math.min(0, window.innerHeight - panel.offsetHeight)}px`,
+        '--practice-at': `${offsets[index]}px`,
+        '--practice-next': `${offsets[index + 1]}px`
+      });
+      const unit = panel.querySelector('.area__figure').offsetWidth;
       const rects = starts[panel.dataset.figure] || [];
-      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-        id: `practice:panel-${index + 1}`, trigger: stack, start: () => `top+=${offset(index)} bottom`, end: () => `top+=${offset(index)} top`, scrub: .6, invalidateOnRefresh: true
-      }});
       panel.querySelectorAll('.area__piece').forEach((piece, number) => {
         const rect = rects[number];
         if (!rect) return;
-        timeline.from(piece, {
-          x: () => from(figure, piece, rect).x,
-          y: () => from(figure, piece, rect).y,
-          scaleX: () => from(figure, piece, rect).scaleX,
-          scaleY: () => from(figure, piece, rect).scaleY,
-          skewX: rect[4] || 0,
-          rotation: rect[5] || 0,
-          duration: 1,
-          ease: 'power2.inOut'
-        }, 0);
-      });
-      timeline.from(panel.querySelector('.area__title'), { xPercent: -14, duration: 1, ease: 'power2.out' }, 0);
-      timeline.from(panel.querySelector('.area__img'), { yPercent: 9, duration: 1 }, 0);
-      if (index) timeline.to(panels[index - 1].querySelector('.area__shade'), { opacity: .5, duration: 1 }, 0);
-      ScrollTrigger.create({
-        id: `practice:index-${index + 1}`, trigger: stack,
-        start: () => `top+=${offset(index)} 55%`,
-        end: () => `top+=${offset(index + 1)} 55%`,
-        onToggle: self => links[index]?.classList.toggle('is-current', self.isActive)
+        const [left, top, width, height, skew = 0, rotation = 0] = rect;
+        motionKit.set(piece, {
+          '--practice-x': `${(left + width / 2) * unit - (piece.offsetLeft + piece.offsetWidth / 2)}px`,
+          '--practice-y': `${(top + height / 2) * unit - (piece.offsetTop + piece.offsetHeight / 2)}px`,
+          '--practice-sx': width * unit / piece.offsetWidth,
+          '--practice-sy': height * unit / piece.offsetHeight,
+          '--practice-skew': `${skew}deg`,
+          '--practice-r': `${rotation}deg`
+        });
       });
     });
-    gsap.to(section.querySelector('.practice__index'), { opacity: 0, ease: 'none', scrollTrigger: {
-      id: 'practice:index-out', trigger: stack, start: 'bottom 98%', end: 'bottom 72%', scrub: true
-    }});
-    return () => {
-      ScrollTrigger.removeEventListener('refreshInit', place);
-      section.classList.remove('is-stacked');
-      panels.forEach(panel => panel.style.removeProperty('--area-stick'));
-      links.forEach(link => link.classList.remove('is-current'));
-    };
+  });
+  motionKit.track(stack, 'top 55%', 'bottom 55%', progress => {
+    const at = progress * offsets.at(-1);
+    links.forEach((link, index) => link?.classList.toggle('is-current', progress > 0 && progress < 1 && at >= offsets[index] && at < offsets[index + 1]));
   });
 });
 </script>
-<script data-8b-part="scene:principles">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(prefers-reduced-motion: no-preference) and (min-width: 861px)',
-    narrow: '(prefers-reduced-motion: no-preference) and (max-width: 860px)'
-  }, context => {
-    const section = document.getElementById('principles');
-    const stair = section.querySelector('.principles__stair');
-    const cells = [...stair.querySelectorAll(':scope > .promise')];
-    const timeline = context.conditions.wide ? gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'principles', trigger: stair, start: 'top 88%', end: 'bottom 70%', scrub: .6, invalidateOnRefresh: true
-    }}) : null;
-    cells.forEach((cell, index) => {
-      const even = index % 2 === 1;
-      if (context.conditions.wide) {
-        timeline.from(cell, even ? { y: () => -cell.offsetHeight / 2, duration: 1 } : { y: 60, duration: 1 }, index * .1);
-      } else if (even) {
-        gsap.from(cell, { x: () => -(stair.offsetWidth - cell.offsetWidth), ease: 'none', scrollTrigger: {
-          id: `principles:step-${index + 1}`, trigger: cell, start: 'top 96%', end: 'top 58%', scrub: .6, invalidateOnRefresh: true
-        }});
-      }
-    });
+<script data-8b-part="scene-script:people">
+motionKit.scene('people', () => {
+  const section = document.getElementById('people');
+  const hold = section.querySelector('.people__hold');
+  const track = section.querySelector('.people__track');
+  const travel = () => {
+    const style = getComputedStyle(hold);
+    return Math.max(0, track.scrollWidth - (hold.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)));
+  };
+  motionKit.measure(() => motionKit.set(section, { '--people-travel': `${travel()}px` }));
+  track.addEventListener('focusin', event => {
+    const card = event.target.closest('.person');
+    if (!card) return;
+    const length = travel();
+    const share = length ? Math.min(1, Math.max(0, (card.offsetLeft + card.offsetWidth - hold.clientWidth / 2) / length)) : 0;
+    window.scrollTo({ top: motionKit.box(section).y + length * share, behavior: 'instant' });
   });
 });
 </script>
-<script data-8b-part="scene:offices">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('offices');
-    const stage = section.querySelector('.offices__stage');
-    const ring = stage.querySelector('.offices__ring');
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'offices', trigger: stage, start: 'top bottom', end: 'center 55%', scrub: .8
-    }});
-    timeline.from(ring, { rotation: 40, duration: 1, ease: 'power1.out' }, 0);
-    ring.querySelectorAll('.city img').forEach(img => timeline.from(img, { scale: 1.35, duration: 1 }, 0));
-  });
+<script data-8b-part="scene-script:fees">
+motionKit.scene('fees', () => {
+  const bars = document.querySelectorAll('#fees .mode__bar');
+  motionKit.measure(() => bars.forEach(bar => motionKit.set(bar, { '--fees-bar-from': bar.offsetHeight / Math.max(bar.offsetWidth, 1) })));
 });
 </script>
-<script data-8b-part="scene:people">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('people');
-    const hold = section.querySelector('.people__hold');
-    const track = section.querySelector('.people__track');
-    const cards = [...track.querySelectorAll(':scope > .person')];
-    const travel = () => {
-      const style = getComputedStyle(hold);
-      return Math.max(0, track.scrollWidth - (hold.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)));
-    };
-    const measure = () => section.style.setProperty('--people-travel', `${travel()}px`);
-    section.classList.add('is-track');
-    measure();
-    ScrollTrigger.addEventListener('refreshInit', measure);
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'people', trigger: section, start: 'top top', end: () => `+=${travel()}`, scrub: .6, invalidateOnRefresh: true
-    }});
-    timeline.to(track, { x: () => -travel(), duration: 1 }, 0);
-    cards.forEach(card => timeline.fromTo(card.querySelector('.person__img'), { xPercent: 6 }, { xPercent: -6, duration: 1 }, 0));
-    const reveal = event => {
-      const card = event.target.closest('.person');
-      if (!card || !timeline.scrollTrigger) return;
-      const share = travel() ? Math.min(1, Math.max(0, (card.offsetLeft + card.offsetWidth - hold.clientWidth / 2) / travel())) : 0;
-      const trigger = timeline.scrollTrigger;
-      const y = trigger.start + (trigger.end - trigger.start) * share;
-      if (window.lenis) window.lenis.scrollTo(y, { immediate: true }); else window.scrollTo(0, y);
-    };
-    track.addEventListener('focusin', reveal);
-    return () => {
-      track.removeEventListener('focusin', reveal);
-      ScrollTrigger.removeEventListener('refreshInit', measure);
-      section.classList.remove('is-track');
-      section.style.removeProperty('--people-travel');
-    };
-  });
-});
-</script>
-<script data-8b-part="scene:fees">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('fees');
-    const list = section.querySelector('.fees__modes');
-    const rows = [...list.querySelectorAll(':scope > .mode')];
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'fees', trigger: list, start: 'top 82%', end: 'bottom 62%', scrub: .6, invalidateOnRefresh: true
-    }});
-    rows.forEach((row, index) => {
-      const bar = row.querySelector('.mode__bar');
-      const at = index * .8;
-      timeline.from(bar, { scaleX: () => bar.offsetHeight / Math.max(bar.offsetWidth, 1), duration: 1, ease: 'power2.inOut' }, at);
-      const stop = row.querySelector('.mode__stop');
-      if (stop) timeline.from(stop, { scaleY: 0, duration: .3 }, at + .75);
-      timeline.from(row.querySelector('.m-text-5'), { opacity: .25, duration: .5 }, at);
-      timeline.from(row.querySelector('.mode__text'), { opacity: .25, duration: .5 }, at + .3);
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const fan = section.querySelector('.contact__fan');
-    const photos = [...fan.querySelectorAll(':scope > .contact__photo')];
-    const tilts = [-9, 6, -4, 8];
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'contact', trigger: fan, start: 'top 92%', end: 'center 52%', scrub: .6, invalidateOnRefresh: true
-    }});
-    photos.forEach((photo, index) => {
-      timeline.from(photo, {
-        x: () => fan.offsetWidth / 2 - (photo.offsetLeft + photo.offsetWidth / 2),
-        y: () => fan.offsetHeight / 2 - (photo.offsetTop + photo.offsetHeight / 2),
-        rotation: tilts[index % tilts.length],
-        scale: .86,
-        duration: 1,
-        ease: 'power2.out'
-      }, index * .06);
-    });
-  });
+<script data-8b-part="scene-script:contact">
+motionKit.scene('contact', () => {
+  const fan = document.querySelector('#contact .contact__fan');
+  const photos = fan.querySelectorAll(':scope > .contact__photo');
+  motionKit.measure(() => photos.forEach(photo => motionKit.set(photo, {
+    '--contact-x': `${fan.offsetWidth / 2 - (photo.offsetLeft + photo.offsetWidth / 2)}px`,
+    '--contact-y': `${fan.offsetHeight / 2 - (photo.offsetTop + photo.offsetHeight / 2)}px`
+  })));
 });
 </script>
 </body>

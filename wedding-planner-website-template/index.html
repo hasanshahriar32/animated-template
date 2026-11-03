@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/wedding-planner-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,15 +20,24 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%23f0925c'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%231c1c1c'%3EA%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjIUvQ.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjIUvQ.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* arabic */
+@font-face {
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjcUvaYr.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
 /* armenian */
 @font-face {
   font-family: 'Google Sans';
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiIUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiIUvaYr.woff2) format('woff2');
   unicode-range: U+0308, U+0530-058F, U+2010, U+2024, U+25CC, U+FB13-FB17;
 }
 /* bengali */
@@ -36,7 +46,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiAUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiAUvaYr.woff2) format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0980-09FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1, U+1CEA, U+1CED, U+1CF2, U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1, U+11DF0-11DF1;
 }
 /* canadian-aboriginal */
@@ -45,7 +55,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPh0UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPh0UvaYr.woff2) format('woff2');
   unicode-range: U+02C7, U+02D8-02D9, U+02DB, U+0307, U+1400-167F, U+18B0-18F5, U+25CC, U+11AB0-11ABF;
 }
 /* cyrillic-ext */
@@ -54,7 +64,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj8UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj8UvaYr.woff2) format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -63,7 +73,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjYUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjYUvaYr.woff2) format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* devanagari */
@@ -72,7 +82,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjMUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjMUvaYr.woff2) format('woff2');
   unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A;
 }
 /* ethiopic */
@@ -81,7 +91,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiMUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiMUvaYr.woff2) format('woff2');
   unicode-range: U+030E, U+1200-1399, U+2D80-2DDE, U+AB01-AB2E, U+1E7E0-1E7E6, U+1E7E8-1E7EB, U+1E7ED-1E7EE, U+1E7F0-1E7FE;
 }
 /* georgian */
@@ -90,7 +100,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi0UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi0UvaYr.woff2) format('woff2');
   unicode-range: U+0589, U+10A0-10FF, U+1C90-1CBA, U+1CBD-1CBF, U+205A, U+2D00-2D2F, U+2E31;
 }
 /* greek-ext */
@@ -99,7 +109,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj4UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj4UvaYr.woff2) format('woff2');
   unicode-range: U+1F00-1FFF;
 }
 /* greek */
@@ -108,7 +118,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjEUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjEUvaYr.woff2) format('woff2');
   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
 }
 /* gujarati */
@@ -117,7 +127,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPikUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPikUvaYr.woff2) format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0A80-0AFF, U+200C-200D, U+20B9, U+25CC, U+A830-A839;
 }
 /* gurmukhi */
@@ -126,7 +136,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPhEUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPhEUvaYr.woff2) format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0A01-0A76, U+200C-200D, U+20B9, U+25CC, U+262C, U+A830-A839;
 }
 /* hebrew */
@@ -135,8 +145,17 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjAUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjAUvaYr.woff2) format('woff2');
   unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* kannada */
+@font-face {
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPigUvaYr.woff2) format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0B83, U+0C80-0CF3, U+1CD0, U+1CD2-1CD3, U+1CDA, U+1CF2, U+1CF4, U+200C-200D, U+20B9, U+25CC, U+A830-A835;
 }
 /* khmer */
 @font-face {
@@ -144,7 +163,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjkUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjkUvaYr.woff2) format('woff2');
   unicode-range: U+1780-17FF, U+19E0-19FF, U+200C-200D, U+25CC;
 }
 /* lao */
@@ -153,7 +172,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjsUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjsUvaYr.woff2) format('woff2');
   unicode-range: U+0E81-0EDF, U+200C-200D, U+25CC;
 }
 /* malayalam */
@@ -162,7 +181,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPioUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPioUvaYr.woff2) format('woff2');
   unicode-range: U+0307, U+0323, U+0951-0952, U+0964-0965, U+0B83, U+0D00-0D7F, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC, U+A830-A832;
 }
 /* oriya */
@@ -171,7 +190,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPisUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPisUvaYr.woff2) format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0B01-0B77, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC;
 }
 /* sinhala */
@@ -180,7 +199,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi8UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi8UvaYr.woff2) format('woff2');
   unicode-range: U+0964-0965, U+0D81-0DF4, U+1CF2, U+200C-200D, U+25CC, U+111E1-111F4;
 }
 /* symbols */
@@ -189,7 +208,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPlwUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPlwUvaYr.woff2) format('woff2');
   unicode-range: U+0001-000C, U+000E-001F, U+007F-009F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AE, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8BB, U+1F8C0-1F8C1, U+1F8D0-1F8D8, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FAC6, U+1FAC8, U+1FACC-1FADD, U+1FADF-1FAEB, U+1FAEF-1FAFA, U+1FB00-1FBFF;
 }
 /* tamil */
@@ -198,7 +217,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiQUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiQUvaYr.woff2) format('woff2');
   unicode-range: U+0964-0965, U+0B82-0BFA, U+200C-200D, U+20B9, U+25CC;
 }
 /* telugu */
@@ -207,7 +226,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi4UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi4UvaYr.woff2) format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0B83, U+0C00-0C7F, U+1CD5-1CD6, U+1CD8, U+1CDA, U+1CF2, U+200C-200D, U+25CC;
 }
 /* thai */
@@ -216,7 +235,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiYUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiYUvaYr.woff2) format('woff2');
   unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC;
 }
 /* vietnamese */
@@ -225,7 +244,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj0UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj0UvaYr.woff2) format('woff2');
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
@@ -234,7 +253,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjwUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjwUvaYr.woff2) format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -243,7 +262,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjIUvQ.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjIUvQ.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 </style>
@@ -274,10 +293,6 @@
 @font-face { font-family: "Google Sans Fallback"; src: local("Arial"), local("ArialMT"), local("Helvetica"); font-weight: 100 549; size-adjust: 100.5%; ascent-override: 96.5%; descent-override: 28.9%; line-gap-override: 0%; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body {
   margin: 0;
   background: var(--color-1);
@@ -650,6 +665,8 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
   #nav .menu { grid-template-columns: 1fr; }
   #nav .menu .menu__links, #nav .menu .menu__contact { grid-column: 1; }
 }
+#nav .nav__logo { transition: box-shadow .4s ease, background-color .4s ease; }
+#nav:not(.is-off-top) .nav__logo { background: var(--color-2); } /* the orange chip vanished on the orange opening */
 }
 </style>
 <style data-8b-part="section:opening">
@@ -829,13 +846,15 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 @media (max-width: 389px) {
   #opening .opening__flood span:last-child { margin-right: 0; }
 }
-}
-</style>
-<style data-8b-part="scene-style:opening">
-@layer scenes {
+#opening .rw-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; }
 @media (prefers-reduced-motion: no-preference) {
-  #opening[data-flooding] .opening__second { background: transparent; }
-  #opening[data-flooding] .opening__flood span { transform-origin: 50% 0; }
+  #opening [data-flood-rise] { animation: opening-up .9s cubic-bezier(.2,.7,.2,1) backwards; }
+  #opening .opening__statement .m-text { animation-delay: .12s; }
+  #opening .rw-cta { animation-delay: .22s; }
+  #opening .opening__facts li:nth-child(1) { animation-delay: .32s; }
+  #opening .opening__facts li:nth-child(2) { animation-delay: .4s; }
+  #opening .opening__facts li:nth-child(3) { animation-delay: .48s; }
+  #opening .opening__column img { animation: opening-scale 1.4s cubic-bezier(.2,.7,.2,1) backwards; }
 }
 }
 </style>
@@ -948,15 +967,6 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
   #seasons .season__photo { grid-column: 1 / -1; grid-row: 2; }
   #seasons .season__months { grid-column: 1; grid-row: 3; padding: 22px 12px 7svh var(--space-1); }
   #seasons .season__note { grid-column: 2; grid-row: 3; padding: 22px var(--space-1) 7svh 12px; font-size: 14px; }
-}
-}
-</style>
-<style data-8b-part="scene-style:seasons">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #seasons[data-track] .seasons__viewport { height: 100svh; overflow: hidden; }
-  #seasons[data-track] .seasons__track { display: flex; width: max-content; height: 100%; }
-  #seasons[data-track] .season { flex: none; width: 100vw; height: 100%; min-height: 0; }
 }
 }
 </style>
@@ -1220,19 +1230,158 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#nav .nav__logo { transition: box-shadow .4s ease, background-color .4s ease; }
-#nav:not(.is-off-top) .nav__logo { background: var(--color-2); } /* the orange chip vanished on the orange opening */
-#opening .rw-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; }
-@media (prefers-reduced-motion: no-preference) {
-  #opening [data-flood-rise] { animation: opening-up .9s cubic-bezier(.2,.7,.2,1) backwards; }
-  #opening .opening__statement .m-text { animation-delay: .12s; }
-  #opening .rw-cta { animation-delay: .22s; }
-  #opening .opening__facts li:nth-child(1) { animation-delay: .32s; }
-  #opening .opening__facts li:nth-child(2) { animation-delay: .4s; }
-  #opening .opening__facts li:nth-child(3) { animation-delay: .48s; }
-  #opening .opening__column img { animation: opening-scale 1.4s cubic-bezier(.2,.7,.2,1) backwards; }
-}</style>
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); --ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); }
+[data-8b-live] [data-8b-motion~="rise"] .line__in { animation-name: motion-rise-line-in-translate; animation-duration: 1.05s; animation-delay: calc(0s + 0.09s * var(--i)); animation-timing-function: var(--ease-power3-out); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"].is-in .line__in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"] { animation-name: motion-rule-scale; animation-duration: 1.1s; animation-delay: calc(0s + var(--rule-delay, 0s)); animation-timing-function: var(--ease-power3-inout); animation-fill-mode: both; animation-play-state: paused; transform: none; transform-origin: 0% 50%; }
+[data-8b-live] [data-8b-motion~="rule"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="steps"] { animation-name: motion-steps-clippath; animation-duration: 1.25s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="steps"].is-in { animation-play-state: running; }
+@keyframes motion-rise-line-in-translate { 0% { translate: 0px calc(108% + 0.1296em); } 100% { translate: 0px 0px; } }
+@keyframes motion-rule-scale { 0% { scale: 0 1; } 100% { scale: 1; } }
+@keyframes motion-steps-clippath { 0% { clip-path: polygon(0% 100%, 25% 100%, 25% 122%, 50% 122%, 50% 144%, 75% 144%, 75% 166%, 100% 166%, 100% 400%, 0% 400%); } 99.998% { clip-path: polygon(0% -66%, 25% -66%, 25% -44%, 50% -44%, 50% -22%, 75% -22%, 75% 0%, 100% 0%, 100% 400%, 0% 400%); } 100% { clip-path: none; } }
+}
+</style>
+<style data-8b-part="scene:opening">
+</style>
+<style data-8b-part="scene:seasons">
+@layer scenes {
+[data-8b-live] #seasons { --seasons-ease-out: linear(0, 0.0731, 0.1426, 0.2085, 0.271, 0.3301, 0.3859, 0.4385, 0.488, 0.5345, 0.5781, 0.6189, 0.657, 0.6925, 0.7254, 0.7559, 0.784, 0.8099, 0.8336, 0.8553, 0.875, 0.8928, 0.9089, 0.9232, 0.936, 0.9473, 0.9571, 0.9657, 0.973, 0.9792, 0.9844, 0.9886, 0.992, 0.9946, 0.9966, 0.998, 0.999, 0.9996, 0.9999, 1, 1); --seasons-ease-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #seasons .seasons__viewport { position: sticky; top: 0%; height: 100svh; overflow: hidden; }
+[data-8b-live] #seasons .seasons__track { display: flex; width: max-content; height: 100%; }
+[data-8b-live] #seasons .season { flex: none; width: 100vw; height: 100%; min-height: 0; }
+[data-8b-live] #seasons .seasons-viewport-room { view-timeline: --seasons-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #seasons .seasons-viewport-room > .seasons-viewport-room-space { height: 300vw; }
+[data-8b-live] #seasons .seasons__track { animation-name: seasons-track; animation-timeline: --seasons-t1; animation-range: cover 100vh cover calc(100vh + 300vw); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #seasons .season:not(:first-child) > .season__word, [data-8b-live] #seasons .season:not(:first-child) > .season__photo, [data-8b-live] #seasons .season:not(:first-child) > .season__photo > img { --seasons-from: calc(100vh + (var(--i) - 1) * 100vw); animation-timeline: --seasons-t1; animation-range: cover var(--seasons-from) cover calc(var(--seasons-from) + 100vw); animation-fill-mode: both; }
+[data-8b-live] #seasons .season:not(:first-child) > .season__word { animation-name: seasons-word; animation-range: cover var(--seasons-from) cover calc(var(--seasons-from) + 85vw); animation-timing-function: var(--seasons-ease-out); }
+[data-8b-live] #seasons .season:not(:first-child) > .season__photo { animation-name: seasons-photo; animation-timing-function: var(--seasons-ease-inout); }
+[data-8b-live] #seasons .season:not(:first-child) > .season__photo > img { animation-name: seasons-image; animation-timing-function: linear; }
+@keyframes seasons-track { from { translate: 0px 0px; } to { translate: -75% 0px; } }
+@keyframes seasons-word { from { translate: 38% 0px; } to { translate: 0px 0px; } }
+@keyframes seasons-photo { 0% { clip-path: inset(0% 56% 0% 0%); } 99.98% { clip-path: inset(0% 0% 0% 0%); } 99.99%, 100% { clip-path: none; } }
+@keyframes seasons-image { from { scale: 1.3; } to { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:handover">
+@layer scenes {
+[data-8b-live] #handover .handover__item { animation-name: handover-item; animation-fill-mode: both; }
+@keyframes handover-item { from { translate: var(--handover-x) var(--handover-y); rotate: var(--handover-r); } to { translate: 0px 0px; rotate: 0deg; } }
+@media (min-width: 761px) {
+  [data-8b-live] #handover .handover-stage-room { view-timeline: --handover-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #handover .handover__stage { position: sticky; top: 0%; }
+  [data-8b-live] #handover .handover-stage-room > .handover-stage-room-space { height: 150vh; }
+  [data-8b-live] #handover .handover__item { --handover-span: calc(150vh / (0.42 + 0.06 * var(--n))); animation-timeline: --handover-t1; animation-range: cover calc(100vh + var(--handover-span) * (0.08 + 0.06 * var(--i))) cover calc(100vh + var(--handover-span) * (0.48 + 0.06 * var(--i))); animation-timing-function: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #handover .handover__item { animation-timeline: view(block 0px); animation-range: cover 0px cover 38vh; animation-timing-function: linear(0, 0.0731, 0.1426, 0.2085, 0.271, 0.3301, 0.3859, 0.4385, 0.488, 0.5345, 0.5781, 0.6189, 0.657, 0.6925, 0.7254, 0.7559, 0.784, 0.8099, 0.8336, 0.8553, 0.875, 0.8928, 0.9089, 0.9232, 0.936, 0.9473, 0.9571, 0.9657, 0.973, 0.9792, 0.9844, 0.9886, 0.992, 0.9946, 0.9966, 0.998, 0.999, 0.9996, 0.9999, 1, 1); }
+}
+}
+</style>
+<style data-8b-part="scene:day">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #day { timeline-scope: --day-t2, --day-t3, --day-t4, --day-t5, --day-t6, --day-t7, --day-t8; }
+[data-8b-live] #day .day__rows > .hour { view-timeline-inset: 0; }
+[data-8b-live] #day .day__rows > li:nth-of-type(1) { view-timeline: --day-item block; }
+[data-8b-live] #day .day__rows > li:nth-of-type(2) { view-timeline: --day-item block, --day-t2 block; }
+[data-8b-live] #day .day__rows > li:nth-of-type(3) { view-timeline: --day-item block, --day-t3 block; }
+[data-8b-live] #day .day__rows > li:nth-of-type(4) { view-timeline: --day-item block, --day-t4 block; }
+[data-8b-live] #day .day__rows > li:nth-of-type(5) { view-timeline: --day-item block, --day-t5 block; }
+[data-8b-live] #day .day__rows > li:nth-of-type(6) { view-timeline: --day-item block, --day-t6 block; }
+[data-8b-live] #day .day__rows > li:nth-of-type(7) { view-timeline: --day-item block, --day-t7 block; }
+[data-8b-live] #day .day__rows > li:nth-of-type(8) { view-timeline: --day-item block, --day-t8 block; }
+[data-8b-live] #day .day__rows > .hour > .hour__time, [data-8b-live] #day .day__frame > img:nth-of-type(-n+8) { animation-fill-mode: both; transform: none; }
+[data-8b-live] #day .day__rows > .hour > .hour__time { animation-name: day-p-hour-time-scale; animation-timeline: --day-item; animation-range: cover 0% cover 100%; animation-timing-function: linear; }
+[data-8b-live] #day .day__frame > img:nth-of-type(-n+8) { animation-range: cover 15vh cover 60vh; }
+[data-8b-live] #day .day__frame > img:nth-of-type(8) { animation-name: day-div-day-frame-img-translate; animation-timeline: --day-t2; animation-timing-function: var(--ease-power2-inout); }
+[data-8b-live] #day .day__frame > img:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5), :nth-of-type(6), :nth-of-type(7)) { animation-name: day-div-day-frame-img-scale, day-div-day-frame-img-translate; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1), var(--ease-power2-inout); translate: 0px -101%; }
+[data-8b-live] #day .day__frame > img:nth-of-type(7) { animation-timeline: --day-t2, --day-t3; }
+[data-8b-live] #day .day__frame > img:nth-of-type(6) { animation-timeline: --day-t3, --day-t4; }
+[data-8b-live] #day .day__frame > img:nth-of-type(5) { animation-timeline: --day-t4, --day-t5; }
+[data-8b-live] #day .day__frame > img:nth-of-type(4) { animation-timeline: --day-t5, --day-t6; }
+[data-8b-live] #day .day__frame > img:nth-of-type(3) { animation-timeline: --day-t6, --day-t7; }
+[data-8b-live] #day .day__frame > img:nth-of-type(2) { animation-timeline: --day-t7, --day-t8; }
+[data-8b-live] #day .day__frame > img:nth-of-type(1) { animation-name: day-div-day-frame-img-scale; animation-timeline: --day-t8; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); }
+@keyframes day-p-hour-time-scale { 0% { scale: 0.42; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 36% { scale: 1; } 64% { scale: 1; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0); } 100% { scale: 0.42; } }
+@keyframes day-div-day-frame-img-translate { 0% { translate: 0px 0px; } 100% { translate: 0px -101%; } }
+@keyframes day-div-day-frame-img-scale { 0% { scale: 1.12; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:weddings">
+@layer scenes {
+[data-8b-live] { --ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); }
+[data-8b-live] #weddings { timeline-scope: --weddings-t1, --weddings-t2, --weddings-t3, --weddings-t4; }
+[data-8b-live] #weddings .mosaic > .wedding > .wedding__card { view-timeline-inset: 0; animation-timing-function: var(--ease-power3-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #weddings .wedding--a > .wedding__card { view-timeline: --weddings-t1 block; animation-timeline: --weddings-t1; animation-range: cover 8vh cover 70vh; }
+[data-8b-live] #weddings .wedding--b > .wedding__card { view-timeline: --weddings-t2 block; animation-timeline: --weddings-t2; animation-range: cover 20vh cover 82vh; }
+[data-8b-live] #weddings .wedding--c > .wedding__card { view-timeline: --weddings-t3 block; animation-timeline: --weddings-t3; animation-range: cover 8vh cover 70vh; }
+[data-8b-live] #weddings .wedding--d > .wedding__card { view-timeline: --weddings-t4 block; animation-timeline: --weddings-t4; animation-range: cover 20vh cover 82vh; }
+[data-8b-live] #weddings .mosaic > .wedding > .wedding__photo { animation-timing-function: var(--ease-power3-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #weddings .wedding--a > .wedding__photo { animation-timeline: --weddings-t1; animation-range: cover 8vh cover 70vh; }
+[data-8b-live] #weddings .wedding--b > .wedding__photo { animation-timeline: --weddings-t2; animation-range: cover 20vh cover 82vh; }
+[data-8b-live] #weddings .wedding--c > .wedding__photo { animation-timeline: --weddings-t3; animation-range: cover 8vh cover 70vh; }
+[data-8b-live] #weddings .wedding--d > .wedding__photo { animation-timeline: --weddings-t4; animation-range: cover 20vh cover 82vh; }
+@keyframes weddings-div-wedding-card-translate-d { 0% { translate: 127.2727% 0px; } 100% { translate: 0px 0px; } }
+@keyframes weddings-div-wedding-card-translate-m { 0% { translate: 100.267% 0px; } 100% { translate: 0px 0px; } }
+@keyframes weddings-figure-wedding-photo-translate-d { 0% { translate: -78.5714% 0px; } 100% { translate: 0px 0px; } }
+@keyframes weddings-figure-wedding-photo-translate-m { 0% { translate: -100.267% 0px; } 100% { translate: 0px 0px; } }
+@media (min-width: 761px) {
+  [data-8b-live] #weddings .wedding--a > .wedding__card, [data-8b-live] #weddings .wedding--b > .wedding__card { animation-name: weddings-div-wedding-card-translate-d; }
+  [data-8b-live] #weddings .wedding--c > .wedding__card, [data-8b-live] #weddings .wedding--d > .wedding__card, [data-8b-live] #weddings .wedding--a > .wedding__photo, [data-8b-live] #weddings .wedding--b > .wedding__photo { animation-name: weddings-figure-wedding-photo-translate-d; }
+  [data-8b-live] #weddings .wedding--c > .wedding__photo, [data-8b-live] #weddings .wedding--d > .wedding__photo { animation-name: weddings-div-wedding-card-translate-d; }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #weddings .wedding--a > .wedding__card, [data-8b-live] #weddings .wedding--b > .wedding__card { animation-name: weddings-div-wedding-card-translate-m; }
+  [data-8b-live] #weddings .wedding--c > .wedding__card, [data-8b-live] #weddings .wedding--d > .wedding__card, [data-8b-live] #weddings .wedding--a > .wedding__photo, [data-8b-live] #weddings .wedding--b > .wedding__photo { animation-name: weddings-figure-wedding-photo-translate-m; }
+  [data-8b-live] #weddings .wedding--c > .wedding__photo, [data-8b-live] #weddings .wedding--d > .wedding__photo { animation-name: weddings-div-wedding-card-translate-m; }
+}
+}
+</style>
+<style data-8b-part="scene:words">
+@layer scenes {
+[data-8b-live] #words { timeline-scope: --words-t1, --words-t2, --words-t3; }
+[data-8b-live] #words .quote--black, [data-8b-live] #words .quote--grey, [data-8b-live] #words .quote--orange { animation-name: words-figure-quote-scale; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #words .quote--black { view-timeline: --words-t1 block; view-timeline-inset: 0; animation-timeline: --words-t2; }
+[data-8b-live] #words .quote--grey { view-timeline: --words-t2 block; view-timeline-inset: 0; animation-timeline: --words-t3; }
+[data-8b-live] #words .quote--white { view-timeline: --words-t3 block; view-timeline-inset: 0; }
+[data-8b-live] #words .quote--orange { animation-timeline: --words-t1; }
+@keyframes words-figure-quote-scale { 0% { scale: 1; } 100% { scale: 0.92; } }
+@media (min-width: 761px) {
+  [data-8b-live] #words .quote--black { animation-range: cover 0% cover calc(100vh - 132px); }
+  [data-8b-live] #words .quote--grey { animation-range: cover 0% cover calc(100vh - 150px); }
+  [data-8b-live] #words .quote--orange { animation-range: cover 0% cover calc(100vh - 114px); }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #words .quote--black { animation-range: cover 0% cover calc(100vh - 105.2px); }
+  [data-8b-live] #words .quote--grey { animation-range: cover 0% cover calc(100vh - 117.2px); }
+  [data-8b-live] #words .quote--orange { animation-range: cover 0% cover calc(100vh - 93.2px); }
+}
+}
+</style>
+<style data-8b-part="scene:journal">
+@layer scenes {
+[data-8b-live] #journal .journal__grid > .note { animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #journal .journal__grid > .note > .note__photo > img { animation-name: journal-figure-note-photo-img-scale; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes journal-article-note-translate-d { 0% { translate: 0px var(--journal-article-note-translate-from-2, 14vh); } 100% { translate: 0px 0px; } }
+@keyframes journal-article-note-translate-m { 0% { translate: 0px 90px; } 100% { translate: 0px 0px; } }
+@keyframes journal-figure-note-photo-img-scale { 0% { scale: 1.22; } 100% { scale: 1; } }
+@media (min-width: 761px) {
+  [data-8b-live] #journal { view-timeline: --journal-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #journal .journal__grid > .note { animation-name: journal-article-note-translate-d; animation-timeline: --journal-t1; animation-range: cover 15vh cover 90vh; }
+  [data-8b-live] #journal .journal__grid > .note > .note__photo > img { animation-timeline: --journal-t1; animation-range: cover 15vh cover 90vh; }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #journal .journal__grid > .note { view-timeline: --journal-item block; view-timeline-inset: 0; animation-name: journal-article-note-translate-m; animation-timeline: --journal-item; animation-range: cover 0% cover 50vh; }
+  [data-8b-live] #journal .journal__grid > .note > .note__photo > img { animation-timeline: --journal-item; animation-range: cover 0% cover 50vh; }
+}
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: top bar with the logo, a Check your date button and a dot-grid menu button; full-screen menu with ten links, email and phone -->
@@ -1246,7 +1395,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
     </button>
   </div>
   </div>
-<div id="menu" class="menu" data-lenis-prevent hidden role="dialog" aria-modal="true" aria-label="Menu">
+<div id="menu" class="menu" hidden role="dialog" aria-modal="true" aria-label="Menu">
   <div class="menu__top">
     <a class="menu__brand" href="#opening">Aubade</a>
     <button class="m-icon-btn-2 menu__close" type="button" aria-label="Close the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
@@ -1271,7 +1420,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 </div>
 </header>
 <main>
-<!-- opening: orange colour field with the h1, a booking button, a tall couple photo and three facts -->
+<!-- opening: orange colour field with the h1, a booking button, a tall couple photo and three facts (animation: scene:opening) -->
 <section id="opening" class="opening" data-8b-section="opening" aria-label="Aubade, garden wedding planners">
   
   <div class="opening__second l-grid">
@@ -1281,7 +1430,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
       <p class="m-text" data-flood-rise>We plan garden, orchard and glasshouse weddings around Bath. Not a package and not a mood board: a day built from the season you marry in, the people you love and a proper plan for the rain.</p>
       <div class="rw-cta" data-flood-rise><a class="m-btn" href="#contact"><span class="m-btn__label">Tell us your date</span></a><a class="m-link" href="#planning"><span class="m-link__label">How we plan</span><svg class="m-link__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a></div>
     </div>
-    <figure class="opening__column"><img style="background:#404026" src="https://images.unsplash.com/photo-1775126964899-ae7b573d77e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8YnJpZGUlMjBhbmQlMjBncm9vbXxlbnwxfDF8fHwxNzkxNDA3ODIzfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=600&q=60" alt="A bride lifting her veil as she walks across a garden lawn with the groom" width="3934" height="5245" loading="lazy"></figure>
+    <figure class="opening__column"><img fetchpriority="high" src="https://images.unsplash.com/photo-1775126964899-ae7b573d77e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8YnJpZGUlMjBhbmQlMjBncm9vbXxlbnwxfDF8fHwxNzkxNDA3ODIzfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=600&q=60" alt="A bride lifting her veil as she walks across a garden lawn with the groom" width="3934" height="5245"></figure>
     <ul class="opening__facts">
       <li data-flood-rise><h3 class="m-text-5">Gardens, orchards, glasshouses</h3><p class="m-text-2">Within ninety minutes of Bath, from walled kitchen gardens to old Victorian glass.</p></li>
       <li data-flood-rise><h3 class="m-text-5">One planner from the first call</h3><p class="m-text-2">Nell or Theo, start to finish. Nobody hands you over to a coordinator.</p></li>
@@ -1292,12 +1441,12 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 <!-- planning: three planning packages as rows with price, inclusions and timing -->
 <section id="planning" class="planning" data-8b-section="planning">
   <div class="planning__head l-grid">
-    <h2 class="m-text-4" data-8b-motion="rise">Three ways to plan a garden wedding</h2>
+    <h2 class="m-text-4" data-8b-motion="rise" data-8b-split="lines">Three ways to plan a garden wedding</h2>
     <p class="m-text">Every wedding gets one planner, a written run sheet and a rain plan. What changes is how early we start and how much you would rather not carry.</p>
   </div>
-  <div class="planning__list">
+  <div class="planning__list" data-8b-items=":scope > .plan">
     <article class="plan l-grid">
-      <span class="plan__rule" data-8b-motion="rule" aria-hidden="true"></span>
+      <span class="plan__rule" data-8b-motion="rule" aria-hidden="true" style="--rule-delay: 0s"></span>
       <div class="plan__name">
         <h3 class="m-text-6">Full planning</h3>
         <p class="plan__price m-text-5">from £7,400</p>
@@ -1317,7 +1466,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
       </div>
     </article>
     <article class="plan l-grid">
-      <span class="plan__rule" data-8b-motion="rule" aria-hidden="true"></span>
+      <span class="plan__rule" data-8b-motion="rule" aria-hidden="true" style="--rule-delay: 0.06s"></span>
       <div class="plan__name">
         <h3 class="m-text-6">Partial planning</h3>
         <p class="plan__price m-text-5">from £4,200</p>
@@ -1336,7 +1485,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
       </div>
     </article>
     <article class="plan l-grid">
-      <span class="plan__rule" data-8b-motion="rule" aria-hidden="true"></span>
+      <span class="plan__rule" data-8b-motion="rule" aria-hidden="true" style="--rule-delay: 0.12s"></span>
       <div class="plan__name">
         <h3 class="m-text-6">The day itself</h3>
         <p class="plan__price m-text-5">from £1,900</p>
@@ -1354,16 +1503,16 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
       </div>
     </article>
   </div>
-  <div class="planning__end" aria-hidden="true"><span class="plan__rule" data-8b-motion="rule"></span></div>
+  <div class="planning__end" aria-hidden="true"><span class="plan__rule" data-8b-motion="rule" style="--rule-delay: 0.18s"></span></div>
 </section>
 <!-- seasons: four colour fields in a horizontal track, one per season, with a flower photo and a giant season word (animation: scene:seasons) -->
 <section id="seasons" class="seasons" data-8b-section="seasons">
   <div class="seasons__head l-grid">
-    <h2 class="m-text-4" data-8b-motion="rise">Every wedding starts with a flower in season</h2>
+    <h2 class="m-text-4" data-8b-motion="rise" data-8b-split="lines">Every wedding starts with a flower in season</h2>
     <p class="m-text">We build each day from what our growers are cutting that month, then let the flower choose the linen, the light and the hour of the ceremony.</p>
   </div>
   <div class="seasons__viewport">
-    <div class="seasons__track">
+    <div class="seasons__track" data-8b-items=":scope > .season" data-8b-fixed="4">
       <article class="season season--spring">
         <div class="season__months">
           <p class="m-text-5">March to May</p>
@@ -1371,7 +1520,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
         </div>
         <p class="season__note m-text">Pale linen, bare tables and a ceremony at noon, when the light is kind and the orchard is still cold in the shade.</p>
         <h3 class="season__word m-text-3" style="--len:6">Spring</h3>
-        <figure class="season__photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1681217626251-abcb4dc1c9e4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8d2hpdGUlMjBuYXJjaXNzdXMlMjBmbG93ZXJzfGVufDF8MHx8fDE3OTE0MDgwNDB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=60" alt="White double narcissus flowers on a pale grey background" width="7086" height="4724" loading="lazy"></figure>
+        <figure class="season__photo"><img src="https://images.unsplash.com/photo-1681217626251-abcb4dc1c9e4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8d2hpdGUlMjBuYXJjaXNzdXMlMjBmbG93ZXJzfGVufDF8MHx8fDE3OTE0MDgwNDB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=60" alt="White double narcissus flowers on a pale grey background" width="7086" height="4724" loading="lazy"></figure>
       </article>
       <article class="season season--summer">
         <div class="season__months">
@@ -1380,7 +1529,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
         </div>
         <p class="season__note m-text">Long tables outside, dinner at eight, and the first dance timed to the last of the light at half past nine.</p>
         <h3 class="season__word m-text-3" style="--len:6">Summer</h3>
-        <figure class="season__photo"><img style="background:#d98ca6" src="https://images.unsplash.com/photo-1771142169235-70f00cab62f8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBhc3RlbCUyMGZsb3dlciUyMGJvdXF1ZXQlMjB3aGl0ZSUyMGJhY2tncm91bmR8ZW58MXwxfHx8MTc5MTQwNzgxOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="A dense bunch of soft pink and cream garden roses" width="4480" height="6720" loading="lazy"></figure>
+        <figure class="season__photo"><img src="https://images.unsplash.com/photo-1771142169235-70f00cab62f8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBhc3RlbCUyMGZsb3dlciUyMGJvdXF1ZXQlMjB3aGl0ZSUyMGJhY2tncm91bmR8ZW58MXwxfHx8MTc5MTQwNzgxOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=840&amp;q=60" alt="A dense bunch of soft pink and cream garden roses" width="4480" height="6720" loading="lazy"></figure>
       </article>
       <article class="season season--autumn">
         <div class="season__months">
@@ -1389,7 +1538,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
         </div>
         <p class="season__note m-text">Orchards heavy with fruit, a ceremony at two, candles lit by five and a fire pit for the speeches.</p>
         <h3 class="season__word m-text-3" style="--len:6">Autumn</h3>
-        <figure class="season__photo"><img style="background:#c00c0c" src="https://images.unsplash.com/photo-1726931302935-72ac77e2b536?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fG9yYW5nZSUyMGRhaGxpYXxlbnwxfDB8fHwxNzkxNDA4MDQyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=970&amp;q=60" alt="A single orange dahlia in full bloom against a black background" width="5531" height="4575" loading="lazy"></figure>
+        <figure class="season__photo"><img src="https://images.unsplash.com/photo-1726931302935-72ac77e2b536?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fG9yYW5nZSUyMGRhaGxpYXxlbnwxfDB8fHwxNzkxNDA4MDQyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1260&amp;q=60" alt="A single orange dahlia in full bloom against a black background" width="5531" height="4575" loading="lazy"></figure>
       </article>
       <article class="season season--winter">
         <div class="season__months">
@@ -1398,7 +1547,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
         </div>
         <p class="season__note m-text">Glasshouses warmed for the day, dark red on white cloth, and everyone inside by four with something hot.</p>
         <h3 class="season__word m-text-3" style="--len:6">Winter</h3>
-        <figure class="season__photo"><img style="background:#730c0c" src="https://images.unsplash.com/photo-1610231726533-3703698b13a7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZGFyayUyMHJlZCUyMGZsb3dlcnMlMjBibGFjayUyMGJhY2tncm91bmR8ZW58MXwwfHx8MTc5MTQwODA0NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=60" alt="A red amaryllis flower open against a black background" width="3840" height="2560" loading="lazy"></figure>
+        <figure class="season__photo"><img src="https://images.unsplash.com/photo-1610231726533-3703698b13a7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZGFyayUyMHJlZCUyMGZsb3dlcnMlMjBibGFjayUyMGJhY2tncm91bmR8ZW58MXwwfHx8MTc5MTQwODA0NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1560&amp;q=60" alt="A red amaryllis flower open against a black background" width="3840" height="2560" loading="lazy"></figure>
       </article>
     </div>
   </div>
@@ -1421,7 +1570,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
     </div>
     <div class="handover__ours">
       <h3 class="m-text-5">Comes to us</h3>
-      <ol class="handover__list">
+      <ol class="handover__list" data-8b-items=":scope > .handover__item">
         <li class="handover__item m-text-5">Venue visits and the shortlist</li>
         <li class="handover__item m-text-5">Supplier contracts and deposits</li>
         <li class="handover__item m-text-5">The budget, kept monthly</li>
@@ -1439,21 +1588,21 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 <!-- day: a wedding day hour by hour beside a sticky frame of eight photos that change with the hour (animation: scene:day) -->
 <section id="day" class="day" data-8b-section="day">
   <div class="day__head l-grid">
-    <h2 class="m-text-4" data-8b-motion="rise">From first light to the last song</h2>
+    <h2 class="m-text-4" data-8b-motion="rise" data-8b-split="lines">From first light to the last song</h2>
     <p class="m-text">An aubade is a song for lovers at dawn. Our wedding days start there: we are on site before sunrise, leave after the last guest, and in between the day is written down to the minute.</p>
   </div>
   <div class="day__body l-grid">
     <div class="day__frame">
-      <img style="background:#260c0c" src="https://images.unsplash.com/photo-1768777272462-20dc1e62bb9b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHdlZGRpbmclMjByZWNlcHRpb24lMjBuaWdodCUyMGRhbmNpbmd8ZW58MXwwfHx8MTc5MTQwNzg1MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=60" alt="The couple's last dance between two lines of guests holding sparklers" width="6016" height="4016" loading="lazy">
-      <img style="background:#26260c" src="https://images.unsplash.com/photo-1680884150120-c944d0143401?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Z29sZGVuJTIwaG91ciUyMGNvdXBsZSUyMGZpZWxkfGVufDF8MXx8fDE3OTE0MDc4NTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="Bride and groom dancing in a field against the setting sun" width="2779" height="4160" loading="lazy">
-      <img style="background:#26260c" src="https://images.unsplash.com/photo-1734705797907-a2ad9e6c71a2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Z3JlZW5ob3VzZSUyMHdlZGRpbmclMjBkaW5uZXJ8ZW58MXwwfHx8MTc5MTQwODA0NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=60" alt="A long dinner table laid with candles and flowers inside a glasshouse" width="5908" height="3944" loading="lazy">
-      <img style="background:#262626" src="https://images.unsplash.com/photo-1790175075280-a468a981bde5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d2VkZGluZyUyMGd1ZXN0cyUyMGdhcmRlbiUyMGRyaW5rc3xlbnwxfDB8fHwxNzkxNDA4MDc5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=60" alt="Two guests in formal clothes raising glasses on a terrace beside a rose bush" width="6240" height="4160" loading="lazy">
-      <img style="background:#26260c" src="https://images.unsplash.com/photo-1758810411905-04fb6f9396e1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Z2FyZGVuJTIwd2VkZGluZyUyMGNlcmVtb255fGVufDF8MHx8fDE3OTE0MDc4MjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=60" alt="A garden ceremony with guests seated on both sides of the couple under the trees" width="7008" height="4672" loading="lazy">
-      <img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1630943909367-9c8fe4d08660?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGJyaWRlJTIwZ2V0dGluZyUyMHJlYWR5JTIwd2luZG93fGVufDF8MXx8fDE3OTE0MDgwNDZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="Black and white photograph of a bride by a tall window while a friend arranges her veil" width="3493" height="5240" loading="lazy">
-      <img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1782038522784-ff40103903e2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGZsb3Jpc3QlMjBhcnJhbmdpbmclMjBmbG93ZXJzfGVufDF8MHx8fDE3OTEzNjU1MDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=60" alt="A florist's hands arranging pale peonies in soft morning light" width="6000" height="4000" loading="lazy">
-      <img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1565184574946-e0f3dc05d30a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bWlzdHklMjBnYXJkZW4lMjBzdW5yaXNlfGVufDF8MXx8fDE3OTE0MDc4NTJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="A garden in morning fog with the sun a pale disc above the trees" width="2624" height="3450" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1768777272462-20dc1e62bb9b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHdlZGRpbmclMjByZWNlcHRpb24lMjBuaWdodCUyMGRhbmNpbmd8ZW58MXwwfHx8MTc5MTQwNzg1MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1080&amp;q=60" alt="The couple's last dance between two lines of guests holding sparklers" width="6016" height="4016" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1680884150120-c944d0143401?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Z29sZGVuJTIwaG91ciUyMGNvdXBsZSUyMGZpZWxkfGVufDF8MXx8fDE3OTE0MDc4NTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=700&amp;q=60" alt="Bride and groom dancing in a field against the setting sun" width="2779" height="4160" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1734705797907-a2ad9e6c71a2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Z3JlZW5ob3VzZSUyMHdlZGRpbmclMjBkaW5uZXJ8ZW58MXwwfHx8MTc5MTQwODA0NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1080&amp;q=60" alt="A long dinner table laid with candles and flowers inside a glasshouse" width="5908" height="3944" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1790175075280-a468a981bde5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d2VkZGluZyUyMGd1ZXN0cyUyMGdhcmRlbiUyMGRyaW5rc3xlbnwxfDB8fHwxNzkxNDA4MDc5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1080&amp;q=60" alt="Two guests in formal clothes raising glasses on a terrace beside a rose bush" width="6240" height="4160" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1758810411905-04fb6f9396e1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Z2FyZGVuJTIwd2VkZGluZyUyMGNlcmVtb255fGVufDF8MHx8fDE3OTE0MDc4MjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1080&amp;q=60" alt="A garden ceremony with guests seated on both sides of the couple under the trees" width="7008" height="4672" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1630943909367-9c8fe4d08660?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGJyaWRlJTIwZ2V0dGluZyUyMHJlYWR5JTIwd2luZG93fGVufDF8MXx8fDE3OTE0MDgwNDZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=700&amp;q=60" alt="Black and white photograph of a bride by a tall window while a friend arranges her veil" width="3493" height="5240" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1782038522784-ff40103903e2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGZsb3Jpc3QlMjBhcnJhbmdpbmclMjBmbG93ZXJzfGVufDF8MHx8fDE3OTEzNjU1MDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1080&amp;q=60" alt="A florist's hands arranging pale peonies in soft morning light" width="6000" height="4000" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1565184574946-e0f3dc05d30a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bWlzdHklMjBnYXJkZW4lMjBzdW5yaXNlfGVufDF8MXx8fDE3OTE0MDc4NTJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="A garden in morning fog with the sun a pale disc above the trees" width="2624" height="3450" loading="lazy">
     </div>
-    <ol class="day__rows">
+    <ol class="day__rows" data-8b-items=":scope > .hour" data-8b-fixed="8">
       <li class="hour"><p class="hour__time m-text-3">05:40</p><div class="hour__text"><h3 class="m-text-5">First light</h3><p class="m-text-2">We arrive with the growers' buckets and the coffee. The garden is still grey and nobody is awake but the birds.</p></div></li>
       <li class="hour"><p class="hour__time m-text-3">08:00</p><div class="hour__text"><h3 class="m-text-5">Flowers in</h3><p class="m-text-2">Arches, tables and the bouquet are built on site from what was cut yesterday evening.</p></div></li>
       <li class="hour"><p class="hour__time m-text-3">11:30</p><div class="hour__text"><h3 class="m-text-5">Getting ready</h3><p class="m-text-2">Hair, make-up and a quiet hour. One of us is with you, the other is with everyone else.</p></div></li>
@@ -1468,17 +1617,17 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 <!-- weddings: four weddings as a mosaic of colour cards and photos (animation: scene:weddings) -->
 <section id="weddings" class="weddings" data-8b-section="weddings">
   <div class="weddings__head l-grid">
-    <h2 class="m-text-4" data-8b-motion="rise">Weddings we have planned</h2>
+    <h2 class="m-text-4" data-8b-motion="rise" data-8b-split="lines">Weddings we have planned</h2>
     <p class="m-text">A few of last year's eighteen. Every one had a different garden, a different flower and, twice, a different plan for the rain.</p>
   </div>
-  <div class="mosaic l-grid">
+  <div class="mosaic l-grid" data-8b-items=":scope > .wedding" data-8b-fixed="4">
     <article class="wedding wedding--a">
       <div class="wedding__card">
         <h3 class="m-text-6">Hattie &amp; Sol</h3>
         <p class="m-text-5">Walled garden, Frome · June</p>
         <p class="m-text-2">Sweet peas grown for them since March, and dinner on the lawn under the old pear tree.</p>
       </div>
-      <figure class="wedding__photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1775126964550-122cc9c1ecaf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8YnJpZGUlMjBhbmQlMjBncm9vbSUyMGdhcmRlbnxlbnwxfDF8fHwxNzkxNDA3ODQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Bride and groom standing on a gravel path between rose beds in a walled garden" width="3635" height="4846" loading="lazy"></figure>
+      <figure class="wedding__photo"><img src="https://images.unsplash.com/photo-1775126964550-122cc9c1ecaf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8YnJpZGUlMjBhbmQlMjBncm9vbSUyMGdhcmRlbnxlbnwxfDF8fHwxNzkxNDA3ODQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Bride and groom standing on a gravel path between rose beds in a walled garden" width="3635" height="4846" loading="lazy"></figure>
     </article>
     <article class="wedding wedding--b">
       <div class="wedding__card">
@@ -1486,10 +1635,10 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
         <p class="m-text-5">Woodland lawn, Bruton · September</p>
         <p class="m-text-2">A ceremony between the beeches, dahlias in every colour of the month and a fire pit for the speeches.</p>
       </div>
-      <figure class="wedding__photo"><img style="background:#735940" src="https://images.unsplash.com/photo-1775126964441-118f83a7d60d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YnJpZGUlMjBhbmQlMjBncm9vbSUyMGdhcmRlbnxlbnwxfDF8fHwxNzkxNDA3ODQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Bride and groom walking hand in hand along a path through tall trees" width="3197" height="4263" loading="lazy"></figure>
+      <figure class="wedding__photo"><img src="https://images.unsplash.com/photo-1775126964441-118f83a7d60d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YnJpZGUlMjBhbmQlMjBncm9vbSUyMGdhcmRlbnxlbnwxfDF8fHwxNzkxNDA3ODQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Bride and groom walking hand in hand along a path through tall trees" width="3197" height="4263" loading="lazy"></figure>
     </article>
     <article class="wedding wedding--c">
-      <figure class="wedding__photo"><img style="background:#405926" src="https://images.unsplash.com/photo-1777918176415-f4d9a967efc7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8YnJpZGUlMjBhbmQlMjBncm9vbSUyMGdhcmRlbnxlbnwxfDF8fHwxNzkxNDA3ODQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A couple resting on a grassy lawn, the bride holding a bouquet, seen from above" width="2000" height="3008" loading="lazy"></figure>
+      <figure class="wedding__photo"><img src="https://images.unsplash.com/photo-1777918176415-f4d9a967efc7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8YnJpZGUlMjBhbmQlMjBncm9vbSUyMGdhcmRlbnxlbnwxfDF8fHwxNzkxNDA3ODQ5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A couple resting on a grassy lawn, the bride holding a bouquet, seen from above" width="2000" height="3008" loading="lazy"></figure>
       <div class="wedding__card">
         <h3 class="m-text-6">Ines &amp; Rowan</h3>
         <p class="m-text-5">Meadow, Wiltshire · August</p>
@@ -1497,7 +1646,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
       </div>
     </article>
     <article class="wedding wedding--d">
-      <figure class="wedding__photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1769812344337-ec16a1b7cef8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Z2FyZGVuJTIwd2VkZGluZyUyMGNlcmVtb255fGVufDF8MHx8fDE3OTE0MDc4MjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1250&amp;q=60" alt="An aisle lined with white flowers leading to a floral arch on a lawn" width="6048" height="4024" loading="lazy"></figure>
+      <figure class="wedding__photo"><img src="https://images.unsplash.com/photo-1769812344337-ec16a1b7cef8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Z2FyZGVuJTIwd2VkZGluZyUyMGNlcmVtb255fGVufDF8MHx8fDE3OTE0MDc4MjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1250&amp;q=60" alt="An aisle lined with white flowers leading to a floral arch on a lawn" width="6048" height="4024" loading="lazy"></figure>
       <div class="wedding__card">
         <h3 class="m-text-6">Mei &amp; Callum</h3>
         <p class="m-text-5">Kitchen garden, Bath · April</p>
@@ -1509,12 +1658,12 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 <!-- planners: two portraits and short bios of the planners -->
 <section id="planners" class="planners" data-8b-section="planners">
   <div class="planners__grid l-grid">
-    <figure class="planner__photo planner__photo--nell" data-8b-motion="steps"><img style="background:#597373" src="https://images.unsplash.com/photo-1683722174093-68cdfaa9566c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d2VkZGluZyUyMHBsYW5uZXIlMjB3b21hbiUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTE0MDc4NTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="Nell Ashby smiling as she writes notes at a table" width="3840" height="5760" loading="lazy"></figure>
+    <figure class="planner__photo planner__photo--nell" data-8b-motion="steps"><img src="https://images.unsplash.com/photo-1683722174093-68cdfaa9566c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d2VkZGluZyUyMHBsYW5uZXIlMjB3b21hbiUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTE0MDc4NTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="Nell Ashby smiling as she writes notes at a table" width="3840" height="5760" loading="lazy"></figure>
     <div class="planners__intro">
-      <h2 class="m-text-4" data-8b-motion="rise">Two planners, both on the day</h2>
+      <h2 class="m-text-4" data-8b-motion="rise" data-8b-split="lines">Two planners, both on the day</h2>
       <p class="m-text">Aubade is Nell Ashby and Theo Marsh. We take eighteen weddings a year so that both of us can be at every one of them: one with you, the other with everyone else.</p>
     </div>
-    <figure class="planner__photo planner__photo--theo" data-8b-motion="steps"><img style="background:#595926" src="https://images.unsplash.com/photo-1785753272933-eea51cd66517?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bWFuJTIwcG9ydHJhaXQlMjBnYXJkZW4lMjBzaGlydHxlbnwxfDF8fHwxNzkxNDA4MDc3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Theo Marsh smiling among green foliage" width="4000" height="6000" loading="lazy"></figure>
+    <figure class="planner__photo planner__photo--theo" data-8b-motion="steps"><img src="https://images.unsplash.com/photo-1785753272933-eea51cd66517?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bWFuJTIwcG9ydHJhaXQlMjBnYXJkZW4lMjBzaGlydHxlbnwxfDF8fHwxNzkxNDA4MDc3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Theo Marsh smiling among green foliage" width="4000" height="6000" loading="lazy"></figure>
     <div class="planners__bios">
       <div>
         <h3 class="m-text-5">Nell Ashby</h3>
@@ -1530,9 +1679,9 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 <!-- words: four couples' notes as colour cards that stack like a deck (animation: scene:words) -->
 <section id="words" class="words" data-8b-section="words">
   <div class="words__head l-grid">
-    <h2 class="m-text-4" data-8b-motion="rise">In their words</h2>
+    <h2 class="m-text-4" data-8b-motion="rise" data-8b-split="lines">In their words</h2>
   </div>
-  <div class="words__stack">
+  <div class="words__stack" data-8b-items=":scope > .quote" data-8b-fixed="4">
     <figure class="quote quote--orange l-grid" style="--quote-step:0">
       <blockquote><p class="m-text-6">We gave Nell a spreadsheet with forty tabs. She gave us back one page and a time to decide about the rain. It rained, and we never got wet.</p></blockquote>
       <figcaption class="m-text-5">Amara &amp; Joe<span class="m-text-2">Orchard wedding, Bruton</span></figcaption>
@@ -1555,81 +1704,81 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 <section id="questions" class="questions" data-8b-section="questions">
   <div class="questions__grid l-grid">
     <div class="questions__head">
-      <h2 class="m-text-4" data-8b-motion="rise">Questions couples ask first</h2>
+      <h2 class="m-text-4" data-8b-motion="rise" data-8b-split="lines">Questions couples ask first</h2>
       <p class="m-text">If yours is not here, ask it on the first call. It is free, it takes half an hour, and nobody will try to sell you a package.</p>
     </div>
     <div class="questions__list">
-      <div>
+      <div data-8b-items=":scope > .question">
         <div class="question">
-          <span class="question__rule" data-8b-motion="rule" aria-hidden="true"></span>
+          <span class="question__rule" data-8b-motion="rule" aria-hidden="true" style="--rule-delay: 0s"></span>
           <details>
           <summary class="m-text-5"><span>How far ahead should we book?</span><span class="question__mark" aria-hidden="true"></span></summary>
           <p class="m-text">For full planning, twelve to eighteen months. For the day itself, eight weeks is enough, though summer Saturdays are usually taken a year ahead.</p>
         </details>
         </div>
         <div class="question">
-          <span class="question__rule" data-8b-motion="rule" aria-hidden="true"></span>
+          <span class="question__rule" data-8b-motion="rule" aria-hidden="true" style="--rule-delay: 0.06s"></span>
           <details>
           <summary class="m-text-5"><span>Do you only plan garden weddings?</span><span class="question__mark" aria-hidden="true"></span></summary>
           <p class="m-text">Mostly gardens, orchards and glasshouses within ninety minutes of Bath. We have also planned barns, a boathouse and one library. Ask us.</p>
         </details>
         </div>
         <div class="question">
-          <span class="question__rule" data-8b-motion="rule" aria-hidden="true"></span>
+          <span class="question__rule" data-8b-motion="rule" aria-hidden="true" style="--rule-delay: 0.12s"></span>
           <details>
           <summary class="m-text-5"><span>What happens if it rains?</span><span class="question__mark" aria-hidden="true"></span></summary>
           <p class="m-text">Every wedding has a written rain plan by the third month: a covered place for the ceremony, umbrellas in the right colour, and a time on the day at which we decide.</p>
         </details>
         </div>
         <div class="question">
-          <span class="question__rule" data-8b-motion="rule" aria-hidden="true"></span>
+          <span class="question__rule" data-8b-motion="rule" aria-hidden="true" style="--rule-delay: 0.18s"></span>
           <details>
           <summary class="m-text-5"><span>Can we bring our own suppliers?</span><span class="question__mark" aria-hidden="true"></span></summary>
           <p class="m-text">Of course. We meet them, share the run sheet and make sure they know where to park the van and when the speeches start.</p>
         </details>
         </div>
         <div class="question">
-          <span class="question__rule" data-8b-motion="rule" aria-hidden="true"></span>
+          <span class="question__rule" data-8b-motion="rule" aria-hidden="true" style="--rule-delay: 0.24s"></span>
           <details>
           <summary class="m-text-5"><span>How many weddings do you take?</span><span class="question__mark" aria-hidden="true"></span></summary>
           <p class="m-text">Eighteen a year and never two on one weekend, so both of us can be at yours from first light.</p>
         </details>
         </div>
         <div class="question">
-          <span class="question__rule" data-8b-motion="rule" aria-hidden="true"></span>
+          <span class="question__rule" data-8b-motion="rule" aria-hidden="true" style="--rule-delay: 0.3s"></span>
           <details>
           <summary class="m-text-5"><span>What does it cost?</span><span class="question__mark" aria-hidden="true"></span></summary>
           <p class="m-text">Full planning starts at £7,400, partial planning at £4,200 and the day itself at £1,900. After the first call you get a written quote with nothing left out.</p>
         </details>
         </div>
       </div>
-      <div class="questions__end" aria-hidden="true"><span class="question__rule" data-8b-motion="rule"></span></div>
+      <div class="questions__end" aria-hidden="true"><span class="question__rule" data-8b-motion="rule" style="--rule-delay: 0s"></span></div>
     </div>
   </div>
 </section>
 <!-- journal: three journal notes with a photo, date, title and link, rising onto one line (animation: scene:journal) -->
 <section id="journal" class="journal" data-8b-section="journal">
-  <div class="journal__grid l-grid">
+  <div class="journal__grid l-grid" data-8b-items=":scope > .note">
     <div class="journal__head">
       <h2 class="m-text-4">Journal</h2>
       <p class="m-text-2">Notes from the studio on flowers, weather and running a day.</p>
     </div>
-    <article class="note">
-      <figure class="note__photo"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1625344612160-f0f29a641617?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8c3dlZXQlMjBwZWElMjBmbG93ZXJzfGVufDF8MHx8fDE3OTE0MDgwNDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="A lilac sweet pea flower in soft focus among stems and buds" width="6016" height="4016" loading="lazy"></figure>
+    <article class="note" style="--journal-article-note-translate-from-2: 14vh">
+      <figure class="note__photo"><img src="https://images.unsplash.com/photo-1625344612160-f0f29a641617?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8c3dlZXQlMjBwZWElMjBmbG93ZXJzfGVufDF8MHx8fDE3OTE0MDgwNDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=760&amp;q=60" alt="A lilac sweet pea flower in soft focus among stems and buds" width="6016" height="4016" loading="lazy"></figure>
       <time class="m-text-2" datetime="2026-09-12">12 September 2026</time>
       <h3 class="m-text-5">Sweet peas in September: what still blooms once the summer has gone</h3>
       <p class="m-text-2">Our growers sow a late row in June. Here is what that gives an autumn wedding, and what it cannot.</p>
       <a class="m-link" href="journal/sweet-peas-in-september"><span class="m-link__label">Read the note</span><svg class="m-link__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
     </article>
-    <article class="note">
-      <figure class="note__photo"><img style="background:#8c8c8c" src="https://images.unsplash.com/photo-1643811206116-e26210fefa21?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dW1icmVsbGElMjByYWluJTIwd2VkZGluZ3xlbnwxfDB8fHwxNzkxNDA4MDc5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="Bride and groom kissing under a clear umbrella in the rain" width="6016" height="4016" loading="lazy"></figure>
+    <article class="note" style="--journal-article-note-translate-from-2: 28vh">
+      <figure class="note__photo"><img src="https://images.unsplash.com/photo-1643811206116-e26210fefa21?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dW1icmVsbGElMjByYWluJTIwd2VkZGluZ3xlbnwxfDB8fHwxNzkxNDA4MDc5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=760&amp;q=60" alt="Bride and groom kissing under a clear umbrella in the rain" width="6016" height="4016" loading="lazy"></figure>
       <time class="m-text-2" datetime="2026-08-28">28 August 2026</time>
       <h3 class="m-text-5">A rain plan is not a marquee</h3>
       <p class="m-text-2">Three ways we keep a garden ceremony dry without hiding it under canvas.</p>
       <a class="m-link" href="journal/a-rain-plan-is-not-a-marquee"><span class="m-link__label">Read the note</span><svg class="m-link__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
     </article>
-    <article class="note">
-      <figure class="note__photo"><img style="background:#a6a6c0" src="https://images.unsplash.com/photo-1672423054499-064b9ba6fbdd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fHdlZGRpbmclMjBzdGF0aW9uZXJ5JTIwaW52aXRhdGlvbiUyMGZsb3dlcnN8ZW58MXwwfHx8MTc5MTQwODA4MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="A sheet of paper on a table with dark roses and leaves around it" width="7631" height="5087" loading="lazy"></figure>
+    <article class="note" style="--journal-article-note-translate-from-2: 42vh">
+      <figure class="note__photo"><img src="https://images.unsplash.com/photo-1672423054499-064b9ba6fbdd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fHdlZGRpbmclMjBzdGF0aW9uZXJ5JTIwaW52aXRhdGlvbiUyMGZsb3dlcnN8ZW58MXwwfHx8MTc5MTQwODA4MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=760&amp;q=60" alt="A sheet of paper on a table with dark roses and leaves around it" width="7631" height="5087" loading="lazy"></figure>
       <time class="m-text-2" datetime="2026-08-03">3 August 2026</time>
       <h3 class="m-text-5">Writing a run sheet your aunt can read</h3>
       <p class="m-text-2">One page, large type, times down the left. Our template, and why it beats an app on the day.</p>
@@ -1641,14 +1790,14 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 <section id="contact" class="contact" data-8b-section="contact">
   <div class="contact__grid l-grid">
     <div class="contact__intro">
-      <h2 class="m-text-4" data-8b-motion="rise">Tell us the date and the garden</h2>
+      <h2 class="m-text-4" data-8b-motion="rise" data-8b-split="lines">Tell us the date and the garden</h2>
       <p class="m-text">A few lines about the two of you, the season and the place are enough. We reply within two working days, and the first call is always free.</p>
       <div class="contact__direct m-text-5">
         <a data-8b-placeholder="email" href="mailto:hello@aubade.example">hello@aubade.example</a>
         <a data-8b-placeholder="phone" href="tel:+441220000000">+44 1220 000 000</a>
         <span class="m-text-2">The Glasshouse Rooms, 1 Example Street, Bath BA1 0ZZ</span>
       </div>
-      <figure class="contact__photo" data-8b-motion="steps"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1778842893922-5635dbde6c82?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Z2FyZGVuJTIwd2VkZGluZyUyMGNlcmVtb255fGVufDF8MHx8fDE3OTE0MDc4MjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="An ornate iron gazebo in a formal garden of clipped hedges" width="6000" height="4000" loading="lazy"></figure>
+      <figure class="contact__photo" data-8b-motion="steps"><img src="https://images.unsplash.com/photo-1778842893922-5635dbde6c82?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Z2FyZGVuJTIwd2VkZGluZyUyMGNlcmVtb255fGVufDF8MHx8fDE3OTE0MDc4MjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="An ornate iron gazebo in a formal garden of clipped hedges" width="6000" height="4000" loading="lazy"></figure>
     </div>
     <form data-8b-placeholder="form" class="contact__form" action="#contact" method="post">
       <label class="m-field"><span class="m-field__label">Your names</span><input class="m-field__control" name="names" type="text" autocomplete="name" required></label>
@@ -1689,10 +1838,6 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
     <a class="m-link" href="#opening"><span class="m-link__label">Back to the top</span><svg class="m-link__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
   </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
 <script data-8b-part="section-script:nav">
 (() => {
   const nav = document.getElementById('nav');
@@ -1717,7 +1862,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
     menu.hidden = false;
     menu.classList.add('is-open');
     toggle.setAttribute('aria-expanded', 'true');
-    window.lenis?.stop();
+    window.motionKit?.wheel?.stop();
     document.documentElement.style.overflow = 'hidden';
     menu.querySelector('.menu__links a').focus();
   };
@@ -1726,7 +1871,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
     menu.classList.remove('is-open');
     toggle.setAttribute('aria-expanded', 'false');
     document.documentElement.style.overflow = '';
-    window.lenis?.start();
+    window.motionKit?.wheel?.start();
     if (returnFocus) toggle.focus();
   };
   toggle.addEventListener('click', open);
@@ -1744,254 +1889,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 })();
 </script>
 
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function navOffset() {
-  return 16;
-}
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.085, anchors: { offset: -navOffset() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  rise(element, vars = {}) {
-    const split = SplitText.create(element, { type: 'lines', mask: 'lines', linesClass: 'rise-line' });
-    return gsap.timeline(vars).from(split.lines, {
-      yPercent: 108, duration: 1.05, ease: 'power3.out', stagger: 0.09,
-      onComplete: () => split.revert()
-    });
-  },
-  steps(element, vars = {}) {
-    const stair = base => `polygon(0% ${base}%, 25% ${base}%, 25% ${base + 22}%, 50% ${base + 22}%, 50% ${base + 44}%, 75% ${base + 44}%, 75% ${base + 66}%, 100% ${base + 66}%, 100% 400%, 0% 400%)`;
-    return gsap.timeline(vars).fromTo(element, { clipPath: stair(100) }, {
-      clipPath: stair(-66), duration: 1.25, ease: 'power2.inOut', clearProps: 'clipPath'
-    });
-  },
-  rule(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { scaleX: 0, transformOrigin: '0% 50%' }, {
-      scaleX: 1, duration: 1.1, ease: 'power3.inOut', clearProps: 'transform'
-    });
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  ['rise', 'steps', 'rule'].forEach(name => {
-    const elements = [...section.querySelectorAll(`[data-8b-motion~="${name}"]`)];
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => ScrollTrigger.create({
-        id: `${id}:${index}`, trigger: element, start: 'top 88%', once: true,
-        animation: effects[name](element, { delay: name === 'rule' ? (index % 6) * 0.06 : 0 })
-      }));
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-</script>
 
-<script data-8b-part="scene:seasons">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('seasons');
-    const viewport = section.querySelector('.seasons__viewport');
-    const track = section.querySelector('.seasons__track');
-    const panels = gsap.utils.toArray(track.querySelectorAll(':scope > .season'));
-    section.setAttribute('data-track', '');
-    const distance = () => track.scrollWidth - viewport.clientWidth;
-    const slide = gsap.to(track, {
-      x: () => -distance(), ease: 'none',
-      scrollTrigger: { id: 'seasons', trigger: viewport, start: 'top top', end: () => '+=' + distance(), pin: true, scrub: true, invalidateOnRefresh: true }
-    });
-    panels.slice(1).forEach((panel, index) => {
-      const photo = panel.querySelector('.season__photo');
-      const image = photo.querySelector('img');
-      const word = panel.querySelector('.season__word');
-      gsap.timeline({ scrollTrigger: { id: `seasons:panel-${index + 2}`, trigger: panel, containerAnimation: slide, start: 'left right', end: 'left left', scrub: true } })
-        .fromTo(photo, { clipPath: 'inset(0% 56% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1, ease: 'power2.inOut', clearProps: 'clipPath' }, 0)
-        .fromTo(image, { scale: 1.3 }, { scale: 1, duration: 1, ease: 'none' }, 0)
-        .fromTo(word, { xPercent: 38 }, { xPercent: 0, duration: 0.85, ease: 'power2.out' }, 0);
-    });
-    return () => section.removeAttribute('data-track');
-  });
-}, { id: 'scene:seasons' });
-</script>
-<script data-8b-part="scene:handover">
-queueMotion(() => {
-  const section = document.getElementById('handover');
-  const stage = section.querySelector('.handover__stage');
-  const items = gsap.utils.toArray(section.querySelectorAll('.handover__item'));
-  const seeded = (index, salt) => { const x = Math.sin(index * 12.9898 + salt * 78.233) * 43758.5453; return x - Math.floor(x); };
-  const offsetIn = element => { let x = 0, y = 0, node = element; while (node && node !== stage) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; } return { x, y }; };
-  gsap.matchMedia().add({
-    wide: '(min-width: 761px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 760px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    if (context.conditions.wide) {
-      const timeline = gsap.timeline({ scrollTrigger: { id: 'handover', trigger: stage, start: 'top top', end: '+=150%', pin: true, scrub: true, invalidateOnRefresh: true } });
-      items.forEach((item, index) => {
-        timeline.fromTo(item, {
-          x: () => stage.offsetWidth * (0.05 + seeded(index, 1) * 0.3) - offsetIn(item).x,
-          y: () => stage.offsetHeight * (0.32 + seeded(index, 2) * 0.3) - offsetIn(item).y,
-          rotation: () => (seeded(index, 3) - 0.5) * 34
-        }, { x: 0, y: 0, rotation: 0, duration: 0.4, ease: 'power2.inOut' }, 0.08 + index * 0.06);
-      });
-    } else {
-      items.forEach((item, index) => {
-        const side = index % 2 ? 1 : -1;
-        gsap.fromTo(item, { x: () => side * innerWidth * (0.35 + seeded(index, 1) * 0.25), rotation: side * (8 + seeded(index, 3) * 14) }, {
-          x: 0, rotation: 0, ease: 'power2.out',
-          scrollTrigger: { id: `handover:item-${index + 1}`, trigger: item, start: 'top bottom', end: 'top 62%', scrub: true, invalidateOnRefresh: true }
-        });
-      });
-    }
-  });
-}, { id: 'scene:handover' });
-</script>
-<script data-8b-part="scene:day">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('day');
-    const photos = gsap.utils.toArray(section.querySelectorAll('.day__frame img')).reverse();
-    const hours = gsap.utils.toArray(section.querySelectorAll('.hour'));
-    hours.forEach((hour, index) => {
-      const time = hour.querySelector('.hour__time');
-      gsap.timeline({ scrollTrigger: { id: `day:hour-${index + 1}`, trigger: hour, start: 'top bottom', end: 'bottom top', scrub: true } })
-        .fromTo(time, { scale: 0.42 }, { scale: 1, duration: 0.36, ease: 'power2.out' }, 0)
-        .to(time, { scale: 0.42, duration: 0.36, ease: 'power2.in' }, 0.64);
-      const leaving = photos[index - 1], arriving = photos[index];
-      if (!leaving || !arriving) return;
-      gsap.timeline({ scrollTrigger: { id: `day:photo-${index + 1}`, trigger: hour, start: 'top 85%', end: 'top 40%', scrub: true } })
-        .to(leaving, { yPercent: -101, duration: 1, ease: 'power2.inOut' }, 0)
-        .fromTo(arriving, { scale: 1.12 }, { scale: 1, duration: 1, ease: 'power1.out' }, 0);
-    });
-  });
-}, { id: 'scene:day' });
-</script>
-<script data-8b-part="scene:weddings">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('weddings');
-    gsap.utils.toArray(section.querySelectorAll('.wedding')).forEach((pair, index) => {
-      const card = pair.querySelector('.wedding__card');
-      const photo = pair.querySelector('.wedding__photo');
-      const cardLeft = () => card.offsetLeft < photo.offsetLeft;
-      const late = index % 2 === 1;
-      gsap.timeline({ scrollTrigger: {
-        id: `weddings:pair-${index + 1}`, trigger: card, start: late ? 'top 80%' : 'top 92%', end: late ? 'top 18%' : 'top 30%', scrub: true, invalidateOnRefresh: true
-      } })
-        .fromTo(card, { x: () => (cardLeft() ? 1 : -1) * photo.offsetWidth }, { x: 0, duration: 1, ease: 'power3.inOut' }, 0)
-        .fromTo(photo, { x: () => (cardLeft() ? -1 : 1) * card.offsetWidth }, { x: 0, duration: 1, ease: 'power3.inOut' }, 0);
-    });
-  });
-}, { id: 'scene:weddings' });
-</script>
-<script data-8b-part="scene:words">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('words');
-    const quotes = gsap.utils.toArray(section.querySelectorAll('.quote'));
-    quotes.slice(0, -1).forEach((quote, index) => {
-      const next = quotes[index + 1];
-      gsap.to(quote, {
-        scale: 0.92, ease: 'none',
-        scrollTrigger: {
-          id: `words:card-${index + 1}`, trigger: next, start: 'top bottom',
-          end: () => 'top ' + (parseFloat(getComputedStyle(next).top) || 0), scrub: true, invalidateOnRefresh: true
-        }
-      });
-    });
-  });
-}, { id: 'scene:words' });
-</script>
-<script data-8b-part="scene:journal">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 761px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 760px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('journal');
-    const notes = gsap.utils.toArray(section.querySelectorAll('.note'));
-    if (context.conditions.wide) {
-      const timeline = gsap.timeline({ scrollTrigger: { id: 'journal', trigger: section, start: 'top 85%', end: 'top 10%', scrub: true, invalidateOnRefresh: true } });
-      notes.forEach((note, index) => {
-        timeline
-          .fromTo(note, { y: () => innerHeight * 0.14 * (index + 1) }, { y: 0, duration: 1, ease: 'power2.out' }, 0)
-          .fromTo(note.querySelector('img'), { scale: 1.22 }, { scale: 1, duration: 1, ease: 'none' }, 0);
-      });
-    } else {
-      notes.forEach((note, index) => {
-        gsap.timeline({ scrollTrigger: { id: `journal:note-${index + 1}`, trigger: note, start: 'top bottom', end: 'top 50%', scrub: true } })
-          .fromTo(note, { y: 90 }, { y: 0, duration: 1, ease: 'power2.out' }, 0)
-          .fromTo(note.querySelector('img'), { scale: 1.22 }, { scale: 1, duration: 1, ease: 'none' }, 0);
-      });
-    }
-  });
-}, { id: 'scene:journal' });
-</script>
 <script data-8b-part="section-script:contact">
 (() => {
   const form = document.querySelector('#contact .contact__form');
@@ -2004,6 +1902,219 @@ queueMotion(() => {
     status.hidden = false;
   });
 })();
+</script>
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}.line:not(:last-child){margin-bottom:0}.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = typeof Intl.Segmenter === 'function'
+? text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment)
+: text => [...text];
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split');
+if (sources.has(element)) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px 100% 0px' });
+(document.fonts?.ready ?? Promise.resolve()).then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+</script>
+<script data-8b-part="scene-script:seasons">
+motionKit.scene("seasons", () => {
+  { const stage = document.querySelector("#seasons .seasons__viewport"), room = document.createElement('div'), space = document.createElement('div'); room.className = "seasons-viewport-room"; space.className = "seasons-viewport-room-space"; space.setAttribute('aria-hidden', 'true'); stage.before(room); room.append(stage, space); }
+});
+</script>
+<script data-8b-part="scene-script:handover">
+motionKit.scene("handover", () => {
+  { const stage = document.querySelector("#handover .handover__stage"), room = document.createElement('div'), space = document.createElement('div'); room.className = "handover-stage-room"; space.className = "handover-stage-room-space"; space.setAttribute('aria-hidden', 'true'); stage.before(room); room.append(stage, space); }
+  const stage = document.querySelector("#handover .handover__stage"), items = [...stage.querySelectorAll(".handover__item")];
+  const wide = matchMedia('(min-width: 761px)');
+  const seeded = (index, salt) => { const x = Math.sin(index * 12.9898 + salt * 78.233) * 43758.5453; return x - Math.floor(x); };
+  const offsetIn = element => { let x = 0, y = 0, node = element; while (node && node !== stage) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; } return { x, y }; };
+  motionKit.measure(() => items.forEach((item, index) => {
+    if (wide.matches) {
+      const at = offsetIn(item);
+      motionKit.set(item, { '--handover-x': `${stage.offsetWidth * (0.05 + seeded(index, 1) * 0.3) - at.x}px`, '--handover-y': `${stage.offsetHeight * (0.32 + seeded(index, 2) * 0.3) - at.y}px`, '--handover-r': `${(seeded(index, 3) - 0.5) * 34}deg` });
+    } else {
+      const side = index % 2 ? 1 : -1;
+      motionKit.set(item, { '--handover-x': `${side * (35 + seeded(index, 1) * 25)}vw`, '--handover-y': '0px', '--handover-r': `${side * (8 + seeded(index, 3) * 14)}deg` });
+    }
+  }));
+});
 </script>
 </body>
 </html>

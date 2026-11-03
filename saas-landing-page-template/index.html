@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/saas-landing-page-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,8 +20,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%236e1c1a'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23fee7a6'%3Em%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/gabarito/v9/QGYtz_0dZAGKJJ4t3HtoW4U.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/rethinksans/v7/AMOWz4SDuXOMCPfdoglY9JQEVFi3.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://fonts.gstatic.com/s/gabarito/v9/QGYtz_0dZAGKJJ4t3HtoW4U.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* latin-ext */
 @font-face {
@@ -29,7 +30,7 @@
   font-weight: 700 800;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/gabarito/v9/QGYtz_0dZAGKJJ4t3HtmW4XUng.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -47,7 +48,7 @@
   font-weight: 400 600;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/rethinksans/v7/AMOWz4SDuXOMCPfdoglY9JQEWli389k.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -87,9 +88,6 @@
 @font-face { font-family: "Rethink Sans Fallback"; src: local("Arial"), local("ArialMT"), local("Helvetica"); font-weight: 100 549; size-adjust: 103.3%; ascent-override: 95.8%; descent-override: 30%; line-gap-override: 0%; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: clip; }
 body {
   margin: 0;
   background: var(--color-1);
@@ -201,6 +199,21 @@ button, input, textarea, select { font: inherit; color: inherit; }
   #noise .noise__sentence { font-size: 22px; }
   #noise .noise__reasons { gap: 4px; padding-top: 10px; }
 }
+#noise .noise__head { position: relative; z-index: 1; }
+#noise .noise__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; margin-top: 6px; }
+@media (max-width: 760px) {
+  #noise .noise__cta { gap: 10px 20px; margin-top: 4px; }
+  #noise .noise__cta .m-btn { min-height: 44px; padding: 0 22px; font-size: 15px; }
+  #noise .noise__cta .m-link { font-size: 14px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #noise .noise__head > * { animation: noise-rise .9s cubic-bezier(.2, .8, .2, 1) backwards; }
+  #noise .noise__head > :nth-child(2) { animation-delay: .1s; }
+  #noise .noise__head > :nth-child(3) { animation-delay: .2s; }
+  #noise .noise__field, #noise .noise__note { animation: noise-fade .6s ease .15s backwards; }
+}
+@keyframes noise-rise { from { transform: translateY(26px); opacity: 0; } }
+@keyframes noise-fade { from { opacity: 0; } }
 }
 </style>
 <style data-8b-part="section:sources">
@@ -470,82 +483,192 @@ button, input, textarea, select { font: inherit; color: inherit; }
 }
 }
 </style>
-<style data-8b-part="scene-style:noise">
+<style data-8b-part="motion">
 @layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #noise[data-staged] { height: 300svh; background: var(--color-1); }
-  #noise[data-staged] .noise__stage { position: sticky; top: 0; height: 100svh; min-height: 0; }
-}
+[data-8b-live] [data-8b-motion~="wave"] .w { display: inline-block; --motion-wave-y: calc(105% + sin(var(--i) * 1.1rad) * 25%); animation-name: motion-wave; animation-duration: .95s; animation-delay: calc(var(--i) * .055s); animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="wave"].is-in .w { animation-play-state: running; }
+@keyframes motion-wave { 0% { translate: 0px var(--motion-wave-y); clip-path: inset(calc(var(--motion-wave-y) * -1) 0px var(--motion-wave-y)); } 99.998% { translate: 0px 0px; clip-path: inset(0px); } 100% { translate: 0px 0px; clip-path: none; } }
+[data-8b-live] [data-8b-motion~="arch"] { animation-name: motion-arch-clippath; animation-duration: 1.15s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="arch"].is-in { animation-play-state: running; }
+@keyframes motion-arch-clippath { 0% { clip-path: inset(58% 42% 0% round 999px); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
 }
 </style>
-<style data-8b-part="scene-style:sources">
+<style data-8b-part="scene:noise">
 @layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #sources[data-staged] { height: 290svh; }
-  #sources[data-staged] .sources__stage { position: sticky; top: 0; height: 100svh; min-height: 0; overflow: clip; }
-  #sources[data-staged] .sources__cols { min-height: 0; }
-}
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] #noise { height: 300svh; background: var(--color-2); view-timeline: --noise-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #noise .noise__stage { position: sticky; top: 0; height: 100svh; min-height: 0; }
+[data-8b-live] #noise .noise__field > li { animation-name: noise-chip; animation-timeline: --noise-t1; animation-range: cover calc(100vh + (100% - 200vh) * var(--noise-at)) cover calc(100vh + (100% - 200vh) * (var(--noise-at) + 0.5)); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; translate: var(--noise-x) var(--noise-y); rotate: var(--noise-r); scale: var(--noise-s); }
+[data-8b-live] #noise .noise__field > .m-chip-2 { animation-name: noise-chip, noise-chip-lit; animation-range: cover calc(100vh + (100% - 200vh) * var(--noise-at)) cover calc(100vh + (100% - 200vh) * (var(--noise-at) + 0.5)), cover calc(100vh + (100% - 200vh) * var(--noise-lit)) cover calc(100vh + (100% - 200vh) * var(--noise-lit) + 1px); animation-timing-function: var(--ease-power2-inout), linear; }
+[data-8b-live] #noise .noise__note { animation-name: noise-card, noise-fade; animation-duration: auto, .6s; animation-delay: 0s, .15s; animation-timeline: --noise-t1, auto; animation-range: cover 50% cover calc(90% - 80vh), normal; animation-timing-function: var(--ease-power3-out), ease; animation-fill-mode: both, backwards; transform: none; }
+@keyframes noise-chip { 0% { translate: var(--noise-x) var(--noise-y); rotate: var(--noise-r); scale: var(--noise-s); } 100% { translate: 0px 0px; rotate: 0deg; scale: 1; } }
+@keyframes noise-chip-lit { 0% { background-color: var(--color-2); color: var(--color-3); border-color: var(--color-3); } 100% { background-color: var(--color-1); color: var(--color-2); border-color: var(--color-1); } }
+@keyframes noise-card { 0% { scale: 0.08; rotate: -8deg; } 100% { scale: 1; rotate: 0deg; } }
 }
 </style>
-<style data-8b-part="scene-style:note">
+<style data-8b-part="scene:sources">
 @layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #note .note__block[data-on] { outline-color: var(--color-5); }
-  #note .note__part[data-on] h3 { color: var(--color-1); }
+  [data-8b-live] #sources { height: 290svh; }
+  [data-8b-live] #sources .sources__stage { position: sticky; top: 0; height: 100svh; min-height: 0; overflow: clip; }
+  [data-8b-live] #sources .sources__cols { min-height: 0; }
 }
 }
-</style>
-<style data-8b-part="scene-style:makers">
 @layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #makers[data-staged] { height: calc(100svh + var(--makers-travel, 0px)); }
-  #makers[data-staged] .makers__stage { position: sticky; top: 0; height: 100svh; overflow: clip; display: flex; flex-direction: column; padding-top: 12svh; padding-bottom: 4svh; }
-  #makers[data-staged] .makers__head { margin-bottom: auto; }
-  #makers[data-staged] .makers__track { display: flex; gap: 3vw; width: max-content; padding-top: 7svh; }
-  #makers[data-staged] .makers__title { max-width: 20ch; font-size: clamp(34px, 3.8vw, 56px); }
-  #makers[data-staged] .makers__card { width: min(28vw, 380px); grid-template-columns: none; grid-column: auto; }
-  #makers[data-staged] .makers__arch { aspect-ratio: auto; height: 40svh; }
+[data-8b-live] { --ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #sources { view-timeline: --sources-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #sources .sources__cols > li { animation-name: sources-col-move, sources-col-clip, sources-col-open; animation-timeline: --sources-t1; animation-range: cover calc(8% + 9% * var(--i) + 84vh - 18vh * var(--i)) cover calc(58% + 9% * var(--i) - 16vh - 18vh * var(--i)), cover calc(8% + 9% * var(--i) + 84vh - 18vh * var(--i)) cover calc(58% + 9% * var(--i) - 16vh - 18vh * var(--i)), cover calc(98% - 96vh) cover calc(98% - 96vh + 1px); animation-timing-function: var(--ease-power3-inout), var(--ease-power3-inout), linear; animation-fill-mode: both, both, forwards; transform: none; }
+@keyframes sources-col-move { 0% { translate: var(--sources-x) var(--sources-y); } 100% { translate: 0px 0px; } }
+@keyframes sources-col-clip { 0% { clip-path: var(--sources-clip); } 100% { clip-path: inset(0px); } }
+@keyframes sources-col-open { 0% { clip-path: inset(0px); } 100% { clip-path: none; } }
+[data-8b-live] #sources .sources__cols > li > .sources__body { animation-timeline: --sources-t1; animation-fill-mode: forwards; }
+[data-8b-live] #sources .sources__cols > li:is(:nth-of-type(1), :nth-of-type(2), :nth-of-type(3), :nth-of-type(5)) > .sources__body { animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0); }
+[data-8b-live] #sources .sources__cols > li:nth-of-type(1) > .sources__body { animation-range: cover calc(100% - 100vh) cover calc(100% - 41.6667vh); }
+[data-8b-live] #sources .sources__cols > li:nth-of-type(2) > .sources__body { animation-range: cover calc(100% - 95vh) cover calc(100% - 36.6667vh); }
+[data-8b-live] #sources .sources__cols > li:nth-of-type(3) > .sources__body { animation-range: cover calc(100% - 90vh) cover calc(100% - 31.6667vh); }
+[data-8b-live] #sources .sources__cols > li:nth-of-type(5) > .sources__body { animation-range: cover calc(100% - 85vh) cover calc(100% - 26.6667vh); }
+[data-8b-live] #sources .sources__cols > li:nth-of-type(4) > .sources__body { animation-range: cover calc(100% - 83.3333vh) cover calc(100% - 25vh); transform: none; }
+@keyframes sources-div-sources-body-clippath-d { 0% { clip-path: inset(0%); } 100% { clip-path: inset(0% 0% 100%); } }
+@keyframes sources-div-sources-body-clippath-m { 0% { clip-path: inset(0%); } 100% { clip-path: inset(0% 100% 0% 0%); } }
+@keyframes sources-div-sources-body-clippath-2-d { 0% { clip-path: none; } 0.002% { clip-path: inset(0%); } 100% { clip-path: inset(0% 0% 100%); } }
+@keyframes sources-div-sources-body-clippath-2-m { 0% { clip-path: none; } 0.002% { clip-path: inset(0%); } 100% { clip-path: inset(0% 100% 0% 0%); } }
+@keyframes sources-div-sources-body-translate-d { 0% { translate: 0px 0px; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 100% { translate: 0px 0px; } }
+@keyframes sources-div-sources-body-translate-m { 0% { translate: 0px 0px; } 100% { translate: 0px 99.805%; } }
+@media (min-width: 761px) {
+  [data-8b-live] #sources .sources__cols > li:nth-of-type(1) > .sources__body { animation-name: sources-div-sources-body-clippath-d; }
+  [data-8b-live] #sources .sources__cols > li:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(5)) > .sources__body { animation-name: sources-div-sources-body-clippath-2-d; }
+  [data-8b-live] #sources .sources__cols > li:nth-of-type(4) > .sources__body { animation-name: sources-div-sources-body-translate-d; animation-timing-function: linear; }
 }
-@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
-  #makers[data-staged] .makers__stage { padding-top: 88px; }
-  #makers[data-staged] .makers__head { gap: 10px; }
-  #makers[data-staged] .makers__lead { font-size: 15px; }
-  #makers[data-staged] .makers__track { gap: 5vw; padding-top: 5svh; }
-  #makers[data-staged] .makers__card { width: 70vw; }
-  #makers[data-staged] .makers__arch { height: 34svh; }
-}
-}
-</style>
-<style data-8b-part="scene-style:field">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #field[data-staged]::after { content: ""; display: block; height: 110svh; }
-  #field[data-staged] .field__stage { position: sticky; top: 0; height: 100svh; align-content: center; padding-top: 64px; padding-bottom: 24px; }
-  #field[data-staged] .field__grid { width: min(100%, calc((100svh - 100px) * 2)); }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
-  #field[data-staged] .field__stage { padding-top: 76px; padding-bottom: 16px; }
-  #field[data-staged] .field__grid { width: min(100%, calc((100svh - 100px) / 2)); }
-}
-}
-</style>
-<style data-8b-part="rework-first-screen">
-#noise[data-staged] { background: var(--color-2); }
-#noise .noise__head { position: relative; z-index: 1; }
-#noise .noise__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; margin-top: 6px; }
 @media (max-width: 760px) {
-  #noise .noise__cta { gap: 10px 20px; margin-top: 4px; }
-  #noise .noise__cta .m-btn { min-height: 44px; padding: 0 22px; font-size: 15px; }
-  #noise .noise__cta .m-link { font-size: 14px; }
+  [data-8b-live] #sources .sources__cols > li:nth-of-type(1) > .sources__body { animation-name: sources-div-sources-body-clippath-m; }
+  [data-8b-live] #sources .sources__cols > li:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(5)) > .sources__body { animation-name: sources-div-sources-body-clippath-2-m; }
+  [data-8b-live] #sources .sources__cols > li:nth-of-type(4) > .sources__body { animation-name: sources-div-sources-body-translate-m; animation-timing-function: var(--ease-power2-inout); }
 }
+}
+</style>
+<style data-8b-part="scene:note">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #note .note__block[data-on] { outline-color: var(--color-5); }
+[data-8b-live] #note .note__part[data-on] h3 { color: var(--color-1); }
+[data-8b-live] #note { view-timeline: --note-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #note .note__panel, [data-8b-live] #note .note__phone { animation-timeline: --note-t1; animation-range: cover 0% cover 75vh; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+@keyframes note-panel-sweep { 0% { translate: 120% 0px; clip-path: inset(0px 60% 0px 0px); } 99.998% { translate: 0px 0px; clip-path: inset(0px); } 100% { translate: 0px 0px; clip-path: none; } }
+@keyframes note-panel-grow { 0% { clip-path: inset(0px 0px 88%); } 99.998% { clip-path: inset(0px); } 100% { clip-path: none; } }
+@keyframes note-phone-ride { 0% { translate: var(--note-phone-x) 0px; scale: var(--note-phone-scale); } 100% { translate: 0px 0px; scale: 1; } }
+@keyframes note-phone-drop { 0% { translate: 0px var(--note-phone-lift); scale: 0.8; } 100% { translate: 0px 0px; scale: 1; } }
+@media (min-width: 761px) {
+  [data-8b-live] #note .note__panel { animation-name: note-panel-sweep; }
+  [data-8b-live] #note .note__phone { animation-name: note-phone-ride; }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #note .note__panel { animation-name: note-panel-grow; }
+  [data-8b-live] #note .note__phone { animation-name: note-phone-drop; }
+}
+}
+</style>
+<style data-8b-part="scene:makers">
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #noise .noise__head > * { animation: rw-rise .9s cubic-bezier(.2, .8, .2, 1) backwards; }
-  #noise .noise__head > :nth-child(2) { animation-delay: .1s; }
-  #noise .noise__head > :nth-child(3) { animation-delay: .2s; }
-  #noise .noise__field, #noise .noise__note { animation: rw-fade .6s ease .15s backwards; }
+  [data-8b-live] #makers { height: calc(100svh + var(--makers-travel, 0px)); }
+  [data-8b-live] #makers .makers__stage { position: sticky; top: 0; height: 100svh; overflow: clip; display: flex; flex-direction: column; padding-top: 12svh; padding-bottom: 4svh; }
+  [data-8b-live] #makers .makers__head { margin-bottom: auto; }
+  [data-8b-live] #makers .makers__track { display: flex; gap: 3vw; width: max-content; padding-top: 7svh; }
+  [data-8b-live] #makers .makers__title { max-width: 20ch; font-size: clamp(34px, 3.8vw, 56px); }
+  [data-8b-live] #makers .makers__card { width: min(28vw, 380px); grid-template-columns: none; grid-column: auto; }
+  [data-8b-live] #makers .makers__arch { aspect-ratio: auto; height: 40svh; }
 }
-@keyframes rw-rise { from { transform: translateY(26px); opacity: 0; } }
-@keyframes rw-fade { from { opacity: 0; } }</style>
+@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
+  [data-8b-live] #makers .makers__stage { padding-top: 88px; }
+  [data-8b-live] #makers .makers__head { gap: 10px; }
+  [data-8b-live] #makers .makers__lead { font-size: 15px; }
+  [data-8b-live] #makers .makers__track { gap: 5vw; padding-top: 5svh; }
+  [data-8b-live] #makers .makers__card { width: 70vw; }
+  [data-8b-live] #makers .makers__arch { height: 34svh; }
+}
+}
+@layer scenes {
+@property --makers-p { syntax: "<number>"; inherits: true; initial-value: 0; }
+[data-8b-live] #makers { view-timeline: --makers-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #makers .makers__track { animation-name: makers-run; animation-timeline: --makers-t1; animation-range: cover 100vh cover calc(100% - 100vh); animation-timing-function: linear; animation-fill-mode: both; translate: calc(var(--makers-p) * var(--makers-move) * -1) 0px; transform: none; }
+[data-8b-live] #makers .makers__track > li { translate: 0px calc(-9vh * sin(var(--makers-p) * pi) * (1 + cos(pi * clamp(-1, var(--makers-at) - var(--makers-p) * var(--makers-span), 1))) / 2); transform: none; }
+@keyframes makers-run { 0% { --makers-p: 0; } 100% { --makers-p: 1; } }
+}
+</style>
+<style data-8b-part="scene:field">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #field::after { content: ""; display: block; height: 110svh; }
+  [data-8b-live] #field .field__stage { position: sticky; top: 0; height: 100svh; align-content: center; padding-top: 64px; padding-bottom: 24px; }
+  [data-8b-live] #field .field__grid { width: min(100%, calc((100svh - 100px) * 2)); }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
+  [data-8b-live] #field .field__stage { padding-top: 76px; padding-bottom: 16px; }
+  [data-8b-live] #field .field__grid { width: min(100%, calc((100svh - 100px) / 2)); }
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #field { view-timeline: --field-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #field .field__grid { animation-name: field-zoom; animation-timeline: --field-t1; animation-range: cover calc(100vh + var(--field-top)) cover calc(86% - 72vh + 0.14 * var(--field-top)); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; transform-origin: 0px 0px; }
+@keyframes field-zoom { 0% { translate: var(--field-x) var(--field-y); scale: var(--field-s); } 100% { translate: 0px 0px; scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:manifesto">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] #manifesto { view-timeline: --manifesto-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #manifesto-title > span:nth-of-type(-n+4), [data-8b-live] #manifesto-title > span:nth-of-type(-n+3) > .manifesto__strike { animation-timeline: --manifesto-t1; animation-fill-mode: both; }
+[data-8b-live] #manifesto-title > span:nth-of-type(1) { animation-name: manifesto-span-manifesto-line-translate; animation-range: cover 15vh cover calc(24.7525% + 7.5743vh); animation-timing-function: var(--ease-power3-out); transform: none; }
+[data-8b-live] #manifesto-title > span:nth-of-type(2) { animation-name: manifesto-span-manifesto-line-translate-2; animation-range: cover calc(8.4158% + 12.4752vh) cover calc(33.1683% + 5.0495vh); animation-timing-function: var(--ease-power3-out); transform: none; }
+[data-8b-live] #manifesto-title > span:nth-of-type(1) > .manifesto__strike { animation-name: manifesto-span-manifesto-strike-clippath; animation-range: cover calc(16.8317% + 9.9505vh) cover 50%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #manifesto-title > span:nth-of-type(3) { animation-name: manifesto-span-manifesto-line-translate; animation-range: cover calc(16.8317% + 9.9505vh) cover calc(41.5842% + 2.5248vh); animation-timing-function: var(--ease-power3-out); transform: none; }
+[data-8b-live] #manifesto-title > span:nth-of-type(2) > .manifesto__strike { animation-name: manifesto-span-manifesto-strike-clippath-2; animation-range: cover calc(25.2475% + 7.4257vh) cover 50%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #manifesto-title > span:nth-of-type(4) { animation-name: manifesto-span-manifesto-line-translate-2; animation-range: cover calc(25.2475% + 7.4257vh) cover 50%; animation-timing-function: var(--ease-power3-out); transform: none; }
+[data-8b-live] #manifesto-title > span:nth-of-type(3) > .manifesto__strike { animation-name: manifesto-span-manifesto-strike-clippath-3; animation-range: cover calc(33.6634% + 4.901vh) cover 50%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+@keyframes manifesto-span-manifesto-line-translate { 0% { translate: -38% 0px; } 100% { translate: 0px 0px; } }
+@keyframes manifesto-span-manifesto-line-translate-2 { 0% { translate: 38% 0px; } 100% { translate: 0px 0px; } }
+@keyframes manifesto-span-manifesto-strike-clippath { 0% { clip-path: inset(0% 100% 0% 0% round 999px); } 44.7761% { clip-path: inset(0% round 999px); } 99.998% { clip-path: inset(0% round 999px); } 100% { clip-path: none; } }
+@keyframes manifesto-span-manifesto-strike-clippath-2 { 0% { clip-path: inset(0% 100% 0% 0% round 999px); } 60% { clip-path: inset(0% round 999px); } 99.998% { clip-path: inset(0% round 999px); } 100% { clip-path: none; } }
+@keyframes manifesto-span-manifesto-strike-clippath-3 { 0% { clip-path: inset(0% 100% 0% 0% round 999px); } 90.9091% { clip-path: inset(0% round 999px); } 99.998% { clip-path: inset(0% round 999px); } 100% { clip-path: none; } }
+}
+</style>
+<style data-8b-part="scene:pricing">
+@layer scenes {
+[data-8b-live] #pricing .pricing__plans { view-timeline: --pricing-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #pricing .pricing__plans > .pricing__plan { animation-timeline: --pricing-t1; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #pricing .pricing__plan--studio { animation-range: cover 4vh cover 70.0714vh, cover 4vh cover 78vh; }
+[data-8b-live] #pricing .pricing__plan--collective { animation-range: cover 11.9286vh cover 78vh; }
+@keyframes pricing-article-pricing-plan-translate-d { 0% { translate: 0px var(--pricing-article-pricing-plan-translate-from-2, 20vh); } 100% { translate: 0px 0px; } }
+@keyframes pricing-article-pricing-plan-translate-m { 0% { translate: 0px var(--pricing-article-pricing-plan-translate-from-2-m, 20vh); } 100% { translate: 0px 0px; } }
+@keyframes pricing-article-pricing-plan-clippath-d { 0% { clip-path: inset(0px round var(--pricing-r) var(--pricing-r) 0px 0px); } 89.2857% { clip-path: inset(0px); } 99.998% { clip-path: inset(0px); } 100% { clip-path: none; } }
+@keyframes pricing-article-pricing-plan-clippath-m { 0% { clip-path: inset(0px round var(--pricing-r) var(--pricing-r) 0px 0px); } 89.2857% { clip-path: inset(0px); } 99.998% { clip-path: inset(0px); } 100% { clip-path: none; } }
+@keyframes pricing-article-pricing-plan-clippath-2-d { 0% { clip-path: inset(0px round var(--pricing-r) var(--pricing-r) 0px 0px); } 99.998% { clip-path: inset(0px); } 100% { clip-path: none; } }
+@keyframes pricing-article-pricing-plan-clippath-2-m { 0% { clip-path: inset(0px round var(--pricing-r) var(--pricing-r) 0px 0px); } 99.998% { clip-path: inset(0px); } 100% { clip-path: none; } }
+@media (min-width: 761px) {
+  [data-8b-live] #pricing .pricing__plan--studio { animation-name: pricing-article-pricing-plan-translate-d, pricing-article-pricing-plan-clippath-d; }
+  [data-8b-live] #pricing .pricing__plan--collective { animation-name: pricing-article-pricing-plan-translate-d, pricing-article-pricing-plan-clippath-2-d; }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #pricing .pricing__plan--studio { animation-name: pricing-article-pricing-plan-translate-m, pricing-article-pricing-plan-clippath-m; }
+  [data-8b-live] #pricing .pricing__plan--collective { animation-name: pricing-article-pricing-plan-translate-m, pricing-article-pricing-plan-clippath-2-m; }
+}
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] #contact .contact__email { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact .contact__email > span:nth-of-type(-n+2) { animation-timeline: --contact-t1; animation-range: cover 0% cover 60vh; animation-timing-function: var(--ease-power3-out); animation-fill-mode: both; transform: none; }
+[data-8b-live] #contact .contact__email > span:nth-of-type(1) { animation-name: contact-span-contact-half-translate; }
+[data-8b-live] #contact .contact__email > span:nth-of-type(2) { animation-name: contact-span-contact-half-translate-2; }
+@keyframes contact-span-contact-half-translate { 0% { translate: -90% 0px; } 100% { translate: 0px 0px; } }
+@keyframes contact-span-contact-half-translate-2 { 0% { translate: 60% 0px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: fixed top bar: drawn wordmark, five section links, Start free button; hides on scroll down; phone menu overlay -->
@@ -554,7 +677,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
     <svg class="nav__mark" viewBox="-18 -18 764 176" fill="none" stroke="currentColor" stroke-width="36" stroke-linecap="round" aria-hidden="true"><path d="M18 122V48a30 30 0 0 1 60 0v74M78 48a30 30 0 0 1 60 0v74"/><path d="M190 18v74a30 30 0 0 0 60 0V18"/><path d="M302 122V48a30 30 0 0 1 30 -30h6"/><path d="M390 122V48a30 30 0 0 1 60 0v74M450 48a30 30 0 0 1 60 0v74"/><path d="M562 18v74a30 30 0 0 0 60 0V18"/><path d="M674 122V48a30 30 0 0 1 30 -30h6"/></svg>
   </a>
   <nav class="nav__menu" aria-label="Main">
-    <ul class="nav__links">
+    <ul class="nav__links" data-8b-items=":scope > li">
       <li><a class="m-link" href="#noise">How it works</a></li>
       <li><a class="m-link" href="#sources">What it reads</a></li>
       <li><a class="m-link" href="#makers">Makers</a></li>
@@ -564,12 +687,12 @@ button, input, textarea, select { font: inherit; color: inherit; }
     <a class="m-btn" href="#pricing">Start free</a>
   </nav>
   <button class="nav__toggle m-btn-2" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
-  <div class="nav__overlay" id="menu" role="dialog" aria-modal="true" aria-label="Menu" data-lenis-prevent hidden>
+  <div class="nav__overlay" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
     <div class="nav__overlay-top">
       <svg class="nav__mark" viewBox="-18 -18 764 176" fill="none" stroke="currentColor" stroke-width="36" stroke-linecap="round" aria-hidden="true"><path d="M18 122V48a30 30 0 0 1 60 0v74M78 48a30 30 0 0 1 60 0v74"/><path d="M190 18v74a30 30 0 0 0 60 0V18"/><path d="M302 122V48a30 30 0 0 1 30 -30h6"/><path d="M390 122V48a30 30 0 0 1 60 0v74M450 48a30 30 0 0 1 60 0v74"/><path d="M562 18v74a30 30 0 0 0 60 0V18"/><path d="M674 122V48a30 30 0 0 1 30 -30h6"/></svg>
       <button class="nav__close m-btn-2" type="button">Close</button>
     </div>
-    <ul class="nav__overlay-links">
+    <ul class="nav__overlay-links" data-8b-items=":scope > li">
       <li><a class="m-link" href="#noise">How it works</a></li>
       <li><a class="m-link" href="#sources">What it reads</a></li>
       <li><a class="m-link" href="#makers">Makers</a></li>
@@ -592,7 +715,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
       <p class="m-text noise__lead">Dashboards hand you everything at once. murmur reads it all for you, sets the noise aside and keeps only what should change your week.</p>
       <div class="noise__cta"><a class="m-btn" href="#pricing">Start listening</a><a class="m-link" href="#note">Read a Monday note</a></div>
     </div>
-    <ul class="noise__field" aria-label="Signals murmur read this week">
+    <ul class="noise__field" data-8b-items=":scope > li" aria-label="Signals murmur read this week" data-8b-fixed="18">
       <li class="m-chip">Tuesday · 41 shop visits</li>
       <li class="m-chip">3 returns, all size S</li>
       <li class="m-chip">“Is the glaze food-safe?”</li>
@@ -615,7 +738,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
     <article class="noise__note" aria-label="This week's note">
       <p class="m-text-3 noise__meta"><span>Monday 7:40</span><span>Your note</span></p>
       <p class="m-text-4 noise__sentence">Restock the small bowls before Saturday’s market.</p>
-      <ul class="m-text-3 noise__reasons">
+      <ul class="m-text-3 noise__reasons" data-8b-items=":scope > li">
         <li>They sold out twice since Wednesday</li>
         <li>Nine people asked when they are back</li>
         <li>Saturday’s market is confirmed</li>
@@ -632,7 +755,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
       <h2 id="sources-title" class="m-text-2 sources__title">Five things it listens to.</h2>
       <p class="m-text sources__lead">Read-only, all week long. murmur never posts, sells or changes anything in your shop.</p>
     </header>
-    <ol class="sources__cols">
+    <ol class="sources__cols" data-8b-items=":scope > li" data-8b-fixed="5">
       <li class="sources__col"><div class="sources__body">
         <p class="m-text sources__text">What sold, when and for how much: online, at the till and at the market stall.</p>
         <p class="m-text-3 sources__heard">Heard this week: 14 small bowls sold, none left.</p>
@@ -690,9 +813,9 @@ button, input, textarea, select { font: inherit; color: inherit; }
     </div>
   </div>
   <div class="note__copy">
-    <h2 id="note-title" class="m-text-2 note__title" data-8b-motion="wave">One sentence. Three reasons. One tap.</h2>
+    <h2 id="note-title" class="m-text-2 note__title" data-8b-motion="wave" data-8b-split="words">One sentence. Three reasons. One tap.</h2>
     <p class="m-text-5 note__lead">Every Monday at 7:40, by app, email or text. Nothing else all week, unless something breaks.</p>
-    <ol class="note__parts">
+    <ol class="note__parts" data-8b-items=":scope > li">
       <li class="note__part" data-part="sentence">
         <h3 class="m-text-4">The sentence</h3>
         <p class="m-text">The move, in plain words and under twenty of them. No chart to decode, no percentage without a reason.</p>
@@ -714,12 +837,12 @@ button, input, textarea, select { font: inherit; color: inherit; }
 <section id="makers" class="makers" data-8b-section="makers" aria-labelledby="makers-title">
   <div class="makers__stage">
     <header class="makers__head">
-      <h2 id="makers-title" class="m-text-2 makers__title" data-8b-motion="wave">Kept by forty-one small studios.</h2>
+      <h2 id="makers-title" class="m-text-2 makers__title" data-8b-motion="wave" data-8b-split="words">Kept by forty-one small studios.</h2>
       <p class="m-text-5 makers__lead">Potters, jewellers, cobblers, weavers. Each reads one sentence on Monday morning. These were theirs last week.</p>
     </header>
-    <ul class="makers__track">
+    <ul class="makers__track" data-8b-items=":scope > li" data-8b-fixed="5">
       <li class="makers__card">
-        <figure class="makers__arch"><img srcset="https://images.unsplash.com/photo-1760894192884-37a7037200ba?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG90dGVyJTIwd2hlZWwlMjB3b21hbnxlbnwxfDF8fHwxNzkxMjEwNjA1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=80 170w, https://images.unsplash.com/photo-1760894192884-37a7037200ba?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG90dGVyJTIwd2hlZWwlMjB3b21hbnxlbnwxfDF8fHwxNzkxMjEwNjA1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=80 220w, https://images.unsplash.com/photo-1760894192884-37a7037200ba?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG90dGVyJTIwd2hlZWwlMjB3b21hbnxlbnwxfDF8fHwxNzkxMjEwNjA1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=80 330w, https://images.unsplash.com/photo-1760894192884-37a7037200ba?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG90dGVyJTIwd2hlZWwlMjB3b21hbnxlbnwxfDF8fHwxNzkxMjEwNjA1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1760894192884-37a7037200ba?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG90dGVyJTIwd2hlZWwlMjB3b21hbnxlbnwxfDF8fHwxNzkxMjEwNjA1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 43vw, 16vw" style="background:#d9c08c" src="https://images.unsplash.com/photo-1760894192884-37a7037200ba?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG90dGVyJTIwd2hlZWwlMjB3b21hbnxlbnwxfDF8fHwxNzkxMjEwNjA1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" width="2000" height="2992" alt="A potter in a sun hat shaping a bowl on the wheel in a warm workshop" loading="lazy"></figure>
+        <figure class="makers__arch"><img src="https://images.unsplash.com/photo-1760894192884-37a7037200ba?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG90dGVyJTIwd2hlZWwlMjB3b21hbnxlbnwxfDF8fHwxNzkxMjEwNjA1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="2000" height="2992" alt="A potter in a sun hat shaping a bowl on the wheel in a warm workshop" loading="lazy"></figure>
         <div class="makers__text">
           <h3 class="m-text-4">Ines Valk</h3>
           <p class="m-text-3">Stoneware, Malmö</p>
@@ -727,7 +850,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
         </div>
       </li>
       <li class="makers__card">
-        <figure class="makers__arch"><img srcset="https://images.unsplash.com/photo-1772442125564-b9669a6df336?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGpld2VscnklMjBtYWtlciUyMHdvcmtzaG9wfGVufDF8MXx8fDE3OTEyMTA1ODJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=80 170w, https://images.unsplash.com/photo-1772442125564-b9669a6df336?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGpld2VscnklMjBtYWtlciUyMHdvcmtzaG9wfGVufDF8MXx8fDE3OTEyMTA1ODJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=80 220w, https://images.unsplash.com/photo-1772442125564-b9669a6df336?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGpld2VscnklMjBtYWtlciUyMHdvcmtzaG9wfGVufDF8MXx8fDE3OTEyMTA1ODJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=80 330w, https://images.unsplash.com/photo-1772442125564-b9669a6df336?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGpld2VscnklMjBtYWtlciUyMHdvcmtzaG9wfGVufDF8MXx8fDE3OTEyMTA1ODJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1772442125564-b9669a6df336?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGpld2VscnklMjBtYWtlciUyMHdvcmtzaG9wfGVufDF8MXx8fDE3OTEyMTA1ODJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 43vw, 16vw" style="background:#d9d9d9" src="https://images.unsplash.com/photo-1772442125564-b9669a6df336?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGpld2VscnklMjBtYWtlciUyMHdvcmtzaG9wfGVufDF8MXx8fDE3OTEyMTA1ODJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" width="2097" height="2796" alt="A jeweller with folded arms standing at her workbench" loading="lazy"></figure>
+        <figure class="makers__arch"><img src="https://images.unsplash.com/photo-1772442125564-b9669a6df336?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGpld2VscnklMjBtYWtlciUyMHdvcmtzaG9wfGVufDF8MXx8fDE3OTEyMTA1ODJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="2097" height="2796" alt="A jeweller with folded arms standing at her workbench" loading="lazy"></figure>
         <div class="makers__text">
           <h3 class="m-text-4">Ada Lindqvist</h3>
           <p class="m-text-3">Silver rings, Gothenburg</p>
@@ -735,7 +858,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
         </div>
       </li>
       <li class="makers__card">
-        <figure class="makers__arch"><img srcset="https://images.unsplash.com/photo-1661447133325-a4a73386b9e4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGFpbG9yJTIwd29ya3Nob3AlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMjEwNTgyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=80 170w, https://images.unsplash.com/photo-1661447133325-a4a73386b9e4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGFpbG9yJTIwd29ya3Nob3AlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMjEwNTgyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=80 220w, https://images.unsplash.com/photo-1661447133325-a4a73386b9e4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGFpbG9yJTIwd29ya3Nob3AlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMjEwNTgyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=80 330w, https://images.unsplash.com/photo-1661447133325-a4a73386b9e4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGFpbG9yJTIwd29ya3Nob3AlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMjEwNTgyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1661447133325-a4a73386b9e4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGFpbG9yJTIwd29ya3Nob3AlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMjEwNTgyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 43vw, 16vw" style="background:#262626" src="https://images.unsplash.com/photo-1661447133325-a4a73386b9e4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGFpbG9yJTIwd29ya3Nob3AlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMjEwNTgyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" width="3648" height="5472" alt="A cobbler smiling in front of a wall of hanging tools" loading="lazy"></figure>
+        <figure class="makers__arch"><img src="https://images.unsplash.com/photo-1661447133325-a4a73386b9e4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGFpbG9yJTIwd29ya3Nob3AlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMjEwNTgyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="3648" height="5472" alt="A cobbler smiling in front of a wall of hanging tools" loading="lazy"></figure>
         <div class="makers__text">
           <h3 class="m-text-4">Tomas Berg</h3>
           <p class="m-text-3">Shoe repair, Uppsala</p>
@@ -743,7 +866,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
         </div>
       </li>
       <li class="makers__card">
-        <figure class="makers__arch"><img srcset="https://images.unsplash.com/photo-1606681246594-372e9e133ac1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d2VhdmVyJTIwbG9vbSUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTEyMTA1ODR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=80 170w, https://images.unsplash.com/photo-1606681246594-372e9e133ac1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d2VhdmVyJTIwbG9vbSUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTEyMTA1ODR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=80 220w, https://images.unsplash.com/photo-1606681246594-372e9e133ac1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d2VhdmVyJTIwbG9vbSUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTEyMTA1ODR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=80 330w, https://images.unsplash.com/photo-1606681246594-372e9e133ac1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d2VhdmVyJTIwbG9vbSUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTEyMTA1ODR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1606681246594-372e9e133ac1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d2VhdmVyJTIwbG9vbSUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTEyMTA1ODR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 43vw, 16vw" style="background:#260c0c" src="https://images.unsplash.com/photo-1606681246594-372e9e133ac1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d2VhdmVyJTIwbG9vbSUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTEyMTA1ODR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" width="8167" height="12533" alt="A weaver in red working a patterned runner on a wooden loom" loading="lazy"></figure>
+        <figure class="makers__arch"><img src="https://images.unsplash.com/photo-1606681246594-372e9e133ac1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d2VhdmVyJTIwbG9vbSUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTEyMTA1ODR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="8167" height="12533" alt="A weaver in red working a patterned runner on a wooden loom" loading="lazy"></figure>
         <div class="makers__text">
           <h3 class="m-text-4">Mira Kaur</h3>
           <p class="m-text-3">Hand-loomed textiles, Lund</p>
@@ -751,7 +874,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
         </div>
       </li>
       <li class="makers__card">
-        <figure class="makers__arch"><img srcset="https://images.unsplash.com/photo-1513872900980-460ea4c87668?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YXJ0aXNhbiUyMHBvcnRyYWl0JTIwcHJvZmlsZXxlbnwxfDF8fHwxNzkxMjEwNTYxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=80 170w, https://images.unsplash.com/photo-1513872900980-460ea4c87668?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YXJ0aXNhbiUyMHBvcnRyYWl0JTIwcHJvZmlsZXxlbnwxfDF8fHwxNzkxMjEwNTYxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=80 220w, https://images.unsplash.com/photo-1513872900980-460ea4c87668?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YXJ0aXNhbiUyMHBvcnRyYWl0JTIwcHJvZmlsZXxlbnwxfDF8fHwxNzkxMjEwNTYxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=80 330w, https://images.unsplash.com/photo-1513872900980-460ea4c87668?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YXJ0aXNhbiUyMHBvcnRyYWl0JTIwcHJvZmlsZXxlbnwxfDF8fHwxNzkxMjEwNTYxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1513872900980-460ea4c87668?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YXJ0aXNhbiUyMHBvcnRyYWl0JTIwcHJvZmlsZXxlbnwxfDF8fHwxNzkxMjEwNTYxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 43vw, 16vw" style="background:#260c0c" src="https://images.unsplash.com/photo-1513872900980-460ea4c87668?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YXJ0aXNhbiUyMHBvcnRyYWl0JTIwcHJvZmlsZXxlbnwxfDF8fHwxNzkxMjEwNTYxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" width="3744" height="5616" alt="A leather worker in a denim apron smiling in his studio" loading="lazy"></figure>
+        <figure class="makers__arch"><img src="https://images.unsplash.com/photo-1513872900980-460ea4c87668?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YXJ0aXNhbiUyMHBvcnRyYWl0JTIwcHJvZmlsZXxlbnwxfDF8fHwxNzkxMjEwNTYxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="3744" height="5616" alt="A leather worker in a denim apron smiling in his studio" loading="lazy"></figure>
         <div class="makers__text">
           <h3 class="m-text-4">Samuel Okoro</h3>
           <p class="m-text-3">Leather goods, Stockholm</p>
@@ -769,22 +892,22 @@ button, input, textarea, select { font: inherit; color: inherit; }
       <p class="m-text-5 field__lead">A week of Mondays across the studios: what murmur noticed, and what the makers did about it.</p>
   </header>
   <div class="field__stage">
-    <div class="field__grid">
-      <figure class="field__cell"><img srcset="https://images.unsplash.com/photo-1789250208749-4719b9c262d7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGhhbmRzJTIwcHJlc3NpbmclMjBjbGF5JTIwY2xvc2UlMjB1cHxlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=80 220w, https://images.unsplash.com/photo-1789250208749-4719b9c262d7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGhhbmRzJTIwcHJlc3NpbmclMjBjbGF5JTIwY2xvc2UlMjB1cHxlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=360&amp;q=80 360w, https://images.unsplash.com/photo-1789250208749-4719b9c262d7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGhhbmRzJTIwcHJlc3NpbmclMjBjbGF5JTIwY2xvc2UlMjB1cHxlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=80 430w, https://images.unsplash.com/photo-1789250208749-4719b9c262d7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGhhbmRzJTIwcHJlc3NpbmclMjBjbGF5JTIwY2xvc2UlMjB1cHxlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1789250208749-4719b9c262d7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGhhbmRzJTIwcHJlc3NpbmclMjBjbGF5JTIwY2xvc2UlMjB1cHxlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=80 720w, https://images.unsplash.com/photo-1789250208749-4719b9c262d7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGhhbmRzJTIwcHJlc3NpbmclMjBjbGF5JTIwY2xvc2UlMjB1cHxlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w" sizes="(max-width: 767px) 57vw, 28vw" style="background:#594040" src="https://images.unsplash.com/photo-1789250208749-4719b9c262d7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGhhbmRzJTIwcHJlc3NpbmclMjBjbGF5JTIwY2xvc2UlMjB1cHxlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" width="7146" height="5716" alt="Hands with a gold bangle kneading a lump of grey clay" loading="lazy"></figure>
+    <div class="field__grid" data-8b-items=":scope > .field__cell" data-8b-fixed="8">
+      <figure class="field__cell"><img src="https://images.unsplash.com/photo-1789250208749-4719b9c262d7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGhhbmRzJTIwcHJlc3NpbmclMjBjbGF5JTIwY2xvc2UlMjB1cHxlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=780&amp;q=60" width="7146" height="5716" alt="Hands with a gold bangle kneading a lump of grey clay" loading="lazy"></figure>
       <article class="field__cell field__note field__note--gold">
         <p class="m-text-3">Ines, stoneware</p>
         <p class="m-text-4 field__quote">“Wedge two extra bags on Thursday.”</p>
         <p class="m-text-3">Three wholesale orders landed at once</p>
       </article>
-      <figure class="field__cell"><img srcset="https://images.unsplash.com/photo-1745636885619-5234bade5295?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cmVkJTIwZmFicmljJTIwZmxvd2luZ3xlbnwxfDJ8fHwxNzkxMjEwNjIxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=80 180w, https://images.unsplash.com/photo-1745636885619-5234bade5295?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cmVkJTIwZmFicmljJTIwZmxvd2luZ3xlbnwxfDJ8fHwxNzkxMjEwNjIxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=80 290w, https://images.unsplash.com/photo-1745636885619-5234bade5295?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cmVkJTIwZmFicmljJTIwZmxvd2luZ3xlbnwxfDJ8fHwxNzkxMjEwNjIxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1745636885619-5234bade5295?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cmVkJTIwZmFicmljJTIwZmxvd2luZ3xlbnwxfDJ8fHwxNzkxMjEwNjIxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1745636885619-5234bade5295?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cmVkJTIwZmFicmljJTIwZmxvd2luZ3xlbnwxfDJ8fHwxNzkxMjEwNjIxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 46vw, 23vw" style="background:#260c0c" src="https://images.unsplash.com/photo-1745636885619-5234bade5295?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cmVkJTIwZmFicmljJTIwZmxvd2luZ3xlbnwxfDJ8fHwxNzkxMjEwNjIxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" width="3857" height="4000" alt="A woman in a flowing red dress turning in a dark room" loading="lazy"></figure>
-      <figure class="field__cell"><img srcset="https://images.unsplash.com/photo-1670905934075-0c3cb559e977?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGluZW4lMjB0ZXh0aWxlJTIwZm9sZGVkfGVufDF8Mnx8fDE3OTEyMTA2MjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=80 180w, https://images.unsplash.com/photo-1670905934075-0c3cb559e977?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGluZW4lMjB0ZXh0aWxlJTIwZm9sZGVkfGVufDF8Mnx8fDE3OTEyMTA2MjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=80 290w, https://images.unsplash.com/photo-1670905934075-0c3cb559e977?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGluZW4lMjB0ZXh0aWxlJTIwZm9sZGVkfGVufDF8Mnx8fDE3OTEyMTA2MjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1670905934075-0c3cb559e977?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGluZW4lMjB0ZXh0aWxlJTIwZm9sZGVkfGVufDF8Mnx8fDE3OTEyMTA2MjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1670905934075-0c3cb559e977?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGluZW4lMjB0ZXh0aWxlJTIwZm9sZGVkfGVufDF8Mnx8fDE3OTEyMTA2MjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 46vw, 23vw" style="background:#262626" src="https://images.unsplash.com/photo-1670905934075-0c3cb559e977?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGluZW4lMjB0ZXh0aWxlJTIwZm9sZGVkfGVufDF8Mnx8fDE3OTEyMTA2MjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" width="3301" height="3379" alt="A stack of folded wool sweaters in grey, brown and oxblood" loading="lazy"></figure>
-      <figure class="field__cell"><img srcset="https://images.unsplash.com/photo-1565619601015-e57cced38f39?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8amV3ZWxyeSUyMHJpbmdzJTIwd2FybSUyMGxpZ2h0fGVufDF8MHx8fDE3OTEyMTA2OTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=80 270w, https://images.unsplash.com/photo-1565619601015-e57cced38f39?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8amV3ZWxyeSUyMHJpbmdzJTIwd2FybSUyMGxpZ2h0fGVufDF8MHx8fDE3OTEyMTA2OTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1565619601015-e57cced38f39?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8amV3ZWxyeSUyMHJpbmdzJTIwd2FybSUyMGxpZ2h0fGVufDF8MHx8fDE3OTEyMTA2OTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=80 450w, https://images.unsplash.com/photo-1565619601015-e57cced38f39?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8amV3ZWxyeSUyMHJpbmdzJTIwd2FybSUyMGxpZ2h0fGVufDF8MHx8fDE3OTEyMTA2OTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=530&amp;q=80 530w, https://images.unsplash.com/photo-1565619601015-e57cced38f39?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8amV3ZWxyeSUyMHJpbmdzJTIwd2FybSUyMGxpZ2h0fGVufDF8MHx8fDE3OTEyMTA2OTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1565619601015-e57cced38f39?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8amV3ZWxyeSUyMHJpbmdzJTIwd2FybSUyMGxpZ2h0fGVufDF8MHx8fDE3OTEyMTA2OTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w" sizes="(max-width: 767px) 70vw, 35vw" style="background:#734026" src="https://images.unsplash.com/photo-1565619601015-e57cced38f39?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8amV3ZWxyeSUyMHJpbmdzJTIwd2FybSUyMGxpZ2h0fGVufDF8MHx8fDE3OTEyMTA2OTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" width="4374" height="2848" alt="A hammered silver ring standing on a wooden beam in amber light" loading="lazy"></figure>
+      <figure class="field__cell"><img src="https://images.unsplash.com/photo-1745636885619-5234bade5295?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cmVkJTIwZmFicmljJTIwZmxvd2luZ3xlbnwxfDJ8fHwxNzkxMjEwNjIxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" width="3857" height="4000" alt="A woman in a flowing red dress turning in a dark room" loading="lazy"></figure>
+      <figure class="field__cell"><img src="https://images.unsplash.com/photo-1670905934075-0c3cb559e977?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGluZW4lMjB0ZXh0aWxlJTIwZm9sZGVkfGVufDF8Mnx8fDE3OTEyMTA2MjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" width="3301" height="3379" alt="A stack of folded wool sweaters in grey, brown and oxblood" loading="lazy"></figure>
+      <figure class="field__cell"><img src="https://images.unsplash.com/photo-1565619601015-e57cced38f39?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8amV3ZWxyeSUyMHJpbmdzJTIwd2FybSUyMGxpZ2h0fGVufDF8MHx8fDE3OTEyMTA2OTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=60" width="4374" height="2848" alt="A hammered silver ring standing on a wooden beam in amber light" loading="lazy"></figure>
       <article class="field__cell field__note field__note--maroon" data-field-zoom>
         <p class="m-text-3">Mira, textiles</p>
         <p class="m-text-4 field__quote">“Move the stall next to the bakery.”</p>
         <p class="m-text-3">Saturday mornings start there</p>
       </article>
-      <figure class="field__cell"><img srcset="https://images.unsplash.com/photo-1690541478715-898f26cbc28d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGVycmFjb3R0YSUyMHBvdHRlcnklMjBoYW5kc3xlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=80 230w, https://images.unsplash.com/photo-1690541478715-898f26cbc28d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGVycmFjb3R0YSUyMHBvdHRlcnklMjBoYW5kc3xlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1690541478715-898f26cbc28d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGVycmFjb3R0YSUyMHBvdHRlcnklMjBoYW5kc3xlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=80 460w, https://images.unsplash.com/photo-1690541478715-898f26cbc28d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGVycmFjb3R0YSUyMHBvdHRlcnklMjBoYW5kc3xlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w, https://images.unsplash.com/photo-1690541478715-898f26cbc28d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGVycmFjb3R0YSUyMHBvdHRlcnklMjBoYW5kc3xlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=80 960w" sizes="(max-width: 767px) 61vw, 30vw" style="background:#c0a673" src="https://images.unsplash.com/photo-1690541478715-898f26cbc28d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGVycmFjb3R0YSUyMHBvdHRlcnklMjBoYW5kc3xlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" width="3648" height="2736" alt="Clay-covered hands shaping a yellow bowl on a potter's wheel" loading="lazy"></figure>
+      <figure class="field__cell"><img src="https://images.unsplash.com/photo-1690541478715-898f26cbc28d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGVycmFjb3R0YSUyMHBvdHRlcnklMjBoYW5kc3xlbnwxfDB8fHwxNzkxMjEwNjkzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=830&amp;q=60" width="3648" height="2736" alt="Clay-covered hands shaping a yellow bowl on a potter's wheel" loading="lazy"></figure>
       <article class="field__cell field__note field__note--rust">
         <p class="m-text-3">Samuel, leather</p>
         <p class="m-text-4 field__quote">“Answer the dye question in the listing.”</p>
@@ -811,11 +934,11 @@ button, input, textarea, select { font: inherit; color: inherit; }
 <!-- surfaces: four coloured tiles showing the same note on a lock screen, an inbox, a text message and a printed card -->
 <section id="surfaces" class="surfaces" data-8b-section="surfaces" aria-labelledby="surfaces-title">
   <header class="surfaces__head">
-    <h2 id="surfaces-title" class="m-text-2 surfaces__title" data-8b-motion="wave">Wherever Monday finds you.</h2>
+    <h2 id="surfaces-title" class="m-text-2 surfaces__title" data-8b-motion="wave" data-8b-split="words">Wherever Monday finds you.</h2>
     <p class="m-text-5 surfaces__lead">The same sentence on any surface. Pick one, or let it follow you from the phone to the workshop wall.</p>
   </header>
-  <ul class="surfaces__grid">
-    <li class="surfaces__tile surfaces__tile--maroon" data-8b-motion="arch">
+  <ul class="surfaces__grid" data-8b-items=":scope > li">
+    <li class="surfaces__tile surfaces__tile--maroon" data-8b-motion="arch" data-8b-enter="90%">
       <div class="surfaces__mock">
         <div class="surfaces__mock-top m-text-3">
           <svg viewBox="-18 -18 764 176" fill="none" stroke="currentColor" stroke-width="36" stroke-linecap="round" aria-hidden="true"><path d="M18 122V48a30 30 0 0 1 60 0v74M78 48a30 30 0 0 1 60 0v74"/><path d="M190 18v74a30 30 0 0 0 60 0V18"/><path d="M302 122V48a30 30 0 0 1 30 -30h6"/><path d="M390 122V48a30 30 0 0 1 60 0v74M450 48a30 30 0 0 1 60 0v74"/><path d="M562 18v74a30 30 0 0 0 60 0V18"/><path d="M674 122V48a30 30 0 0 1 30 -30h6"/></svg>
@@ -825,7 +948,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
       </div>
       <p class="m-text-3 surfaces__label"><strong>Lock screen</strong><span>Monday, 7:40</span></p>
     </li>
-    <li class="surfaces__tile surfaces__tile--butter" data-8b-motion="arch">
+    <li class="surfaces__tile surfaces__tile--butter" data-8b-motion="arch" data-8b-enter="90%">
       <div class="surfaces__mock">
         <div class="surfaces__mock-top m-text-3"><strong>murmur</strong><span>07:40</span></div>
         <p class="m-text-3"><strong>Your Monday note</strong></p>
@@ -833,14 +956,14 @@ button, input, textarea, select { font: inherit; color: inherit; }
       </div>
       <p class="m-text-3 surfaces__label"><strong>Inbox</strong><span>One email, no newsletter</span></p>
     </li>
-    <li class="surfaces__tile surfaces__tile--gold" data-8b-motion="arch">
+    <li class="surfaces__tile surfaces__tile--gold" data-8b-motion="arch" data-8b-enter="90%">
       <div class="surfaces__mock">
         <p class="surfaces__line">Restock the small bowls before Saturday’s market.</p>
         <p class="m-text-3">murmur · reply DONE or LATER</p>
       </div>
       <p class="m-text-3 surfaces__label"><strong>Text message</strong><span>For days at the stall</span></p>
     </li>
-    <li class="surfaces__tile surfaces__tile--rust" data-8b-motion="arch">
+    <li class="surfaces__tile surfaces__tile--rust" data-8b-motion="arch" data-8b-enter="90%">
       <div class="surfaces__mock">
         <div class="surfaces__mock-top m-text-3">
           <svg viewBox="-18 -18 764 176" fill="none" stroke="currentColor" stroke-width="36" stroke-linecap="round" aria-hidden="true"><path d="M18 122V48a30 30 0 0 1 60 0v74M78 48a30 30 0 0 1 60 0v74"/><path d="M190 18v74a30 30 0 0 0 60 0V18"/><path d="M302 122V48a30 30 0 0 1 30 -30h6"/><path d="M390 122V48a30 30 0 0 1 60 0v74M450 48a30 30 0 0 1 60 0v74"/><path d="M562 18v74a30 30 0 0 0 60 0V18"/><path d="M674 122V48a30 30 0 0 1 30 -30h6"/></svg>
@@ -859,12 +982,12 @@ button, input, textarea, select { font: inherit; color: inherit; }
     <h2 id="pricing-title" class="m-text-2 pricing__title">Four Mondays free. Then one small price.</h2>
     <p class="m-text-5 pricing__lead">Try it for a month with everything switched on. No card needed until your fifth note.</p>
   </header>
-  <div class="pricing__plans">
-    <article class="pricing__plan pricing__plan--studio">
+  <div class="pricing__plans" data-8b-items=":scope > .pricing__plan" data-8b-fixed="2">
+    <article class="pricing__plan pricing__plan--studio" style="--pricing-article-pricing-plan-translate-from-2: 20vh; --pricing-article-pricing-plan-translate-from-2-m: 20vh">
       <h3 class="m-text-4">Studio</h3>
       <p class="pricing__price"><span class="pricing__amount">€9</span><span class="m-text">a month</span></p>
       <p class="m-text">For one shop and the person who runs it.</p>
-      <ul class="pricing__list m-text">
+      <ul class="pricing__list m-text" data-8b-items=":scope > li">
         <li>One note every Monday</li>
         <li>All five sources, read-only</li>
         <li>App, email or text</li>
@@ -874,11 +997,11 @@ button, input, textarea, select { font: inherit; color: inherit; }
       <a class="m-btn-2" href="#contact">Start four free weeks</a>
       <p class="m-text-3 pricing__fine">Prices include VAT. Billed monthly.</p>
     </article>
-    <article class="pricing__plan pricing__plan--collective">
+    <article class="pricing__plan pricing__plan--collective" style="--pricing-article-pricing-plan-translate-from-2: 36vh; --pricing-article-pricing-plan-translate-from-2-m: 36vh">
       <h3 class="m-text-4">Collective</h3>
       <p class="pricing__price"><span class="pricing__amount">€24</span><span class="m-text">a month</span></p>
       <p class="m-text">For shared studios and small teams, up to five shops.</p>
-      <ul class="pricing__list m-text">
+      <ul class="pricing__list m-text" data-8b-items=":scope > li">
         <li>A note per shop, plus one shared</li>
         <li>Up to eight people</li>
         <li>A Thursday check-in when something moves</li>
@@ -894,11 +1017,11 @@ button, input, textarea, select { font: inherit; color: inherit; }
 <!-- faq: six questions in native details elements beside a heading, an email line and an arch photo -->
 <section id="faq" class="faq" data-8b-section="faq" aria-labelledby="faq-title">
   <div class="faq__aside">
-    <h2 id="faq-title" class="m-text-2 faq__title" data-8b-motion="wave">Questions, answered plainly.</h2>
+    <h2 id="faq-title" class="m-text-2 faq__title" data-8b-motion="wave" data-8b-split="words">Questions, answered plainly.</h2>
     <p class="m-text">Still unsure? Write to <a data-8b-placeholder="email" class="m-link" href="mailto:hello@murmur.example">hello@murmur.example</a> and a person replies within a day.</p>
-    <figure class="faq__photo" data-8b-motion="arch"><img srcset="https://images.unsplash.com/photo-1677715156712-68fd84957185?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d29tYW4lMjBwb3J0cmFpdCUyMHRlcnJhY290dGF8ZW58MXwxfHx8MTc5MTIxMDU2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=80 200w, https://images.unsplash.com/photo-1677715156712-68fd84957185?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d29tYW4lMjBwb3J0cmFpdCUyMHRlcnJhY290dGF8ZW58MXwxfHx8MTc5MTIxMDU2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80 300w, https://images.unsplash.com/photo-1677715156712-68fd84957185?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d29tYW4lMjBwb3J0cmFpdCUyMHRlcnJhY290dGF8ZW58MXwxfHx8MTc5MTIxMDU2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1677715156712-68fd84957185?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d29tYW4lMjBwb3J0cmFpdCUyMHRlcnJhY290dGF8ZW58MXwxfHx8MTc5MTIxMDU2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 53vw, 23vw" style="background:#260c0c" src="https://images.unsplash.com/photo-1677715156712-68fd84957185?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d29tYW4lMjBwb3J0cmFpdCUyMHRlcnJhY290dGF8ZW58MXwxfHx8MTc5MTIxMDU2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" width="3111" height="3889" alt="A woman in a rust dress with her hands resting on her head" loading="lazy"></figure>
+    <figure class="faq__photo" data-8b-motion="arch" data-8b-enter="90%"><img src="https://images.unsplash.com/photo-1677715156712-68fd84957185?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d29tYW4lMjBwb3J0cmFpdCUyMHRlcnJhY290dGF8ZW58MXwxfHx8MTc5MTIxMDU2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=60" width="3111" height="3889" alt="A woman in a rust dress with her hands resting on her head" loading="lazy"></figure>
   </div>
-  <div class="faq__list">
+  <div class="faq__list" data-8b-items=":scope > details">
     <details class="faq__item">
       <summary><span class="m-text-4 faq__q">What does murmur need access to?</span></summary>
       <p class="m-text faq__a">Read-only access to your shop, your card reader and the inbox labels you choose. It cannot post, sell, refund or change a price.</p>
@@ -960,12 +1083,12 @@ button, input, textarea, select { font: inherit; color: inherit; }
   <div class="footer__top">
     <p class="footer__lead">One sentence, every Monday. The rest of the week is yours.</p>
     <div class="footer__cols m-text-3">
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><a class="m-link" href="#noise">How it works</a></li>
         <li><a class="m-link" href="#sources">What it reads</a></li>
         <li><a class="m-link" href="#makers">Makers</a></li>
       </ul>
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><a class="m-link" href="#pricing">Pricing</a></li>
         <li><a class="m-link" href="#faq">FAQ</a></li>
         <li><a class="m-link" href="#contact">Contact</a></li>
@@ -981,10 +1104,6 @@ button, input, textarea, select { font: inherit; color: inherit; }
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
 <script data-8b-part="section-script:navigation">
 (() => {
   const nav = document.getElementById('navigation');
@@ -994,11 +1113,11 @@ button, input, textarea, select { font: inherit; color: inherit; }
   const setOpen = open => {
     overlay.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); close.focus(); } else { window.lenis?.start(); toggle.focus(); }
+    if (open) { window.motionKit?.wheel?.stop(); close.focus(); } else { window.motionKit?.wheel?.start(); toggle.focus(); }
   };
   toggle.addEventListener('click', () => setOpen(true));
   close.addEventListener('click', () => setOpen(false));
-  overlay.addEventListener('click', event => { if (event.target.closest('a')) { overlay.hidden = true; toggle.setAttribute('aria-expanded', 'false'); window.lenis?.start(); } });
+  overlay.addEventListener('click', event => { if (event.target.closest('a')) { overlay.hidden = true; toggle.setAttribute('aria-expanded', 'false'); window.motionKit?.wheel?.start(); } });
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !overlay.hidden) setOpen(false); });
   let last = scrollY, travel = 0, dir = 0;
   addEventListener('scroll', () => {
@@ -1015,358 +1134,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
 })();
 </script>
 
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0;
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); });
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-  window.adjacent = (a, b) => {
-    const order = [...document.querySelectorAll('[data-8b-section]')].filter(section => section.getAttribute('data-8b-section') !== 'navigation').map(section => section.id);
-    return order.indexOf(a) >= 0 && order[order.indexOf(a) + 1] === b;
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-ScrollTrigger.config({ autoRefreshEvents: 'visibilitychange,DOMContentLoaded,resize' });
-function refreshScroll() { ScrollTrigger.sort(); ScrollTrigger.refresh(); }
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const nav = document.getElementById('navigation');
-  const lenis = window.lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95, anchors: { offset: -(nav ? nav.offsetHeight + 14 : 0) } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  wave(element, vars = {}) {
-    const split = SplitText.create(element, { type: 'words', mask: 'words' });
-    const timeline = gsap.timeline({ ...vars, onComplete() { split.revert(); vars.onComplete?.(); } });
-    timeline.from(split.words, {
-      yPercent: i => 105 + Math.sin(i * 1.1) * 25,
-      duration: 0.95,
-      ease: 'power3.out',
-      stagger: { each: 0.055, from: 'start' },
-      delay: 0
-    }, 0);
-    return timeline;
-  },
-  arch(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element,
-      { clipPath: 'inset(58% 42% 0% 42% round 999px 999px 999px 999px)' },
-      { clipPath: 'inset(0% 0% 0% 0% round 0px 0px 0px 0px)', duration: 1.15, ease: 'power3.inOut', clearProps: 'clipPath' });
-  }
-};
-const onceBindings = { wave: 'top 88%', arch: 'top 90%' };
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  Object.keys(onceBindings).forEach(name => {
-    const elements = [...section.querySelectorAll(`[data-8b-motion~="${name}"]`)];
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, i) => ScrollTrigger.create({
-        id: `${id}:${i}`, trigger: element, start: onceBindings[name], once: true,
-        animation: effects[name](element, { paused: true })
-      }));
-    }), section.getBoundingClientRect().top < innerHeight ? { first: true, id } : { near: section, id });
-  });
-});
-</script>
 
-<script data-8b-part="scene:noise">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const noise = document.getElementById('noise');
-    const stage = noise.querySelector('.noise__stage');
-    const head = noise.querySelector('.noise__head');
-    const chips = [...noise.querySelectorAll('.noise__field > li')];
-    const card = noise.querySelector('.noise__note');
-    noise.setAttribute('data-staged', '');
-
-    if (adjacent('hero', 'noise')) {
-      const smooth = (a, b, t) => { const x = Math.min(1, Math.max(0, (t - a) / (b - a))); return x * x * (3 - 2 * x); };
-      const setY = gsap.quickSetter(stage, 'y', 'px');
-      const gate = { p: 0 };
-      let width = stage.offsetWidth, lift = innerHeight, narrow = innerWidth < 760 ? 0.3 : 0.2, rise = innerWidth < 760 ? 0.12 : 0.2;
-      const draw = () => {
-        const p = gate.p;
-        if (p >= 1) { stage.style.clipPath = 'none'; setY(0); return; }
-        const open = narrow + (1 - narrow) * smooth(0, 1, p);
-        const rx = open * width / 2, ry = rx * (1 - smooth(0.3, 1, p));
-        const side = (1 - open) * 50;
-        stage.style.clipPath = `inset(0% ${side}% 0% ${side}% round ${rx}px ${rx}px 0px 0px / ${ry}px ${ry}px 0px 0px)`;
-        setY(-lift * rise * Math.sin(Math.PI * p) ** 2);
-      };
-      const measure = () => { width = stage.offsetWidth; lift = innerHeight; narrow = innerWidth < 760 ? 0.3 : 0.2; rise = innerWidth < 760 ? 0.12 : 0.2; };
-      gsap.timeline({ scrollTrigger: { id: 'noise:entry', trigger: noise, start: 'top bottom', end: 'top 20%', scrub: true, onRefreshInit: measure, onRefresh: draw } })
-        .fromTo(gate, { p: 0 }, { p: 1, ease: 'none', immediateRender: true, onUpdate: draw }, 0);
-      draw();
-    }
-
-    let seed = 7;
-    const rand = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
-    const chaos = chips.map(() => ({ x: rand(), y: rand(), r: rand(), s: rand() }));
-    const layoutBox = element => {
-      let x = 0, y = 0, node = element;
-      while (node && node !== stage) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
-      return { x, y, w: element.offsetWidth, h: element.offsetHeight };
-    };
-    const offset = (chip, i, axis) => {
-      const sw = stage.offsetWidth, sh = stage.offsetHeight, c = layoutBox(chip), h = layoutBox(head);
-      const tx = sw * (0.07 + chaos[i].x * 0.86);
-      let ty = sh * (0.12 + chaos[i].y * 0.78);
-      const headBottom = h.y + h.h;
-      if (tx < h.x + h.w + 40 && ty < headBottom + 80) ty = headBottom + 80 + chaos[i].y * (sh - headBottom - 120);
-      return axis === 'x' ? tx - (c.x + c.w / 2) : ty - (c.y + c.h / 2);
-    };
-    const plain = chips.find(chip => chip.classList.contains('m-chip'));
-    const keys = chips.filter(chip => chip.classList.contains('m-chip-2'));
-    const look = element => { const s = getComputedStyle(element); return { backgroundColor: s.backgroundColor, color: s.color, borderColor: s.borderTopColor }; };
-    const plainLook = look(plain), keyLook = look(keys[0]);
-    const sort = gsap.timeline({ scrollTrigger: { id: 'noise', trigger: noise, start: 'top top', end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true } });
-    chips.forEach((chip, i) => sort.fromTo(chip, {
-      x: () => offset(chip, i, 'x'),
-      y: () => offset(chip, i, 'y'),
-      rotation: (chaos[i].r - 0.5) * 70,
-      scale: 1.15 + chaos[i].s * 0.45
-    }, { x: 0, y: 0, rotation: 0, scale: 1, ease: 'power2.inOut', duration: 0.5, immediateRender: true }, 0.06 + chaos[i].s * 0.16));
-    sort
-      .fromTo(keys, { ...plainLook }, { ...keyLook, ease: 'none', duration: 0.001, stagger: 0.05 }, 0.68)
-      .fromTo(card, { scale: 0.08, rotation: -8, transformOrigin: '50% 50%' }, { scale: 1, rotation: 0, ease: 'power3.out', duration: 0.4 }, 0.5)
-      .to({}, { duration: 0.1 }, 0.9);
-    return () => { noise.removeAttribute('data-staged'); stage.style.clipPath = ''; gsap.set(stage, { clearProps: 'transform' }); };
-  });
-}, { first: true, id: 'scene:noise' });
-</script>
-<script data-8b-part="scene:sources">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const sources = document.getElementById('sources');
-    const cols = [...sources.querySelectorAll('.sources__col')];
-    const list = sources.querySelector('.sources__cols');
-    sources.setAttribute('data-staged', '');
-    const geometry = () => {
-      const box = list.getBoundingClientRect();
-      const rects = cols.map(col => col.getBoundingClientRect());
-      const inRow = rects.length > 1 && Math.abs(rects[0].top - rects[1].top) < 2;
-      const n = cols.length;
-      return rects.map((r, i) => {
-        if (inRow) {
-          const sw = Math.min(box.width * 0.46, 620), sh = box.height * 0.42;
-          const sx = box.left + (box.width - sw) / 2 + (sw / n) * i, sy = box.top + (box.height - sh) / 2;
-          return { x: sx - r.left, y: sy + sh - r.bottom, clip: `inset(${r.height - sh}px ${r.width - sw / n}px 0px 0px)` };
-        }
-        const sw = box.width * 0.72, sh = Math.min(box.height * 0.5, n * 46);
-        const sx = box.left + (box.width - sw) / 2, sy = box.top + (box.height - sh) / 2 + (sh / n) * i;
-        return { x: sx - r.left, y: sy - r.top, clip: `inset(0px ${r.width - sw}px ${r.height - sh / n}px 0px)` };
-      });
-    };
-    let g = geometry();
-    const unfold = gsap.timeline({ scrollTrigger: { id: 'sources', trigger: sources, start: 'top top', end: 'bottom bottom', scrub: 0.5, invalidateOnRefresh: true, onRefreshInit: () => { gsap.set(cols, { clearProps: 'transform,clipPath' }); g = geometry(); } } });
-    cols.forEach((col, i) => {
-      unfold.fromTo(col,
-        { x: () => g[i].x, y: () => g[i].y, clipPath: () => g[i].clip },
-        { x: 0, y: 0, clipPath: 'inset(0px 0px 0px 0px)', ease: 'power3.inOut', duration: 0.5 }, 0.08 + i * 0.09);
-    });
-    unfold.set(cols, { clipPath: 'none' }, 0.98).to({}, { duration: 0.02 }, 0.98);
-
-    if (adjacent('sources', 'note')) {
-      const key = sources.querySelector('[data-sources-key]');
-      const keyBody = key.querySelector('.sources__body');
-      const others = cols.filter(col => col !== key).map(col => col.querySelector('.sources__body'));
-      const inRow = () => cols.length > 1 && Math.abs(cols[0].offsetTop - cols[1].offsetTop) < 2;
-      const exit = gsap.timeline({ scrollTrigger: {
-        id: 'sources:exit', trigger: sources, start: 'bottom bottom', end: 'bottom 25%', scrub: true, invalidateOnRefresh: true,
-        onLeaveBack: () => gsap.set([...others, keyBody], { clearProps: 'clipPath,transform' })
-      } });
-      exit.fromTo(others, { clipPath: 'inset(0% 0% 0% 0%)' }, {
-        clipPath: () => inRow() ? 'inset(0% 0% 100% 0%)' : 'inset(0% 100% 0% 0%)',
-        ease: 'power2.in', duration: 0.7, stagger: 0.06, immediateRender: false
-      }, 0)
-        .fromTo(keyBody, { y: 0 }, { y: () => inRow() ? 0 : list.offsetTop + list.offsetHeight - key.offsetTop - key.offsetHeight, ease: 'power2.inOut', duration: 0.7, immediateRender: false }, 0.2);
-    }
-    return () => sources.removeAttribute('data-staged');
-  });
-}, { id: 'scene:sources' });
-</script>
-<script data-8b-part="scene:note">
-queueMotion(() => {
-  gsap.matchMedia().add({ wide: '(min-width: 761px) and (prefers-reduced-motion: no-preference)', narrow: '(max-width: 760px) and (prefers-reduced-motion: no-preference)' }, context => {
-    const note = document.getElementById('note');
-    const panel = note.querySelector('.note__panel');
-    const phone = note.querySelector('.note__phone');
-    if (adjacent('sources', 'note')) {
-      const key = document.querySelector('#sources [data-sources-key]');
-      const tl = gsap.timeline({ scrollTrigger: { id: 'note:entry', trigger: note, start: 'top bottom', end: 'top 25%', scrub: true, invalidateOnRefresh: true } });
-      if (context.conditions.wide && key) {
-        const geo = () => {
-          const list = key.parentElement, first = list.firstElementChild;
-          const colLeft = list.getBoundingClientRect().left + key.offsetLeft - first.offsetLeft;
-          const panelLeft = note.getBoundingClientRect().left + panel.offsetLeft;
-          return { x: colLeft - panelLeft, colW: key.offsetWidth, panelW: panel.offsetWidth };
-        };
-        tl.fromTo(panel, { x: () => geo().x, clipPath: () => `inset(0px ${geo().panelW - geo().colW}px 0px 0px)` },
-          { x: 0, clipPath: 'inset(0px 0px 0px 0px)', ease: 'power2.inOut', duration: 1 }, 0)
-          .fromTo(phone, { x: () => (geo().colW - geo().panelW) / 2, scale: () => Math.min(1, (geo().colW - 28) / phone.offsetWidth) },
-          { x: 0, scale: 1, ease: 'power2.inOut', duration: 1 }, 0);
-      } else {
-        tl.fromTo(panel, { clipPath: () => `inset(0px 0px ${panel.offsetHeight * 0.88}px 0px)` }, { clipPath: 'inset(0px 0px 0px 0px)', ease: 'power2.inOut', duration: 1 }, 0)
-          .fromTo(phone, { y: () => -panel.offsetHeight * 0.25, scale: 0.8 }, { y: 0, scale: 1, ease: 'power2.inOut', duration: 1 }, 0);
-      }
-      tl.set(panel, { clipPath: 'none' }, 1);
-    }
-    const parts = [...note.querySelectorAll('.note__part')];
-    parts.forEach(part => {
-      const block = phone.querySelector(`.note__block[data-part="${part.dataset.part}"]`);
-      ScrollTrigger.create({
-        id: `note:${part.dataset.part}`, trigger: part, start: 'top 62%', end: 'bottom 62%',
-        onToggle: self => { part.toggleAttribute('data-on', self.isActive); block?.toggleAttribute('data-on', self.isActive); }
-      });
-    });
-    return () => note.querySelectorAll('[data-on]').forEach(node => node.removeAttribute('data-on'));
-  });
-}, { id: 'scene:note' });
-</script>
-<script data-8b-part="scene:makers">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const makers = document.getElementById('makers');
-    const stage = makers.querySelector('.makers__stage');
-    const track = makers.querySelector('.makers__track');
-    const cards = [...track.children];
-    makers.setAttribute('data-staged', '');
-    const travel = () => {
-      const pad = parseFloat(getComputedStyle(stage).paddingLeft) || 0;
-      return Math.max(0, track.scrollWidth - (stage.clientWidth - 2 * pad));
-    };
-    const setTravel = () => makers.style.setProperty('--makers-travel', `${Math.round(travel())}px`);
-    setTravel();
-    const setters = cards.map(card => gsap.quickSetter(card, 'y', 'px'));
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'makers', trigger: makers, start: 'top top', end: 'bottom bottom', scrub: 0.5, invalidateOnRefresh: true, onRefreshInit: setTravel } });
-    const wave = () => {
-      const x = gsap.getProperty(track, 'x'), vw = stage.clientWidth;
-      const lift = innerHeight * 0.09 * Math.sin(Math.PI * Math.min(1, Math.max(0, timeline.progress())));
-      cards.forEach((card, i) => {
-        const d = (card.offsetLeft + x + card.offsetWidth / 2 - vw / 2) / (vw * 0.5);
-        setters[i](Math.abs(d) < 1 ? -lift * (1 + Math.cos(Math.PI * d)) / 2 : 0);
-      });
-    };
-    timeline.fromTo(track, { x: 0 }, { x: () => -travel(), ease: 'none', onUpdate: wave });
-    return () => { makers.removeAttribute('data-staged'); makers.style.removeProperty('--makers-travel'); };
-  });
-}, { id: 'scene:makers' });
-</script>
-<script data-8b-part="scene:field">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const field = document.getElementById('field');
-    const stage = field.querySelector('.field__stage');
-    const grid = field.querySelector('.field__grid');
-    const tile = grid.querySelector('[data-field-zoom]');
-    field.setAttribute('data-staged', '');
-    const measure = () => {
-      const tw = tile.offsetWidth, th = tile.offsetHeight;
-      const s = Math.min(stage.clientWidth * 0.86 / tw, stage.clientHeight * 0.9 / th);
-      const cx = tile.offsetLeft + tw / 2, cy = tile.offsetTop + th / 2;
-      return { s, x: stage.clientWidth / 2 - grid.offsetLeft - s * cx, y: stage.clientHeight / 2 - grid.offsetTop - s * cy };
-    };
-    let zoom = measure();
-    gsap.timeline({ scrollTrigger: { id: 'field', trigger: stage, start: 'top top', endTrigger: field, end: 'bottom bottom', scrub: 0.5, invalidateOnRefresh: true, onRefreshInit: () => { zoom = measure(); } } })
-      .fromTo(grid, { x: () => zoom.x, y: () => zoom.y, scale: () => zoom.s, transformOrigin: '0px 0px' }, { x: 0, y: 0, scale: 1, ease: 'power2.inOut', duration: 0.86 })
-      .to({}, { duration: 0.14 });
-    return () => field.removeAttribute('data-staged');
-  });
-}, { id: 'scene:field' });
-</script>
-<script data-8b-part="scene:manifesto">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const manifesto = document.getElementById('manifesto');
-    const lines = [...manifesto.querySelectorAll('.manifesto__line')];
-    const strikes = manifesto.querySelectorAll('.manifesto__strike');
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'manifesto', trigger: manifesto, start: 'top 85%', end: 'center 50%', scrub: 0.5 } });
-    lines.forEach((line, i) => {
-      timeline.fromTo(line, { xPercent: (i % 2 ? 1 : -1) * 38 }, { xPercent: 0, ease: 'power3.out', duration: 0.5 }, i * 0.17);
-      const strike = line.querySelector('.manifesto__strike');
-      if (strike) timeline.fromTo(strike, { clipPath: 'inset(0% 100% 0% 0% round 999px)' }, { clipPath: 'inset(0% 0% 0% 0% round 999px)', ease: 'power2.inOut', duration: 0.3 }, i * 0.17 + 0.34);
-    });
-    timeline.set(strikes, { clipPath: 'none' });
-  });
-}, { id: 'scene:manifesto' });
-</script>
-<script data-8b-part="scene:pricing">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const pricing = document.getElementById('pricing');
-    const plans = [...pricing.querySelectorAll('.pricing__plan')];
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'pricing', trigger: pricing.querySelector('.pricing__plans'), start: 'top 96%', end: 'top 22%', scrub: 0.4, invalidateOnRefresh: true } });
-    plans.forEach((plan, i) => timeline.fromTo(plan,
-      { y: () => innerHeight * (0.2 + i * 0.16), clipPath: () => `inset(0px 0px 0px 0px round ${plan.offsetWidth / 2}px ${plan.offsetWidth / 2}px 0px 0px)` },
-      { y: 0, clipPath: 'inset(0px 0px 0px 0px round 0px 0px 0px 0px)', ease: 'power2.out', duration: 1 }, i * 0.12));
-    timeline.set(plans, { clipPath: 'none' });
-  });
-}, { id: 'scene:pricing' });
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const contact = document.getElementById('contact');
-    const halves = contact.querySelectorAll('.contact__half');
-    gsap.timeline({ scrollTrigger: { id: 'contact', trigger: contact.querySelector('.contact__email'), start: 'top 100%', end: 'top 40%', scrub: 0.4 } })
-      .fromTo(halves[0], { xPercent: -90 }, { xPercent: 0, ease: 'power3.out' }, 0)
-      .fromTo(halves[1], { xPercent: 60 }, { xPercent: 0, ease: 'power3.out' }, 0);
-  });
-}, { id: 'scene:contact' });
-</script>
 <script data-8b-part="section-script:contact">
 (() => {
   const form = document.querySelector('#contact .contact__form');
@@ -1393,6 +1161,318 @@ queueMotion(() => {
     if (entry.isIntersecting) footer.removeAttribute('data-paused'); else footer.setAttribute('data-paused', '');
   }).observe(footer);
 })();
+</script>
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}.line:not(:last-child){margin-bottom:0}.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = typeof Intl.Segmenter === 'function'
+? text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment)
+: text => [...text];
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split');
+if (sources.has(element)) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px 100% 0px' });
+(document.fonts?.ready ?? Promise.resolve()).then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:noise">
+motionKit.scene('noise', () => {
+  const noise = document.getElementById('noise');
+  const stage = noise.querySelector('.noise__stage');
+  const head = noise.querySelector('.noise__head');
+  const chips = [...noise.querySelectorAll('.noise__field > li')];
+  let seed = 7;
+  const rand = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+  const chaos = chips.map(() => ({ x: rand(), y: rand(), r: rand(), s: rand() }));
+  chips.forEach((chip, i) => motionKit.set(chip, { '--noise-r': `${(chaos[i].r - 0.5) * 70}deg`, '--noise-s': 1.15 + chaos[i].s * 0.45, '--noise-at': 0.06 + chaos[i].s * 0.16 }));
+  chips.filter(chip => chip.classList.contains('m-chip-2')).forEach((chip, i) => motionKit.set(chip, { '--noise-lit': 0.68 + i * 0.05 }));
+  const layoutBox = element => {
+    let x = 0, y = 0, node = element;
+    while (node && node !== stage) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+    return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+  };
+  motionKit.measure(() => {
+    const sw = stage.offsetWidth, sh = stage.offsetHeight, h = layoutBox(head), headBottom = h.y + h.h;
+    chips.forEach((chip, i) => {
+      const c = layoutBox(chip), tx = sw * (0.07 + chaos[i].x * 0.86);
+      let ty = sh * (0.12 + chaos[i].y * 0.78);
+      if (tx < h.x + h.w + 40 && ty < headBottom + 80) ty = headBottom + 80 + chaos[i].y * (sh - headBottom - 120);
+      motionKit.set(chip, { '--noise-x': `${tx - (c.x + c.w / 2)}px`, '--noise-y': `${ty - (c.y + c.h / 2)}px` });
+    });
+  });
+});
+</script>
+<script data-8b-part="scene-script:sources">
+motionKit.scene('sources', () => {
+  const list = document.querySelector('#sources .sources__cols');
+  const cols = [...list.children];
+  motionKit.measure(() => {
+    const box = list.getBoundingClientRect(), n = cols.length;
+    const inRow = n > 1 && Math.abs(cols[0].offsetTop - cols[1].offsetTop) < 2;
+    cols.forEach((col, i) => {
+      const style = getComputedStyle(col), w = parseFloat(style.width), h = parseFloat(style.height);
+      const left = col.offsetLeft - list.offsetLeft, top = col.offsetTop - list.offsetTop;
+      if (inRow) {
+        const sw = Math.min(box.width * 0.46, 620), sh = box.height * 0.42;
+        const sx = (box.width - sw) / 2 + (sw / n) * i, sy = (box.height - sh) / 2;
+        motionKit.set(col, { '--sources-x': `${sx - left}px`, '--sources-y': `${sy + sh - top - h}px`, '--sources-clip': `inset(${h - sh}px ${w - sw / n}px 0px 0px)` });
+      } else {
+        const sw = box.width * 0.72, sh = Math.min(box.height * 0.5, n * 46);
+        const sx = (box.width - sw) / 2, sy = (box.height - sh) / 2 + (sh / n) * i;
+        motionKit.set(col, { '--sources-x': `${sx - left}px`, '--sources-y': `${sy - top}px`, '--sources-clip': `inset(0px ${w - sw}px ${h - sh / n}px 0px)` });
+      }
+    });
+  });
+});
+</script>
+<script data-8b-part="scene-script:note">
+motionKit.scene('note', () => {
+  const note = document.getElementById('note');
+  const panel = note.querySelector('.note__panel');
+  const phone = note.querySelector('.note__phone');
+  motionKit.measure(() => {
+    const w = note.offsetWidth;
+    motionKit.set(note, { '--note-phone-x': `${(w / 5 - w / 2) / 2}px`, '--note-phone-scale': Math.min(1, (w / 5 - 28) / phone.offsetWidth), '--note-phone-lift': `${-panel.offsetHeight * 0.25}px` });
+  });
+  note.querySelectorAll('.note__part').forEach(part => {
+    const block = phone.querySelector(`.note__block[data-part="${part.dataset.part}"]`);
+    motionKit.track(part, 'top 62%', 'bottom 62%', progress => {
+      const on = progress > 0 && progress < 1;
+      part.toggleAttribute('data-on', on);
+      block?.toggleAttribute('data-on', on);
+    });
+  });
+});
+</script>
+<script data-8b-part="scene-script:makers">
+motionKit.scene('makers', () => {
+  const makers = document.getElementById('makers');
+  const stage = makers.querySelector('.makers__stage');
+  const track = makers.querySelector('.makers__track');
+  motionKit.measure(() => {
+    const pad = parseFloat(getComputedStyle(stage).paddingLeft) || 0, half = stage.clientWidth / 2;
+    const travel = Math.max(0, track.scrollWidth - (stage.clientWidth - 2 * pad));
+    motionKit.set(makers, { '--makers-travel': `${Math.round(travel)}px`, '--makers-move': `${travel}px`, '--makers-span': travel / half });
+    [...track.children].forEach(card => motionKit.set(card, { '--makers-at': (card.offsetLeft + card.offsetWidth / 2 - half) / half }));
+  });
+});
+</script>
+<script data-8b-part="scene-script:field">
+motionKit.scene('field', () => {
+  const field = document.getElementById('field');
+  const stage = field.querySelector('.field__stage');
+  const grid = field.querySelector('.field__grid');
+  const tile = grid.querySelector('[data-field-zoom]');
+  const above = stage.previousElementSibling;
+  motionKit.measure(() => {
+    const tw = tile.offsetWidth, th = tile.offsetHeight;
+    const s = Math.min(stage.clientWidth * 0.86 / tw, stage.clientHeight * 0.9 / th);
+    const cx = tile.offsetLeft + tw / 2, cy = tile.offsetTop + th / 2;
+    motionKit.set(field, { '--field-top': `${above.offsetTop + above.offsetHeight}px`, '--field-x': `${stage.clientWidth / 2 - grid.offsetLeft - s * cx}px`, '--field-y': `${stage.clientHeight / 2 - grid.offsetTop - s * cy}px`, '--field-s': s });
+  });
+});
+</script>
+<script data-8b-part="scene-script:pricing">
+motionKit.scene('pricing', () => {
+  const plans = document.querySelectorAll('#pricing .pricing__plan');
+  motionKit.measure(() => plans.forEach(plan => motionKit.set(plan, { '--pricing-r': `${plan.offsetWidth / 2}px` })));
+});
 </script>
 </body>
 </html>

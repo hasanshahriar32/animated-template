@@ -1,8 +1,8 @@
-# Free HTML boutique hotel website template with GSAP scroll animations
+# Free HTML boutique hotel website template with scroll animations and no libraries
 
-Boutique hotel website template: one free HTML page for a small hotel or guesthouse, with a house history, three kinds of room, an hour-by-hour day, a table, outings, a photo grid of the town and a stay request form. Warm off-white and ink with terracotta accents. AGENTS.md is included, so Claude Code, Cursor or Codex can adapt it.
+Boutique hotel website template: one free HTML page for a small hotel or guesthouse, with a house history, three kinds of room, an hour-by-hour day, meals, outings, a town photo grid and a stay form. Off-white and ink with terracotta accents. The scroll motion runs on CSS with no JavaScript libraries, and AGENTS.md guides Claude Code, Cursor or Codex.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/boutique-hotel-website-template/)** · **[Use this template](https://github.com/new?template_name=boutique-hotel-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/boutique-hotel-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/ostro/)**
 
@@ -24,19 +24,19 @@ curl -LO https://raw.githubusercontent.com/8bsite/boutique-hotel-website-templat
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my house: name, town, building story, room kinds with sizes, sleeps and nightly prices, season, check-in time, meal times, outings, policies, address, phone, email>. Replace first the name everywhere, the place names, the rooms and prices, the staff and boat names and the guest-book line. Keep the section ids, the classes AGENTS.md lists, one room name per panel and the wordmark's --len at the name's letter count. Ask me for missing facts; never invent prices, policies, reviews or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my house: name, town, building story, room kinds with sizes, sleeps and nightly prices, season, check-in time, meal times, outings, policies, address, contacts>. Replace the name, place names, rooms, prices, staff and boat names first. Motion is CSS scroll-driven animation plus the inline motion kit: keep the gate script, section ids, data-8b-* attributes, the classes AGENTS.md lists, three room panels with their names, and the wordmark's --len; add no animation library. Never invent prices, policies or contacts; ask me.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex starts with facts only the house has: room kinds, sizes and nightly prices, season, check-in time, meal times, outings, policies, address, phone and email. The demo invents all of them, along with the cook, the desk, the fisherman and the boat. Replace the name everywhere, then set the footer wordmark's --len to its letter count. Add or remove a room panel and its name together.
+Vibe coding with Claude Code, Cursor or Codex starts with facts only the house has: room kinds, sizes and nightly prices, season, check-in time, meal times, outings, policies, address, phone and email. The demo invents all of them, along with the cook, the desk, the fisherman and the boat. With this boutique hotel website template for Claude Code, replace the name everywhere, then set the footer wordmark's --len to its letter count. Keep three room panels with one name each: the CSS moves exactly three.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=boutique-hotel-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
-- **Navigation**: fixed bar with a Menu button, the wordmark and a Book a room button; full-screen menu with eight links, address, phone and email. The bar slides away after about 24px of downward scrolling and returns on scroll up; the Menu button opens a full-screen overlay and pauses smooth scrolling while it is open.
+- **Navigation**: fixed bar with a Menu button, the wordmark and a Book a room button; full-screen menu with eight links, address, phone and email. The bar slides away after about 24px of downward scrolling and returns on scroll up; the Menu button opens a full-screen overlay and pauses the smooth wheel scrolling while it is open.
 - **A house where the sea keeps the hours.**: a headline cut as a window over a photo of the bay; scrolling opens the window to the full frame, then a statement and three facts arrive on the view. On load the headline rises line by line and the small photo window scales in while the photo drifts sideways in a loop; scrolling then opens the window to the full frame, drops the lede and buttons away and brings a statement and three facts over a dark shade.
 - **A customs house of 1908**: a history of the building as three dated photos with captions, then two paragraphs. The heading slides in by line, the three photos open from small windows, and the first also drifts inside its frame as you scroll.
-- **The sea rooms, the harbour rooms, the tower.**: a held full-screen stage of three room kinds: the next panel wipes in over the previous one while the heading line of room names slides and lights the current one. Pinned for about two screens of scroll: each next room photo wipes in from the right over the last while the heading line of room names slides sideways and lights the current name.
+- **The sea rooms, the harbour rooms, the tower.**: a held full-screen stage of three room kinds: the next panel wipes in over the previous one while the heading line of room names slides and lights the current one. Held for about two screens of scroll: each next room photo wipes in from the right over the last while the heading line of room names slides sideways and lights the current name.
 - **A day kept by the sea**: six hours of the day as tall rows; the whole section takes each hour's colour as it reaches the middle of the screen. The whole section takes each hour's colours as its row reaches the middle of the screen, and each big phrase drifts sideways as you scroll.
 - **Lunch is what the boats bring**: a large held photo beside a text column: four meals, two photos, the cook's quote and a booking button. The heading slides in by line, the held photo drifts a little inside its frame, and the two smaller photos open from windows.
 - **Out from the mole**: four outings as plates that stack like cards: each held plate settles back, smaller and darker, while the next rises over it. Each outing plate sticks near the upper edge and shrinks and darkens as the next plate rises over it.
@@ -61,15 +61,15 @@ No agent? Click **[Use this template](https://github.com/new?template_name=bouti
 **Can guests book a room or check availability on it?**  
 No. The Book a room buttons and room links jump to the stay request form, which asks for dates, guests, a room kind, name and email. As shipped it shows a thank-you line and sends nothing. Connect Formspree or Netlify Forms, or point the buttons at your booking engine.
 
-**What happens on a phone, with reduced motion or without JavaScript?**  
-On a phone the harbour grid has three columns instead of five and the sea plates put their text under the photo. With reduced motion, entrance and scroll animations and smooth scrolling stop, the page still reads in full and the bar still hides on scroll. Without JavaScript the Menu button does nothing; the footer keeps its page links.
+**What happens on a phone, in Firefox or with reduced motion?**  
+On a phone the harbour grid has three columns instead of five. Without CSS scroll-driven animations (Firefox today) or with reduced motion, the page shows its finished layout: the window stays small, the three rooms follow one another, the plates stack without shrinking, ordinary scrolling. Firefox still plays the opening load-in; the bar hides on scroll in both.
 
 **Can I get a site like this without editing code?**  
-Not this file; it needs an AI coding agent or a developer. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a one-sentence description, in its own design. Designing and restyling are free; publishing with hosting, HTML export and AI edits in chat are Pro, $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Not this file; it needs an AI coding agent or a developer. [8B's AI website builder](https://8b.com/) designs a new site from a one-sentence description, in its own design. Designing and restyling are free; publishing with hosting, HTML export and AI edits in chat are Pro, $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 
-Choose it as a website for boutique hotels when the pitch is a place: the building, the rooms, the day and the table. A business that sells fixed-date trips rather than rooms fits the [group tour](https://8b.com/templates/binario-tre/) template better. The weak spot is booking: it is a hotel booking template only in the sense of an enquiry form, with no availability calendar or rate engine, and one page has no room detail pages. Without code, 8B's builder is the other route.
+Choose it as a website for boutique hotels when the pitch is a place: the building, the rooms, the day and the table. This is the light build, with the same look and motion and no script from a CDN: about 26 KB of code gzipped in one file, against 75 KB and four extra requests for the GSAP version. Fixed-date trips suit the [group tour](https://8b.com/templates/binario-tre/) template better. It is a hotel booking template only through an enquiry form, with no availability calendar.
 
 ## Before you publish
 
@@ -78,7 +78,9 @@ Choose it as a website for boutique hotels when the pitch is a place: the buildi
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 95 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 104 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 95 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

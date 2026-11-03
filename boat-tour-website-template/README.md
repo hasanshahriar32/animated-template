@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make it the site for <my boat firm: name, home pier, season, each trip with boat, times and fares, route places, boats with seats, skippers, charter prices, weather and dog rules, kiosk hours>. Replace trips and fares first, then the rest. Keep the ids, data-8b-section, data-8b-motion, data-8b-part and the selectors AGENTS.md lists, and set the footer wordmark's len to the new name's length. Ask me for what is missing; never invent fares, times, safety rules, licences, ratings or contacts.
 ```
 
-Vibe coding goes fastest when the agent gets the operator's own facts first. Have Claude Code, Cursor or Codex replace the three trips, then the route places, boats with seats and year built, three skippers, charter prices and the kiosk address. It must keep every section id and the data-8b-section, data-8b-motion and data-8b-part attributes, and ask for ratings, licences, weather and dog rules instead of inventing them. The demo's fares are in pounds and its Kelmouth details are invented.
+Vibe coding goes fastest when the agent gets the operator's own facts first, and this boat tour website template for Claude Code, Cursor or Codex rewards that. Replace the three trips, then the route places, boats with seats, three skippers, charter prices and the kiosk address. Keep every section id and the data-8b-section, data-8b-motion and data-8b-part attributes, and ask for ratings, licences, weather and dog rules instead of inventing them, since [made-up filler](https://8b.com/templates/not-ai-generated/) reads as generated. The demo's fares are in pounds and its Kelmouth details are invented.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=boat-tour-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -68,7 +68,7 @@ No. The Book links and the Book a seat button jump to the trips or contact secti
 With reduced motion entrance and scroll animations and smooth scrolling are off, so route and reviews become grids; hover fills and the nav hiding still run. Without JavaScript the phone Menu opens nothing; the questions still open.
 
 **Can I get a site like this without editing code?**  
-Yes, in another way. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence, in its own design rather than this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, in another way. [8B's AI website builder](https://8b.com/) designs a new site from a sentence, in its own design rather than this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

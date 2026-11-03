@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my perfumery: name, address, how I sell (appointment, post), my signature scents with notes, sizes and prices, where each material is grown, who chooses the scents, session price, sample set price, shipping and returns, opening hours>. Replace first the name, the six origins, the four extrait cards and the three people. Keep the section ids, the classes AGENTS.md lists, six origin tiles, four cabinet cards and six vials. Ask for missing facts; never invent prices, hours, addresses or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when you hand the agent the facts only the perfumer has: extrait names, notes, sizes and prices, origins and seasons, session terms, batch status, shipping and returns. The demo invents all of them, along with the three people and the address. Update the Noses heading's --len whenever its text changes. Keep the section ids and the six, four and six counts of tiles, cards and vials.
+A perfumery website template for Claude Code, Cursor or Codex needs you to hand the agent the facts only the perfumer has: extrait names, notes, sizes and prices, origins and seasons, session terms, batch status, shipping and returns. The demo invents all of them, along with the three people and the address. Update the Noses heading's --len whenever its text changes. Keep the section ids and the six, four and six counts of tiles, cards and vials.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=perfumery-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -68,7 +68,7 @@ Each of the four extrait cards lists notes in three rows, from the first impress
 Not as shipped. There is no cart or payment. The Order the Blind Set button opens an email, and the booking form sends nothing. Point the button to your shop or checkout link, or connect a form service such as Formspree or Netlify Forms.
 
 **Can I get a site like this without editing code?**  
-Yes, in a different way. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence, in its own design rather than this one. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, in a different way. [8B's AI website builder](https://8b.com/) designs a new site from a sentence, in its own design rather than this one. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

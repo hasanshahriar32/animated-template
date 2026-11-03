@@ -1,8 +1,8 @@
-# Free HTML fitness app landing page template with GSAP scroll animations
+# Free HTML fitness app landing page template with scroll animations and no libraries
 
-Fitness app landing page template: one free HTML file for a training app with adaptive plans and coaching. Rounded panels in a charcoal frame hold a seven-day chart, four coaches, a drawn phone whose screen changes as you scroll, a distance challenge, weekly group runs and three plans. AGENTS.md tells Claude Code or Cursor what to replace and keep.
+Fitness app landing page template: one free HTML file for a training app with adaptive plans and coaching. Rounded panels in a charcoal frame hold a seven-day chart, four coaches, a drawn phone whose screen changes as you scroll, a distance challenge, group runs and three plans. The motion runs on CSS, with no JavaScript libraries.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/fitness-app-landing-page-template/)** · **[Use this template](https://github.com/new?template_name=fitness-app-landing-page-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/fitness-app-landing-page-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/kurvo/)**
 
@@ -24,10 +24,10 @@ curl -LO https://raw.githubusercontent.com/8bsite/fitness-app-landing-page-templ
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make it the landing page for <my fitness app: name, how it adapts training, disciplines, coaches, publishable member results, challenge, clubs, plans and prices, store and sign-up links, contacts, company name>. Replace first the name, week chart, coaches, member stories, prices and every #get-app button. Keep the classes AGENTS.md lists, three phone screens with three notes and five route checkpoints; make every --len match its line's character count. Ask me for anything missing; never invent prices, member numbers, results, coach credentials or store links.
+Read AGENTS.md, then edit index.html. Make it the landing page for <my fitness app: name, how it adapts training, disciplines, coaches, member results, challenge, clubs, prices, store and sign-up links, contacts>. Replace first the name, chart, coaches, stories, prices and #get-app buttons. Motion is CSS scroll-driven animation plus the inline kit: keep the gate script, data-8b-motion attributes, the classes AGENTS.md lists, three phone screens with three notes and five route checkpoints; match every --len to its line; add no animation library. Never invent prices, results or links; ask me.
 ```
 
-For vibe coding with Claude Code or Cursor, give the agent your app's facts first: the demo invents every one, down to 200 coaches and 18,000 members. The week chart lives in two places: each day's --cv-h height and the line's seven points. The script pairs three phone screens with three notes, so keep both. Five checkpoints sit on the route; a new count means changing the path, their positions and the script's point list together. Replace the third story's avatar, cropped from a crowd photo.
+As a fitness app landing page template for Claude Code or Cursor, it needs your app's facts: the demo invents all, down to 200 coaches and 18,000 members. The week chart lives in two places: each day's --cv-h height and the line's seven points. The script pairs three phone screens with three notes, so keep both. A moved route checkpoint needs new --ch-x and --ch-y values on the path. Replace the third story's avatar, cropped from a crowd photo. Cursor users can [plan the edit before it runs](https://8b.com/templates/for-cursor/).
 
 No agent? Click **[Use this template](https://github.com/new?template_name=fitness-app-landing-page-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -65,15 +65,15 @@ No agent? Click **[Use this template](https://github.com/new?template_name=fitne
 **Where do the Get the app and plan buttons lead?**  
 To the plans list. With no store badges, QR code or sign-up form, Get the app, Start free, Try Pro free, Try Duo free, Find my coach and Join the hundred all point to #get-app. As a download app landing page, it needs your store and sign-up links; a waitlist needs a form wired to Formspree or Netlify Forms.
 
-**How does it behave on phones, with reduced motion or with JavaScript off?**  
-Up to 900 px the nav links fold into a menu button; on phones chart days become rows with sideways bars. Reduced motion stops smooth scrolling, entrance and scroll animations and lists the three phone screens one under another; hover effects and the hiding nav bar stay. Without JavaScript the menu cannot open; the six footer links and questions work.
+**Does the scroll motion need GSAP or another library?**  
+No. The scenes are CSS scroll-driven animations; a short inline kit smooths the wheel and lights the phone notes and checkpoints. Nothing changes for the visitor, and the page loads about a third of the code: 25 KB gzipped against 71 KB. Keep the gate script, every id and data-8b-motion value, three phone screens, three notes and five checkpoints.
 
-**Can I build a fitness website without editing code?**  
-Yes: describe the site in a sentence and [8B's AI website builder](https://8b.com/templates/8b/) designs a new one, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
+**How does it behave on phones, with reduced motion or with JavaScript off?**  
+On phones chart days become sideways bars. Without CSS scroll-driven animations (Firefox today) or with reduced motion, the page shows its finished layout: wide headings, full bars, the drawn route, plans in a row, the three phone screens stacked, ordinary scrolling. Hover effects and the hiding nav stay. Without JavaScript the menu cannot open.
 
 ## Is it the right base?
 
-Choose this as your fitness landing page when you sell a training app with free and paid plans, coaches, challenges and group runs. An app outside fitness, shown feature by feature, sits better on the [captioning app](https://8b.com/templates/linea/) template. Two weak spots: with no store badges or QR code, every Get the app, plan, Find my coach and Join the hundred button stops at the plans list, and the copy promises five disciplines beside four rows. Set real links and match the count before launch.
+Choose this as your fitness landing page when you sell a training app with free and paid plans, coaches, challenges and group runs. It is the light build, with no animation library: about 25 KB of code gzipped in one file against 71 KB for the GSAP version. An app outside fitness sits better on the [captioning app](https://8b.com/templates/linea/) template. Weak spots: no store badges, so every Get the app and plan button stops at the plans list, and five disciplines promised beside four rows.
 
 ## Before you publish
 
@@ -81,7 +81,9 @@ Choose this as your fitness landing page when you sell a training app with free 
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 85 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 121+ (it uses :has(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 91 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 121+ (it uses :has(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 85 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

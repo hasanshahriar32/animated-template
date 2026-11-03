@@ -1,6 +1,6 @@
 # AGENTS.md: bakery website template
 
-One-page website for a neighbourhood bakery and coffee counter that sells monthly boxes by pre-order, with cakes, catering and gift cards. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a neighbourhood bakery and coffee counter that sells monthly boxes by pre-order, with cakes, catering and gift cards. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,20 +14,18 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__toggle` `.menu__close`
   - `section-script:visit`: `.vs__form` `.vs__status`
   - `section-script:footer`: `.ft__news` `.ft__status`
-  - `scene:oven-dial`: `.ov__item`
-  - `scene:deal`: `.st__fan` `.st__card`
-  - `scene:sunrise`: `.sh` `.sh__sun`
-  - `scene:stickers`: `.wy__stage` `.wy__mark` `.wy__ring` `.wy__sticker`
-  - `scene:scissor`: `.rv__band` `.rv__track` `.rv__row`
-  - `scene:frame`: `.ck__frame` `.ck__fill` `.ck__card` `.ck__quote` `.ck__platter`
-  - `scene:sleeve`: `.gf__object` `.gf__card` `.gf__photo`
+  - `scene-script:scissor`: `.rv__band` `.rv__track`
+  - `scene-script:oven-dial`: `.ov__item`
+  - `scene-script:deal`: `.st__fan` `.st__card`
+  - `scene-script:stickers`: `.wy__mark` `.wy__sticker`
+  - `scene-script:frame`: `.ck__frame` `.ck__fill` `.ck__card` `.ck__quote` `.ck__platter`
 - `style="--len:N"` = characters in that display line, spaces included: `Okapi` is 5.
 - The footer wordmark "Okapi" is sized from style="--len:5", the number of characters: update it when the name changes length.
-- Scripts read these counts: the steps section has exactly four cards (the deal scene's resting tilts are four values), the reviews section has two ribbons, and the reasons use one tween per sticker in document order. Add or remove items only if you update the scene.
 - The reviews script clones each row once and aria-hides the clone: edit quotes in the original rows only, and keep three per row so the loop fills the ribbon.
 - The colour blocks, blobs, the sun disc, the round mark and the starbursts are CSS and SVG, not images: recolour them through the colour variables in :root. The page keeps unused CSS for a box scene from a removed first screen, which does no harm.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #ffffff (page background, photo frames, form fields, white chips and cards, and the text in the violet footer), `--color-2` #0e0b16 (body text, button lids, dark badges and field borders), `--color-3` #ffd24a (the bake of the year panel, the logo tab in the nav and yellow cards), `--color-4` #faed8f (pale yellow card ground, photo frames in the bake of the year and the ground of the stickers section), `--color-5` #f9a220 (orange starbursts, the small button label and some stickers), `--color-6` #e0007a (the main button label, the favicon and the times in the morning shift cards), `--color-7` #fd48f2 (the oven list panel, the phone menu overlay and the striped box band), `--color-8` #a6f6f8 (the cyan panel of the opening screen), `--color-9` #1ce8ed (link underlines and fills, badges, one tray card, the gift section ground and the second review ribbon), `--color-10` #ffdbfd (the pre-order steps panel, the pink fill of the cake frame and the pale pink the oven list fades toward), `--color-11` #3b308f (the footer ground, most handwritten notes, the dot print and striped bands), `--color-12` #670a2e (dark wine text and ring on the sticker section and the second review ribbon), `--color-13` #a58bf0 (lavender cards in the tray, the steps fan and the stickers), `--color-14` #1b1545 (the midnight ground at the start of the morning shift section); body text needs 4.5:1 contrast.
@@ -45,7 +43,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - Instagram and TikTok icons in the footer: now the home pages https://www.instagram.com/ and https://www.tiktok.com/; owner's target: your own profile addresses.
 - The two forms (the order form in the visit section and the email list form in the footer): now nothing is sent: a script checks the fields, shows a thank-you line and clears the form; owner's target: a form service or your own endpoint in the form action, and remove the preventDefault in the section scripts.
 - The form in `#visit` (fields `name`, `email`, `what`, `note`) sends nothing. Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it.
-- The form in `#footer` (fields `email`) sends nothing; `section-script:footer` validates it and shows the thank-you text. Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
+- The form in `#footer` (fields `email`) sends nothing; `section-script:footer` handles its submit in the page (read it before you connect a service). Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
 - The name Okapi Bakehouse (any letter case); the favicon letter and colours in `<link rel="icon">`.
 - Photos (22, Unsplash: opening 6, steps 4, bake-of-the-year 4, morning-shift 4, cakes-and-catering 2, gift-boxes 1, contact 1): `src`, no `srcset`/`sizes`, `width`/`height` to the ratio, `alt`, CREDITS.md.
 - `<title>`, meta description, og tags.
@@ -69,10 +67,10 @@ All demo text, never to be invented:
 
 ## Known limits
 - Without JavaScript the phone Menu button cannot open the overlay. The footer repeats the main links, so every section stays reachable.
-- Without JavaScript or with reduced motion the morning-shift section stays on its dark night ground; its text is on white cards and chips, so it stays readable.
+- Fixed counts: CSS rules address the four step cards by :nth-of-type, and the reviews section has two ribbons (rv__band--a and rv__band--b). The oven list carries data-8b-fixed, but its dial measures every line, so lines can be added or removed; the six reason stickers take their order from --i, so any number works.
+- Without scroll-driven animation support (Firefox today) each section shows its finished layout: the step cards rest in their fan, the oven list stands at full weight, the morning shift stays on its dark night ground and the review ribbons stand still with their quotes wrapped; only the opening text still rises on load. With reduced motion on, nothing moves on load either. The text of the morning shift sits on white cards and chips, so it stays readable on the night ground.
 - Both forms only simulate sending. They need a form service or an endpoint before the site can take orders.
-- GSAP, ScrollTrigger, SplitText and Lenis load from a CDN as ordinary blocking scripts at the end of the body.
 - The Privacy and Terms links point to the order form, and the social icons point to the home pages of the networks, until you set real addresses.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Okapi Bakehouse left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Okapi Bakehouse left only in class names.

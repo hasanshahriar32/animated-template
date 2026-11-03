@@ -1,8 +1,8 @@
-# Free HTML interior design website template with GSAP scroll animations
+# Free HTML interior design website template with scroll animations and no libraries
 
-Interior design website template: one free HTML page for a small colour studio or decorator, with a tile mosaic opening, an A to Z glossary, six projects, four priced commissions, six house paints and a contact form. Flat periwinkle, pink and lime sit on near-white. An AI agent can adapt the single file.
+Interior design website template: one free HTML page for a small colour studio or decorator, with a tile mosaic opening, an A to Z glossary, six projects, four priced commissions, six house paints and a contact form. Flat periwinkle, pink and lime sit on near-white. The scroll motion runs on CSS alone, with no libraries.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/interior-design-website-template/)** · **[Use this template](https://github.com/new?template_name=interior-design-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/interior-design-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/pervenche/)**
 
@@ -24,10 +24,10 @@ curl -LO https://raw.githubusercontent.com/8bsite/interior-design-website-templa
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my interior studio: city, what I design, projects with town and year, packages with fixed prices, paints or palette, how a job runs in steps, opening hours, address, how clients reach me>. Replace first the studio name everywhere, the four prices, the six project names, the client quotes and the contact details. Keep the section ids, the data-8b attributes AGENTS.md lists and four sittings. Ask me for any missing fact and never invent prices, hours, addresses, reviews or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my interior studio: city, what I design, projects with town and year, packages with fixed prices, paints or palette, how a job runs in steps, opening hours, address, how clients reach me>. Replace the studio name, prices, project names, quotes and contacts first. Motion is CSS scroll-driven animation with the inline kit: keep the gate script, section ids, data-8b-section and data-8b-motion, four sittings and six paint cards; add no library. Never invent prices, hours, reviews or contacts; ask me.
 ```
 
-Hand index.html and AGENTS.md to Claude Code, Cursor or Codex and start vibe coding with the studio's own facts: city, projects, the four prices, paints, hours, address and contacts. The demo's euro prices, client quotes and project names are invented, so every one must be replaced. Keep the section ids and the classes AGENTS.md lists, and change the giant contact word and its --len value together. The agent must ask for missing prices and reviews, not make them up.
+An interior design website template for Claude Code needs the studio's own facts first: city, projects, the four prices, paints, hours, address and contacts. Hand index.html and AGENTS.md to [Claude Code in a terminal](https://8b.com/templates/for-claude-code/), Cursor or Codex and vibe code the rest. The demo's euro prices, quotes and project names are invented, so replace every one. The giant contact word needs its --len value, and its rising letters and the pink dot's hops are set in CSS for that word.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=interior-design-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -59,17 +59,17 @@ No agent? Click **[Use this template](https://github.com/new?template_name=inter
 ## Questions
 
 **Where can I find free interior design website templates like this one?**  
-This one is free: a single index.html under the MIT licence, with AGENTS.md. It loads GSAP and Lenis from jsDelivr and fonts from Google Fonts. The seven photos come from Unsplash and are credited in CREDITS.md. Replace them with your own work before you publish.
+This one is free: a single index.html under the MIT licence, with AGENTS.md. [The scroll motion here](https://8b.com/templates/animated/) is CSS, so the page loads no JavaScript library and no script from a CDN, only fonts from Google Fonts. The seven photos come from Unsplash and are credited in CREDITS.md. Replace them with your own work.
 
 **Does the contact form send anything?**  
 No. As shipped it checks the required fields and shows a thank-you line, but nothing leaves the page. Connect a service such as Formspree or Netlify Forms, or your own endpoint, and replace the demo email and phone, which are placeholders.
 
 **Can I get a site like this without editing code?**  
-Yes, in a different way. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence, and designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT. It does not produce this template.
+Yes, in a different way. [8B's AI website builder](https://8b.com/) designs a new site from a sentence, and designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT. It does not produce this template.
 
 ## Is it the right base?
 
-Choose this as an interior design web template when you sell a method and fixed prices to private clients and want colour and type to carry the page. If you present whole buildings instead of rooms, the [architecture](https://8b.com/templates/midblock/) template fits better. The weak spot is the six paint cards: they assume you mix your own paints, so cut them if you do not. For a site without touching code, the 8B builder is the other route.
+Choose this as an interior design web template when you sell a method and fixed prices to private clients. This is the light build: the same look and behaviour, no animation library and no script from a CDN, about 33 KB of code gzipped in one file against 78 KB for the GSAP version. For whole buildings, the [architecture](https://8b.com/templates/midblock/) template fits better. The six paint cards assume you mix your own paints; cut them if not. The 8B builder is the no-code route.
 
 ## Before you publish
 
@@ -78,7 +78,9 @@ Choose this as an interior design web template when you sell a method and fixed 
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.4 from jsDelivr, 125 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), container query units, cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 138 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 121+ (it uses color-mix(), container query units, :has(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.4 from jsDelivr, 125 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

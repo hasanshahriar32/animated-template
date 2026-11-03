@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my burger bar or diner: name, address, opening hours, the burgers and sides with prices, allergen and gluten-free policy, weekly nights and offers, how groups book, phone, email, social links>. Replace first the wordmark, the six burgers, the five method steps, the pickle list, the quotes and the photos. Keep the section ids and the classes AGENTS.md lists for each script. Ask me for any missing fact and never invent prices, hours, sourcing claims, reviews or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when the agent has the facts only the bar can give: menu and prices, hours, address, allergens, weekly nights and group booking rules. The demo's hours, prices, sourcing claims and quotes are invented. Replace the wordmark, the six menu cells, the five method steps, the pickle list and the quotes first, and leave the section ids and the classes AGENTS.md lists for each script alone.
+As a burger restaurant website template for Claude Code, Cursor or Codex, it goes fastest when you vibe code it and the agent has the facts only the bar can give: menu and prices, hours, address, allergens, weekly nights and group booking rules. The demo's hours, prices, sourcing claims and quotes are invented. Replace the wordmark, the six menu cells, the five method steps, the pickle list and the quotes first, and leave the section ids and the classes AGENTS.md lists for each script alone.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=burger-restaurant-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -66,7 +66,7 @@ No. It shows the menu, not a basket: six burgers and six sides and drinks with p
 Nowhere yet. It checks name, mobile, date, time and party size, shows a thank-you line that promises a text within the hour, and clears the fields. Connect Formspree or Netlify Forms using the steps in AGENTS.md, or link to OpenTable, SevenRooms or Resy, and edit that promise.
 
 **Can I get a site like this without editing code?**  
-Yes, with a different tool. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a one-sentence description, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
+Yes, with a different tool. [8B's AI website builder](https://8b.com/) designs a new site from a one-sentence description, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
 
 ## Is it the right base?
 

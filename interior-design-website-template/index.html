@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/interior-design-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,17 +20,25 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%235767c2'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23dde833'%3EP%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjIUvQ.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjIUvQ.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/robotoserif/v17/R70mjywflP6FLr3gZx7K8UyuXDs9zVwDmXCb8lxYgmuii32UGoVldX7kg_jL4_HUPM_kB_qXekT5KSh0.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
 <style>
+/* arabic */
+@font-face {
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjcUvaYr.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
 /* armenian */
 @font-face {
   font-family: 'Google Sans';
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiIUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiIUvaYr.woff2) format('woff2');
   unicode-range: U+0308, U+0530-058F, U+2010, U+2024, U+25CC, U+FB13-FB17;
 }
 /* bengali */
@@ -38,8 +47,8 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiAUvaYr.woff2) format('woff2');
-  unicode-range: U+0951-0952, U+0964-0965, U+0980-09FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1, U+1CEA, U+1CED, U+1CF2, U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1;
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiAUvaYr.woff2) format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0980-09FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1, U+1CEA, U+1CED, U+1CF2, U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1, U+11DF0-11DF1;
 }
 /* canadian-aboriginal */
 @font-face {
@@ -47,7 +56,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPh0UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPh0UvaYr.woff2) format('woff2');
   unicode-range: U+02C7, U+02D8-02D9, U+02DB, U+0307, U+1400-167F, U+18B0-18F5, U+25CC, U+11AB0-11ABF;
 }
 /* cyrillic-ext */
@@ -56,7 +65,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj8UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj8UvaYr.woff2) format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -65,7 +74,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjYUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjYUvaYr.woff2) format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* devanagari */
@@ -74,8 +83,8 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjMUvaYr.woff2) format('woff2');
-  unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjMUvaYr.woff2) format('woff2');
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A;
 }
 /* ethiopic */
 @font-face {
@@ -83,7 +92,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiMUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiMUvaYr.woff2) format('woff2');
   unicode-range: U+030E, U+1200-1399, U+2D80-2DDE, U+AB01-AB2E, U+1E7E0-1E7E6, U+1E7E8-1E7EB, U+1E7ED-1E7EE, U+1E7F0-1E7FE;
 }
 /* georgian */
@@ -92,7 +101,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi0UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi0UvaYr.woff2) format('woff2');
   unicode-range: U+0589, U+10A0-10FF, U+1C90-1CBA, U+1CBD-1CBF, U+205A, U+2D00-2D2F, U+2E31;
 }
 /* greek-ext */
@@ -101,7 +110,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj4UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj4UvaYr.woff2) format('woff2');
   unicode-range: U+1F00-1FFF;
 }
 /* greek */
@@ -110,7 +119,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjEUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjEUvaYr.woff2) format('woff2');
   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
 }
 /* gujarati */
@@ -119,7 +128,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPikUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPikUvaYr.woff2) format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0A80-0AFF, U+200C-200D, U+20B9, U+25CC, U+A830-A839;
 }
 /* gurmukhi */
@@ -128,7 +137,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPhEUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPhEUvaYr.woff2) format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0A01-0A76, U+200C-200D, U+20B9, U+25CC, U+262C, U+A830-A839;
 }
 /* hebrew */
@@ -137,8 +146,17 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjAUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjAUvaYr.woff2) format('woff2');
   unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* kannada */
+@font-face {
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPigUvaYr.woff2) format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0B83, U+0C80-0CF3, U+1CD0, U+1CD2-1CD3, U+1CDA, U+1CF2, U+1CF4, U+200C-200D, U+20B9, U+25CC, U+A830-A835;
 }
 /* khmer */
 @font-face {
@@ -146,7 +164,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjkUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjkUvaYr.woff2) format('woff2');
   unicode-range: U+1780-17FF, U+19E0-19FF, U+200C-200D, U+25CC;
 }
 /* lao */
@@ -155,7 +173,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjsUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjsUvaYr.woff2) format('woff2');
   unicode-range: U+0E81-0EDF, U+200C-200D, U+25CC;
 }
 /* malayalam */
@@ -164,8 +182,8 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPioUvaYr.woff2) format('woff2');
-  unicode-range: U+0307, U+0323, U+0951-0952, U+0964-0965, U+0D00-0D7F, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC, U+A830-A832;
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPioUvaYr.woff2) format('woff2');
+  unicode-range: U+0307, U+0323, U+0951-0952, U+0964-0965, U+0B83, U+0D00-0D7F, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC, U+A830-A832;
 }
 /* oriya */
 @font-face {
@@ -173,7 +191,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPisUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPisUvaYr.woff2) format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0B01-0B77, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC;
 }
 /* sinhala */
@@ -182,7 +200,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi8UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi8UvaYr.woff2) format('woff2');
   unicode-range: U+0964-0965, U+0D81-0DF4, U+1CF2, U+200C-200D, U+25CC, U+111E1-111F4;
 }
 /* symbols */
@@ -191,8 +209,8 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPlwUvaYr.woff2) format('woff2');
-  unicode-range: U+0001-000C, U+000E-001F, U+007F-009F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AD, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F7FF, U+1F800-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8BB, U+1F8C0-1F8C1, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FA89, U+1FA8F-1FAC6, U+1FACE-1FADC, U+1FADF-1FAE9, U+1FAF0-1FAF8, U+1FB00-1FBFF;
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPlwUvaYr.woff2) format('woff2');
+  unicode-range: U+0001-000C, U+000E-001F, U+007F-009F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AE, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8BB, U+1F8C0-1F8C1, U+1F8D0-1F8D8, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FAC6, U+1FAC8, U+1FACC-1FADD, U+1FADF-1FAEB, U+1FAEF-1FAFA, U+1FB00-1FBFF;
 }
 /* tamil */
 @font-face {
@@ -200,7 +218,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiQUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiQUvaYr.woff2) format('woff2');
   unicode-range: U+0964-0965, U+0B82-0BFA, U+200C-200D, U+20B9, U+25CC;
 }
 /* telugu */
@@ -209,8 +227,8 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi4UvaYr.woff2) format('woff2');
-  unicode-range: U+0951-0952, U+0964-0965, U+0C00-0C7F, U+1CDA, U+1CF2, U+200C-200D, U+25CC;
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi4UvaYr.woff2) format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0B83, U+0C00-0C7F, U+1CD5-1CD6, U+1CD8, U+1CDA, U+1CF2, U+200C-200D, U+25CC;
 }
 /* thai */
 @font-face {
@@ -218,7 +236,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiYUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiYUvaYr.woff2) format('woff2');
   unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC;
 }
 /* vietnamese */
@@ -227,7 +245,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj0UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj0UvaYr.woff2) format('woff2');
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
@@ -236,8 +254,8 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjwUvaYr.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjwUvaYr.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -245,7 +263,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjIUvQ.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjIUvQ.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* cyrillic-ext */
@@ -286,7 +304,7 @@
   font-stretch: 50% 85%;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/robotoserif/v17/R70mjywflP6FLr3gZx7K8UyuXDs9zVwDmXCb8lxYgmuii32UGoVldX7kg_jL4_HUPM_kB_qXekT5Jyh0xOI.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -322,10 +340,6 @@
   @font-face { font-family: "Google Sans Fallback"; src: local("Arial"), local("ArialMT"), local("Helvetica"); font-weight: 100 549; size-adjust: 98.3%; ascent-override: 98.7%; descent-override: 29.5%; line-gap-override: 0%; }
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-  .lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-smooth iframe { pointer-events: none; }
   body { margin: 0; background: var(--color-1); color: var(--color-2); font-family: var(--font-2); font-size: 1rem; line-height: 1.6; overflow-x: clip; -webkit-font-smoothing: antialiased; }
   img, svg { display: block; max-width: 100%; }
   img { height: auto; }
@@ -482,6 +496,47 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
     #method .method__title { font-size: clamp(2.75rem, 15cqi, 4.5rem); }
     #method .method__tile--stars { grid-template-columns: repeat(4, 1fr); padding: 8% 10%; }
   }
+  #method { padding-top: 4rem; }
+  #method .method__tile--text { justify-content: flex-start; gap: 1.5rem; }
+  #method .method__copy { margin-top: auto; }
+  #method .method__tile--text .m-btn { align-self: flex-start; background: var(--color-5); color: var(--color-1); }
+  #method .method__socket::after { content: ""; position: absolute; inset: 22%; border-radius: 50%; background: var(--color-3); }
+  @media (max-width: 600px) {
+    #method .method__grid { grid-template-areas: "text text" "socket socket" "socket socket" "petals arrow" "rings rings" "photo photo" "plus halves" "stars stars"; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    #method .method__tile { animation: rw-tile .8s cubic-bezier(.2, .8, .2, 1) backwards; }
+    #method .method__tile:nth-child(2) { animation-delay: .06s; }
+    #method .method__tile:nth-child(3) { animation-delay: .12s; }
+    #method .method__tile:nth-child(4) { animation-delay: .18s; }
+    #method .method__tile:nth-child(5) { animation-delay: .24s; }
+    #method .method__tile:nth-child(6) { animation-delay: .3s; }
+    #method .method__tile:nth-child(7) { animation-delay: .36s; }
+    #method .method__tile:nth-child(8) { animation-delay: .42s; }
+    #method .method__tile:nth-child(9) { animation-delay: .48s; }
+    #method .method__petal { --r: -90deg; animation: rw-petal .7s .2s cubic-bezier(.2, .8, .2, 1) backwards; }
+    #method .method__petal:nth-child(2), #method .method__petal:nth-child(3) { --r: 90deg; }
+    #method .method__socket::after { animation: rw-pop-dot .75s 1s cubic-bezier(.3, 1.6, .5, 1) backwards, rw-drift 5.2s 1.75s ease-in-out infinite; }
+    #method .method__ring circle { stroke-dasharray: 310; animation: rw-draw 1.1s .3s cubic-bezier(.6, 0, .2, 1) backwards; }
+    #method .method__fill { animation: rw-fill .8s .25s cubic-bezier(.6, 0, .2, 1) backwards; }
+    #method .method__tile--text > :not(.method__fill) { animation: rw-up .8s .45s cubic-bezier(.2, .8, .2, 1) backwards; }
+    #method .method__tile--text > .method__copy { animation-delay: .55s; }
+    #method .method__tile--text > .m-btn { animation-delay: .65s; }
+    #method .method__plus { animation: rw-turn .6s .5s cubic-bezier(.2, .8, .2, 1) backwards; }
+    #method .method__half:first-child { animation: rw-half .8s .5s cubic-bezier(.2, .8, .2, 1) backwards; }
+    #method .method__half:last-child { --y: 100%; animation: rw-half .8s .5s cubic-bezier(.2, .8, .2, 1) backwards; }
+    #method .method__tile--stars .m-spark { animation: rw-pop .6s .6s cubic-bezier(.3, 1.4, .5, 1) backwards; }
+  }
+  @keyframes rw-tile { from { opacity: 0; scale: .94; } }
+  @keyframes rw-petal { from { rotate: var(--r); scale: .2; } }
+  @keyframes rw-draw { from { stroke-dashoffset: 310; } }
+  @keyframes rw-fill { from { clip-path: inset(100% 0 0 0); } }
+  @keyframes rw-up { from { translate: 0 1.5rem; opacity: 0; } }
+  @keyframes rw-turn { from { rotate: 45deg; scale: .4; } }
+  @keyframes rw-half { from { translate: 0 var(--y, -100%); } }
+  @keyframes rw-pop { from { rotate: -90deg; scale: 0; } }
+  @keyframes rw-pop-dot { from { scale: 0; } }
+  @keyframes rw-drift { 0%, 100% { translate: -16px 0; } 25% { translate: 0 -10px; } 50% { translate: 16px 0; } 75% { translate: 0 10px; } }
 }
 </style>
 <style data-8b-part="section:alphabet">
@@ -762,48 +817,251 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
   }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#method { padding-top: 4rem; }
-#method .method__tile--text { justify-content: flex-start; gap: 1.5rem; }
-#method .method__copy { margin-top: auto; }
-#method .method__tile--text .m-btn { align-self: flex-start; background: var(--color-5); color: var(--color-1); }
-#method .method__socket::after { content: ""; position: absolute; inset: 22%; border-radius: 50%; background: var(--color-3); }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); --ease-6a9d03: linear(0, 0.1254, 0.2419, 0.3497, 0.4492, 0.5406, 0.6243, 0.7005, 0.7696, 0.8318, 0.8875, 0.9369, 0.9804, 1.0182, 1.0507, 1.0781, 1.1008, 1.119, 1.1331, 1.1433, 1.15, 1.1534, 1.1539, 1.1517, 1.1472, 1.1406, 1.1323, 1.1225, 1.1116, 1.0998, 1.0875, 1.0749, 1.0624, 1.0502, 1.0387, 1.0281, 1.0188, 1.011, 1.0051, 1.0013, 1); --ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); }
+[data-8b-live] [data-8b-motion~="rise"] .line__in { animation-name: motion-rise-line-in-translate; animation-duration: 1s; animation-delay: calc(0s + 0.1s * var(--i)); animation-timing-function: var(--ease-power3-out); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"].is-in .line__in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="twinkle"] { animation-name: motion-twinkle-scale, motion-twinkle-rotate; animation-duration: 0.9s; animation-delay: 0s; animation-timing-function: var(--ease-6a9d03); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="twinkle"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rail"] { animation-name: motion-rail-scale; animation-duration: 1.2s; animation-delay: 0s; animation-timing-function: var(--ease-power3-inout); animation-fill-mode: both; animation-play-state: paused; transform: none; transform-origin: 0% 50%; }
+[data-8b-live] [data-8b-motion~="rail"].is-in { animation-play-state: running; }
+[data-8b-live] :has(> [data-8b-motion~="drift"]) { view-timeline: --motion-drift block; view-timeline-inset: 0; }
+[data-8b-live] [data-8b-motion~="drift"] { animation-name: motion-drift; animation-timeline: --motion-drift; animation-range: cover 0% cover 50%; animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes motion-drift { 0% { translate: 0 7%; scale: 1.12; } 100% { translate: 0 0; scale: 1; } }
+@keyframes motion-rise-line-in-translate { 0% { translate: 0px calc(108% + 0.1296em); } 100% { translate: 0px 0px; } }
+@keyframes motion-twinkle-scale { 0% { scale: 0; } 100% { scale: 1; } }
+@keyframes motion-twinkle-rotate { 0% { rotate: -90deg; } 100% { rotate: 0deg; } }
+@keyframes motion-rail-scale { 0% { scale: 0 1; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:method">
+@layer scenes {
+[data-8b-live] #method .method__tile.is-late:not(.method__tile--photo) { view-timeline: --method-tile block; view-timeline-inset: 0; }
+[data-8b-live] #method .is-late .method__petal, [data-8b-live] #method .is-late .method__arrow path, [data-8b-live] #method .is-late .method__ring circle, [data-8b-live] #method .is-late .method__fill, [data-8b-live] #method .is-late .method__rings circle, [data-8b-live] #method .is-late .method__plus, [data-8b-live] #method .is-late .method__half, [data-8b-live] #method .is-late .m-spark { animation-timeline: --method-tile; animation-range: cover 5vh cover 55vh; animation-duration: auto; animation-delay: 0s; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; }
+[data-8b-live] #method .is-late .method__petal { animation-name: method-petal; --method-r: -90deg; }
+[data-8b-live] #method .is-late .method__petal:nth-child(2), [data-8b-live] #method .is-late .method__petal:nth-child(3) { --method-r: 90deg; }
+[data-8b-live] #method .is-late .method__petal, [data-8b-live] #method .is-late .m-spark { animation-range: cover 5vh cover 40.7143vh; }
+[data-8b-live] #method .is-late .method__petal:nth-child(2), [data-8b-live] #method .is-late .m-spark:nth-child(2) { animation-range: cover 9.7619vh cover 45.4762vh; }
+[data-8b-live] #method .is-late .method__petal:nth-child(3), [data-8b-live] #method .is-late .m-spark:nth-child(3) { animation-range: cover 14.5238vh cover 50.2381vh; }
+[data-8b-live] #method .is-late .method__petal:nth-child(4), [data-8b-live] #method .is-late .m-spark:nth-child(4) { animation-range: cover 19.2857vh cover 55vh; }
+[data-8b-live] #method .is-late .method__arrow .method__arrow-line { stroke-dasharray: 117.966 117.966; animation-name: method-arrow-line; animation-range: cover 5vh cover 38.3333vh; }
+[data-8b-live] #method .is-late .method__arrow .method__arrow-head { stroke-dasharray: 86 86; animation-name: method-arrow-head; animation-range: cover 21.6667vh cover 55vh; }
+[data-8b-live] #method .is-late .method__ring circle { stroke-dasharray: 309.876 309.876; transform-box: fill-box; transform-origin: 50% 50%; animation-name: method-ring; }
+[data-8b-live] #method .is-late .method__fill { animation-name: method-fill; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #method .is-late .method__rings circle { animation-name: method-rings; --method-x: 114px; }
+[data-8b-live] #method .is-late .method__rings circle:nth-of-type(2) { --method-x: 38px; }
+[data-8b-live] #method .is-late .method__rings circle:nth-of-type(3) { --method-x: -38px; }
+[data-8b-live] #method .is-late .method__rings circle:nth-of-type(4) { --method-x: -114px; }
+[data-8b-live] #method .is-late .method__plus { animation-name: method-plus; }
+[data-8b-live] #method .is-late .method__plus:nth-of-type(1) { animation-range: cover 5vh cover 38.3333vh; }
+[data-8b-live] #method .is-late .method__plus:nth-of-type(2) { animation-range: cover 8.3333vh cover 41.6667vh; }
+[data-8b-live] #method .is-late .method__plus:nth-of-type(3) { animation-range: cover 11.6667vh cover 45vh; }
+[data-8b-live] #method .is-late .method__plus:nth-of-type(4) { animation-range: cover 15vh cover 48.3333vh; }
+[data-8b-live] #method .is-late .method__plus:nth-of-type(5) { animation-range: cover 18.3333vh cover 51.6667vh; }
+[data-8b-live] #method .is-late .method__plus:nth-of-type(6) { animation-range: cover 21.6667vh cover 55vh; }
+[data-8b-live] #method .is-late .method__half { animation-name: method-half; --method-y: -100%; }
+[data-8b-live] #method .is-late .method__half:last-child { --method-y: 100%; }
+[data-8b-live] #method .is-late .m-spark { animation-name: method-spark; }
+[data-8b-live] #method .method__tile--photo.is-late { animation-name: method-photo; animation-timeline: view(); animation-range: cover 5vh cover 55vh; animation-duration: auto; animation-delay: 0s; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; }
+@keyframes method-petal { 0% { rotate: var(--method-r); scale: 0.2; } 100% { rotate: 0deg; scale: 1; } }
+@keyframes method-arrow-line { 0% { stroke-dashoffset: 117.966px; } 100% { stroke-dashoffset: 0px; } }
+@keyframes method-arrow-head { 0% { stroke-dashoffset: 86px; } 100% { stroke-dashoffset: 0px; } }
+@keyframes method-ring { 0% { stroke-dashoffset: 309.876px; rotate: -90deg; } 100% { stroke-dashoffset: 0px; rotate: 0deg; } }
+@keyframes method-fill { 0% { clip-path: inset(100% 0% 0% 0%); } 100% { clip-path: inset(0% 0% 0% 0%); } }
+@keyframes method-rings { 0% { translate: var(--method-x) 0px; } 100% { translate: 0px 0px; } }
+@keyframes method-plus { 0% { rotate: 45deg; scale: 0.4; } 100% { rotate: 0deg; scale: 1; } }
+@keyframes method-half { 0% { translate: 0px var(--method-y); } 100% { translate: 0px 0px; } }
+@keyframes method-spark { 0% { rotate: -90deg; scale: 0; } 100% { rotate: 0deg; scale: 1; } }
+@keyframes method-photo { 0% { clip-path: circle(14% at 50% 50%); } 99.998% { clip-path: circle(75% at 50% 50%); } 100% { clip-path: none; } }
+}
+</style>
+<style data-8b-part="scene:alphabet">
+@layer scenes {
+[data-8b-live] #alphabet .alphabet__g::before { transform: scale(var(--alphabet-dot, 0)); }
+[data-8b-live] #alphabet .alphabet__entry.is-reading .alphabet__letter { background: var(--color-4); }
+}
+</style>
+<style data-8b-part="scene:rooms">
+@layer scenes {
+  @media (prefers-reduced-motion: no-preference) and (min-height: 560px) {
+    [data-8b-live] #rooms { height: 250svh; padding-block: 0; }
+    [data-8b-live] #rooms .rooms__stage { position: sticky; top: 0; min-height: 100svh; padding-block: clamp(4.5rem, 10svh, 6rem) clamp(1.5rem, 5svh, 3rem); }
+    [data-8b-live] #rooms .rooms__photo { will-change: transform; }
+    @media (max-width: 800px) {
+      [data-8b-live] #rooms { height: auto; padding-block: var(--space-2) 0; }
+      [data-8b-live] #rooms .rooms__stage { position: static; min-height: 0; padding-block: 0; grid-template-rows: auto 1fr; height: calc(100svh + 120svh); align-items: start; }
+      [data-8b-live] #rooms .rooms__sheet { position: sticky; top: max(1rem, calc(50svh - 19rem)); }
+    }
+  }
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #rooms { view-timeline: --rooms-t1 block; view-timeline-inset: 0; --rooms-from: 35vh; --rooms-to: calc(100% - 100vh); }
+[data-8b-live] #rooms .rooms__photo { --rooms-t: calc(1.35 + 0.09 * (var(--n) - 1)); --rooms-a: calc((0.15 + 0.09 * var(--i)) / var(--rooms-t)); --rooms-b: calc((1.15 + 0.09 * var(--i)) / var(--rooms-t)); animation-name: rooms-photo; animation-timeline: --rooms-t1; animation-range: cover calc(var(--rooms-from) + var(--rooms-a) * (var(--rooms-to) - var(--rooms-from))) cover calc(var(--rooms-from) + var(--rooms-b) * (var(--rooms-to) - var(--rooms-from))); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; }
+@media (max-width: 800px) { [data-8b-live] #rooms { --rooms-from: calc(var(--rooms-sheet-y, 0px) + 25vh); } }
+@media (max-height: 559px) {
+  [data-8b-live] #rooms { --rooms-from: 15vh; --rooms-to: calc(50% + 5vh); }
+  @media (max-width: 800px) { [data-8b-live] #rooms { --rooms-from: calc(var(--rooms-sheet-y, 0px) + 15vh); } }
+}
+@keyframes rooms-photo { 0% { translate: var(--rooms-x) var(--rooms-y); rotate: var(--rooms-r); scale: var(--rooms-s); } 100% { translate: 0px 0px; rotate: 0deg; scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:voices">
+@layer scenes {
+[data-8b-live] #voices { view-timeline: --voices-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #voices .voices__badge, [data-8b-live] #voices .voices__rings, [data-8b-live] #voices .voices__cards > figure:is(:nth-of-type(1), :nth-of-type(3)) > .voices__shape, [data-8b-live] #voices .voices__w1, [data-8b-live] #voices .voices__w2 { animation-timeline: --voices-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #voices .voices__badge, [data-8b-live] #voices .voices__rings, [data-8b-live] #voices .voices__cards > figure:is(:nth-of-type(1), :nth-of-type(3)) > .voices__shape { animation-range: cover 0% cover 75vh; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); }
+[data-8b-live] #voices .voices__badge { animation-name: voices-p-voices-badge-rotate; }
+[data-8b-live] #voices .voices__rings { animation-name: voices-svg-voices-rings-rotate; transform-origin: 50% 50%; }
+[data-8b-live] #voices .voices__cards > figure:is(:nth-of-type(1), :nth-of-type(3)) > .voices__shape { animation-name: voices-svg-voices-shape-rotate; transform-origin: 50% 50%; }
+[data-8b-live] #voices .voices__w1, [data-8b-live] #voices .voices__w2 { animation-range: cover calc(100% - 85vh) cover calc(100% - 25vh); animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0); }
+[data-8b-live] #voices .voices__w1 { animation-name: voices-span-voices-w1-translate; }
+[data-8b-live] #voices .voices__w2 { animation-name: voices-span-voices-w2-translate; }
+@keyframes voices-p-voices-badge-rotate { 0% { rotate: -40deg; } 100% { rotate: 0deg; } }
+@keyframes voices-svg-voices-rings-rotate { 0% { rotate: -180deg; } 100% { rotate: 0deg; } }
+@keyframes voices-svg-voices-shape-rotate { 0% { rotate: -135deg; } 100% { rotate: 0deg; } }
+@keyframes voices-span-voices-w1-translate { 0% { translate: 0px 0px; } 100% { translate: -112% 0px; } }
+@keyframes voices-span-voices-w2-translate { 0% { translate: 0px 0px; } 100% { translate: 112% 0px; } }
+}
+</style>
+<style data-8b-part="scene:prices">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); --ease-power1-inout: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); }
+[data-8b-live] #prices { view-timeline: --prices-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #prices .prices__head { animation-name: prices-div-prices-head-translate; animation-timeline: --prices-t1; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #prices .prices__list > .prices__row { animation-name: prices-li-prices-row-translate; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #prices .prices__list > .prices__row > .prices__pill { animation-timing-function: var(--ease-power3-out); animation-fill-mode: both; transform: none; }
+[data-8b-live] #prices .prices__list > .prices__row > .m-rule { animation-name: prices-span-m-rule-scale; animation-timing-function: var(--ease-power1-inout); animation-fill-mode: both; transform: none; transform-origin: 0% 50%; }
+@keyframes prices-div-prices-head-translate { 0% { translate: 0px 120px; } 100% { translate: 0px 0px; } }
+@keyframes prices-li-prices-row-translate { 0% { translate: 0px 90px; } 100% { translate: 0px 0px; } }
+@keyframes prices-p-prices-pill-translate-d { 0% { translate: var(--prices-p-prices-pill-translate-from, 45vw) 0px; } 100% { translate: 0px 0px; } }
+@keyframes prices-p-prices-pill-translate-m { 0% { translate: 45vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes prices-span-m-rule-scale { 0% { scale: 0 1; } 100% { scale: 1; } }
+@media (min-width: 861px) {
+  [data-8b-live] #prices .prices__head { animation-range: cover 15vh cover 46.5789vh; }
+  [data-8b-live] #prices .prices__list > .prices__row { animation-timeline: --prices-t1; animation-range: cover calc(17.7068vh + 6.3158vh * var(--i)) cover calc(49.2857vh + 6.3158vh * var(--i)); }
+  [data-8b-live] #prices .prices__list > .prices__row > .prices__pill { animation-name: prices-p-prices-pill-translate-d; animation-timeline: --prices-t1; animation-range: cover calc(22.218vh + 6.3158vh * var(--i)) cover calc(56.0526vh + 6.3158vh * var(--i)); }
+  [data-8b-live] #prices .prices__list > .prices__row > .m-rule { animation-timeline: --prices-t1; animation-range: cover calc(24.4737vh + 6.3158vh * var(--i)) cover calc(56.0526vh + 6.3158vh * var(--i)); }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #prices .prices__head { animation-range: cover 15vh cover 55vh; }
+  [data-8b-live] #prices .prices__list > .prices__row > .prices__pill { animation-name: prices-p-prices-pill-translate-m; }
+  [data-8b-live] #prices .prices__list > li:nth-of-type(3) { animation-timeline: --prices-t2; animation-range: cover 2vh cover 33.2941vh; view-timeline: --prices-t2 block; view-timeline-inset: 0; }
+  [data-8b-live] #prices .prices__list > li:nth-of-type(4) { animation-timeline: --prices-t3; animation-range: cover 2vh cover 33.2941vh; view-timeline: --prices-t3 block; view-timeline-inset: 0; }
+  [data-8b-live] #prices .prices__list > li:nth-of-type(1) { animation-timeline: --prices-t1; animation-range: cover 18.4286vh cover 58.4286vh; }
+  [data-8b-live] #prices .prices__list > li:nth-of-type(1) > .prices__pill { animation-timeline: --prices-t1; animation-range: cover 24.1429vh cover 67vh; }
+  [data-8b-live] #prices .prices__list > li:nth-of-type(1) > .m-rule { animation-timeline: --prices-t1; animation-range: cover 27vh cover 67vh; }
+  [data-8b-live] #prices .prices__list > li:nth-of-type(2) { animation-timeline: --prices-t1; animation-range: cover 26.4286vh cover 66.4286vh; }
+  [data-8b-live] #prices .prices__list > li:nth-of-type(2) > .prices__pill { animation-timeline: --prices-t1; animation-range: cover 32.1429vh cover 75vh; }
+  [data-8b-live] #prices .prices__list > li:nth-of-type(2) > .m-rule { animation-timeline: --prices-t1; animation-range: cover 35vh cover 75vh; }
+  [data-8b-live] #prices .prices__list > li:nth-of-type(3) > .prices__pill { animation-timeline: --prices-t2; animation-range: cover 6.4706vh cover 40vh; }
+  [data-8b-live] #prices .prices__list > li:nth-of-type(3) > .m-rule { animation-timeline: --prices-t2; animation-range: cover 8.7059vh cover 40vh; }
+  [data-8b-live] #prices .prices__list > li:nth-of-type(4) > .prices__pill { animation-timeline: --prices-t3; animation-range: cover 6.4706vh cover 40vh; }
+  [data-8b-live] #prices .prices__list > li:nth-of-type(4) > .m-rule { animation-timeline: --prices-t3; animation-range: cover 8.7059vh cover 40vh; }
+}
+}
+</style>
+<style data-8b-part="scene:paints">
+@layer scenes {
+  @media (prefers-reduced-motion: no-preference) and (min-height: 560px) {
+    [data-8b-live] #paints .paints__track { height: calc(100svh + (var(--paints-n) - 1) * 55svh); }
+    [data-8b-live] #paints .paints__deck { --paints-spine: 5.5rem; position: sticky; top: 1.5rem; display: block; height: calc(100svh - 3rem); overflow: clip; }
+    [data-8b-live] #paints .paints__card { position: absolute; top: 0; bottom: 0; left: calc(var(--paints-i) * var(--paints-spine)); width: calc(100% - (var(--paints-n) - 1) * var(--paints-spine)); min-height: 0; will-change: transform; }
+    [data-8b-live] #paints .paints__name { font-size: clamp(3rem, 4.4vw, 4.4rem); }
+    [data-8b-live] #paints .paints__mark { width: min(46%, 21rem); }
+    [data-8b-live] #paints .paints__body { display: flex; flex-direction: column; justify-content: center; gap: 1.1rem; }
+    [data-8b-live] #paints .paints__mark { align-self: flex-end; margin-bottom: clamp(.5rem, 3svh, 2rem); }
+    [data-8b-live] #paints .paints__body .m-text { font-size: 1.1rem; }
+    @media (max-width: 600px) {
+      [data-8b-live] #paints .paints__deck { --paints-spine: 3.5rem; }
+      [data-8b-live] #paints .paints__card { left: 0; right: 0; width: auto; top: calc(var(--paints-i) * var(--paints-spine)); bottom: auto; height: calc(100% - (var(--paints-n) - 1) * var(--paints-spine)); }
+      [data-8b-live] #paints .paints__name { font-size: 2.2rem; }
+      [data-8b-live] #paints .paints__mark { width: 8rem; }
+      [data-8b-live] #paints .paints__body .m-text { font-size: 1rem; }
+    }
+  }
+}
+@layer scenes {
+@media (min-height: 560px) {
+[data-8b-live] #paints { --paints-n: 6; }
+[data-8b-live] #paints .paints__deck > .paints__card { --paints-i: calc(0 + var(--i) * 1); }
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #paints .paints__track { view-timeline: --paints-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #paints .paints__deck > .paints__card > .paints__body > .paints__mark, [data-8b-live] #paints .paints__card--bonbon, [data-8b-live] #paints .paints__card--citron, [data-8b-live] #paints .paints__card--lilas, [data-8b-live] #paints .paints__card--craie, [data-8b-live] #paints .paints__card--encre { animation-timeline: --paints-t1; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #paints .paints__deck > .paints__card > .paints__body > .paints__mark { animation-name: paints-svg-paints-mark-rotate, paints-svg-paints-mark-scale; transform-origin: 50% 50%; }
+[data-8b-live] #paints .paints__card--pervenche > .paints__body > .paints__mark { animation-range: cover calc(100vh - 24px) cover calc(10.2564% + 79.4872vh - 19.1px); }
+[data-8b-live] #paints .paints__card--bonbon { animation-range: cover calc(5.9829% + 88.0342vh - 21.1px) cover calc(23.0769% + 53.8462vh - 12.9px); }
+[data-8b-live] #paints .paints__card--bonbon > .paints__body > .paints__mark { animation-range: cover calc(9.4017% + 81.1966vh - 19.5px) cover calc(24.7863% + 50.4274vh - 12.1px); }
+[data-8b-live] #paints .paints__card--citron { animation-range: cover calc(23.0769% + 53.8462vh - 12.9px) cover calc(40.1709% + 19.6581vh - 4.7px); }
+[data-8b-live] #paints .paints__card--citron > .paints__body > .paints__mark { animation-range: cover calc(26.4957% + 47.0085vh - 11.3px) cover calc(41.8803% + 16.2393vh - 3.9px); }
+[data-8b-live] #paints .paints__card--lilas { animation-range: cover calc(40.1709% + 19.6581vh - 4.7px) cover calc(57.265% - 14.5299vh + 3.5px); }
+[data-8b-live] #paints .paints__card--lilas > .paints__body > .paints__mark { animation-range: cover calc(43.5897% + 12.8205vh - 3.1px) cover calc(58.9744% - 17.9487vh + 4.3px); }
+[data-8b-live] #paints .paints__card--craie { animation-range: cover calc(57.265% - 14.5299vh + 3.5px) cover calc(74.359% - 48.7179vh + 11.7px); }
+[data-8b-live] #paints .paints__card--craie > .paints__body > .paints__mark { animation-range: cover calc(60.6838% - 21.3675vh + 5.1px) cover calc(76.0684% - 52.1368vh + 12.5px); }
+[data-8b-live] #paints .paints__card--encre { animation-range: cover calc(74.359% - 48.7179vh + 11.7px) cover calc(91.453% - 82.906vh + 19.9px); }
+[data-8b-live] #paints .paints__card--encre > .paints__body > .paints__mark { animation-range: cover calc(77.7778% - 55.5556vh + 13.3px) cover calc(93.1624% - 86.3248vh + 20.7px); }
+@media (min-width: 601px) {
+  [data-8b-live] #paints .paints__card--bonbon, [data-8b-live] #paints .paints__card--citron, [data-8b-live] #paints .paints__card--lilas, [data-8b-live] #paints .paints__card--craie, [data-8b-live] #paints .paints__card--encre { animation-name: paints-li-paints-card-translate-d; }
+}
 @media (max-width: 600px) {
-  #method .method__grid { grid-template-areas: "text text" "socket socket" "socket socket" "petals arrow" "rings rings" "photo photo" "plus halves" "stars stars"; }
+  [data-8b-live] #paints .paints__card--bonbon, [data-8b-live] #paints .paints__card--citron, [data-8b-live] #paints .paints__card--lilas, [data-8b-live] #paints .paints__card--craie, [data-8b-live] #paints .paints__card--encre { animation-name: paints-li-paints-card-translate-m; }
 }
-@media (prefers-reduced-motion: no-preference) {
-  #method .method__tile { animation: rw-tile .8s cubic-bezier(.2, .8, .2, 1) backwards; }
-  #method .method__tile:nth-child(2) { animation-delay: .06s; }
-  #method .method__tile:nth-child(3) { animation-delay: .12s; }
-  #method .method__tile:nth-child(4) { animation-delay: .18s; }
-  #method .method__tile:nth-child(5) { animation-delay: .24s; }
-  #method .method__tile:nth-child(6) { animation-delay: .3s; }
-  #method .method__tile:nth-child(7) { animation-delay: .36s; }
-  #method .method__tile:nth-child(8) { animation-delay: .42s; }
-  #method .method__tile:nth-child(9) { animation-delay: .48s; }
-  #method .method__petal { --r: -90deg; animation: rw-petal .7s .2s cubic-bezier(.2, .8, .2, 1) backwards; }
-  #method .method__petal:nth-child(2), #method .method__petal:nth-child(3) { --r: 90deg; }
-  #method .method__socket::after { animation: rw-pop-dot .75s 1s cubic-bezier(.3, 1.6, .5, 1) backwards, rw-drift 5.2s 1.75s ease-in-out infinite; }
-  #method .method__ring circle { stroke-dasharray: 310; animation: rw-draw 1.1s .3s cubic-bezier(.6, 0, .2, 1) backwards; }
-  #method .method__fill { animation: rw-fill .8s .25s cubic-bezier(.6, 0, .2, 1) backwards; }
-  #method .method__tile--text > :not(.method__fill) { animation: rw-up .8s .45s cubic-bezier(.2, .8, .2, 1) backwards; }
-  #method .method__tile--text > .method__copy { animation-delay: .55s; }
-  #method .method__tile--text > .m-btn { animation-delay: .65s; }
-  #method .method__plus { animation: rw-turn .6s .5s cubic-bezier(.2, .8, .2, 1) backwards; }
-  #method .method__half:first-child { animation: rw-half .8s .5s cubic-bezier(.2, .8, .2, 1) backwards; }
-  #method .method__half:last-child { --y: 100%; animation: rw-half .8s .5s cubic-bezier(.2, .8, .2, 1) backwards; }
-  #method .method__tile--stars .m-spark { animation: rw-pop .6s .6s cubic-bezier(.3, 1.4, .5, 1) backwards; }
 }
-@keyframes rw-tile { from { opacity: 0; scale: .94; } }
-@keyframes rw-petal { from { rotate: var(--r); scale: .2; } }
-@keyframes rw-draw { from { stroke-dashoffset: 310; } }
-@keyframes rw-fill { from { clip-path: inset(100% 0 0 0); } }
-@keyframes rw-up { from { translate: 0 1.5rem; opacity: 0; } }
-@keyframes rw-turn { from { rotate: 45deg; scale: .4; } }
-@keyframes rw-half { from { translate: 0 var(--y, -100%); } }
-@keyframes rw-pop { from { rotate: -90deg; scale: 0; } }
-@keyframes rw-pop-dot { from { scale: 0; } }
-@keyframes rw-drift { 0%, 100% { translate: -16px 0; } 25% { translate: 0 -10px; } 50% { translate: 16px 0; } 75% { translate: 0 10px; } }</style>
+@keyframes paints-svg-paints-mark-rotate { 0% { rotate: -120deg; } 100% { rotate: 0deg; } }
+@keyframes paints-svg-paints-mark-scale { 0% { scale: 0.35; } 100% { scale: 1; } }
+@keyframes paints-li-paints-card-translate-d { 0% { translate: calc(100% - var(--paints-spine)) 0px; } 100% { translate: 0px 0px; } }
+@keyframes paints-li-paints-card-translate-m { 0% { translate: 0px calc(100% - var(--paints-spine)); } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:light">
+@layer scenes {
+@property --light-warm { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --light-night { syntax: "<number>"; inherits: false; initial-value: 0; }
+[data-8b-live] #light .light__wall { view-timeline: --light-wall block; view-timeline-inset: 0; background: color-mix(in oklab, color-mix(in oklab, var(--color-2), var(--color-3) calc(var(--light-warm) * 32%)), var(--color-5) calc(var(--light-night) * 72%)); animation-name: light-wall; }
+[data-8b-live] #light .light__sun { animation-name: light-sun; }
+[data-8b-live] #light .light__lamp { animation-name: light-lamp; }
+[data-8b-live] #light .light__wall, [data-8b-live] #light .light__sun, [data-8b-live] #light .light__lamp { animation-timeline: --light-wall; animation-range: cover 20vh cover calc(100% - 20vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #light .light__hour.is-now::before { transform: scale(1); }
+[data-8b-live] #light .light__hour.is-now .light__when { color: var(--color-5); }
+@keyframes light-wall { 0%, 33.3333% { --light-warm: 0; --light-night: 0; } 66.6667% { --light-warm: 1; --light-night: 0; } 100% { --light-warm: 0.25; --light-night: 1; } }
+@keyframes light-sun { 0% { transform: translateX(90%) skewX(24deg) scale(1, 0.78); opacity: 1; animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1); } 33.3333% { transform: translateX(0%) skewX(0deg) scale(1, 1); opacity: 1; animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0); } 66.6667% { transform: translateX(-95%) skewX(-28deg) scale(1, 1.35); opacity: 1; animation-timing-function: linear; } 90%, 100% { transform: translateX(-95%) skewX(-28deg) scale(1, 1.7); opacity: 0; } }
+@keyframes light-lamp { 0%, 78.3333% { transform: scale(0); animation-timing-function: linear(0, 0.1207, 0.2329, 0.3369, 0.433, 0.5215, 0.6026, 0.6767, 0.744, 0.8048, 0.8594, 0.908, 0.951, 0.9886, 1.0211, 1.0488, 1.072, 1.0909, 1.1059, 1.1171, 1.125, 1.1297, 1.1316, 1.131, 1.128, 1.123, 1.1164, 1.1083, 1.099, 1.0889, 1.0781, 1.0671, 1.056, 1.0452, 1.0349, 1.0254, 1.017, 1.01, 1.0046, 1.0012, 1); } 98.3333%, 100% { transform: scale(1); } }
+}
+</style>
+<style data-8b-part="scene:sittings">
+@layer scenes {
+[data-8b-live] { --ease-power1-inout: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); }
+[data-8b-live] #sittings .sittings__chain { view-timeline: --sittings-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #sittings .sittings__chain > g:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4)) { animation-timeline: --sittings-t1; animation-timing-function: var(--ease-power1-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #sittings .sittings__chain > g:nth-of-type(2) { animation-name: sittings-g-sittings-slide-translate; animation-range: cover calc(5.0847% + 9.8644vh) cover calc(89.8305% - 25.7288vh); }
+[data-8b-live] #sittings .sittings__chain > g:nth-of-type(3) { animation-name: sittings-g-sittings-slide-translate-2; animation-range: cover calc(10.1695% + 7.7288vh) cover calc(94.9153% - 27.8644vh); }
+[data-8b-live] #sittings .sittings__chain > g:nth-of-type(4) { animation-name: sittings-g-sittings-slide-translate-3; animation-range: cover calc(15.2542% + 5.5932vh) cover calc(100% - 30vh); }
+@keyframes sittings-g-sittings-slide-translate { 0% { translate: -233px 0px; } 100% { translate: 0px 0px; } }
+@keyframes sittings-g-sittings-slide-translate-2 { 0% { translate: -467px 0px; } 100% { translate: 0px 0px; } }
+@keyframes sittings-g-sittings-slide-translate-3 { 0% { translate: -700px 0px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] #contact-title { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact-title > span:is(:nth-of-type(1), :nth-of-type(2), :nth-of-type(3), :nth-of-type(5), :nth-of-type(6), :nth-of-type(7)) > .contact__g, [data-8b-live] #contact .contact__dot, [data-8b-live] #contact .contact__l--j > .contact__g { animation-timeline: --contact-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #contact-title > span:nth-of-type(2) > .contact__g { animation-name: contact-span-contact-g-translate; animation-range: cover 5vh cover 18.75vh; animation-timing-function: var(--ease-power3-out); }
+[data-8b-live] #contact .contact__dot { animation-name: contact-dot; animation-range: cover 5vh cover 60vh; animation-timing-function: linear; }
+[data-8b-live] #contact-title > span:nth-of-type(6) > .contact__g { animation-name: contact-span-contact-g-translate; animation-range: cover 7.0625vh cover 20.8125vh; animation-timing-function: var(--ease-power3-out); }
+[data-8b-live] #contact .contact__l--j > .contact__g { animation-name: contact-span-contact-g-translate; animation-range: cover 9.125vh cover 22.875vh; animation-timing-function: var(--ease-power3-out); }
+[data-8b-live] #contact-title > span:nth-of-type(1) > .contact__g { animation-name: contact-span-contact-g-translate; animation-range: cover 11.1875vh cover 24.9375vh; animation-timing-function: var(--ease-power3-out); }
+[data-8b-live] #contact-title > span:nth-of-type(7) > .contact__g { animation-name: contact-span-contact-g-translate; animation-range: cover 13.25vh cover 27vh; animation-timing-function: var(--ease-power3-out); }
+[data-8b-live] #contact-title > span:nth-of-type(3) > .contact__g { animation-name: contact-span-contact-g-translate; animation-range: cover 15.3125vh cover 29.0625vh; animation-timing-function: var(--ease-power3-out); }
+[data-8b-live] #contact-title > span:nth-of-type(5) > .contact__g { animation-name: contact-span-contact-g-translate; animation-range: cover 17.375vh cover 31.125vh; animation-timing-function: var(--ease-power3-out); }
+@keyframes contact-span-contact-g-translate { 0% { translate: 0px 160%; } 100% { translate: 0px 0px; } }
+@keyframes contact-dot { 0% { translate: -1.2292em -0.2em; } 31.2542% { translate: -1.2291em -0.2001em; } 32.5042% { translate: -1.2044em -0.2176em; } 33.3333% { translate: -1.188em -0.2271em; } 35% { translate: -1.155em -0.2417em; } 36.6667% { translate: -1.1221em -0.2512em; } 38.3333% { translate: -1.0891em -0.2567em; } 40.0042% { translate: -1.0561em -0.2592em; } 43.7542% { translate: -0.9819em -0.2598em; } 45% { translate: -0.9573em -0.2581em; } 46.6667% { translate: -0.9243em -0.2501em; } 47.5042% { translate: -0.9078em -0.2424em; } 48.3333% { translate: -0.8914em -0.2316em; } 50% { translate: -0.8584em -0.1982em; } 51.6667% { translate: -0.8255em -0.1453em; } 53.3333% { translate: -0.7925em -0.0686em; } 54.1708% { translate: -0.776em -0.0203em; } 55% { translate: -0.7601em -0.0686em; } 56.6667% { translate: -0.7283em -0.1453em; } 58.3333% { translate: -0.6965em -0.1982em; } 60% { translate: -0.6647em -0.2316em; } 61.6667% { translate: -0.6329em -0.2501em; } 63.3333% { translate: -0.601em -0.2581em; } 65.6292% { translate: -0.5572em -0.26em; } 66.6667% { translate: -0.5374em -0.2598em; } 68.3333% { translate: -0.5056em -0.2568em; } 70% { translate: -0.4738em -0.2466em; } 71.6667% { translate: -0.442em -0.2248em; } 73.3333% { translate: -0.4101em -0.1869em; } 75% { translate: -0.3783em -0.1285em; } 76.6667% { translate: -0.3465em -0.0452em; } 77.0875% { translate: -0.3385em -0.0203em; } 78.3333% { translate: -0.3201em -0.0903em; } 80% { translate: -0.2954em -0.1606em; } 81.6667% { translate: -0.2708em -0.2082em; } 83.3333% { translate: -0.2462em -0.2374em; } 85% { translate: -0.2216em -0.2529em; } 86.6667% { translate: -0.197em -0.259em; } 88.5458% { translate: -0.1692em -0.26em; } 90% { translate: -0.1477em -0.2595em; } 91.6667% { translate: -0.1231em -0.2547em; } 93.3333% { translate: -0.0985em -0.241em; } 95% { translate: -0.0739em -0.2134em; } 96.6667% { translate: -0.0492em -0.1673em; } 98.3333% { translate: -0.0246em -0.0978em; } 100% { translate: 0em 0em; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: top bar: four section links, a studio tagline, the Pervenche wordmark and a Menu button that opens a full-screen overlay -->
@@ -819,7 +1077,7 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
     <a class="nav__brand" href="#method">Pervenche</a>
     <button class="nav__menu m-btn-2" type="button" aria-expanded="false" aria-controls="menu"><span class="m-btn-2__label">Menu</span></button>
   </nav>
-  <div id="menu" class="nav__overlay" hidden data-lenis-prevent>
+  <div id="menu" class="nav__overlay" hidden>
     <div class="nav__overlay-top">
       <p class="m-text-2">Interior colour studio, Lyon</p>
       <button class="nav__close m-btn-2" type="button"><span class="m-btn-2__label">Close</span></button>
@@ -857,7 +1115,7 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
         <a class="m-btn" href="#contact"><span class="m-btn__label">Book a colour walk</span></a>
       </div>
       <div class="method__tile method__tile--rings" aria-hidden="true"><svg class="method__rings" viewBox="0 0 330 100"><circle cx="50" cy="50" r="46"/><circle cx="126" cy="50" r="46"/><circle cx="202" cy="50" r="46"/><circle cx="278" cy="50" r="46"/></svg></div>
-      <figure class="method__tile method__tile--photo"><img srcset="https://images.unsplash.com/photo-1783791213924-c310bb8f9002?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=400&q=80 400w, https://images.unsplash.com/photo-1783791213924-c310bb8f9002?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=640&q=80 640w, https://images.unsplash.com/photo-1783791213924-c310bb8f9002?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=80 750w, https://images.unsplash.com/photo-1783791213924-c310bb8f9002?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=960&q=80 960w, https://images.unsplash.com/photo-1783791213924-c310bb8f9002?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1280&q=80 1280w" sizes="(max-width: 767px) 100vw, 50vw" style="background:#c0a6a6" src="https://images.unsplash.com/photo-1783791213924-c310bb8f9002?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=80" alt="A corridor painted in three flat planes: white, a pale blue band and an acid yellow return" width="1600" height="1067" loading="lazy" data-8b-motion="drift"></figure>
+      <figure class="method__tile method__tile--photo"><img fetchpriority="high" src="https://images.unsplash.com/photo-1783791213924-c310bb8f9002?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=700&q=60" alt="A corridor painted in three flat planes: white, a pale blue band and an acid yellow return" width="1600" height="1067" loading="lazy" data-8b-motion="drift"></figure>
       <div class="method__tile method__tile--plus" aria-hidden="true">
         <svg class="method__plus" viewBox="0 0 40 40"><path d="M20 6v28M6 20h28"/></svg><svg class="method__plus" viewBox="0 0 40 40"><path d="M20 6v28M6 20h28"/></svg><svg class="method__plus" viewBox="0 0 40 40"><path d="M20 6v28M6 20h28"/></svg>
         <svg class="method__plus" viewBox="0 0 40 40"><path d="M20 6v28M6 20h28"/></svg><svg class="method__plus" viewBox="0 0 40 40"><path d="M20 6v28M6 20h28"/></svg><svg class="method__plus" viewBox="0 0 40 40"><path d="M20 6v28M6 20h28"/></svg>
@@ -875,12 +1133,12 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
   <!-- alphabet: a sticky A to Z wall of letters beside a glossary of ten entries (demo: room terms such as Arch, Colour drench, Limewash) (animation: scene:alphabet) -->
   <section id="alphabet" data-8b-section="alphabet" aria-labelledby="alphabet-title">
     <div class="alphabet__head">
-      <h2 id="alphabet-title" class="m-text-3" data-8b-motion="rise">A room alphabet</h2>
+      <h2 id="alphabet-title" class="m-text-3" data-8b-motion="rise" data-8b-split="lines">A room alphabet</h2>
       <p class="m-text">Twenty-six letters on the studio wall. Ten of them come up in almost every commission; ask us about any of them on a colour walk.</p>
     </div>
     <div class="alphabet__body">
     <div class="alphabet__wall m-text-3" aria-hidden="true"><span class="alphabet__g">A</span><span class="alphabet__g">B</span><span class="alphabet__g">C</span><span class="alphabet__g">D</span><span class="alphabet__g">E</span><span class="alphabet__g">F</span><span class="alphabet__g">G</span><span class="alphabet__g">H</span><span class="alphabet__g">I</span><span class="alphabet__g">J</span><span class="alphabet__g">K</span><span class="alphabet__g">L</span><span class="alphabet__g">M</span><span class="alphabet__g">N</span><span class="alphabet__g">O</span><span class="alphabet__g">P</span><span class="alphabet__g">Q</span><span class="alphabet__g">R</span><span class="alphabet__g">S</span><span class="alphabet__g">T</span><span class="alphabet__g">U</span><span class="alphabet__g">V</span><span class="alphabet__g">W</span><span class="alphabet__g">X</span><span class="alphabet__g">Y</span><span class="alphabet__g">Z</span></div>
-    <dl class="alphabet__list">
+    <dl class="alphabet__list" data-8b-items=":scope > .alphabet__entry">
       <div class="alphabet__entry"><dt><span class="alphabet__letter" aria-hidden="true">A</span><span class="m-text-6">Arch</span></dt><dd class="m-text">We round one doorway or niche in every home. It is where the eye rests.</dd></div>
       <div class="alphabet__entry"><dt><span class="alphabet__letter" aria-hidden="true">B</span><span class="m-text-6">Bouclé</span></dt><dd class="m-text">A knotted, chalky fabric for the one chair nobody wants to leave.</dd></div>
       <div class="alphabet__entry"><dt><span class="alphabet__letter" aria-hidden="true">C</span><span class="m-text-6">Colour drench</span></dt><dd class="m-text">Walls, skirting and ceiling in one shade, so the room reads as a single block.</dd></div>
@@ -901,34 +1159,34 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
         <h2 id="rooms-title" class="m-text-3">Rooms we have drawn<span class="m-spark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 0C21.6 11.2 28.8 18.4 40 20 28.8 21.6 21.6 28.8 20 40 18.4 28.8 11.2 21.6 0 20 11.2 18.4 18.4 11.2 20 0Z"/></svg></span></h2>
         <p class="m-text">Six recent commissions, from a pâtisserie counter to an attic bedroom. Each one began as a single sheet of shapes and colours.</p>
       </div>
-      <ul class="rooms__sheet">
+      <ul class="rooms__sheet" data-8b-items=":scope > .rooms__item">
         <li class="rooms__item">
-          <div class="rooms__frame"><div class="rooms__photo"><img srcset="https://images.unsplash.com/photo-1590564310616-4984760edb51?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGluayUyMGNhZmUlMjBpbnRlcmlvcnxlbnwxfDB8fHwxNzkxMjEwNDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=190&amp;q=80 190w, https://images.unsplash.com/photo-1590564310616-4984760edb51?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGluayUyMGNhZmUlMjBpbnRlcmlvcnxlbnwxfDB8fHwxNzkxMjEwNDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80 300w, https://images.unsplash.com/photo-1590564310616-4984760edb51?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGluayUyMGNhZmUlMjBpbnRlcmlvcnxlbnwxfDB8fHwxNzkxMjEwNDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1590564310616-4984760edb51?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGluayUyMGNhZmUlMjBpbnRlcmlvcnxlbnwxfDB8fHwxNzkxMjEwNDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 50vw, 23vw" style="background:#c08c8c" src="https://images.unsplash.com/photo-1590564310616-4984760edb51?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGluayUyMGNhZmUlMjBpbnRlcmlvcnxlbnwxfDB8fHwxNzkxMjEwNDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A blush-pink salon with a round mirror, a slim vanity and red velvet chairs" width="1600" height="1067" loading="lazy"></div></div>
+          <div class="rooms__frame"><div class="rooms__photo"><img src="https://images.unsplash.com/photo-1590564310616-4984760edb51?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGluayUyMGNhZmUlMjBpbnRlcmlvcnxlbnwxfDB8fHwxNzkxMjEwNDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="A blush-pink salon with a round mirror, a slim vanity and red velvet chairs" width="1600" height="1067" loading="lazy"></div></div>
           <h3 class="rooms__name m-text-6">Salon Grenadine</h3>
           <p class="rooms__meta m-text-2">Hair salon, Lyon, 2025</p>
         </li>
         <li class="rooms__item">
-          <div class="rooms__frame"><div class="rooms__photo"><img srcset="https://images.unsplash.com/photo-1743867840110-ee532b7c6fb9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=80 170w, https://images.unsplash.com/photo-1743867840110-ee532b7c6fb9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=80 270w, https://images.unsplash.com/photo-1743867840110-ee532b7c6fb9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=80 340w, https://images.unsplash.com/photo-1743867840110-ee532b7c6fb9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1743867840110-ee532b7c6fb9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=530&amp;q=80 530w, https://images.unsplash.com/photo-1743867840110-ee532b7c6fb9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 44vw, 21vw" style="background:#404059" src="https://images.unsplash.com/photo-1743867840110-ee532b7c6fb9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A lilac attic bedroom with a round porthole window, a daybed and plants on the wall" width="1600" height="1200" loading="lazy"></div></div>
+          <div class="rooms__frame"><div class="rooms__photo"><img src="https://images.unsplash.com/photo-1743867840110-ee532b7c6fb9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=370&amp;q=60" alt="A lilac attic bedroom with a round porthole window, a daybed and plants on the wall" width="1600" height="1200" loading="lazy"></div></div>
           <h3 class="rooms__name m-text-6">Lilac attic</h3>
           <p class="rooms__meta m-text-2">Bedroom, Annecy, 2025</p>
         </li>
         <li class="rooms__item">
-          <div class="rooms__frame"><div class="rooms__photo"><img srcset="https://images.unsplash.com/photo-1790049687819-9dd37662276e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=80 180w, https://images.unsplash.com/photo-1790049687819-9dd37662276e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=80 290w, https://images.unsplash.com/photo-1790049687819-9dd37662276e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=360&amp;q=80 360w, https://images.unsplash.com/photo-1790049687819-9dd37662276e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1790049687819-9dd37662276e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 47vw, 22vw" style="background:#8c8c8c" src="https://images.unsplash.com/photo-1790049687819-9dd37662276e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A shop counter lit from below, in front of walls tiled in pink, mauve and grey" width="1600" height="1125" loading="lazy"></div></div>
+          <div class="rooms__frame"><div class="rooms__photo"><img src="https://images.unsplash.com/photo-1790049687819-9dd37662276e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBhc3RlbCUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0MTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="A shop counter lit from below, in front of walls tiled in pink, mauve and grey" width="1600" height="1125" loading="lazy"></div></div>
           <h3 class="rooms__name m-text-6">Pâtisserie Mauve</h3>
           <p class="rooms__meta m-text-2">Shop counter, Grenoble, 2024</p>
         </li>
         <li class="rooms__item">
-          <div class="rooms__frame"><div class="rooms__photo"><img srcset="https://images.unsplash.com/photo-1687941544146-351d41b57cbd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=190&amp;q=80 190w, https://images.unsplash.com/photo-1687941544146-351d41b57cbd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80 300w, https://images.unsplash.com/photo-1687941544146-351d41b57cbd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1687941544146-351d41b57cbd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 50vw, 23vw" style="background:#d9d9d9" src="https://images.unsplash.com/photo-1687941544146-351d41b57cbd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A guest bedroom with a teal panelled wall, arched mirrors and black lamps" width="1600" height="1067" loading="lazy"></div></div>
+          <div class="rooms__frame"><div class="rooms__photo"><img src="https://images.unsplash.com/photo-1687941544146-351d41b57cbd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29sb3JmdWwlMjBiZWRyb29tJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTIxMDQxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="A guest bedroom with a teal panelled wall, arched mirrors and black lamps" width="1600" height="1067" loading="lazy"></div></div>
           <h3 class="rooms__name m-text-6">Teal guest room</h3>
           <p class="rooms__meta m-text-2">Guest room, Lyon, 2024</p>
         </li>
         <li class="rooms__item">
-          <div class="rooms__frame"><div class="rooms__photo"><img srcset="https://images.unsplash.com/photo-1693165074486-91c440396298?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGFyY2hlZCUyMGRvb3J3YXklMjBwYXN0ZWx8ZW58MXwwfHx8MTc5MTIxMDQ2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=190&amp;q=80 190w, https://images.unsplash.com/photo-1693165074486-91c440396298?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGFyY2hlZCUyMGRvb3J3YXklMjBwYXN0ZWx8ZW58MXwwfHx8MTc5MTIxMDQ2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80 300w, https://images.unsplash.com/photo-1693165074486-91c440396298?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGFyY2hlZCUyMGRvb3J3YXklMjBwYXN0ZWx8ZW58MXwwfHx8MTc5MTIxMDQ2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1693165074486-91c440396298?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGFyY2hlZCUyMGRvb3J3YXklMjBwYXN0ZWx8ZW58MXwwfHx8MTc5MTIxMDQ2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 50vw, 23vw" style="background:#d9d9d9" src="https://images.unsplash.com/photo-1693165074486-91c440396298?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGFyY2hlZCUyMGRvb3J3YXklMjBwYXN0ZWx8ZW58MXwwfHx8MTc5MTIxMDQ2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A white café front with a lilac door, an arched window and a mint chair" width="1600" height="1067" loading="lazy"></div></div>
+          <div class="rooms__frame"><div class="rooms__photo"><img src="https://images.unsplash.com/photo-1693165074486-91c440396298?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGFyY2hlZCUyMGRvb3J3YXklMjBwYXN0ZWx8ZW58MXwwfHx8MTc5MTIxMDQ2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=60" alt="A white café front with a lilac door, an arched window and a mint chair" width="1600" height="1067" loading="lazy"></div></div>
           <h3 class="rooms__name m-text-6">Café Lilas</h3>
           <p class="rooms__meta m-text-2">Café front, Valence, 2023</p>
         </li>
         <li class="rooms__item">
-          <div class="rooms__frame"><div class="rooms__photo"><img srcset="https://images.unsplash.com/photo-1780777659443-f67ec3398d41?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGVyaXdpbmtsZSUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0Njl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=190&amp;q=80 190w, https://images.unsplash.com/photo-1780777659443-f67ec3398d41?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGVyaXdpbmtsZSUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0Njl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80 300w, https://images.unsplash.com/photo-1780777659443-f67ec3398d41?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGVyaXdpbmtsZSUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0Njl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=80 400w, https://images.unsplash.com/photo-1780777659443-f67ec3398d41?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGVyaXdpbmtsZSUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0Njl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=80 640w" sizes="(max-width: 767px) 50vw, 23vw" style="background:#a68c59" src="https://images.unsplash.com/photo-1780777659443-f67ec3398d41?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGVyaXdpbmtsZSUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0Njl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="A double-height living room with a navy velvet sofa, a hanging chair and a stair" width="1600" height="1067" loading="lazy"></div></div>
+          <div class="rooms__frame"><div class="rooms__photo"><img src="https://images.unsplash.com/photo-1780777659443-f67ec3398d41?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGVyaXdpbmtsZSUyMGludGVyaW9yfGVufDF8MHx8fDE3OTEyMTA0Njl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=60" alt="A double-height living room with a navy velvet sofa, a hanging chair and a stair" width="1600" height="1067" loading="lazy"></div></div>
           <h3 class="rooms__name m-text-6">Velvet duplex</h3>
           <p class="rooms__meta m-text-2">Living room, Geneva, 2023</p>
         </li>
@@ -939,13 +1197,13 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
   <!-- voices: a periwinkle band with three client quotes on cards, a badge and a giant COLOUR FIRST word pair (animation: scene:voices) -->
   <section id="voices" data-8b-section="voices" aria-labelledby="voices-title">
     <div class="voices__top">
-      <h2 id="voices-title" class="m-text-3" data-8b-motion="rise">Said in our rooms</h2>
+      <h2 id="voices-title" class="m-text-3" data-8b-motion="rise" data-8b-split="lines">Said in our rooms</h2>
       <div class="voices__badges">
         <svg class="voices__rings" viewBox="0 0 150 80" aria-hidden="true"><circle cx="48" cy="40" r="36"/><circle cx="102" cy="40" r="36"/></svg>
         <p class="voices__badge m-badge-2"><span>Clients in their own words</span></p>
       </div>
     </div>
-    <div class="voices__cards">
+    <div class="voices__cards" data-8b-items=":scope > .voices__card" data-8b-fixed="3">
       <figure class="voices__card m-surface">
         <svg class="voices__shape" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 22a18 18 0 0 1 28 28 18 18 0 0 1-28 28 18 18 0 0 1-28-28 18 18 0 0 1 28-28Z"/></svg>
         <blockquote><p class="voices__quote m-text-6">We asked for a calm bedroom and got a blue we now plan our holidays around.</p></blockquote>
@@ -971,26 +1229,26 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
       <p class="m-text">Fixed prices, written down before we start. Paint and furniture are bought at cost and never marked up.</p>
       <a class="m-btn" href="#contact"><span class="m-btn__label">Book a colour walk</span></a>
     </div>
-    <ol class="prices__list">
-      <li class="prices__row">
+    <ol class="prices__list" data-8b-items=":scope > .prices__row" data-8b-fixed="4">
+      <li class="prices__row" style="--prices-p-prices-pill-translate-from: 45vw">
         <div class="prices__name"><h3 class="m-text-6">Colour walk</h3><p class="m-text">Two hours in your rooms with paint cards, a notebook and the light you have. You keep a written palette.</p></div>
         <p class="prices__tag m-text-2">Fixed</p>
         <p class="prices__pill m-badge">€280</p>
         <span class="m-rule" aria-hidden="true"></span>
       </li>
-      <li class="prices__row">
+      <li class="prices__row" style="--prices-p-prices-pill-translate-from: 576px">
         <div class="prices__name"><h3 class="m-text-6">One-room drawing</h3><p class="m-text">Plan, palette, shapes and lighting for one room on a single specimen sheet, with a shopping list.</p></div>
         <p class="prices__tag m-text-2">Fixed</p>
         <p class="prices__pill m-badge">€1,900</p>
         <span class="m-rule" aria-hidden="true"></span>
       </li>
-      <li class="prices__row">
+      <li class="prices__row" style="--prices-p-prices-pill-translate-from: 45vw">
         <div class="prices__name"><h3 class="m-text-6">Light score</h3><p class="m-text">A lighting plan for the whole home: lamps, colour temperatures, dimmers and where the switches go.</p></div>
         <p class="prices__tag m-text-2">Fixed</p>
         <p class="prices__pill m-badge">€850</p>
         <span class="m-rule" aria-hidden="true"></span>
       </li>
-      <li class="prices__row">
+      <li class="prices__row" style="--prices-p-prices-pill-translate-from: 45vw">
         <div class="prices__name"><h3 class="m-text-6">Whole-home specimen</h3><p class="m-text">Every room drawn as one family, four sittings, site visits and a place in our painters' calendar.</p></div>
         <p class="prices__tag m-text-2">From</p>
         <p class="prices__pill m-badge">€7,400</p>
@@ -1001,11 +1259,11 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
   <!-- paints: six tall paint cards in a sticky deck, each leaving its rotated name as a spine (demo: Pervenche, Bonbon, Citron, Lilas, Craie, Encre) (animation: scene:paints) -->
   <section id="paints" data-8b-section="paints" aria-labelledby="paints-title">
     <div class="paints__head">
-      <h2 id="paints-title" class="m-text-3" data-8b-motion="rise">Six house paints</h2>
+      <h2 id="paints-title" class="m-text-3" data-8b-motion="rise" data-8b-split="lines">Six house paints</h2>
       <p class="m-text">Mixed in Lyon from three pigments and a great deal of white. Every commission ends with a tin of each shade we used, for the touch-ups.</p>
     </div>
     <div class="paints__track">
-      <ul class="paints__deck">
+      <ul class="paints__deck" data-8b-items=":scope > .paints__card" data-8b-fixed="6">
         <li class="paints__card paints__card--pervenche">
           <div class="paints__spine"><h3 class="paints__name m-text-6">Pervenche</h3></div>
           <div class="paints__body">
@@ -1061,9 +1319,9 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
   <!-- light: a text column with four hours of the day beside a painted wall where a patch of sunlight crosses and night falls (demo: Morning, Noon, Evening, Night) (animation: scene:light) -->
   <section id="light" data-8b-section="light" aria-labelledby="light-title">
     <div class="light__text">
-      <h2 id="light-title" class="m-text-3" data-8b-motion="rise">We paint for the light you have</h2>
+      <h2 id="light-title" class="m-text-3" data-8b-motion="rise" data-8b-split="lines">We paint for the light you have</h2>
       <p class="m-text">A colour is only half paint; the other half is the window. Before we choose anything, we watch your walls at four hours of the day.</p>
-      <ol class="light__hours">
+      <ol class="light__hours" data-8b-items=":scope > .light__hour">
         <li class="light__hour"><span class="light__when m-text-6">Morning</span><span class="m-text">Cool and clear. Blues look their bluest.</span></li>
         <li class="light__hour"><span class="light__when m-text-6">Noon</span><span class="m-text">Flat and honest. The hour to judge a white.</span></li>
         <li class="light__hour"><span class="light__when m-text-6">Evening</span><span class="m-text">Low and warm. Pinks blush and greys turn to sand.</span></li>
@@ -1081,7 +1339,7 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
   <!-- sittings: four rings that roll into one chain above four numbered meeting steps (demo: Walk, Draw, Sample, Paint) (animation: scene:sittings) -->
   <section id="sittings" data-8b-section="sittings" aria-labelledby="sittings-title">
     <div class="sittings__head">
-      <h2 id="sittings-title" class="m-text-3" data-8b-motion="rise">Four sittings</h2>
+      <h2 id="sittings-title" class="m-text-3" data-8b-motion="rise" data-8b-split="lines">Four sittings</h2>
       <p class="m-text">Every commission takes four meetings, never more. Between them, we draw.</p>
     </div>
     <svg class="sittings__chain" viewBox="0 0 1000 310" aria-hidden="true">
@@ -1090,7 +1348,7 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
       <g class="sittings__slide"><g class="sittings__ring"><circle class="sittings__line" cx="617" cy="155" r="140"/><circle class="sittings__pip" cx="617" cy="15" r="13"/></g></g>
       <g class="sittings__slide"><g class="sittings__ring"><circle class="sittings__line" cx="850" cy="155" r="140"/><circle class="sittings__pip" cx="850" cy="15" r="13"/></g></g>
     </svg>
-    <ol class="sittings__steps">
+    <ol class="sittings__steps" data-8b-items=":scope > .sittings__step" data-8b-fixed="4">
       <li class="sittings__step"><span class="m-text-2">Sitting 1</span><h3 class="m-text-6">Walk</h3><p class="m-text">We walk your rooms at two hours of the day with paint cards and a notebook. You talk, we listen.</p></li>
       <li class="sittings__step"><span class="m-text-2">Sitting 2</span><h3 class="m-text-6">Draw</h3><p class="m-text">A specimen sheet: plan, palette, shapes and lamps on one page, with a sample of every finish.</p></li>
       <li class="sittings__step"><span class="m-text-2">Sitting 3</span><h3 class="m-text-6">Sample</h3><p class="m-text">Swatches a metre square on your own walls, seen in the morning and again at night.</p></li>
@@ -1101,10 +1359,10 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
   <section id="faq" data-8b-section="faq" aria-labelledby="faq-title">
     <div class="faq__head">
       <span class="m-spark" aria-hidden="true" data-8b-motion="twinkle"><svg viewBox="0 0 40 40"><path d="M20 0C21.6 11.2 28.8 18.4 40 20 28.8 21.6 21.6 28.8 20 40 18.4 28.8 11.2 21.6 0 20 11.2 18.4 18.4 11.2 20 0Z"/></svg></span>
-      <h2 id="faq-title" class="m-text-3" data-8b-motion="rise">Questions people ask</h2>
+      <h2 id="faq-title" class="m-text-3" data-8b-motion="rise" data-8b-split="lines">Questions people ask</h2>
       <p class="m-text">Anything else, ask us on a colour walk or write a note below.</p>
     </div>
-    <div class="faq__list">
+    <div class="faq__list" data-8b-items=":scope > .faq__item">
       <details class="faq__item">
         <summary class="faq__q"><span class="m-text-6">Do you work outside Lyon?</span><span class="faq__icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 3v14M3 10h14"/></svg></span><span class="faq__rule" aria-hidden="true" data-8b-motion="rail"></span></summary>
         <div class="faq__a"><p class="m-text">Yes. Colour walks are within two hours of Lyon by train. Drawings and light scores can be made anywhere from your photos, plans and a video call.</p></div>
@@ -1194,445 +1452,7 @@ select.m-field__control { appearance: none; background-image: linear-gradient(45
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0;
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); });
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-  window.adjacent = (a, b) => {
-    const order = [...document.querySelectorAll('[data-8b-section]')].filter(section => section.getAttribute('data-8b-section') !== 'navigation').map(section => section.id);
-    return order.indexOf(a) >= 0 && order[order.indexOf(a) + 1] === b;
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const nav = document.querySelector('[data-8b-section="navigation"] .nav__bar');
-  const lenis = window.lenis = new Lenis({ lerp: .085, anchors: { offset: -(nav ? nav.offsetHeight : 0) } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  rise(element, vars = {}) {
-    const split = SplitText.create(element, { type: 'lines', mask: 'lines', linesClass: 'fx-line' });
-    return gsap.timeline({ ...vars, onComplete() { split.revert(); vars.onComplete?.(); } })
-      .from(split.lines, { yPercent: 108, duration: 1, ease: 'power3.out', stagger: .1 });
-  },
-  rail(element, vars = {}) {
-    return gsap.timeline(vars).from(element, { scaleX: 0, transformOrigin: '0% 50%', duration: 1.2, ease: 'power3.inOut' });
-  },
-  twinkle(element, vars = {}) {
-    return gsap.timeline(vars).from(element, { scale: 0, rotation: -90, duration: .9, ease: 'back.out(2.2)' });
-  },
-  drift(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { yPercent: 7, scale: 1.12 }, { yPercent: 0, scale: 1, ease: 'none' });
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  ['rise', 'rail', 'twinkle', 'drift'].forEach(name => {
-    const elements = [...section.querySelectorAll(`[data-8b-motion~="${name}"]`)];
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => {
-        const trigger = name === 'drift' ? element.parentElement : element;
-        if (name === 'drift') {
-          effects.drift(element, { scrollTrigger: { id: `${id}:${index}`, trigger, start: 'top bottom', end: 'center center', scrub: true } });
-        } else {
-          effects[name](element, { scrollTrigger: { id: `${id}:${index}`, trigger, start: 'top 88%', once: true } });
-        }
-      });
-    }), section.getBoundingClientRect().top < innerHeight ? { first: true, id } : { near: section, id });
-  });
-});
-</script>
 
-<script data-8b-part="scene:method">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const method = document.getElementById('method');
-    const tiles = [...method.querySelectorAll('.method__tile')];
-    const build = tile => {
-      const tl = gsap.timeline({ defaults: { ease: 'power2.out', duration: .6 } });
-      if (tile.matches('.method__tile--petals')) tl.from(tile.querySelectorAll('.method__petal'), { rotation: index => [-90, 90, 90, -90][index], scale: .2, stagger: .08 });
-      else if (tile.matches('.method__tile--arrow')) {
-        tile.querySelectorAll('.method__arrow path').forEach((path, index) => {
-          const length = path.getTotalLength() + 2;
-          gsap.set(path, { strokeDasharray: `${length} ${length}` });
-          tl.fromTo(path, { strokeDashoffset: length }, { strokeDashoffset: 0, duration: .5 }, index * .25);
-        });
-      }
-      else if (tile.matches('.method__tile--socket')) {
-        const circle = tile.querySelector('.method__ring circle');
-        const length = circle.getTotalLength() + 2;
-        gsap.set(circle, { strokeDasharray: `${length} ${length}` });
-        tl.fromTo(circle, { strokeDashoffset: length, rotation: -90, transformOrigin: '50% 50%' }, { strokeDashoffset: 0, rotation: 0, duration: 1 });
-      }
-      else if (tile.matches('.method__tile--rings')) tl.from(tile.querySelectorAll('.method__rings circle'), { x: index => (1.5 - index) * 76, stagger: 0, duration: .9 });
-      else if (tile.matches('.method__tile--photo')) tl.fromTo(tile, { clipPath: 'circle(14% at 50% 50%)' }, { clipPath: 'circle(75% at 50% 50%)', duration: 1, ease: 'power2.inOut' }).set(tile, { clipPath: 'none' });
-      else if (tile.matches('.method__tile--plus')) tl.from(tile.querySelectorAll('.method__plus'), { rotation: 45, scale: .4, stagger: .06 });
-      else if (tile.matches('.method__tile--halves')) tl.from(tile.querySelectorAll('.method__half'), { yPercent: index => index ? 100 : -100, duration: .8 });
-      else if (tile.matches('.method__tile--stars')) tl.from(tile.querySelectorAll('.m-spark'), { scale: 0, rotation: -90, stagger: .08 });
-      else if (tile.matches('.method__tile--text')) tl.fromTo(tile.querySelector('.method__fill'), { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: .8, ease: 'power2.inOut' });
-      return tl;
-    };
-    const top = method.getBoundingClientRect().top;
-    const reach = innerHeight * .75;
-    const early = tiles.filter(tile => tile.getBoundingClientRect().top - top < reach);
-    const late = tiles.filter(tile => !early.includes(tile));
-    late.forEach((tile, index) => {
-      gsap.timeline({ scrollTrigger: { id: `method:tile-${index}`, trigger: tile, start: 'top 95%', end: 'top 45%', scrub: true } }).add(build(tile));
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:alphabet">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('alphabet');
-    const glyphs = [...section.querySelectorAll('.alphabet__g')];
-    const letters = glyphs.map(glyph => glyph.textContent.trim());
-    const entries = [...section.querySelectorAll('.alphabet__entry')].map(entry => ({ entry, index: letters.indexOf(entry.querySelector('.alphabet__letter').textContent.trim()) })).filter(item => item.index > -1);
-    if (!entries.length) return;
-    const marked = new Set(entries.map(item => item.index));
-    const width = 2.6;
-    const last = glyphs.map(() => -1);
-    let centres = [];
-    const measure = () => { centres = entries.map(({ entry }) => { const box = entry.getBoundingClientRect(); return box.top + scrollY + box.height / 2; }); };
-    const headAt = line => {
-      if (line <= centres[0]) return entries[0].index - (centres[0] - line) / 60;
-      for (let i = 0; i < centres.length - 1; i++) {
-        if (line < centres[i + 1]) return entries[i].index + (line - centres[i]) / (centres[i + 1] - centres[i]) * (entries[i + 1].index - entries[i].index);
-      }
-      return entries[entries.length - 1].index + (line - centres[centres.length - 1]) / 60;
-    };
-    const render = () => {
-      const head = headAt(scrollY + innerHeight * .55);
-      glyphs.forEach((glyph, index) => {
-        const near = Math.max(0, 1 - Math.abs(index - head) / width);
-        const amount = Math.round(near * near * (3 - 2 * near) * 100) / 100;
-        if (amount === last[index]) return;
-        last[index] = amount;
-        glyph.style.fontStretch = `${50 + 35 * amount}%`;
-        if (marked.has(index)) {
-          glyph.style.setProperty('--alphabet-dot', amount.toFixed(2));
-          glyph.style.color = amount > .45 ? 'var(--color-5)' : '';
-        }
-      });
-      entries.forEach(({ entry, index }) => entry.classList.toggle('is-reading', Math.abs(index - head) < .5));
-    };
-    section.classList.add('is-waving');
-    ScrollTrigger.create({ id: 'alphabet', trigger: section, start: 'top bottom', end: 'bottom top', onUpdate: render, onRefresh: () => { measure(); render(); } });
-    measure();
-    render();
-    return () => {
-      section.classList.remove('is-waving');
-      glyphs.forEach(glyph => { glyph.style.fontStretch = ''; glyph.style.color = ''; glyph.style.removeProperty('--alphabet-dot'); });
-      entries.forEach(({ entry }) => entry.classList.remove('is-reading'));
-    };
-  });
-}, { near: document.getElementById('alphabet') });
-</script>
-<style data-8b-part="scene-style:alphabet">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #alphabet.is-waving .alphabet__g::before { transform: scale(var(--alphabet-dot, 0)); }
-    #alphabet.is-waving .alphabet__entry.is-reading .alphabet__letter { background: var(--color-4); }
-  }
-}
-</style>
-<script data-8b-part="scene:rooms">
-queueMotion(() => {
-  gsap.matchMedia().add({ motion: '(prefers-reduced-motion: no-preference)', tall: '(min-height: 560px)', phone: '(max-width: 800px)' }, context => {
-    const { motion, tall, phone } = context.conditions;
-    if (!motion) return;
-    const section = document.getElementById('rooms');
-    const sheet = section.querySelector('.rooms__sheet');
-    const stage = phone ? sheet : section.querySelector('.rooms__stage');
-    const photos = [...section.querySelectorAll('.rooms__photo')];
-    const spots = phone
-      ? [[.3, .14, -11, 1.35], [.78, .3, 13, 1.05], [.45, .5, -6, 1.6], [.18, .72, 10, 1.1], [.82, .8, -13, 1.25], [.5, .95, 7, .95]]
-      : [[.36, .2, -12, 1.55], [.86, .16, 10, .9], [.6, .52, -5, 1.85], [.13, .84, 14, 1.1], [.9, .78, -9, 1.3], [.45, .88, 7, .85]];
-    if (tall) section.classList.add('is-staged');
-    const offset = (photo, index, axis) => {
-      const spot = spots[index % spots.length];
-      const box = stage.getBoundingClientRect();
-      const frame = photo.parentElement.getBoundingClientRect();
-      return axis === 'x' ? box.left + spot[0] * box.width - (frame.left + frame.width / 2) : box.top + spot[1] * box.height - (frame.top + frame.height / 2);
-    };
-    const timeline = gsap.timeline({ scrollTrigger: {
-      id: 'rooms', trigger: phone ? sheet : section, start: tall ? (phone ? 'top 75%' : 'top 65%') : 'top 85%', endTrigger: section, end: tall ? 'bottom bottom' : 'center 45%', scrub: true, invalidateOnRefresh: true
-    } });
-    photos.forEach((photo, index) => {
-      const spot = spots[index % spots.length];
-      timeline.from(photo, {
-        x: () => offset(photo, index, 'x'), y: () => offset(photo, index, 'y'),
-        rotation: spot[2], scale: spot[3], duration: 1, ease: 'power2.inOut'
-      }, .15 + index * .09);
-    });
-    timeline.to({}, { duration: .2 });
-    return () => section.classList.remove('is-staged');
-  });
-});
-</script>
-<style data-8b-part="scene-style:rooms">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #rooms.is-staged { height: 250svh; padding-block: 0; }
-    #rooms.is-staged .rooms__stage { position: sticky; top: 0; min-height: 100svh; padding-block: clamp(4.5rem, 10svh, 6rem) clamp(1.5rem, 5svh, 3rem); }
-    #rooms.is-staged .rooms__photo { will-change: transform; }
-    @media (max-width: 800px) {
-      #rooms.is-staged { height: auto; padding-block: var(--space-2) 0; }
-      #rooms.is-staged .rooms__stage { position: static; min-height: 0; padding-block: 0; grid-template-rows: auto 1fr; height: calc(100svh + 120svh); align-items: start; }
-      #rooms.is-staged .rooms__sheet { position: sticky; top: max(1rem, calc(50svh - 19rem)); }
-    }
-  }
-}
-</style>
-<script data-8b-part="scene:voices">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('voices');
-    gsap.timeline({ defaults: { ease: 'power1.out' }, scrollTrigger: { id: 'voices:turn', trigger: section, start: 'top bottom', end: 'top 25%', scrub: true } })
-      .from(section.querySelector('.voices__badge'), { rotation: -40 }, 0)
-      .from(section.querySelector('.voices__rings'), { rotation: -180, transformOrigin: '50% 50%' }, 0)
-      .from(section.querySelectorAll('.voices__shape'), { rotation: -135, transformOrigin: '50% 50%' }, 0);
-    if (adjacent('voices', 'prices')) {
-      gsap.timeline({ defaults: { ease: 'power2.in' }, scrollTrigger: { id: 'voices:exit', trigger: section, start: 'bottom 85%', end: 'bottom 25%', scrub: true } })
-        .to(section.querySelector('.voices__w1'), { xPercent: -112, duration: 1 }, 0)
-        .to(section.querySelector('.voices__w2'), { xPercent: 112, duration: 1 }, 0);
-    }
-  });
-}, { near: document.getElementById('voices') });
-</script>
-<script data-8b-part="scene:prices">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('prices');
-    const rows = [...section.querySelectorAll('.prices__row')];
-    const build = row => gsap.timeline({ defaults: { ease: 'power2.out' } })
-      .from(row, { y: 90, duration: .7 }, 0)
-      .from(row.querySelector('.m-rule'), { scaleX: 0, transformOrigin: '0% 50%', duration: .7, ease: 'power1.inOut' }, .15)
-      .from(row.querySelector('.prices__pill'), { x: () => innerWidth * .45, duration: .75, ease: 'power3.out' }, .1);
-    const top = section.getBoundingClientRect().top;
-    const early = rows.filter(row => row.getBoundingClientRect().top - top < innerHeight * .75);
-    const late = rows.filter(row => !early.includes(row));
-    if (adjacent('voices', 'prices')) {
-      const entry = gsap.timeline({ scrollTrigger: { id: 'prices:entry', trigger: section, start: 'top 85%', end: 'top 25%', scrub: true, invalidateOnRefresh: true } });
-      entry.from(section.querySelector('.prices__head'), { y: 120, duration: .7, ease: 'power2.out' }, 0);
-      early.forEach((row, index) => entry.add(build(row), .06 + index * .14));
-    } else late.unshift(...early);
-    late.forEach((row, index) => {
-      gsap.timeline({ scrollTrigger: { id: `prices:row-${index}`, trigger: row, start: 'top 98%', end: 'top 60%', scrub: true, invalidateOnRefresh: true } }).add(build(row));
-    });
-  });
-}, { near: document.getElementById('prices') });
-</script>
-<script data-8b-part="scene:paints">
-queueMotion(() => {
-  gsap.matchMedia().add({ motion: '(prefers-reduced-motion: no-preference)', tall: '(min-height: 560px)', phone: '(max-width: 600px)' }, context => {
-    const { motion, tall, phone } = context.conditions;
-    if (!motion || !tall) return;
-    const section = document.getElementById('paints');
-    const track = section.querySelector('.paints__track');
-    const deck = section.querySelector('.paints__deck');
-    const cards = [...deck.querySelectorAll('.paints__card')];
-    if (cards.length < 2) return;
-    section.classList.add('is-deck');
-    section.style.setProperty('--paints-n', cards.length);
-    cards.forEach((card, index) => card.style.setProperty('--paints-i', index));
-    const axis = phone ? 'y' : 'x';
-    const shift = () => phone
-      ? cards[0].offsetHeight - (cards[1].offsetTop - cards[0].offsetTop)
-      : cards[0].offsetWidth - (cards[1].offsetLeft - cards[0].offsetLeft);
-    const timeline = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 1 }, scrollTrigger: {
-      id: 'paints', trigger: track, start: 'top 24px', end: 'bottom bottom-=24', scrub: true, invalidateOnRefresh: true
-    } });
-    timeline.from(cards[0].querySelector('.paints__mark'), { rotation: -120, scale: .35, transformOrigin: '50% 50%', duration: .6 }, 0);
-    cards.slice(1).forEach((card, index) => {
-      timeline.fromTo(card, { [axis]: () => shift() }, { [axis]: 0 }, .35 + index)
-        .from(card.querySelector('.paints__mark'), { rotation: -120, scale: .35, transformOrigin: '50% 50%', duration: .9 }, .55 + index);
-    });
-    timeline.to({}, { duration: .4 });
-    return () => {
-      section.classList.remove('is-deck');
-      section.style.removeProperty('--paints-n');
-      cards.forEach(card => card.style.removeProperty('--paints-i'));
-    };
-  });
-});
-</script>
-<style data-8b-part="scene-style:paints">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #paints.is-deck .paints__track { height: calc(100svh + (var(--paints-n) - 1) * 55svh); }
-    #paints.is-deck .paints__deck { --paints-spine: 5.5rem; position: sticky; top: 1.5rem; display: block; height: calc(100svh - 3rem); overflow: clip; }
-    #paints.is-deck .paints__card { position: absolute; top: 0; bottom: 0; left: calc(var(--paints-i) * var(--paints-spine)); width: calc(100% - (var(--paints-n) - 1) * var(--paints-spine)); min-height: 0; will-change: transform; }
-    #paints.is-deck .paints__name { font-size: clamp(3rem, 4.4vw, 4.4rem); }
-    #paints.is-deck .paints__mark { width: min(46%, 21rem); }
-    #paints.is-deck .paints__body { display: flex; flex-direction: column; justify-content: center; gap: 1.1rem; }
-    #paints.is-deck .paints__mark { align-self: flex-end; margin-bottom: clamp(.5rem, 3svh, 2rem); }
-    #paints.is-deck .paints__body .m-text { font-size: 1.1rem; }
-    @media (max-width: 600px) {
-      #paints.is-deck .paints__deck { --paints-spine: 3.5rem; }
-      #paints.is-deck .paints__card { left: 0; right: 0; width: auto; top: calc(var(--paints-i) * var(--paints-spine)); bottom: auto; height: calc(100% - (var(--paints-n) - 1) * var(--paints-spine)); }
-      #paints.is-deck .paints__name { font-size: 2.2rem; }
-      #paints.is-deck .paints__mark { width: 8rem; }
-      #paints.is-deck .paints__body .m-text { font-size: 1rem; }
-    }
-  }
-}
-</style>
-<script data-8b-part="scene:light">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('light');
-    const wall = section.querySelector('.light__wall');
-    const sun = section.querySelector('.light__sun');
-    const lamp = section.querySelector('.light__lamp');
-    const hours = [...section.querySelectorAll('.light__hour')];
-    section.classList.add('is-timed');
-    const mark = progress => {
-      const now = Math.min(hours.length - 1, Math.round(progress * (hours.length - 1)));
-      hours.forEach((hour, index) => hour.classList.toggle('is-now', index === now));
-    };
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'light', trigger: wall, start: 'top 80%', end: 'bottom 20%', scrub: true, onUpdate: self => mark(self.progress), onRefresh: self => mark(self.progress)
-    } });
-    timeline.fromTo(sun, { xPercent: 90, skewX: 24, scaleY: .78 }, { xPercent: 0, skewX: 0, scaleY: 1, duration: 1, ease: 'sine.out' }, 0)
-      .to(sun, { xPercent: -95, skewX: -28, scaleY: 1.35, duration: 1, ease: 'sine.in' }, 1)
-      .fromTo(wall, { '--light-warm': 0, '--light-night': 0 }, { '--light-warm': 1, duration: 1 }, 1)
-      .to(sun, { opacity: 0, scaleY: 1.7, duration: .7 }, 2)
-      .to(wall, { '--light-warm': .25, '--light-night': 1, duration: 1 }, 2)
-      .fromTo(lamp, { scale: 0 }, { scale: 1, duration: .6, ease: 'back.out(2)' }, 2.35);
-    return () => { section.classList.remove('is-timed'); hours.forEach(hour => hour.classList.remove('is-now')); };
-  });
-}, { near: document.getElementById('light') });
-</script>
-<style data-8b-part="scene-style:light">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #light.is-timed .light__wall { background: color-mix(in oklab, color-mix(in oklab, var(--color-2), var(--color-3) calc(var(--light-warm, 0) * 32%)), var(--color-5) calc(var(--light-night, 0) * 72%)); }
-    #light.is-timed .light__hour.is-now::before { transform: scale(1); }
-    #light.is-timed .light__hour.is-now .light__when { color: var(--color-5); }
-  }
-}
-</style>
-<script data-8b-part="scene:sittings">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('sittings');
-    const chain = section.querySelector('.sittings__chain');
-    const slides = [...chain.querySelectorAll('.sittings__slide')];
-    const rings = slides.map(slide => {
-      const line = slide.querySelector('.sittings__line');
-      return { slide, pip: slide.querySelector('.sittings__pip'), cx: Number(line.getAttribute('cx')), cy: Number(line.getAttribute('cy')), r: Number(line.getAttribute('r')) };
-    });
-    const home = rings[0].cx;
-    const timeline = gsap.timeline({ defaults: { ease: 'power1.inOut', duration: 1 }, scrollTrigger: { id: 'sittings', trigger: chain, start: 'top 88%', end: 'bottom 30%', scrub: true } });
-    rings.forEach((ring, index) => {
-      const distance = ring.cx - home;
-      const turn = { angle: distance ? -distance / ring.r : -Math.PI / 2 };
-      const place = () => { ring.pip.setAttribute('cx', (ring.cx + ring.r * Math.sin(turn.angle)).toFixed(2)); ring.pip.setAttribute('cy', (ring.cy - ring.r * Math.cos(turn.angle)).toFixed(2)); };
-      if (distance) timeline.from(ring.slide, { x: -distance }, index * .06);
-      timeline.to(turn, { angle: 0, onUpdate: place }, index * .06);
-      place();
-    });
-    return () => rings.forEach(ring => { ring.pip.setAttribute('cx', ring.cx); ring.pip.setAttribute('cy', ring.cy - ring.r); });
-  });
-}, { near: document.getElementById('sittings') });
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const title = section.querySelector('.contact__title');
-    const letters = [...title.querySelectorAll('.contact__l')];
-    const glyphs = letters.map(letter => letter.querySelector('.contact__g'));
-    const host = title.querySelector('.contact__l--j');
-    const dot = host.querySelector('.contact__dot');
-    const stops = letters.slice(0, letters.indexOf(host));
-    const size = () => parseFloat(getComputedStyle(title).fontSize);
-    const centre = letter => letter.offsetLeft + letter.offsetWidth / 2;
-    const lift = letter => (letter.textContent === letter.textContent.toUpperCase() ? .2 : .02) * size();
-    const order = [3, 0, 5, 2, 6, 1, 4];
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'contact', trigger: title, start: 'top 95%', end: 'top 40%', scrub: true, invalidateOnRefresh: true } });
-    glyphs.forEach((glyph, index) => {
-      timeline.from(glyph, { yPercent: 160, duration: .6, ease: 'power3.out' }, order[index % order.length] * .09);
-    });
-    if (!stops.length) return;
-    timeline.set(dot, { x: () => centre(stops[0]) - centre(host), y: () => -lift(stops[0]) }, 0);
-    stops.slice(1).concat(host).forEach((letter, index) => {
-      const at = .75 + index * .55;
-      const x = () => letter === host ? 0 : centre(letter) - centre(host);
-      const y = () => letter === host ? 0 : -lift(letter);
-      timeline.to(dot, { x, duration: .55, ease: 'none' }, at)
-        .to(dot, { y: () => -.26 * size(), duration: .275, ease: 'power2.out' }, at)
-        .to(dot, { y, duration: .275, ease: 'power2.in' }, at + .275);
-    });
-  });
-}, { near: document.getElementById('contact') });
-</script>
 <script data-8b-part="section-script:contact">
 (() => {
   const form = document.querySelector('#contact .contact__form');
@@ -1668,8 +1488,8 @@ queueMotion(() => {
   const setOpen = open => {
     overlay.hidden = !open;
     button.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); close.focus(); }
-    else { window.lenis?.start(); button.focus(); }
+    if (open) { window.motionKit?.wheel?.stop(); close.focus(); }
+    else { window.motionKit?.wheel?.start(); button.focus(); }
   };
   button.addEventListener('click', () => setOpen(true));
   close.addEventListener('click', () => setOpen(false));
@@ -1680,8 +1500,324 @@ queueMotion(() => {
     const edge = event.shiftKey ? stops[0] : stops[stops.length - 1];
     if (document.activeElement === edge) { event.preventDefault(); (event.shiftKey ? stops[stops.length - 1] : stops[0]).focus(); }
   });
-  overlay.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { overlay.hidden = true; button.setAttribute('aria-expanded', 'false'); window.lenis?.start(); }));
+  overlay.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { overlay.hidden = true; button.setAttribute('aria-expanded', 'false'); window.motionKit?.wheel?.start(); }));
 })();
+</script>
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}.line:not(:last-child){margin-bottom:0}.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = typeof Intl.Segmenter === 'function'
+? text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment)
+: text => [...text];
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split');
+if (sources.has(element)) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px 100% 0px' });
+(document.fonts?.ready ?? Promise.resolve()).then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:method">
+motionKit.scene('method', () => {
+  const method = document.getElementById('method');
+  const tiles = [...method.querySelectorAll('.method__tile')];
+  motionKit.measure(() => {
+    const top = motionKit.box(method).y;
+    tiles.forEach(tile => tile.classList.toggle('is-late', motionKit.box(tile).y - top >= innerHeight * .75));
+  });
+});
+</script>
+<script data-8b-part="scene-script:alphabet">
+motionKit.scene('alphabet', () => {
+  const section = document.getElementById('alphabet');
+  const glyphs = [...section.querySelectorAll('.alphabet__g')];
+  const letters = glyphs.map(glyph => glyph.textContent.trim());
+  const entries = [...section.querySelectorAll('.alphabet__entry')].map(entry => ({ entry, index: letters.indexOf(entry.querySelector('.alphabet__letter').textContent.trim()) })).filter(item => item.index > -1);
+  if (!entries.length) return;
+  const marked = new Set(entries.map(item => item.index));
+  const width = 2.6;
+  const last = glyphs.map(() => -1);
+  let centres = [];
+  const headAt = line => {
+    if (line <= centres[0]) return entries[0].index - (centres[0] - line) / 60;
+    for (let i = 0; i < centres.length - 1; i++) {
+      if (line < centres[i + 1]) return entries[i].index + (line - centres[i]) / (centres[i + 1] - centres[i]) * (entries[i + 1].index - entries[i].index);
+    }
+    return entries[entries.length - 1].index + (line - centres[centres.length - 1]) / 60;
+  };
+  const render = () => {
+    const head = headAt(scrollY + innerHeight * .55);
+    glyphs.forEach((glyph, index) => {
+      const near = Math.max(0, 1 - Math.abs(index - head) / width);
+      const amount = Math.round(near * near * (3 - 2 * near) * 100) / 100;
+      if (amount === last[index]) return;
+      last[index] = amount;
+      glyph.style.fontStretch = `${50 + 35 * amount}%`;
+      if (marked.has(index)) {
+        glyph.style.setProperty('--alphabet-dot', amount.toFixed(2));
+        glyph.style.color = amount > .45 ? 'var(--color-5)' : '';
+      }
+    });
+    entries.forEach(({ entry, index }) => entry.classList.toggle('is-reading', Math.abs(index - head) < .5));
+  };
+  motionKit.measure(() => {
+    centres = entries.map(({ entry }) => { const box = entry.getBoundingClientRect(); return box.top + scrollY + box.height / 2; });
+    render();
+  });
+  motionKit.track(section, 'top bottom', 'bottom top', render);
+});
+</script>
+<script data-8b-part="scene-script:rooms">
+motionKit.scene('rooms', () => {
+  const section = document.getElementById('rooms');
+  const stage = section.querySelector('.rooms__stage');
+  const head = section.querySelector('.rooms__head');
+  const sheet = section.querySelector('.rooms__sheet');
+  const photos = [...section.querySelectorAll('.rooms__photo')];
+  const phone = matchMedia('(max-width: 800px)');
+  const spotsPhone = [[.3, .14, -11, 1.35], [.78, .3, 13, 1.05], [.45, .5, -6, 1.6], [.18, .72, 10, 1.1], [.82, .8, -13, 1.25], [.5, .95, 7, .95]];
+  const spotsWide = [[.36, .2, -12, 1.55], [.86, .16, 10, .9], [.6, .52, -5, 1.85], [.13, .84, 14, 1.1], [.9, .78, -9, 1.3], [.45, .88, 7, .85]];
+  motionKit.measure(() => {
+    const spots = phone.matches ? spotsPhone : spotsWide;
+    const box = motionKit.box(phone.matches ? sheet : stage);
+    const headBox = motionKit.box(head);
+    motionKit.set(section, { '--rooms-sheet-y': `${headBox.y + headBox.h + parseFloat(getComputedStyle(stage).rowGap) - motionKit.box(section).y}px` });
+    photos.forEach((photo, index) => {
+      const spot = spots[index % spots.length];
+      const frame = motionKit.box(photo.parentElement);
+      motionKit.set(photo, {
+        '--rooms-x': `${box.x + spot[0] * box.w - (frame.x + frame.w / 2)}px`,
+        '--rooms-y': `${box.y + spot[1] * box.h - (frame.y + frame.h / 2)}px`,
+        '--rooms-r': `${spot[2]}deg`,
+        '--rooms-s': spot[3]
+      });
+    });
+  });
+});
+</script>
+<script data-8b-part="scene-script:light">
+motionKit.scene('light', () => {
+  const section = document.getElementById('light');
+  const hours = [...section.querySelectorAll('.light__hour')];
+  motionKit.track(section.querySelector('.light__wall'), 'top 80%', 'bottom 20%', progress => {
+    const now = Math.min(hours.length - 1, Math.round(progress * (hours.length - 1)));
+    hours.forEach((hour, index) => hour.classList.toggle('is-now', index === now));
+  });
+});
+</script>
+<script data-8b-part="scene-script:sittings">
+motionKit.scene('sittings', () => {
+  const chain = document.querySelector('#sittings .sittings__chain');
+  const rings = [...chain.querySelectorAll('.sittings__slide')].map(slide => {
+    const line = slide.querySelector('.sittings__line');
+    return { pip: slide.querySelector('.sittings__pip'), cx: Number(line.getAttribute('cx')), cy: Number(line.getAttribute('cy')), r: Number(line.getAttribute('r')) };
+  });
+  const home = rings[0].cx;
+  const total = 1 + (rings.length - 1) * .06;
+  const inOut = t => t < .5 ? 2 * t * t : 1 - 2 * (1 - t) * (1 - t);
+  motionKit.track(chain, 'top 88%', 'bottom 30%', progress => rings.forEach((ring, index) => {
+    const distance = ring.cx - home;
+    const from = distance ? -distance / ring.r : -Math.PI / 2;
+    const angle = from * (1 - inOut(Math.min(1, Math.max(0, progress * total - index * .06))));
+    ring.pip.setAttribute('cx', (ring.cx + ring.r * Math.sin(angle)).toFixed(2));
+    ring.pip.setAttribute('cy', (ring.cy - ring.r * Math.cos(angle)).toFixed(2));
+  }));
+});
 </script>
 </body>
 </html>

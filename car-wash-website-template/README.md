@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my car wash or valeting business: name, address, opening hours, prices for small, family and large vehicles, the five wash steps with minutes, protection coats with prices, club price and perks, crew, booking method>. Replace first the brand, the placeholder address and phone, the Sheffield references, prices, reviews and crew. Keep the section ids, the three price data attributes and five steps with five photos. Ask me for missing facts and never invent prices, hours, guarantees or reviews.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes quickest when you give the agent the facts only the owner has: prices for each vehicle size, hours, the club price and perks, protection claims, the redo promise, the tallest vehicle the bay takes, crew and company details. The demo invents all of them, plus the 4.9 rating and the eight reviews. The agent swaps the name in any letter case and rewrites the five wash steps and their minutes.
+As a car wash website template for Claude Code, Cursor or Codex, it goes quickest when you vibe code it and give the agent the facts only the owner has: prices for each vehicle size, hours, the club price and perks, protection claims, the redo promise, the tallest vehicle the bay takes, crew and company details. The demo invents all of them, plus the 4.9 rating and the eight reviews. The agent swaps the name in any letter case and rewrites the five wash steps and their minutes.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=car-wash-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -67,7 +67,7 @@ Yes. The protection section lists four coats with from prices: decontamination, 
 The booking form asks for name, mobile, vehicle size, service, day and a note, and requires name and mobile. As shipped it sends nothing: it shows a thank-you line and clears the fields. Connect Formspree or Netlify Forms, or link the buttons to your booking system.
 
 **Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). You describe the site in a sentence and its engine designs a new site, its own design and not this template. Designing and restyling are free; hosting with SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, with [8B's AI website builder](https://8b.com/). You describe the site in a sentence and its engine designs a new site, its own design and not this template. Designing and restyling are free; hosting with SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

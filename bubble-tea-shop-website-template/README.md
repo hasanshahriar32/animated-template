@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my drinks shop: name, city, signature cups with prices, build options with extras, weekly drop names and dates, opening hours, address, phone, email, allergen and vegan facts, and how groups order>. Replace the demo menu, build layers, weekly drops, regulars' messages and name puns first. Keep the ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the classes AGENTS.md lists; the scripts read them. Ask me for any missing fact and never invent prices, allergens, hours, addresses, reviews or contacts.
 ```
 
-Give index.html and AGENTS.md to Claude Code, Cursor or Codex and start with the menu: four signature cups, five build layers with four options each and four dated weekly drops. Keep the ids and the data-8b-section, data-8b-motion and data-8b-part attributes, since the animation scripts read them. The agent must ask the owner for real prices, vegan and allergen claims, hours, the address and the drop dates, and rewrite the name puns if the bar has another name.
+For a bubble tea shop website template for Claude Code, Cursor or Codex, give the agent index.html and AGENTS.md and start with the menu: four signature cups, five build layers with four options each and four dated weekly drops. Keep the ids and the data-8b-section, data-8b-motion and data-8b-part attributes, since the animation scripts read them. The agent must ask the owner for real prices, vegan and allergen claims, hours, the address and the drop dates, and rewrite the name puns if the bar has another name.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=bubble-tea-shop-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -62,13 +62,13 @@ No agent? Click **[Use this template](https://github.com/new?template_name=bubbl
 ## Questions
 
 **Does the group order form send anything?**  
-No. A script checks the required name and email and the cup count (10 to 200), shows a thank-you line and clears the fields. Without JavaScript the browser posts it back to the page and nothing is sent. Connect Formspree or Netlify Forms, or your ordering tool, before you publish.
+No. A script checks the required name and email and the cup count (10 to 200), shows a thank-you line and clears the fields. Without JavaScript the browser posts it back to the page and nothing is sent. Connect Formspree, Netlify Forms or your ordering tool before you publish, whether [from a GitHub Pages copy](https://8b.com/templates/github/) or another host.
 
 **What happens with reduced motion?**  
-The page still reads in full. Entrance and scroll animations and smooth scrolling are off, the cards, chips, bubbles and bumps show at rest, and the drops section is a normal block. The nav bar still tucks away on scroll and button fills still run.
+The page still reads in full. Entrance animations, [scroll-linked motion](https://8b.com/templates/animated/) and smooth scrolling are off, the cards, chips, bubbles and bumps show at rest, and the drops section is a normal block. The nav bar still tucks away on scroll and button fills still run.
 
 **Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). You describe the site in a sentence and its engine designs a new site, with its own design, not this template. Designing and restyling are free. Publishing with hosting and SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, with [8B's AI website builder](https://8b.com/). You describe the site in a sentence and its engine designs a new site, with its own design, not this template. Designing and restyling are free. Publishing with hosting and SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

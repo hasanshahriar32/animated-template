@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my practice: name, town, what we treat and at what ages, therapists with registrations and working days, how a first visit runs, where we meet, fees, hours, how parents book a call>. Replace first the wordmark in the nav and the footer, the therapists, registrations, fees, quotes and Exeter details. Keep the ids, the classes AGENTS.md lists and four word spans in the first-visit heading. Ask me for any missing fact and never invent registrations, fees, quotes or contacts.
 ```
 
-Give the agent the facts only your practice has: registrations, therapist names and working days, the ages each help card serves, fees, step timings, service areas and hours. The demo invents all of them, including the Exeter address and the HCPC claim. Replace the two-part wordmark first, in the nav and the footer. Vibe coding with Claude Code, Cursor or Codex works well when the agent asks for these facts instead of filling gaps.
+Give the agent the facts only your practice has: registrations, therapist names and working days, the ages each help card serves, fees, step timings, service areas and hours. The demo invents all of them, including the Exeter address and the HCPC claim. Replace the two-part wordmark first, in the nav and the footer. Vibe coding this speech therapist website template for Claude Code, Cursor or Codex works well when the agent asks for these facts instead of filling gaps, as the [guide to working in Claude Code](https://8b.com/templates/for-claude-code/) explains.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=speech-therapist-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -65,7 +65,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=speec
 Yes. It is one index.html under the MIT license, so a practice or a freelancer can use it for clients at no cost. GSAP, ScrollTrigger, SplitText and Lenis load from jsDelivr, the fonts are Google Fonts files, and there is no build step. Photos are Unsplash images listed in CREDITS.md.
 
 **Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). You describe the practice in a sentence and its engine designs a new site, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, with [8B's AI website builder](https://8b.com/). You describe the practice in a sentence and its engine designs a new site, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 **Where does the Request a call form send its messages?**  
 Nowhere yet. A script checks that the name and the phone or email field are filled, shows a thank-you line and resets the form without sending anything. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or delete the form. Also edit the thank-you line, which promises a call within one working day.

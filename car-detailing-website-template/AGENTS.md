@@ -1,6 +1,6 @@
 # AGENTS.md: car detailing website template
 
-One-page website for a car detailing studio that offers paint correction, ceramic coating and interior care to car owners. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a car detailing studio that offers paint correction, ceramic coating and interior care to car owners. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,23 +14,22 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:nav`: `.nav__toggle` `.nav__overlay` `.nav__close`
   - `section-script:opening`: `.opening__word` `.opening__shine-text` `.opening__mark-box`
   - `section-script:measure`: `.measure__row`
   - `section-script:contact`: `.contact__form` `.contact__status` `data-sent` `data-error`
-  - `scene:opening-assembly`: `.opening__frame` `.opening__img` `.opening__mark` `.opening__intro` `.opening__claim` `.opening__facts`
-  - `scene:treatments-focus`: `.treat__row` `.treat__name` `.treat__photo` `.treat__body`
-  - `scene:measure-scan`: `.measure__rows` `.measure__scan` `.measure__row` `.measure__fill` `.measure__value`
-  - `scene:work-drift`: `.work__item`
-  - `scene:process-week`: `.process__track` `.process__days` `.process__day` `.process__shot` `.process__dow` `.process__text`
-  - `scene:reviews-stair`: `.reviews__track-wrap` `.reviews__stage` `.reviews__track` `.reviews__card`
-  - `scene:aftercare-haze`: `.care__statement` `.care__photo`
-  - `scene:footer-mark`: `.footer__mark`
+  - `scene-script:opening-assembly`: `.opening__frame` `.opening__img`
+  - `scene-script:treatments-focus`: `.treat__name`
+  - `scene-script:measure-scan`: `.measure__rows`
+  - `scene-script:process-week`: `.process__days` `.process__day` `.process__shot`
+  - `scene-script:reviews-stair`: `.reviews__stage` `.reviews__track` `.reviews__card`
+  - `scene-script:footer-mark`: `.footer__mark`
 - `style="--len:N"` = characters in that display line, spaces included: `Vernis` is 6, `Paint correction` is 16, `Ceramic coating` is 15, `Interior care` is 13.
 - The wordmark and the three treatment names are sized by style="--len:N", the number of characters with spaces included (6 for Vernis in the opening and the footer, 16, 15 and 13 for the treatment names). Change N when you change a name.
 - The sheen on the opening wordmark is a copy of the word that section-script:opening fills from the wordmark's text, so change the wordmark in one place only.
-- The measure bars are set from each row's data value and the 240 µm scale in the CSS and scene:measure-scan (value / 240); each row also carries the same number as style="--measure-v:N", which draws the bar without JavaScript. Keep the data value, --measure-v and the visible figure in step when you edit a row.
+- The measure bars are drawn from each row's --measure-v and the 240 µm scale (value / 240) in two CSS rules, #measure .measure__fill and the measure-span-measure-fill-scale keyframes; section-script:measure copies each row's data value into --measure-v, and the row also carries the same number as style="--measure-v:N", which draws the bar without JavaScript. Keep the data value, --measure-v and the visible figure in step when you edit a row.
 - The process grid is CSS with five columns, and the reviews and treatments are lists the scenes read item by item; the process layout is drawn for exactly five days.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #0f0f0f (page ground of the opening, treatments, work, process, questions, contact and footer; text on the buttons and the pale review cards), `--color-2` #ededed (body and heading text, button fill, the footer wordmark, the sheen on the opening wordmark, reading bars and focus outlines), `--color-3` #a9aea8 (the opening wordmark, paragraphs under headings, spec labels and the muted lines in the footer), `--color-4` #2f382f (deep green ground of the paint readings and studio sections and the starting ground of the reviews), `--color-5` #545e54 (sage ground of the aftercare section, the button hover wipe, form underlines, question rules and the flagged resprayed row), `--color-6` #d4cccc (the six review cards), `--color-7` #1d1f1d (tag ground, photo placeholders, bar tracks and hairlines between treatment rows and in the footer), `--color-8` #59523f (the olive-brown the reviews ground reaches at the end of its sideways track); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
@@ -65,9 +64,10 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the Menu button on phones does nothing and the nav links are hidden below 900px width; the footer repeats Treatments, Process and Book only.
 - The form does not send anything yet: the action is # and the thank-you line comes from a script.
-- GSAP, ScrollTrigger, SplitText and Lenis load from jsDelivr, so without that network access the page stays a static layout and the scenes do not run.
-- The reviews and process stages are pinned to the screen height (320vh and 250vh tracks), so on short landscape windows the cards and columns can be tight.
+- Without scroll-driven animation support (Firefox today) the scroll scenes, the caption and photo effects and the smooth wheel are off and each section shows its finished layout: the opening photo whole, every bar at its value, the week as five columns, the reviews as an even row that scrolls sideways with snap; the opening load-in and the wordmark sheen still play. With reduced motion those stop too.
+- The reviews and process stages are held with CSS sticky inside tall tracks (320vh and 250vh), so on short landscape windows the cards and columns can be tight.
+- The readings scene is timed for twelve rows with the flagged panel eighth (data-8b-fixed="12"): with more or fewer rows, or the flag moved, the bars and the flag ground no longer meet the scan line. The five cars (data-8b-fixed="5") carry their drift offsets inline on each card, and the zoom inside the frame is set on the third card by :nth-of-type; an added car without them settles down from above like the first.
 - Nav hide-on-scroll, the sheen loop and hover transitions are separate from the scenes: the hide-on-scroll and hover effects keep running with reduced motion.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Vernis left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Vernis left only in class names.

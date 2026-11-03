@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/car-detailing-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,8 +20,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%230f0f0f'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23ededed'%3EV%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjIUvQ.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwcGFU.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjIUvQ.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/tiktoksans/v8/70luu7g-Lm8OXGnh_Ow1sUfFMmlnhbRF425wxXH-UGeud7XItbaHtxhggMrrhDPeNAHtMV7v5dBNB5M.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* cyrillic-ext */
@@ -68,13 +69,22 @@
   src: url(https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwcGFU.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+/* arabic */
+@font-face {
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjcUvaYr.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
 /* armenian */
 @font-face {
   font-family: 'Google Sans';
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiIUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiIUvaYr.woff2) format('woff2');
   unicode-range: U+0308, U+0530-058F, U+2010, U+2024, U+25CC, U+FB13-FB17;
 }
 /* bengali */
@@ -83,7 +93,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiAUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiAUvaYr.woff2) format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0980-09FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1, U+1CEA, U+1CED, U+1CF2, U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1, U+11DF0-11DF1;
 }
 /* canadian-aboriginal */
@@ -92,7 +102,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPh0UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPh0UvaYr.woff2) format('woff2');
   unicode-range: U+02C7, U+02D8-02D9, U+02DB, U+0307, U+1400-167F, U+18B0-18F5, U+25CC, U+11AB0-11ABF;
 }
 /* cyrillic-ext */
@@ -101,7 +111,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj8UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj8UvaYr.woff2) format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -110,7 +120,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjYUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjYUvaYr.woff2) format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* devanagari */
@@ -119,7 +129,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjMUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjMUvaYr.woff2) format('woff2');
   unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B0A;
 }
 /* ethiopic */
@@ -128,7 +138,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiMUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiMUvaYr.woff2) format('woff2');
   unicode-range: U+030E, U+1200-1399, U+2D80-2DDE, U+AB01-AB2E, U+1E7E0-1E7E6, U+1E7E8-1E7EB, U+1E7ED-1E7EE, U+1E7F0-1E7FE;
 }
 /* georgian */
@@ -137,7 +147,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi0UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi0UvaYr.woff2) format('woff2');
   unicode-range: U+0589, U+10A0-10FF, U+1C90-1CBA, U+1CBD-1CBF, U+205A, U+2D00-2D2F, U+2E31;
 }
 /* greek-ext */
@@ -146,7 +156,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj4UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj4UvaYr.woff2) format('woff2');
   unicode-range: U+1F00-1FFF;
 }
 /* greek */
@@ -155,7 +165,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjEUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjEUvaYr.woff2) format('woff2');
   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
 }
 /* gujarati */
@@ -164,7 +174,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPikUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPikUvaYr.woff2) format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0A80-0AFF, U+200C-200D, U+20B9, U+25CC, U+A830-A839;
 }
 /* gurmukhi */
@@ -173,7 +183,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPhEUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPhEUvaYr.woff2) format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0A01-0A76, U+200C-200D, U+20B9, U+25CC, U+262C, U+A830-A839;
 }
 /* hebrew */
@@ -182,8 +192,17 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjAUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjAUvaYr.woff2) format('woff2');
   unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* kannada */
+@font-face {
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPigUvaYr.woff2) format('woff2');
+  unicode-range: U+0951-0952, U+0964-0965, U+0B83, U+0C80-0CF3, U+1CD0, U+1CD2-1CD3, U+1CDA, U+1CF2, U+1CF4, U+200C-200D, U+20B9, U+25CC, U+A830-A835;
 }
 /* khmer */
 @font-face {
@@ -191,7 +210,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjkUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjkUvaYr.woff2) format('woff2');
   unicode-range: U+1780-17FF, U+19E0-19FF, U+200C-200D, U+25CC;
 }
 /* lao */
@@ -200,7 +219,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjsUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjsUvaYr.woff2) format('woff2');
   unicode-range: U+0E81-0EDF, U+200C-200D, U+25CC;
 }
 /* malayalam */
@@ -209,7 +228,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPioUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPioUvaYr.woff2) format('woff2');
   unicode-range: U+0307, U+0323, U+0951-0952, U+0964-0965, U+0B83, U+0D00-0D7F, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC, U+A830-A832;
 }
 /* oriya */
@@ -218,7 +237,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPisUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPisUvaYr.woff2) format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0B01-0B77, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC;
 }
 /* sinhala */
@@ -227,7 +246,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi8UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi8UvaYr.woff2) format('woff2');
   unicode-range: U+0964-0965, U+0D81-0DF4, U+1CF2, U+200C-200D, U+25CC, U+111E1-111F4;
 }
 /* symbols */
@@ -236,7 +255,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPlwUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPlwUvaYr.woff2) format('woff2');
   unicode-range: U+0001-000C, U+000E-001F, U+007F-009F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AE, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8BB, U+1F8C0-1F8C1, U+1F8D0-1F8D8, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FAC6, U+1FAC8, U+1FACC-1FADD, U+1FADF-1FAEB, U+1FAEF-1FAFA, U+1FB00-1FBFF;
 }
 /* tamil */
@@ -245,7 +264,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiQUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiQUvaYr.woff2) format('woff2');
   unicode-range: U+0964-0965, U+0B82-0BFA, U+200C-200D, U+20B9, U+25CC;
 }
 /* telugu */
@@ -254,7 +273,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi4UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPi4UvaYr.woff2) format('woff2');
   unicode-range: U+0951-0952, U+0964-0965, U+0B83, U+0C00-0C7F, U+1CD5-1CD6, U+1CD8, U+1CDA, U+1CF2, U+200C-200D, U+25CC;
 }
 /* thai */
@@ -263,7 +282,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiYUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPiYUvaYr.woff2) format('woff2');
   unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC;
 }
 /* vietnamese */
@@ -272,7 +291,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj0UvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPj0UvaYr.woff2) format('woff2');
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
 }
 /* latin-ext */
@@ -281,7 +300,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjwUvaYr.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjwUvaYr.woff2) format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -290,7 +309,7 @@
   font-style: normal;
   font-weight: 400 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/googlesans/v71/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjIUvQ.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/googlesans/v76/4UasrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RPjIUvQ.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* cyrillic-ext */
@@ -383,10 +402,6 @@
 @font-face { font-family: "Geist Fallback"; src: local("Arial"), local("ArialMT"), local("Helvetica"); font-weight: 100 549; size-adjust: 96.2%; ascent-override: 105%; descent-override: 31.2%; line-gap-override: 0%; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: hidden; }
 body { margin: 0; background: var(--color-1); color: var(--color-2); font-family: var(--font-2); font-size: 16px; font-weight: 400; line-height: 1.6; letter-spacing: 0; text-transform: none; font-style: normal; -webkit-font-smoothing: antialiased; }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
@@ -514,11 +529,6 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 </style>
 <style data-8b-part="layout">
 @layer layout {
-@media (prefers-reduced-motion: no-preference) {
-  [data-clarify] { position: relative; container-type: inline-size; }
-  [data-clarify]::after { content: ""; position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, color-mix(in srgb, var(--color-2) 30%, transparent), color-mix(in srgb, var(--color-3) 22%, transparent)); clip-path: inset(0 0 0 calc(var(--clarify-x, 0) * 1%)); pointer-events: none; }
-  [data-clarify]::before { content: ""; position: absolute; top: 0; bottom: 0; left: -1px; z-index: 3; width: 2px; background: var(--color-2); opacity: var(--clarify-line, 1); transform: translateX(calc(var(--clarify-x, 0) * 1cqw)); pointer-events: none; }
-}
 }
 </style>
 <style data-8b-part="section:treatments">
@@ -726,6 +736,206 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 }
 }
 </style>
+<style data-8b-part="motion">
+@property --motion-clarify-x { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --motion-clarify-line { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] [data-8b-motion~="clarify"] { position: relative; container-type: inline-size; animation-name: motion-clarify-x, motion-clarify-line; animation-duration: 1.15s, 0.3s; animation-delay: 0s, 1s; animation-timing-function: var(--ease-power2-inout), linear; animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="clarify"].is-in { animation-play-state: running; }
+@keyframes motion-clarify-x { 0% { --motion-clarify-x: 0; } 100% { --motion-clarify-x: 100; } }
+@keyframes motion-clarify-line { 0% { --motion-clarify-line: 1; } 99.998% { --motion-clarify-line: 0.000333; } 100% { --motion-clarify-line: 0; } }
+[data-8b-live] [data-8b-motion~="clarify"]::after { content: ""; position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, color-mix(in srgb, var(--color-2) 30%, transparent), color-mix(in srgb, var(--color-3) 22%, transparent)); clip-path: inset(0 0 0 calc(var(--motion-clarify-x, 0) * 1%)); pointer-events: none; }
+[data-8b-live] [data-8b-motion~="clarify"]::before { content: ""; position: absolute; top: 0; bottom: 0; left: -1px; z-index: 3; width: 2px; background: var(--color-2); opacity: var(--motion-clarify-line, 1); transform: translateX(calc(var(--motion-clarify-x, 0) * 1cqw)); pointer-events: none; }
+[data-8b-live] { --motion-ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.002, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0458, 0.0648, 0.0893, 0.12, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9542, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9997, 1, 1, 1); }
+[data-8b-live] [data-8b-motion~="bracket"] > .m-cap__bracket, [data-8b-live] [data-8b-motion~="bracket"] > .m-cap__label { animation-duration: 0.75s; animation-timing-function: var(--motion-ease-power3-inout); animation-fill-mode: backwards; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="bracket"].is-in > .m-cap__bracket, [data-8b-live] [data-8b-motion~="bracket"].is-in > .m-cap__label { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="bracket"] > .m-cap__bracket:first-child { animation-name: motion-bracket-start; }
+[data-8b-live] [data-8b-motion~="bracket"] > .m-cap__bracket:last-child { animation-name: motion-bracket-end; }
+[data-8b-live] [data-8b-motion~="bracket"] > .m-cap__label { animation-name: motion-bracket-label; }
+@keyframes motion-bracket-start { 0% { translate: var(--motion-bracket-half, 0px) 0px; } 100% { translate: 0px 0px; } }
+@keyframes motion-bracket-end { 0% { translate: calc(-1 * var(--motion-bracket-half, 0px)) 0px; } 100% { translate: 0px 0px; } }
+@keyframes motion-bracket-label { 0% { clip-path: inset(0% 50%); } 100% { clip-path: inset(0%); } }
+}
+</style>
+<style data-8b-part="scene:opening-assembly">
+@property --opening-haze { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --opening-line { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --opening-sweep { syntax: '<number>'; inherits: true; initial-value: 100; }
+@property --opening-shine { syntax: '<length>'; inherits: true; initial-value: 0px; }
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #opening .opening__tiles { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(var(--opening-cols), 1fr); grid-template-rows: repeat(var(--opening-rows), 1fr); pointer-events: none; }
+  [data-8b-live] #opening .opening__tile { position: relative; overflow: hidden; will-change: transform; }
+  [data-8b-live] #opening .opening__tile img { position: absolute; max-width: none; width: calc(var(--opening-cols) * 100%); height: calc(var(--opening-rows) * 100%); left: calc(var(--opening-c) * -100%); top: calc(var(--opening-r) * -100%); object-fit: cover; }
+  [data-8b-live] #opening .opening__frame::after { content: ""; position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, color-mix(in srgb, var(--color-2) 30%, transparent), color-mix(in srgb, var(--color-3) 24%, transparent)); opacity: var(--opening-haze, 0); clip-path: inset(0 0 0 calc(var(--opening-sweep, 0) * 1%)); pointer-events: none; }
+  [data-8b-live] #opening .opening__frame::before { content: ""; position: absolute; top: -14px; bottom: -14px; left: -1px; z-index: 3; width: 2px; background: var(--color-2); opacity: var(--opening-line, 0); transform: translateX(calc(var(--opening-sweep, 0) * 1cqw)); pointer-events: none; }
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power1-inout: linear(0, 0.0003 1.25%, 0.0013 2.5%, 0.005 5%, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); }
+[data-8b-live] #opening { timeline-scope: --opening-t1; view-timeline: --opening-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #opening .m-text-5, [data-8b-live] #opening .opening__intro, [data-8b-live] #opening .opening__frame, [data-8b-live] #opening .opening__frame .opening__tiles, [data-8b-live] #opening .opening__img, [data-8b-live] #opening .m-text-4, [data-8b-live] #opening .opening__facts > li { animation-timeline: --opening-t1; animation-fill-mode: both; }
+[data-8b-live] #opening .m-text-5, [data-8b-live] #opening .opening__intro, [data-8b-live] #opening .m-text-4, [data-8b-live] #opening .opening__facts > li { transform: none; }
+[data-8b-live] #opening .m-text-5 { animation-name: opening-p-m-text-5-translate, opening-p-m-text-5-scale, opening-p-m-text-5-opacity, opening-p-m-text-5-visibility; animation-range: cover 100vh cover calc(30% + 40vh); animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333), cubic-bezier(0.3333, 0, 0.6667, 0.3333), cubic-bezier(0.3333, 0, 0.6667, 0.3333), linear; }
+[data-8b-live] #opening .opening__intro { animation-name: opening-div-opening-intro-translate; animation-range: cover 100vh cover calc(42% + 16vh); animation-timing-function: linear; }
+[data-8b-live] #opening .opening__frame { animation-name: opening-figure-opening-frame---opening-haze, opening-figure-opening-frame---opening-line, opening-figure-opening-frame---opening-sweep; animation-range: cover calc(40% + 20vh) cover calc(52% - 4vh), cover calc(56% - 12vh) cover calc(95% - 90vh), cover calc(57% - 14vh) cover calc(91% - 82vh); animation-timing-function: linear, linear, var(--ease-power1-inout); }
+[data-8b-live] #opening .opening__frame .opening__tiles { animation-name: opening-figure-opening-frame-div-opening-tiles-opacity, opening-figure-opening-frame-div-opening-tiles-visibility; animation-range: cover calc(53.5% - 7vh) cover calc(54% - 8vh); animation-timing-function: linear; }
+[data-8b-live] #opening .opening__img { animation-name: opening-img-opening-img-opacity, opening-img-opening-img-visibility; animation-range: cover calc(53.5% - 7vh) cover calc(54% - 8vh); animation-timing-function: linear; }
+[data-8b-live] #opening .m-text-4, [data-8b-live] #opening .opening__facts > li { animation-name: opening-p-m-text-4-opacity, opening-p-m-text-4-visibility, opening-p-m-text-4-translate; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1), linear, cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] #opening .m-text-4 { animation-range: cover calc(62% - 24vh) cover calc(82% - 64vh); }
+[data-8b-live] #opening .opening__facts > li { animation-range: cover calc(67% + 5% * var(--i) - 34vh - 10vh * var(--i)) cover calc(87% + 5% * var(--i) - 74vh - 10vh * var(--i)); }
+[data-8b-live] #opening .opening__shine { --opening-shine: -20cqw; animation-name: opening-shine-move; transform: translateX(var(--opening-shine)); }
+[data-8b-live] #opening .opening__shine-text { animation-name: none; transform: translateX(calc(-1 * var(--opening-shine))); }
+@keyframes opening-shine-move { 0% { --opening-shine: -20cqw; } 52%, 100% { --opening-shine: 100cqw; } }
+[data-8b-live] #opening .opening__tile { --opening-range: cover calc(100vh + var(--opening-at) * (100% - 200vh)) cover calc(100vh + (var(--opening-at) + 0.36) * (100% - 200vh)); animation-name: opening-tile-move, opening-tile-show; animation-timeline: --opening-t1; animation-range: var(--opening-range); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1), cubic-bezier(0.3333, 0, 0.6667, 0.3333); animation-fill-mode: both; }
+@media (max-width: 899.98px) {
+  [data-8b-live] #opening .opening__tile { animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1), cubic-bezier(0.3333, 0, 0.6667, 0); }
+}
+@media (min-width: 1024px) and (hover: hover) {
+  [data-8b-live] #opening .opening__tile { animation-name: opening-tile-move, opening-tile-show, opening-tile-blur; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1), cubic-bezier(0.3333, 0, 0.6667, 0.3333), cubic-bezier(0.3333, 1, 0.6667, 1); }
+}
+@keyframes opening-tile-move { 0% { translate: var(--opening-x) var(--opening-y); scale: var(--opening-s); rotate: var(--opening-t); } 100% { translate: 0px 0px; scale: 1; rotate: 0deg; } }
+@keyframes opening-tile-show { 0% { opacity: 0; visibility: hidden; } 0.002% { visibility: visible; } 100% { opacity: 1; visibility: visible; } }
+@keyframes opening-tile-blur { 0% { filter: blur(10px); } 100% { filter: blur(0px); } }
+@keyframes opening-p-m-text-5-translate { 0% { translate: 0px 0px; } 100% { translate: 0px -38%; } }
+@keyframes opening-p-m-text-5-scale { 0% { scale: 1; } 100% { scale: 0.86; } }
+@keyframes opening-p-m-text-5-opacity { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes opening-p-m-text-5-visibility { 0% { visibility: visible; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 99.998% { visibility: visible; } 100% { visibility: hidden; } }
+@keyframes opening-div-opening-intro-translate { 0% { translate: 0px 0px; } 100% { translate: 0px -14vh; } }
+@keyframes opening-figure-opening-frame---opening-haze { 0% { --opening-haze: 0; } 0.002% { --opening-haze: 0.000833; } 100% { --opening-haze: 1; } }
+@keyframes opening-figure-opening-frame---opening-line { 0% { --opening-line: 0; } 0.002% { --opening-line: 0.003333; } 7.6923% { --opening-line: 0.996667; } 7.6943% { --opening-line: 1; } 89.7436% { --opening-line: 1; } 89.7456% { --opening-line: 0.9975; } 99.998% { --opening-line: 0.0025; } 100% { --opening-line: 0; } }
+@keyframes opening-figure-opening-frame---opening-sweep { 0% { --opening-sweep: 0; } 100% { --opening-sweep: 100; } }
+@keyframes opening-figure-opening-frame-div-opening-tiles-opacity { 0% { opacity: 1; } 99.98% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes opening-figure-opening-frame-div-opening-tiles-visibility { 0% { visibility: visible; } 99.98% { visibility: visible; } 100% { visibility: hidden; } }
+@keyframes opening-img-opening-img-opacity { 0% { opacity: 0; } 99.98% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes opening-img-opening-img-visibility { 0% { visibility: hidden; } 99.98% { visibility: hidden; } 100% { visibility: visible; } }
+@keyframes opening-p-m-text-4-opacity { 0% { opacity: 0.2; } 100% { opacity: 1; } }
+@keyframes opening-p-m-text-4-visibility { 0% { visibility: visible; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 100% { visibility: visible; } }
+@keyframes opening-p-m-text-4-translate { 0% { translate: 0px 18px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:treatments-focus">
+@layer scenes {
+[data-8b-live] #treatments .treat__list > .treat__row { view-timeline: --treatments-item block; view-timeline-inset: 0; }
+[data-8b-live] #treatments .treat__list > .treat__row > .treat__name-box > .m-text-6 { animation-name: treatments-name-scale; animation-timeline: --treatments-item; animation-range: cover 8vh cover 66vh; animation-timing-function: linear; animation-fill-mode: both; transform-origin: 0 50%; }
+[data-8b-live] #treatments .treat__list > .treat__row > .treat__photo { animation-name: treatments-figure-treat-photo-clippath; animation-timeline: --treatments-item; animation-range: cover 8vh cover 66vh; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; }
+[data-8b-live] #treatments .treat__list > .treat__row > .treat__body { animation-name: treatments-div-treat-body-opacity, treatments-div-treat-body-visibility; animation-timeline: --treatments-item; animation-range: cover 37vh cover 66vh; animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes treatments-name-scale { 0% { scale: var(--treatments-narrow, 1) 1; animation-timing-function: linear(0, 0.0006, 0.0025, 0.0056, 0.01, 0.0156, 0.0225, 0.0306, 0.04, 0.0506, 0.0625, 0.0756, 0.09, 0.1056, 0.1225, 0.1406, 0.16, 0.1806, 0.2025, 0.2256, 0.25, 0.2756, 0.3025, 0.3306, 0.36, 0.3906, 0.4225, 0.4556, 0.49, 0.5256, 0.5625, 0.6006, 0.64, 0.6806, 0.7225, 0.7656, 0.81, 0.8556, 0.9025, 0.9506, 1); } 40.825% { scale: var(--treatments-mid, 1) 1; animation-timing-function: linear(0, 0.0369, 0.0751, 0.1146, 0.1555, 0.1976, 0.2411, 0.285, 0.3277, 0.369, 0.4091, 0.4478, 0.4853, 0.5214, 0.5562, 0.5896, 0.6218, 0.6527, 0.6822, 0.7105, 0.7374, 0.763, 0.7873, 0.8103, 0.8319, 0.8523, 0.8713, 0.889, 0.9055, 0.9206, 0.9343, 0.9468, 0.958, 0.9678, 0.9764, 0.9836, 0.9895, 0.9941, 0.9974, 0.9993, 1); } 100% { scale: 1 1; } }
+@keyframes treatments-figure-treat-photo-clippath { 0% { clip-path: inset(0% 38%); } 100% { clip-path: inset(0%); } }
+@keyframes treatments-div-treat-body-opacity { 0% { opacity: 0.25; } 100% { opacity: 1; } }
+@keyframes treatments-div-treat-body-visibility { 0% { visibility: visible; } 100% { visibility: visible; } }
+}
+</style>
+<style data-8b-part="scene:measure-scan">
+@property --measure-flag { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #measure .measure__scan { opacity: 1; }
+}
+}
+@layer scenes {
+[data-8b-live] #measure { timeline-scope: --measure-t1; }
+[data-8b-live] #measure .measure__rows { view-timeline: --measure-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #measure .measure__scan { animation-name: measure-span-measure-scan-translate; animation-timeline: --measure-t1; animation-range: cover 14vh cover calc(99.5851% - 61.6846vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #measure .measure__rows > .measure__row > .measure__bar > .measure__fill { animation-name: measure-span-measure-fill-scale; animation-timeline: --measure-t1; animation-range: cover calc(1.2448% + 8.2988% * var(--i) + 13.0539vh - 6.307vh * var(--i)) cover calc(8.7137% + 8.2987% * var(--i) + 7.3776vh - 6.3071vh * var(--i)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #measure .measure__rows > .measure__row > .measure__value { animation-name: measure-data-m-text-opacity, measure-data-m-text-visibility; animation-timeline: --measure-t1; animation-range: cover calc(1.6598% + 8.2987% * var(--i) + 12.7386vh - 6.3071vh * var(--i)) cover calc(4.1494% + 8.2987% * var(--i) + 10.8465vh - 6.3071vh * var(--i)); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #measure .measure__row--flag { animation-name: measure-li-measure-row---measure-flag; animation-timeline: --measure-t1; animation-range: cover calc(60.5809% - 32.0415vh) cover calc(63.9004% - 34.5643vh); animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes measure-span-measure-scan-translate { 0% { translate: 0px var(--measure-scan-from, 0px); } 100% { translate: 0px var(--measure-scan-to, 0px); } }
+@keyframes measure-span-measure-fill-scale { 0% { scale: 0 1; } 100% { scale: calc(var(--measure-v, 0) / 240) 1; } }
+@keyframes measure-data-m-text-opacity { 0% { opacity: 0.2; } 100% { opacity: 1; } }
+@keyframes measure-data-m-text-visibility { 0% { visibility: visible; } 100% { visibility: visible; } }
+@keyframes measure-li-measure-row---measure-flag { 0% { --measure-flag: 0; } 0.002% { --measure-flag: 0.00025; } 100% { --measure-flag: 1; } }
+}
+</style>
+<style data-8b-part="scene:work-drift">
+@layer scenes {
+[data-8b-live] #work .work__grid > .work__item, [data-8b-live] #work .work__grid > article:nth-of-type(3) > .work__media > img { animation-timeline: --work-item; animation-range: cover 0% cover 50%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #work .work__grid > .work__item { view-timeline: --work-item block; view-timeline-inset: 0; }
+[data-8b-live] #work .work__grid > article:nth-of-type(3) > .work__media > img { animation-name: work-figure-work-media-img-scale; }
+@keyframes work-article-work-item-translate-d { 0% { translate: 0px var(--work-article-work-item-translate-from-2, -67.5px); } 100% { translate: 0px 0px; } }
+@keyframes work-article-work-item-translate-m { 0% { translate: 0px var(--work-article-work-item-translate-from-2-m, -22.5px); } 100% { translate: 0px 0px; } }
+@keyframes work-figure-work-media-img-scale { 0% { scale: 1.22; } 100% { scale: 1; } }
+@media (min-width: 900px) {
+  [data-8b-live] #work .work__grid > .work__item { animation-name: work-article-work-item-translate-d; }
+}
+@media (max-width: 899px) {
+  [data-8b-live] #work .work__grid > .work__item { animation-name: work-article-work-item-translate-m; }
+}
+}
+</style>
+<style data-8b-part="scene:process-week">
+@property --process-p { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #process .process__track { height: 250vh; }
+  [data-8b-live] #process .process__stage { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 40px; }
+}
+}
+@layer scenes {
+[data-8b-live] #process .process__days > .process__day > .process__shot { z-index: calc(var(--process-n) - var(--i)); }
+[data-8b-live] #process .process__days { --process-start: 100vh; --process-span: calc(100% - 200vh); animation-name: process-line; animation-timeline: --process-t1; animation-range: cover var(--process-start) cover calc(var(--process-start) + (var(--process-n) - 1) / (var(--process-n) - 0.65) * var(--process-span)); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #process .process__day:not(:first-child) > .process__shot { animation-name: process-shot-move, process-shot-land; animation-timeline: --process-t1; animation-range: cover var(--process-start) cover calc(var(--process-start) + var(--i) / (var(--process-n) - 0.65) * var(--process-span)), cover calc(var(--process-start) + (var(--i) - 0.25) / (var(--process-n) - 0.65) * var(--process-span)) cover calc(var(--process-start) + var(--i) / (var(--process-n) - 0.65) * var(--process-span)); animation-timing-function: linear, cubic-bezier(0.3333, 0.6667, 0.6667, 1); animation-fill-mode: both; }
+[data-8b-live] #process .process__day:not(:first-child) > :is(.process__dow, h3, .process__text) { animation-name: process-text; animation-timeline: --process-t1; animation-range: cover calc(var(--process-start) + (var(--i) - 0.3) / (var(--process-n) - 0.65) * var(--process-span)) cover calc(var(--process-start) + var(--i) / (var(--process-n) - 0.65) * var(--process-span)); animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes process-line { 0% { --process-p: 0; } 100% { --process-p: 1; } }
+@keyframes process-shot-move { 0% { translate: var(--process-x, 0px) var(--process-y, 0px); } 100% { translate: 0px 0px; } }
+@keyframes process-shot-land { 0% { scale: 1.05; } 100% { scale: 1; } }
+@keyframes process-text { 0% { opacity: 0.22; } 100% { opacity: 1; } }
+@media (min-width: 900px) {
+  [data-8b-live] #process .process__track { view-timeline: --process-t1 block; view-timeline-inset: 0; }
+}
+@media (max-width: 899.98px) {
+  [data-8b-live] #process .process__days { view-timeline: --process-t1 block; view-timeline-inset: 0; --process-start: 70vh; --process-span: var(--process-reach, 0px); }
+}
+}
+</style>
+<style data-8b-part="scene:reviews-stair">
+@property --reviews-shift { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #reviews .reviews__track-wrap { height: 320vh; }
+  [data-8b-live] #reviews .reviews__stage { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 72px 0 32px; overflow: hidden; }
+  [data-8b-live] #reviews .reviews__track { width: max-content; overflow: visible; scroll-snap-type: none; padding-bottom: 0; }
+}
+}
+@layer scenes {
+[data-8b-live] #reviews { timeline-scope: --reviews-t1; --reviews-ease: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1513, 0.18, 0.2113, 0.245, 0.2813, 0.32, 0.3612, 0.405, 0.4512, 0.5, 0.5488, 0.595, 0.6387, 0.68, 0.7188, 0.755, 0.7888, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); --reviews-step: 30px; animation-name: reviews-shift; animation-timeline: --reviews-t1; animation-range: cover 100vh cover calc(100% - 100vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #reviews .reviews__track-wrap { view-timeline: --reviews-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #reviews .reviews__track { animation-name: reviews-track; animation-timeline: --reviews-t1; animation-range: cover 100vh cover calc(100% - 100vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #reviews .reviews__card:not(:first-child) { animation-name: reviews-card; animation-timeline: --reviews-t1; animation-range: cover 100vh cover calc(100vh + var(--reviews-reach, 1) * (100% - 200vh)); animation-timing-function: var(--reviews-ease); animation-fill-mode: both; }
+@keyframes reviews-shift { 0% { --reviews-shift: 0; } 100% { --reviews-shift: 1; } }
+@keyframes reviews-track { 0% { translate: 0px 0px; } 100% { translate: calc(-1 * var(--reviews-distance, 0px)) 0px; } }
+@keyframes reviews-card { 0% { translate: 0px calc(var(--i) * var(--reviews-step)); } 100% { translate: 0px 0px; } }
+@media (min-width: 900px) {
+  [data-8b-live] #reviews { --reviews-step: min(44px, 5.5vh); }
+}
+}
+</style>
+<style data-8b-part="scene:aftercare-haze">
+@layer scenes {
+[data-8b-live] #aftercare .care__photo { view-timeline: --aftercare-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #aftercare .care__photo > img { animation-name: aftercare-figure-care-photo-img-translate, aftercare-figure-care-photo-img-scale; animation-timeline: --aftercare-t1; animation-range: cover 0% cover 50%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #aftercare .care__statement { view-timeline: --aftercare-t2 block; view-timeline-inset: 0; }
+[data-8b-live] #aftercare .care__statement .w { display: inline-block; animation-name: aftercare-word-show; animation-timeline: --aftercare-t2; animation-range: cover calc(18vh + 0.7 * var(--i) / (var(--n) - 0.7) * (100% - 66vh)) cover calc(18vh + (0.7 * var(--i) + 0.3 * var(--n)) / (var(--n) - 0.7) * (100% - 66vh)); animation-timing-function: linear; animation-fill-mode: both; }
+@media (min-width: 1024px) and (hover: hover) {
+  [data-8b-live] #aftercare .care__statement .w { animation-name: aftercare-word-show, aftercare-word-blur; }
+}
+@keyframes aftercare-word-show { 0% { opacity: 0.14; } 100% { opacity: 1; } }
+@keyframes aftercare-word-blur { 0% { filter: blur(6px); } 100% { filter: blur(0px); } }
+@keyframes aftercare-figure-care-photo-img-translate { 0% { translate: 0px -9%; } 100% { translate: 0px 0px; } }
+@keyframes aftercare-figure-care-photo-img-scale { 0% { scale: 1.18; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:footer-mark">
+@layer scenes {
+[data-8b-live] #footer { view-timeline: --footer-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #footer .m-text-5 { animation-name: footer-mark-scale; animation-timeline: --footer-t1; animation-range: cover 0% cover calc(100% - 100vh); animation-timing-function: linear; animation-fill-mode: both; transform-origin: 0 50%; }
+@keyframes footer-mark-scale { 0% { scale: var(--footer-narrow, 1) 1; animation-timing-function: linear(0, 0.0275, 0.0548, 0.082, 0.1091, 0.136, 0.1629, 0.1896, 0.2162, 0.2426, 0.2689, 0.2951, 0.3212, 0.3472, 0.373, 0.3987, 0.4242, 0.4497, 0.475, 0.5002, 0.5253, 0.5502, 0.575, 0.5997, 0.6242, 0.6487, 0.673, 0.6972, 0.7212, 0.7451, 0.7689, 0.7926, 0.8162, 0.8396, 0.8629, 0.886, 0.9091, 0.932, 0.9548, 0.9775, 1); } 18.351% { scale: var(--footer-mid, 1) 1; animation-timing-function: linear(0, 0.0494, 0.0975, 0.1444, 0.19, 0.2344, 0.2775, 0.3194, 0.36, 0.3994, 0.4375, 0.4744, 0.51, 0.5444, 0.5775, 0.6094, 0.64, 0.6694, 0.6975, 0.7244, 0.75, 0.7744, 0.7975, 0.8194, 0.84, 0.8594, 0.8775, 0.8944, 0.91, 0.9244, 0.9375, 0.9494, 0.96, 0.9694, 0.9775, 0.9844, 0.99, 0.9944, 0.9975, 0.9994, 1); } 100% { scale: 1 1; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: fixed bar: wordmark, five section links in the page's own link style, Menu button on phones with a full-screen overlay -->
@@ -741,7 +951,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
     </ul>
   </nav>
   <button class="m-link nav__toggle" type="button" aria-expanded="false" aria-controls="menu"><span class="m-link__label">Menu</span></button>
-  <div class="nav__overlay" id="menu" data-lenis-prevent hidden>
+  <div class="nav__overlay" id="menu" hidden>
     <div class="nav__overlay-top">
       <span class="m-text-5 nav__logo" aria-hidden="true">Vernis</span>
       <button class="m-link nav__close" type="button"><span class="m-link__label">Close</span></button>
@@ -782,11 +992,11 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
   <div class="opening__two">
     <div class="opening__stage">
       <figure class="opening__frame">
-        <img loading="lazy" style="background:#262626" class="opening__img" src="https://images.unsplash.com/photo-1755230838541-98bd1195d5bf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8ZGFyayUyMGNhciUyMGJvZHklMjByZWZsZWN0aW9uJTIwaGlnaGxpZ2h0c3xlbnwxfDB8fHwxNzkxMzgxMDE4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1570&amp;q=60" alt="A dark car standing in a tunnel of white light panels, every panel line reflected in its paint" width="1600" height="900">
+        <img fetchpriority="high" class="opening__img" src="https://images.unsplash.com/photo-1755230838541-98bd1195d5bf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8ZGFyayUyMGNhciUyMGJvZHklMjByZWZsZWN0aW9uJTIwaGlnaGxpZ2h0c3xlbnwxfDB8fHwxNzkxMzgxMDE4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1570&amp;q=60" alt="A dark car standing in a tunnel of white light panels, every panel line reflected in its paint" width="1600" height="900">
       </figure>
       <div class="opening__statement">
         <p class="m-text-4 opening__claim">Corrected panel by panel, sealed once, and handed back in a finish that reads like still water.</p>
-        <ul class="opening__facts">
+        <ul class="opening__facts" data-8b-items=":scope > li">
           <li class="m-tag">Paint read on every panel</li>
           <li class="m-tag">Five days in the studio</li>
           <li class="m-tag">Five-year coating</li>
@@ -798,11 +1008,11 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 <!-- treatments: three tall rows: treatment name in the wide face, lead, text, time in the studio, price from, and a photo (animation: scene:treatments-focus) -->
 <section id="treatments" class="treat" data-8b-section="treatments">
   <div class="treat__head">
-    <p class="m-cap" data-8b-motion="bracket"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Treatments</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
+    <p class="m-cap" data-8b-motion="bracket" data-8b-enter="90%"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Treatments</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
     <h2 class="m-text-2 treat__title">Three treatments, one standard of light.</h2>
     <p class="m-text treat__intro">Every car starts with an inspection under daylight lamps. From there we agree one treatment or a combination, and a price that does not move once the car is in.</p>
   </div>
-  <ol class="treat__list">
+  <ol class="treat__list" data-8b-items=":scope > .treat__row" data-8b-fixed="3">
     <li class="treat__row">
       <div class="treat__name-box"><h3 class="m-text-6 treat__name" style="--len:16">Paint correction</h3></div>
       <div class="treat__body">
@@ -813,7 +1023,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
           <div><dt class="m-text-3">From</dt><dd class="m-text">£680</dd></div>
         </dl>
       </div>
-      <figure class="treat__photo"><img style="background:#d9f3f3" src="https://images.unsplash.com/photo-1780558852671-e47265577239?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y2FyJTIwcG9saXNoaW5nJTIwbWFjaGluZSUyMGRldGFpbGluZ3xlbnwxfDB8fHwxNzkxMzgxMDE4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=740&amp;q=60" alt="A rotary polisher working across the dark bonnet of a car" width="1600" height="900" loading="lazy"></figure>
+      <figure class="treat__photo"><img src="https://images.unsplash.com/photo-1780558852671-e47265577239?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y2FyJTIwcG9saXNoaW5nJTIwbWFjaGluZSUyMGRldGFpbGluZ3xlbnwxfDB8fHwxNzkxMzgxMDE4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=740&amp;q=60" alt="A rotary polisher working across the dark bonnet of a car" width="1600" height="900" loading="lazy"></figure>
     </li>
     <li class="treat__row">
       <div class="treat__name-box"><h3 class="m-text-6 treat__name" style="--len:15">Ceramic coating</h3></div>
@@ -825,7 +1035,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
           <div><dt class="m-text-3">From</dt><dd class="m-text">£890</dd></div>
         </dl>
       </div>
-      <figure class="treat__photo"><img style="background:#8c8c8c" src="https://images.unsplash.com/photo-1734557280462-26eb09e1f6ea?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHdhdGVyJTIwYmVhZGluZyUyMGNhciUyMHBhaW50fGVufDF8MHx8fDE3OTEzODEwMTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Round water beads standing on a coated grey panel" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="treat__photo"><img src="https://images.unsplash.com/photo-1734557280462-26eb09e1f6ea?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHdhdGVyJTIwYmVhZGluZyUyMGNhciUyMHBhaW50fGVufDF8MHx8fDE3OTEzODEwMTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Round water beads standing on a coated grey panel" width="1600" height="1067" loading="lazy"></figure>
     </li>
     <li class="treat__row">
       <div class="treat__name-box"><h3 class="m-text-6 treat__name" style="--len:13">Interior care</h3></div>
@@ -837,7 +1047,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
           <div><dt class="m-text-3">From</dt><dd class="m-text">£240</dd></div>
         </dl>
       </div>
-      <figure class="treat__photo"><img style="background:#734026" src="https://images.unsplash.com/photo-1691157415383-9e85455a0f9e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y2FyJTIwbGVhdGhlciUyMGludGVyaW9yJTIwc2VhdHMlMjBkZXRhaWx8ZW58MXwwfHx8MTc5MTM4MTAyMHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Cognac leather seats in a classic car, cleaned and fed" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="treat__photo"><img src="https://images.unsplash.com/photo-1691157415383-9e85455a0f9e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y2FyJTIwbGVhdGhlciUyMGludGVyaW9yJTIwc2VhdHMlMjBkZXRhaWx8ZW58MXwwfHx8MTc5MTM4MTAyMHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Cognac leather seats in a classic car, cleaned and fed" width="1600" height="1067" loading="lazy"></figure>
     </li>
   </ol>
 </section>
@@ -846,13 +1056,13 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 <section id="measure" class="measure" data-8b-section="measure">
   <div class="measure__grid">
     <div class="measure__head">
-      <p class="m-cap" data-8b-motion="bracket"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Paint readings</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
+      <p class="m-cap" data-8b-motion="bracket" data-8b-enter="90%"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Paint readings</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
       <h2 class="m-text-2">We read the paint before we cut it.</h2>
       <p class="m-text">Clear coat is thinner than a sheet of paper. Before a polisher touches the car we take a gauge reading on every panel, so correction stops where the clear coat says stop. The readings go home with you — these are from an estate that came in last month.</p>
     </div>
     <div class="measure__sheet">
       <p class="m-text-3 measure__legend"><span>Panel</span><span>Paint depth</span><span>Microns</span></p>
-      <ol class="measure__rows">
+      <ol class="measure__rows" data-8b-items=":scope > .measure__row" data-8b-fixed="12">
         <li class="measure__row" style="--measure-v:118"><span class="m-text">Bonnet</span><span class="measure__bar" aria-hidden="true"><span class="measure__fill"></span></span><data class="m-text measure__value" value="118">118 µm</data></li>
         <li class="measure__row" style="--measure-v:124"><span class="m-text">Roof</span><span class="measure__bar" aria-hidden="true"><span class="measure__fill"></span></span><data class="m-text measure__value" value="124">124 µm</data></li>
         <li class="measure__row" style="--measure-v:112"><span class="m-text">Tailgate</span><span class="measure__bar" aria-hidden="true"><span class="measure__fill"></span></span><data class="m-text measure__value" value="112">112 µm</data></li>
@@ -876,34 +1086,34 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 <section id="work" class="work" data-8b-section="work">
   <div class="work__head">
     <div class="work__head-text">
-      <p class="m-cap" data-8b-motion="bracket"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Recent cars</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
+      <p class="m-cap" data-8b-motion="bracket" data-8b-enter="90%"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Recent cars</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
       <h2 class="m-text-2 work__title">Cars that left the studio this season.</h2>
     </div>
     <a class="m-link" href="#contact"><span class="m-link__label">Book a slot</span></a>
   </div>
-  <div class="work__grid">
-    <article class="work__item">
-      <figure class="work__media" data-8b-motion="clarify"><img style="background:#c08c73" src="https://images.unsplash.com/photo-1784379926533-c84b04e6e808?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Z3JlZW4lMjBjbGFzc2ljJTIwY2FyfGVufDF8MHx8fDE3OTEzODEwNDR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=680&amp;q=60" alt="A light green 1970s 911 parked on cobblestones" width="1600" height="1200" loading="lazy"><ul class="work__tags"><li class="m-tag">Two-stage correction</li><li class="m-tag">Ceramic</li></ul></figure>
+  <div class="work__grid" data-8b-items=":scope > .work__item" data-8b-fixed="5">
+    <article class="work__item" style="--work-article-work-item-translate-from-2: -67.5px; --work-article-work-item-translate-from-2-m: -22.5px">
+      <figure class="work__media" data-8b-motion="clarify" data-8b-enter="78%"><img src="https://images.unsplash.com/photo-1784379926533-c84b04e6e808?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Z3JlZW4lMjBjbGFzc2ljJTIwY2FyfGVufDF8MHx8fDE3OTEzODEwNDR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=680&amp;q=60" alt="A light green 1970s 911 parked on cobblestones" width="1600" height="1200" loading="lazy"><ul class="work__tags"><li class="m-tag">Two-stage correction</li><li class="m-tag">Ceramic</li></ul></figure>
       <h3 class="m-text-4 work__name"><span class="work__mark" aria-hidden="true"></span>1973 911 T, light green</h3>
       <p class="m-text work__desc">Original paint, soft and thin in places. Eighteen microns taken off at most; every panel stayed above ninety-five.</p>
     </article>
-    <article class="work__item">
-      <figure class="work__media" data-8b-motion="clarify"><img style="background:#0c2626" src="https://images.unsplash.com/photo-1645400379459-f6fd3d963fd4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZGFyayUyMGNhciUyMGJvZHklMjByZWZsZWN0aW9uJTIwaGlnaGxpZ2h0c3xlbnwxfDB8fHwxNzkxMzgxMDE4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=840&amp;q=60" alt="A black sports car lit from above in a dark room" width="1600" height="914" loading="lazy"><ul class="work__tags"><li class="m-tag">New-car prep</li><li class="m-tag">Ceramic</li></ul></figure>
+    <article class="work__item" style="--work-article-work-item-translate-from-2: 150px; --work-article-work-item-translate-from-2-m: 50px">
+      <figure class="work__media" data-8b-motion="clarify" data-8b-enter="78%"><img src="https://images.unsplash.com/photo-1645400379459-f6fd3d963fd4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZGFyayUyMGNhciUyMGJvZHklMjByZWZsZWN0aW9uJTIwaGlnaGxpZ2h0c3xlbnwxfDB8fHwxNzkxMzgxMDE4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=840&amp;q=60" alt="A black sports car lit from above in a dark room" width="1600" height="914" loading="lazy"><ul class="work__tags"><li class="m-tag">New-car prep</li><li class="m-tag">Ceramic</li></ul></figure>
       <h3 class="m-text-4 work__name"><span class="work__mark" aria-hidden="true"></span>2023 coupé, black on black</h3>
       <p class="m-text work__desc">Dealer swirls on a car with three hundred miles. One-step polish, two coats, and a cover for the drive home.</p>
     </article>
-    <article class="work__item">
-      <figure class="work__media" data-8b-motion="clarify"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1786561047822-f4010b9b5a25?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8Y2xhc3NpYyUyMHNwb3J0cyUyMGNhciUyMGdhcmFnZXxlbnwxfDB8fHwxNzkxMzgxMDM5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=870&amp;q=60" alt="A blue 1960s convertible with a black soft top in a white garage" width="1600" height="1228" loading="lazy"><ul class="work__tags"><li class="m-tag">Single-stage polish</li><li class="m-tag">Interior</li></ul></figure>
+    <article class="work__item" style="--work-article-work-item-translate-from-2: 75px; --work-article-work-item-translate-from-2-m: 25px">
+      <figure class="work__media" data-8b-motion="clarify" data-8b-enter="78%"><img src="https://images.unsplash.com/photo-1786561047822-f4010b9b5a25?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8Y2xhc3NpYyUyMHNwb3J0cyUyMGNhciUyMGdhcmFnZXxlbnwxfDB8fHwxNzkxMzgxMDM5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1070&amp;q=60" alt="A blue 1960s convertible with a black soft top in a white garage" width="1600" height="1228" loading="lazy"><ul class="work__tags"><li class="m-tag">Single-stage polish</li><li class="m-tag">Interior</li></ul></figure>
       <h3 class="m-text-4 work__name"><span class="work__mark" aria-hidden="true"></span>1966 convertible, Nassau blue</h3>
       <p class="m-text work__desc">Lacquer that had not seen a polisher in decades, on a bonnet that had seen too much sun. Finished by hand, the hood cleaned and proofed.</p>
     </article>
-    <article class="work__item">
-      <figure class="work__media" data-8b-motion="clarify"><img style="background:#d9a68c" src="https://images.unsplash.com/photo-1783108884066-fa83b4b4612f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y2xhc3NpYyUyMHNwb3J0cyUyMGNhciUyMGdhcmFnZXxlbnwxfDB8fHwxNzkxMzgxMDM5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" alt="A black vintage roadster parked in an underground garage" width="1600" height="1067" loading="lazy"><ul class="work__tags"><li class="m-tag">Hand refinement</li><li class="m-tag">Leather</li></ul></figure>
+    <article class="work__item" style="--work-article-work-item-translate-from-2: -67.5px; --work-article-work-item-translate-from-2-m: -22.5px">
+      <figure class="work__media" data-8b-motion="clarify" data-8b-enter="78%"><img src="https://images.unsplash.com/photo-1783108884066-fa83b4b4612f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y2xhc3NpYyUyMHNwb3J0cyUyMGNhciUyMGdhcmFnZXxlbnwxfDB8fHwxNzkxMzgxMDM5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" alt="A black vintage roadster parked in an underground garage" width="1600" height="1067" loading="lazy"><ul class="work__tags"><li class="m-tag">Hand refinement</li><li class="m-tag">Leather</li></ul></figure>
       <h3 class="m-text-4 work__name"><span class="work__mark" aria-hidden="true"></span>1952 roadster, black</h3>
       <p class="m-text work__desc">No machine near seventy-year-old paint. Refined by hand over three days; the leather cleaned and fed twice.</p>
     </article>
-    <article class="work__item">
-      <figure class="work__media" data-8b-motion="clarify"><img style="background:#a68c73" src="https://images.unsplash.com/photo-1667878604760-ea68d0fd321f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y2xhc3NpYyUyMHNwb3J0cyUyMGNhciUyMGdhcmFnZXxlbnwxfDB8fHwxNzkxMzgxMDM5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="An olive 911 alone in a wide concrete garage, seen from above" width="1600" height="1067" loading="lazy"><ul class="work__tags"><li class="m-tag">Wet sanding</li><li class="m-tag">Three-stage</li></ul></figure>
+    <article class="work__item" style="--work-article-work-item-translate-from-2: 150px; --work-article-work-item-translate-from-2-m: 50px">
+      <figure class="work__media" data-8b-motion="clarify" data-8b-enter="78%"><img src="https://images.unsplash.com/photo-1667878604760-ea68d0fd321f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y2xhc3NpYyUyMHNwb3J0cyUyMGNhciUyMGdhcmFnZXxlbnwxfDB8fHwxNzkxMzgxMDM5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="An olive 911 alone in a wide concrete garage, seen from above" width="1600" height="1067" loading="lazy"><ul class="work__tags"><li class="m-tag">Wet sanding</li><li class="m-tag">Three-stage</li></ul></figure>
       <h3 class="m-text-4 work__name"><span class="work__mark" aria-hidden="true"></span>1979 911 SC, olive</h3>
       <p class="m-text work__desc">A respray full of orange peel from a previous owner. Flatted, corrected and coated — the reflection now runs straight.</p>
     </article>
@@ -912,12 +1122,12 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 <!-- studio: a photo of a car in a white room beside a short text and three facts with square markers -->
 <section id="studio" class="studio" data-8b-section="studio">
   <div class="studio__grid">
-    <figure class="studio__photo" data-8b-motion="clarify"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1692260122105-28c26fc3c882?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2luZ2xlJTIwY2FyJTIwc3R1ZGlvJTIwbGlnaHRpbmd8ZW58MXwwfHx8MTc5MTM4MTA3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=750&amp;q=60" alt="An orange coupé standing alone in a white room lit by ceiling panels" width="1600" height="900" loading="lazy"></figure>
+    <figure class="studio__photo" data-8b-motion="clarify" data-8b-enter="78%"><img src="https://images.unsplash.com/photo-1692260122105-28c26fc3c882?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2luZ2xlJTIwY2FyJTIwc3R1ZGlvJTIwbGlnaHRpbmd8ZW58MXwwfHx8MTc5MTM4MTA3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=750&amp;q=60" alt="An orange coupé standing alone in a white room lit by ceiling panels" width="1600" height="900" loading="lazy"></figure>
     <div class="studio__text">
-      <p class="m-cap" data-8b-motion="bracket"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">The studio</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
+      <p class="m-cap" data-8b-motion="bracket" data-8b-enter="90%"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">The studio</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
       <h2 class="m-text-2">One car in the studio at a time.</h2>
       <p class="m-text studio__body">The bay at Example Works holds one car. Nothing else is sanded, polished or sprayed in the room while yours is there; the air is filtered, the floor is heated, and the lamps are the colour of a clear afternoon.</p>
-      <ul class="studio__facts">
+      <ul class="studio__facts" data-8b-items=":scope > li">
         <li><span class="studio__marker" aria-hidden="true"></span><span class="m-text">Daylight lamps on three sides of the car</span></li>
         <li><span class="studio__marker" aria-hidden="true"></span><span class="m-text">Coatings cure at a steady 20 °C</span></li>
         <li><span class="studio__marker" aria-hidden="true"></span><span class="m-text">Collection and return within 30 miles</span></li>
@@ -929,39 +1139,39 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 <!-- process: a working week of five day columns, Monday to Friday, with a stack of photos travelling across them (animation: scene:process-week) -->
 <section id="process" class="process" data-8b-section="process">
   <div class="process__head">
-    <p class="m-cap" data-8b-motion="bracket"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Five days</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
+    <p class="m-cap" data-8b-motion="bracket" data-8b-enter="90%"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Five days</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
     <h2 class="m-text-2 process__title">A working week for one car.</h2>
     <p class="m-text process__intro">A full treatment runs Monday to Friday. At the end of each day you get a photo and the readings, so you know where the car is without having to ask.</p>
   </div>
   <div class="process__track">
     <div class="process__stage">
-      <ol class="process__days">
+      <ol class="process__days" data-8b-items=":scope > .process__day">
         <li class="process__day">
-          <figure class="process__shot"><img style="background:#262626" src="https://images.unsplash.com/photo-1622329821376-a19fd6002562?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZGV0YWlsZXIlMjBpbnNwZWN0aW5nJTIwY2FyJTIwcGFpbnQlMjBsaWdodHxlbnwxfDB8fHwxNzkxMzgxMDQyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="A detailer leaning over a black car with an inspection lamp" width="1600" height="1200" loading="lazy"></figure>
+          <figure class="process__shot"><img src="https://images.unsplash.com/photo-1622329821376-a19fd6002562?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZGV0YWlsZXIlMjBpbnNwZWN0aW5nJTIwY2FyJTIwcGFpbnQlMjBsaWdodHxlbnwxfDB8fHwxNzkxMzgxMDQyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="A detailer leaning over a black car with an inspection lamp" width="1600" height="1200" loading="lazy"></figure>
           <p class="m-text-3 process__dow">Monday</p>
           <h3 class="m-text-4">Inspect and measure</h3>
           <p class="m-text process__text">Lamps, gauge and notes. Every chip, scratch and respray is photographed and agreed with you before we start.</p>
         </li>
         <li class="process__day">
-          <figure class="process__shot"><img style="background:#F4CA49" src="https://images.unsplash.com/photo-1605164598708-25701594473e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Y2FyJTIwc25vdyUyMGZvYW0lMjB3YXNofGVufDF8MHx8fDE3OTEzODEwNDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=60" alt="A car covered in thick white snow foam inside a wash bay" width="1600" height="1067" loading="lazy"></figure>
+          <figure class="process__shot"><img src="https://images.unsplash.com/photo-1605164598708-25701594473e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Y2FyJTIwc25vdyUyMGZvYW0lMjB3YXNofGVufDF8MHx8fDE3OTEzODEwNDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=510&amp;q=60" alt="A car covered in thick white snow foam inside a wash bay" width="1600" height="1067" loading="lazy"></figure>
           <p class="m-text-3 process__dow">Tuesday</p>
           <h3 class="m-text-4">Wash and decontaminate</h3>
           <p class="m-text process__text">Snow foam, a two-bucket wash, iron fallout and tar dissolved, then clay on every panel until the paint feels like glass.</p>
         </li>
         <li class="process__day">
-          <figure class="process__shot"><img style="background:#262626" src="https://images.unsplash.com/photo-1658244546876-d82cbf1a1c9e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Y2FyJTIwcG9saXNoaW5nJTIwbWFjaGluZSUyMGRldGFpbGluZ3xlbnwxfDB8fHwxNzkxMzgxMDE4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=60" alt="A polisher pressed to the dark bonnet of a car beside its headlight" width="1600" height="1067" loading="lazy"></figure>
+          <figure class="process__shot"><img src="https://images.unsplash.com/photo-1658244546876-d82cbf1a1c9e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Y2FyJTIwcG9saXNoaW5nJTIwbWFjaGluZSUyMGRldGFpbGluZ3xlbnwxfDB8fHwxNzkxMzgxMDE4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=510&amp;q=60" alt="A polisher pressed to the dark bonnet of a car beside its headlight" width="1600" height="1067" loading="lazy"></figure>
           <p class="m-text-3 process__dow">Wednesday</p>
           <h3 class="m-text-4">Correct</h3>
           <p class="m-text process__text">Compound and polish, panel by panel, re-reading the gauge as we go. The day ends with a look under every lamp.</p>
         </li>
         <li class="process__day">
-          <figure class="process__shot"><img style="background:#262626" src="https://images.unsplash.com/photo-1657658482808-38205fc2e506?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8ZGV0YWlsZXIlMjBpbnNwZWN0aW5nJTIwY2FyJTIwcGFpbnQlMjBsaWdodHxlbnwxfDB8fHwxNzkxMzgxMDQyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=60" alt="A gloved hand levelling coating on the front of a white car" width="1600" height="1067" loading="lazy"></figure>
+          <figure class="process__shot"><img src="https://images.unsplash.com/photo-1657658482808-38205fc2e506?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8ZGV0YWlsZXIlMjBpbnNwZWN0aW5nJTIwY2FyJTIwcGFpbnQlMjBsaWdodHxlbnwxfDB8fHwxNzkxMzgxMDQyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=510&amp;q=60" alt="A gloved hand levelling coating on the front of a white car" width="1600" height="1067" loading="lazy"></figure>
           <p class="m-text-3 process__dow">Thursday</p>
           <h3 class="m-text-4">Coat</h3>
           <p class="m-text process__text">A panel wipe, then two layers of ceramic, levelled by hand and cured under infrared overnight.</p>
         </li>
         <li class="process__day">
-          <figure class="process__shot"><img style="background:#8c8c8c" src="https://images.unsplash.com/photo-1667159590280-095fe9314f4e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dmludGFnZSUyMGNhciUyMHN0dWRpb3xlbnwxfDB8fHwxNzkxMzgxMDQwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=580&amp;q=60" alt="A finished black muscle car gleaming against a dark studio backdrop" width="1600" height="900" loading="lazy"></figure>
+          <figure class="process__shot"><img src="https://images.unsplash.com/photo-1667159590280-095fe9314f4e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dmludGFnZSUyMGNhciUyMHN0dWRpb3xlbnwxfDB8fHwxNzkxMzgxMDQwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=610&amp;q=60" alt="A finished black muscle car gleaming against a dark studio backdrop" width="1600" height="900" loading="lazy"></figure>
           <p class="m-text-3 process__dow">Friday</p>
           <h3 class="m-text-4">Finish and hand over</h3>
           <p class="m-text process__text">Glass, wheels and cabin, a last look under the lamps, and the keys handed back with the readings and an aftercare kit.</p>
@@ -977,12 +1187,12 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
     <div class="reviews__stage">
       <div class="reviews__head">
         <div class="reviews__head-text">
-          <p class="m-cap" data-8b-motion="bracket"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Owners</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
+          <p class="m-cap" data-8b-motion="bracket" data-8b-enter="90%"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Owners</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
           <h2 class="m-text-2">Owners, in their words.</h2>
         </div>
         <a class="m-link" href="#contact"><span class="m-link__label">Book an inspection</span></a>
       </div>
-      <ul class="reviews__track">
+      <ul class="reviews__track" data-8b-items=":scope > .reviews__card">
         <li class="reviews__card">
           <blockquote><p class="m-text-4 reviews__quote">“I had been told the paint on my 911 was too thin to touch. They measured it, showed me the numbers and found a way. It looks like 1989 again.”</p></blockquote>
           <p class="reviews__who"><span class="m-text">Daniel Okafor</span><span class="m-text-3">1989 911 Carrera</span></p>
@@ -1015,10 +1225,10 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 <section id="faq" class="faq" data-8b-section="faq">
   <div class="faq__grid">
     <div class="faq__head">
-      <p class="m-cap" data-8b-motion="bracket"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Questions</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
+      <p class="m-cap" data-8b-motion="bracket" data-8b-enter="90%"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Questions</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
       <h2 class="m-text-2">What owners ask before booking.</h2>
     </div>
-    <div class="faq__list">
+    <div class="faq__list" data-8b-items=":scope > .faq__item">
       <details class="faq__item">
         <summary class="faq__q"><span class="m-text-4">How long will you have my car?</span><span class="faq__sign" aria-hidden="true"></span></summary>
         <p class="m-text faq__a">Five working days for a full treatment, one to three for a single one. We agree the dates at the inspection and keep them.</p>
@@ -1051,9 +1261,9 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 <section id="aftercare" class="care" data-8b-section="aftercare">
   <div class="care__grid">
     <div class="care__text">
-      <p class="m-cap" data-8b-motion="bracket"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Aftercare</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
-      <h2 class="m-text-2 care__statement">A coating is not armour. Wash it gently, dry it softly, and the gloss you collected is the gloss you keep.</h2>
-      <ul class="care__rules">
+      <p class="m-cap" data-8b-motion="bracket" data-8b-enter="90%"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Aftercare</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
+      <h2 class="m-text-2 care__statement" data-8b-split="words">A coating is not armour. Wash it gently, dry it softly, and the gloss you collected is the gloss you keep.</h2>
+      <ul class="care__rules" data-8b-items=":scope > li">
         <li><span class="care__marker" aria-hidden="true"></span><span class="m-text">Two buckets, a clean mitt, never a brush.</span></li>
         <li><span class="care__marker" aria-hidden="true"></span><span class="m-text">Rinse before you touch; dry with a plush towel.</span></li>
         <li><span class="care__marker" aria-hidden="true"></span><span class="m-text">Bring it back once a year — the check is free.</span></li>
@@ -1063,7 +1273,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
         <a class="m-link" href="#contact"><span class="m-link__label">Book a maintenance wash</span></a>
       </div>
     </div>
-    <figure class="care__photo"><img style="background:#73738c" src="https://images.unsplash.com/photo-1761934657948-708146148588?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bWljcm9maWJlciUyMHRvd2VsJTIwY2FyfGVufDF8MHx8fDE3OTEzODEwNzR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=750&amp;q=60" alt="A grey microfibre towel folded on the glossy black bonnet of a car" width="1600" height="1067" loading="lazy"></figure>
+    <figure class="care__photo"><img src="https://images.unsplash.com/photo-1761934657948-708146148588?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bWljcm9maWJlciUyMHRvd2VsJTIwY2FyfGVufDF8MHx8fDE3OTEzODEwNzR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=890&amp;q=60" alt="A grey microfibre towel folded on the glossy black bonnet of a car" width="1600" height="1067" loading="lazy"></figure>
   </div>
 </section>
 
@@ -1071,7 +1281,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 <section id="contact" class="contact" data-8b-section="contact">
   <div class="contact__grid">
     <div class="contact__head">
-      <p class="m-cap" data-8b-motion="bracket"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Book an inspection</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
+      <p class="m-cap" data-8b-motion="bracket" data-8b-enter="90%"><span class="m-cap__bracket" aria-hidden="true">[</span><span class="m-cap__label">Book an inspection</span><span class="m-cap__bracket" aria-hidden="true">]</span></p>
       <h2 class="m-text-2">Forty minutes under the lamps.</h2>
       <p class="m-text">The inspection is free. You leave with paint readings, photos of anything we find and a fixed price. Tell us about the car and we will call to agree a time.</p>
     </div>
@@ -1156,11 +1366,11 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
     overlay.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
     nav.removeAttribute('data-hidden');
-    if (open) { window.lenis?.stop(); close.focus(); } else { window.lenis?.start(); toggle.focus(); }
+    if (open) { window.motionKit?.wheel?.stop(); close.focus(); } else { window.motionKit?.wheel?.start(); toggle.focus(); }
   };
   toggle.addEventListener('click', () => setOpen(true));
   close.addEventListener('click', () => setOpen(false));
-  overlay.addEventListener('click', event => { if (event.target.closest('a')) { overlay.hidden = true; toggle.setAttribute('aria-expanded', 'false'); window.lenis?.start(); } });
+  overlay.addEventListener('click', event => { if (event.target.closest('a')) { overlay.hidden = true; toggle.setAttribute('aria-expanded', 'false'); window.motionKit?.wheel?.start(); } });
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !overlay.hidden) setOpen(false); });
 })();
 </script>
@@ -1202,422 +1412,292 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
   });
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
+<script data-8b-part="motion-kit">
 (() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}.line:not(:last-child){margin-bottom:0}.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = typeof Intl.Segmenter === 'function'
+? text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment)
+: text => [...text];
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split');
+if (sources.has(element)) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px 100% 0px' });
+(document.fonts?.ready ?? Promise.resolve()).then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const nav = document.getElementById('nav');
-  const lenis = window.lenis = new Lenis({
-    lerp: 0.075,
-    wheelMultiplier: 0.9,
-    anchors: { offset: -(nav ? nav.offsetHeight : 0) }
-  });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => {
-    gsap.ticker.remove(tick);
-    gsap.ticker.lagSmoothing(500, 33);
-    lenis.destroy();
-    window.lenis = null;
-  };
-});
-let resizeTimer;
-window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(refreshScroll, 200); });
+<script data-8b-part="atom-script:m-cap">
+window.motionKit?.measure(() => document.querySelectorAll('[data-8b-motion~="bracket"]').forEach(caption => {
+  const label = caption.querySelector('.m-cap__label');
+  if (label) window.motionKit.set(caption, { '--motion-bracket-half': `${label.offsetWidth / 2 + 6}px` });
+}));
 </script>
-<script data-8b-part="motion">
-const effects = {
-  clarify(figure, vars = {}) {
-    return gsap.timeline(vars)
-      .fromTo(figure, { '--clarify-x': 0 }, { '--clarify-x': 100, duration: 1.15, ease: 'power2.inOut' }, 0)
-      .fromTo(figure, { '--clarify-line': 1 }, { '--clarify-line': 0, duration: 0.3, ease: 'none' }, 1.0);
-  },
-  bracket(caption, vars = {}) {
-    const brackets = caption.querySelectorAll('.m-cap__bracket');
-    const label = caption.querySelector('.m-cap__label');
-    const timeline = gsap.timeline(vars);
-    if (brackets.length !== 2 || !label) return timeline;
-    const half = () => label.offsetWidth / 2 + 6;
-    return timeline
-      .fromTo(brackets[0], { x: half }, { x: 0, duration: 0.75, ease: 'power3.inOut', clearProps: 'transform' }, 0)
-      .fromTo(brackets[1], { x: () => -half() }, { x: 0, duration: 0.75, ease: 'power3.inOut', clearProps: 'transform' }, 0)
-      .fromTo(label, { clipPath: 'inset(0% 50% 0% 50%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.75, ease: 'power3.inOut', clearProps: 'clipPath' }, 0);
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  ['clarify', 'bracket'].forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => {
-      gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-        elements.forEach((element, index) => {
-          if (name === 'clarify') element.setAttribute('data-clarify', '');
-          ScrollTrigger.create({
-            id: `${id}:${index}`,
-            trigger: element,
-            start: name === 'clarify' ? 'top 78%' : 'top 90%',
-            once: true,
-            animation: effects[name](element)
-          });
-        });
-        return () => elements.forEach(element => element.removeAttribute('data-clarify'));
+<script data-8b-part="scene-script:opening-assembly">
+motionKit.scene("opening-assembly", () => {
+  const frame = document.querySelector("#opening .opening__frame"), img = frame.querySelector(".opening__img");
+  const random = (min, max) => min + Math.random() * (max - min);
+  const rows = 4;
+  let built = 0, layer;
+  motionKit.measure(() => {
+    const cols = matchMedia("(min-width: 900px)").matches ? 6 : 3;
+    if (cols === built) return;
+    built = cols;
+    layer?.remove();
+    layer = document.createElement("div");
+    layer.className = "opening__tiles";
+    layer.setAttribute("aria-hidden", "true");
+    motionKit.set(layer, { "--opening-cols": cols, "--opening-rows": rows });
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      const tile = document.createElement("div"), copy = document.createElement("img");
+      tile.className = "opening__tile";
+      copy.src = img.currentSrc || img.src;
+      copy.alt = "";
+      copy.decoding = "async";
+      motionKit.set(copy, { "--opening-c": c, "--opening-r": r });
+      const spread = random(1.25, 2.1), lift = random(0.45, 1.05), drift = random(-1, 1), scale = random(0.3, 0.72), turn = random(-16, 16), delay = random(0, 0.16);
+      motionKit.set(tile, {
+        "--opening-x": `calc(${(c + 0.5 - cols / 2) * (spread - 1) * 100}% + ${drift * 6}vw)`,
+        "--opening-y": `calc(${(r + 0.5 - rows / 2) * (spread - 1) * 100}% - ${lift * 100}vh)`,
+        "--opening-s": scale, "--opening-t": `${turn}deg`, "--opening-at": 0.03 + delay
       });
-    }, { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-</script>
-<script data-8b-part="scene:opening-assembly">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    desk: '(min-width: 900px) and (prefers-reduced-motion: no-preference)',
-    phone: '(max-width: 899.98px) and (prefers-reduced-motion: no-preference)',
-    blur: '(min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const { desk, blur } = context.conditions;
-    const section = document.getElementById('opening');
-    const frame = section.querySelector('.opening__frame');
-    const img = frame.querySelector('.opening__img');
-    const mark = section.querySelector('.opening__mark');
-    const intro = section.querySelector('.opening__intro');
-    const statement = section.querySelectorAll('.opening__claim, .opening__facts > li');
-    const cols = desk ? 6 : 3;
-    const rows = 4;
-    const layer = document.createElement('div');
-    layer.className = 'opening__tiles';
-    layer.setAttribute('aria-hidden', 'true');
-    layer.style.setProperty('--opening-cols', cols);
-    layer.style.setProperty('--opening-rows', rows);
-    const random = gsap.utils.random;
-    const tiles = [];
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const tile = document.createElement('div');
-        tile.className = 'opening__tile';
-        const copy = document.createElement('img');
-        copy.src = img.currentSrc || img.src;
-        copy.alt = '';
-        copy.decoding = 'async';
-        copy.style.setProperty('--opening-c', c);
-        copy.style.setProperty('--opening-r', r);
-        tile.append(copy);
-        layer.append(tile);
-        tiles.push({ tile, c, r, spread: random(1.25, 2.1), lift: random(0.45, 1.05), drift: random(-1, 1), scale: random(0.3, 0.72), turn: random(-16, 16), delay: random(0, 0.16) });
-      }
+      tile.append(copy);
+      layer.append(tile);
     }
     frame.append(layer);
-    section.setAttribute('data-haze', '');
-    gsap.set(img, { autoAlpha: 0 });
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'opening-assembly', trigger: section, start: 'top top', end: 'bottom bottom', scrub: true, invalidateOnRefresh: true }
-    });
-    timeline
-      .to(mark, { yPercent: -38, scale: 0.86, autoAlpha: 0, duration: 0.3, ease: 'power1.in' }, 0)
-      .to(intro, { y: () => -innerHeight * 0.14, duration: 0.42 }, 0);
-    tiles.forEach(({ tile, c, r, spread, lift, drift, scale, turn, delay }) => {
-      const tileX = () => (c + 0.5 - cols / 2) * (frame.offsetWidth / cols) * (spread - 1) + drift * innerWidth * 0.06;
-      const tileY = () => -lift * innerHeight + (r + 0.5 - rows / 2) * (frame.offsetHeight / rows) * (spread - 1);
-      timeline.fromTo(tile, {
-        x: tileX, y: tileY, scale, rotation: turn, filter: blur ? 'blur(10px)' : 'none'
-      }, {
-        x: 0, y: 0, scale: 1, rotation: 0, filter: blur ? 'blur(0px)' : 'none', duration: 0.36, ease: 'power2.out'
-      }, 0.03 + delay);
-      timeline.fromTo(tile, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.36, ease: desk ? 'power1.in' : 'power2.in' }, 0.03 + delay);
-    });
-    timeline
-      .set(layer, { autoAlpha: 1 }, 0.535)
-      .set(img, { autoAlpha: 0 }, 0.535)
-      .set(layer, { autoAlpha: 0 }, 0.54)
-      .set(img, { autoAlpha: 1 }, 0.54)
-      .fromTo(frame, { '--opening-haze': 0 }, { '--opening-haze': 1, duration: 0.12 }, 0.4)
-      .fromTo(frame, { '--opening-sweep': 0 }, { '--opening-sweep': 100, duration: 0.34, ease: 'power1.inOut' }, 0.57)
-      .fromTo(frame, { '--opening-line': 0 }, { '--opening-line': 1, duration: 0.03 }, 0.56)
-      .to(frame, { '--opening-line': 0, duration: 0.04 }, 0.91)
-      .fromTo(statement, { autoAlpha: 0.2, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.2, stagger: 0.05, ease: 'power2.out' }, 0.62)
-      .to({}, { duration: 0.06 }, 0.94);
-    return () => {
-      layer.remove();
-      section.removeAttribute('data-haze');
-    };
-  });
-}, { first: true, id: 'opening-assembly' });
-</script>
-<style data-8b-part="scene-style:opening-assembly">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #opening .opening__tiles { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(var(--opening-cols), 1fr); grid-template-rows: repeat(var(--opening-rows), 1fr); pointer-events: none; }
-  #opening .opening__tile { position: relative; overflow: hidden; will-change: transform; }
-  #opening .opening__tile img { position: absolute; max-width: none; width: calc(var(--opening-cols) * 100%); height: calc(var(--opening-rows) * 100%); left: calc(var(--opening-c) * -100%); top: calc(var(--opening-r) * -100%); object-fit: cover; }
-  #opening[data-haze] .opening__frame::after { content: ""; position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, color-mix(in srgb, var(--color-2) 30%, transparent), color-mix(in srgb, var(--color-3) 24%, transparent)); opacity: var(--opening-haze, 0); clip-path: inset(0 0 0 calc(var(--opening-sweep, 0) * 1%)); pointer-events: none; }
-  #opening[data-haze] .opening__frame::before { content: ""; position: absolute; top: -14px; bottom: -14px; left: -1px; z-index: 3; width: 2px; background: var(--color-2); opacity: var(--opening-line, 0); transform: translateX(calc(var(--opening-sweep, 0) * 1cqw)); pointer-events: none; }
-}
-}
-</style>
-<script data-8b-part="scene:treatments-focus">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('treatments');
-    section.querySelectorAll('.treat__row').forEach((row, index) => {
-      gsap.timeline({
-        defaults: { ease: 'none' },
-        scrollTrigger: { id: `treatments-focus:${index}`, trigger: row, start: 'top 92%', end: 'top 34%', scrub: true }
-      })
-        .fromTo(row.querySelector('.treat__name'), { fontStretch: '75%' }, { fontStretch: '150%', duration: 1, ease: 'power1.inOut' }, 0)
-        .fromTo(row.querySelector('.treat__photo'), { clipPath: 'inset(0% 38% 0% 38%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1, ease: 'power2.inOut' }, 0)
-        .fromTo(row.querySelector('.treat__body'), { autoAlpha: 0.25 }, { autoAlpha: 1, duration: 0.5 }, 0.5);
-    });
-  });
-}, { near: document.getElementById('treatments') });
-</script>
-<script data-8b-part="scene:measure-scan">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('measure');
-    const list = section.querySelector('.measure__rows');
-    const scan = section.querySelector('.measure__scan');
-    const rows = [...list.querySelectorAll('.measure__row')];
-    section.setAttribute('data-scan', '');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'measure-scan', trigger: list, start: 'top 86%', end: 'bottom 62%', scrub: true, invalidateOnRefresh: true }
-    });
-    timeline.fromTo(scan, { y: () => list.offsetTop }, { y: () => list.offsetTop + list.offsetHeight, duration: rows.length }, 0);
-    rows.forEach((row, index) => {
-      const value = Number(row.style.getPropertyValue('--measure-v')) || 0;
-      timeline
-        .fromTo(row.querySelector('.measure__fill'), { scaleX: 0 }, { scaleX: value / 240, duration: 0.9, ease: 'power2.out' }, index + 0.15)
-        .fromTo(row.querySelector('.measure__value'), { autoAlpha: 0.2 }, { autoAlpha: 1, duration: 0.3 }, index + 0.2);
-      if (row.classList.contains('measure__row--flag')) {
-        timeline.fromTo(row, { '--measure-flag': 0 }, { '--measure-flag': 1, duration: 0.4 }, index + 0.3);
-      }
-    });
-    return () => section.removeAttribute('data-scan');
-  });
-}, { near: document.getElementById('measure') });
-</script>
-<style data-8b-part="scene-style:measure-scan">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #measure[data-scan] .measure__scan { opacity: 1; }
-}
-}
-</style>
-<script data-8b-part="scene:work-drift">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    desk: '(min-width: 900px) and (prefers-reduced-motion: no-preference)',
-    phone: '(max-width: 899.98px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const travel = context.conditions.desk ? 150 : 50;
-    const section = document.getElementById('work');
-    section.querySelectorAll('.work__item').forEach((item, index) => {
-      const slot = index % 5;
-      const from = slot === 1 || slot === 4 ? travel : slot === 2 ? travel * 0.5 : -travel * 0.45;
-      const timeline = gsap.timeline({
-        defaults: { ease: 'none' },
-        scrollTrigger: { id: `work-drift:${index}`, trigger: item, start: 'top bottom', end: 'center center', scrub: true }
-      });
-      timeline.fromTo(item, { y: from }, { y: 0, duration: 1 }, 0);
-      if (slot === 2) timeline.fromTo(item.querySelector('img'), { scale: 1.22 }, { scale: 1, duration: 1 }, 0);
-    });
-  });
-}, { near: document.getElementById('work') });
-</script>
-<script data-8b-part="scene:process-week">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    desk: '(min-width: 900px) and (prefers-reduced-motion: no-preference)',
-    phone: '(max-width: 899.98px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const { desk } = context.conditions;
-    const section = document.getElementById('process');
-    const track = section.querySelector('.process__track');
-    const list = section.querySelector('.process__days');
-    const days = [...list.querySelectorAll('.process__day')];
-    const shots = days.map(day => day.querySelector('.process__shot'));
-    const last = days.length - 1;
-    section.setAttribute('data-week', '');
-    shots.forEach((shot, index) => gsap.set(shot, { zIndex: days.length - index }));
-    const offset = (index, axis) => axis === 'x' ? shots[0].offsetLeft - shots[index].offsetLeft : shots[0].offsetTop - shots[index].offsetTop;
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: desk
-        ? { id: 'process-week', trigger: track, start: 'top top', end: 'bottom bottom', scrub: true, invalidateOnRefresh: true }
-        : { id: 'process-week', trigger: list, start: 'top 30%', endTrigger: days[last], end: 'top 30%', scrub: true, invalidateOnRefresh: true }
-    });
-    timeline.fromTo(list, { '--process-p': 0 }, { '--process-p': 1, duration: last }, 0);
-    shots.forEach((shot, index) => {
-      if (!index) return;
-      timeline
-        .fromTo(shot, { x: () => offset(index, 'x'), y: () => offset(index, 'y') }, { x: 0, y: 0, duration: index }, 0)
-        .fromTo(shot, { scale: 1.05 }, { scale: 1, duration: 0.25, ease: 'power1.out' }, index - 0.25);
-      const texts = days[index].querySelectorAll('.process__dow, h3, .process__text');
-      timeline.fromTo(texts, { autoAlpha: 0.22 }, { autoAlpha: 1, duration: 0.3 }, index - 0.3);
-    });
-    timeline.to({}, { duration: 0.35 }, last);
-    return () => section.removeAttribute('data-week');
   });
 });
 </script>
-<style data-8b-part="scene-style:process-week">
-@layer scenes {
-@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
-  #process[data-week] .process__track { height: 250vh; }
-  #process[data-week] .process__stage { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 40px; }
-}
-}
-</style>
-<script data-8b-part="scene:reviews-stair">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    desk: '(min-width: 900px) and (prefers-reduced-motion: no-preference)',
-    phone: '(max-width: 899.98px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('reviews');
-    const wrap = section.querySelector('.reviews__track-wrap');
-    const stage = section.querySelector('.reviews__stage');
-    const track = section.querySelector('.reviews__track');
-    const cards = [...track.querySelectorAll('.reviews__card')];
-    const step = context.conditions.desk ? Math.min(44, innerHeight * 0.055) : 30;
-    const setters = cards.map(card => gsap.quickSetter(card, 'y', 'px'));
-    const ease = gsap.parseEase('power1.inOut');
-    let distance = 0;
-    const measure = () => { distance = Math.max(0, track.scrollWidth - stage.clientWidth); };
-    const level = progress => {
-      const shift = progress * distance;
-      cards.forEach((card, index) => {
-        const reach = Math.min(card.offsetLeft - cards[0].offsetLeft, distance);
-        const done = reach > 0 ? Math.min(1, shift / reach) : 1;
-        setters[index]((1 - ease(done)) * index * step);
-      });
-    };
-    section.setAttribute('data-stair', '');
-    measure();
-    level(0);
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        id: 'reviews-stair', trigger: wrap, start: 'top top', end: 'bottom bottom', scrub: true, invalidateOnRefresh: true,
-        onRefresh: self => { measure(); level(self.progress); },
-        onUpdate: self => level(self.progress)
-      }
-    });
-    timeline
-      .fromTo(track, { x: 0 }, { x: () => -Math.max(0, track.scrollWidth - stage.clientWidth), duration: 1 }, 0)
-      .fromTo(section, { '--reviews-shift': 0 }, { '--reviews-shift': 1, duration: 1 }, 0);
-    return () => {
-      section.removeAttribute('data-stair');
-      gsap.set(cards, { clearProps: 'transform' });
-    };
+<script data-8b-part="scene-script:treatments-focus">
+motionKit.scene("treatments-focus", () => {
+  const width = element => { const range = document.createRange(); range.selectNodeContents(element); return range.getBoundingClientRect().width; };
+  const elements = [...document.querySelectorAll("#treatments .treat__name")];
+  motionKit.measure(() => elements.forEach(element => {
+    const wide = width(element);
+    for (const [name, value] of [["narrow", "75%"], ["mid", "100%"]]) {
+      element.style.fontStretch = value;
+      motionKit.set(element, { [`--treatments-${name}`]: wide ? width(element) / wide : 1 });
+    }
+    element.style.fontStretch = "";
+  }));
+});
+</script>
+<script data-8b-part="scene-script:measure-scan">
+motionKit.scene("measure-scan", () => {
+  const section = document.getElementById("measure"), list = section.querySelector(".measure__rows");
+  motionKit.measure(() => motionKit.set(section, { "--measure-scan-from": `${list.offsetTop}px`, "--measure-scan-to": `${list.offsetTop + list.offsetHeight}px` }));
+});
+</script>
+<script data-8b-part="scene-script:process-week">
+motionKit.scene("process-week", () => {
+  const list = document.querySelector("#process .process__days"), days = [...list.querySelectorAll(".process__day")];
+  const shots = days.map(day => day.querySelector(".process__shot"));
+  motionKit.measure(() => {
+    motionKit.set(list, { "--process-n": days.length, "--process-reach": `${motionKit.box(days.at(-1)).y - motionKit.box(list).y}px` });
+    shots.forEach(shot => motionKit.set(shot, { "--process-x": `${shots[0].offsetLeft - shot.offsetLeft}px`, "--process-y": `${shots[0].offsetTop - shot.offsetTop}px` }));
   });
 });
 </script>
-<style data-8b-part="scene-style:reviews-stair">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #reviews[data-stair] .reviews__track-wrap { height: 320vh; }
-  #reviews[data-stair] .reviews__stage { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 72px 0 32px; overflow: hidden; }
-  #reviews[data-stair] .reviews__track { width: max-content; overflow: visible; scroll-snap-type: none; padding-bottom: 0; }
-}
-}
-</style>
-<script data-8b-part="scene:aftercare-haze">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    motion: '(prefers-reduced-motion: no-preference)',
-    blur: '(min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const desk = context.conditions.blur;
-    const section = document.getElementById('aftercare');
-    const statement = section.querySelector('.care__statement');
-    const photo = section.querySelector('.care__photo img');
-    const split = SplitText.create(statement, { type: 'words', wordsClass: 'care__word' });
-    gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'aftercare-haze', trigger: statement, start: 'top 82%', end: 'bottom 48%', scrub: true }
-    }).fromTo(split.words, { autoAlpha: 0.14, filter: desk ? 'blur(6px)' : 'none' }, { autoAlpha: 1, filter: desk ? 'blur(0px)' : 'none', duration: 0.3, stagger: 0.7 / split.words.length }, 0);
-    gsap.fromTo(photo, { yPercent: -9, scale: 1.18 }, {
-      yPercent: 0, scale: 1, ease: 'none',
-      scrollTrigger: { id: 'aftercare-haze:photo', trigger: section.querySelector('.care__photo'), start: 'top bottom', end: 'center center', scrub: true }
-    });
-    return () => split.revert();
+<script data-8b-part="scene-script:reviews-stair">
+motionKit.scene("reviews-stair", () => {
+  const section = document.getElementById("reviews"), stage = section.querySelector(".reviews__stage"), track = section.querySelector(".reviews__track");
+  const cards = [...track.querySelectorAll(".reviews__card")];
+  motionKit.measure(() => {
+    const distance = Math.max(0, track.scrollWidth - stage.clientWidth);
+    motionKit.set(section, { "--reviews-distance": `${distance}px` });
+    motionKit.set(track, distance ? { "--reviews-step-on": 1 } : { "--reviews-step": "0px" });
+    cards.forEach(card => motionKit.set(card, { "--reviews-reach": distance ? Math.max(0.001, Math.min(card.offsetLeft - cards[0].offsetLeft, distance) / distance) : 1 }));
   });
-}, { near: document.getElementById('aftercare') });
+});
 </script>
-<script data-8b-part="scene:footer-mark">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const footer = document.getElementById('footer');
-    gsap.fromTo(footer.querySelector('.footer__mark'), { fontStretch: '75%' }, {
-      fontStretch: '150%', ease: 'power1.out',
-      scrollTrigger: { id: 'footer-mark', trigger: footer, start: 'top bottom', end: 'bottom bottom', scrub: true }
-    });
-  });
-}, { near: document.getElementById('footer') });
+<script data-8b-part="scene-script:footer-mark">
+motionKit.scene("footer-mark", () => {
+  const width = element => { const range = document.createRange(); range.selectNodeContents(element); return range.getBoundingClientRect().width; };
+  const elements = [...document.querySelectorAll("#footer .footer__mark")];
+  motionKit.measure(() => elements.forEach(element => {
+    const wide = width(element);
+    for (const [name, value] of [["narrow", "75%"], ["mid", "100%"]]) {
+      element.style.fontStretch = value;
+      motionKit.set(element, { [`--footer-${name}`]: wide ? width(element) / wide : 1 });
+    }
+    element.style.fontStretch = "";
+  }));
+});
 </script>
 </body>
 </html>

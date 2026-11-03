@@ -36,7 +36,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - Book your first class button in the opening: now #contact; owner's target: the booking page for a first class or a one-to-one intro.
 - Book a place button in the timetable: now #contact; owner's target: your live timetable or class booking page.
 - Book a first class, Buy ten classes and Go unlimited buttons on the three price cards: now #contact; owner's target: the checkout or booking link of each plan (a first class, a class pass, a monthly membership).
-- The form in `#contact` (fields `name`, `email`, `class`, `message`) sends nothing; `section-script:contact` validates it and shows the thank-you text. Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
+- The form in `#contact` (fields `name`, `email`, `class`, `message`) sends nothing; `section-script:contact` handles its submit in the page (read it before you connect a service). Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
 - The name Hundred (any letter case); the favicon letter and colours in `<link rel="icon">`.
 - Photos (21, Unsplash: opening 1, classes 4, fifty 4, teachers 4, bodies 4, studio 4): `src`, no `srcset`/`sizes`, `width`/`height` to the ratio, `alt`, CREDITS.md.
 - `<title>`, meta description, og tags.

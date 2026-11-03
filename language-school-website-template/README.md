@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my school: name, city, address, languages with days, times and level ranges, weekly clubs and walks, the free class offer, prices, student quotes with permission, opening hours, how people book>. Replace first the school name, greetings and Leeds details, then prices, quotes and portraits. Keep the section ids, the classes AGENTS.md lists and each --lv-step; set each greeting's --len to its character count. Ask me for missing facts and never invent timetables, prices, teachers, quotes or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex starts with facts only the school has: languages, days and times, level ranges, prices, the free class offer, hours and address. The demo invents all of them, plus the five student quotes, shown with stock portraits. Ask the agent to change each greeting and its --len value, keep every --lv-step on the level bars, leave the section ids and the animation classes from AGENTS.md alone, and never invent teachers, prices or results.
+If you vibe code the site, a language school website template for Claude Code, Cursor or Codex still starts with facts only the school has: languages, days and times, level ranges, prices, the free class offer, hours and address. The demo invents all of them, plus the five student quotes, shown with stock portraits. Ask the agent to change each greeting and its --len value, keep every --lv-step on the level bars, leave the section ids and the animation classes from AGENTS.md alone, and never invent teachers, prices or results.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=language-school-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -66,7 +66,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=langu
 No. There is no form. The three Book a free class buttons in the nav, menu and first screen jump to the trial section, and the other five buttons open the visitor's email app on a placeholder address. Point them at your booking or checkout pages, or add a form service such as Formspree or Netlify Forms.
 
 **Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). You describe the school in a sentence and it designs a new site, in its own design rather than this template. Designing and restyling are free. Publishing with hosting and SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs in Claude and ChatGPT.
+Yes, with [8B's AI website builder](https://8b.com/). You describe the school in a sentence and it designs a new site, in its own design rather than this template. Designing and restyling are free. Publishing with hosting and SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs in Claude and ChatGPT.
 
 **What happens with reduced motion or without JavaScript?**  
 With reduced motion the pinned scenes and smooth scrolling switch off, so the language panels become a plain grid and the thread a list. The hiding nav bar and hover fills keep running. Without JavaScript the FAQ still opens, but the phone menu does nothing and the sideways track stays one clipped row, so later panels cannot be reached.

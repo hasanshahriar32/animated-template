@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my hire business: name, town, bikes and prices, stands with addresses and hours, routes, hire terms, deposit, excess, phone, email, legal name>. Replace first the bike specs, the five stands, the four routes, the prices and the Saturday dates. If the number of stands changes, edit the letters A to E by hand too. Keep the section ids and the classes AGENTS.md lists. Ask me for missing facts and never invent prices, hours, addresses, reviews or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when you give the agent the facts only the business has: bike specs and prices, stand addresses and hours, route distances, deposit, excess and hire terms. The demo invents all of them, along with the Sheffield places, the riders' quotes and the Saturday dates. Change the bike articles with the bike options and price rows, the five stand rows with the collect-from options, and edit the letters A to E by hand when the stand count changes.
+Vibe coding goes fastest when the agent gets the facts only the business has: bike specs and prices, stand addresses and hours, route distances, deposit, excess and hire terms. The demo invents all of them, plus the Sheffield places, rider quotes and Saturday dates. Change the bike articles with the bike options and price rows, and the stand rows with the collect-from options; edit the letters A to E by hand. As a bike rental website template for Claude Code, Cursor or Codex it needs only those facts.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=bike-rental-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -62,13 +62,13 @@ No agent? Click **[Use this template](https://github.com/new?template_name=bike-
 ## Questions
 
 **Can I get a site like this without editing code?**  
-Not from this file, which needs an AI coding agent or a developer. For no code, [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence, in its own design rather than this one. Designing is free; publishing with hosting, HTML export and AI edits are on Pro at $9 a month billed yearly.
+Not from this file, which needs an AI coding agent or a developer. For no code, [8B's AI website builder](https://8b.com/) designs a new site from a sentence, in its own design rather than this one. Designing is free; publishing with hosting, HTML export and AI edits are on Pro at $9 a month billed yearly.
 
 **Does the booking form send anything?**  
 No. The form requires a name, an email and a date, then shows a thank-you line and disables the button without sending anything. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or point the Book buttons at your own booking page, and edit the promise to confirm within the hour.
 
 **What happens on a phone, with reduced motion or without JavaScript?**  
-On a phone the header links give way to the menu button and the held bike stage hides the spec lists. With reduced motion, entrance and scroll animations and smooth scrolling are off and bikes and routes sit in plain grids. Without JavaScript the menu cannot open; on phones the nine footer links remain, and the questions still open.
+On a phone the header links give way to the menu button and the held bike stage hides the spec lists. With reduced motion, entrance motion, [the pinned bike wipes](https://8b.com/templates/animated/) and smooth scrolling are off, and bikes and routes sit in plain grids. Without JavaScript the menu cannot open; the nine footer links remain on phones.
 
 ## Is it the right base?
 

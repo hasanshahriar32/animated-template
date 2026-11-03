@@ -1,8 +1,8 @@
-# Free HTML language course website template with GSAP scroll animations
+# Free HTML language course website template with scroll animations and no libraries
 
-This language course website template is a free one-page HTML site for a school that teaches adults in small evening groups. It has six syllabus cards, six languages with times, four teachers, a level finder, three fees and a trial form, in navy and pink with torn-paper photo stickers. One index.html and AGENTS.md let an AI agent adapt it.
+This language course website template is a free one-page HTML site for a school that teaches adults in small evening groups: six syllabus cards, six languages with times, four teachers, a level finder, three fees and a trial form, in navy and pink with torn-paper photo stickers. Its scroll motion is CSS, with no JavaScript library.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/language-course-website-template/)** · **[Use this template](https://github.com/new?template_name=language-course-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/language-course-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/small-talk/)**
 
@@ -24,16 +24,16 @@ curl -LO https://raw.githubusercontent.com/8bsite/language-course-website-templa
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Turn it into the site for <my school: name, city and address, languages or subjects, levels, lesson days and times, term dates, teachers, clubs or trips, fees and refund terms, how people book a trial>. Replace first the brand name with its --len, the languages, times, fees and teachers. Keep the section ids, the classes AGENTS.md lists and exactly three level questions, or change the result ranges. Ask me for missing facts; never invent prices, dates, teacher bios, refunds or contacts.
+Read AGENTS.md, then edit index.html. Turn it into the site for <my school: name, city and address, languages or subjects, levels, lesson days and times, term dates, teachers, clubs or trips, fees and refund terms, how people book a trial>. Replace the brand name with its --len, the languages, times, fees and teachers first. Keep the gate script in the head, the data-8b-section, data-8b-motion and data-8b-items attributes, four student notes and three level questions; add no animation library. Never invent prices, dates, teacher bios, refunds or contacts; ask me.
 ```
 
-Start with the six languages and their times, the three fees, the four teachers, the clubs, the trips and the contact block. Rename the brand and update the wordmark's --len, which sizes the first-screen wordmark. In Claude Code, Cursor or Codex, vibe coding goes fastest when you supply refund terms, hours and teacher bios yourself. Teacher photos are stock portraits of real people: replace them with your own staff.
+Start with the six languages and their times, the three fees, the four teachers, the clubs, the trips and the contact block. Rename the brand and update the wordmark's --len, which sizes the first-screen wordmark. As a language course website template for Claude Code, Cursor or Codex, vibe coding goes fastest when you supply refund terms, hours and teacher bios yourself, then [start Claude Code in the folder](https://8b.com/templates/for-claude-code/). Replace the stock teacher portraits with your own staff.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=language-course-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
-- **Navigation**: fixed bar: pink wordmark, Free trial button and a menu button; full-screen menu with seven links, address and phone; hides on scroll down. The bar slides up out of view while you scroll down and returns on the way up, and the full-screen menu opens from a button and closes on Escape while Lenis smooth scrolling pauses.
+- **Navigation**: fixed bar: pink wordmark, Free trial button and a menu button; full-screen menu with seven links, address and phone; hides on scroll down. The bar slides up out of view while you scroll down and returns on the way up, and the full-screen menu opens from a button and closes on Escape while the smooth wheel scrolling pauses.
 - **Small Talk**: two screens: giant wordmark, a torn portrait sticker with a bubble, a term tape and intro with two buttons; then a statement surrounded by eight greeting bubbles. On load the wordmark rises, the portrait lands and the tape and intro slide in, then scrolling lifts the torn cap off the portrait, tilts the portrait and bursts eight bubbles around the statement, whose words light up one by one.
 - **The syllabus is your Tuesday**: six week cards with a photo, week badge, situation and a phrase in the language, on a 3 by 2 plan. As the plan scrolls in, six photos fly from scattered sizes and turns onto their slots with corners pressed flat, and the heading lines rise.
 - **Six languages around one table**: six large language names, each with a greeting bubble, levels and lesson times. A divider is drawn across each row and each greeting bubble is slapped on with a turn when it arrives.
@@ -61,17 +61,17 @@ No agent? Click **[Use this template](https://github.com/new?template_name=langu
 ## Questions
 
 **Is this a language school website template free for commercial use?**  
-Yes. It is a single index.html under the MIT license, so a school, a freelancer or an agency can use it for a client at no cost. GSAP, ScrollTrigger, SplitText and Lenis load from jsDelivr, and there is no build step. The photos come from Unsplash and the typeface, Schibsted Grotesk, is under the Open Font License.
+Yes. It is a single index.html, a [whole school on one scroll](https://8b.com/templates/one-page/), under the MIT license, so a school, a freelancer or an agency can use it at no cost. It needs no GSAP, Lenis or other library and no build step. The photos come from Unsplash and the typeface, Schibsted Grotesk, is under the Open Font License.
 
 **Can students book a trial lesson on the page?**  
 Not yet. Every trial button jumps to the contact form, which requires a name and an email, shows a thank-you line and clears itself without sending anything. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or point the buttons at your booking system, and rewrite the thank-you line, which promises a call within a day.
 
 **Can I get a language school site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/): describe your school in a sentence and its engine designs a new site, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro, $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
+Yes, with [8B's AI website builder](https://8b.com/): describe your school in a sentence and its engine designs a new site, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro, $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
 
 ## Is it the right base?
 
-Choose it for a school with groups, terms and a talkative brand. A plainer, flat-colour site is closer in the [white template with coloured panels](https://8b.com/templates/saylo/). As a language school template it has weak spots: one page, no course catalogue or student login, a form that sends nothing yet, and a twelve-week syllabus beside ten-week courses. Owners who would rather not edit code can use the 8B builder.
+Choose it for a school with groups, terms and a talkative brand. This build moves on CSS with no animation library and no script from a CDN: about 30 KB of code gzipped in one file, against 76 KB and four extra requests for the GSAP version. A plainer site is closer in the [white template with coloured panels](https://8b.com/templates/saylo/). Weak spots: one page, no course catalogue or student login, a form that sends nothing yet, and a twelve-week syllabus beside ten-week courses.
 
 ## Before you publish
 
@@ -80,7 +80,9 @@ Choose it for a school with groups, terms and a talkative brand. A plainer, flat
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.4 from jsDelivr, 98 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), container query units, cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 114 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), container query units, cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.4 from jsDelivr, 99 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

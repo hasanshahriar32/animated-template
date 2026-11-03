@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my clinic: name, town, address, treatments with durations and prices, opening hours, registration body, insurers accepted, podiatrists with specialities, home-visit radius and charge, how people book>. Replace first the clinic name, address, prices, staff, the three patient stories and the 23 photos. Keep the section ids, the data-8b-section, data-8b-motion and data-8b-part attributes, the classes AGENTS.md lists and one condition photo per row in order. Ask me for missing facts; never invent prices, registrations, clinical claims, patient quotes or contacts.
 ```
 
-Vibe coding goes fastest when the agent gets the facts only the clinic has: name, address, hours, registration body, prices and times, staff, insurers and the home-visit radius. The demo invents all of them, along with three patient quotes. The agent should replace the clinic name in the logo, the phone menu, the footer wordmark, the copyright line and the title tags, then swap the photos. Real patient stories need written consent.
+As a podiatrist website template for Claude Code and Cursor, it goes fastest when you vibe code it and the agent gets the facts only the clinic has: name, address, hours, registration body, prices and times, staff, insurers and the home-visit radius. The demo invents all of them, along with three patient quotes. The agent should replace the clinic name in the logo, the phone menu, the footer wordmark, the copyright line and the title tags, then swap the photos. Real patient stories need written consent.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=podiatrist-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -64,7 +64,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=podia
 No. The script needs a name and a phone number, shows a thank-you line and clears the fields; nothing leaves the page. Connect Formspree or Netlify Forms with the steps in AGENTS.md. The form has a free-text box, so add a privacy notice and tell patients not to write sensitive details.
 
 **Can I get a clinic site like this without editing code?**  
-Yes: use [8B's AI website builder](https://8b.com/templates/8b/). You describe the site in a sentence and it designs a new one, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes: use [8B's AI website builder](https://8b.com/). You describe the site in a sentence and it designs a new one, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 **Can a physiotherapist or a clinic outside the UK use it?**  
 Yes, after a text pass. The demo is British: pounds, HCPC, the Royal College of Podiatry, GP referrals and a Nottingham address. The condition list, gait lab and insole stages describe feet, so a physio rewrites them. Podiatry websites for other countries swap the registration body, insurers and currency.

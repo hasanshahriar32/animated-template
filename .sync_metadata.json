@@ -113,7 +113,7 @@
   },
   "arcade-bar-website-template": {
     "description": "Free HTML arcade bar website template with GSAP scroll animations, for bars, game venues and nightlife spaces with events and private hire. Cream and charcoal with pink, blue and yellow photo frames. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T10:32:21Z",
+    "pushed_at": "2026-11-03T08:16:59Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -164,29 +164,29 @@
     ]
   },
   "art-gallery-website-template": {
-    "description": "Free HTML art gallery website template with GSAP scroll animations, for a kunsthalle, museum with late hours or art venue. A white page cut by hairlines, with night-dark screens and a coral glow. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:12:46Z",
+    "description": "Free HTML art gallery website template with scroll animations and no libraries (GSAP build included), for a kunsthalle, museum with late hours or art venue. A white page cut by hairlines, with night-dark screens and a coral glow. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T07:57:18Z",
     "topics": [
       "agents-md",
       "art-gallery",
       "claude-code",
+      "css-scroll-driven-animations",
       "cultural-venue",
       "cursor-ai",
       "gallery-template",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
       "museum-website",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "awesome-ai-coding-tools": {
@@ -240,8 +240,8 @@
     "topics": []
   },
   "bakery-website-template": {
-    "description": "Free HTML bakery website template with GSAP scroll animations, for a neighbourhood bakery, coffee counter or cake shop. Bright candy colours, a pre-order box and a 4 am baking timeline. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:46:03Z",
+    "description": "Free HTML bakery website template with scroll animations and no libraries (GSAP build included), for a neighbourhood bakery, coffee counter or cake shop. Bright candy colours, a pre-order box and a 4 am baking timeline. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:00:33Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -249,25 +249,25 @@
       "bakery-website",
       "cafe-website",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "bike-rental-website-template": {
     "description": "Free HTML bike rental website template with GSAP scroll animations, for bike rental shops, tour operators and mobility services with stands or branches. Light grey and near black with one acid-lime accent. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T10:32:49Z",
+    "pushed_at": "2026-11-03T08:15:22Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -291,9 +291,35 @@
       "website-templates"
     ]
   },
+  "birth-center-website-template": {
+    "description": "Free HTML birth center website template with scroll animations and no libraries (GSAP build included), for midwife-led birth centers, maternity and doula practices. Soft serif type, blush and coral tiles. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T07:58:44Z",
+    "topics": [
+      "agents-md",
+      "birth-center-website",
+      "claude-code",
+      "css-scroll-driven-animations",
+      "cursor-ai",
+      "doula-website",
+      "gsap",
+      "html-template",
+      "landing-page",
+      "lenis",
+      "maternity-website",
+      "midwife-website",
+      "mit-license",
+      "no-dependencies",
+      "scroll-animation",
+      "scrolltrigger",
+      "single-file",
+      "static-site",
+      "vibe-coding",
+      "website-template"
+    ]
+  },
   "board-game-cafe-website-template": {
     "description": "Free HTML board game cafe website template with GSAP scroll animations, for a game cafe, a tabletop games library or a pub with game nights. Navy, sky blue, amber and pink in quarter-circle tiles. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T08:18:50Z",
+    "pushed_at": "2026-11-03T08:17:06Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -319,7 +345,7 @@
   },
   "boat-tour-website-template": {
     "description": "Free HTML boat tour website template with GSAP scroll animations, for harbour cruises, sightseeing boats and charter skippers. Pale grey ground, near-black rounded panels, one orange accent and a harbour photo behind the opening. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T09:25:12Z",
+    "pushed_at": "2026-11-03T08:16:36Z",
     "topics": [
       "agents-md",
       "boat-tour-website",
@@ -344,34 +370,34 @@
     ]
   },
   "boutique-hotel-website-template": {
-    "description": "Free HTML boutique hotel website template with GSAP scroll animations, for a small seaside hotel, guesthouse or B&B. Warm off-white ground, terracotta accents and a window that opens over the first photo. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T11:07:51Z",
+    "description": "Free HTML boutique hotel website template with scroll animations and no libraries (GSAP build included), for a small seaside hotel, guesthouse or B&B. Warm off-white ground, terracotta accents and a window that opens over the first photo. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:08:34Z",
     "topics": [
       "agents-md",
       "bed-and-breakfast",
       "boutique-hotel",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "guesthouse",
       "hotel-website",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "seaside",
       "single-file",
       "static-site",
       "travel",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "bowling-alley-website-template": {
     "description": "Free HTML bowling alley website template with GSAP scroll animations, for bowling centres, arcades and entertainment venues with a bar and kitchen. Near-black ground with yellow, orange, lilac and sky-blue panels and a neon glow section. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T10:00:07Z",
+    "pushed_at": "2026-11-03T08:16:43Z",
     "topics": [
       "agents-md",
       "bowling-alley-website",
@@ -423,7 +449,7 @@
   },
   "bubble-tea-shop-website-template": {
     "description": "Free HTML bubble tea shop website template with GSAP scroll animations, for bubble tea bars, juice and dessert shops and small cafes. Candy colours on white with navy type, stacked cards and scalloped edges. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T08:22:38Z",
+    "pushed_at": "2026-11-03T08:13:24Z",
     "topics": [
       "agents-md",
       "bubble-tea-website",
@@ -449,7 +475,7 @@
   },
   "burger-restaurant-website-template": {
     "description": "Free HTML burger restaurant website template with GSAP scroll animations, for burger joints, diners and casual restaurants. Acid lime and deep green with check paper, bold serif prices and sticker badges. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T10:33:45Z",
+    "pushed_at": "2026-11-03T08:13:31Z",
     "topics": [
       "agents-md",
       "burger-restaurant-website",
@@ -474,34 +500,34 @@
     ]
   },
   "car-detailing-website-template": {
-    "description": "Free HTML car detailing website template with GSAP scroll animations, for a detail studio, paint correction or ceramic coating shop. Near-black ground, a wide wordmark and bracketed captions. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T11:07:23Z",
+    "description": "Free HTML car detailing website template with scroll animations and no libraries (GSAP build included), for a detail studio, paint correction or ceramic coating shop. Near-black ground, a wide wordmark and bracketed captions. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:04:37Z",
     "topics": [
       "agents-md",
       "auto-shop",
       "car-detailing",
       "ceramic-coating",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "dark-theme",
       "detailing-website",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "car-wash-website-template": {
     "description": "Free HTML car wash website template with GSAP scroll animations, for car washes, valeting and detailing businesses. Electric violet and foam cream with scalloped edges and sunny yellow prices. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T10:34:15Z",
+    "pushed_at": "2026-11-03T08:18:56Z",
     "topics": [
       "agents-md",
       "auto-detailing-website",
@@ -526,20 +552,21 @@
     ]
   },
   "ceramic-tile-website-template": {
-    "description": "Free HTML ceramic tile website template with GSAP scroll animations, for a tile maker, ceramics workshop or interior materials shop. A field of square glazed tiles in a bold colour palette, with a live tile designer. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T11:06:24Z",
+    "description": "Free HTML ceramic tile website template with scroll animations and no libraries (GSAP build included), for a tile maker, ceramics workshop or interior materials shop. A field of square glazed tiles in a bold colour palette, with a live tile designer. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:06:20Z",
     "topics": [
       "agents-md",
       "ceramic-tiles",
       "ceramics-website",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "interior-design",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "product-configurator",
       "scroll-animation",
       "scrolltrigger",
@@ -547,13 +574,12 @@
       "static-site",
       "tile-shop",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "cheese-shop-website-template": {
     "description": "Free HTML cheese shop website template with GSAP scroll animations, for a cheesemonger, deli or maturing cellar. Light grey ground, black type and a cellar that rises through the shop floor. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T11:08:49Z",
+    "pushed_at": "2026-11-03T08:13:02Z",
     "topics": [
       "agents-md",
       "cheese-shop",
@@ -584,7 +610,7 @@
   },
   "coding-school-website-template": {
     "description": "Free HTML coding school website template with GSAP scroll animations, for bootcamps, adult education and part-time training courses. Flat colour planes that fall into order, in orange, plum and ice. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T10:00:35Z",
+    "pushed_at": "2026-11-03T08:17:19Z",
     "topics": [
       "adult-education",
       "agents-md",
@@ -610,7 +636,7 @@
   },
   "coffee-roaster-website-template": {
     "description": "Free HTML coffee roaster website template with GSAP scroll animations, for micro-roasters, coffee shops and specialty bean sellers. Cream paper, indigo ink, rust accents and rubber-stamp details. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T10:31:42Z",
+    "pushed_at": "2026-11-03T08:15:38Z",
     "topics": [
       "agents-md",
       "cafe-website",
@@ -766,7 +792,7 @@
   },
   "creative-agency-website-template": {
     "description": "Free HTML creative agency website template with scroll animations and no libraries (GSAP build included), for an agency, production house or studio with a portfolio. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-11-01T14:56:31Z",
+    "pushed_at": "2026-11-03T08:17:55Z",
     "topics": [
       "agency-website",
       "agents-md",
@@ -792,7 +818,7 @@
   },
   "dance-studio-website-template": {
     "description": "Free HTML dance studio website template with GSAP scroll animations, for dance schools, fitness studios and adult beginner classes. Dark and white sections with red, yellow and pale blue accents, hand-drawn loops and portraits in a ring. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T09:24:31Z",
+    "pushed_at": "2026-11-03T08:18:48Z",
     "topics": [
       "agents-md",
       "class-timetable",
@@ -817,20 +843,21 @@
     ]
   },
   "daycare-website-template": {
-    "description": "Free HTML daycare website template with GSAP scroll animations, for nurseries, preschools, playgroups and childminders. Soft cream, pink and lilac slabs with photos and cards that squash and roll like dough. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:49:58Z",
+    "description": "Free HTML daycare website template with scroll animations and no libraries (GSAP build included), for nurseries, preschools, playgroups and childminders. Soft cream, pink and lilac slabs with photos and cards that squash and roll like dough. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:11:38Z",
     "topics": [
       "agents-md",
       "childcare-website",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "kids-website",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "nursery-website",
       "preschool-website",
       "scroll-animation",
@@ -838,8 +865,7 @@
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "design-studio-website-template": {
@@ -869,48 +895,74 @@
     ]
   },
   "driving-school-website-template": {
-    "description": "Free HTML driving school website template with GSAP scroll animations, for driving schools, instructors and lesson-based services. Bright colour tiles on a pale grey ground, with a side rail on desktop. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T16:23:10Z",
+    "description": "Free HTML driving school website template with scroll animations and no libraries (GSAP build included), for driving schools, instructors and lesson-based services. Bright colour tiles on a pale grey ground, with a side rail on desktop. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:07:41Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "driving-instructor",
       "driving-school",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "learner-driver",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "electric-moped-website-template": {
-    "description": "Free HTML electric moped website template with GSAP scroll animations, for an electric moped or scooter maker, dealer or rental business. Light grey panels, white pill cards and one red accent in a single grotesque face. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:47:30Z",
+    "description": "Free HTML electric moped website template with scroll animations and no libraries (GSAP build included), for an electric moped or scooter maker, dealer or rental business. Light grey panels, white pill cards and one red accent in a single grotesque face. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:02:47Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "electric-moped",
       "electric-scooter",
+      "gsap",
+      "html-template",
+      "landing-page",
+      "lenis",
+      "mit-license",
+      "moped-dealer",
+      "no-dependencies",
+      "scroll-animation",
+      "scrolltrigger",
+      "single-file",
+      "static-site",
+      "vibe-coding",
+      "website-template"
+    ]
+  },
+  "electric-scooter-website-template": {
+    "description": "Free HTML electric scooter website template with GSAP scroll animations, for electric scooter and e-bike brands, makers and showrooms. Pale grey and near-black panels with notched corners, a red accent, four full-screen paint fields and line-by-line heading reveals. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:14:59Z",
+    "topics": [
+      "agents-md",
+      "claude-code",
+      "cursor-ai",
+      "electric-moped",
+      "electric-scooter",
+      "ev-website",
       "gsap",
       "html-template",
       "html5",
       "landing-page",
       "lenis",
       "mit-license",
-      "moped-dealer",
+      "product-landing-page",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
@@ -922,7 +974,7 @@
   },
   "electrician-website-template": {
     "description": "Free HTML electrician website template with GSAP scroll animations, for home electricians, rewire and car charger installers and small trades. Warm cream sheets, dark green ground and one aqua accent. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T08:22:10Z",
+    "pushed_at": "2026-11-03T08:16:11Z",
     "topics": [
       "agents-md",
       "claude-code",
@@ -974,7 +1026,7 @@
   },
   "farm-delivery-website-template": {
     "description": "Free HTML farm delivery website template with GSAP scroll animations, for veg box schemes, farm delivery and local food producers. Lime green, near-black and white, a six-armed asterisk mark. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T09:59:11Z",
+    "pushed_at": "2026-11-03T08:14:09Z",
     "topics": [
       "agents-md",
       "claude-code",
@@ -999,55 +1051,81 @@
     ]
   },
   "fashion-brand-website-template": {
-    "description": "Free HTML fashion brand website template with GSAP scroll animations, for a clothing label, outerwear brand or boutique. A white and ink editorial layout with five bold season colours and a portrait panel that works as a lens. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T11:06:55Z",
+    "description": "Free HTML fashion brand website template with scroll animations and no libraries (GSAP build included), for a clothing label, outerwear brand or boutique. A white and ink editorial layout with five bold season colours and a portrait panel that works as a lens. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:07:14Z",
     "topics": [
       "agents-md",
       "clothing-brand",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "ecommerce-landing-page",
       "fashion-website",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "lookbook",
       "mit-license",
+      "no-dependencies",
       "outerwear",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
+    ]
+  },
+  "film-festival-website-template": {
+    "description": "Free HTML film festival website template with scroll animations and no libraries (GSAP build included), for short film festivals, cinemas and screening series. Black cinema look, a film still showing through the title letters. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T07:57:14Z",
+    "topics": [
+      "agents-md",
+      "ai-agents",
+      "claude-code",
+      "css-scroll-driven-animations",
+      "cursor-ai",
+      "film-festival",
+      "film-website",
+      "gsap",
+      "html-template",
+      "landing-page",
+      "lenis",
+      "mit-license",
+      "no-dependencies",
+      "scroll-animation",
+      "scrolltrigger",
+      "short-film",
+      "single-file",
+      "static-site",
+      "vibe-coding",
+      "website-template"
     ]
   },
   "fitness-app-landing-page-template": {
-    "description": "Free HTML fitness app website template with GSAP scroll animations, for workout apps, personal training and online coaching. A charcoal frame around mint, lilac and lime panels, with very wide uppercase type. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:12:10Z",
+    "description": "Free HTML fitness app website template with scroll animations and no libraries (GSAP build included), for workout apps, personal training and online coaching. A charcoal frame around mint, lilac and lime panels, with very wide uppercase type. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:01:27Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "app-landing-page",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "fitness-app",
       "fitness-website",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "fitness-website-template": {
@@ -1103,20 +1181,21 @@
     ]
   },
   "football-club-website-template": {
-    "description": "Free HTML youth football club website template with GSAP scroll animations, for grassroots clubs, junior teams and sports clubs. Signal orange on black and cream, poster-size capital headings. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T16:24:08Z",
+    "description": "Free HTML youth football club website template with scroll animations and no libraries (GSAP build included), for grassroots clubs, junior teams and sports clubs. Signal orange on black and cream, poster-size capital headings. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:09:27Z",
     "topics": [
       "agents-md",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "football-club",
       "grassroots-football",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
@@ -1124,13 +1203,12 @@
       "static-site",
       "vibe-coding",
       "website-template",
-      "website-templates",
       "youth-football"
     ]
   },
   "genealogy-website-template": {
     "description": "Free HTML genealogy website template with GSAP scroll animations, for family history researchers, archivists and heritage services. Pale paper sheets with index tabs on a black desk, handwritten notes and stamps. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T09:24:04Z",
+    "pushed_at": "2026-11-03T08:15:29Z",
     "topics": [
       "agents-md",
       "archive",
@@ -1180,61 +1258,87 @@
       "website-templates"
     ]
   },
-  "group-fitness-website-template": {
-    "description": "Free HTML group fitness website template with GSAP scroll animations, for aerobics, dance and boxing studios and gyms with classes. Retro 80s stickers, sunset stripes and a loud pastel palette. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T10:35:12Z",
+  "graphic-design-studio-website-template": {
+    "description": "Free HTML graphic design studio website template with scroll animations and no libraries (GSAP build included), for a design studio, a risograph print room or a small press. Two inks on yellow paper, extruded lowercase type. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T07:59:18Z",
     "topics": [
       "agents-md",
       "claude-code",
+      "css-scroll-driven-animations",
+      "cursor-ai",
+      "design-studio",
+      "graphic-design-studio",
+      "gsap",
+      "html-template",
+      "landing-page",
+      "lenis",
+      "mit-license",
+      "no-dependencies",
+      "portfolio-website",
+      "print-studio",
+      "risograph",
+      "scroll-animation",
+      "scrolltrigger",
+      "single-file",
+      "vibe-coding",
+      "website-template"
+    ]
+  },
+  "group-fitness-website-template": {
+    "description": "Free HTML group fitness website template with scroll animations and no libraries (GSAP build included), for aerobics, dance and boxing studios and gyms with classes. Retro 80s stickers, sunset stripes and a loud pastel palette. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:09:01Z",
+    "topics": [
+      "agents-md",
+      "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "dance-studio-website",
       "fitness-studio-website",
       "gsap",
       "gym-website",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "retro-design",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "hair-salon-website-template": {
-    "description": "Free HTML hair salon website template with GSAP scroll animations, for hairdressers, colour studios and barbers. Loud red, ink and cyan with torn-paper edges. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:49:00Z",
+    "description": "Free HTML hair salon website template with scroll animations and no libraries (GSAP build included), for hairdressers, colour studios and barbers. Loud red, ink and cyan with torn-paper edges. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:05:27Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "barber",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "hair-salon",
       "hairdresser",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "hardware-store-website-template": {
     "description": "Free HTML hardware store website template with GSAP scroll animations, for hardware shops, DIY stores, key cutters and tool hire counters. A cloud of product tiles, pale paper ground and dark departments. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T11:10:43Z",
+    "pushed_at": "2026-11-03T08:18:03Z",
     "topics": [
       "agents-md",
       "claude-code",
@@ -1259,29 +1363,29 @@
     ]
   },
   "home-renovation-website-template": {
-    "description": "Free HTML home renovation website template with GSAP scroll animations, for builders, extension and loft specialists and kitchen fitters. Graph-paper ground, pencil notes and cobalt duotone photos. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:46:59Z",
+    "description": "Free HTML home renovation website template with scroll animations and no libraries (GSAP build included), for builders, extension and loft specialists and kitchen fitters. Graph-paper ground, pencil notes and cobalt duotone photos. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:01:54Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "builder-website",
       "claude-code",
       "construction-website",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "home-renovation",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "ice-cream-shop-website-template": {
@@ -1311,29 +1415,29 @@
     ]
   },
   "interior-design-website-template": {
-    "description": "Free HTML interior design website template with GSAP scroll animations, for a colour studio, interior designer or decorator. Flat periwinkle, pink and lime tiles with tall condensed serif type. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:14:10Z",
+    "description": "Free HTML interior design website template with scroll animations and no libraries (GSAP build included), for a colour studio, interior designer or decorator. Flat periwinkle, pink and lime tiles with tall condensed serif type. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T07:58:40Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
       "color-studio",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "interior-design",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "portfolio-website",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "it-support-website-template": {
@@ -1416,7 +1520,7 @@
   },
   "landscaping-website-template": {
     "description": "Free HTML landscaping website template with GSAP scroll animations, for garden designers, landscapers and garden maintenance firms. Lime, forest-green and sage panels with notched corners and a screen-high garden photo opening. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T08:21:44Z",
+    "pushed_at": "2026-11-03T08:15:49Z",
     "topics": [
       "agents-md",
       "claude-code",
@@ -1441,34 +1545,34 @@
     ]
   },
   "language-course-website-template": {
-    "description": "Free HTML language course website template with GSAP scroll animations, for an evening language school, tutoring centre or course provider. Navy and pink, torn-paper photo stickers and speech bubbles. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T10:35:45Z",
+    "description": "Free HTML language course website template with scroll animations and no libraries (GSAP build included), for an evening language school, tutoring centre or course provider. Navy and pink, torn-paper photo stickers and speech bubbles. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:03:16Z",
     "topics": [
       "agents-md",
       "claude-code",
       "course-website",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "education-website",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "language-school",
       "language-school-website",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "language-school-website-template": {
     "description": "Free HTML language school website template with GSAP scroll animations, for a language school, tutor or evening class provider. White ground, bold extended headings and playful colour shapes. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T08:20:46Z",
+    "pushed_at": "2026-11-03T08:17:38Z",
     "topics": [
       "agents-md",
       "cursor-ai",
@@ -1493,81 +1597,81 @@
     ]
   },
   "law-firm-website-template": {
-    "description": "Free HTML law firm website template with GSAP scroll animations, for solicitors, commercial lawyers and legal practices. Monochrome photos on white and grey with red geometric shapes and a light red serif. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:10:04Z",
+    "description": "Free HTML law firm website template with scroll animations and no libraries (GSAP build included), for solicitors, commercial lawyers and legal practices. Monochrome photos on white and grey with red geometric shapes and a light red serif. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:05:54Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "law-firm-website",
       "lawyer-website",
       "legal-website",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "lighting-store-website-template": {
-    "description": "Free HTML lighting shop website template with GSAP scroll animations, for a lamp shop, lighting showroom or interior lighting studio. A grey and ink page with one yellow, lit like a lamp. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T16:25:31Z",
+    "description": "Free HTML lighting shop website template with scroll animations and no libraries (GSAP build included), for a lamp shop, lighting showroom or interior lighting studio. A grey and ink page with one yellow, lit like a lamp. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:12:04Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "lamp-shop",
       "landing-page",
       "lenis",
       "lighting-shop",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "showroom",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "marketing-agency-website-template": {
-    "description": "Free HTML marketing agency website template with GSAP scroll animations, for communications studios, research-led agencies and report or webinar launches. Torn-paper collage arrow in vermilion, black and taupe on cool grey. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:13:41Z",
+    "description": "Free HTML marketing agency website template with scroll animations and no libraries (GSAP build included), for communications studios, research-led agencies and report or webinar launches. Torn-paper collage arrow in vermilion, black and taupe on cool grey. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T07:58:11Z",
     "topics": [
       "agency-website",
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "marketing-agency",
       "mit-license",
+      "no-dependencies",
       "report-landing-page",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "mcp-registry": {
@@ -1576,20 +1680,21 @@
     "topics": []
   },
   "modeling-agency-website-template": {
-    "description": "Free HTML model scouting agency website template with GSAP scroll animations, for a modelling agency, talent scout or casting studio. Light grey ground, yellow spots and a black open-call screen. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T16:59:49Z",
+    "description": "Free HTML model scouting agency website template with scroll animations and no libraries (GSAP build included), for a modelling agency, talent scout or casting studio. Light grey ground, yellow spots and a black open-call screen. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T07:59:06Z",
     "topics": [
       "agents-md",
       "casting-call",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
       "model-agency",
+      "no-dependencies",
       "scouting-agency",
       "scroll-animation",
       "scrolltrigger",
@@ -1597,13 +1702,12 @@
       "static-site",
       "talent-agency",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "mortgage-broker-website-template": {
     "description": "Free HTML mortgage broker website template with GSAP scroll animations, for mortgage advisers, brokers and independent financial advisers. White and zinc with an amber and ember glow. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T09:56:20Z",
+    "pushed_at": "2026-11-03T08:15:14Z",
     "topics": [
       "agents-md",
       "cursor-ai",
@@ -1628,34 +1732,34 @@
     ]
   },
   "motion-design-studio-website-template": {
-    "description": "Free HTML motion design studio website template with GSAP scroll animations, for animation studios, video production houses and creative agencies. Cool grey ground, black photo cards and orange light streaks. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T17:00:18Z",
+    "description": "Free HTML motion design studio website template with scroll animations and no libraries (GSAP build included), for animation studios, video production houses and creative agencies. Cool grey ground, black photo cards and orange light streaks. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T07:59:34Z",
     "topics": [
       "agency-website",
       "agents-md",
       "ai-agents",
       "animation-studio",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
       "motion-design-studio",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "movie-theater-website-template": {
     "description": "Free HTML movie theater website template with GSAP scroll animations, for arthouse cinemas, film clubs and small venues with a bar. Black frame, white and mint and lavender tiles, tilted photo windows. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T09:56:48Z",
+    "pushed_at": "2026-11-03T08:14:41Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -1680,60 +1784,60 @@
     ]
   },
   "museum-website-template": {
-    "description": "Free HTML natural history museum website template with GSAP scroll animations, for museums, collections, galleries and heritage charities. Engraved plates on teal, amber and ice grounds with yellow accents. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T16:25:02Z",
+    "description": "Free HTML natural history museum website template with scroll animations and no libraries (GSAP build included), for museums, collections, galleries and heritage charities. Engraved plates on teal, amber and ice grounds with yellow accents. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:10:45Z",
     "topics": [
       "agents-md",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gallery-website",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
       "museum-website",
       "natural-history",
+      "no-dependencies",
       "nonprofit-website",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "music-school-website-template": {
-    "description": "Free HTML online music school website template with GSAP scroll animations, for music teachers, lesson studios and course sellers. White page with thin black outlines, beige cards and one orange accent. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:45:33Z",
+    "description": "Free HTML online music school website template with scroll animations and no libraries (GSAP build included), for music teachers, lesson studios and course sellers. White page with thin black outlines, beige cards and one orange accent. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:00:03Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
       "music-lessons",
       "music-school",
+      "no-dependencies",
       "online-music-lessons",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "nail-salon-website-template": {
     "description": "Free HTML nail salon website template with GSAP scroll animations, for a gel nail studio, manicurist or beauty salon. Frosted glass panes and warm orange orbs over an orange opening and taupe, sand and peach bands. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T08:19:19Z",
+    "pushed_at": "2026-11-03T08:14:17Z",
     "topics": [
       "agents-md",
       "beauty-salon",
@@ -1759,7 +1863,7 @@
   },
   "nonprofit-website-template": {
     "description": "Free HTML nonprofit website template with GSAP scroll animations, for charities, volunteer centres, food banks and community groups. White ground, folder-tab cards in saturated colours, a yellow flood and handwritten signatures. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T09:57:46Z",
+    "pushed_at": "2026-11-03T08:18:16Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -1789,34 +1893,34 @@
     "topics": []
   },
   "outdoor-gear-rental-website-template": {
-    "description": "Free HTML outdoor kit hire website template with GSAP scroll animations, for gear rental shops, camping hire and adventure outfitters. Pale blue ground, navy type and one electric blue accent. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:09:06Z",
+    "description": "Free HTML outdoor kit hire website template with scroll animations and no libraries (GSAP build included), for gear rental shops, camping hire and adventure outfitters. Pale blue ground, navy type and one electric blue accent. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:09:53Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "camping",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gear-rental",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "outdoor-gear",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "perfumery-website-template": {
     "description": "Free HTML perfumery website template with GSAP scroll animations, for independent perfumers, fragrance studios and scent shops that sell by appointment. Near-black ground, warm cream type and amber accents. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T11:10:13Z",
+    "pushed_at": "2026-11-03T08:17:31Z",
     "topics": [
       "agents-md",
       "claude-code",
@@ -1868,7 +1972,7 @@
   },
   "pharmacy-website-template": {
     "description": "Free HTML pharmacy website template with GSAP scroll animations, for an independent pharmacy, a walk-in clinic or a neighbourhood health shop. Paper-folder tabs in pastel colours on a grey ground. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T16:22:42Z",
+    "pushed_at": "2026-11-03T08:14:34Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -1894,7 +1998,7 @@
   },
   "pilates-studio-website-template": {
     "description": "Free HTML pilates studio website template with GSAP scroll animations, for reformer studios, Pilates teachers and small class-based fitness studios. A cream sheet in a coral frame with heavy, tight coral type. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:11:40Z",
+    "pushed_at": "2026-11-03T08:14:52Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -1946,7 +2050,7 @@
   },
   "planetarium-website-template": {
     "description": "Free HTML planetarium website template with GSAP scroll animations, for planetariums, observatories, science centres and star-gazing venues. Night violet with hot orange and magenta glow. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T09:25:40Z",
+    "pushed_at": "2026-11-03T08:19:03Z",
     "topics": [
       "agents-md",
       "astronomy",
@@ -1972,7 +2076,7 @@
   },
   "plumber-website-template": {
     "description": "Free HTML plumber website template with GSAP scroll animations, for plumbing and heating firms, gas engineers and boiler installers. Giant staggered uppercase type, rounded photo bands, blue for plumbing and orange for heating. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:10:36Z",
+    "pushed_at": "2026-11-03T08:13:47Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -1997,19 +2101,20 @@
     ]
   },
   "podcast-website-template": {
-    "description": "Free HTML podcast website template with GSAP scroll animations, for a podcast network, a show collective or an audio studio. Bright colour tiles, a transcript that fills a waveform as you scroll. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:48:00Z",
+    "description": "Free HTML podcast website template with scroll animations and no libraries (GSAP build included), for a podcast network, a show collective or an audio studio. Bright colour tiles, a transcript that fills a waveform as you scroll. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:04:09Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "podcast-network",
       "podcast-template",
       "podcast-website",
@@ -2018,13 +2123,12 @@
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "podiatrist-website-template": {
     "description": "Free HTML podiatrist website template with GSAP scroll animations, for podiatrists, physiotherapists and small health practices. Pale lime and deep green cells, a serif voice and round photo discs. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T10:34:43Z",
+    "pushed_at": "2026-11-03T08:14:01Z",
     "topics": [
       "agents-md",
       "claude-code",
@@ -2050,7 +2154,7 @@
   },
   "pottery-studio-website-template": {
     "description": "Free HTML pottery studio website template with GSAP scroll animations, for ceramic studios, potters and craft makers that teach classes and take commissions. Light grey grid, glaze colours and a big lowercase wordmark. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T11:09:45Z",
+    "pushed_at": "2026-11-03T08:13:54Z",
     "topics": [
       "agents-md",
       "ceramics-website",
@@ -2076,7 +2180,7 @@
   },
   "print-shop-website-template": {
     "description": "Free HTML print shop website template with GSAP scroll animations, for copy shops, print studios and small presses. Warm paper white with yellow, coral, violet, pale blue and lime accents and editor-style selection handles. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T10:33:18Z",
+    "pushed_at": "2026-11-03T08:17:45Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -2205,18 +2309,19 @@
     ]
   },
   "roller-rink-website-template": {
-    "description": "Free HTML roller rink website template with GSAP scroll animations, for a roller rink, skate park or party venue. Teal, aubergine and a warm stripe sequence of yellow, orange and red on a retro poster grid. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:48:31Z",
+    "description": "Free HTML roller rink website template with scroll animations and no libraries (GSAP build included), for a roller rink, skate park or party venue. Teal, aubergine and a warm stripe sequence of yellow, orange and red on a retro poster grid. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:05:02Z",
     "topics": [
       "agents-md",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "party-venue",
       "retro-design",
       "roller-rink",
@@ -2226,25 +2331,25 @@
       "single-file",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "running-race-website-template": {
-    "description": "Free HTML mountain race website template with GSAP scroll animations, for a trail running race, ultra, mountain event or sports festival. Black ground, sticker-like tags and orange light that moves across the photos. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T17:01:46Z",
+    "description": "Free HTML mountain race website template with scroll animations and no libraries (GSAP build included), for a trail running race, ultra, mountain event or sports festival. Black ground, sticker-like tags and orange light that moves across the photos. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:12:32Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "event-website",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "race-website",
       "scroll-animation",
       "scrolltrigger",
@@ -2252,24 +2357,24 @@
       "static-site",
       "trail-running",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "saas-landing-page-template": {
-    "description": "Free HTML SaaS website template with GSAP scroll animations, for a small-business app, a subscription tool or a startup landing page. Maroon, butter and gold colour blocks, round-ended shapes and a phone mockup. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:13:14Z",
+    "description": "Free HTML SaaS website template with scroll animations and no libraries (GSAP build included), for a small-business app, a subscription tool or a startup landing page. Maroon, butter and gold colour blocks, round-ended shapes and a phone mockup. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T07:57:44Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "saas-landing-page",
       "saas-template",
       "scroll-animation",
@@ -2278,25 +2383,25 @@
       "startup-website",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "sauna-website-template": {
-    "description": "Free HTML sauna website template with GSAP scroll animations, for a bathhouse, day spa or lakeside sauna. Near-black ground, copper accents and a fog that rises over the first photo. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T11:08:21Z",
+    "description": "Free HTML sauna website template with scroll animations and no libraries (GSAP build included), for a bathhouse, day spa or lakeside sauna. Near-black ground, copper accents and a fog that rises over the first photo. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:02:19Z",
     "topics": [
       "agents-md",
       "bathhouse",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "dark-theme",
       "day-spa",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "sauna-website",
       "scroll-animation",
       "scrolltrigger",
@@ -2304,51 +2409,77 @@
       "spa-website",
       "static-site",
       "website-template",
-      "website-templates",
       "wellness"
     ]
   },
-  "smart-home-website-template": {
-    "description": "Free HTML smart home installer website template with GSAP scroll animations, for home automation installers, electricians and interior technology firms. Dark dusk panels, orange accents and reeded-glass photos. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T16:24:35Z",
+  "self-storage-website-template": {
+    "description": "Free HTML self storage website template with scroll animations and no libraries (GSAP build included), for storage facilities, unit rentals and removals firms. Light-grey poster print with one signal yellow. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T07:58:13Z",
     "topics": [
       "agents-md",
       "claude-code",
+      "css-scroll-driven-animations",
+      "cursor-ai",
+      "gsap",
+      "html-template",
+      "landing-page",
+      "lenis",
+      "mit-license",
+      "no-dependencies",
+      "removals",
+      "scroll-animation",
+      "scrolltrigger",
+      "self-storage",
+      "single-file",
+      "static-site",
+      "storage-units",
+      "storage-website",
+      "vibe-coding",
+      "website-template"
+    ]
+  },
+  "smart-home-website-template": {
+    "description": "Free HTML smart home installer website template with scroll animations and no libraries (GSAP build included), for home automation installers, electricians and interior technology firms. Dark dusk panels, orange accents and reeded-glass photos. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:10:19Z",
+    "topics": [
+      "agents-md",
+      "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "dark-theme",
       "electrician-website",
       "gsap",
       "home-automation",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "smart-home-website",
       "static-site",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "sneaker-store-website-template": {
-    "description": "Free HTML streetwear store website template with GSAP scroll animations, for independent clothing and sneaker shops. Pale green ground, black type and one lime accent, with a sideways lookbook. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T16:23:39Z",
+    "description": "Free HTML streetwear store website template with scroll animations and no libraries (GSAP build included), for independent clothing and sneaker shops. Pale green ground, black type and one lime accent, with a sideways lookbook. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:08:08Z",
     "topics": [
       "agents-md",
       "claude-code",
       "clothing-store",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "lookbook",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
@@ -2356,13 +2487,12 @@
       "static-site",
       "streetwear",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "speech-therapist-website-template": {
     "description": "Free HTML speech therapy website template with GSAP scroll animations, for children's therapy practices, clinics and early years services. Soft sky blue, indigo and cream, with rounded cards and playful shapes. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T16:21:17Z",
+    "pushed_at": "2026-11-03T08:16:50Z",
     "topics": [
       "agents-md",
       "childrens-therapy",
@@ -2414,7 +2544,7 @@
   },
   "stonemason-website-template": {
     "description": "Free HTML stonemason website template with GSAP scroll animations, for a stone yard, restoration mason or letter cutter. Near-black page with light-grey rounded panels, a serif and a grotesk. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T08:19:48Z",
+    "pushed_at": "2026-11-03T08:13:14Z",
     "topics": [
       "agents-md",
       "builder-website",
@@ -2439,34 +2569,34 @@
     ]
   },
   "streetwear-brand-website-template": {
-    "description": "Free HTML streetwear website template with GSAP scroll animations, for clothing brands, print studios and merch labels. Marker doodles on stickers and tape, a pinned sideways strip. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:49:28Z",
+    "description": "Free HTML streetwear website template with scroll animations and no libraries (GSAP build included), for clothing brands, print studios and merch labels. Marker doodles on stickers and tape, a pinned sideways strip. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:06:48Z",
     "topics": [
       "agents-md",
       "claude-code",
       "clothing-brand",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "fashion-website",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "merch-store",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "streetwear",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "swimming-pool-website-template": {
     "description": "Free HTML swimming pool website template with GSAP scroll animations, for lidos, community pools, swim clubs and leisure centres. Pale grey ground, saturated rounded tiles, round photo windows and green price stickers. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T09:57:21Z",
+    "pushed_at": "2026-11-03T08:18:24Z",
     "topics": [
       "agents-md",
       "ai-agents",
@@ -2492,7 +2622,7 @@
   },
   "tailor-website-template": {
     "description": "Free HTML tailor website template with GSAP scroll animations, for tailors, atelier workrooms and made-to-order clothiers. Near-black ground, bottle green and gold, extra-wide capitals. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T09:58:41Z",
+    "pushed_at": "2026-11-03T08:14:27Z",
     "topics": [
       "agents-md",
       "bespoke-tailoring",
@@ -2518,7 +2648,7 @@
   },
   "tile-store-website-template": {
     "description": "Free HTML tile store website template with GSAP scroll animations, for tile showrooms, bathroom studios and building suppliers. White grid with ruled lines and blocks of blue, yellow and red. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T09:59:39Z",
+    "pushed_at": "2026-11-03T08:18:41Z",
     "topics": [
       "agents-md",
       "bathroom-showroom",
@@ -2544,7 +2674,7 @@
   },
   "toy-store-website-template": {
     "description": "Free HTML toy store website template with GSAP scroll animations, for independent toy shops, kids' stores and family businesses. Candy colours on white, notched cards and a wavy blue ribbon. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-31T08:21:15Z",
+    "pushed_at": "2026-11-03T08:18:31Z",
     "topics": [
       "agents-md",
       "claude-code",
@@ -2595,18 +2725,19 @@
     ]
   },
   "travel-agency-website-template": {
-    "description": "Free HTML small group tour website template with GSAP scroll animations, for a tour operator, travel agency or experience travel brand. A landscape that narrows into a train window, olive and cream with an amber accent. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T17:00:48Z",
+    "description": "Free HTML small group tour website template with scroll animations and no libraries (GSAP build included), for a tour operator, travel agency or experience travel brand. A landscape that narrows into a train window, olive and cream with an amber accent. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:03:43Z",
     "topics": [
       "agents-md",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "italy",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
@@ -2616,8 +2747,7 @@
       "travel-agency",
       "travel-website",
       "vibe-coding",
-      "website-template",
-      "website-templates"
+      "website-template"
     ]
   },
   "ui": {
@@ -2651,55 +2781,81 @@
       "website-template"
     ]
   },
+  "water-park-website-template": {
+    "description": "Free HTML water park website template with scroll animations and no libraries (GSAP build included), for water parks, leisure pools and swim schools. Orange wordmark on black, pool-blue sections. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T07:57:43Z",
+    "topics": [
+      "agents-md",
+      "ai-agents",
+      "amusement-park",
+      "claude-code",
+      "css-scroll-driven-animations",
+      "cursor-ai",
+      "gsap",
+      "html-template",
+      "landing-page",
+      "lenis",
+      "mit-license",
+      "no-dependencies",
+      "scroll-animation",
+      "scrolltrigger",
+      "single-file",
+      "static-site",
+      "swimming-pool",
+      "vibe-coding",
+      "water-park-website",
+      "website-template"
+    ]
+  },
   "wedding-planner-website-template": {
-    "description": "Free HTML wedding planner website template with GSAP scroll animations, for wedding planners, florists and event studios. Pale grey ground with warm orange colour fields and garden photography. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T16:22:13Z",
+    "description": "Free HTML wedding planner website template with scroll animations and no libraries (GSAP build included), for wedding planners, florists and event studios. Pale grey ground with warm orange colour fields and garden photography. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:11:11Z",
     "topics": [
       "agents-md",
       "claude-code",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "event-planner",
       "florist-website",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
       "website-template",
-      "website-templates",
       "wedding-planner-website",
       "wedding-website"
     ]
   },
   "wellness-studio-website-template": {
-    "description": "Free HTML emotional fitness studio website template with GSAP scroll animations, for coaches, workshop leaders and course creators. Warm grey ground, hairline rules and giant words with footnote asterisks. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
-    "pushed_at": "2026-10-30T15:46:31Z",
+    "description": "Free HTML emotional fitness studio website template with scroll animations and no libraries (GSAP build included), for coaches, workshop leaders and course creators. Warm grey ground, hairline rules and giant words with footnote asterisks. One HTML file, MIT, with AGENTS.md for Claude Code, Cursor and Codex. By 8B.",
+    "pushed_at": "2026-11-03T08:01:00Z",
     "topics": [
       "agents-md",
       "ai-agents",
       "claude-code",
       "coaching-website",
       "course-landing-page",
+      "css-scroll-driven-animations",
       "cursor-ai",
       "gsap",
       "html-template",
-      "html5",
       "landing-page",
       "lenis",
       "mit-license",
+      "no-dependencies",
       "scroll-animation",
       "scrolltrigger",
       "single-file",
       "static-site",
       "vibe-coding",
       "website-template",
-      "website-templates",
       "wellness-website"
     ]
   }

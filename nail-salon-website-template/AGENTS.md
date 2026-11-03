@@ -46,9 +46,9 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 ## Ask the owner for
 All demo text, never to be invented:
 - Location and contacts: the street name "Example Street" (in the studio heading and address), London E8, "five minutes from Hackney Central" (Visit), phone +44 20 0000 0000, hello@glaze.example (studio heading, Visit, menu, footer, title and meta description).
-- Prices: the six finishes "From £42, £52, £48, £45, £50, £68" (finishes) and the 14 rows of the price sheet, incl. £3–8 per nail of art, £15 removal, £38 refill, £82 hands and feet (finishes, prices).
+- Prices: the six finishes "From £42, £52, £48, £45, £50, £68" (finishes) and the 14 rows of the price sheet, incl. £3-8 per nail of art, £15 removal, £38 refill, £82 hands and feet (finishes, prices).
 - Club: "£39 a month", a refill or colour every 21 days, first pick of Saturday tables, 10% off hand-painting and pedicures, pause any month (club).
-- Hours: Tuesday to Friday 10–20, Saturday 9–18, Sunday 11–17, Monday closed in Visit; the footer says Tuesday to Saturday 10–20, Sunday 11–17 and does not match, set one version.
+- Hours: Tuesday to Friday 10-20, Saturday 9-18, Sunday 11-17, Monday closed in Visit; the footer says Tuesday to Saturday 10-20, Sunday 11-17 and does not match, set one version.
 - Team: Mara Osei, Juno Bell, Ines Varga and Theo Lam with specialties and working days, "six tables", "Each artist keeps her own lamp" (artists, studio, faq).
 - Process claims: sixty seconds of curing per layer, six to nine layers, a set takes fifty to eighty minutes, lasts three weeks, up to four for a bare set (opening, layers, faq).
 - Studio details: six tables along one window, a low sofa, talk-free weekday mornings from ten to eleven, pot tea, oat milk and clementines, daylight from nine until four (studio, in the meta description).

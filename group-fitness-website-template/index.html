@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/group-fitness-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -198,10 +199,6 @@
 @layer base {
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body { margin: 0; background: var(--color-1); color: var(--color-2); font-family: var(--font-3); font-size: 17px; line-height: 1.5; overflow-x: clip; }
 img, svg { display: block; max-width: 100%; }
 h1, h2, h3, h4, p, ul, ol, figure, blockquote, dl, dd { margin: 0; }
@@ -484,22 +481,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @media (max-width: 560px) { #coaches .co__track { grid-template-columns: 1fr; } #coaches .co__head { grid-template-columns: 1fr; } }
 }
 </style>
-<style data-8b-part="scene-style:coaches">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #coaches[data-track] .co__stage { min-height: 100svh; display: grid; align-content: center; padding-block: 96px 48px; }
-  #coaches[data-track] .co__track { display: flex; align-items: center; gap: 4vw; width: max-content; }
-  #coaches[data-track] .co__head { display: grid; grid-template-columns: 1fr; width: min(30vw, 420px); margin: 0; }
-  #coaches[data-track] .co__card { width: min(28vw, 400px, calc((100svh - 330px) * 1.05)); }
-  @media (max-width: 760px) {
-    #coaches[data-track] .co__stage { padding-block: 80px 32px; }
-    #coaches[data-track] .co__head { width: 82vw; }
-    #coaches[data-track] .co__card { width: 74vw; }
-    #coaches[data-track] .co__visual { width: 100%; }
-  }
-}
-}
-</style>
 <style data-8b-part="section:week">
 @layer sections {
 #week { position: relative; background-color: var(--color-1); background-image: linear-gradient(color-mix(in oklab, var(--color-2) 8%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in oklab, var(--color-2) 8%, transparent) 1px, transparent 1px); background-size: 56px 56px; padding: var(--space-2) var(--space-1); overflow: clip; }
@@ -640,6 +621,220 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 }
 </style>
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] { --ease-back-out-2-2: linear(0, 0.1254, 0.2419, 0.3497, 0.4492, 0.5406, 0.6243, 0.7005, 0.7696, 0.8318, 0.8875, 0.9369, 0.9804, 1.0182, 1.0507, 1.0781, 1.1008, 1.119, 1.1331, 1.1433, 1.15, 1.1534, 1.1539, 1.1517, 1.1472, 1.1406, 1.1323, 1.1225, 1.1116, 1.0998, 1.0875, 1.0749, 1.0624, 1.0502, 1.0387, 1.0281, 1.0188, 1.011, 1.0051, 1.0013, 1); }
+[data-8b-live] [data-8b-motion~="spin"] { view-timeline: --motion-spin block; view-timeline-inset: 0; animation-name: motion-spin-rotate, motion-spin-translate; animation-timeline: --motion-spin; animation-range: cover 0% cover 100%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"][data-8b-items=":scope > span"] > span { animation-name: motion-rise-scope-span-span-translate, motion-rise-scope-span-span-opacity; animation-duration: 0.8s; animation-delay: calc(0s + 0.08s * var(--i)); animation-timing-function: var(--ease-power3-out), cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"][data-8b-items=":scope > span"].is-in > span { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rise"]:not([data-8b-items=":scope > span"]) span { animation-name: motion-rise-scope-span-span-translate, motion-rise-scope-span-span-opacity; animation-duration: 0.8s; animation-delay: 0s; animation-timing-function: var(--ease-power3-out), cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"]:not([data-8b-items=":scope > span"]).is-in span { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="stamp"][data-8b-items] > *, [data-8b-live] [data-8b-motion~="stamp"]:not([data-8b-items]) { --motion-stamp-turn: -7deg; animation-name: motion-stamp; animation-duration: 0.55s; animation-timing-function: var(--ease-back-out-2-2); animation-fill-mode: backwards; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="stamp"][data-8b-items] > * { animation-delay: calc(0.06s * var(--i)); }
+[data-8b-live] [data-8b-motion~="stamp"][data-8b-items] > :nth-child(even) { --motion-stamp-turn: 7deg; }
+[data-8b-live] [data-8b-motion~="stamp"][data-8b-items].is-in > *, [data-8b-live] [data-8b-motion~="stamp"]:not([data-8b-items]).is-in { animation-play-state: running; }
+@keyframes motion-stamp { from { scale: 1.18; rotate: calc(var(--motion-stamp-turn) - var(--motion-stamp-rest, 0deg)); opacity: 0; } }
+@keyframes motion-spin-rotate { 0% { rotate: var(--spin-rotate-from, -100deg); } 40% { rotate: 0deg; } 60% { rotate: 0deg; } 100% { rotate: var(--spin-rotate-to, 100deg); } }
+@keyframes motion-spin-translate { 0% { translate: 0px 30px; } 40% { translate: 0px 0px; } 60% { translate: 0px 0px; } 100% { translate: 0px -30px; } }
+@keyframes motion-rise-scope-span-span-translate { 0% { translate: 0px 70%; } 100% { translate: 0px 0px; } }
+@keyframes motion-rise-scope-span-span-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+}
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+[data-8b-live] #opening { --opening-t: 100vh; --opening-travel: 100vh; view-timeline: --opening-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #opening .op__half--a, [data-8b-live] #opening .op__half--b, [data-8b-live] #opening .op__copy, [data-8b-live] #opening .op__actions, [data-8b-live] #opening .op__frame, [data-8b-live] #opening .op__st--1, [data-8b-live] #opening .op__st--2, [data-8b-live] #opening .op__st--3, [data-8b-live] #opening .op__st--4, [data-8b-live] #opening .op__st--5, [data-8b-live] #opening .op__dusk, [data-8b-live] #opening .op__sun, [data-8b-live] #opening .op__gaps > span:nth-of-type(-n+6), [data-8b-live] #opening .op__say > .m-text-2 > span:nth-of-type(-n+3), [data-8b-live] #opening .op__snap--a, [data-8b-live] #opening .op__snap--b { animation-timeline: --opening-t1; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #opening .op__half--a { animation-name: opening-span-op-half-translate; transform: none; }
+[data-8b-live] #opening .op__half--b { animation-name: opening-span-op-half-translate-2; transform: none; }
+[data-8b-live] #opening .op__copy, [data-8b-live] #opening .op__actions, [data-8b-live] #opening .op__frame { transform: none; }
+[data-8b-live] #opening .op__st--1 { animation-name: opening-span-op-st-rotate, opening-span-op-st-translate; transform: none; }
+[data-8b-live] #opening .op__st--2 { animation-name: opening-span-op-st-rotate-2, opening-span-op-st-translate-2; transform: none; }
+[data-8b-live] #opening .op__st--3 { animation-name: opening-span-op-st-rotate, opening-span-op-st-translate-3; transform: none; }
+[data-8b-live] #opening .op__st--4 { animation-name: opening-span-op-st-rotate-2, opening-span-op-st-translate-4; transform: none; }
+[data-8b-live] #opening .op__st--5 { animation-name: opening-span-op-st-rotate, opening-span-op-st-translate-5; transform: none; }
+[data-8b-live] #opening .op__dusk { animation-name: opening-div-op-dusk-opacity; }
+[data-8b-live] #opening .op__sun { transform: none; }
+[data-8b-live] #opening .op__gaps > span:nth-of-type(-n+6) { animation-name: opening-span-op-gap-scale; transform: none; }
+[data-8b-live] #opening .op__say > .m-text-2 > span:nth-of-type(-n+3) { transform: none; }
+[data-8b-live] #opening .op__snap--a { animation-name: opening-figure-op-snap-translate, opening-figure-op-snap-rotate; transform: none; }
+[data-8b-live] #opening .op__snap--b { animation-name: opening-figure-op-snap-translate-2, opening-figure-op-snap-rotate-2; transform: none; }
+@keyframes opening-span-op-half-translate { 0% { translate: 0px 0px; } 100% { translate: -45% 0px; } }
+@keyframes opening-span-op-half-translate-2 { 0% { translate: 0px 0px; } 100% { translate: 45% 0px; } }
+@keyframes opening-div-op-copy-translate-d { 0% { translate: 0px 0px; } 100% { translate: -14vw 0px; } }
+@keyframes opening-div-op-copy-translate-m { 0% { translate: 0px 0px; } 100% { translate: 0px -45vh; } }
+@keyframes opening-div-op-actions-translate { 0% { translate: 0px 0px; } 100% { translate: 14vw 0px; } }
+@keyframes opening-figure-op-frame-translate { 0% { translate: 0px 0px; } 100% { translate: 0px var(--opening-travel); } }
+@keyframes opening-figure-op-frame-rotate { 0% { rotate: 0deg; } 100% { rotate: 14deg; } }
+@keyframes opening-figure-op-frame-scale { 0% { scale: 1; } 100% { scale: 0.82; } }
+@keyframes opening-span-op-st-rotate { 0% { rotate: 0deg; } 100% { rotate: -160deg; } }
+@keyframes opening-span-op-st-translate { 0% { translate: 0px 0px; } 100% { translate: -18vw -20vh; } }
+@keyframes opening-span-op-st-rotate-2 { 0% { rotate: 0deg; } 100% { rotate: 140deg; } }
+@keyframes opening-span-op-st-translate-2 { 0% { translate: 0px 0px; } 100% { translate: 18vw -26vh; } }
+@keyframes opening-span-op-st-translate-3 { 0% { translate: 0px 0px; } 100% { translate: -18vw -32vh; } }
+@keyframes opening-span-op-st-translate-4 { 0% { translate: 0px 0px; } 100% { translate: 18vw -38vh; } }
+@keyframes opening-span-op-st-translate-5 { 0% { translate: 0px 0px; } 100% { translate: -18vw -44vh; } }
+@keyframes opening-div-op-dusk-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes opening-div-op-sun-translate { 0% { translate: 0px 112%; } 100% { translate: 0px 50%; } }
+@keyframes opening-div-op-sun-scale { 0% { scale: 0.7; } 100% { scale: 1; } }
+@keyframes opening-span-op-gap-scale { 0% { scale: 1 0; } 100% { scale: 1; } }
+@keyframes opening-span-op-line-translate-d { 0% { translate: -40% 0px; } 100% { translate: 0px 0px; } }
+@keyframes opening-span-op-line-translate-m { 0% { translate: -22% 0px; } 100% { translate: 0px 0px; } }
+@keyframes opening-span-op-line-translate-2-d { 0% { translate: 40% 0px; } 100% { translate: 0px 0px; } }
+@keyframes opening-span-op-line-translate-2-m { 0% { translate: 22% 0px; } 100% { translate: 0px 0px; } }
+@keyframes opening-figure-op-snap-translate { 0% { translate: -60% 0px; } 100% { translate: 0px 0px; } }
+@keyframes opening-figure-op-snap-rotate { 0% { rotate: -24deg; } 100% { rotate: -7deg; } }
+@keyframes opening-figure-op-snap-translate-2 { 0% { translate: 60% 0px; } 100% { translate: 0px 0px; } }
+@keyframes opening-figure-op-snap-rotate-2 { 0% { rotate: 24deg; } 100% { rotate: 6deg; } }
+[data-8b-live] #opening .op__half--a, [data-8b-live] #opening .op__half--b { animation-range: cover calc(100vh + 0 * var(--opening-t)) cover calc(100vh + 0.6 * var(--opening-t)); }
+[data-8b-live] #opening .op__frame { animation-name: opening-figure-op-frame-translate, opening-figure-op-frame-rotate, opening-figure-op-frame-scale; animation-range: cover calc(100vh + 0 * var(--opening-t)) cover calc(100vh + 1 * var(--opening-t)); }
+[data-8b-live] #opening .op__st--1, [data-8b-live] #opening .op__st--2, [data-8b-live] #opening .op__st--3, [data-8b-live] #opening .op__st--4, [data-8b-live] #opening .op__st--5 { animation-range: cover calc(100vh + 0 * var(--opening-t)) cover calc(100vh + 0.8 * var(--opening-t)); }
+[data-8b-live] #opening .op__dusk { animation-range: cover calc(100vh + 0.05 * var(--opening-t)) cover calc(100vh + 0.75 * var(--opening-t)); }
+[data-8b-live] #opening .op__sun { animation-name: opening-div-op-sun-translate, opening-div-op-sun-scale; animation-range: cover calc(100vh + 0.15 * var(--opening-t)) cover calc(100vh + 0.7 * var(--opening-t)); }
+[data-8b-live] #opening .op__gaps > span:nth-of-type(1) { animation-range: cover calc(100vh + 0.3 * var(--opening-t)) cover calc(100vh + 0.55 * var(--opening-t)); }
+[data-8b-live] #opening .op__gaps > span:nth-of-type(2) { animation-range: cover calc(100vh + 0.34 * var(--opening-t)) cover calc(100vh + 0.59 * var(--opening-t)); }
+[data-8b-live] #opening .op__gaps > span:nth-of-type(3) { animation-range: cover calc(100vh + 0.38 * var(--opening-t)) cover calc(100vh + 0.63 * var(--opening-t)); }
+[data-8b-live] #opening .op__gaps > span:nth-of-type(4) { animation-range: cover calc(100vh + 0.42 * var(--opening-t)) cover calc(100vh + 0.67 * var(--opening-t)); }
+[data-8b-live] #opening .op__gaps > span:nth-of-type(5) { animation-range: cover calc(100vh + 0.46 * var(--opening-t)) cover calc(100vh + 0.71 * var(--opening-t)); }
+[data-8b-live] #opening .op__gaps > span:nth-of-type(6) { animation-range: cover calc(100vh + 0.5 * var(--opening-t)) cover calc(100vh + 0.75 * var(--opening-t)); }
+[data-8b-live] #opening .op__say > .m-text-2 > span:nth-of-type(1) { animation-range: cover calc(100vh + 0.5 * var(--opening-t)) cover calc(100vh + 0.95 * var(--opening-t)); }
+[data-8b-live] #opening .op__say > .m-text-2 > span:nth-of-type(2) { animation-range: cover calc(100vh + 0.55 * var(--opening-t)) cover calc(100vh + 1 * var(--opening-t)); }
+[data-8b-live] #opening .op__say > .m-text-2 > span:nth-of-type(3) { animation-range: cover calc(100vh + 0.6 * var(--opening-t)) cover calc(100vh + 1.05 * var(--opening-t)); }
+[data-8b-live] #opening .op__snap--a { animation-range: cover calc(100vh + 0.55 * var(--opening-t)) cover calc(100vh + 1 * var(--opening-t)); }
+[data-8b-live] #opening .op__snap--b { animation-range: cover calc(100vh + 0.6 * var(--opening-t)) cover calc(100vh + 1.05 * var(--opening-t)); }
+@media (min-width: 761px) {
+  [data-8b-live] #opening .op__copy { animation-name: opening-div-op-copy-translate-d; animation-range: cover calc(100vh + 0 * var(--opening-t)) cover calc(100vh + 0.6 * var(--opening-t)); }
+  [data-8b-live] #opening .op__actions { animation-name: opening-div-op-actions-translate; animation-range: cover calc(100vh + 0 * var(--opening-t)) cover calc(100vh + 0.6 * var(--opening-t)); }
+  [data-8b-live] #opening .op__say > .m-text-2 > span:nth-of-type(odd) { animation-name: opening-span-op-line-translate-d; }
+  [data-8b-live] #opening .op__say > .m-text-2 > span:nth-of-type(even) { animation-name: opening-span-op-line-translate-2-d; }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #opening .op__copy, [data-8b-live] #opening .op__actions { animation-name: opening-div-op-copy-translate-m; animation-range: cover calc(100vh + 0 * var(--opening-t)) cover calc(100vh + 0.5 * var(--opening-t)); }
+  [data-8b-live] #opening .op__say > .m-text-2 > span:nth-of-type(odd) { animation-name: opening-span-op-line-translate-m; }
+  [data-8b-live] #opening .op__say > .m-text-2 > span:nth-of-type(even) { animation-name: opening-span-op-line-translate-2-m; }
+}
+}
+</style>
+<style data-8b-part="scene:classes">
+@layer scenes {
+[data-8b-live] #classes .cl__row { view-timeline: --classes-row block; view-timeline-inset: 0; }
+[data-8b-live] #classes .cl__band, [data-8b-live] #classes .cl__label, [data-8b-live] #classes .cl__pic, [data-8b-live] #classes .cl__meta { animation-timeline: --classes-row; animation-range: cover calc(135vh - 85%) cover calc(185% - 135vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #classes .cl__band { animation-name: classes-band; transform: none; }
+[data-8b-live] #classes .cl__label { animation-name: classes-label; }
+[data-8b-live] #classes .cl__pic { animation-name: classes-pic; transform: none; }
+[data-8b-live] #classes .cl__row:nth-child(odd) .cl__pic { --classes-pic-from: -22deg; --classes-pic-to: -5deg; }
+[data-8b-live] #classes .cl__row:nth-child(even) .cl__pic { --classes-pic-from: 22deg; --classes-pic-to: 4deg; }
+[data-8b-live] #classes .cl__meta { animation-name: classes-meta; }
+@keyframes classes-band { 0%, 13.3333% { scale: 0 1; } 33.3333%, 66.6667% { scale: 1 1; } 86.6667%, 100% { scale: 0 1; } }
+@keyframes classes-label { 0% { opacity: 0.3; } 20%, 80% { opacity: 1; } 100% { opacity: 0.3; } }
+@keyframes classes-pic { 0% { scale: 0.4; opacity: 0; rotate: var(--classes-pic-from); } 10% { scale: 0.4; opacity: 0; rotate: var(--classes-pic-from); animation-timing-function: linear(0, 0.1112, 0.2148, 0.3112, 0.4006, 0.4832, 0.5593, 0.6291, 0.6928, 0.7507, 0.8031, 0.8502, 0.8922, 0.9294, 0.962, 0.9902, 1.0144, 1.0347, 1.0514, 1.0648, 1.075, 1.0824, 1.0871, 1.0894, 1.0896, 1.0879, 1.0845, 1.0797, 1.0738, 1.0669, 1.0594, 1.0514, 1.0432, 1.0351, 1.0272, 1.0199, 1.0134, 1.0079, 1.0037, 1.001, 1); } 33.3333% { scale: 1; opacity: 1; rotate: var(--classes-pic-to); } 66.6667% { scale: 1; opacity: 1; rotate: var(--classes-pic-to); animation-timing-function: linear(0, -0.001, -0.0037, -0.0079, -0.0134, -0.0199, -0.0272, -0.0351, -0.0432, -0.0514, -0.0594, -0.0669, -0.0738, -0.0797, -0.0845, -0.0879, -0.0896, -0.0894, -0.0871, -0.0824, -0.075, -0.0648, -0.0514, -0.0347, -0.0144, 0.0098, 0.038, 0.0706, 0.1078, 0.1498, 0.1969, 0.2493, 0.3072, 0.3709, 0.4407, 0.5168, 0.5994, 0.6888, 0.7852, 0.8888, 1); } 90% { scale: 0.4; opacity: 0; rotate: var(--classes-pic-from); } 100% { scale: 0.4; opacity: 0; rotate: var(--classes-pic-from); } }
+@keyframes classes-meta { 0%, 6.6667% { opacity: 0.25; translate: -36px 0px; } 26.6667%, 73.3333% { opacity: 1; translate: 0px 0px; } 93.3333%, 100% { opacity: 0.25; translate: -36px 0px; } }
+}
+</style>
+<style data-8b-part="scene:arc">
+@layer scenes {
+[data-8b-live] #arc::after { content: ""; display: block; height: 150vh; }
+[data-8b-live] #arc .arc__stage { position: sticky; top: 0; }
+}
+</style>
+<style data-8b-part="scene:room">
+@layer scenes {
+[data-8b-live] #room .rm__pile { view-timeline: --room-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #room .rm__shot--1, [data-8b-live] #room .rm__shot--2, [data-8b-live] #room .rm__shot--3, [data-8b-live] #room .rm__shot--4, [data-8b-live] #room .rm__shot--5 { animation-timeline: --room-t1; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #room .rm__shot--1 { animation-range: cover 10vh cover calc(16.6667% + 6.6667vh); }
+[data-8b-live] #room .rm__shot--2 { animation-range: cover calc(8.3333% + 8.3333vh) cover calc(25% + 5vh); }
+[data-8b-live] #room .rm__shot--3 { animation-range: cover calc(16.6667% + 6.6667vh) cover calc(33.3333% + 3.3333vh); }
+[data-8b-live] #room .rm__shot--4 { animation-range: cover calc(25% + 5vh) cover calc(41.6667% + 1.6667vh); }
+[data-8b-live] #room .rm__shot--5 { animation-range: cover calc(33.3333% + 3.3333vh) cover 50%; }
+@keyframes room-div-rm-shot-translate { 0% { translate: -55vw -30vh; } 100% { translate: 0px 0px; } }
+@keyframes room-div-rm-shot-rotate { 0% { rotate: -48deg; } 100% { rotate: -6deg; } }
+@keyframes room-div-rm-shot-scale { 0% { scale: 1.15; } 100% { scale: 1; } }
+@keyframes room-div-rm-shot-translate-2 { 0% { translate: 55vw -30vh; } 100% { translate: 0px 0px; } }
+@keyframes room-div-rm-shot-rotate-2 { 0% { rotate: 48deg; } 100% { rotate: 5deg; } }
+@keyframes room-div-rm-shot-rotate-3 { 0% { rotate: -48deg; } 100% { rotate: 2deg; } }
+@keyframes room-div-rm-shot-rotate-4 { 0% { rotate: 48deg; } 100% { rotate: -4deg; } }
+@keyframes room-div-rm-shot-rotate-5 { 0% { rotate: -48deg; } 100% { rotate: 7deg; } }
+[data-8b-live] #room .rm__shot--1 { animation-name: room-div-rm-shot-translate, room-div-rm-shot-rotate, room-div-rm-shot-scale; }
+[data-8b-live] #room .rm__shot--2 { animation-name: room-div-rm-shot-translate-2, room-div-rm-shot-rotate-2, room-div-rm-shot-scale; }
+[data-8b-live] #room .rm__shot--3 { animation-name: room-div-rm-shot-translate, room-div-rm-shot-rotate-3, room-div-rm-shot-scale; }
+[data-8b-live] #room .rm__shot--4 { animation-name: room-div-rm-shot-translate-2, room-div-rm-shot-rotate-4, room-div-rm-shot-scale; }
+[data-8b-live] #room .rm__shot--5 { animation-name: room-div-rm-shot-translate, room-div-rm-shot-rotate-5, room-div-rm-shot-scale; }
+}
+</style>
+<style data-8b-part="scene:coaches">
+@layer scenes {
+[data-8b-live] #coaches { view-timeline: --coaches-t block; view-timeline-inset: 0; }
+[data-8b-live] #coaches::after { content: ""; display: block; height: var(--coaches-distance, 0px); }
+[data-8b-live] #coaches .co__stage { position: sticky; top: 0; min-height: 100svh; display: grid; align-content: center; padding-block: 96px 48px; }
+[data-8b-live] #coaches .co__track { display: flex; align-items: center; gap: 4vw; width: max-content; animation-name: coaches-slide; animation-timeline: --coaches-t; animation-range: cover 100vh cover calc(100vh + max(1px, var(--coaches-distance, 1px))); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #coaches .co__head { display: grid; grid-template-columns: 1fr; width: min(30vw, 420px); margin: 0; }
+[data-8b-live] #coaches .co__card { width: min(28vw, 400px, calc((100svh - 330px) * 1.05)); }
+[data-8b-live] #coaches .co__sun, [data-8b-live] #coaches .co__photo { animation-timeline: --coaches-t; animation-range: cover calc(100vh + var(--coaches-from, 0px)) cover calc(100vh + var(--coaches-to, 1px)); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #coaches .co__sun { animation-name: coaches-sun; }
+[data-8b-live] #coaches .co__photo { animation-name: coaches-photo; transform: none; }
+[data-8b-live] #coaches .co__card:nth-child(even) .co__photo { --coaches-photo-from: -16deg; --coaches-photo-to: 4deg; }
+[data-8b-live] #coaches .co__card:nth-child(odd) .co__photo { --coaches-photo-from: 16deg; --coaches-photo-to: -4deg; }
+@keyframes coaches-slide { 0% { translate: 0px 0px; } 100% { translate: calc(-1 * var(--coaches-distance, 0px)) 0px; } }
+@keyframes coaches-sun { 0% { rotate: calc(-220deg * var(--coaches-left, 1)); } 100% { rotate: 0deg; } }
+@keyframes coaches-photo { 0% { rotate: calc(var(--coaches-photo-to) + (var(--coaches-photo-from) - var(--coaches-photo-to)) * var(--coaches-left, 1)); translate: calc(30% * var(--coaches-left, 1)) 0px; } 100% { rotate: var(--coaches-photo-to); translate: 0px 0px; } }
+@media (max-width: 760px) {
+  [data-8b-live] #coaches .co__stage { padding-block: 80px 32px; }
+  [data-8b-live] #coaches .co__head { width: 82vw; }
+  [data-8b-live] #coaches .co__card { width: 74vw; }
+  [data-8b-live] #coaches .co__visual { width: 100%; }
+}
+}
+</style>
+<style data-8b-part="scene:rewind">
+@property --rewind-rw-ax { syntax: '<length>'; inherits: true; initial-value: 63.75000000000001px; }
+@property --rewind-rw-ay { syntax: '<length>'; inherits: true; initial-value: 0px; }
+@property --rewind-rw-bx { syntax: '<length>'; inherits: true; initial-value: 127.50000000000001px; }
+@property --rewind-rw-by { syntax: '<length>'; inherits: true; initial-value: 0px; }
+@property --rewind-rw-cx { syntax: '<length>'; inherits: true; initial-value: 191.25000000000003px; }
+@property --rewind-rw-cy { syntax: '<length>'; inherits: true; initial-value: 0px; }
+@layer scenes {
+[data-8b-live] #rewind .rw__word, [data-8b-live] #rewind .rw__pic--1, [data-8b-live] #rewind .rw__pic--2 { animation-range: cover 0% cover 100%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #rewind .rw__word { view-timeline: --rewind-t1 block; view-timeline-inset: 0; animation-timeline: --rewind-t1; --rw-ax: var(--rewind-rw-ax); --rw-ay: var(--rewind-rw-ay); --rw-bx: var(--rewind-rw-bx); --rw-by: var(--rewind-rw-by); --rw-cx: var(--rewind-rw-cx); --rw-cy: var(--rewind-rw-cy); }
+[data-8b-live] #rewind .rw__pics { view-timeline: --rewind-t2 block; view-timeline-inset: 0; }
+[data-8b-live] #rewind .rw__pic--1 { animation-name: rewind-div-rw-pic-translate, rewind-div-rw-pic-rotate; animation-timeline: --rewind-t2; }
+[data-8b-live] #rewind .rw__pic--2 { animation-name: rewind-div-rw-pic-translate-2, rewind-div-rw-pic-rotate-2; animation-timeline: --rewind-t2; }
+@keyframes rewind-span-rw-word---rw-ax { 0% { --rewind-rw-ax: min(17vw, 250px); animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 54% { --rewind-rw-ax: 7px; } 70% { --rewind-rw-ax: 7px; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 100% { --rewind-rw-ax: min(17vw, 250px); } }
+@keyframes rewind-span-rw-word---rw-ay { 0% { --rewind-rw-ay: 0px; } 0.002% { --rewind-rw-ay: 0.0026px; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 54% { --rewind-rw-ay: 7px; } 70% { --rewind-rw-ay: 7px; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 99.998% { --rewind-rw-ay: 0.0047px; } 100% { --rewind-rw-ay: 0px; } }
+@keyframes rewind-span-rw-word---rw-bx { 0% { --rewind-rw-bx: min(34vw, 500px); animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 54% { --rewind-rw-bx: 0px; } 70% { --rewind-rw-bx: 0px; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 100% { --rewind-rw-bx: min(34vw, 500px); } }
+@keyframes rewind-span-rw-word---rw-by { 0% { --rewind-rw-by: 0px; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 54% { --rewind-rw-by: 0px; } 70% { --rewind-rw-by: 0px; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 100% { --rewind-rw-by: 0px; } }
+@keyframes rewind-span-rw-word---rw-cx { 0% { --rewind-rw-cx: min(51vw, 750px); animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 54% { --rewind-rw-cx: 0px; } 70% { --rewind-rw-cx: 0px; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 100% { --rewind-rw-cx: min(51vw, 750px); } }
+@keyframes rewind-span-rw-word---rw-cy { 0% { --rewind-rw-cy: 0px; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 54% { --rewind-rw-cy: 0px; } 70% { --rewind-rw-cy: 0px; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 100% { --rewind-rw-cy: 0px; } }
+@keyframes rewind-span-rw-word-translate { 0% { translate: 35vw 0px; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 54% { translate: 0px 0px; } 70% { translate: 0px 0px; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 100% { translate: -35vw 0px; } }
+@keyframes rewind-div-rw-pic-translate { 0% { translate: 0px 140px; } 40% { translate: 0px 0px; } 60% { translate: 0px 0px; } 100% { translate: 0px -120px; } }
+@keyframes rewind-div-rw-pic-rotate { 0% { rotate: -14deg; } 40% { rotate: -6deg; } 60% { rotate: -6deg; } 100% { rotate: 2deg; } }
+@keyframes rewind-div-rw-pic-translate-2 { 0% { translate: 0px -100px; } 40% { translate: 0px 0px; } 60% { translate: 0px 0px; } 100% { translate: 0px 120px; } }
+@keyframes rewind-div-rw-pic-rotate-2 { 0% { rotate: 12deg; } 40% { rotate: 5deg; } 60% { rotate: 5deg; } 100% { rotate: -3deg; } }
+[data-8b-live] #rewind .rw__word { animation-name: rewind-span-rw-word---rw-ax, rewind-span-rw-word---rw-ay, rewind-span-rw-word---rw-bx, rewind-span-rw-word---rw-by, rewind-span-rw-word---rw-cx, rewind-span-rw-word---rw-cy, rewind-span-rw-word-translate; }
+}
+</style>
+<style data-8b-part="scene:regulars">
+@layer scenes {
+[data-8b-live] { --ease-49796a: linear(0, 0.1159, 0.2239, 0.3241, 0.4168, 0.5023, 0.581, 0.6529, 0.7184, 0.7778, 0.8313, 0.8791, 0.9216, 0.959, 0.9916, 1.0195, 1.0432, 1.0628, 1.0787, 1.091, 1.1, 1.106, 1.1094, 1.1102, 1.1088, 1.1055, 1.1004, 1.094, 1.0864, 1.0779, 1.0688, 1.0592, 1.0496, 1.0401, 1.0311, 1.0227, 1.0152, 1.0089, 1.0042, 1.0011, 1); }
+[data-8b-live] #regulars .rg__board { view-timeline: --regulars-t1 block; view-timeline-inset: 0; animation-timeline: --regulars-t1; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #regulars .rg__board > .rg__quote { animation-name: regulars-li-rg-quote-translate, regulars-li-rg-quote-rotate; animation-timeline: --regulars-t1; animation-timing-function: var(--ease-49796a); animation-fill-mode: both; transform: none; }
+@keyframes regulars-ul-rg-board-rotatex-d { 0% { rotate: x 64deg; } 100% { rotate: x 0deg; } }
+@keyframes regulars-ul-rg-board-rotatex-m { 0% { rotate: x 48deg; } 100% { rotate: x 0deg; } }
+@keyframes regulars-ul-rg-board-translate { 0% { translate: 0px 60px; } 100% { translate: 0px 0px; } }
+@keyframes regulars-li-rg-quote-translate { 0% { translate: 0px 70px; } 100% { translate: 0px 0px; } }
+@keyframes regulars-li-rg-quote-rotate { 0% { rotate: var(--regulars-li-rg-quote-rotate-from, -9deg); } 100% { rotate: var(--regulars-li-rg-quote-rotate-to, -1.5deg); } }
+@media (min-width: 861px) {
+  [data-8b-live] #regulars .rg__board { animation-name: regulars-ul-rg-board-rotatex-d, regulars-ul-rg-board-translate; animation-range: cover 5vh cover calc(39.0625% - 2.8125vh); }
+  [data-8b-live] #regulars .rg__board > .rg__quote { animation-range: cover calc(11.7188% + 4.6875% * var(--i) + 2.6563vh - 0.9375vh * var(--i)) cover calc(31.25% + 4.6875% * var(--i) - 1.25vh - 0.9375vh * var(--i)); }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #regulars .rg__board { animation-name: regulars-ul-rg-board-rotatex-m, regulars-ul-rg-board-translate; animation-range: cover 5vh cover 59.6875vh; }
+  [data-8b-live] #regulars .rg__board > .rg__quote { animation-range: cover calc(21.4063vh + 6.5625vh * var(--i)) cover calc(48.75vh + 6.5625vh * var(--i)); }
+}
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <svg class="sprite" aria-hidden="true" focusable="false">
@@ -693,7 +888,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
     <a class="m-btn" href="#contact"><span class="m-btn__label">Free class</span></a>
     <button class="m-btn-3 nav__menu" type="button" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" style="fill:none;stroke:currentColor;stroke-width:2.4"/></svg><span class="sr-only">Open the menu</span></button>
   </div>
-  <div id="menu" class="menu" data-lenis-prevent hidden>
+  <div id="menu" class="menu" hidden>
     <button class="m-btn-3 menu__close" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" style="fill:none;stroke:currentColor;stroke-width:2.4"/></svg><span class="sr-only">Close the menu</span></button>
     <a class="m-text-2" href="#classes">Classes</a>
     <a class="m-text-2" href="#week">Timetable</a>
@@ -720,7 +915,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
       <a class="m-btn-2" href="#week"><span class="m-btn__label">See the timetable</span></a>
     </div>
     <figure class="op__frame">
-      <div class="op__frame-in m-photo"><img style="background:#d9c0c0" src="https://images.unsplash.com/photo-1634788699152-8456796c14eb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d29tYW4lMjBqdW1waW5nJTIwd29ya291dCUyMGNvbG9yZnVsfGVufDF8MXx8fDE3OTEzNjU1MjR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=400&q=60" alt="A smiling woman in black workout kit mid-jump, knees tucked, against a pale pink backdrop" width="2673" height="4009" fetchpriority="high"></div>
+      <div class="op__frame-in m-photo"><img src="https://images.unsplash.com/photo-1634788699152-8456796c14eb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d29tYW4lMjBqdW1waW5nJTIwd29ya291dCUyMGNvbG9yZnVsfGVufDF8MXx8fDE3OTEzNjU1MjR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=400&q=60" alt="A smiling woman in black workout kit mid-jump, knees tucked, against a pale pink backdrop" width="2673" height="4009" fetchpriority="high"></div>
     </figure>
     <div class="op__stickers" aria-hidden="true">
       <span class="op__st op__st--1"><span class="op__pop"><span class="op__bob"><svg class="m-sticker" aria-hidden="true" focusable="false"><use href="#st-arc"/></svg></span></span></span>
@@ -744,11 +939,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
         </ul>
       </div>
       <figure class="op__snap op__snap--a">
-        <div class="m-photo"><img style="background:#c0a6a6" src="https://images.unsplash.com/photo-1790015527740-747a94ef34d3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8ODBzJTIwYWVyb2JpY3N8ZW58MXwxfHx8MTc5MTM2NTUzOXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=300&q=60" alt="A woman in a red leotard, purple leggings and yellow leg warmers crouching" width="3493" height="4657" loading="lazy"></div>
+        <div class="m-photo"><img src="https://images.unsplash.com/photo-1790015527740-747a94ef34d3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8ODBzJTIwYWVyb2JpY3N8ZW58MXwxfHx8MTc5MTM2NTUzOXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=370&q=60" alt="A woman in a red leotard, purple leggings and yellow leg warmers crouching" width="3493" height="4657" loading="lazy"></div>
         <figcaption class="m-text-3">Leg warmers optional</figcaption>
       </figure>
       <figure class="op__snap op__snap--b">
-        <div class="m-photo"><img style="background:#c0c0d9" src="https://images.unsplash.com/photo-1661977597031-19b569b7e5ab?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fHJvbGxlciUyMHNrYXRpbmd8ZW58MXwxfHx8MTc5MTM2NTU0NHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Legs in white roller skates with pink wheels and laces kicked up against a lilac wall" width="3840" height="5760" loading="lazy"></div>
+        <div class="m-photo"><img src="https://images.unsplash.com/photo-1661977597031-19b569b7e5ab?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fHJvbGxlciUyMHNrYXRpbmd8ZW58MXwxfHx8MTc5MTM2NTU0NHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=370&q=60" alt="Legs in white roller skates with pink wheels and laces kicked up against a lilac wall" width="3840" height="5760" loading="lazy"></div>
         <figcaption class="m-text-3">Skates to borrow</figcaption>
       </figure>
     </div>
@@ -756,47 +951,47 @@ button, input, select, textarea { font: inherit; color: inherit; }
 </section>
 <!-- classes: seven classes as a list of big names where the row in the middle of the screen is lit with a lime band, a photo and details (animation: scene:classes) -->
 <section id="classes" data-8b-section="classes" aria-labelledby="classes-title">
-  <span class="cl__st cl__st--1" data-8b-motion="spin" data-turn="200" aria-hidden="true"><svg class="m-sticker-4" aria-hidden="true" focusable="false"><use href="#st-arc"/></svg></span>
-  <span class="cl__st cl__st--2" data-8b-motion="spin" data-turn="-160" aria-hidden="true"><svg class="m-sticker-3" aria-hidden="true" focusable="false"><use href="#st-bolt"/></svg></span>
+  <span class="cl__st cl__st--1" data-8b-motion="spin" data-turn="200" aria-hidden="true" style="--spin-rotate-from: -100deg; --spin-rotate-to: 100deg"><svg class="m-sticker-4" aria-hidden="true" focusable="false"><use href="#st-arc"/></svg></span>
+  <span class="cl__st cl__st--2" data-8b-motion="spin" data-turn="-160" aria-hidden="true" style="--spin-rotate-from: 80deg; --spin-rotate-to: -80deg"><svg class="m-sticker-3" aria-hidden="true" focusable="false"><use href="#st-bolt"/></svg></span>
   <div class="cl__head">
-    <h2 class="m-text-2" id="classes-title" data-8b-motion="rise"><span>Seven classes.</span> <span>Pick your noise.</span></h2>
+    <h2 class="m-text-2" id="classes-title" data-8b-motion="rise" data-8b-items=":scope > span"><span>Seven classes.</span> <span>Pick your noise.</span></h2>
     <p class="m-text-5">Every class runs fifty minutes or less, every level is welcome, and every coach will show you the easy version first.</p>
   </div>
   <ol class="cl__list" data-8b-items=":scope > .cl__row">
     <li class="cl__row">
       <div class="cl__meta"><p class="m-text-3">50 min · All levels</p><p class="m-text">The original: a low platform, eight-count combos and the songs your parents danced to.</p></div>
       <h3 class="cl__name m-text-2"><span class="cl__band" aria-hidden="true"></span><span class="cl__label">Step &amp; Sweat</span></h3>
-      <div class="cl__pic m-photo"><img style="background:#40260c" src="https://images.unsplash.com/photo-1619107372089-9b05ed524774?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YWVyb2JpY3MlMjBjbGFzc3xlbnwxfDB8fHwxNzkxMzY1NTIxfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=260&q=60" alt="A group of women stepping forward together across a sunlit wooden studio floor" width="3089" height="2048" loading="lazy"></div>
+      <div class="cl__pic m-photo"><img src="https://images.unsplash.com/photo-1619107372089-9b05ed524774?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YWVyb2JpY3MlMjBjbGFzc3xlbnwxfDB8fHwxNzkxMzY1NTIxfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=130&q=60" alt="A group of women stepping forward together across a sunlit wooden studio floor" width="3089" height="2048" loading="lazy"></div>
     </li>
     <li class="cl__row">
       <div class="cl__meta"><p class="m-text-3">45 min · Medium</p><p class="m-text">Simple routines built up four moves at a time. Nobody’s watching; everyone’s grinning.</p></div>
       <h3 class="cl__name m-text-2"><span class="cl__band" aria-hidden="true"></span><span class="cl__label">Dance Cardio</span></h3>
-      <div class="cl__pic m-photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1787647090390-890c94512cee?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Z3JvdXAlMjBmaXRuZXNzJTIwaGlnaCUyMGZpdmV8ZW58MXwwfHx8MTc5MTM2NTY0OXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="A class holding a balance pose in front of a wall painted with orange and teal triangles" width="3840" height="2160" loading="lazy"></div>
+      <div class="cl__pic m-photo"><img src="https://images.unsplash.com/photo-1787647090390-890c94512cee?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Z3JvdXAlMjBmaXRuZXNzJTIwaGlnaCUyMGZpdmV8ZW58MXwwfHx8MTc5MTM2NTY0OXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=160&q=60" alt="A class holding a balance pose in front of a wall painted with orange and teal triangles" width="3840" height="2160" loading="lazy"></div>
     </li>
     <li class="cl__row">
       <div class="cl__meta"><p class="m-text-3">50 min · High</p><p class="m-text">Pads, gloves and three-minute rounds. Hit hard, breathe out, repeat.</p></div>
       <h3 class="cl__name m-text-2"><span class="cl__band" aria-hidden="true"></span><span class="cl__label">Box Burn</span></h3>
-      <div class="cl__pic m-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1583187856683-dddad0e87f79?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGJveGluZyUyMGNsYXNzfGVufDF8MHx8fDE3OTEzNjU1NDJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=250&q=60" alt="Two women working on boxing pads, one in blue gloves laughing" width="3000" height="2000" loading="lazy"></div>
+      <div class="cl__pic m-photo"><img src="https://images.unsplash.com/photo-1583187856683-dddad0e87f79?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGJveGluZyUyMGNsYXNzfGVufDF8MHx8fDE3OTEzNjU1NDJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=130&q=60" alt="Two women working on boxing pads, one in blue gloves laughing" width="3000" height="2000" loading="lazy"></div>
     </li>
     <li class="cl__row">
       <div class="cl__meta"><p class="m-text-3">60 min · Medium</p><p class="m-text">Balance, glide and core work on quad skates. Skates and pads to borrow at the desk.</p></div>
       <h3 class="cl__name m-text-2"><span class="cl__band" aria-hidden="true"></span><span class="cl__label">Skate Fit</span></h3>
-      <div class="cl__pic m-photo"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1612643152502-ed3e2ec346bd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHJvbGxlciUyMHNrYXRpbmd8ZW58MXwxfHx8MTc5MTM2NTU0NHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=220&q=60" alt="A quad roller skate seen from below against a wall of bright stripes" width="2316" height="3088" loading="lazy"></div>
+      <div class="cl__pic m-photo"><img src="https://images.unsplash.com/photo-1612643152502-ed3e2ec346bd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHJvbGxlciUyMHNrYXRpbmd8ZW58MXwxfHx8MTc5MTM2NTU0NHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=100&q=60" alt="A quad roller skate seen from below against a wall of bright stripes" width="2316" height="3088" loading="lazy"></div>
     </li>
     <li class="cl__row">
       <div class="cl__meta"><p class="m-text-3">45 min · Medium</p><p class="m-text">Light dumbbells, lots of reps and a beat that keeps you honest.</p></div>
       <h3 class="cl__name m-text-2"><span class="cl__band" aria-hidden="true"></span><span class="cl__label">Pump</span></h3>
-      <div class="cl__pic m-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1597460970331-f3e7c941f4e0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cmV0cm8lMjB3b3Jrb3V0fGVufDF8MHx8fDE3OTEzNjU1NDB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=250&q=60" alt="A woman in blue leggings pressing two pink dumbbells forward by a big window" width="5760" height="3840" loading="lazy"></div>
+      <div class="cl__pic m-photo"><img src="https://images.unsplash.com/photo-1597460970331-f3e7c941f4e0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cmV0cm8lMjB3b3Jrb3V0fGVufDF8MHx8fDE3OTEzNjU1NDB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=130&q=60" alt="A woman in blue leggings pressing two pink dumbbells forward by a big window" width="5760" height="3840" loading="lazy"></div>
     </li>
     <li class="cl__row">
       <div class="cl__meta"><p class="m-text-3">30 min · High</p><p class="m-text">Ropes, hops and short sprints. Half an hour that feels like a full set.</p></div>
       <h3 class="cl__name m-text-2"><span class="cl__band" aria-hidden="true"></span><span class="cl__label">Jump</span></h3>
-      <div class="cl__pic m-photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1682531024622-e3eb89bc6fb9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8anVtcCUyMHJvcGV8ZW58MXwxfHx8MTc5MTM2NTU0NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=220&q=60" alt="A woman skipping with a rope in front of a blue gym wall" width="4000" height="6000" loading="lazy"></div>
+      <div class="cl__pic m-photo"><img src="https://images.unsplash.com/photo-1682531024622-e3eb89bc6fb9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8anVtcCUyMHJvcGV8ZW58MXwxfHx8MTc5MTM2NTU0NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=100&q=60" alt="A woman skipping with a rope in front of a blue gym wall" width="4000" height="6000" loading="lazy"></div>
     </li>
     <li class="cl__row">
       <div class="cl__meta"><p class="m-text-3">40 min · Easy</p><p class="m-text">Long holds and slow breathing to put everything back where it was.</p></div>
       <h3 class="cl__name m-text-2"><span class="cl__band" aria-hidden="true"></span><span class="cl__label">Stretch &amp; Unwind</span></h3>
-      <div class="cl__pic m-photo"><img style="background:#c08c59" src="https://images.unsplash.com/photo-1599447421321-1c96150f0f6b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c3RyZXRjaGluZyUyMGNsYXNzfGVufDF8MHx8fDE3OTEzNjU1NDR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=250&q=60" alt="Three women in a triangle pose on pink mats in a bright wooden studio" width="5616" height="3744" loading="lazy"></div>
+      <div class="cl__pic m-photo"><img src="https://images.unsplash.com/photo-1599447421321-1c96150f0f6b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c3RyZXRjaGluZyUyMGNsYXNzfGVufDF8MHx8fDE3OTEzNjU1NDR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=130&q=60" alt="Three women in a triangle pose on pink mats in a bright wooden studio" width="5616" height="3744" loading="lazy"></div>
     </li>
   </ol>
 </section>
@@ -815,7 +1010,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
       </svg>
       <span class="arc__sun"></span>
     </div>
-    <ol class="arc__phases" data-8b-items=":scope > .arc__phase">
+    <ol class="arc__phases" data-8b-items=":scope > .arc__phase" data-8b-fixed="4">
       <li class="arc__phase"><p class="m-text-3">0–10 min</p><h3 class="m-text-2">Warm-up</h3><p class="m-text">Marching, step-touches, big arm circles. Your heart rate climbs slowly.</p></li>
       <li class="arc__phase"><p class="m-text-3">10–25 min</p><h3 class="m-text-2">Build</h3><p class="m-text">The combinations stack up: four moves, then eight, then the whole routine.</p></li>
       <li class="arc__phase"><p class="m-text-3">25–40 min</p><h3 class="m-text-2">Peak</h3><p class="m-text">The chorus: top tempo, biggest moves, the song everyone shouts.</p></li>
@@ -828,7 +1023,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 <section id="room" data-8b-section="room" aria-labelledby="room-title">
   <div class="rm__grid">
     <div class="rm__text">
-      <h2 class="m-text-2" id="room-title" data-8b-motion="rise"><span>One big</span> <span>loud room</span></h2>
+      <h2 class="m-text-2" id="room-title" data-8b-motion="rise" data-8b-items=":scope > span"><span>One big</span> <span>loud room</span></h2>
       <p class="m-text-5">The whole first floor of an old wool mill, painted in triangles and built for jumping.</p>
       <dl class="rm__facts">
         <div><dt class="m-text-3">Floor</dt><dd class="m-text">Sprung maple, kind to knees and ankles.</dd></div>
@@ -840,11 +1035,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
       </dl>
     </div>
     <div class="rm__pile">
-      <div class="rm__shot rm__shot--1 m-photo"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1787724691140-94b3f9867e67?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGRhbmNlJTIwc3R1ZGlvJTIwd29vZGVuJTIwZmxvb3J8ZW58MXwwfHx8MTc5MTM2NTY0OHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=500&q=60" alt="A dance class moving across the studio in front of the triangle-painted wall" width="3840" height="2160" loading="lazy"></div>
-      <div class="rm__shot rm__shot--2 m-photo"><img style="background:#595959" src="https://images.unsplash.com/photo-1758526387683-dc34df1e7ae6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZGFuY2UlMjBzdHVkaW8lMjB3b29kZW4lMjBmbG9vcnxlbnwxfDB8fHwxNzkxMzY1NjQ4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=490&q=60" alt="A dancer in black holding a low lunge on the wooden floor" width="3840" height="2160" loading="lazy"></div>
-      <div class="rm__shot rm__shot--3 m-photo"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1787647089633-37e49ee2e054?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Z3JvdXAlMjBmaXRuZXNzJTIwaGlnaCUyMGZpdmV8ZW58MXwwfHx8MTc5MTM2NTY0OXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=450&q=60" alt="A class reaching both arms up on mats under tall windows" width="3840" height="2160" loading="lazy"></div>
-      <div class="rm__shot rm__shot--4 m-photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1787647089799-e0c0a582e947?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z3JvdXAlMjBmaXRuZXNzJTIwaGlnaCUyMGZpdmV8ZW58MXwwfHx8MTc5MTM2NTY0OXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=480&q=60" alt="Students holding a warrior pose with their arms stretched wide" width="3840" height="2160" loading="lazy"></div>
-      <div class="rm__shot rm__shot--5 m-photo"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1787724691026-60cfd8b2e255?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8ZGFuY2UlMjBzdHVkaW8lMjB3b29kZW4lMjBmbG9vcnxlbnwxfDB8fHwxNzkxMzY1NjQ4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="Feet in silver trainers mid-step on the maple floor" width="3840" height="2160" loading="lazy"></div>
+      <div class="rm__shot rm__shot--1 m-photo"><img src="https://images.unsplash.com/photo-1787724691140-94b3f9867e67?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGRhbmNlJTIwc3R1ZGlvJTIwd29vZGVuJTIwZmxvb3J8ZW58MXwwfHx8MTc5MTM2NTY0OHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=880&q=60" alt="A dance class moving across the studio in front of the triangle-painted wall" width="3840" height="2160" loading="lazy"></div>
+      <div class="rm__shot rm__shot--2 m-photo"><img src="https://images.unsplash.com/photo-1758526387683-dc34df1e7ae6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZGFuY2UlMjBzdHVkaW8lMjB3b29kZW4lMjBmbG9vcnxlbnwxfDB8fHwxNzkxMzY1NjQ4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=880&q=60" alt="A dancer in black holding a low lunge on the wooden floor" width="3840" height="2160" loading="lazy"></div>
+      <div class="rm__shot rm__shot--3 m-photo"><img src="https://images.unsplash.com/photo-1787647089633-37e49ee2e054?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Z3JvdXAlMjBmaXRuZXNzJTIwaGlnaCUyMGZpdmV8ZW58MXwwfHx8MTc5MTM2NTY0OXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=880&q=60" alt="A class reaching both arms up on mats under tall windows" width="3840" height="2160" loading="lazy"></div>
+      <div class="rm__shot rm__shot--4 m-photo"><img src="https://images.unsplash.com/photo-1787647089799-e0c0a582e947?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z3JvdXAlMjBmaXRuZXNzJTIwaGlnaCUyMGZpdmV8ZW58MXwwfHx8MTc5MTM2NTY0OXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=880&q=60" alt="Students holding a warrior pose with their arms stretched wide" width="3840" height="2160" loading="lazy"></div>
+      <div class="rm__shot rm__shot--5 m-photo"><img src="https://images.unsplash.com/photo-1787724691026-60cfd8b2e255?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8ZGFuY2UlMjBzdHVkaW8lMjB3b29kZW4lMjBmbG9vcnxlbnwxfDB8fHwxNzkxMzY1NjQ4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=880&q=60" alt="Feet in silver trainers mid-step on the maple floor" width="3840" height="2160" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -858,25 +1053,25 @@ button, input, select, textarea { font: inherit; color: inherit; }
         <p class="m-text-5">Four people who will learn your name in the first class and shout it, kindly, in the second.</p>
       </div>
       <article class="co__card">
-        <div class="co__visual"><span class="co__sun" aria-hidden="true"></span><div class="co__photo m-photo"><img style="background:#0ca6c0" src="https://images.unsplash.com/photo-1683848644078-f339179c4ff6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Z3ltJTIwcG9ydHJhaXQlMjB3b21hbnxlbnwxfDF8fHwxNzkxMzY1NTQ4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="Dani, arms crossed in a training top against a blue backdrop" width="2624" height="3936" loading="lazy"></div></div>
+        <div class="co__visual"><span class="co__sun" aria-hidden="true"></span><div class="co__photo m-photo"><img src="https://images.unsplash.com/photo-1683848644078-f339179c4ff6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Z3ltJTIwcG9ydHJhaXQlMjB3b21hbnxlbnwxfDF8fHwxNzkxMzY1NTQ4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=330&q=60" alt="Dani, arms crossed in a training top against a blue backdrop" width="2624" height="3936" loading="lazy"></div></div>
         <h3 class="m-text-2">Dani Reyes</h3>
         <p class="m-text-3">Box Burn · Jump</p>
         <p class="m-text">Boxed for Yorkshire at nineteen. Counts in fours, cheers in capitals.</p>
       </article>
       <article class="co__card">
-        <div class="co__visual"><span class="co__sun" aria-hidden="true"></span><div class="co__photo m-photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1609858922226-d8e75c4502e4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGZpdG5lc3MlMjBjb2FjaCUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTM2NTY0Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="Marco grinning and holding a weight plate out in front of him" width="4000" height="6000" loading="lazy"></div></div>
+        <div class="co__visual"><span class="co__sun" aria-hidden="true"></span><div class="co__photo m-photo"><img src="https://images.unsplash.com/photo-1609858922226-d8e75c4502e4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGZpdG5lc3MlMjBjb2FjaCUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTM2NTY0Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="Marco grinning and holding a weight plate out in front of him" width="4000" height="6000" loading="lazy"></div></div>
         <h3 class="m-text-2">Marco Bell</h3>
         <p class="m-text-3">Pump · Step &amp; Sweat</p>
         <p class="m-text">Builds strength one rep at a time and picks every song himself.</p>
       </article>
       <article class="co__card">
-        <div class="co__visual"><span class="co__sun" aria-hidden="true"></span><div class="co__photo m-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1755549477030-5642e66b6847?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGZpdG5lc3MlMjBjb2FjaCUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTM2NTY0Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="Bev in glasses and a coral T-shirt, laughing" width="4000" height="6000" loading="lazy"></div></div>
+        <div class="co__visual"><span class="co__sun" aria-hidden="true"></span><div class="co__photo m-photo"><img src="https://images.unsplash.com/photo-1755549477030-5642e66b6847?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGZpdG5lc3MlMjBjb2FjaCUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTM2NTY0Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="Bev in glasses and a coral T-shirt, laughing" width="4000" height="6000" loading="lazy"></div></div>
         <h3 class="m-text-2">Bev Okafor</h3>
         <p class="m-text-3">Stretch &amp; Unwind · Step &amp; Sweat</p>
         <p class="m-text">Has taught step since 1986 and still does the best grapevine in Leeds.</p>
       </article>
       <article class="co__card">
-        <div class="co__visual"><span class="co__sun" aria-hidden="true"></span><div class="co__photo m-photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1619361814016-4acc36025fa9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cGVyc29uYWwlMjB0cmFpbmVyJTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTM2NTU0OHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=370&q=60" alt="Theo standing outdoors in a red and black training T-shirt" width="4000" height="5000" loading="lazy"></div></div>
+        <div class="co__visual"><span class="co__sun" aria-hidden="true"></span><div class="co__photo m-photo"><img src="https://images.unsplash.com/photo-1619361814016-4acc36025fa9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cGVyc29uYWwlMjB0cmFpbmVyJTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTM2NTU0OHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="Theo standing outdoors in a red and black training T-shirt" width="4000" height="5000" loading="lazy"></div></div>
         <h3 class="m-text-2">Theo Lund</h3>
         <p class="m-text-3">Skate Fit · Dance Cardio</p>
         <p class="m-text">Learned to skate at a roller disco aged nine and never really stopped.</p>
@@ -887,9 +1082,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 <!-- week: a seven-day timetable of class slots with times and coaches -->
 <section id="week" data-8b-section="week" aria-labelledby="week-title">
-  <span class="wk__st wk__st--1" data-8b-motion="spin" data-turn="180" aria-hidden="true"><svg class="m-sticker-2" aria-hidden="true" focusable="false"><use href="#st-disc"/></svg></span>
+  <span class="wk__st wk__st--1" data-8b-motion="spin" data-turn="180" aria-hidden="true" style="--spin-rotate-from: -90deg; --spin-rotate-to: 90deg"><svg class="m-sticker-2" aria-hidden="true" focusable="false"><use href="#st-disc"/></svg></span>
   <div class="wk__head">
-    <h2 class="m-text-2" id="week-title" data-8b-motion="rise"><span>This week</span> <span>on the floor</span></h2>
+    <h2 class="m-text-2" id="week-title" data-8b-motion="rise" data-8b-items=":scope > span"><span>This week</span> <span>on the floor</span></h2>
     <div>
       <p class="m-text-5">Twenty-four classes, early, at lunch and after work. Book up to seven days ahead; cancel up to two hours before.</p>
       <div class="wk__cta"><a class="m-btn" href="#contact"><span class="m-btn__label">Book a class</span></a><a class="m-link m-text-3" href="#passes">See the passes</a></div>
@@ -940,8 +1135,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
   <h2 class="m-text-4" id="rewind-title"><span class="rw__word" style="--len:6">Rewind</span><span class="rw__sub">Fridays</span></h2>
   <div class="rw__body">
     <div class="rw__pics">
-      <div class="rw__pic rw__pic--1"><div class="m-photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1680107011433-4b8d7d88cef7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fHJvbGxlciUyMHNrYXRpbmd8ZW58MXwxfHx8MTc5MTM2NTU0NHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=340&q=60" alt="A skater lacing up roller skates beside the rink under blue disco lights" width="2832" height="4240" loading="lazy"></div></div>
-      <div class="rw__pic rw__pic--2"><div class="m-photo"><img style="background:#260c40" src="https://images.unsplash.com/photo-1671118045619-45fc5f1fa2ed?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fGRpc2NvJTIwYmFsbHxlbnwxfDB8fHwxNzkxMzY1NTQ5fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=380&q=60" alt="A mirror ball throwing pink and violet light across a dark room" width="5901" height="3934" loading="lazy"></div></div>
+      <div class="rw__pic rw__pic--1"><div class="m-photo"><img src="https://images.unsplash.com/photo-1680107011433-4b8d7d88cef7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fHJvbGxlciUyMHNrYXRpbmd8ZW58MXwxfHx8MTc5MTM2NTU0NHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=390&q=60" alt="A skater lacing up roller skates beside the rink under blue disco lights" width="2832" height="4240" loading="lazy"></div></div>
+      <div class="rw__pic rw__pic--2"><div class="m-photo"><img src="https://images.unsplash.com/photo-1671118045619-45fc5f1fa2ed?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fGRpc2NvJTIwYmFsbHxlbnwxfDB8fHwxNzkxMzY1NTQ5fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=440&q=60" alt="A mirror ball throwing pink and violet light across a dark room" width="5901" height="3934" loading="lazy"></div></div>
     </div>
     <div class="rw__text">
       <p class="m-text-5">On the last Friday of every month the mats go to the wall, the mirror ball comes out and the studio turns into a roller rink, with an aerobics break every half hour.</p>
@@ -957,22 +1152,22 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 <!-- passes: three passes drawn as tickets with a stub, a price, a description and a button, and a first-class-free note -->
 <section id="passes" data-8b-section="passes" aria-labelledby="passes-title">
-  <span class="ps__st ps__st--1" data-8b-motion="spin" data-turn="220" aria-hidden="true"><svg class="m-sticker" aria-hidden="true" focusable="false"><use href="#st-tri"/></svg></span>
-  <span class="ps__st ps__st--2" data-8b-motion="spin" data-turn="-180" aria-hidden="true"><svg class="m-sticker-5" aria-hidden="true" focusable="false"><use href="#st-zig"/></svg></span>
+  <span class="ps__st ps__st--1" data-8b-motion="spin" data-turn="220" aria-hidden="true" style="--spin-rotate-from: -110deg; --spin-rotate-to: 110deg"><svg class="m-sticker" aria-hidden="true" focusable="false"><use href="#st-tri"/></svg></span>
+  <span class="ps__st ps__st--2" data-8b-motion="spin" data-turn="-180" aria-hidden="true" style="--spin-rotate-from: 90deg; --spin-rotate-to: -90deg"><svg class="m-sticker-5" aria-hidden="true" focusable="false"><use href="#st-zig"/></svg></span>
   <div class="ps__head">
     <h2 class="m-text-2" id="passes-title" data-8b-motion="rise"><span>Pay your way</span></h2>
     <p class="m-text-5">No joining fee, no contracts and nothing in small print. Your first class is on us, whichever pass you pick after it.</p>
   </div>
   <ol class="ps__list" data-8b-items=":scope > .ps__ticket" data-8b-motion="stamp">
-    <li class="ps__ticket m-surface">
+    <li style="--motion-stamp-rest: -2deg" class="ps__ticket m-surface">
       <div class="ps__stub"><p class="ps__price m-text-4">£12</p><p class="m-text-3">per class</p></div>
       <div class="ps__body"><h3 class="m-text-2">Drop-in</h3><p class="m-text">One class, any class. Pay when you book or at the desk.</p><a class="m-btn-2" href="#contact"><span class="m-btn__label">Book a class</span></a></div>
     </li>
-    <li class="ps__ticket m-surface-2">
+    <li style="--motion-stamp-rest: 1.5deg" class="ps__ticket m-surface-2">
       <div class="ps__stub"><p class="ps__price m-text-4">£95</p><p class="m-text-3">ten classes</p></div>
       <div class="ps__body"><h3 class="m-text-2">Ten-pack</h3><p class="m-text">Ten classes to use within four months. Share them with a friend if you like.</p><a class="m-btn-2" href="#contact"><span class="m-btn__label">Get the ten-pack</span></a></div>
     </li>
-    <li class="ps__ticket m-surface-3">
+    <li style="--motion-stamp-rest: -1deg" class="ps__ticket m-surface-3">
       <div class="ps__stub"><p class="ps__price m-text-4">£59</p><p class="m-text-3">a month</p></div>
       <div class="ps__body"><h3 class="m-text-2">Unlimited</h3><p class="m-text">Every class, every week, and Rewind Fridays at half price. Stop any month.</p><a class="m-btn-2" href="#contact"><span class="m-btn__label">Go unlimited</span></a></div>
     </li>
@@ -988,20 +1183,20 @@ button, input, select, textarea { font: inherit; color: inherit; }
   </div>
   <div class="rg__stage">
     <ul class="rg__board" data-8b-items=":scope > .rg__quote">
-      <li class="rg__quote m-surface"><blockquote><p class="m-text-5">“I came for the free class in 2019 and I haven’t missed a Tuesday since.”</p></blockquote><p class="m-text-3">Priya · Skate Fit</p></li>
-      <li class="rg__quote m-surface-2"><blockquote><p class="m-text-5">“The only gym where I laugh more than I swear.”</p></blockquote><p class="m-text-3">Joe · Box Burn</p></li>
-      <li class="rg__quote m-surface"><blockquote><p class="m-text-5">“Bev’s warm-up is harder than most people’s whole workout.”</p></blockquote><p class="m-text-3">Hannah · Step &amp; Sweat</p></li>
-      <li class="rg__quote m-surface-3"><blockquote><p class="m-text-5">“I’m sixty-one and I bought leg warmers. No regrets at all.”</p></blockquote><p class="m-text-3">Carol · Stretch &amp; Unwind</p></li>
-      <li class="rg__quote m-surface"><blockquote><p class="m-text-5">“Loud, friendly and very sweaty. Exactly what it says on the door.”</p></blockquote><p class="m-text-3">Sam · Dance Cardio</p></li>
+      <li class="rg__quote m-surface" style="--regulars-li-rg-quote-rotate-from: -9deg; --regulars-li-rg-quote-rotate-to: -1.5deg"><blockquote><p class="m-text-5">“I came for the free class in 2019 and I haven’t missed a Tuesday since.”</p></blockquote><p class="m-text-3">Priya · Skate Fit</p></li>
+      <li class="rg__quote m-surface-2" style="--regulars-li-rg-quote-rotate-from: 9deg; --regulars-li-rg-quote-rotate-to: 1.5deg"><blockquote><p class="m-text-5">“The only gym where I laugh more than I swear.”</p></blockquote><p class="m-text-3">Joe · Box Burn</p></li>
+      <li class="rg__quote m-surface" style="--regulars-li-rg-quote-rotate-from: -9deg; --regulars-li-rg-quote-rotate-to: -1.5deg"><blockquote><p class="m-text-5">“Bev’s warm-up is harder than most people’s whole workout.”</p></blockquote><p class="m-text-3">Hannah · Step &amp; Sweat</p></li>
+      <li class="rg__quote m-surface-3" style="--regulars-li-rg-quote-rotate-from: 9deg; --regulars-li-rg-quote-rotate-to: 1.5deg"><blockquote><p class="m-text-5">“I’m sixty-one and I bought leg warmers. No regrets at all.”</p></blockquote><p class="m-text-3">Carol · Stretch &amp; Unwind</p></li>
+      <li class="rg__quote m-surface" style="--regulars-li-rg-quote-rotate-from: -9deg; --regulars-li-rg-quote-rotate-to: -1.5deg"><blockquote><p class="m-text-5">“Loud, friendly and very sweaty. Exactly what it says on the door.”</p></blockquote><p class="m-text-3">Sam · Dance Cardio</p></li>
     </ul>
   </div>
 </section>
 
 <!-- contact: free-class form on the left, three info cards on the right -->
 <section id="contact" data-8b-section="contact" aria-labelledby="contact-title">
-  <span class="ct__st ct__st--1" data-8b-motion="spin" data-turn="200" aria-hidden="true"><svg class="m-sticker-2" aria-hidden="true" focusable="false"><use href="#st-arc"/></svg></span>
+  <span class="ct__st ct__st--1" data-8b-motion="spin" data-turn="200" aria-hidden="true" style="--spin-rotate-from: -100deg; --spin-rotate-to: 100deg"><svg class="m-sticker-2" aria-hidden="true" focusable="false"><use href="#st-arc"/></svg></span>
   <div class="ct__head">
-    <h2 class="m-text-2" id="contact-title" data-8b-motion="rise"><span>Your first class</span> <span>is on us</span></h2>
+    <h2 class="m-text-2" id="contact-title" data-8b-motion="rise" data-8b-items=":scope > span"><span>Your first class</span> <span>is on us</span></h2>
     <p class="m-text-5">Tell us which class you fancy and when. We’ll text you within a day to save your spot and tell you what to bring (water, trainers, nothing else).</p>
   </div>
   <div class="ct__grid">
@@ -1026,7 +1221,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 <!-- footer: a giant wordmark, three columns and a base line -->
 <footer id="footer" data-8b-section="footer">
-  <span class="ft__st ft__st--1" data-8b-motion="spin" data-turn="240" aria-hidden="true"><svg class="m-sticker-3" aria-hidden="true" focusable="false"><use href="#st-bolt"/></svg></span>
+  <span class="ft__st ft__st--1" data-8b-motion="spin" data-turn="240" aria-hidden="true" style="--spin-rotate-from: -120deg; --spin-rotate-to: 120deg"><svg class="m-sticker-3" aria-hidden="true" focusable="false"><use href="#st-bolt"/></svg></span>
   <p class="m-text-4"><a class="ft__word" href="#opening" style="--len:8">Highkick</a></p>
   <div class="ft__cols">
     <div>
@@ -1055,10 +1250,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   <div class="ft__base m-text-3"><p>© 2026 Highkick Studio Ltd · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></p><p>Made loud in Leeds</p></div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/MotionPathPlugin.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
 <script data-8b-part="section-script:nav">
 (() => {
   const nav = document.getElementById('nav');
@@ -1076,12 +1267,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
   const setMenu = state => {
     menu.hidden = !state;
     open.setAttribute('aria-expanded', String(state));
-    if (state) { window.lenis?.stop(); close.focus(); } else { window.lenis?.start(); open.focus(); }
+    if (state) { window.motionKit?.wheel?.stop(); close.focus(); } else { window.motionKit?.wheel?.start(); open.focus(); }
   };
   open.addEventListener('click', () => setMenu(true));
   close.addEventListener('click', () => setMenu(false));
   menu.addEventListener('keydown', event => { if (event.key === 'Escape') setMenu(false); });
-  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { menu.hidden = true; open.setAttribute('aria-expanded', 'false'); window.lenis?.start(); }));
+  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { menu.hidden = true; open.setAttribute('aria-expanded', 'false'); window.motionKit?.wheel?.start(); }));
 })();
 </script>
 <script data-8b-part="section-script:opening">
@@ -1090,265 +1281,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   const first = section.querySelector('.op__s1');
   new IntersectionObserver(([entry]) => section.classList.toggle('is-offscreen', !entry.isIntersecting)).observe(first);
 })();
-</script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
-function refreshScroll() {
-  const nav = document.getElementById('nav');
-  document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const nav = document.getElementById('nav');
-  const lenis = window.lenis = new Lenis({ lerp: 0.12, wheelMultiplier: 1, anchors: { offset: -nav.offsetHeight } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  spin(element, vars = {}) {
-    const turn = Number(element.dataset.turn || 160);
-    return gsap.timeline(vars)
-      .fromTo(element, { rotation: -turn / 2, y: 30 }, { rotation: 0, y: 0, ease: 'none', duration: .4 })
-      .to(element, { duration: .2 })
-      .to(element, { rotation: turn / 2, y: -30, ease: 'none', duration: .4 });
-  },
-  stamp(element, vars = {}) {
-    const items = element.matches('[data-8b-items]') ? element.querySelectorAll(element.dataset['8bItems']) : [element];
-    return gsap.timeline(vars).from(items, { scale: 1.18, rotation: (i) => (i % 2 ? 7 : -7), opacity: 0, duration: .55, ease: 'back.out(2.2)', stagger: .06 });
-  },
-  rise(element, vars = {}) {
-    const lines = element.querySelectorAll(':scope > span');
-    return gsap.timeline(vars).from(lines.length ? lines : element, { yPercent: 70, opacity: 0, duration: .8, ease: 'power3.out', stagger: .08 });
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  ['spin', 'stamp', 'rise'].forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => {
-        if (name === 'spin') ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top bottom', end: 'bottom top', scrub: .8, animation: effects.spin(element) });
-        else ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top 88%', once: true, animation: effects[name](element) });
-      });
-    }), section.getBoundingClientRect().top < innerHeight ? { first: true, id } : { near: section, id });
-  });
-});
-</script>
-<script data-8b-part="scene:opening">
-queueMotion(() => {
-  gsap.matchMedia().add({ phone: '(max-width: 760px) and (prefers-reduced-motion: no-preference)', wide: '(min-width: 761px) and (prefers-reduced-motion: no-preference)' }, () => {
-    const section = document.getElementById('opening');
-    const second = section.querySelector('.op__s2');
-    const sky = section.querySelector('.op__sky');
-    const frame = section.querySelector('.op__frame');
-    const phone = matchMedia('(max-width: 760px)').matches;
-    const travel = () => second.offsetTop + sky.offsetHeight - frame.offsetTop + innerHeight * .55;
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'opening', trigger: section, start: 'top top', end: () => '+=' + second.offsetHeight, scrub: .7, invalidateOnRefresh: true }
-    });
-    timeline
-      .to(section.querySelector('.op__half--a'), { xPercent: -45, duration: .6 }, 0)
-      .to(section.querySelector('.op__half--b'), { xPercent: 45, duration: .6 }, 0)
-      .to(section.querySelector('.op__copy'), phone ? { y: () => -innerHeight * .45, duration: .5 } : { x: () => -innerWidth * .14, duration: .6 }, 0)
-      .to(section.querySelector('.op__actions'), phone ? { y: () => -innerHeight * .45, duration: .5 } : { x: () => innerWidth * .14, duration: .6 }, 0)
-      .to(frame, { y: travel, rotation: 14, scale: .82, duration: 1 }, 0)
-      .to(section.querySelector('.op__dusk'), { opacity: 1, duration: .7 }, .05)
-      .to(section.querySelectorAll('.op__st'), { rotation: (i) => (i % 2 ? 140 : -160), x: (i) => (i % 2 ? 1 : -1) * innerWidth * .18, y: (i) => -innerHeight * (.2 + i * .06), duration: .8 }, 0)
-      .from(section.querySelector('.op__sun'), { yPercent: 62, scale: .7, duration: .55 }, .15)
-      .from(section.querySelectorAll('.op__gap'), { scaleY: 0, duration: .25, stagger: .04 }, .3)
-      .from(section.querySelectorAll('.op__line'), { xPercent: (i) => (i % 2 ? 1 : -1) * (phone ? 22 : 40), duration: .45, stagger: .05 }, .5)
-      .from(section.querySelector('.op__snap--a'), { xPercent: -60, rotation: -24, duration: .45 }, .55)
-      .from(section.querySelector('.op__snap--b'), { xPercent: 60, rotation: 24, duration: .45 }, .6);
-  });
-}, { first: true });
-</script>
-<script data-8b-part="scene:classes">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('classes');
-    const list = section.querySelector('.cl__list');
-    const rows = [...list.querySelectorAll('.cl__row')];
-    const focus = rows.map((row, index) => gsap.timeline({ paused: true, defaults: { ease: 'none' } })
-      .fromTo(row.querySelector('.cl__band'), { scaleX: 0 }, { scaleX: 1, duration: .6 }, .4)
-      .fromTo(row.querySelector('.cl__label'), { opacity: .3 }, { opacity: 1, duration: .6 }, 0)
-      .fromTo(row.querySelector('.cl__pic'), { scale: .4, opacity: 0, rotation: index % 2 ? 22 : -22 }, { scale: 1, opacity: 1, rotation: index % 2 ? 4 : -5, duration: .7, ease: 'back.out(1.6)' }, .3)
-      .fromTo(row.querySelector('.cl__meta'), { opacity: .25, x: -36 }, { opacity: 1, x: 0, duration: .6 }, .2));
-    const update = () => {
-      const middle = innerHeight / 2;
-      rows.forEach((row, index) => {
-        const box = row.getBoundingClientRect();
-        const distance = Math.abs(box.top + box.height / 2 - middle);
-        focus[index].progress(gsap.utils.clamp(0, 1, 1 - (distance - box.height * .45) / (box.height * .9)));
-      });
-    };
-    ScrollTrigger.create({ id: 'classes', trigger: list, start: 'top bottom', end: 'bottom top', onUpdate: update, onRefresh: update });
-    update();
-  });
-}, { near: document.querySelector('#classes .cl__list') });
-</script>
-<script data-8b-part="scene:arc">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('arc');
-    const stage = section.querySelector('.arc__stage');
-    const path = section.querySelector('.arc__line');
-    const sun = section.querySelector('.arc__sun');
-    const phases = [...section.querySelectorAll('.arc__phase')];
-    const starts = [0, .2, .5, .8];
-    const length = path.getTotalLength();
-    const light = progress => phases.forEach((phase, index) => phase.classList.toggle('is-on', progress >= starts[index] && (index === phases.length - 1 || progress < starts[index + 1])));
-    section.setAttribute('data-arc', '');
-    light(0);
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'arc', trigger: stage, start: 'top top', end: '+=150%', pin: true, scrub: .6, invalidateOnRefresh: true, onUpdate: self => light(self.progress) }
-    });
-    timeline
-      .fromTo(path, { strokeDasharray: length, strokeDashoffset: length }, { strokeDashoffset: 0, duration: 1 }, 0)
-      .to(sun, { motionPath: { path, align: path, alignOrigin: [.5, .5] }, duration: 1 }, 0);
-    return () => { section.removeAttribute('data-arc'); phases.forEach(phase => phase.classList.remove('is-on')); };
-  });
-});
-</script>
-<script data-8b-part="scene:room">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('room');
-    const pile = section.querySelector('.rm__pile');
-    const shots = section.querySelectorAll('.rm__shot');
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'room', trigger: pile, start: 'top 90%', end: 'center 50%', scrub: .6, invalidateOnRefresh: true } });
-    shots.forEach((shot, index) => timeline.from(shot, {
-      x: () => (index % 2 ? 1 : -1) * innerWidth * .55,
-      y: () => -innerHeight * .3,
-      rotation: index % 2 ? 48 : -48,
-      scale: 1.15,
-      duration: 1,
-      ease: 'power2.out'
-    }, index * .5));
-  });
-}, { near: document.querySelector('#room .rm__pile') });
-</script>
-<script data-8b-part="scene:coaches">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('coaches');
-    const stage = section.querySelector('.co__stage');
-    const track = section.querySelector('.co__track');
-    section.setAttribute('data-track', '');
-    const distance = () => Math.max(0, track.scrollWidth - (stage.clientWidth - parseFloat(getComputedStyle(stage).paddingLeft) * 2));
-    const slide = gsap.to(track, {
-      x: () => -distance(),
-      ease: 'none',
-      scrollTrigger: { id: 'coaches', trigger: stage, start: 'top top', end: () => '+=' + distance(), pin: true, scrub: .6, invalidateOnRefresh: true }
-    });
-    section.querySelectorAll('.co__card').forEach((card, index) => {
-      gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: 'coaches:card-' + index, trigger: card, containerAnimation: slide, start: 'left right', end: 'left 68%', scrub: .6 } })
-        .from(card.querySelector('.co__sun'), { rotation: -220 }, 0)
-        .from(card.querySelector('.co__photo'), { rotation: index % 2 ? 16 : -16, xPercent: 30 }, 0);
-    });
-    return () => section.removeAttribute('data-track');
-  });
-});
-</script>
-<script data-8b-part="scene:rewind">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('rewind');
-    const word = section.querySelector('.rw__word');
-    const far = () => Math.min(innerWidth * .17, 250);
-    const trail = sign => ({ '--rw-ax': () => sign * far() + 'px', '--rw-ay': '0px', '--rw-bx': () => sign * far() * 2 + 'px', '--rw-by': '0px', '--rw-cx': () => sign * far() * 3 + 'px', '--rw-cy': '0px' });
-    const rest = { '--rw-ax': '7px', '--rw-ay': '7px', '--rw-bx': '0px', '--rw-by': '0px', '--rw-cx': '0px', '--rw-cy': '0px', x: 0 };
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'rewind', trigger: word, start: 'top bottom', end: 'bottom top', scrub: .5, invalidateOnRefresh: true }
-    });
-    timeline
-      .fromTo(word, { ...trail(1), x: () => innerWidth * .35 }, { ...rest, duration: .54, ease: 'power1.out' }, 0)
-      .to(word, { ...trail(1), x: () => -innerWidth * .35, duration: .3, ease: 'power1.in' }, .7);
-    const pics = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: 'rewind:pics', trigger: section.querySelector('.rw__pics'), start: 'top bottom', end: 'bottom top', scrub: .5 } });
-    pics
-      .fromTo(section.querySelector('.rw__pic--1'), { y: 140, rotation: -14 }, { y: 0, rotation: -6, duration: .4 }, 0)
-      .to(section.querySelector('.rw__pic--1'), { y: -120, rotation: 2, duration: .4 }, .6)
-      .fromTo(section.querySelector('.rw__pic--2'), { y: -100, rotation: 12 }, { y: 0, rotation: 5, duration: .4 }, 0)
-      .to(section.querySelector('.rw__pic--2'), { y: 120, rotation: -3, duration: .4 }, .6);
-  });
-}, { near: document.querySelector('#rewind') });
-</script>
-<script data-8b-part="scene:regulars">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('regulars');
-    const board = section.querySelector('.rg__board');
-    const quotes = [...section.querySelectorAll('.rg__quote')];
-    const phone = matchMedia('(max-width: 860px)').matches;
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'regulars', trigger: board, start: 'top 95%', end: phone ? 'top 25%' : 'center 55%', scrub: .6 } });
-    timeline.fromTo(board, { rotationX: phone ? 48 : 64, y: 60 }, { rotationX: 0, y: 0, duration: 1, ease: 'power1.out' }, 0);
-    quotes.forEach((quote, index) => timeline.from(quote, { y: 70, rotation: (index % 2 ? 1 : -1) * 9, duration: .5, ease: 'back.out(1.8)' }, .3 + index * .12));
-  });
-}, { near: document.querySelector('#regulars .rg__board') });
 </script>
 <script data-8b-part="section-script:contact">
 (() => {
@@ -1361,6 +1293,197 @@ queueMotion(() => {
     form.reset();
   });
 })();
+</script>
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:opening">
+motionKit.scene('opening', () => {
+  const section = document.getElementById('opening');
+  const second = section.querySelector('.op__s2');
+  const sky = section.querySelector('.op__sky');
+  const frame = section.querySelector('.op__frame');
+  motionKit.measure(() => motionKit.set(section, {
+    '--opening-t': second.offsetHeight / 1.05 + 'px',
+    '--opening-travel': second.offsetTop + sky.offsetHeight - frame.offsetTop + innerHeight * .55 + 'px'
+  }));
+});
+</script>
+<script data-8b-part="scene-script:arc">
+motionKit.scene('arc', () => {
+  const section = document.getElementById('arc');
+  const graph = section.querySelector('.arc__graph');
+  const path = section.querySelector('.arc__line');
+  const sun = section.querySelector('.arc__sun');
+  const phases = [...section.querySelectorAll('.arc__phase')];
+  const starts = [0, .2, .5, .8];
+  const length = path.getTotalLength();
+  const first = path.getPointAtLength(0);
+  const across = path.ownerSVGElement.viewBox.baseVal.width;
+  section.setAttribute('data-arc', '');
+  motionKit.set(path, { 'stroke-dasharray': length });
+  motionKit.track(section, 'top top', 'top -150%', progress => {
+    const point = path.getPointAtLength(progress * length);
+    const unit = graph.offsetWidth / across;
+    motionKit.set(path, { 'stroke-dashoffset': length * (1 - progress) });
+    motionKit.set(sun, { translate: (point.x - first.x) * unit + 'px ' + (point.y - first.y) * unit + 'px' });
+    const held = Math.round(progress * innerHeight * 1.5) / (innerHeight * 1.5);
+    phases.forEach((phase, index) => phase.classList.toggle('is-on', held >= starts[index] && (index === phases.length - 1 || held < starts[index + 1])));
+  });
+});
+</script>
+<script data-8b-part="scene-script:coaches">
+motionKit.scene('coaches', () => {
+  const section = document.getElementById('coaches');
+  const stage = section.querySelector('.co__stage');
+  const track = section.querySelector('.co__track');
+  const cards = [...section.querySelectorAll('.co__card')];
+  motionKit.measure(() => {
+    const last = cards[cards.length - 1];
+    const left = card => motionKit.box(card).x;
+    const width = left(last) - left(track) + last.offsetWidth * 1.162;
+    const room = stage.clientWidth - parseFloat(getComputedStyle(stage).paddingLeft) * 2;
+    motionKit.set(section, { '--coaches-distance': Math.max(0, width - room) + 'px' });
+    cards.forEach(card => {
+      const from = left(card) - innerWidth;
+      const to = left(card) - innerWidth * .68;
+      motionKit.set(card, {
+        '--coaches-from': Math.max(0, from) + 'px',
+        '--coaches-to': Math.max(1, to) + 'px',
+        '--coaches-left': Math.min(1, Math.max(0, to / (to - from)))
+      });
+    });
+  });
+});
 </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 # AGENTS.md: sauna website template
 
-One-page website for a sauna and bathing house or day spa with a lake, timed passes and a booking request form. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a sauna and bathing house or day spa with a lake, timed passes and a booking request form. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,25 +14,22 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:header`: `.hd-menu` `.mn-close`
   - `section-script:arrival`: `.op-veil`
-  - `scene:arrival`: `.op-first` `.op-hold` `.op-lake` `.op-veil` `.op-room` `.op-room-dark` `.op-line` `.op-float` `data-depth`
-  - `scene:round-frame`: `.rd-steps` `.rd-shot--heat` `.rd-shot--cold` `.rd-shot--rest` `.rd-tint--hot` `.rd-tint--cold`
   - `section-script:saunas`: `.sa-row`
-  - `scene:saunas-heat`: `.sa-row` `.sa-line`
-  - `scene:steam-wave`: `.st-lines` `.st-glow` `.st-line`
-  - `scene:day-light`: `.dy-morning` `.dy-night` `.dy-tint--dawn` `.dy-tint--dusk` `.dy-hour`
-  - `scene:house-slats`: `.hs-photo`
   - `section-script:passes`: `.ps-pass` `data-from` `data-to`
-  - `scene:passes-hours`: `.ps-board` `.ps-axis` `.ps-marker` `.ps-pass` `data-from` `data-to`
   - `section-script:visit`: `.vs-form` `.vs-status` `data-ok` `data-error`
-  - `scene:visit-name`: `.vs-name`
+  - `scene-script:arrival`: `.op-first`
+  - `scene-script:day-light`: `.dy-hours`
+  - `scene-script:house-slats`: `.m-photo`
+  - `scene-script:passes-hours`: `.ps-board` `.ps-axis` `.ps-pass` `data-from` `data-to`
 - `style="--len:N"` = characters in that display line, spaces included: `Water on the stones.` is 20, `A breath of heat` is 16, `rolls off the ceiling` is 21, `and the room` is 12, `goes quiet.` is 11, `Brume` is 5.
-- The four sauna rows and the line lengths come from each temperature's data value (value as a percent of the track). Keep values between 0 and 100, and keep the visible text in step.
+- Each sauna row's line has two lengths: at rest it comes from the temperature's data value (value as a percent of the track, set by section-script:saunas), and while the motion plays the line runs to the row's inline --saunas-span-sa-line-clippath-to-2, which is 100 minus that value in percent. Change both, keep values between 0 and 100, and keep the visible text in step.
 - The five statement lines each carry style="--len:N", the number of characters with spaces and punctuation, which sets the font size so the line fits the width. Change N when you change a line.
 - The passes read data-from and data-to (hours on a 24-hour clock, axis 08 to 22) for their bands and for the marker scene. The axis labels are separate text.
-- The rest, round and day photos are stacked layers (heat over cold over rest; morning under night) written by their scenes, so replace them with photos of the same shape and keep the order.
+- The rest, round and day photos are stacked layers (heat over cold over rest; morning under night) moved by their scenes, so replace them with photos of the same shape and keep the order. The three small photos on the second screen rise by distances written in the scene:arrival keyframes; their data-depth attributes are not read.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #0b0906 (page ground, the menu overlay, the solid header, text on a filled button when hovered), `--color-2` #dcd8d1 (body and heading text, button borders and hover fills, focus outlines, fog patches), `--color-3` #9a948a (section rails, field labels, captions, small notes, form field underlines), `--color-4` #2b2620 (hairlines between steps, dishes, questions and passes; borders of the form panel and menu button), `--color-5` #d0703f (copper for heat: hot readings and temperatures, step meta, line ends, the lit hour, open pass bands, the pass marker, the statement glow), `--color-6` #8fb2b8 (lake blue for cold: cold readings and temperatures, the start of the temperature lines, the cold and dawn tints, one fog patch), `--color-7` #15120e (the request form panel, photo placeholders and the dropdown option backgrounds), `--color-8` #091114 (cold end of the sauna section's ground, a blue-black), `--color-9` #1b0d07 (hot end of the sauna section's ground, a brown-black); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -66,9 +63,9 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the menu button does nothing and the five top links are hidden on narrow screens; the footer repeats The round, Saunas, A day, Passes and Questions. Without JavaScript the temperature lines also stay empty and all three pass bands span the whole 08 to 22 axis.
 - The form does not send anything yet: the action is # and the thank-you line comes from a script.
-- The opening, the round and the day use sticky stages with scrubbed layers (fog, photos, tints) and a fixed 100vh stage, so on very short windows the held frame can crop its photo.
-- GSAP, ScrollTrigger, SplitText and Lenis load from jsDelivr; without them the scenes do not run.
-- The header hide-on-scroll and the hover states keep working with reduced motion; the scenes do not.
+- While the motion runs, the opening, the round and the day use held stages (CSS sticky) with layers tied to the scroll (fog, photos, tints) and a 100vh stage, so on very short windows the held frame can crop its photo.
+- Without scroll-driven animation support (Firefox today) the scroll scenes, the reveals and the smooth wheel are off and each section shows its finished layout: the round as a triptych, the morning lake behind the six hours, the lines at their temperatures, no pass lit, the closing name as one word. The opening load-in and the fog drift are plain CSS and still play. With reduced motion on, nothing moves on its own; the header hide-on-scroll and the hover states keep working.
+- Counts fixed in CSS: the round has three steps and three photos (data-8b-fixed), the passes board three passes (data-8b-fixed), and the statement's five lines are each timed by their own :nth-of-type rule in scene:steam-wave, so a sixth line would not swell.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Brume left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Brume left only in class names.

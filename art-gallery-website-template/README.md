@@ -1,8 +1,8 @@
-# Free HTML art gallery website template with GSAP scroll animations
+# Free HTML art gallery website template with scroll animations and no libraries
 
-This art gallery website template is one free HTML file for a gallery, kunsthalle or museum that opens late: an opening screen, a six-night programme, four rooms, five resident artists, a midnight screening, passes and a visit form. White ruled cells meet dark night screens and a coral glow. AGENTS.md is included, so an AI agent can adapt it.
+This art gallery website template is a free HTML file for a gallery, kunsthalle or museum that opens late: a six-night programme, four rooms, five artists, a screening, passes and a visit form. White ruled cells meet dark night screens and a coral glow. Its scroll motion runs on CSS with no libraries, in about 27 KB of code gzipped.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/art-gallery-website-template/)** · **[Use this template](https://github.com/new?template_name=art-gallery-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/art-gallery-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/nocturna/)**
 
@@ -24,17 +24,17 @@ curl -LO https://raw.githubusercontent.com/8bsite/art-gallery-website-template/m
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my venue: name, address, opening hours, rooms, season events with dates, resident artists, any screening, ticket and pass prices>. Replace first the name, hours, six programme rows, five artists, prices and the Rotterdam address. Keep the section ids and the classes AGENTS.md lists, set each --len to its text length, and keep four rooms, eight relay cities and three pass cards. Ask me for missing facts and never invent dates, prices, artists or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my venue: name, address, hours, rooms, dated events, artists, screening, pass prices>. Replace the name, hours, six programme rows, five artists, prices and the Rotterdam address first. Keep the gate script in the head, the ids, the data-8b-section and data-8b-motion attributes and the classes AGENTS.md lists, and add no animation library. Reset each --len; keep four rooms, six programme photos, eight relay cities and three pass cards. Never invent dates, prices, artists or contacts; ask me.
 ```
 
-Claude Code, Cursor or Codex can adapt this by vibe coding in a few passes. Start with the name, hours, address and the six programme rows, then the four rooms, five artists and the screening. Ask the owner for every date, price, artist name, film title and house rule; the demo invents all of them. Leave the ids, the script classes and the data-8b attributes AGENTS.md lists alone, and reset the --len number on the wordmark, the rails and the artist names when their text changes.
+As an art gallery website template for Claude Code, Cursor or Codex, it adapts by vibe coding in a few passes. Start with the name, hours, address and the six programme rows, then the four rooms, five artists and the screening. Ask the owner for every date, price, artist name, film title and house rule; the demo invents all of them. Leave the gate script, the ids and the classes and data-8b attributes AGENTS.md lists alone, and reset each --len when its text changes.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=art-gallery-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
 - **Navigation**: white top bar over the right two thirds: arch logo, coral dot, four links, Menu button; Menu opens a dark overlay with seven links; the bar hides on scroll down. The bar hides when you scroll down past half a screen and returns on scroll up; Menu opens a dark overlay of seven links.
-- **Lights down at nine. Eyes open till two.**: dark screen with the heading "Lights down at nine. Eyes open till two.", intro, Get a pass button, See the season link, three fact cells and five stars. On load the heading lines, text and three fact cells rise in one after another. The glow breathes and the five stars turn slowly, and both pause while the section is off screen.
+- **Lights down at nine. Eyes open till two.**: dark screen with the heading "Lights down at nine. Eyes open till two.", intro, Get a pass button, See the season link, three fact cells and five stars. Smooth wheel scrolling throughout; on load the heading lines, text and three fact cells rise in one after another, while the glow breathes and the five stars turn slowly, pausing off screen.
 - **Six nights to stay up for**: ledger of six nights with dates, titles, formats and rooms, beside a sticky arch window that shows a photo per night. As each row reaches the reading line its photo rises into the arch over the previous one, and on desktop a coral dot slides down the rule to that row.
 - **Four rooms, one long night**: dark stage with the heading "Four rooms, one long night", a Plan a visit button and a plan of four rooms that a coral lamp walks through. Pinned: each room starts under a dark veil, a coral lamp travels from room to room, and each veil lifts as the lamp arrives.
 - **Five artists who work at night**: five resident artists as huge two-weight names with a role line and an arch portrait each. As each row crosses the screen the light first name thickens while the heavy surname thins, they trade back, and the portrait slides along the row.
@@ -60,17 +60,17 @@ No agent? Click **[Use this template](https://github.com/new?template_name=art-g
 ## Questions
 
 **Can a museum or a daytime gallery use it?**  
-Yes, after a text pass. A museum website design can keep the rooms, programme and passes, but the demo copy is built around night hours: nine to two, free entry before 22:00 and a Friday midnight screening. Replace those, or remove the screening and relay sections with their animation scripts and repoint the links to #screening.
+Yes, after a text pass. A museum website design can keep the rooms, programme and passes, but the demo copy is built around night hours: nine to two, free entry before 22:00 and a Friday midnight screening. Replace those, or remove the screening and relay sections with their motion styles and script, and repoint the links to #screening.
 
 **Where does the visit form send its messages?**  
 Nowhere yet. The form needs a name, an email and a question, then shows a thank-you line and clears itself without sending anything. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or replace the form with a link, and rewrite the thank-you line.
 
-**Can I get a site like this without editing code?**  
-Yes, in a different way. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence, with its own design, not this template. Designing and restyling are free; publishing with hosting and SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
+**Does the motion work in every browser and with reduced motion?**  
+The gate script in the head turns the scroll motion on only where scroll-driven animations exist and reduced motion is off. Elsewhere, Firefox today, the page shows its finished layout with plain scrolling: no pinned sections, all rooms lit, the still in its middle cell. In Firefox the opening glow and stars still move; with reduced motion they stay still.
 
 ## Is it the right base?
 
-This is the right base when a venue keeps late hours, runs dated events and sells passes. A venue built around one dated event fits [a template made for events](https://8b.com/templates/ondo/) better, and a gallery with hundreds of works or a shop needs more than one page. One weak spot: without JavaScript the Menu button cannot open its overlay, and on phones that overlay holds the only Residents and Midnight screening links. Owners who do not want to edit code can use a no-code builder instead.
+This is the right base when a venue keeps late hours, runs dated events and sells passes. It is the light build: the same look and scroll behaviour, with no animation library and no script from a CDN. Measured here, it downloads about 27 KB of code gzipped in one file; the GSAP version needs about 72 KB and three extra requests. A venue built around one dated event fits [a template made for events](https://8b.com/templates/ondo/) better.
 
 ## Before you publish
 
@@ -79,7 +79,9 @@ This is the right base when a venue keeps late hours, runs dated events and sell
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 105 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 116 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 121+ (it uses color-mix(), :has(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 105 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

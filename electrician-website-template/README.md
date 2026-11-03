@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my electrical business: company name, area covered, services, fixed price per job, team, registrations and insurance, out-of-hours number and callout fee, hours, how people book>. Replace first the company name, the Sheffield places, the eight prices, the team, the reviews and the phone numbers. Keep the ids, the data-8b-section, data-8b-motion and data-8b-part attributes, the selectors AGENTS.md lists and one photo per room. Ask me for missing facts; never invent prices, registrations, cover, hours, addresses, reviews or contacts.
 ```
 
-Electrician web design by vibe coding with Claude Code, Cursor or Codex goes quickest when the agent has the real facts: prices, areas, registrations, insurance, hours and phone numbers. The demo invents all of them, including the nine employed electricians and the eight reviews. Replace those first, keep the ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the selectors AGENTS.md lists, keep one photo per room, and set the footer wordmark's --len to the new name's character count.
+Electrician web design by vibe coding goes quickest with an electrician website template for Claude Code, Cursor or Codex, once the agent has the real facts: prices, areas, registrations, insurance, hours and phone numbers. The demo invents all of them, including the nine employed electricians and the eight reviews. Replace those first, keep the ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the selectors AGENTS.md lists, keep one photo per room, and set the footer wordmark's --len to the new name's character count.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=electrician-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -62,14 +62,14 @@ No agent? Click **[Use this template](https://github.com/new?template_name=elect
 
 ## Questions
 
+**Can I use this design with other AI tools?**  
+Yes. The electrician website design prompt on this page works without the template in Claude Code, Codex, Cursor, Lovable, v0 or Bolt, and [a Replit button](https://8b.com/templates/for-replit/) fills it in. With the template, download index.html and AGENTS.md into an empty folder, open it in your agent, paste the short prompt; AGENTS.md says what to keep and which facts to ask for.
+
 **Does the visit form send anything?**  
 No. The script checks that name and phone are filled in, shows a thank-you line and clears the fields. To receive requests, point the form at Formspree or Netlify Forms, or at your own CRM form, and then drop the thank-you script.
 
 **What happens with reduced motion or without JavaScript?**  
 With reduced motion the entrance and scroll animations and smooth scrolling are off and the page still reads in full, though the navigation bar still hides on scroll and button hovers still animate. Without JavaScript the wide-screen links, FAQ and prices work, but the phone Menu button cannot open its overlay and the night grid stays empty.
-
-**Can I get a site like this without editing code?**  
-Yes. [8B's AI website builder](https://8b.com/templates/8b/) lets you describe the business in a sentence and designs a new site of its own, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly, and it also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

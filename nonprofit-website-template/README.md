@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my organisation: name, city, registered charity number, causes, real opportunities with day, time, length and places left, age and background check rules, donation amounts, budget, contacts>. Replace first the demo name, Glasgow places and Scottish terms, the six open hours, the quotes and the money figures. Keep the ids and the classes AGENTS.md lists, and set the footer wordmark's len to the new name's length. Ask me for missing facts and never invent figures, quotes, charity numbers or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when the agent gets the facts only the organisation has: name, charity number, causes, real opportunities with day, time and places, age and background check rules, gift amounts and what each buys. The demo invents all of these, with the three quotes and the money figures. Replace them first, then the Glasgow names and Scottish terms such as the PVG check. Leave the section ids and the classes AGENTS.md lists alone.
+Using a nonprofit website template for Claude Code, Cursor or Codex goes fastest when the agent gets the facts only the organisation has: name, charity number, causes, real opportunities with day, time and places, age and background check rules, gift amounts. The demo invents all of these, with the quotes and money figures. Replace them first, then the Glasgow names and Scottish terms such as the PVG check. The whole site is [one long volunteering page](https://8b.com/templates/one-page/), so the agent reads it in one pass.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=nonprofit-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -64,13 +64,13 @@ No agent? Click **[Use this template](https://github.com/new?template_name=nonpr
 ## Questions
 
 **Is this a free non-profit website template?**  
-Yes. The code is MIT licensed and sits in one index.html with inline CSS and scripts. GSAP and Lenis load from jsDelivr, the fonts from Google Fonts, and the 24 photos stay on Unsplash's servers and are listed in CREDITS.md.
+Yes. The code is MIT licensed and sits in one index.html with inline CSS and scripts. GSAP and Lenis load from jsDelivr, the fonts from Google Fonts, and the 24 photos stay on Unsplash's servers and are listed in CREDITS.md. On Replit, [the volunteer network card](https://8b.com/templates/for-replit/) opens Agent with this design's prompt.
 
 **Do the donation and sign-up forms work?**  
 No, neither sends anything. The donation form only shows a preview message and the sign-up form checks the name and email, then shows a thank-you line. Connect sign-up with Formspree or Netlify Forms, and point Give now at your own donation page or payment link.
 
 **Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). Describe the site in a sentence and it designs a new one, not this template. Designing and restyling are free; publishing with hosting, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, with [8B's AI website builder](https://8b.com/). Describe the site in a sentence and it designs a new one, not this template. Designing and restyling are free; publishing with hosting, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

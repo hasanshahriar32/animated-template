@@ -43,7 +43,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Ask the owner for
 All demo text, never to be invented:
-- Opening hours: Monday to Friday 8:00 to 19:00, Saturday 9:00 to 17:00, closed Sunday; "Open today 8:00–19:00" (top strip, contact, footer).
+- Opening hours: Monday to Friday 8:00 to 19:00, Saturday 9:00 to 17:00, closed Sunday; "Open today 8:00-19:00" (top strip, contact, footer).
 - Same-day rule: files in by 2 pm printed that day, "Same-day print!" (top strip, rail label, posters, questions).
 - Founding year: "on Narborough Road since 2011" (footer).
 - Job specs and prices: poster sizes A3 to A0 from £4 an A3, flyers from £28 for 250 A6, zines from £1.90 a copy, cards from £22 for 100, with paper weights and turnarounds (opening tabs).

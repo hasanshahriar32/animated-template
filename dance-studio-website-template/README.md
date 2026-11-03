@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my studio: name, city, styles with beginner and improver times, the weekly timetable with teachers, teacher bios, passes and prices, trial offer, show date if any, address, hours, phone, email, how to book>. Replace the six styles, the timetable cards, the five teachers, the four passes and the contact details first. Keep the ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the class names AGENTS.md lists. Ask me for any missing fact; never invent prices, times, bios or contacts.
 ```
 
-In a vibe coding session, hand Claude Code, Cursor or Codex index.html and AGENTS.md. Replace the thirteen timetable cards, the five teachers and the four passes first. The opening ring is built for eight portraits and the styles line-up for six photos, so swap images without changing the count. Ask the owner for real times, prices, bios and the show date, and never invent them.
+If you vibe code the site, treat this as a dance studio website template for Claude Code and Cursor: hand the agent index.html and AGENTS.md. Replace the thirteen timetable cards, the five teachers and the four passes first. The opening ring is built for eight portraits and the styles line-up for six photos, so keep those counts. Ask the owner for real times, prices, bios and the show date, and never invent them.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=dance-studio-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -69,7 +69,7 @@ It has twelve sections: header, opening, styles, first class, timetable, teacher
 No. With JavaScript the form checks the name and the email, then shows a thank-you line, and sends nothing. Without JavaScript it posts to the page itself, which a static host rejects. Connect it to Formspree or Netlify Forms, or point the buttons at your own booking or checkout page, as AGENTS.md describes.
 
 **Can I get a site like this without editing code?**  
-Not this exact file, but [8B's AI website builder](https://8b.com/templates/8b/) makes a new site from a sentence. You describe the studio and its engine designs the site, and designing and restyling are free. Hosting, SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Not this exact file, but [8B's AI website builder](https://8b.com/) makes a new site from a sentence. You describe the studio and its engine designs the site, and designing and restyling are free. Hosting, SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

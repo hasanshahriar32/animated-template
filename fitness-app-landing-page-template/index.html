@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/fitness-app-landing-page-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -161,10 +162,6 @@
   /* end font fallbacks */
   *, *::before, *::after { box-sizing: border-box; }
   html { background: var(--color-1); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-  .lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-smooth iframe { pointer-events: none; }
   body { margin: 0; background: var(--color-1); color: var(--color-3); -webkit-font-smoothing: antialiased; overflow-x: clip; }
   img, svg { display: block; max-width: 100%; }
   img { height: auto; }
@@ -292,9 +289,11 @@
   #curve .cv-line { position: absolute; left: 0; right: 0; top: 0; height: clamp(300px, 46svh, 440px); width: 100%; overflow: visible; pointer-events: none; }
   #curve .cv-line polyline { fill: none; stroke: var(--color-1); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
   #curve .cv-caption { margin-top: 18px; color: var(--color-9); }
+  #curve { padding-top: calc(70px + var(--space-2)); }
+  #curve .cv-title { font-size: clamp(34px, 5.6vw, 88px); }
   @media (max-width: 900px) {
+    #curve { padding-top: calc(62px + var(--space-2)); }
     #curve .cv-grid { grid-template-columns: 1fr; }
-    #curve .cv-chart { order: -1; }
   }
   @media (max-width: 767.98px) {
     #curve .cv-days { grid-template-columns: 1fr; gap: 10px; }
@@ -392,24 +391,6 @@
     #app .ap-grid { grid-template-columns: 1fr; }
     #app .ap-phone { width: min(270px, 74vw); }
     #app .ap-note { min-height: 0; padding: 18px 0 18px 24px; }
-  }
-}
-</style>
-<style data-8b-part="scene-style:app">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #app[data-app-run] .ap-phone { aspect-ratio: 300 / 620; }
-    #app[data-app-run] .ap-screen { height: 100%; }
-    #app[data-app-run] .ap-strip { position: relative; height: 100%; }
-    #app[data-app-run] .ap-view { position: absolute; inset: 0; aspect-ratio: auto; }
-    #app[data-app-run] .ap-view + .ap-view { border-top: 0; }
-  }
-  @media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
-    #app[data-app-run] .ap-stage { position: sticky; top: calc(50svh - 330px); }
-  }
-  @media (prefers-reduced-motion: no-preference) and (max-width: 767.98px) {
-    #app[data-app-run] .ap-stage { display: block; height: 190svh; }
-    #app[data-app-run] .ap-phone { position: sticky; top: max(72px, calc(50svh - 280px)); margin: 0 auto; }
   }
 }
 </style>
@@ -551,13 +532,122 @@
   @media (hover: hover) { #footer nav a:hover { background-size: 0 1px; background-position: 100% 100%; transition: background-size .45s cubic-bezier(.3, .7, .2, 1); } }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#curve { padding-top: calc(70px + var(--space-2)); }
-#curve .cv-title { font-size: clamp(34px, 5.6vw, 88px); }
-@media (max-width: 900px) {
-  #curve { padding-top: calc(62px + var(--space-2)); }
-  #curve .cv-chart { order: 0; }
-}</style>
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); --ease-c6cd5f: linear(0, 0.0012, 0.0047, 0.0106, 0.0189, 0.0295, 0.0425, 0.0579, 0.0756, 0.0957, 0.1182, 0.143, 0.1702, 0.1997, 0.2316, 0.2659, 0.3025, 0.3415, 0.3829, 0.4266, 0.4727, 0.5211, 0.5719, 0.6251, 0.6806, 0.7385, 0.7988, 0.8614, 0.9264, 0.9938, 0.9697, 0.9387, 0.91, 0.8837, 0.8597, 0.8381, 0.8189, 0.802, 0.7875, 0.7754, 0.7656, 0.7582, 0.7532, 0.7505, 0.7502, 0.7522, 0.7566, 0.7634, 0.7725, 0.784, 0.7979, 0.8141, 0.8327, 0.8536, 0.8769, 0.9026, 0.9306, 0.961, 0.9938, 0.9867, 0.9727, 0.9609, 0.9516, 0.9446, 0.94, 0.9377, 0.9379, 0.9403, 0.9452, 0.9524, 0.9619, 0.9738, 0.9881, 0.9977, 0.991, 0.9866, 0.9845, 0.9849, 0.9875, 0.9926, 1); }
+[data-8b-live] [data-8b-motion~="stretch"] { animation-name: motion-stretch---m-wd; animation-duration: 1.1s; animation-delay: 0s; animation-timing-function: var(--ease-power3-out); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="stretch"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="drop"] { animation-name: motion-drop-translate, motion-drop-rotate, motion-drop-opacity; animation-duration: 0.9s; animation-delay: 0s; animation-timing-function: var(--ease-c6cd5f); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="drop"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="draw"] { animation-name: motion-draw-strokedashoffset, motion-draw-strokedasharray; animation-duration: 1.3s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1), linear; animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="draw"].is-in { animation-play-state: running; }
+@keyframes motion-stretch---m-wd { 0% { --m-wd: 75; } 100% { --m-wd: 150; } }
+@keyframes motion-drop-translate { 0% { translate: 0px -70px; } 100% { translate: 0px 0px; } }
+@keyframes motion-drop-rotate { 0% { rotate: var(--drop-rotate-from, 28deg); } 100% { rotate: 0deg; } }
+@keyframes motion-drop-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes motion-draw-strokedashoffset { 0% { stroke-dashoffset: 100px; } 100% { stroke-dashoffset: 0px; } }
+@keyframes motion-draw-strokedasharray { 0% { stroke-dasharray: 100px; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 100% { stroke-dasharray: 100px; } }
+}
+</style>
+<style data-8b-part="scene:curve">
+@layer scenes {
+[data-8b-live] #curve .cv-bar { animation-duration: .9167s; animation-delay: calc(.3833s + var(--i, 0) * .0833s); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: backwards; will-change: scale; --curve-flat: min(4, calc(.5 / max(var(--cv-h), .06))); }
+[data-8b-live] #curve .cv-line polyline { stroke-dasharray: 100px; animation-name: curve-line; animation-duration: .75s; animation-delay: 1.1333s; animation-timing-function: linear; animation-fill-mode: backwards; }
+@keyframes curve-bar-y { 0% { scale: 1 var(--curve-flat); background-color: var(--color-8); } }
+@keyframes curve-bar-x { 0% { scale: var(--curve-flat) 1; background-color: var(--color-8); } }
+@keyframes curve-line { 0% { stroke-dashoffset: 100px; } 100% { stroke-dashoffset: 0px; } }
+@media (min-width: 768px) {
+  [data-8b-live] #curve .cv-bar { animation-name: curve-bar-y; }
+}
+@media (max-width: 767.98px) {
+  [data-8b-live] #curve .cv-bar { animation-name: curve-bar-x; }
+}
+}
+</style>
+<style data-8b-part="scene:disciplines">
+@layer scenes {
+[data-8b-live] #disciplines .m-notch > .m-text-2 { --m-wd: 150; }
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #disciplines .ds-rows { view-timeline: --disciplines-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #disciplines .ds-rows > li { animation-timeline: --disciplines-t1; animation-range: cover calc(5vh + 8.5882vh * var(--i)) cover calc(52.2353vh + 8.5882vh * var(--i)); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+@keyframes disciplines-li-ds-row-rotate-d { 0% { rotate: var(--disciplines-li-ds-row-rotate-from, -9deg); } 100% { rotate: 0deg; } }
+@keyframes disciplines-li-ds-row-rotate-m { 0% { rotate: var(--disciplines-li-ds-row-rotate-from-m, -5deg); } 100% { rotate: 0deg; } }
+@keyframes disciplines-li-ds-row-translate-d { 0% { translate: var(--disciplines-li-ds-row-translate-from, 22%) var(--disciplines-li-ds-row-translate-from-2, 50px); } 100% { translate: 0px 0px; } }
+@keyframes disciplines-li-ds-row-translate-m { 0% { translate: var(--disciplines-li-ds-row-translate-from-m, 5%) var(--disciplines-li-ds-row-translate-from-2-m, 24px); } 100% { translate: 0px 0px; } }
+@keyframes disciplines-li-ds-row-clippath-d { 0% { clip-path: inset(0% 60% 0% 0% round 999px); } 100% { clip-path: inset(0% round 999px); } }
+@keyframes disciplines-li-ds-row-clippath-m { 0% { clip-path: inset(0% 34% 0% 0% round 44px); } 100% { clip-path: inset(0% round 44px); } }
+@media (min-width: 768px) {
+  [data-8b-live] #disciplines .ds-rows > li { animation-name: disciplines-li-ds-row-rotate-d, disciplines-li-ds-row-translate-d, disciplines-li-ds-row-clippath-d; }
+}
+@media (max-width: 767.98px) {
+  [data-8b-live] #disciplines .ds-rows > li { animation-name: disciplines-li-ds-row-rotate-m, disciplines-li-ds-row-translate-m, disciplines-li-ds-row-clippath-m; }
+}
+}
+</style>
+<style data-8b-part="scene:app">
+@layer scenes {
+[data-8b-live] #app .m-text-2 { --m-wd: 150; }
+[data-8b-live] #app .ap-phone { aspect-ratio: 300 / 620; }
+[data-8b-live] #app .ap-screen { height: 100%; }
+[data-8b-live] #app .ap-strip { position: relative; height: 100%; }
+[data-8b-live] #app .ap-view { position: absolute; inset: 0; aspect-ratio: auto; }
+[data-8b-live] #app .ap-view + .ap-view { border-top: 0; animation-name: app-wipe; }
+[data-8b-live] #app .ap-view + .ap-view > * { animation-name: app-rise; }
+[data-8b-live] #app .ap-grid { timeline-scope: --app-run; }
+[data-8b-live] #app .ap-view + .ap-view, [data-8b-live] #app .ap-view + .ap-view > * { animation-timeline: --app-run; animation-range: cover calc(var(--app-from) + var(--app-at) * (var(--app-to) - var(--app-from))) cover calc(var(--app-from) + (var(--app-at) + var(--app-for)) * (var(--app-to) - var(--app-from))); animation-timing-function: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); animation-fill-mode: both; }
+@keyframes app-wipe { 0% { clip-path: inset(100% 0% 0%); } 100% { clip-path: inset(0%); } }
+@keyframes app-rise { 0% { translate: 0px 40px; } 100% { translate: 0px 0px; } }
+@media (min-width: 768px) {
+  [data-8b-live] #app { --app-from: calc(var(--app-first) + 50vh); --app-to: calc(var(--app-last) + 50vh); }
+  [data-8b-live] #app .ap-stage { position: sticky; top: calc(50svh - 330px); }
+  [data-8b-live] #app .ap-notes { view-timeline: --app-run block; }
+}
+@media (max-width: 767.98px) {
+  [data-8b-live] #app { --app-from: 84vh; --app-to: calc(100% - 85vh); }
+  [data-8b-live] #app .ap-stage { display: block; height: 190svh; view-timeline: --app-run block; }
+  [data-8b-live] #app .ap-phone { position: sticky; top: max(72px, calc(50svh - 280px)); margin: 0 auto; }
+}
+}
+</style>
+<style data-8b-part="scene:challenge">
+@layer scenes {
+[data-8b-live] #challenge .ch-map { view-timeline: --challenge-map block; }
+[data-8b-live] #challenge .ch-route { stroke-dasharray: 100px; animation-name: challenge-route; animation-timeline: --challenge-map; animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes challenge-route { 0% { stroke-dashoffset: 100px; } 100% { stroke-dashoffset: 0px; } }
+@media (min-width: 768px) {
+  [data-8b-live] #challenge .ch-route { animation-range: cover 22vh cover calc(100% - 48vh); }
+}
+@media (max-width: 767.98px) {
+  [data-8b-live] #challenge .ch-route { animation-range: cover 22vh cover calc(100% - 58vh); }
+}
+}
+</style>
+<style data-8b-part="scene:pricing">
+@layer scenes {
+[data-8b-live] #pricing .m-text-2 { --m-wd: 150; }
+[data-8b-live] #pricing .pr-plans { view-timeline: --pricing-list block; }
+[data-8b-live] #pricing .pr-plan { --pricing-off: calc((var(--n) - 1) / 2 - var(--i)); animation-timeline: --pricing-list; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; }
+@keyframes pricing-fan { 0% { translate: calc(var(--pricing-off) * (100% + 12px)) calc(max(var(--pricing-off), -1 * var(--pricing-off)) * 40px); rotate: calc(var(--pricing-off) * -9deg); } 100% { translate: 0px 0px; rotate: 0deg; } }
+@keyframes pricing-stack { 0% { translate: 0px calc(var(--i) * (100% + 12px) * -.85); rotate: calc(min(1, var(--i)) * (2 * mod(var(--i), 2) - 1) * 4deg); } 100% { translate: 0px 0px; rotate: 0deg; } }
+@media (min-width: 901px) {
+  [data-8b-live] #pricing .pr-plan { animation-name: pricing-fan; animation-range: cover 8vh cover 68vh; }
+}
+@media (max-width: 900.98px) {
+  [data-8b-live] #pricing .pr-plan { animation-name: pricing-stack; animation-range: cover 8vh cover calc(100% - 85vh); }
+}
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] #contact .m-text-2 { --m-wd: 150; }
+[data-8b-live] #contact { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact .ct-shade { animation-name: contact-div-ct-shade-clippath; animation-timeline: --contact-t1; animation-range: cover 4vh cover 42vh; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; }
+@keyframes contact-div-ct-shade-clippath { 0% { clip-path: inset(0% 28% 18% 0% round 26px); } 100% { clip-path: inset(0% 100% 100% 0% round 26px); } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body class="m-text">
 <!-- navigation: fixed top bar: logo in a dark corner tab, four section links, Get the app button; hides on scroll down; full-screen menu on phones -->
@@ -571,7 +661,7 @@
   </nav>
   <a class="m-btn nav-cta" href="#get-app"><span class="m-btn__label">Get the app</span></a>
   <button class="m-icon-btn nav-menu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
-  <div id="menu" class="menu" data-lenis-prevent hidden>
+  <div id="menu" class="menu" hidden>
     <div class="menu__top"><span class="menu__brand">Kurvo</span><button class="m-icon-btn menu__close" type="button" aria-label="Close menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
     <nav class="menu__links" aria-label="Menu">
       <a class="m-text-2" href="#curve">Plans</a>
@@ -591,7 +681,7 @@
   <div class="cv-grid l-panel__body">
     <div class="cv-copy">
       <p class="m-text-5">A week is never a straight line. Every morning Kurvo reads how you slept, how sore you are and how full your day looks, then bends the plan to fit.</p>
-      <ul class="cv-cues">
+      <ul class="cv-cues" data-8b-items=":scope > li">
         <li><span class="m-badge">Sleep</span><p class="m-text">A short night moves the intervals to tomorrow.</p></li>
         <li><span class="m-badge">Soreness</span><p class="m-text">Heavy legs turn a tempo run into mobility.</p></li>
         <li><span class="m-badge">Calendar</span><p class="m-text">A 30-minute gap still gets a complete session.</p></li>
@@ -599,7 +689,7 @@
       <a class="m-btn" href="#pricing"><span class="m-btn__label">Bend my week</span></a>
     </div>
     <figure class="cv-chart">
-      <ol class="cv-days">
+      <ol class="cv-days" data-8b-items=":scope > li" data-8b-fixed="7">
         <li style="--cv-h:.53"><span class="cv-track"><span class="cv-bar"></span></span><span class="cv-day m-text-4">Mon</span><span class="cv-name"><b>Strength</b>40 min</span></li>
         <li class="is-easy" style="--cv-h:.4"><span class="cv-track"><span class="cv-bar"></span></span><span class="cv-day m-text-4">Tue</span><span class="cv-name"><b>Easy run</b>30 min</span></li>
         <li class="is-today" style="--cv-h:.67"><span class="cv-track"><span class="cv-bar"></span></span><span class="cv-day m-text-4">Wed · today</span><span class="cv-name"><b>Intervals</b>50 min</span></li>
@@ -618,29 +708,29 @@
   <div class="m-notch"><h2 class="m-text-2" data-8b-motion="stretch">Coaches who<br>know you</h2></div>
   <div class="l-panel__body">
     <p class="co-lead m-text-5">Two hundred certified coaches write the sessions, check your form videos and answer in the chat. You pick one; the app keeps them in the loop.</p>
-    <ul class="co-list">
+    <ul class="co-list" data-8b-items=":scope > li">
       <li class="co-item">
-        <figure class="co-photo"><img style="background:#0c2626" src="https://images.unsplash.com/photo-1577744168855-0391d2ed2b3a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c21pbGluZyUyMG1hbiUyMHNwb3J0c3dlYXIlMjBwb3J0cmFpdHxlbnwxfDJ8fHwxNzkxMjMyMjA3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="Coach Marcus Hale, arms crossed, in a black training shirt" width="3786" height="3786" loading="lazy"></figure>
+        <figure class="co-photo"><img src="https://images.unsplash.com/photo-1577744168855-0391d2ed2b3a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c21pbGluZyUyMG1hbiUyMHNwb3J0c3dlYXIlMjBwb3J0cmFpdHxlbnwxfDJ8fHwxNzkxMjMyMjA3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="Coach Marcus Hale, arms crossed, in a black training shirt" width="3786" height="3786" loading="lazy"></figure>
         <h3 class="m-text-3">Marcus Hale</h3>
-        <span class="m-badge" data-8b-motion="drop">Strength</span>
+        <span class="m-badge" data-8b-motion="drop" style="--drop-rotate-from: 28deg">Strength</span>
         <p class="m-text">Twelve years under the barbell, zero ego lifting.</p>
       </li>
       <li class="co-item">
-        <figure class="co-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1635862649934-4d7f4e46742b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZmVtYWxlJTIwcnVubmVyJTIwcG9ydHJhaXQlMjBzdHVkaW8lMjBsaWdodCUyMGJhY2tncm91bmR8ZW58MXwxfHx8MTc5MTIzMjE1Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=550&q=60" alt="Coach Ama Boateng smiling in an orange sports top" width="3827" height="4949" loading="lazy"></figure>
+        <figure class="co-photo"><img src="https://images.unsplash.com/photo-1635862649934-4d7f4e46742b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZmVtYWxlJTIwcnVubmVyJTIwcG9ydHJhaXQlMjBzdHVkaW8lMjBsaWdodCUyMGJhY2tncm91bmR8ZW58MXwxfHx8MTc5MTIzMjE1Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="Coach Ama Boateng smiling in an orange sports top" width="3827" height="4949" loading="lazy"></figure>
         <h3 class="m-text-3">Ama Boateng</h3>
-        <span class="m-badge" data-8b-motion="drop">HIIT</span>
+        <span class="m-badge" data-8b-motion="drop" style="--drop-rotate-from: -28deg">HIIT</span>
         <p class="m-text">Short, loud and brutally efficient twenty-minute sessions.</p>
       </li>
       <li class="co-item">
-        <figure class="co-photo"><img style="background:#0ca6c0" src="https://images.unsplash.com/photo-1683848644087-c3cb69b77d4f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8d29tYW4lMjBhdGhsZXRlJTIwcG9ydHJhaXQlMjBzdHVkaW98ZW58MXwxfHx8MTc5MTIzMjEzNnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="Coach Lena Ortiz with a long braid, arms crossed" width="2624" height="3936" loading="lazy"></figure>
+        <figure class="co-photo"><img src="https://images.unsplash.com/photo-1683848644087-c3cb69b77d4f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8d29tYW4lMjBhdGhsZXRlJTIwcG9ydHJhaXQlMjBzdHVkaW98ZW58MXwxfHx8MTc5MTIzMjEzNnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="Coach Lena Ortiz with a long braid, arms crossed" width="2624" height="3936" loading="lazy"></figure>
         <h3 class="m-text-3">Lena Ortiz</h3>
-        <span class="m-badge" data-8b-motion="drop">Pilates</span>
+        <span class="m-badge" data-8b-motion="drop" style="--drop-rotate-from: 28deg">Pilates</span>
         <p class="m-text">Core, posture and the mobility everyone skips.</p>
       </li>
       <li class="co-item">
-        <figure class="co-photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1623605931891-d5b95ee98459?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c21pbGluZyUyMG1hbiUyMHNwb3J0c3dlYXIlMjBwb3J0cmFpdHxlbnwxfDJ8fHwxNzkxMjMyMjA3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=320&q=60" alt="Coach Dev Malik smiling in a gym" width="3456" height="3378" loading="lazy"></figure>
+        <figure class="co-photo"><img src="https://images.unsplash.com/photo-1623605931891-d5b95ee98459?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c21pbGluZyUyMG1hbiUyMHNwb3J0c3dlYXIlMjBwb3J0cmFpdHxlbnwxfDJ8fHwxNzkxMjMyMjA3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=320&q=60" alt="Coach Dev Malik smiling in a gym" width="3456" height="3378" loading="lazy"></figure>
         <h3 class="m-text-3">Dev Malik</h3>
-        <span class="m-badge" data-8b-motion="drop">Cycling</span>
+        <span class="m-badge" data-8b-motion="drop" style="--drop-rotate-from: -28deg">Cycling</span>
         <p class="m-text">Builds your engine one cadence drill at a time.</p>
       </li>
     </ul>
@@ -652,26 +742,26 @@
   <div class="m-notch"><h2 class="m-text-2" data-8b-motion="stretch">Train<br>anything</h2></div>
   <div class="l-panel__body">
     <p class="ds-lead m-text-5">Five disciplines, one plan. Mix them freely: Kurvo balances the load so Tuesday's legs survive Wednesday's ride.</p>
-    <ul class="ds-rows">
-      <li class="ds-row m-surface-4">
+    <ul class="ds-rows" data-8b-items=":scope > li" data-8b-fixed="4">
+      <li class="ds-row m-surface-4" style="--disciplines-li-ds-row-rotate-from: -9deg; --disciplines-li-ds-row-translate-from: 22%; --disciplines-li-ds-row-translate-from-2: 50px; --disciplines-li-ds-row-rotate-from-m: -5deg; --disciplines-li-ds-row-translate-from-m: 5%; --disciplines-li-ds-row-translate-from-2-m: 24px">
         <h3 class="ds-name m-text-2" style="--len:8">Strength</h3>
         <div class="ds-info"><span class="m-badge-3">36 classes a week</span><p class="m-text">Barbell, kettlebell and bodyweight blocks, progressed every week.</p></div>
-        <figure class="ds-photo"><img src="https://images.unsplash.com/photo-1635863800416-01eaf5b6be2d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8a2V0dGxlYmVsbCUyMHRyYWluaW5nJTIwd29tYW58ZW58MXwxfHx8MTc5MTIzMjE4OHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Athlete in orange holding a yellow kettlebell in a deep lunge" width="3840" height="5760" loading="lazy" style="background:#f3f3f3;--ds-y:23%"></figure>
+        <figure class="ds-photo"><img src="https://images.unsplash.com/photo-1635863800416-01eaf5b6be2d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8a2V0dGxlYmVsbCUyMHRyYWluaW5nJTIwd29tYW58ZW58MXwxfHx8MTc5MTIzMjE4OHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=300&q=60" alt="Athlete in orange holding a yellow kettlebell in a deep lunge" width="3840" height="5760" loading="lazy" style="--ds-y:23%"></figure>
       </li>
-      <li class="ds-row m-surface-2">
+      <li class="ds-row m-surface-2" style="--disciplines-li-ds-row-rotate-from: 7deg; --disciplines-li-ds-row-translate-from: -8%; --disciplines-li-ds-row-translate-from-2: 100px; --disciplines-li-ds-row-rotate-from-m: 4deg; --disciplines-li-ds-row-translate-from-m: -3%; --disciplines-li-ds-row-translate-from-2-m: 48px">
         <h3 class="ds-name m-text-2" style="--len:7">Cycling</h3>
         <div class="ds-info"><span class="m-badge-3">28 classes a week</span><p class="m-text">Indoor rides synced to your bike, from recovery spins to climbs.</p></div>
-        <figure class="ds-photo"><img style="background:#264040" src="https://images.unsplash.com/photo-1784819482818-36e4b287d6dd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8aW5kb29yJTIwY3ljbGluZyUyMGNsYXNzfGVufDF8MXx8fDE3OTEyMzIxODd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Athlete riding a stationary bike in a dark gym" width="4128" height="6192" loading="lazy"></figure>
+        <figure class="ds-photo"><img src="https://images.unsplash.com/photo-1784819482818-36e4b287d6dd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8aW5kb29yJTIwY3ljbGluZyUyMGNsYXNzfGVufDF8MXx8fDE3OTEyMzIxODd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=300&q=60" alt="Athlete riding a stationary bike in a dark gym" width="4128" height="6192" loading="lazy"></figure>
       </li>
-      <li class="ds-row m-surface">
+      <li class="ds-row m-surface" style="--disciplines-li-ds-row-rotate-from: -5deg; --disciplines-li-ds-row-translate-from: 34%; --disciplines-li-ds-row-translate-from-2: 150px; --disciplines-li-ds-row-rotate-from-m: -3deg; --disciplines-li-ds-row-translate-from-m: 7%; --disciplines-li-ds-row-translate-from-2-m: 72px">
         <h3 class="ds-name m-text-2" style="--len:4">HIIT</h3>
         <div class="ds-info"><span class="m-badge-3">40 classes a week</span><p class="m-text">Twenty minutes, no equipment, heart rate in the right zone.</p></div>
-        <figure class="ds-photo"><img src="https://images.unsplash.com/photo-1575898311530-2af21854a893?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGZ1bmN0aW9uYWwlMjB0cmFpbmluZyUyMG1hbiUyMGd5bXxlbnwxfDF8fHwxNzkxMjMyMTg4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Athlete doing pull-ups on a rig in a bright gym" width="4480" height="6720" loading="lazy" style="background:#d9d9d9;--ds-y:8%"></figure>
+        <figure class="ds-photo"><img src="https://images.unsplash.com/photo-1575898311530-2af21854a893?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGZ1bmN0aW9uYWwlMjB0cmFpbmluZyUyMG1hbiUyMGd5bXxlbnwxfDF8fHwxNzkxMjMyMTg4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=300&q=60" alt="Athlete doing pull-ups on a rig in a bright gym" width="4480" height="6720" loading="lazy" style="--ds-y:8%"></figure>
       </li>
-      <li class="ds-row m-surface-4">
+      <li class="ds-row m-surface-4" style="--disciplines-li-ds-row-rotate-from: 10deg; --disciplines-li-ds-row-translate-from: 6%; --disciplines-li-ds-row-translate-from-2: 200px; --disciplines-li-ds-row-rotate-from-m: 5deg; --disciplines-li-ds-row-translate-from-m: 2%; --disciplines-li-ds-row-translate-from-2-m: 96px">
         <h3 class="ds-name m-text-2" style="--len:4">Yoga</h3>
         <div class="ds-info"><span class="m-badge-3">22 classes a week</span><p class="m-text">Flows that undo the week, timed for the evenings you need them.</p></div>
-        <figure class="ds-photo"><img src="https://images.unsplash.com/photo-1667890786022-83bca6c4f4c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8d29tYW4lMjB5b2dhJTIwcG9zZSUyMHN0dWRpbyUyMGxpZ2h0fGVufDF8MXx8fDE3OTEyMzIxODZ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Woman in white holding a seated yoga twist on a dark background" width="4672" height="7008" loading="lazy" style="background:#262626;--ds-y:32%"></figure>
+        <figure class="ds-photo"><img src="https://images.unsplash.com/photo-1667890786022-83bca6c4f4c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8d29tYW4lMjB5b2dhJTIwcG9zZSUyMHN0dWRpbyUyMGxpZ2h0fGVufDF8MXx8fDE3OTEyMzIxODZ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="Woman in white holding a seated yoga twist on a dark background" width="4672" height="7008" loading="lazy" style="--ds-y:32%"></figure>
       </li>
     </ul>
   </div>
@@ -696,7 +786,7 @@
               <ul class="ap-facts"><li><span>Sleep</span><span>7 h 40</span></li><li><span>Resting heart rate</span><span>52 bpm</span></li><li><span>Legs</span><span>Fresh</span></li></ul>
             </div>
             <div class="ap-view">
-              <header><span class="ap-who"><img style="background:#f3f3f3" class="m-avatar" src="https://images.unsplash.com/photo-1635862649934-4d7f4e46742b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZmVtYWxlJTIwcnVubmVyJTIwcG9ydHJhaXQlMjBzdHVkaW8lMjBsaWdodCUyMGJhY2tncm91bmR8ZW58MXwxfHx8MTc5MTIzMjE1Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=550&q=60" alt="" width="3827" height="4949" loading="lazy"><span class="m-text-4">Coach Ama</span></span></header>
+              <header><span class="ap-who"><img class="m-avatar" src="https://images.unsplash.com/photo-1635862649934-4d7f4e46742b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZmVtYWxlJTIwcnVubmVyJTIwcG9ydHJhaXQlMjBzdHVkaW8lMjBsaWdodCUyMGJhY2tncm91bmR8ZW58MXwxfHx8MTc5MTIzMjE1Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="" width="3827" height="4949" loading="lazy"><span class="m-text-4">Coach Ama</span></span></header>
               <p class="ap-bubble">Rain all Saturday, so I moved your long run to Sunday morning.</p>
               <p class="ap-bubble ap-bubble--me">Perfect. Can Friday be yoga instead of rest?</p>
               <p class="ap-bubble">Done: 25 minutes, slow flow. Sleep well!</p>
@@ -716,21 +806,21 @@
 <!-- member-stories: three member stories: a small result curve with a lime result tag, a quote, an avatar, a name and how long they have been members -->
 <section id="stories" class="l-panel m-surface-2" data-8b-section="member-stories">
   <div class="m-notch"><h2 class="m-text-2" data-8b-motion="stretch">Real people,<br>real curves</h2></div>
-  <ul class="st-list l-panel__body">
+  <ul class="st-list l-panel__body" data-8b-items=":scope > li">
     <li class="st-card">
-      <div class="st-spark"><svg viewBox="0 0 310 110" aria-hidden="true"><path pathLength="100" data-8b-motion="draw" d="M10,90 C18.3,86.7 43.3,71.7 60,70 C76.7,68.3 93.3,83.3 110,80 C126.7,76.7 143.3,53.7 160,50 C176.7,46.3 193.3,62.3 210,58 C226.7,53.7 245,31.7 260,24 C275,16.3 293.3,14 300,12"/><circle cx="300" cy="12" r="7"/></svg><span class="m-badge-3" data-8b-motion="drop">10 km in 52:40</span></div>
+      <div class="st-spark"><svg viewBox="0 0 310 110" aria-hidden="true"><path pathLength="100" data-8b-motion="draw" d="M10,90 C18.3,86.7 43.3,71.7 60,70 C76.7,68.3 93.3,83.3 110,80 C126.7,76.7 143.3,53.7 160,50 C176.7,46.3 193.3,62.3 210,58 C226.7,53.7 245,31.7 260,24 C275,16.3 293.3,14 300,12"/><circle cx="300" cy="12" r="7"/></svg><span class="m-badge-3" data-8b-motion="drop" style="--drop-rotate-from: 28deg">10 km in 52:40</span></div>
       <blockquote><p>I stopped skipping Mondays once the plan stopped pretending Mondays were easy.</p></blockquote>
-      <div class="st-who"><img style="background:#c0c0a6" class="m-avatar" src="https://images.unsplash.com/photo-1734830268394-6c4a1f165af1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YXRobGV0ZSUyMGhlYWRzaG90JTIwcGxhaW4lMjBiYWNrZ3JvdW5kfGVufDF8Mnx8fDE3OTEyMzIyMDZ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=80&q=60" alt="Tomás Reyes" width="3903" height="3903" loading="lazy"><span><b>Tomás Reyes</b><small>Member for 8 months</small></span></div>
+      <div class="st-who"><img class="m-avatar" src="https://images.unsplash.com/photo-1734830268394-6c4a1f165af1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YXRobGV0ZSUyMGhlYWRzaG90JTIwcGxhaW4lMjBiYWNrZ3JvdW5kfGVufDF8Mnx8fDE3OTEyMzIyMDZ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=80&q=60" alt="Tomás Reyes" width="3903" height="3903" loading="lazy"><span><b>Tomás Reyes</b><small>Member for 8 months</small></span></div>
     </li>
     <li class="st-card">
-      <div class="st-spark"><svg viewBox="0 0 310 110" aria-hidden="true"><path pathLength="100" data-8b-motion="draw" d="M10,80 C18.3,78.7 43.3,71.3 60,72 C76.7,72.7 93.3,86 110,84 C126.7,82 143.3,67.3 160,60 C176.7,52.7 193.3,45 210,40 C226.7,35 245,34.3 260,30 C275,25.7 293.3,16.7 300,14"/><circle cx="300" cy="14" r="7"/></svg><span class="m-badge-3" data-8b-motion="drop">Deadlift +20 kg</span></div>
+      <div class="st-spark"><svg viewBox="0 0 310 110" aria-hidden="true"><path pathLength="100" data-8b-motion="draw" d="M10,80 C18.3,78.7 43.3,71.3 60,72 C76.7,72.7 93.3,86 110,84 C126.7,82 143.3,67.3 160,60 C176.7,52.7 193.3,45 210,40 C226.7,35 245,34.3 260,30 C275,25.7 293.3,16.7 300,14"/><circle cx="300" cy="14" r="7"/></svg><span class="m-badge-3" data-8b-motion="drop" style="--drop-rotate-from: -28deg">Deadlift +20 kg</span></div>
       <blockquote><p>Three kids, two jobs, and finally a plan that moves when my week does.</p></blockquote>
-      <div class="st-who"><img style="background:#c0c0c0" class="m-avatar" src="https://images.unsplash.com/photo-1770908714581-be644af7044f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YXRobGV0ZSUyMGhlYWRzaG90JTIwcGxhaW4lMjBiYWNrZ3JvdW5kfGVufDF8Mnx8fDE3OTEyMzIyMDZ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=80&q=60" alt="Nadia Karim" width="2778" height="2832" loading="lazy"><span><b>Nadia Karim</b><small>Member for 1 year</small></span></div>
+      <div class="st-who"><img class="m-avatar" src="https://images.unsplash.com/photo-1770908714581-be644af7044f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YXRobGV0ZSUyMGhlYWRzaG90JTIwcGxhaW4lMjBiYWNrZ3JvdW5kfGVufDF8Mnx8fDE3OTEyMzIyMDZ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=80&q=60" alt="Nadia Karim" width="2778" height="2832" loading="lazy"><span><b>Nadia Karim</b><small>Member for 1 year</small></span></div>
     </li>
     <li class="st-card">
-      <div class="st-spark"><svg viewBox="0 0 310 110" aria-hidden="true"><path pathLength="100" data-8b-motion="draw" d="M10,96 C18.3,94.7 43.3,88.7 60,88 C76.7,87.3 93.3,95.7 110,92 C126.7,88.3 143.3,69.3 160,66 C176.7,62.7 193.3,77.3 210,72 C226.7,66.7 245,43.3 260,34 C275,24.7 293.3,19 300,16"/><circle cx="300" cy="16" r="7"/></svg><span class="m-badge-3" data-8b-motion="drop">First marathon, 4:48</span></div>
+      <div class="st-spark"><svg viewBox="0 0 310 110" aria-hidden="true"><path pathLength="100" data-8b-motion="draw" d="M10,96 C18.3,94.7 43.3,88.7 60,88 C76.7,87.3 93.3,95.7 110,92 C126.7,88.3 143.3,69.3 160,66 C176.7,62.7 193.3,77.3 210,72 C226.7,66.7 245,43.3 260,34 C275,24.7 293.3,19 300,16"/><circle cx="300" cy="16" r="7"/></svg><span class="m-badge-3" data-8b-motion="drop" style="--drop-rotate-from: 28deg">First marathon, 4:48</span></div>
       <blockquote><p>At 61 I ran my first marathon. The app held me back in month two, and that is why I finished.</p></blockquote>
-      <div class="st-who"><img style="background:#a6a6a6" class="m-avatar" src="https://images.unsplash.com/photo-1776860976478-729261a586ae?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Z3JvdXAlMjBydW4lMjBjbHViJTIwY2l0eXxlbnwxfDB8fHwxNzkxMjMyMzc0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=120&q=60" alt="Ruth Miller" width="5434" height="3623" loading="lazy"><span><b>Ruth Miller</b><small>Member for 2 years</small></span></div>
+      <div class="st-who"><img class="m-avatar" src="https://images.unsplash.com/photo-1776860976478-729261a586ae?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Z3JvdXAlMjBydW4lMjBjbHViJTIwY2l0eXxlbnwxfDB8fHwxNzkxMjMyMzc0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=120&q=60" alt="Ruth Miller" width="5434" height="3623" loading="lazy"><span><b>Ruth Miller</b><small>Member for 2 years</small></span></div>
     </li>
   </ul>
 </section>
@@ -743,7 +833,7 @@
       <div class="ch-map">
         <svg class="ch-svg--wide" viewBox="0 0 700 360" aria-hidden="true"><path class="ch-ghost" d="M30,300 C51.7,271.7 115,138.3 160,130 C205,121.7 253.3,255 300,250 C346.7,245 395,103.3 440,100 C485,96.7 530,235 570,230 C610,225 661.7,96.7 680,70"/><path class="ch-route" pathLength="100" d="M30,300 C51.7,271.7 115,138.3 160,130 C205,121.7 253.3,255 300,250 C346.7,245 395,103.3 440,100 C485,96.7 530,235 570,230 C610,225 661.7,96.7 680,70"/></svg>
         <svg class="ch-svg--tall" viewBox="0 0 64 600" preserveAspectRatio="none" aria-hidden="true"><path class="ch-ghost" d="M32,10 C35.3,30 55.3,90 52,130 C48.7,170 12,210 12,250 C12,290 52,330 52,370 C52,410 15.3,453.3 12,490 C8.7,526.7 28.7,573.3 32,590"/><path class="ch-route" pathLength="100" d="M32,10 C35.3,30 55.3,90 52,130 C48.7,170 12,210 12,250 C12,290 52,330 52,370 C52,410 15.3,453.3 12,490 C8.7,526.7 28.7,573.3 32,590"/></svg>
-        <ol class="ch-points">
+        <ol class="ch-points" data-8b-items=":scope > li" data-8b-fixed="5">
           <li class="is-up" style="--ch-x:22.86%;--ch-y:36.11%"><b>20 km</b><span>Finisher badge on your profile</span></li>
           <li style="--ch-x:42.86%;--ch-y:69.44%"><b>40 km</b><span>A free live class pass</span></li>
           <li class="is-up" style="--ch-x:62.86%;--ch-y:27.78%"><b>60 km</b><span>Form review from a coach</span></li>
@@ -754,7 +844,7 @@
       </div>
     </div>
     <div class="ch-side">
-      <figure class="ch-photo"><img style="background:#a65926" src="https://images.unsplash.com/photo-1726195221456-7e104a23bbff?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHJ1bm5pbmclMjB0cmFjayUyMGF0aGxldGV8ZW58MXwwfHx8MTc5MTIzMjM3M3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=640&q=60" alt="Runner in mid-stride on a track at night" width="6000" height="4000" loading="lazy"></figure>
+      <figure class="ch-photo"><img src="https://images.unsplash.com/photo-1726195221456-7e104a23bbff?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHJ1bm5pbmclMjB0cmFjayUyMGF0aGxldGV8ZW58MXwwfHx8MTc5MTIzMjM3M3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=640&q=60" alt="Runner in mid-stride on a track at night" width="6000" height="4000" loading="lazy"></figure>
       <a class="m-btn-2" href="#get-app"><span class="m-btn__label">Join the hundred</span></a>
     </div>
   </div>
@@ -763,16 +853,16 @@
 <section id="clubs" class="l-panel m-surface" data-8b-section="run-clubs">
   <div class="m-notch"><h2 class="m-text-2" data-8b-motion="stretch">Sunday<br>clubs</h2></div>
   <div class="cl-grid l-panel__body">
-    <figure class="cl-photo"><img style="background:#d9d9f3" src="https://images.unsplash.com/photo-1750089440313-5c6d8b5248e0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8d29tYW4lMjBqb2dnaW5nJTIwcGFyayUyMG1vcm5pbmd8ZW58MXwwfHx8MTc5MTIzMjM3M3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=780&q=60" alt="Runner on a waterfront path with city towers behind" width="6000" height="4000" loading="lazy"></figure>
+    <figure class="cl-photo"><img src="https://images.unsplash.com/photo-1750089440313-5c6d8b5248e0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8d29tYW4lMjBqb2dnaW5nJTIwcGFyayUyMG1vcm5pbmd8ZW58MXwwfHx8MTc5MTIzMjM3M3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=780&q=60" alt="Runner on a waterfront path with city towers behind" width="6000" height="4000" loading="lazy"></figure>
     <div>
       <p class="cl-lead m-text-5">Once a week the app goes outside. Free group runs at an easy pace, a coach at the front and coffee at the end.</p>
-      <ul class="cl-list">
-        <li><h3 class="m-text-3">London</h3><p class="m-text">Southbank, by the riverside steps</p><span class="m-badge" data-8b-motion="drop">08:30</span></li>
-        <li><h3 class="m-text-3">Berlin</h3><p class="m-text">Tempelhofer Feld, north gate</p><span class="m-badge" data-8b-motion="drop">09:00</span></li>
-        <li><h3 class="m-text-3">Lisbon</h3><p class="m-text">Belém, the lawn by the tower</p><span class="m-badge" data-8b-motion="drop">08:00</span></li>
-        <li><h3 class="m-text-3">Toronto</h3><p class="m-text">Trillium Park, lake entrance</p><span class="m-badge" data-8b-motion="drop">09:30</span></li>
-        <li><h3 class="m-text-3">Melbourne</h3><p class="m-text">The Tan, Anderson Street gate</p><span class="m-badge" data-8b-motion="drop">07:30</span></li>
-        <li><h3 class="m-text-3">Austin</h3><p class="m-text">Lady Bird Lake, Zilker side</p><span class="m-badge" data-8b-motion="drop">07:00</span></li>
+      <ul class="cl-list" data-8b-items=":scope > li">
+        <li><h3 class="m-text-3">London</h3><p class="m-text">Southbank, by the riverside steps</p><span class="m-badge" data-8b-motion="drop" style="--drop-rotate-from: 28deg">08:30</span></li>
+        <li><h3 class="m-text-3">Berlin</h3><p class="m-text">Tempelhofer Feld, north gate</p><span class="m-badge" data-8b-motion="drop" style="--drop-rotate-from: -28deg">09:00</span></li>
+        <li><h3 class="m-text-3">Lisbon</h3><p class="m-text">Belém, the lawn by the tower</p><span class="m-badge" data-8b-motion="drop" style="--drop-rotate-from: 28deg">08:00</span></li>
+        <li><h3 class="m-text-3">Toronto</h3><p class="m-text">Trillium Park, lake entrance</p><span class="m-badge" data-8b-motion="drop" style="--drop-rotate-from: -28deg">09:30</span></li>
+        <li><h3 class="m-text-3">Melbourne</h3><p class="m-text">The Tan, Anderson Street gate</p><span class="m-badge" data-8b-motion="drop" style="--drop-rotate-from: 28deg">07:30</span></li>
+        <li><h3 class="m-text-3">Austin</h3><p class="m-text">Lady Bird Lake, Zilker side</p><span class="m-badge" data-8b-motion="drop" style="--drop-rotate-from: -28deg">07:00</span></li>
       </ul>
     </div>
   </div>
@@ -782,7 +872,7 @@
   <div class="m-notch"><h2 class="m-text-2" data-8b-motion="stretch">Pick your<br>plan</h2></div>
   <div class="l-panel__body">
     <p class="pr-lead m-text-5">Start free for 30 days on any plan. Switch or cancel from the app whenever you like.</p>
-    <ul class="pr-plans" id="get-app">
+    <ul class="pr-plans" id="get-app" data-8b-items=":scope > li" data-8b-fixed="3">
       <li class="pr-plan">
         <div class="pr-head"><h3 class="m-text-3">Starter</h3></div>
         <p class="pr-price"><strong>$0</strong><span class="m-text">forever</span></p>
@@ -810,7 +900,7 @@
   <div class="m-notch"><h2 class="m-text-2" data-8b-motion="stretch">Questions,<br>answered</h2></div>
   <div class="fq-grid l-panel__body">
     <div class="fq-side"><p class="m-text-5">Still unsure? The answers below cover most of what people ask before they start.</p><a class="m-link" href="#contact"><span class="m-link__label">Ask us something else</span></a></div>
-    <div class="fq-list">
+    <div class="fq-list" data-8b-items=":scope > details">
       <details><summary class="m-text-3">Do I need a smartwatch?</summary><p class="m-text">No. A watch or ring makes the recovery score sharper, but three taps each morning about sleep and soreness are enough to bend the plan.</p></details>
       <details><summary class="m-text-3">How does the plan adapt?</summary><p class="m-text">Every morning Kurvo compares your recovery, your calendar and the week's goal, then moves, shortens or swaps sessions. You see every change and can undo it.</p></details>
       <details><summary class="m-text-3">Can I train at home?</summary><p class="m-text">Yes. Tell the app what equipment you have, even if it is nothing, and every session is written for it.</p></details>
@@ -872,253 +962,196 @@
   const setMenu = open => {
     menu.hidden = !open;
     openBtn.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); closeBtn.focus(); } else { window.lenis?.start(); openBtn.focus(); }
+    if (open) { window.motionKit?.wheel?.stop(); closeBtn.focus(); } else { window.motionKit?.wheel?.start(); openBtn.focus(); }
   };
   openBtn.addEventListener('click', () => setMenu(true));
   closeBtn.addEventListener('click', () => setMenu(false));
-  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menu.hidden = true; openBtn.setAttribute('aria-expanded', 'false'); window.lenis?.start(); }));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menu.hidden = true; openBtn.setAttribute('aria-expanded', 'false'); window.motionKit?.wheel?.start(); }));
   addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) setMenu(false); });
 })();
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
+
+<script data-8b-part="motion-kit">
 (() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function navOffset() {
-  const nav = document.getElementById('nav');
-  return nav ? nav.offsetHeight + 12 : 0;
-}
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: .11, anchors: { offset: -navOffset() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
+<script data-8b-part="scene-script:app">
+motionKit.scene('app', () => {
+  const section = document.getElementById('app');
+  const stage = section.querySelector('.ap-stage');
+  const list = section.querySelector('.ap-notes');
+  const notes = section.querySelectorAll('.ap-note');
+  const wide = matchMedia('(min-width: 768px)');
+  const steps = [];
+  section.querySelectorAll('.ap-view').forEach((view, i) => {
+    if (!i) return;
+    const at = .1 + (i - 1) * .5;
+    steps.push([view, at]);
+    Array.from(view.children).forEach((child, j) => steps.push([child, at + j * .02]));
+  });
+  const run = Math.max(1, ...steps.map(([, at]) => at + .2));
+  steps.forEach(([node, at]) => motionKit.set(node, { '--app-at': at / run, '--app-for': .2 / run }));
+  let first = 0, last = 1;
+  motionKit.measure(() => {
+    const top = motionKit.box(list).y;
+    const centre = note => { const box = motionKit.box(note); return box.y + box.h / 2 - top; };
+    const a = centre(notes[0]), z = centre(notes[notes.length - 1]);
+    first = a / list.offsetHeight;
+    last = z / list.offsetHeight;
+    motionKit.set(section, { '--app-first': a + 'px', '--app-last': z + 'px' });
+  });
+  const mark = progress => {
+    const on = Math.min(notes.length - 1, Math.floor(progress * notes.length * .999));
+    notes.forEach((note, i) => note.classList.toggle('is-on', i === on));
+  };
+  motionKit.track(list, 'top 50%', 'bottom 50%', p => { if (wide.matches) mark(last > first ? Math.min(1, Math.max(0, (p - first) / (last - first))) : 0); });
+  motionKit.track(stage, 'top 16%', 'bottom 85%', p => { if (!wide.matches) mark(p); });
 });
 </script>
-<script data-8b-part="motion">
-const effects = {
-  stretch(element, vars = {}) {
-    return gsap.timeline(vars).from(element, { '--m-wd': 75, duration: 1.1, ease: 'power3.out' });
-  },
-  drop(element, vars = {}, index = 0) {
-    return gsap.timeline(vars).from(element, { y: -70, rotation: (index % 2 ? -1 : 1) * 28, opacity: 0, duration: .9, ease: 'bounce.out' });
-  },
-  draw(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { strokeDasharray: 100, strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 1.3, ease: 'power2.inOut' });
-  }
-};
-['stretch', 'drop', 'draw'].forEach(name => {
-  document.querySelectorAll('[data-8b-section]').forEach(section => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, i) => ScrollTrigger.create({
-        id: elements.length > 1 ? `${id}:${i}` : id, trigger: element, start: 'top 88%', once: true,
-        animation: effects[name](element, { paused: true }, i)
-      }));
-    }), section.getBoundingClientRect().top < innerHeight ? { first: true, id } : { near: section, id });
+<script data-8b-part="scene-script:challenge">
+motionKit.scene('challenge', () => {
+  const section = document.getElementById('challenge');
+  const map = section.querySelector('.ch-map');
+  const dot = section.querySelector('.ch-dot');
+  const points = section.querySelectorAll('.ch-points li');
+  const wide = matchMedia('(min-width: 768px)');
+  const sample = svg => {
+    const route = svg.querySelector('.ch-route'), len = route.getTotalLength();
+    return { svg, box: svg.viewBox.baseVal, pts: Array.from({ length: 201 }, (_, i) => route.getPointAtLength(len * i / 200)) };
+  };
+  const desk = sample(section.querySelector('.ch-svg--wide')), phone = sample(section.querySelector('.ch-svg--tall'));
+  const at = Array.from(points, li => {
+    const x = parseFloat(li.style.getPropertyValue('--ch-x')) / 100 * desk.box.width, y = parseFloat(li.style.getPropertyValue('--ch-y')) / 100 * desk.box.height;
+    let best = 0, bd = Infinity;
+    desk.pts.forEach((p, i) => { const d = (p.x - x) ** 2 + (p.y - y) ** 2; if (d < bd) { bd = d; best = i; } });
+    return best / 200;
   });
+  let scaleX = 1, scaleY = 1;
+  motionKit.measure(() => {
+    const { svg, box } = wide.matches ? desk : phone;
+    scaleX = svg.clientWidth / box.width;
+    scaleY = svg.clientHeight / box.height;
+  });
+  const place = t => {
+    const { pts } = wide.matches ? desk : phone, p = pts[Math.round(t * 200)], end = pts[200];
+    motionKit.set(dot, { translate: (p.x - end.x) * scaleX + 'px ' + (p.y - end.y) * scaleY + 'px' });
+    points.forEach((li, i) => li.classList.toggle('is-dim', t < (wide.matches ? at[i] : (i + 1) / points.length) - .004));
+  };
+  motionKit.track(map, 'top 78%', 'bottom 48%', p => { if (wide.matches) place(p); });
+  motionKit.track(map, 'top 78%', 'bottom 58%', p => { if (!wide.matches) place(p); });
 });
-</script>
-
-<script data-8b-part="scene:curve">
-queueMotion(() => {
-  gsap.matchMedia().add({ desk: '(min-width: 768px) and (prefers-reduced-motion: no-preference)', phone: '(max-width: 767.98px) and (prefers-reduced-motion: no-preference)' }, ctx => {
-    const desk = ctx.conditions.desk;
-    const section = document.getElementById('curve');
-    const chart = section.querySelector('.cv-chart');
-    const items = section.querySelectorAll('.cv-days li');
-    const grey = getComputedStyle(document.documentElement).getPropertyValue('--color-8').trim();
-    const prop = desk ? 'scaleY' : 'scaleX';
-    const tl = gsap.timeline({ defaults: { ease: 'none' }, delay: .3 });
-    items.forEach((item, i) => {
-      const bar = item.querySelector('.cv-bar');
-      const h = parseFloat(getComputedStyle(item).getPropertyValue('--cv-h')) || .5;
-      tl.fromTo(bar, { [prop]: Math.min(4, .5 / Math.max(h, .06)), backgroundColor: grey },
-        { [prop]: 1, backgroundColor: getComputedStyle(bar).backgroundColor, duration: .55, ease: 'power2.inOut' }, .05 + i * .05);
-    });
-    tl.timeScale(.6);
-    if (desk) tl.fromTo(section.querySelector('.cv-line polyline'), { strokeDasharray: 100, strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: .45 }, .5);
-  });
-}, { first: true });
-</script>
-<script data-8b-part="scene:disciplines">
-queueMotion(() => {
-  gsap.matchMedia().add({ desk: '(min-width: 768px) and (prefers-reduced-motion: no-preference)', phone: '(max-width: 767.98px) and (prefers-reduced-motion: no-preference)' }, ctx => {
-    const desk = ctx.conditions.desk;
-    const section = document.getElementById('disciplines');
-    const list = section.querySelector('.ds-rows');
-    const rows = list.querySelectorAll('.ds-row');
-    const tilt = desk ? [-9, 7, -5, 10] : [-5, 4, -3, 5];
-    const shift = desk ? [22, -8, 34, 6] : [5, -3, 7, 2];
-    const r = desk ? '999px' : '44px';
-    const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' }, scrollTrigger: {
-      id: 'disciplines', trigger: list, start: 'top 95%', end: 'top 22%', scrub: .5
-    } });
-    rows.forEach((row, i) => {
-      tl.fromTo(row, { rotation: tilt[i % 4], xPercent: shift[i % 4], y: (desk ? 50 : 24) * (i + 1), clipPath: `inset(0% ${desk ? 60 : 34}% 0% 0% round ${r})` },
-        { rotation: 0, xPercent: 0, y: 0, clipPath: `inset(0% 0% 0% 0% round ${r})`, duration: .55 }, i * .1);
-    });
-  });
-}, { near: document.getElementById('disciplines') });
-</script>
-<script data-8b-part="scene:app">
-queueMotion(() => {
-  gsap.matchMedia().add({ desk: '(min-width: 768px) and (prefers-reduced-motion: no-preference)', phone: '(max-width: 767.98px) and (prefers-reduced-motion: no-preference)' }, ctx => {
-    const desk = ctx.conditions.desk;
-    const section = document.getElementById('app');
-    const strip = section.querySelector('.ap-strip');
-    section.setAttribute('data-app-run', '');
-    const notes = section.querySelectorAll('.ap-note');
-    const mark = i => notes.forEach((note, j) => note.classList.toggle('is-on', j === i));
-    const trigger = desk
-      ? { trigger: notes[0], start: 'center center', endTrigger: notes[notes.length - 1], end: 'center center' }
-      : { trigger: section.querySelector('.ap-stage'), start: 'top 16%', end: 'bottom 85%' };
-    const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' }, scrollTrigger: {
-      id: 'app', ...trigger, scrub: .5, onUpdate: self => mark(Math.min(notes.length - 1, Math.floor(self.progress * notes.length * .999)))
-    } });
-    const views = strip.querySelectorAll('.ap-view');
-    views.forEach((view, i) => {
-      if (!i) return;
-      tl.fromTo(view, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: .2 }, .1 + (i - 1) * .5)
-        .from(view.children, { y: 40, duration: .2, stagger: .02 }, .1 + (i - 1) * .5);
-    });
-    tl.to({}, { duration: .1 }, .9);
-    return () => { mark(0); section.removeAttribute('data-app-run'); };
-  });
-});
-</script>
-<script data-8b-part="scene:challenge">
-queueMotion(() => {
-  gsap.matchMedia().add({ desk: '(min-width: 768px) and (prefers-reduced-motion: no-preference)', phone: '(max-width: 767.98px) and (prefers-reduced-motion: no-preference)' }, ctx => {
-    const desk = ctx.conditions.desk;
-    const section = document.getElementById('challenge');
-    const map = section.querySelector('.ch-map');
-    const svg = section.querySelector(desk ? '.ch-svg--wide' : '.ch-svg--tall');
-    const route = svg.querySelector('.ch-route');
-    const dot = section.querySelector('.ch-dot');
-    const points = section.querySelectorAll('.ch-points li');
-    const box = desk ? [700, 360] : [64, 600];
-    const len = route.getTotalLength();
-    const pts = Array.from({ length: 201 }, (_, i) => route.getPointAtLength(len * i / 200));
-    const end = pts[200];
-    const at = desk ? [[160, 130], [300, 250], [440, 100], [570, 230], [680, 70]].map(([x, y]) => {
-      let best = 0, bd = Infinity;
-      pts.forEach((p, i) => { const d = (p.x - x) ** 2 + (p.y - y) ** 2; if (d < bd) { bd = d; best = i; } });
-      return best / 200;
-    }) : Array.from(points, (_, i) => (i + 1) / points.length);
-    let sx = 1, sy = 1;
-    const measure = () => { sx = svg.clientWidth / box[0]; sy = svg.clientHeight / box[1]; };
-    const setX = gsap.quickSetter(dot, 'x', 'px'), setY = gsap.quickSetter(dot, 'y', 'px');
-    const state = { t: 1 };
-    const place = () => {
-      const p = pts[Math.round(state.t * 200)];
-      setX((p.x - end.x) * sx); setY((p.y - end.y) * sy);
-      points.forEach((li, i) => li.classList.toggle('is-dim', state.t < at[i] - .004));
-    };
-    measure();
-    const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'challenge', trigger: map, start: 'top 78%', end: desk ? 'bottom 48%' : 'bottom 58%', scrub: .6,
-      invalidateOnRefresh: true, onRefresh: () => { measure(); place(); }
-    } });
-    tl.fromTo(route, { strokeDasharray: 100, strokeDashoffset: 100 }, { strokeDashoffset: 0, duration: 1 }, 0)
-      .fromTo(state, { t: 0 }, { t: 1, duration: 1, onUpdate: place }, 0);
-    place();
-    return () => points.forEach(li => li.classList.remove('is-dim'));
-  });
-}, { near: document.getElementById('challenge') });
-</script>
-<script data-8b-part="scene:pricing">
-queueMotion(() => {
-  gsap.matchMedia().add({ desk: '(min-width: 901px) and (prefers-reduced-motion: no-preference)', phone: '(max-width: 900.98px) and (prefers-reduced-motion: no-preference)' }, ctx => {
-    const desk = ctx.conditions.desk;
-    const section = document.getElementById('pricing');
-    const list = section.querySelector('.pr-plans');
-    const plans = list.querySelectorAll('.pr-plan');
-    const mid = (plans.length - 1) / 2;
-    const tl = gsap.timeline({ defaults: { ease: 'power2.out' }, scrollTrigger: {
-      id: 'pricing', trigger: list, start: 'top 92%', end: desk ? 'top 32%' : 'bottom 85%', scrub: .6, invalidateOnRefresh: true
-    } });
-    plans.forEach((plan, i) => {
-      tl.from(plan, desk
-        ? { x: () => (mid - i) * (plan.offsetWidth + 12), y: Math.abs(i - mid) * 40, rotation: (i - mid) * 9, duration: 1 }
-        : { y: () => -i * (plan.offsetHeight + 12) * .85, rotation: i ? (i % 2 ? 4 : -4) : 0, duration: 1 }, 0);
-    });
-  });
-}, { near: document.getElementById('pricing') });
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    gsap.timeline({ scrollTrigger: { id: 'contact', trigger: section, start: 'top 96%', end: 'top 58%', scrub: .5 } })
-      .fromTo(section.querySelector('.ct-shade'), { clipPath: 'inset(0% 28% 18% 0% round 26px)' }, { clipPath: 'inset(0% 100% 100% 0% round 26px)', ease: 'power2.inOut' });
-  });
-}, { near: document.getElementById('contact') });
 </script>
 </body>
 </html>

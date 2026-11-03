@@ -1,6 +1,6 @@
 # AGENTS.md: podcast website template
 
-One-page website for a podcast network or audio collective with shows, authors, a studio and live events. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a podcast network or audio collective with shows, authors, a studio and live events. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,17 +14,17 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:nav`: `.nav-menu` `.nav-close` `.nav-links` `.nav-panel__foot`
-  - `scene:episode`: `.ep-script` `.ep-bars--fill`
-  - `scene:shows`: `.sh-stage` `.sh-track` `.sh-cell` `.sh-tile`
-  - `scene:authors`: `.au-grid` `.au-face` `.au-card`
-  - `scene:submit`: `.sb-path` `.sb-line` `.sb-rail` `.sb-marker` `.sb-step` `.sb-fill` `.sb-text`
-  - `scene:letters`: `.lt-grid` `.lt-window` `.lt-thread`
-  - `scene:contact`: `.ct-band` `.ct-bands` `.ct-value`
+  - `scene-script:episode`: `.ep-script`
+  - `scene-script:shows`: `.sh-stage` `.sh-track` `.sh-cell` `.sh-tile`
+  - `scene-script:authors`: `.au-grid` `.au-face`
+  - `scene-script:submit`: `.sb-path` `.sb-line` `.sb-rail` `.sb-marker` `.sb-step` `.sb-fill` `.sb-text`
+  - `scene-script:letters`: `.lt-grid` `.lt-window` `.lt-thread`
 - `style="--len:N"` = characters in that display line, spaces included: `gabble` is 6.
 - The footer wordmark is sized by style="--len:6", the number of characters of "gabble": update it when the name changes length.
-- The submit scene has three fixed anchor points on the loop line (x 200, 600 and 1000 in its SVG), one per step: keep three steps or edit the scene and the line. The contact scene alternates its bands from left and right by their order, and the letters scene picks each message's side from the lt-msg--out class (the first message is shown from the start).
+- The submit scene has three fixed anchor points on the loop line (x 200, 600 and 1000 in its SVG), one per step: keep three steps or edit the scene and the line. Each contact band carries its own slide direction in inline variables (--contact-li-ct-band-translate-from and --contact-span-m-text-7-translate-from, minus for the left, plus for the right): copy them with a band you add. The letters scene picks each message's side from the lt-msg--out class (the first message is shown from the start).
 - The orange field, the waveform bars (inline --ep-h per bar), the white loops and the colour trails are CSS and SVG: recolour them through the variables in :root, not by editing the shapes.
 - The search fields are plain GET forms to /search with the name q; the nav links, the overlay and the footer rely on the section ids (plus, episode, shows, authors, studio, submit, live, letters, faq, contact).
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #ffffff (page ground, listener chat bubbles, live date rows, two studio fact tiles, FAQ rows, text on the ink sections), `--color-2` #1e1c22 (text, the shows, live and footer grounds, dark buttons, favicon letter), `--color-3` #ff6b1f (the opening field, main buttons, show replies in the chat, the author count circle, the submission marker, the footer loop), `--color-4` #f9e38c (studio ground, yellow show and contact tiles, live date blocks, the first step's fill), `--color-5` #cdbbf8 (letters ground, player card, lavender tiles, light text on the ink sections), `--color-6` #f1f0f3 (FAQ ground, grey pills such as search and Log in, the FAQ icon discs and the menu button), `--color-7` #646069 (secondary text, captions, search placeholder), `--color-8` #a98af2 (submission loop line, step ring borders and phone rail, the voice note waveform marks), `--color-9` #b8860a (only in leftover rules for a first screen that is no longer in the page, nothing visible uses it), `--color-10` #6a45d6 (show names on the author cards); body text needs 4.5:1 contrast.
@@ -69,9 +69,11 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the menu button cannot open the overlay at any width, so the top bar has no section links (on phones it shows only the logo, the Join button and that menu button); the search fields send people to /search, which does not exist yet.
 - The page has no audio player: the waveform and the timestamps are decoration, and "Listen to episode 41" only jumps to the shows section until you link it to a real player or episode page.
-- The shows row and the letters chat are pinned scenes; on short screens the pinned stage can be taller than the viewport, so test the shows row on a laptop height. The episode player stays stuck at the top on phones while the transcript scrolls under it.
+- The shows row and the letters chat are held in place with CSS sticky while you scroll; on short screens the shows stage can be taller than the viewport, so test it on a laptop height. The episode player stays stuck at the top on phones while the transcript scrolls under it.
+- Without scroll-driven animation support (Firefox today), and with reduced motion on, the page shows its finished layout with ordinary scrolling: the shows as a four by two grid (two columns on phones), the full chat thread, the transcript in full ink, every step filled and the opening loop already drawn. The top bar still hides on scroll down in both cases.
+- The author grid is built for six cards plus the count card (data-8b-fixed="7"): the name and bio fades are CSS :nth-of-type rules for the first six, so an added author shows without the fade unless those rules get a new entry.
 - Several texts sit on the loud orange field and the lavender tiles in dark ink; if you change those colours keep the contrast of dark text on them.
 - The stylesheet still carries about ninety lines of unused rules for a first screen that is no longer in the page (selectors starting #opening .op-first, .op-card, .op-new, .op-media and similar); they do nothing and can be deleted.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Gabble left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Gabble left only in class names.

@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my studio: what we make, classes with days and prices, commission terms, glazes, makers, membership, shop pieces, address and hours>. Replace first the studio name, the Sheffield address, the three client venues, the prices and the makers. Keep the classes AGENTS.md lists and the five grid lines, and set --len on each glaze name and the footer wordmark to its new length. Ask me for missing facts and never invent prices, firing details, food-safety claims or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when you give the agent the facts only the studio has: class days and prices, commission minimums and lead times, firing temperatures, glaze safety claims, membership terms, makers, address and hours. The agent should replace the name in every letter case, then write the character count of each glaze name and of the footer wordmark into its --len. A glaze is recoloured on its own row. It must not invent food-safe or dishwasher claims.
+If you vibe code the site, it goes fastest when you give the agent the facts only the studio has: class days and prices, commission minimums and lead times, firing temperatures, glaze safety claims, membership terms, makers, address and hours. The agent should replace the name in every letter case, then write the character count of each glaze name and of the footer wordmark into its --len. A glaze is recoloured on its own row. It must not invent food-safe or dishwasher claims.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=pottery-studio-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -65,7 +65,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=potte
 Nowhere yet. The form checks for a name, a valid email and a message, shows a thank-you line promising a reply within two working days, and clears itself. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or remove the form and keep the email and phone. Edit that promise too.
 
 **Can I get a site like this without editing code?**  
-Not this exact file, but yes for a site. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site, with its own design, from a sentence about your studio. Designing and restyling are free. Publishing with hosting, HTML export and AI edits in chat are on Pro at $9 a month billed yearly, and it also runs inside Claude and ChatGPT.
+Not this exact file, but yes for a site. [8B's AI website builder](https://8b.com/) designs a new site, with its own design, from a sentence about your studio. Designing and restyling are free. Publishing with hosting, HTML export and AI edits in chat are on Pro at $9 a month billed yearly, and it also runs inside Claude and ChatGPT.
 
 **What happens on a phone, with reduced motion or with scripts off?**  
 On a phone the process row still slides sideways and the bar shrinks to the logo and a menu button. With reduced motion on, entrance and scroll animations and smooth scrolling are off: steps stack in a grid and glaze rows stay colour bands, while button fills still react to hover. Without JavaScript the menu cannot open.

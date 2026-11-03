@@ -1,8 +1,8 @@
-# Free HTML sauna website template with GSAP scroll animations
+# Free HTML sauna website template with scroll animations and no libraries
 
-Sauna website template: one free HTML file for a bathhouse or lakeside day spa, with a three-step round, four rooms with temperatures, three timed passes and a request form. The look is near-black with copper and lake blue in a light serif, and fog rises over the first photo. AGENTS.md is included for Claude Code, Cursor or Codex.
+Sauna website template: one free HTML file for a bathhouse or lakeside day spa, with a three-step round, four rooms with temperatures, three timed passes and a request form. The look is near-black with copper and lake blue in a light serif, and fog rises over the first photo, in CSS with no libraries. AGENTS.md guides Claude Code or Codex.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/sauna-website-template/)** · **[Use this template](https://github.com/new?template_name=sauna-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/sauna-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/brume/)**
 
@@ -24,17 +24,17 @@ curl -LO https://raw.githubusercontent.com/8bsite/sauna-website-template/main/CR
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my bathhouse: name, place, water, rooms with temperatures and seats, passes with hours and prices, menu, opening days, house rules, address, phone, email>. Replace the name, the readings, the passes and the room facts. Keep the section ids, the classes AGENTS.md lists, pass data-from and data-to between 8 and 22, and temperature data values between 0 and 100. Set each --len to its line's character count. Ask for missing facts; never invent prices, hours, health advice, reviews or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my bathhouse: name, place, water, rooms with temperatures and seats, passes with hours and prices, menu, opening days, rules, contacts>. Replace the name, readings, passes and room facts. Motion is CSS scroll-driven animation plus the inline kit: keep the gate script, section ids, the classes AGENTS.md lists, pass hours between 8 and 22, each temperature value with its line end; set each --len; add no animation library. Never invent prices, hours, health advice or contacts; ask me.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when you give the agent the facts only the venue has: room temperatures and seats, pass hours and prices, menu, opening days, rules and address. The demo invents all of them, along with the lake and the village. The agent should swap the name in every letter case, rewrite the five statement lines and reset each --len. Pass hours must stay inside the 08 to 22 axis.
+Used as a sauna website template for Claude Code, Cursor or Codex, vibe coding goes fastest when you give the agent the facts only the venue has: room temperatures and seats, pass hours and prices, menu, opening days, rules and address. The demo invents all of them, along with the lake and the village. The agent should swap the name in every letter case, rewrite the five statement lines and reset each --len. Pass hours must stay inside the 08 to 22 axis.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=sauna-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
 - **Navigation**: fixed bar with a three-bar mark and wordmark, five section links, a Book a day button and a menu button with an overlay. The bar turns solid after 80px of scroll, slides away when you scroll down past 160px and returns when you scroll up; under 1024px wide a menu button opens a full-screen overlay.
-- **Heat, cold, and the quiet after.**: two screens: a lake under fog with the headline, intro, two actions and live-looking readings; then a warm rest room, a three-line heading and three floating photos. On load the lake photo settles from a slight zoom, three fog patches drift sideways in a loop and the headline rises in. On scroll the lake photo holds still while the text leaves, a fog veil climbs over it and a rest-room photo comes up from the dark, then the three heading lines slide into their indents and the three small photos rise at different speeds.
+- **Heat, cold, and the quiet after.**: two screens: a lake under fog with the headline, intro, two actions and live-looking readings; then a warm rest room, a three-line heading and three floating photos. On load the lake photo settles from a slight zoom, three fog patches drift sideways in a loop and the headline rises in. On scroll the lake photo holds still while the text leaves, a fog veil climbs over it and a rest-room photo comes up from the dark, then the three small photos rise at different speeds.
 - **One round, three temperatures**: three steps of one round (heat, cold, rest) beside a held photo frame that opens into each in turn. A frame of three photos in thirds stays beside the steps: the heat photo widens over the others under a copper tint, wipes away to the cold photo under a blue tint, which wipes away to the rest photo, and the thirds return.
 - **Four rooms, coldest to hottest**: four rooms coldest to hottest as rows, each with a temperature, a line that runs out to it, text, facts and a photo. Each row's temperature line draws out to its value as the row arrives, and the section ground shifts from blue-black to brown-black across the four rooms.
 - **Water on the stones. A breath of heat rolls off the ceiling and the room goes quiet.**: a five-line statement over a dark photo; a glow rises through it and the lines swell in weight. A copper glow rises through the five lines, and from the bottom line up each swells from weight 300 to 560 and turns copper before settling back.
@@ -67,14 +67,14 @@ No agent? Click **[Use this template](https://github.com/new?template_name=sauna
 As shipped it sends nothing. It needs a date, a name and an email, then shows a thank-you line and clears itself. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or link the Book buttons to your booking system. Edit the thank-you line too: it promises confirmation by email within a few hours.
 
 **Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). You describe the site in a sentence and its engine designs a new one, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, with [8B's AI website builder](https://8b.com/). You describe the site in a sentence and its engine designs a new one, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
-**What happens on a phone, with reduced motion or with scripts off?**  
-Under 1024px wide the nav links fold into a menu overlay. Reduced motion stops smooth scrolling and the scroll scenes, so the round shows three photos side by side; hover fills still run. Without JavaScript the menu fails, the form sends nothing, the temperature lines stay empty and every pass band fills the axis; questions and footer links work.
+**What happens with reduced motion, in Firefox or with scripts off?**  
+Without CSS scroll-driven animations (Firefox today) or with reduced motion, each section shows its finished layout: the round as three photos side by side, the morning lake behind the hours, the name whole. Firefox still plays the opening fog. Without JavaScript the menu fails, the temperature lines stay empty and every pass band fills the axis.
 
 ## Is it the right base?
 
-As a sauna website template it fits one venue with water nearby, a few rooms of different character and entry sold by the hour. A coach selling a course or a studio with a teacher fits the [studio and course](https://8b.com/templates/senti/) template better. Booking is the thin part: the form is a request, with no calendar of free slots. If nobody on your team edits code, 8B's AI website builder is the no-code option.
+As a sauna website template it fits one venue with water nearby, a few rooms of different character and entry sold by the hour. A coach selling a course or a studio with a teacher fits the [studio and course](https://8b.com/templates/senti/) template better. This light build has no animation library: about 27 KB gzipped against 75 KB and four extra requests for the GSAP version. Booking is the thin part: the form is a request, with no calendar of free slots.
 
 ## Before you publish
 
@@ -83,7 +83,9 @@ As a sauna website template it fits one venue with water nearby, a few rooms of 
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 92 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 107 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 92 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

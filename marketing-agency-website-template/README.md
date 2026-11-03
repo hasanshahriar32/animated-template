@@ -1,8 +1,8 @@
-# Free HTML marketing agency website template with GSAP scroll animations
+# Free HTML marketing agency website template with scroll animations and no libraries
 
-Marketing agency website template: one free HTML file for a communications studio that publishes a yearly research report and runs a live series. It holds six research signals, a ledger of old and new measures, four dated sessions, a report request form and a contact form, in grey, black and vermilion paper cut. An AI agent can adapt it.
+Marketing agency website template: one free HTML file for a communications studio that publishes a yearly research report and runs a live series. It holds six research signals, a ledger of old and new measures, four dated sessions and two forms, in grey, black and vermilion paper cut. Its scroll motion runs on CSS with no libraries.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/marketing-agency-website-template/)** · **[Use this template](https://github.com/new?template_name=marketing-agency-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/marketing-agency-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/halyard/)**
 
@@ -24,17 +24,17 @@ curl -LO https://raw.githubusercontent.com/8bsite/marketing-agency-website-templ
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my agency: name, city, what we publish each year, the findings and chapters, live event dates, titles and guests, team names and roles, hours, address, contacts>. Replace the figures, signals, shifts, session dates and nav live link first, then the team. Keep every id, the data-8b-section, data-8b-motion and data-8b-part attributes, the classes AGENTS.md lists and one bearing per signal; set the footer --len to the name's length. Ask me for missing facts; never invent figures, dates, names or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my agency: name, city, yearly publication, findings and chapters, live event dates, titles and guests, team names and roles, hours, address, contacts>. Replace the figures, signals, shifts, session dates and nav live link first, then the team. Keep the gate script in the head, every id, the data-8b-section and data-8b-motion attributes and the classes AGENTS.md lists; add no animation library. Keep six signals, five field photos and the footer --len. Never invent figures, dates, names or contacts; ask me.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when the agent gets the studio's facts first: research figures, each signal and its market count, session dates and guests, team names, address. The demo invents all of it. The agent should rename the studio in any letter case, set the footer wordmark's --len, update the dates and time tags by hand, and replace the four portraits and their alt texts, which name the people.
+A marketing agency website template for Claude Code goes fastest when the agent gets the studio's facts first: research figures, each signal and its market count, session dates and guests, team names, address. The demo invents all of it. If you vibe code in Cursor or Codex, the agent should rename the studio in any letter case across [the single agency page](https://8b.com/templates/one-page/), set the footer wordmark's --len, update the dates by hand and replace the four portraits and their alt texts.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=marketing-agency-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
 - **Navigation**: fixed top bar: logo, six section links, a red live link; hides on scroll down; phone menu overlay. The bar hides while you scroll down and returns on scroll up; the Menu button opens a full-screen overlay below 960 px.
-- **Attention doesn’t drift. It turns.**: first screen: a tall collage arrow on the left, the h1 "Attention doesn't drift. It turns.", a lead, a facts line and two buttons. On load the arrow drops in and the heading, lead, facts line and buttons slide in one after another; paper pieces flow along the arrow's shaft in a loop.
+- **Attention doesn’t drift. It turns.**: first screen: a tall collage arrow on the left, the h1 "Attention doesn't drift. It turns.", a lead, a facts line and two buttons. Smooth wheel scrolling throughout; on load the arrow drops in and the heading, lead, facts line and buttons slide in one after another, while paper pieces flow along the arrow's shaft in a loop.
 - **Six signals for 2027**: six numbered trends as a list beside a sticky dial with one big arrow that swings to each trend's bearing. The big arrow swings to each signal's bearing as that item crosses the screen centre, one dial tick per item lights red, and the other signal names grey out.
 - **What brands count, and what people act on**: ledger of six old measures struck out and replaced by new ones, each with a one-line note. Row by row, red tape covers the old measure, a small arrow grows out and the new measure slides in.
 - **Field notes**: a quote over five torn photos that start piled on top of it and part toward the edges, each with a city caption. Five photos start piled over the quote and part toward the edges at different angles while the stage stays pinned on wide screens, then lift away as the sessions sheet arrives.
@@ -69,11 +69,11 @@ Partly. The sessions section lists four dated evenings, but each Save a seat but
 No. The report form checks the email and the contact form checks name, email and message, then each shows a thank-you line and clears its fields. Nothing is sent or stored. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or delete a form and its script.
 
 **Can I get a site like this without editing code?**  
-Yes, in another way. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence, with its own design rather than this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, in another way. [8B's AI website builder](https://8b.com/) designs a new site from a sentence, with its own design rather than this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 
-Pick it when the studio's argument is its research and the goal is report sign-ups and seats. A creative studio that wants to show its work first is better served by the [agency](https://8b.com/templates/sillage/) template. Weak spots: both forms send nothing until connected, and without JavaScript the Menu button does nothing and the nav links hide below 960 px. For a site without editing code, the 8B builder is the no-code route.
+Pick it when the studio's argument is its research and the goal is report sign-ups and seats. A studio that shows its work first suits the [agency](https://8b.com/templates/sillage/) template. This light build keeps the look and scroll behaviour with no animation library and no script from a CDN: about 29 KB of code gzipped in one file, against 75 KB and four extra requests for the GSAP version. Both forms send nothing until connected.
 
 ## Before you publish
 
@@ -82,7 +82,9 @@ Pick it when the studio's argument is its research and the goal is report sign-u
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 113 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), container query units, cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 122 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), container query units, cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 113 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my venue: name, lane count and game prices, kitchen and bar hours, league nights and captains, menu with prices, party packages, beginners' hour, address and how guests book>. Replace the venue name, leaderboard, menu and every price first. Keep the ids, the data-8b-section, data-8b-motion and data-8b-part attributes, the classes AGENTS.md lists and the footer wordmark's len value set to the new name's character count. Ask me for missing facts and never invent prices, hours, scores, league names or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when the agent gets the facts only the venue has: lane count, game prices, kitchen and bar hours, league nights, menu prices, party packages and the booking route. The demo invents all of them. It also prints two sets of opening hours that disagree, so make them match. Keep the ids and the data-8b-section, data-8b-motion and data-8b-part attributes.
+Vibe coding this bowling alley website template for Claude Code or Cursor goes fastest when the agent gets the facts only the venue has: lane count, game prices, kitchen and bar hours, league nights, menu prices, party packages and the booking route. The demo invents all of them. It also prints two sets of opening hours that disagree, so make them match. Keep the ids and the data-8b-section, data-8b-motion and data-8b-part attributes.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=bowling-alley-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -67,11 +67,11 @@ No agent? Click **[Use this template](https://github.com/new?template_name=bowli
 **Does the Book a lane button take bookings?**  
 Not by itself. Every Book a lane button jumps to the enquiry form, which requires a name and an email, shows a thank-you line and sends nothing. Point the buttons at your booking page, or connect the form to Formspree or Netlify Forms with the steps in AGENTS.md.
 
-**Can I get a site like this without editing code?**  
-Yes, in a different way. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence about your venue, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+**Where is the bowling alley website design prompt, and how do I use it?**  
+Below the short prompt sits a longer bowling alley website design prompt for any AI tool. With the template, put index.html and AGENTS.md in an empty folder using its curl lines, and tell the agent to read AGENTS.md first. Give it the files, not the page address. Codex reads [AGENTS.md from the folder](https://8b.com/templates/for-codex/) on its own.
 
-**What happens on a phone, with reduced motion or with scripts off?**  
-On a phone the tiles and cards stack in one column, and the party panels still scroll sideways. With reduced motion on, animations and smooth scrolling stop: the glow section stays dark, the kitchen disc shows only the cocktail photo and the header still hides. Without JavaScript the navigation overlay cannot open; the questions still do.
+**Can I get a site like this without editing code?**  
+Yes, in a different way. [8B's AI website builder](https://8b.com/) designs a new site from a sentence about your venue, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

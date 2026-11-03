@@ -45,7 +45,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 ## Ask the owner for
 All demo text, never to be invented:
 - Motor and range figures: 250 watts, assist to 15.5 mph, about 80 km on one battery, 85 Nm motor, 21 kg, 17 kg, folds to 80 × 40 cm (opening, bikes).
-- Bike specs and rider heights: 150–195 cm for the Town, 60 kg on the Hauler's deck, children aged one to seven, two batteries on the Climber (bikes, questions).
+- Bike specs and rider heights: 150-195 cm for the Town, 60 kg on the Hauler's deck, children aged one to seven, two batteries on the Climber (bikes, questions).
 - Prices: from £9, £14, £16 and £11 an hour (bikes) and the full table of hour, half day, day and week, £79 a month pass, £50 excess, £200 deposit hold (prices, questions).
 - Stands: five names, addresses, hours and which bikes each holds, plus transport references such as the station and tram stops (stands).
 - Routes: names, start stands, distances, climb and times for four rides (routes).

@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my tile shop or bathroom studio: name, town, showroom address and hours, materials with prices per square metre, finished jobs, sample terms, fitters and guarantee, delivery and returns, legal name and company number>. Replace first the shop name, the Belfast details, the materials and prices, the four rooms and the fitters. Keep the section ids, the classes AGENTS.md lists, exactly four room photos and equal bond rows. Ask me for missing facts; never invent prices, guarantees, reviews or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when you hand the agent the facts only the shop has: materials and prices per square metre, finished jobs, sample terms, glazes, fitters, guarantee, delivery, returns and legal name. The demo invents all of them. Replace the Belfast details first, and leave the section ids and the classes AGENTS.md lists alone. Check the technical tips in the questions, such as the R10 slip rating, against your own trade.
+Vibe coding this tile store website template for Claude Code or Cursor goes fastest when you hand the agent the facts only the shop has: materials and prices per square metre, finished jobs, sample terms, glazes, fitters, guarantee, delivery, returns and legal name. The demo invents all of them. Replace the Belfast details first, and leave the section ids and the classes AGENTS.md lists alone. Check the technical tips in the questions, such as the R10 slip rating, against your own trade. [The vibe coding guide](https://8b.com/templates/vibe-coding/) compares other agents.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=tile-store-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -66,8 +66,8 @@ Yes. It is one page with no product pages, search or checkout, built around a sa
 **Where does the sample form send its requests?**  
 Nowhere yet. It needs at least one chip, a name, an email and a postcode, allows at most five chips, then shows a thank-you line and clears the fields. To receive requests, connect Formspree or Netlify Forms with the steps in AGENTS.md, or remove the form and its script.
 
-**Can I get a tile shop site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). You describe the shop in a sentence and it designs a new site, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It runs inside Claude and ChatGPT too.
+**Where is the tile store website design prompt, and how do I use it?**  
+Below the short prompt sits a longer tile store website design prompt for any AI tool. With the template, put index.html and AGENTS.md in an empty folder with the curl lines in AGENTS.md, and tell the agent to read AGENTS.md first. Give it the files, not the page address. Cursor reads AGENTS.md too, as [its folder setup](https://8b.com/templates/for-cursor/) shows.
 
 ## Is it the right base?
 

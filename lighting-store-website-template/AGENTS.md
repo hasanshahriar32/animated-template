@@ -1,6 +1,6 @@
 # AGENTS.md: lighting store website template
 
-One-page website for a lighting shop and showroom that sells lamps, draws lighting plans and repairs old lamps. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a lighting shop and showroom that sells lamps, draws lighting plans and repairs old lamps. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,20 +14,18 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav-toggle` `.nav-menu` `.nav-close`
   - `section-script:contact`: `.ct-form` `.ct-status` `data-sent` `data-invalid`
-  - `scene:rooms`: `.rm-track` `.rm-room` `.rm-room__strip` `.rm-room__media` `.rm-room__squiggle`
-  - `scene:collection`: `.cl-row` `.cl-shot__move` `.cl-row__lamp`
-  - `scene:makers`: `.mk-list` `.mk-row` `.mk-name`
-  - `scene:repairs`: `.rp-frame` `.rp-after` `.rp-after__in` `.rp-line` `.rp-step`
-  - `scene:thursdays`: `.th-disc` `.th-media` `.th-ring` `.th-line--a` `.th-line--b`
-  - `scene:sign`: `.ft-mark`
+  - `scene-script:rooms`: `.rm-track` `.rm-room` `.rm-room__squiggle`
+  - `scene-script:makers`: `.mk-name`
+  - `scene-script:repairs`: `.rp-frame` `.rp-line`
 - `style="--len:N"` = characters in that display line, spaces included: `Glim.` is 5.
 - The wordmark in the footer takes its size from style="--len:5", the number of characters in "Glim." (the full stop counts); change it with the name. The wordmark in the nav bar is plain text.
 - The yellow glows, strips, rings, squiggles and rules are CSS and SVG, not images: recolour them through --color-4 and the other colour variables in :root. The first screen's rules and the glow are drawn by CSS only.
-- The rooms and lamp list scripts read whatever .rm-room and .cl-row items are in the markup (the track width and the pin length are measured), so rooms and lamp rows can be added or removed; the first screen's three service columns and the three loan days sit on three-column grids, so changing their number means changing the grid.
-- The photos carry an inline background colour (style="background:#...") that shows while they load; update it with the photo or remove it. The repairs photo is used twice (grey and colour copies), so change both.
+- The rooms scene measures the .rm-room columns (the track width and how long the section is held), so rooms can be added or removed. The lamp list is fixed at six rows: on desktop the CSS raises each next photo into the frame through :nth-of-type rules for rows 2 to 6, so a seventh row needs its own rule. The first screen's three service columns and the three loan days sit on three-column grids, so changing their number means changing the grid.
+- The repairs photo is used twice (a grey copy and a colour copy), so change both.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #ececec (page background and the text colour of links on their hover fill), `--color-2` #121212 (text, hairline rules, outlines, the dark first screen, the late-opening section, the footer and the menu overlay), `--color-3` #ffffff (top bar, makers section background and text on the dark sections), `--color-4` #ffd000 (the light: glows, photo strips, lit lamp-list lines, makers row rules, repair line and step bars, loan day bars, button hover fill, footer wordmark), `--color-5` #555555 (notes, price lines, the product line under each workshop's city, unlit repair steps and photo placeholders), `--color-6` #a3a3a3 (body text on the dark sections, the first screen rules, the late-opening rings and the footer's resting wordmark); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -43,7 +41,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - Book a repair button in the repairs section: now #contact; owner's target: your repair booking page, or keep #contact.
 - Plan a Thursday visit link in the late opening section: now #contact; owner's target: your visit booking page, or keep #contact.
 - Send button of the contact form: now the form has action="#" and method="post"; the script only checks the required fields and shows the thank-you line, nothing is sent; owner's target: your form handler (Formspree, Netlify Forms or your own endpoint), or remove the form and keep the phone and email.
-- The form in `#contact` (fields `name`, `email`, `topic`, `message`) sends nothing; `section-script:contact` validates it and shows the thank-you text. Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
+- The form in `#contact` (fields `name`, `email`, `topic`, `message`) sends nothing; `section-script:contact` handles its submit in the page (read it before you connect a service). Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
 - The name Glim (any letter case); the favicon letter and colours in `<link rel="icon">`.
 - Photos (17, Unsplash: opening 1, rooms 6, collection 6, plans 1, try 1, repairs 1, thursdays 1): `src`, no `srcset`/`sizes`, `width`/`height` to the ratio, `alt`, CREDITS.md.
 - `<title>`, meta description, og tags.
@@ -65,10 +63,11 @@ All demo text, never to be invented:
 
 ## Known limits
 - Without JavaScript the menu button cannot open the overlay, and below 900 px the five bar links are hidden. The footer repeats The lamps, Light by room, Lighting plans, Borrow a lamp and Repairs, and the page's buttons lead to the contact section, but Late Thursdays is linked only from the overlay and no link leads to the questions, so on a phone those two are reached only by scrolling. The contact form also shows no thank-you line.
-- The pinned rooms track is about 2100 px of scrolling on a 1440 px screen and about 1900 px on a 375 px phone, and each room column is fixed to the screen height while pinned, so long texts can run under the photo on short windows.
-- The first screen photo and the other photos are lazy-loaded, including the first-screen one, and they come from Unsplash at the sizes in the URLs; self-host them before launch.
+- The rooms track is held for about 2100 px of scrolling on a 1440 px screen and about 1900 px on a 375 px phone, and each room column is the screen height while held, so long texts can run under the photo on short windows.
+- Without scroll-driven animation support (Firefox today) the page shows its finished layout: the rooms wrap into a grid of columns, each lamp row keeps its own photo, the repair photo is in colour with all steps lit, the bar stays in place and the wheel scrolls natively; only the first screen's load-in plays. With reduced motion on, nothing moves except hover effects.
+- The photos below the first screen are lazy-loaded (the first-screen photo loads with high priority), and they come from Unsplash at the sizes in the URLs; self-host them before launch.
 - Several small texts (13 px) carry the prices and notes; the prices in the lamp list are in the small size.
 - There is no online shop or basket: every button goes to an anchor on the page, so a real shop needs its own links.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Glim left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Glim left only in class names.

@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my shop: name, address, year opened, owner and a quote, aisles with stock counts, counter jobs with prices, workshop dates and prices, hire tools with deposits, opening hours, delivery and returns rules, phone, email>. Replace first the name, hours, prices and dates. Keep the section ids, the classes AGENTS.md lists and both faces of every hire row; set the footer wordmark's len to the new name's length. Ask me for missing facts and never invent prices, hours or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when you hand the agent the facts only the shop has: hours, prices, deposits, workshop dates, delivery rules and stock counts. The demo invents all of them, including the owner's story. Ask the agent to replace the name everywhere, then set the footer wordmark's --len to its length. A hire or classes section you do not offer can go, along with its style block, animation script and the links to its id.
+A hardware store website template for Claude Code, Cursor or Codex needs you to hand the agent the facts only the shop has: hours, prices, deposits, workshop dates, delivery rules and stock counts. The demo invents all of them, including the owner's story. Ask the agent to replace the name everywhere, then set the footer wordmark's --len to its length. A hire or classes section you do not offer can go, along with its style block, animation script and the links to its id.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=hardware-store-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -71,7 +71,7 @@ No. There is no cart, checkout or product pages. The buttons jump to sections or
 No. The form checks that the email address is valid, then swaps itself for a thank-you line and sends nothing. AGENTS.md gives the steps for Formspree or Netlify Forms; a newsletter service such as Mailchimp or Buttondown needs its own form code. Or delete the form and its script. Also edit the line that promises a monthly email.
 
 **Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/): you describe the shop in a sentence and its engine designs a new site, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, with [8B's AI website builder](https://8b.com/): you describe the shop in a sentence and its engine designs a new site, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

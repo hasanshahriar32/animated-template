@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my brokerage: name, city, regulator wording, fee model and amounts, lender count, advisers and specialities, client stories, rates to show, hours, booking>. Replace first the firm name, the fees, the lender count (data element, chart variables, every 94 in the text), the advisers and the stories. Keep the section ids, four method steps with four photos and four dots, and the classes AGENTS.md lists. Ask me for missing facts; never invent rates, fees, reviews, regulatory claims or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when you hand the agent the facts only the firm has: fee model, regulator wording, lender count, rates, advisers and client stories. The demo invents all of them, including the 4.9 rating and the adviser bios. The agent should swap the name everywhere, then change the 94 in the lead paragraph's data element, the chart's inline count and the five other places it appears, keeping data-bank below the new count.
+A mortgage broker website template for Claude Code, Cursor or Codex goes fastest when you hand the agent the facts only the firm has: fee model, regulator wording, lender count, rates, advisers and stories. The demo invents all of them, including the 4.9 rating. The agent should swap the name everywhere, then change the 94 in the lead paragraph's data element, the chart's inline count and the five other places it appears, keeping data-bank below the new count. The [steps for Claude Code](https://8b.com/templates/for-claude-code/) cover folder setup and a first prompt.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=mortgage-broker-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -70,7 +70,7 @@ It includes demo wording only. The footer says the firm is authorised and regula
 No. The script checks the required fields, clears the form and shows a thank-you line, and nothing is sent. Connect Formspree or Netlify Forms, or point the Book a free call buttons at a Calendly or Cal.com link. Replace the contact script when you do: it clears the fields before a plain post could send them.
 
 **Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). You describe the firm in a sentence and its engine designs a new site, its own design and not this template. Designing and restyling are free; publishing with hosting and SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, with [8B's AI website builder](https://8b.com/). You describe the firm in a sentence and its engine designs a new site, its own design and not this template. Designing and restyling are free; publishing with hosting and SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

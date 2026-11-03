@@ -1,6 +1,6 @@
 # AGENTS.md: outdoor gear rental website template
 
-One-page website for an outdoor kit hire shop that rents tents, packs and boots by the night. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for an outdoor kit hire shop that rents tents, packs and boots by the night. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,16 +14,15 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav-menu`
   - `section-script:footer`: `.foot-form` `.foot-form__msg` `data-invalid` `data-done`
   - `section-script:packs`: `.pack__price` `.packs-nights`
-  - `scene:kit-index`: `.kit-grid` `.kit-cards` `.kit-card__title` `data-index-label`
-  - `scene:packs-deal`: `.packs-grid` `.pack`
-  - `scene:fitting-swap`: `.fit-photo` `.fit-story`
-  - `scene:care-track`: `.care-pin` `.care-track` `.care-panel` `.care-tick`
-  - `scene:trips-zoom`: `.trips-stage` `.trips-grid` `.trips-cell--centre`
-  - `scene:visit-open`: `.visit-frame` `.visit-zoom`
+  - `scene-script:kit-index`: `.kit-cards` `.kit-card__title` `.kit-grid` `data-index-label`
+  - `scene-script:packs-deal`: `.packs-grid` `.pack`
+  - `scene-script:care-track`: `.care-pin` `.care-track` `.care-panel` `.care-tick`
+  - `scene-script:trips-zoom`: `.trips-stage` `.trips-grid` `.trips-cell--centre`
 - `style="--len:N"` = characters in that display line, spaces included: `Kitfell` is 7.
 - The pack prices are data values: each price element carries data-price-2, data-price-3 and data-price-7, and section-script:packs writes the one chosen with the radios. Change both the visible price and the three attributes.
 - The trips grid is built for exactly nine cells (six photos and three quotes) and its centre cell is marked trips-cell--centre; scene:trips-zoom scales about that cell.
@@ -43,7 +42,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - "Instagram" and "Strava club" links in the footer: now the home pages of the networks; owner's target: your own profile pages, or remove them.
 - "Hire terms" and "Privacy" links in the footer: now #faq and #visit; owner's target: your hire terms page and privacy policy.
 - Route notes sign-up form in the footer: now action="#": nothing is sent, the script only shows a thank-you line; owner's target: your newsletter form address or provider.
-- The form in `#footer` (fields `email`) sends nothing; `section-script:footer` validates it and shows the thank-you text. Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
+- The form in `#footer` (fields `email`) sends nothing; `section-script:footer` handles its submit in the page (read it before you connect a service). Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
 - The name Kitfell (any letter case); the favicon letter and colours in `<link rel="icon">`.
 - Photos (29, Unsplash: opening 1, kit 6, packs 4, fitting 3, care 6, routes 1, trips 6, faq 1, visit 1): `src`, no `srcset`/`sizes`, `width`/`height` to the ratio, `alt`, CREDITS.md.
 - `<title>`, meta description, og tags.
@@ -64,9 +63,11 @@ All demo text, never to be invented:
 
 ## Known limits
 - Without JavaScript the menu button cannot open the overlay at 900 px and below, the pack prices do not follow the nights switch, the kit index is not built, and the sign-up form sends nothing; the FAQ still opens.
+- Without scroll-driven animation support (Firefox today) the page shows its finished layout: the opening window and lift still play on load, but the photo does not drift, the kit index is not built, the care checks and the trips form plain grids and nothing pins. With reduced motion on, nothing plays on load either; the nav bar still hides on scroll and hover transitions still run.
 - The sign-up form has action="#" and nothing is sent; connect a form or newsletter service before publishing.
 - The care track pins its section at every width and the trips zoom pins its section on screens wider than 760 px, so the page is long to scroll; the trips grid is a fixed 3 by 3.
+- The fitting section swaps exactly three photos for three stories through CSS :nth-of-type rules; a fourth story would get no photo swap unless those rules get a fourth entry.
 - The opening style block still holds rules for a removed first screen (op-word, op-screen--1, op-card) that no markup uses; they do nothing and can be deleted.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Kitfell left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Kitfell left only in class names.

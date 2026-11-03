@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my venue: name, address, machines, weekly events and league rules, prices, private hire options, menu, hours, owners' names, how people book>. Replace first the venue name everywhere, the owners' story, the league board, prices, menu, hours and photos. Keep the section ids, the classes AGENTS.md lists and the board rows in rank order, and set the footer wordmark's --len to the new name's length. Ask me for any missing fact; never invent prices, hours, scores, reviews, addresses or contacts.
 ```
 
-Give Claude Code, Cursor or Codex the facts only the venue has: hours, machine counts, league rules, coin and hire prices, menu, address and the owners' names. The demo invents all of them, along with the board's scores and the three reviews. The agent should then replace the venue name everywhere, set the footer wordmark's --len to the new name's length and point the Book buttons at your booking page. Vibe coding suits a one-file page like this.
+Give Claude Code, Cursor or Codex the facts only the venue has: hours, machine counts, league rules, coin and hire prices, menu, address and the owners' names. The demo invents all of them, along with the board's scores and the three reviews. The agent should replace the venue name everywhere, set the footer wordmark's --len to the new name's length and point the Book buttons at your booking page. A one-file page suits [vibe coding in Claude Code](https://8b.com/templates/for-claude-code/).
 
 No agent? Click **[Use this template](https://github.com/new?template_name=arcade-bar-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -62,13 +62,13 @@ No agent? Click **[Use this template](https://github.com/new?template_name=arcad
 ## Questions
 
 **Does it work as an arcade game website template for a venue without a bar?**  
-Yes, after a text pass. Bowling, escape rooms, mini golf and pinball halls reuse the events, league board, ways to play, hire and booking sections. With no bar, delete the drinks menu section, its menu-track script block and the three Menu links, in the header, the phone overlay and the footer.
+Yes, after a text pass. Bowling, escape rooms, mini golf and pinball halls reuse the events, league board, ways to play, hire and booking sections of its [single-scroll layout](https://8b.com/templates/one-page/). With no bar, delete the drinks menu section, its menu-track script block and the three Menu links, in the header, the phone overlay and the footer.
 
 **Does the booking form send bookings?**  
 No. As shipped, the booth form and the newsletter form check their fields, show a thank-you or error line and send nothing. Connect them to Formspree or Netlify Forms, or point the Book a booth buttons at your own booking page or ticketing link.
 
 **Can I get a site like this without editing code?**  
-Yes. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a one-sentence description; it is its own design, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes. [8B's AI website builder](https://8b.com/) designs a new site from a one-sentence description; it is its own design, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/home-renovation-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,7 +20,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%232446d0'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23fbf8f1'%3ES%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/playpensans/v22/dg4i_pj1p6gXP0gzAZgm4c89TCIj.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/schibstedgrotesk/v7/Jqz55SSPQuCQF3t8uOwiUL-taUTtap9Gayo.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 @font-face {
@@ -206,10 +206,6 @@
 @font-face { font-family: "Playpen Sans Fallback"; src: local("Arial"), local("ArialMT"), local("Helvetica"); font-weight: 100 549; size-adjust: 104.2%; ascent-override: 112.3%; descent-override: 32.6%; line-gap-override: 0%; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis [data-lenis-prevent], .lenis [data-lenis-prevent-wheel], .lenis [data-lenis-prevent-touch] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body {
   margin: 0;
   color: var(--color-2);
@@ -296,6 +292,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 #nav .nv-overlay ul { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
 #nav .nv-overlay li a { font-size: 34px; letter-spacing: -0.03em; }
 #nav .nv-close { position: absolute; top: 22px; right: 24px; }
+#nav .nv-corner { padding: 5px 9px 3px; background: var(--color-7); border: 1px solid color-mix(in srgb, var(--color-2) 20%, transparent); border-radius: var(--radius-1); box-shadow: var(--shadow-1); }
 @media (max-width: 1180px) { #nav .nv-corner { display: none; } }
 @media (max-width: 860px) {
   #nav .nv-links, #nav .nv-cta { display: none; }
@@ -340,13 +337,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
   #opening .op-note { animation: op-write 0.75s 0.35s ease-out backwards; }
   #opening .op-actions { animation: op-rise 0.8s 0.18s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; }
   #opening .op-print { animation: op-lift 1s 0.06s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; }
-  #opening .op-beam { animation: op-sweep 6s ease-in-out infinite alternate; }
-  #opening .op-stage.is-off .op-beam { animation-play-state: paused; }
 }
 @keyframes op-rise { from { transform: translateY(0.4em); } }
 @keyframes op-lift { from { transform: translateY(56px); } }
 @keyframes op-write { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
-@keyframes op-sweep { from { transform: skewX(-16deg) translateX(0); } to { transform: skewX(-16deg) translateX(min(48vw, 560px)); } }
 @media (max-width: 1180px) { #opening .op-note { width: auto; white-space: nowrap; } #opening .op-note--a { right: auto; left: 0.2em; top: -1.6em; } #opening .op-note--b { left: auto; right: 0; bottom: -1.7em; } }
 @media (max-width: 860px) {
   #opening { --op-top: max(44svh, 340px); --op-side: 12px; }
@@ -361,6 +355,27 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 /* Flicker fix (2026-10-29, checked on the user's phone): the parts the intro and the opening scene move hold their own layers from load on, and the scene keeps 3D transforms at its ends, so neither the end of the intro nor the return to the top repaints the first screen. */
 #opening .op-photo, #opening .op-grid, #opening .op-sheet { will-change: transform; } #opening .op-dim { will-change: opacity; }
+#opening .op-second { margin-top: -100svh; }
+#opening .op-frame { --op-k: 0; }
+#opening .op-photo { transform: translateX(5%) scale(1.5); }
+#opening .op-dim { opacity: .55; }
+#opening .op-sheet h1 { margin-bottom: 14px; }
+#opening .op-actions { justify-content: flex-start; gap: 12px 24px; margin-top: 22px; }
+@media (max-width: 860px) {
+  #opening .op-actions { margin-top: 18px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #opening .op-print { animation: rw-fade .9s ease backwards; }
+  #opening .op-sheet { animation: rw-drop .8s .2s cubic-bezier(.2, .7, .2, 1) backwards; }
+  #opening .op-plan path { animation: rw-draw .7s ease-out backwards; animation-delay: calc(.6s + var(--i, 0) * .06s); }
+  #opening .op-plan path:nth-child(2) { --i: 1; } #opening .op-plan path:nth-child(3) { --i: 2; }
+  #opening .op-plan path:nth-child(4) { --i: 3; } #opening .op-plan path:nth-child(5) { --i: 4; }
+  #opening .op-plan path:nth-child(6) { --i: 5; } #opening .op-plan path:nth-child(7) { --i: 6; }
+  #opening .op-plan path:nth-child(8) { --i: 7; }
+}
+@keyframes rw-fade { from { opacity: 0; } }
+@keyframes rw-drop { from { transform: translateY(-24px) rotate(2.5deg); opacity: 0; } }
+@keyframes rw-draw { from { stroke-dashoffset: 1; } }
 }
 </style>
 <style data-8b-part="section:method">
@@ -653,42 +668,150 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 }
 </style>
-<style data-8b-part="scene-style:projects">
+<style data-8b-part="motion">
 @layer scenes {
-@media (prefers-reduced-motion: no-preference) and (min-width: 861px) {
-  #projects[data-track] { height: calc(var(--pj-len, 0px) + 100svh); padding: 0; }
-  #projects[data-track] .pj-pin { position: sticky; top: 0; display: flex; flex-direction: column; justify-content: center; gap: 4svh; width: 100%; height: 100svh; overflow: hidden; }
-  #projects[data-track] .pj-intro { position: static; flex-direction: row; flex-wrap: wrap; align-items: flex-end; gap: 12px 48px; padding: 56px 6vw 0; }
-  #projects[data-track] .pj-intro .m-text { max-width: 30em; }
-  #projects[data-track] .pj-track { display: flex; flex-wrap: nowrap; align-items: flex-start; gap: 48px; width: max-content; padding: 0 calc(50vw - 14vw) 0 86vw; }
-  #projects[data-track] .pj-card { flex: 0 0 28vw; }
-  #projects[data-track] .pj-card .m-duo-2 { max-height: 52svh; }
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] [data-8b-motion~="pencil"] { animation-name: motion-pencil-clippath; animation-duration: 0.9s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="pencil"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="snap"] { animation-name: motion-snap-drop; animation-duration: 0.75s; animation-delay: var(--motion-snap-delay, calc(mod(var(--i, 0), 3) * 0.08s)); animation-timing-function: linear(0, 0.1159, 0.2239, 0.3241, 0.4168, 0.5023, 0.581, 0.6529, 0.7184, 0.7778, 0.8313, 0.8791, 0.9216, 0.959, 0.9916, 1.0195, 1.0432, 1.0628, 1.0787, 1.091, 1.1, 1.106, 1.1094, 1.1102, 1.1088, 1.1055, 1.1004, 1.094, 1.0864, 1.0779, 1.0688, 1.0592, 1.0496, 1.0401, 1.0311, 1.0227, 1.0152, 1.0089, 1.0042, 1.0011, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="snap"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"] { animation-name: motion-rule-scale; animation-duration: 0.8s; animation-delay: 0s; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rule"].is-in { animation-play-state: running; }
+@keyframes motion-pencil-clippath { 0% { clip-path: inset(0% 100% 0% 0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes motion-snap-drop { 0% { translate: 0 -24px; rotate: 4deg; opacity: 0; visibility: hidden; } 100% { translate: 0 0; rotate: 0deg; opacity: 1; } }
+@keyframes motion-rule-scale { 0% { scale: 0 1; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+[data-8b-live] #opening .op-beam { animation: opening-sweep 6s ease-in-out infinite alternate; }
+[data-8b-live] #opening .op-stage.is-off .op-beam { animation-play-state: paused; }
+@keyframes opening-sweep { from { transform: skewX(-16deg) translateX(0); } to { transform: skewX(-16deg) translateX(min(48vw, 560px)); } }
+}
+</style>
+<style data-8b-part="scene:method">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #method { timeline-scope: --method-t1; }
+[data-8b-live] #method .mt-steps { view-timeline: --method-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #method .mt-sheet { animation-name: method-div-mt-sheet-scale, method-div-mt-sheet-translate; animation-timeline: --method-t1; animation-range: cover 28vh cover calc(100% - 62vh); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+@keyframes method-div-mt-sheet-scale { 0% { scale: 1; } 9.8039% { scale: 2; } 22.549% { scale: 2; } 32.3529% { scale: 2; } 45.098% { scale: 2; } 54.902% { scale: 2; } 67.6471% { scale: 2; } 77.451% { scale: 2; } 90.1961% { scale: 2; } 100% { scale: 1; } }
+@keyframes method-div-mt-sheet-translate { 0% { translate: 0px 0px; } 9.8039% { translate: 0px 0px; } 22.549% { translate: 0px 0px; } 32.3529% { translate: -100% 0px; } 45.098% { translate: -100% 0px; } 54.902% { translate: 0px -100%; } 67.6471% { translate: 0px -100%; } 77.451% { translate: -100% -100%; } 90.1961% { translate: -100% -100%; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:rooms">
+@layer scenes {
+@property --rooms-left { syntax: "<number>"; inherits: true; initial-value: 0; }
+[data-8b-live] #rooms .rm-plan { view-timeline: --rooms-plan block; view-timeline-inset: 0; animation-name: rooms-gather; animation-timeline: --rooms-plan; animation-range: cover 15vh cover calc(50% - 5vh); animation-timing-function: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1513, 0.18, 0.2113, 0.245, 0.2813, 0.32, 0.3612, 0.405, 0.4512, 0.5, 0.5488, 0.595, 0.6387, 0.68, 0.7188, 0.755, 0.7888, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); animation-fill-mode: both; }
+[data-8b-live] #rooms .rm-room { translate: round(calc(var(--rooms-left) * var(--rooms-dx, 0) * 24px), 24px) round(calc(var(--rooms-left) * var(--rooms-dy, 0) * 24px), 24px); }
+@media (max-width: 860px) {
+  [data-8b-live] #rooms .rm-room { translate: round(calc(var(--rooms-left) * (mod(var(--i, 0), 2) * 2 - 1) * 24px), 24px) round(calc(var(--rooms-left) * var(--i, 0) * 24px), 24px); }
+}
+@keyframes rooms-gather { from { --rooms-left: 1; } to { --rooms-left: 0; } }
+}
+</style>
+<style data-8b-part="scene:projects">
+@layer scenes {
+[data-8b-live] #projects .pj-cap, [data-8b-live] #projects .pj-card img, [data-8b-live] #projects .pj-card .m-duo__tone { animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #projects .pj-cap { animation-name: projects-cap; }
+[data-8b-live] #projects .pj-card img { animation-name: projects-photo; }
+[data-8b-live] #projects .pj-card .m-duo__tone { animation-name: projects-tone; }
+@media (min-width: 861px) {
+  [data-8b-live] #projects { --pj-len: calc(162vw + 192px); height: calc(var(--pj-len) + 100svh); padding: 0; view-timeline: --projects-run block; view-timeline-inset: 0; }
+  [data-8b-live] #projects .pj-pin { position: sticky; top: 0; display: flex; flex-direction: column; justify-content: center; gap: 4svh; width: 100%; height: 100svh; overflow: hidden; }
+  [data-8b-live] #projects .pj-intro { position: static; flex-direction: row; flex-wrap: wrap; align-items: flex-end; gap: 12px 48px; padding: 56px 6vw 0; }
+  [data-8b-live] #projects .pj-intro .m-text { max-width: 30em; }
+  [data-8b-live] #projects .pj-track { display: flex; flex-wrap: nowrap; align-items: flex-start; gap: 48px; width: max-content; padding: 0 calc(50vw - 14vw) 0 86vw; animation-name: projects-travel; animation-timeline: --projects-run; animation-range: cover 100vh cover calc(100vh + var(--pj-len)); animation-timing-function: linear; animation-fill-mode: both; }
+  [data-8b-live] #projects .pj-card { flex: 0 0 28vw; --pj-step: calc(var(--i, 0) * (28vw + 48px)); }
+  [data-8b-live] #projects .pj-card:first-child { --pj-from: calc(23 / 24); }
+  [data-8b-live] #projects .pj-card .m-duo-2 { max-height: 52svh; }
+  [data-8b-live] #projects .pj-cap, [data-8b-live] #projects .pj-card img, [data-8b-live] #projects .pj-card .m-duo__tone { animation-timeline: --projects-run; animation-range: cover calc(100vh + max(0px, var(--pj-step) - 2vw)) cover calc(100vh + var(--pj-step) + 46vw); }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #projects .pj-card { view-timeline: --projects-card block; view-timeline-inset: 0; }
+  [data-8b-live] #projects .pj-cap, [data-8b-live] #projects .pj-card img, [data-8b-live] #projects .pj-card .m-duo__tone { animation-timeline: --projects-card; animation-range: cover 12vh cover calc(50% - 2vh); }
+}
+@keyframes projects-travel { from { translate: 0 0; } to { translate: calc(var(--pj-len) * -1) 0; } }
+@keyframes projects-cap { from { translate: 0 calc(36px * var(--pj-from, 1)); } to { translate: 0 0; } }
+@keyframes projects-photo { from { filter: grayscale(var(--pj-from, 1)) contrast(calc(1 + 0.2 * var(--pj-from, 1))); } to { filter: grayscale(0) contrast(1); } }
+@keyframes projects-tone { from { opacity: var(--pj-from, 1); } to { opacity: 0; } }
+}
+</style>
+<style data-8b-part="scene:letter">
+@layer scenes {
+[data-8b-live] #letter { timeline-scope: --letter-t5; }
+[data-8b-live] #letter .lt-tile--2, [data-8b-live] #letter .lt-tile--1, [data-8b-live] #letter .lt-tile--4, [data-8b-live] #letter .lt-tile--3 { animation-range: cover 0% cover calc(50% - 12vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] #letter .lt-tile--2 { view-timeline: --letter-t1 block; view-timeline-inset: 0; animation-timeline: --letter-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #letter .lt-tile--1 { view-timeline: --letter-t2 block; view-timeline-inset: 0; animation-timeline: --letter-t2; animation-fill-mode: both; transform: none; }
+[data-8b-live] #letter .lt-tile--4 { view-timeline: --letter-t3 block; view-timeline-inset: 0; animation-timeline: --letter-t3; animation-fill-mode: both; transform: none; }
+[data-8b-live] #letter .lt-tile--3 { view-timeline: --letter-t4 block; view-timeline-inset: 0; animation-timeline: --letter-t4; animation-fill-mode: both; transform: none; }
+[data-8b-live] #letter .lt-front { view-timeline: --letter-t5 block; view-timeline-inset: 0; }
+[data-8b-live] #letter .lt-paper { animation-name: letter-article-lt-paper-translate; animation-timeline: --letter-t5; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes letter-span-m-tile-translate-d { 0% { translate: -180px 180px; } 100% { translate: 0px 0px; } }
+@keyframes letter-span-m-tile-translate-m { 0% { translate: -72px 72px; } 100% { translate: 0px 0px; } }
+@keyframes letter-span-m-tile-rotate { 0% { rotate: 0deg; } 100% { rotate: 9deg; } }
+@keyframes letter-span-m-tile-scale { 0% { scale: 0.55; } 100% { scale: 1; } }
+@keyframes letter-span-m-tile-translate-2-d { 0% { translate: 180px 160px; } 100% { translate: 0px 0px; } }
+@keyframes letter-span-m-tile-translate-2-m { 0% { translate: 72px 64px; } 100% { translate: 0px 0px; } }
+@keyframes letter-span-m-tile-rotate-2 { 0% { rotate: 0deg; } 100% { rotate: -12deg; } }
+@keyframes letter-span-m-tile-translate-3-d { 0% { translate: -170px -150px; } 100% { translate: 0px 0px; } }
+@keyframes letter-span-m-tile-translate-3-m { 0% { translate: -68px -60px; } 100% { translate: 0px 0px; } }
+@keyframes letter-span-m-tile-rotate-3 { 0% { rotate: 0deg; } 100% { rotate: -8deg; } }
+@keyframes letter-span-m-tile-translate-4-d { 0% { translate: 170px -140px; } 100% { translate: 0px 0px; } }
+@keyframes letter-span-m-tile-translate-4-m { 0% { translate: 68px -56px; } 100% { translate: 0px 0px; } }
+@keyframes letter-span-m-tile-rotate-4 { 0% { rotate: 0deg; } 100% { rotate: 7deg; } }
+@keyframes letter-article-lt-paper-translate { 0% { translate: 0px 76%; } 100% { translate: 0px 0px; } }
+@media (min-width: 861px) {
+  [data-8b-live] #letter .lt-tile--2 { animation-name: letter-span-m-tile-translate-d, letter-span-m-tile-rotate, letter-span-m-tile-scale; }
+  [data-8b-live] #letter .lt-tile--1 { animation-name: letter-span-m-tile-translate-2-d, letter-span-m-tile-rotate-2, letter-span-m-tile-scale; }
+  [data-8b-live] #letter .lt-tile--4 { animation-name: letter-span-m-tile-translate-3-d, letter-span-m-tile-rotate-3, letter-span-m-tile-scale; }
+  [data-8b-live] #letter .lt-tile--3 { animation-name: letter-span-m-tile-translate-4-d, letter-span-m-tile-rotate-4, letter-span-m-tile-scale; }
+  [data-8b-live] #letter .lt-paper { animation-range: cover 4vh cover calc(50% - 2vh - 214.8px); }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #letter .lt-tile--2 { animation-name: letter-span-m-tile-translate-m, letter-span-m-tile-rotate, letter-span-m-tile-scale; }
+  [data-8b-live] #letter .lt-tile--1 { animation-name: letter-span-m-tile-translate-2-m, letter-span-m-tile-rotate-2, letter-span-m-tile-scale; }
+  [data-8b-live] #letter .lt-tile--4 { animation-name: letter-span-m-tile-translate-3-m, letter-span-m-tile-rotate-3, letter-span-m-tile-scale; }
+  [data-8b-live] #letter .lt-tile--3 { animation-name: letter-span-m-tile-translate-4-m, letter-span-m-tile-rotate-4, letter-span-m-tile-scale; }
+  [data-8b-live] #letter .lt-paper { animation-range: cover 4vh cover calc(50% - 2vh - 367px); }
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .op-second { margin-top: -100svh; }
-#opening .op-frame { --op-k: 0; }
-#opening .op-photo { transform: translateX(5%) scale(1.5); }
-#opening .op-dim { opacity: .55; }
-#opening .op-sheet h1 { margin-bottom: 14px; }
-#opening .op-actions { justify-content: flex-start; gap: 12px 24px; margin-top: 22px; }
-#nav .nv-corner { padding: 5px 9px 3px; background: var(--color-7); border: 1px solid color-mix(in srgb, var(--color-2) 20%, transparent); border-radius: var(--radius-1); box-shadow: var(--shadow-1); }
-@media (max-width: 860px) {
-  #opening .op-actions { margin-top: 18px; }
+<style data-8b-part="scene:snags">
+@layer scenes {
+[data-8b-live] { --ease-cb0991: linear(0, 0.1207, 0.2329, 0.3369, 0.433, 0.5215, 0.6026, 0.6767, 0.744, 0.8048, 0.8594, 0.908, 0.951, 0.9886, 1.0211, 1.0488, 1.072, 1.0909, 1.1059, 1.1171, 1.125, 1.1297, 1.1316, 1.131, 1.128, 1.123, 1.1164, 1.1083, 1.099, 1.0889, 1.0781, 1.0671, 1.056, 1.0452, 1.0349, 1.0254, 1.017, 1.01, 1.0046, 1.0012, 1); }
+[data-8b-live] #snags .sn-sheet { view-timeline: --snags-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #snags .sn-list > li > .m-text > .sn-ink { animation-name: snags-span-sn-ink-backgroundsize; animation-timeline: --snags-t1; animation-range: cover calc(28vh - 14.9296vh * var(--i) + 14.0845% * var(--i)) cover calc(14.0845% + 14.0845% * var(--i) + 13.0704vh - 14.9296vh * var(--i)); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #snags .sn-list > li > .sn-box > .sn-tick > path { animation-name: snags-svg-sn-tick-path-strokedashoffset; animation-timeline: --snags-t1; animation-range: cover calc(7.7465% + 14.0845% * var(--i) + 19.7887vh - 14.9295vh * var(--i)) cover calc(14.0845% + 14.0845% * var(--i) + 13.0704vh - 14.9296vh * var(--i)); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #snags .sn-stamp { animation-name: snags-p-m-note-scale, snags-p-m-note-opacity, snags-p-m-note-visibility, snags-p-m-note-rotate; animation-timeline: --snags-t1; animation-range: cover calc(87.3239% - 64.5634vh) cover calc(100% - 78vh); animation-timing-function: var(--ease-cb0991), var(--ease-cb0991), linear, var(--ease-cb0991); animation-fill-mode: both; transform: none; }
+@keyframes snags-span-sn-ink-backgroundsize { 0% { background-size: 0% 2px; } 100% { background-size: 100% 2px; } }
+@keyframes snags-svg-sn-tick-path-strokedashoffset { 0% { stroke-dashoffset: 1px; } 99.998% { stroke-dashoffset: 0.0002px; } 100% { stroke-dashoffset: 0px; } }
+@keyframes snags-p-m-note-scale { 0% { scale: 1.9; } 100% { scale: 1; } }
+@keyframes snags-p-m-note-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes snags-p-m-note-visibility { 0% { visibility: hidden; } 0.002% { visibility: visible; animation-timing-function: linear(0, 0.1207, 0.2329, 0.3369, 0.433, 0.5215, 0.6026, 0.6767, 0.744, 0.8048, 0.8594, 0.908, 0.951, 0.9886, 1.0211, 1.0488, 1.072, 1.0909, 1.1059, 1.1171, 1.125, 1.1297, 1.1316, 1.131, 1.128, 1.123, 1.1164, 1.1083, 1.099, 1.0889, 1.0781, 1.0671, 1.056, 1.0452, 1.0349, 1.0254, 1.017, 1.01, 1.0046, 1.0012, 1); } 100% { visibility: visible; } }
+@keyframes snags-p-m-note-rotate { 0% { rotate: 8deg; } 100% { rotate: -8deg; } }
 }
-@media (prefers-reduced-motion: no-preference) {
-  #opening .op-print { animation: rw-fade .9s ease backwards; }
-  #opening .op-sheet { animation: rw-drop .8s .2s cubic-bezier(.2, .7, .2, 1) backwards; }
-  #opening .op-plan path { animation: rw-draw .7s ease-out backwards; animation-delay: calc(.6s + var(--i, 0) * .06s); }
-  #opening .op-plan path:nth-child(2) { --i: 1; } #opening .op-plan path:nth-child(3) { --i: 2; }
-  #opening .op-plan path:nth-child(4) { --i: 3; } #opening .op-plan path:nth-child(5) { --i: 4; }
-  #opening .op-plan path:nth-child(6) { --i: 5; } #opening .op-plan path:nth-child(7) { --i: 6; }
-  #opening .op-plan path:nth-child(8) { --i: 7; }
+</style>
+<style data-8b-part="scene:faq">
+@layer scenes {
+[data-8b-live] #faq .fq-folder { view-timeline: --faq-t1 block; view-timeline-inset: 0; animation-name: faq-div-fq-folder-translate, faq-div-fq-folder-rotate; animation-timeline: --faq-t1; animation-range: cover 0% cover 68vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes faq-div-fq-folder-translate { 0% { translate: 0px 150px; } 100% { translate: 0px 0px; } }
+@keyframes faq-div-fq-folder-rotate { 0% { rotate: -4.5deg; } 100% { rotate: 0deg; } }
 }
-@keyframes rw-fade { from { opacity: 0; } }
-@keyframes rw-drop { from { transform: translateY(-24px) rotate(2.5deg); opacity: 0; } }
-@keyframes rw-draw { from { stroke-dashoffset: 1; } }</style>
+</style>
+<style data-8b-part="scene:footer">
+@layer scenes {
+[data-8b-live] #footer { view-timeline: --footer-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #footer .ft-mark > .ft-tile { animation-name: footer-span-ft-tile-translate, footer-span-ft-tile-rotate-2; animation-timeline: --footer-t1; animation-range: cover 0% cover calc(50% - 10vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #footer .ft-mark > span:first-of-type, [data-8b-live] #footer .ft-mark > span:last-of-type { animation-name: footer-span-ft-tile-translate, footer-span-ft-tile-rotate; }
+@keyframes footer-span-ft-tile-translate { 0% { translate: var(--footer-span-ft-tile-translate-from, -90px) var(--footer-span-ft-tile-translate-from-2, -60px); } 100% { translate: 0px 0px; } }
+@keyframes footer-span-ft-tile-rotate { 0% { rotate: -90deg; } 100% { rotate: 0deg; } }
+@keyframes footer-span-ft-tile-rotate-2 { 0% { rotate: 90deg; } 100% { rotate: 0deg; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: fixed paper strip: four-tile logo, wordmark, five links, Book a site visit button; two pencil notes in the corners; phone menu overlay -->
@@ -703,7 +826,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
       </span>
       <span class="nv-word">squarefoot</span>
     </a>
-    <ul class="nv-links">
+    <ul class="nv-links" data-8b-items=":scope > li">
       <li><a class="m-link" href="#method">Method</a></li>
       <li><a class="m-link" href="#rooms">Rooms</a></li>
       <li><a class="m-link" href="#pricing">Pricing</a></li>
@@ -715,9 +838,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
   </div>
   <p class="m-note nv-corner nv-corner--left">since 2011</p>
   <a data-8b-placeholder="phone" class="m-note m-link nv-corner nv-corner--right" href="tel:+441610000000">0161 000 0000</a>
-  <div class="nv-overlay" id="nv-overlay" data-lenis-prevent hidden>
+  <div class="nv-overlay" id="nv-overlay" hidden>
     <button class="m-icon nv-close" type="button" aria-label="Close menu"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15"/></svg></button>
-    <ul>
+    <ul data-8b-items=":scope > li">
       <li><a class="m-link" href="#method">Method</a></li>
       <li><a class="m-link" href="#rooms">Rooms</a></li>
       <li><a class="m-link" href="#pricing">Pricing</a></li>
@@ -731,7 +854,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 </header>
 
 <main>
-<!-- opening: a full-screen sunlit-room photo in blue duotone with a paper sheet laid over it: heading, intro, pencil note, two actions and a small drawn plan -->
+<!-- opening: a full-screen sunlit-room photo in blue duotone with a paper sheet laid over it: heading, intro, pencil note, two actions and a small drawn plan (animation: scene:opening) -->
 <section id="opening" data-8b-section="opening" aria-labelledby="opening-title">
   <div class="op-stage">
     <div class="op-grid" aria-hidden="true"></div>
@@ -739,7 +862,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
       <div class="op-frame m-duo">
         <picture class="op-pic">
           <source media="(max-width: 860px)" srcset="https://images.unsplash.com/photo-1781364797259-ecb71d6632c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c3VubGl0JTIwZW1wdHklMjByb29tJTIwd2luZG93JTIwbGlnaHQlMjBzaGFkb3dzfGVufDF8MHx8fDE3OTEzNjgwNjd8MA&ixlib=rb-4.1.0&auto=format&amp;fit=crop&amp;crop=left&amp;w=720&amp;h=1240&amp;q=60" width="720" height="1240">
-          <img srcset="https://images.unsplash.com/photo-1781364797259-ecb71d6632c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c3VubGl0JTIwZW1wdHklMjByb29tJTIwd2luZG93JTIwbGlnaHQlMjBzaGFkb3dzfGVufDF8MHx8fDE3OTEzNjgwNjd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=780&q=60 780w, https://images.unsplash.com/photo-1781364797259-ecb71d6632c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c3VubGl0JTIwZW1wdHklMjByb29tJTIwd2luZG93JTIwbGlnaHQlMjBzaGFkb3dzfGVufDF8MHx8fDE3OTEzNjgwNjd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1280&q=60 1280w" sizes="(max-width: 767px) 260px, 100vw" style="background:#262626" class="op-photo" src="https://images.unsplash.com/photo-1781364797259-ecb71d6632c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c3VubGl0JTIwZW1wdHklMjByb29tJTIwd2luZG93JTIwbGlnaHQlMjBzaGFkb3dzfGVufDF8MHx8fDE3OTEzNjgwNjd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1280&q=60" alt="Afternoon sun falling through tall old windows into an unrenovated room with bare plaster walls" width="1600" height="1067" fetchpriority="high">
+          <img srcset="https://images.unsplash.com/photo-1781364797259-ecb71d6632c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c3VubGl0JTIwZW1wdHklMjByb29tJTIwd2luZG93JTIwbGlnaHQlMjBzaGFkb3dzfGVufDF8MHx8fDE3OTEzNjgwNjd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1170&q=60 1170w, https://images.unsplash.com/photo-1781364797259-ecb71d6632c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c3VubGl0JTIwZW1wdHklMjByb29tJTIwd2luZG93JTIwbGlnaHQlMjBzaGFkb3dzfGVufDF8MHx8fDE3OTEzNjgwNjd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60 1600w" sizes="(max-width: 767px) 390px, 125vw" class="op-photo" src="https://images.unsplash.com/photo-1781364797259-ecb71d6632c2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c3VubGl0JTIwZW1wdHklMjByb29tJTIwd2luZG93JTIwbGlnaHQlMjBzaGFkb3dzfGVufDF8MHx8fDE3OTEzNjgwNjd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="Afternoon sun falling through tall old windows into an unrenovated room with bare plaster walls" width="1600" height="1067" fetchpriority="high">
         </picture>
         <span class="m-duo__tone" aria-hidden="true"></span>
         <span class="op-beam" aria-hidden="true"></span>
@@ -783,15 +906,15 @@ button, input, select, textarea { font: inherit; color: inherit; }
   <div class="mt-body">
     <div class="mt-stick">
       <div class="mt-frame m-surface">
-        <div class="mt-sheet">
-          <figure class="mt-shot"><div class="m-duo"><img style="background:#73a6c0" src="https://images.unsplash.com/photo-1709719263448-b93060a4a702?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YnVpbGRlciUyMG1lYXN1cmluZyUyMHdhbGwlMjB0YXBlfGVufDF8MHx8fDE3OTEzNjgwNzV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="A builder in paint-spattered overalls holding a hard hat and a measuring tape" width="1600" height="1131" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div><figcaption class="m-note">1 · measure</figcaption></figure>
-          <figure class="mt-shot"><div class="m-duo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1721244654210-a505a99661e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8aGFuZCUyMGRyYXdpbmclMjBmbG9vciUyMHBsYW4lMjBwZW5jaWx8ZW58MXwwfHx8MTc5MTM2ODA3NHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=320&q=60" alt="A hand-drawn floor plan of a house with walls, stairs and doorways" width="1600" height="1089" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div><figcaption class="m-note">2 · draw</figcaption></figure>
-          <figure class="mt-shot"><div class="m-duo"><img style="background:#734026" src="https://images.unsplash.com/photo-1736182615481-3795ea557614?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTl8fGtpdGNoZW4lMjByZW5vdmF0aW9uJTIwY29uc3RydWN0aW9ufGVufDF8MHx8fDE3OTEzNjgwNjd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="A ground floor mid-renovation with plasterboard, a mitre saw and tools across the floor" width="1600" height="1200" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div><figcaption class="m-note">3 · build</figcaption></figure>
-          <figure class="mt-shot"><div class="m-duo"><img style="background:#c0a68c" src="https://images.unsplash.com/photo-1790924083649-146d1f683b1a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8b3BlbiUyMHBsYW4lMjBraXRjaGVuJTIwZGluaW5nJTIwcm9vbXxlbnwxfDB8fHwxNzkxMzY5MTk5fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=390&q=60" alt="A finished open-plan kitchen with an island, a tall blue cupboard and a dining table" width="1600" height="893" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div><figcaption class="m-note">4 · hand over</figcaption></figure>
+        <div class="mt-sheet" data-8b-items=":scope > figure" data-8b-fixed="4">
+          <figure class="mt-shot"><div class="m-duo"><img src="https://images.unsplash.com/photo-1709719263448-b93060a4a702?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YnVpbGRlciUyMG1lYXN1cmluZyUyMHdhbGwlMjB0YXBlfGVufDF8MHx8fDE3OTEzNjgwNzV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="A builder in paint-spattered overalls holding a hard hat and a measuring tape" width="1600" height="1131" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div><figcaption class="m-note">1 · measure</figcaption></figure>
+          <figure class="mt-shot"><div class="m-duo"><img src="https://images.unsplash.com/photo-1721244654210-a505a99661e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8aGFuZCUyMGRyYXdpbmclMjBmbG9vciUyMHBsYW4lMjBwZW5jaWx8ZW58MXwwfHx8MTc5MTM2ODA3NHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=320&q=60" alt="A hand-drawn floor plan of a house with walls, stairs and doorways" width="1600" height="1089" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div><figcaption class="m-note">2 · draw</figcaption></figure>
+          <figure class="mt-shot"><div class="m-duo"><img src="https://images.unsplash.com/photo-1736182615481-3795ea557614?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTl8fGtpdGNoZW4lMjByZW5vdmF0aW9uJTIwY29uc3RydWN0aW9ufGVufDF8MHx8fDE3OTEzNjgwNjd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="A ground floor mid-renovation with plasterboard, a mitre saw and tools across the floor" width="1600" height="1200" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div><figcaption class="m-note">3 · build</figcaption></figure>
+          <figure class="mt-shot"><div class="m-duo"><img src="https://images.unsplash.com/photo-1790924083649-146d1f683b1a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8b3BlbiUyMHBsYW4lMjBraXRjaGVuJTIwZGluaW5nJTIwcm9vbXxlbnwxfDB8fHwxNzkxMzY5MTk5fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=390&q=60" alt="A finished open-plan kitchen with an island, a tall blue cupboard and a dining table" width="1600" height="893" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div><figcaption class="m-note">4 · hand over</figcaption></figure>
         </div>
       </div>
     </div>
-    <ol class="mt-steps">
+    <ol class="mt-steps" data-8b-items=":scope > li" data-8b-fixed="4">
       <li class="mt-step">
         <span class="mt-num" aria-hidden="true">1</span>
         <h3 class="m-text-4">Rooms, measured</h3>
@@ -826,30 +949,30 @@ button, input, select, textarea { font: inherit; color: inherit; }
     <h2 id="rooms-title" class="m-text-3">What we build, room by room</h2>
     <p class="m-text">Most of our houses are Edwardian terraces and 1930s semis. We know their walls, their floors and their quirks, and we plan every room as part of the whole house.</p>
   </div>
-  <div class="rm-plan">
-    <article class="rm-room rm-room--front" data-dx="-3" data-dy="-2">
+  <div class="rm-plan" data-8b-items=":scope > .rm-room" data-8b-fixed="6">
+    <article class="rm-room rm-room--front" style="--rooms-dx: -3; --rooms-dy: -2">
       <h3 class="m-text-4">Whole-house refurbishment</h3>
       <p class="m-text-5">Rewiring, heating, plaster, sash windows and joinery for older houses, done in an order that keeps one room liveable.</p>
       <svg class="rm-door rm-door--b" viewBox="0 0 46 46" aria-hidden="true"><path d="M44 2V44H2"/><path d="M44 2A42 42 0 0 0 2 44"/></svg>
     </article>
-    <article class="rm-room rm-room--cellar" data-dx="-3" data-dy="2">
+    <article class="rm-room rm-room--cellar" style="--rooms-dx: -3; --rooms-dy: 2">
       <h3 class="m-text-4">Cellar conversions</h3>
       <p class="m-text-5">Tanking, damp-proofing and a light well: a dry room under your feet.</p>
     </article>
-    <article class="rm-room rm-room--kitchen" data-dx="0" data-dy="-3">
+    <article class="rm-room rm-room--kitchen" style="--rooms-dx: 0; --rooms-dy: -3">
       <h3 class="m-text-4">Kitchens</h3>
       <p class="m-text-5">Layouts drawn around how you cook, then units, worktops, plumbing and electrics under one contract.</p>
       <svg class="rm-door rm-door--t" viewBox="0 0 46 46" aria-hidden="true"><path d="M44 2V44H2"/><path d="M44 2A42 42 0 0 0 2 44"/></svg>
     </article>
-    <article class="rm-room rm-room--extension" data-dx="3" data-dy="-2">
+    <article class="rm-room rm-room--extension" style="--rooms-dx: 3; --rooms-dy: -2">
       <h3 class="m-text-4">Rear and side-return extensions</h3>
       <p class="m-text-5">Steel, a glass roof and wide doors to the garden: the kitchen-diner the house never had.</p>
     </article>
-    <article class="rm-room rm-room--loft" data-dx="2" data-dy="3">
+    <article class="rm-room rm-room--loft" style="--rooms-dx: 2; --rooms-dy: 3">
       <h3 class="m-text-4">Loft conversions</h3>
       <p class="m-text-5">Dormers, a proper staircase and an en-suite.</p>
     </article>
-    <article class="rm-room rm-room--bath" data-dx="4" data-dy="2">
+    <article class="rm-room rm-room--bath" style="--rooms-dx: 4; --rooms-dy: 2">
       <h3 class="m-text-4">Bathrooms</h3>
       <p class="m-text-5">Moved, enlarged or simply done properly.</p>
     </article>
@@ -867,7 +990,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
     <h2 id="pricing-title" class="m-text-3">Priced by the square foot</h2>
     <p class="m-note" data-8b-motion="pencil">every quote itemised, line by line</p>
   </div>
-  <ul class="pr-sheets">
+  <ul class="pr-sheets" data-8b-items=":scope > li">
     <li class="pr-sheet" data-8b-motion="snap">
       <h3 class="m-text-4">Refresh</h3>
       <p class="pr-price">£65<small>per sq ft, from</small></p>
@@ -901,25 +1024,25 @@ button, input, select, textarea { font: inherit; color: inherit; }
       <p class="m-text">Five houses from last year. Each room was a pencil drawing on our graph paper before it was a room, and each one came out the way it was drawn.</p>
       <p class="m-note" data-8b-motion="pencil">drawn in blue, built in colour <svg viewBox="0 0 60 24" aria-hidden="true"><path d="M3 15c14-9 30-11 47-4M42 5l9 6-8 7"/></svg></p>
     </div>
-    <div class="pj-track">
+    <div class="pj-track" data-8b-items=":scope > .pj-card">
       <figure class="pj-card">
-        <div class="m-duo-2"><img style="background:#d9a673" src="https://images.unsplash.com/photo-1724217601708-d72dff632f8a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fG5ldyUyMGtpdGNoZW4lMjB3b29kJTIwaW50ZXJpb3J8ZW58MXwxfHx8MTc5MTM2ODA3N3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=550&q=60" alt="A pine kitchen with a timber ceiling, open shelves and a window over the sink" width="1067" height="1600" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div>
+        <div class="m-duo-2"><img src="https://images.unsplash.com/photo-1724217601708-d72dff632f8a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fG5ldyUyMGtpdGNoZW4lMjB3b29kJTIwaW50ZXJpb3J8ZW58MXwxfHx8MTc5MTM2ODA3N3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=550&q=60" alt="A pine kitchen with a timber ceiling, open shelves and a window over the sink" width="1067" height="1600" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div>
         <figcaption class="pj-cap"><h3 class="m-text-4">The pine kitchen</h3><p class="m-text-5">Chorlton · kitchen in a 1905 terrace · 9 weeks</p><p class="m-note">kept the original boards</p></figcaption>
       </figure>
       <figure class="pj-card">
-        <div class="m-duo-2"><img style="background:#c0c0a6" src="https://images.unsplash.com/photo-1753272702593-772c7c854913?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGxvZnQlMjBjb252ZXJzaW9uJTIwYmVkcm9vbXxlbnwxfDF8fHwxNzkxMzY5MTk4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=550&q=60" alt="A loft bedroom with white walls and sunlight pouring through a large skylight" width="900" height="1600" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div>
+        <div class="m-duo-2"><img src="https://images.unsplash.com/photo-1753272702593-772c7c854913?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGxvZnQlMjBjb252ZXJzaW9uJTIwYmVkcm9vbXxlbnwxfDF8fHwxNzkxMzY5MTk4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=550&q=60" alt="A loft bedroom with white walls and sunlight pouring through a large skylight" width="900" height="1600" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div>
         <figcaption class="pj-cap"><h3 class="m-text-4">Bedroom under the skylight</h3><p class="m-text-5">Didsbury · loft conversion with en-suite · 12 weeks</p><p class="m-note">stairs drawn three times</p></figcaption>
       </figure>
       <figure class="pj-card">
-        <div class="m-duo-2"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1782805180061-3d131e792074?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8YmF0aHJvb20lMjBncmVlbiUyMHRpbGVzfGVufDF8MXx8fDE3OTEzNjgxMDF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=550&q=60" alt="A bathroom with green tiles, a marble wall, a round mirror and a dark vanity unit" width="1067" height="1600" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div>
+        <div class="m-duo-2"><img src="https://images.unsplash.com/photo-1782805180061-3d131e792074?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8YmF0aHJvb20lMjBncmVlbiUyMHRpbGVzfGVufDF8MXx8fDE3OTEzNjgxMDF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=550&q=60" alt="A bathroom with green tiles, a marble wall, a round mirror and a dark vanity unit" width="1067" height="1600" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div>
         <figcaption class="pj-cap"><h3 class="m-text-4">The green bathroom</h3><p class="m-text-5">Levenshulme · bathroom moved upstairs · 5 weeks</p><p class="m-note">tiles set out on paper first</p></figcaption>
       </figure>
       <figure class="pj-card">
-        <div class="m-duo-2"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1662242053595-27486f9ec2fd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8dmljdG9yaWFuJTIwaG91c2UlMjBpbnRlcmlvciUyMHJlbm92YXRlZHxlbnwxfDF8fHwxNzkxMzY5MTk4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=550&q=60" alt="A restored front room with tall sash windows, a timber fireplace and a polished wooden floor" width="1067" height="1600" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div>
+        <div class="m-duo-2"><img src="https://images.unsplash.com/photo-1662242053595-27486f9ec2fd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8dmljdG9yaWFuJTIwaG91c2UlMjBpbnRlcmlvciUyMHJlbm92YXRlZHxlbnwxfDF8fHwxNzkxMzY5MTk4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=550&q=60" alt="A restored front room with tall sash windows, a timber fireplace and a polished wooden floor" width="1067" height="1600" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div>
         <figcaption class="pj-cap"><h3 class="m-text-4">Front room, sashes restored</h3><p class="m-text-5">Whalley Range · windows, plaster and floor · 7 weeks</p><p class="m-note">every sash rehung by hand</p></figcaption>
       </figure>
       <figure class="pj-card">
-        <div class="m-duo-2"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1789381566177-d8878d6f9f59?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fG9wZW4lMjBwbGFuJTIwa2l0Y2hlbiUyMGRpbmluZyUyMHJvb218ZW58MXwwfHx8MTc5MTM2OTE5OXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1030&q=60" alt="A bright kitchen-diner with white units, black pendant lights and a long wooden table" width="1600" height="1067" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div>
+        <div class="m-duo-2"><img src="https://images.unsplash.com/photo-1789381566177-d8878d6f9f59?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fG9wZW4lMjBwbGFuJTIwa2l0Y2hlbiUyMGRpbmluZyUyMHJvb218ZW58MXwwfHx8MTc5MTM2OTE5OXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1030&q=60" alt="A bright kitchen-diner with white units, black pendant lights and a long wooden table" width="1600" height="1067" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div>
         <figcaption class="pj-cap"><h3 class="m-text-4">The long kitchen-diner</h3><p class="m-text-5">Burnage · 260 sq ft rear extension · 16 weeks</p><p class="m-note">the back wall is now a steel</p></figcaption>
       </figure>
     </div>
@@ -938,16 +1061,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
   <div class="dy-book">
     <div class="dy-page m-surface">
       <p class="m-note dy-margin" aria-hidden="true">the Okafors · no. 40</p>
-      <ol class="dy-entries">
+      <ol class="dy-entries" data-8b-items=":scope > li">
         <li class="dy-entry"><h3 class="m-text-4">Week 1</h3><p class="m-text">Skip on the road, letters through the neighbours' doors. Kitchen stripped back to brick and the old boiler gone.</p><div class="dy-rule" data-8b-motion="rule"></div></li>
         <li class="dy-entry"><h3 class="m-text-4">Week 2</h3><p class="m-text">Footings dug and inspected. Building control signed them off on Thursday morning.</p><div class="dy-rule" data-8b-motion="rule"></div></li>
         <li class="dy-entry"><h3 class="m-text-4">Week 4</h3><p class="m-text">The steel is in. The back wall has gone and the room suddenly feels twice the size.</p></li>
       </ol>
-      <figure class="dy-photo" data-8b-motion="snap"><div class="m-duo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1776821456681-305bdcd81096?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cGxhc3RlcmVkJTIwd2FsbCUyMGVtcHR5JTIwcm9vbSUyMHJlbm92YXRpb258ZW58MXwwfHx8MTc5MTM2OTIwMHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=440&q=60" alt="An empty room stripped for renovation, with exposed brick and bare walls" width="1600" height="1067" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div><figcaption class="m-note">week 1, stripped back</figcaption></figure>
+      <figure class="dy-photo" data-8b-motion="snap"><div class="m-duo"><img src="https://images.unsplash.com/photo-1776821456681-305bdcd81096?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cGxhc3RlcmVkJTIwd2FsbCUyMGVtcHR5JTIwcm9vbSUyMHJlbm92YXRpb258ZW58MXwwfHx8MTc5MTM2OTIwMHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=430&q=60" alt="An empty room stripped for renovation, with exposed brick and bare walls" width="1600" height="1067" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div><figcaption class="m-note">week 1, stripped back</figcaption></figure>
     </div>
     <div class="dy-page m-surface">
-      <figure class="dy-photo dy-photo--b" data-8b-motion="snap"><div class="m-duo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1641370957655-526287a6535a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YnVpbGRlciUyMG1lYXN1cmluZyUyMHdhbGwlMjB0YXBlfGVufDF8MHx8fDE3OTEzNjgwNzV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=440&q=60" alt="A gloved hand cutting a sheet of plasterboard along a folding rule" width="1600" height="1067" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div><figcaption class="m-note">week 9, boards cut to the plan</figcaption></figure>
-      <ol class="dy-entries" start="4">
+      <figure class="dy-photo dy-photo--b" data-8b-motion="snap" style="--motion-snap-delay: 0.08s"><div class="m-duo"><img src="https://images.unsplash.com/photo-1641370957655-526287a6535a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YnVpbGRlciUyMG1lYXN1cmluZyUyMHdhbGwlMjB0YXBlfGVufDF8MHx8fDE3OTEzNjgwNzV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=480&q=60" alt="A gloved hand cutting a sheet of plasterboard along a folding rule" width="1600" height="1067" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div><figcaption class="m-note">week 9, boards cut to the plan</figcaption></figure>
+      <ol class="dy-entries" data-8b-items=":scope > li" start="4">
         <li class="dy-entry"><h3 class="m-text-4">Week 6</h3><p class="m-text">Glass roof on, first fix of wiring and pipes. It rained all Tuesday: the roof stayed dry.</p><div class="dy-rule" data-8b-motion="rule"></div></li>
         <li class="dy-entry"><h3 class="m-text-4">Week 9</h3><p class="m-text">Plaster, then the floor. Units delivered and stacked in the front room under dust sheets.</p><div class="dy-rule" data-8b-motion="rule"></div></li>
         <li class="dy-entry"><h3 class="m-text-4">Week 11</h3><p class="m-text">Worktops fitted. Snag walk with Amara and Tunde on Friday; four items on the list, all closed by Tuesday.</p></li>
@@ -994,7 +1117,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
     <div class="sn-sheet m-surface">
       <h3 class="m-text-4">Snag list · 40 Example Road</h3>
       <p class="m-note">walked through on friday with the owners</p>
-      <ul class="sn-list">
+      <ul class="sn-list" data-8b-items=":scope > li">
         <li class="sn-item"><span class="sn-box" aria-hidden="true"><svg class="sn-tick" viewBox="0 0 26 26"><path pathLength="1" d="M5 13l5 6 11-13"/></svg></span><span class="m-text sn-text"><span class="sn-ink">Garden door catches on the frame</span></span></li>
         <li class="sn-item"><span class="sn-box" aria-hidden="true"><svg class="sn-tick" viewBox="0 0 26 26"><path pathLength="1" d="M5 13l5 6 11-13"/></svg></span><span class="m-text sn-text"><span class="sn-ink">Grout haze on the splashback</span></span></li>
         <li class="sn-item"><span class="sn-box" aria-hidden="true"><svg class="sn-tick" viewBox="0 0 26 26"><path pathLength="1" d="M5 13l5 6 11-13"/></svg></span><span class="m-text sn-text"><span class="sn-ink">Socket by the hob slightly off level</span></span></li>
@@ -1019,7 +1142,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
     <h2 id="reviews-title" class="m-text-3">Heard over the garden fence</h2>
     <p class="m-note" data-8b-motion="pencil">from owners, and once from a neighbour</p>
   </div>
-  <ul class="rv-slips">
+  <ul class="rv-slips" data-8b-items=":scope > li">
     <li class="rv-slip m-surface" data-8b-motion="snap"><figure><blockquote><p>They drew our kitchen on graph paper at our own table, and the finished room matches it square for square.</p></blockquote><figcaption class="m-note">Amara and Tunde, Chorlton</figcaption></figure></li>
     <li class="rv-slip m-surface" data-8b-motion="snap"><figure><blockquote><p>The Friday diary was the best part. I always knew what had happened while I was at work.</p></blockquote><figcaption class="m-note">Helen, Didsbury</figcaption></figure></li>
     <li class="rv-slip m-surface" data-8b-motion="snap"><figure><blockquote><p>Our neighbours sent a thank-you card for the builders. That has never happened to us before.</p></blockquote><figcaption class="m-note">Rob and Mei, Levenshulme</figcaption></figure></li>
@@ -1036,7 +1159,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
         <p class="m-text">The questions we hear on almost every first visit. Anything else, ask Dan on the phone.</p>
         <a data-8b-placeholder="phone" class="m-btn-2" href="tel:+441610000000"><span class="m-btn__tile" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5"/></svg></span><span class="m-btn__label">0161 000 0000</span></a>
       </div>
-      <ul class="fq-list">
+      <ul class="fq-list" data-8b-items=":scope > li">
         <li><details><summary><span class="m-text-4">Do I need planning permission for a rear extension?</span><span class="m-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 10h12M10 4v12"/></svg></span></summary><p class="m-text">Many single-storey rear extensions fall under permitted development, but terraces and conservation areas have their own limits. We check on the first visit and handle the application or a lawful development certificate when it is needed.</p></details></li>
         <li><details><summary><span class="m-text-4">How long does a typical job take?</span><span class="m-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 10h12M10 4v12"/></svg></span></summary><p class="m-text">Bathrooms take four to six weeks, kitchens six to nine, lofts ten to twelve and rear extensions twelve to sixteen. The programme is drawn week by week before we start, and the diary tells you where we are against it.</p></details></li>
         <li><details><summary><span class="m-text-4">Can we stay in the house during the work?</span><span class="m-icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 10h12M10 4v12"/></svg></span></summary><p class="m-text">Usually, yes. We seal off the work with dust screens, keep a temporary kitchen running when we can and plan the noisy and the no-water days with you in advance.</p></details></li>
@@ -1081,7 +1204,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
     </div>
     <div class="ct-side">
       <figure class="ct-photo">
-        <div class="m-duo"><img style="background:#0c59a6" src="https://images.unsplash.com/photo-1568293207619-df44ae062a9c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YnJpY2slMjB0ZXJyYWNlZCUyMGhvdXNlJTIwc3RyZWV0fGVufDF8MHx8fDE3OTEzNjgxMDV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=550&q=60" alt="A row of red-brick terraced houses with chimneys under a bright sky" width="1600" height="1260" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div>
+        <div class="m-duo"><img src="https://images.unsplash.com/photo-1568293207619-df44ae062a9c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YnJpY2slMjB0ZXJyYWNlZCUyMGhvdXNlJTIwc3RyZWV0fGVufDF8MHx8fDE3OTEzNjgxMDV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=550&q=60" alt="A row of red-brick terraced houses with chimneys under a bright sky" width="1600" height="1260" loading="lazy"><span class="m-duo__tone" aria-hidden="true"></span></div>
         <figcaption class="m-note" data-8b-motion="pencil">our patch: terraces and semis, south Manchester</figcaption>
       </figure>
       <dl class="ct-list">
@@ -1097,128 +1220,36 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 <!-- footer: dark footer: four tiles that lock into the logo mark, a closing line, link columns, a large wordmark and the copyright with the Design: 8B credit (animation: scene:footer) -->
 <footer id="footer" data-8b-section="footer" data-ground="dark">
-  <div class="ft-mark" aria-hidden="true">
-    <span class="ft-tile" data-dx="-90" data-dy="-60" data-r="-90"><svg viewBox="0 0 40 40"><rect x="7" y="8" width="26" height="6" rx="1"/><rect x="7" y="17" width="26" height="6" rx="1"/><rect x="7" y="26" width="26" height="6" rx="1"/></svg></span>
-    <span class="ft-tile" data-dx="90" data-dy="-70" data-r="90"><svg viewBox="0 0 40 40"><path d="M5 23 20 9l15 14v9L20 18 5 32Z"/></svg></span>
-    <span class="ft-tile" data-dx="-100" data-dy="60" data-r="90"><svg viewBox="0 0 40 40"><path d="M20 6a14 14 0 1 1 0 28 14 14 0 0 1 0-28Zm0 7a7 7 0 1 0 0 14 7 7 0 0 0 0-14Z"/></svg></span>
-    <span class="ft-tile" data-dx="100" data-dy="70" data-r="-90"><svg viewBox="0 0 40 40"><path d="M7 7v26h26A26 26 0 0 0 7 7Z"/></svg></span>
+  <div class="ft-mark" aria-hidden="true" data-8b-items=":scope > .ft-tile" data-8b-fixed="4">
+    <span class="ft-tile" data-dx="-90" data-dy="-60" data-r="-90" style="--footer-span-ft-tile-translate-from: -90px; --footer-span-ft-tile-translate-from-2: -60px"><svg viewBox="0 0 40 40"><rect x="7" y="8" width="26" height="6" rx="1"/><rect x="7" y="17" width="26" height="6" rx="1"/><rect x="7" y="26" width="26" height="6" rx="1"/></svg></span>
+    <span class="ft-tile" data-dx="90" data-dy="-70" data-r="90" style="--footer-span-ft-tile-translate-from: 90px; --footer-span-ft-tile-translate-from-2: -70px"><svg viewBox="0 0 40 40"><path d="M5 23 20 9l15 14v9L20 18 5 32Z"/></svg></span>
+    <span class="ft-tile" data-dx="-100" data-dy="60" data-r="90" style="--footer-span-ft-tile-translate-from: -100px; --footer-span-ft-tile-translate-from-2: 60px"><svg viewBox="0 0 40 40"><path d="M20 6a14 14 0 1 1 0 28 14 14 0 0 1 0-28Zm0 7a7 7 0 1 0 0 14 7 7 0 0 0 0-14Z"/></svg></span>
+    <span class="ft-tile" data-dx="100" data-dy="70" data-r="-90" style="--footer-span-ft-tile-translate-from: 100px; --footer-span-ft-tile-translate-from-2: 70px"><svg viewBox="0 0 40 40"><path d="M7 7v26h26A26 26 0 0 0 7 7Z"/></svg></span>
   </div>
   <div class="ft-panel">
     <div class="ft-cols">
       <div><h2 class="m-text-3">We build the room you keep sketching.</h2></div>
       <div>
         <h3 class="m-note">The page</h3>
-        <ul class="m-text-5"><li><a class="m-link" href="#method">Method</a></li><li><a class="m-link" href="#rooms">Rooms</a></li><li><a class="m-link" href="#pricing">Pricing</a></li><li><a class="m-link" href="#projects">Projects</a></li><li><a class="m-link" href="#faq">FAQ</a></li></ul>
+        <ul class="m-text-5" data-8b-items=":scope > li"><li><a class="m-link" href="#method">Method</a></li><li><a class="m-link" href="#rooms">Rooms</a></li><li><a class="m-link" href="#pricing">Pricing</a></li><li><a class="m-link" href="#projects">Projects</a></li><li><a class="m-link" href="#faq">FAQ</a></li></ul>
       </div>
       <div>
         <h3 class="m-note">Talk to us</h3>
-        <ul class="m-text-5"><li><a data-8b-placeholder="phone" class="m-link" href="tel:+441610000000">0161 000 0000</a></li><li><a data-8b-placeholder="email" class="m-link" href="mailto:hello@squarefoot.example">hello@squarefoot.example</a></li><li><a class="m-link" href="#contact">Book a site visit</a></li></ul>
+        <ul class="m-text-5" data-8b-items=":scope > li"><li><a data-8b-placeholder="phone" class="m-link" href="tel:+441610000000">0161 000 0000</a></li><li><a data-8b-placeholder="email" class="m-link" href="mailto:hello@squarefoot.example">hello@squarefoot.example</a></li><li><a class="m-link" href="#contact">Book a site visit</a></li></ul>
       </div>
       <div>
         <h3 class="m-note">Follow the diary</h3>
-        <ul class="m-text-5"><li><a data-8b-placeholder="social" class="m-link" href="https://www.instagram.com/">Instagram</a></li><li><a data-8b-placeholder="social" class="m-link" href="https://www.facebook.com/">Facebook</a></li></ul>
+        <ul class="m-text-5" data-8b-items=":scope > li"><li><a data-8b-placeholder="social" class="m-link" href="https://www.instagram.com/">Instagram</a></li><li><a data-8b-placeholder="social" class="m-link" href="https://www.facebook.com/">Facebook</a></li></ul>
       </div>
     </div>
     <p class="ft-word" style="--len:10" aria-hidden="true">squarefoot</p>
     <div class="ft-legal m-text-5">
       <p>© 2026 Squarefoot Renovations Ltd · Manchester · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></p>
-      <ul><li><a class="m-link" href="#footer">Privacy</a></li><li><a class="m-link" href="#footer">Terms</a></li></ul>
+      <ul data-8b-items=":scope > li"><li><a class="m-link" href="#footer">Privacy</a></li><li><a class="m-link" href="#footer">Terms</a></li></ul>
     </div>
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function refreshScroll() { ScrollTrigger.sort(); ScrollTrigger.refresh(); }
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.085, anchors: { offset: -24 } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick); gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  pencil(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.9, ease: 'power2.out', clearProps: 'clipPath' });
-  },
-  snap(element, vars = {}) {
-    return gsap.timeline(vars).from(element, { y: -24, rotation: '+=4', autoAlpha: 0, duration: 0.75, ease: 'back.out(1.8)' });
-  },
-  rule(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power2.inOut' });
-  }
-};
-['pencil', 'snap', 'rule'].forEach(name => {
-  document.querySelectorAll('[data-8b-section]').forEach(section => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, i) => ScrollTrigger.create({ id: `${id}:${i + 1}`, trigger: element, start: 'top 88%', once: true, animation: effects[name](element, { delay: name === 'snap' ? (i % 3) * 0.08 : 0 }) }));
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-</script>
 <script data-8b-part="section-script:nav">
 (() => {
   const nav = document.getElementById('nav');
@@ -1236,11 +1267,11 @@ const effects = {
   const setOpen = open => {
     overlay.hidden = !open;
     openBtn.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); closeBtn.focus(); } else { window.lenis?.start(); openBtn.focus(); }
+    if (open) { window.motionKit?.wheel?.stop(); closeBtn.focus(); } else { window.motionKit?.wheel?.start(); openBtn.focus(); }
   };
   openBtn.addEventListener('click', () => setOpen(true));
   closeBtn.addEventListener('click', () => setOpen(false));
-  overlay.addEventListener('click', event => { if (event.target.closest('a')) { overlay.hidden = true; openBtn.setAttribute('aria-expanded', 'false'); window.lenis?.start(); } });
+  overlay.addEventListener('click', event => { if (event.target.closest('a')) { overlay.hidden = true; openBtn.setAttribute('aria-expanded', 'false'); window.motionKit?.wheel?.start(); } });
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !overlay.hidden) setOpen(false); });
 })();
 </script>
@@ -1264,120 +1295,151 @@ const effects = {
 })();
 </script>
 
-<script data-8b-part="scene:method">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('method');
-    const sheet = section.querySelector('.mt-sheet');
-    const steps = section.querySelectorAll('.mt-step');
-    const count = Math.min(steps.length, sheet.children.length);
-    const timeline = gsap.timeline({ defaults: { ease: 'power2.inOut' }, scrollTrigger: {
-      id: 'method', trigger: section.querySelector('.mt-steps'), start: 'top 72%', end: 'bottom 62%', scrub: 0.8
-    }});
-    for (let i = 0; i < count; i++) {
-      timeline.to(sheet, { scale: 2, xPercent: -100 * (i % 2), yPercent: -100 * Math.floor(i / 2), duration: 1 }).to({}, { duration: 1.3 });
-    }
-    timeline.to(sheet, { scale: 1, xPercent: 0, yPercent: 0, duration: 1 });
-    steps.forEach((step, i) => ScrollTrigger.create({ id: `method:step-${i + 1}`, trigger: step, start: 'top 62%', end: 'bottom 62%', toggleClass: { targets: step, className: 'is-active' } }));
-  });
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:method">
+motionKit.scene("method", () => {
+  { const targets = ["#method .mt-steps > li:nth-of-type(1)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#method .mt-steps > li:nth-of-type(1)"), "0% 62%", "100% 62%", p => targets.forEach(t => t.classList.toggle("is-active", p > 0 && p < 1))); }
+  { const targets = ["#method .mt-steps > li:nth-of-type(2)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#method .mt-steps > li:nth-of-type(2)"), "0% 62%", "100% 62%", p => targets.forEach(t => t.classList.toggle("is-active", p > 0 && p < 1))); }
+  { const targets = ["#method .mt-steps > li:nth-of-type(3)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#method .mt-steps > li:nth-of-type(3)"), "0% 62%", "100% 62%", p => targets.forEach(t => t.classList.toggle("is-active", p > 0 && p < 1))); }
+  { const targets = ["#method .mt-steps > li:nth-of-type(4)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#method .mt-steps > li:nth-of-type(4)"), "0% 62%", "100% 62%", p => targets.forEach(t => t.classList.toggle("is-active", p > 0 && p < 1))); }
 });
 </script>
-<script data-8b-part="scene:rooms">
-queueMotion(() => {
-  gsap.matchMedia().add({ wide: '(min-width: 861px) and (prefers-reduced-motion: no-preference)', narrow: '(max-width: 860px) and (prefers-reduced-motion: no-preference)' }, context => {
-    const section = document.getElementById('rooms');
-    const plan = section.querySelector('.rm-plan');
-    const rooms = plan.querySelectorAll('.rm-room');
-    const square = 24;
-    const snapToGrid = value => Math.round(parseFloat(value) / square) * square + 'px';
-    const timeline = gsap.timeline({ defaults: { ease: 'power1.inOut' }, scrollTrigger: {
-      id: 'rooms', trigger: plan, start: 'top 85%', end: 'center 55%', scrub: 0.5
-    }});
-    rooms.forEach((room, i) => {
-      const dx = context.conditions.wide ? Number(room.dataset.dx || 0) : (i % 2 ? 1 : -1);
-      const dy = context.conditions.wide ? Number(room.dataset.dy || 0) : i;
-      timeline.fromTo(room, { x: dx * square, y: dy * square }, { x: 0, y: 0, duration: 1, modifiers: { x: snapToGrid, y: snapToGrid } }, 0);
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:projects">
-queueMotion(() => {
-  gsap.matchMedia().add({ wide: '(min-width: 861px) and (prefers-reduced-motion: no-preference)', narrow: '(max-width: 860px) and (prefers-reduced-motion: no-preference)' }, context => {
-    const section = document.getElementById('projects');
-    const track = section.querySelector('.pj-track');
-    const cards = [...track.querySelectorAll('.pj-card')];
-    const develop = card => gsap.timeline({ defaults: { ease: 'none' } })
-      .fromTo(card.querySelector('.m-duo__tone'), { opacity: 1 }, { opacity: 0 }, 0)
-      .fromTo(card.querySelector('img'), { filter: 'grayscale(1) contrast(1.2)' }, { filter: 'grayscale(0) contrast(1)' }, 0)
-      .fromTo(card.querySelector('.pj-cap'), { y: 36 }, { y: 0 }, 0);
-    if (context.conditions.wide) {
-      section.setAttribute('data-track', '');
-      const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
-      const setLength = () => section.style.setProperty('--pj-len', distance() + 'px');
-      setLength();
-      const move = gsap.to(track, { x: () => -distance(), ease: 'none', scrollTrigger: {
-        id: 'projects', trigger: section, start: 'top top', end: () => '+=' + distance(), scrub: 0.6, invalidateOnRefresh: true, onRefreshInit: setLength
-      }});
-      cards.forEach((card, i) => ScrollTrigger.create({ id: `projects:card-${i + 1}`, trigger: card, containerAnimation: move, start: 'left 88%', end: 'center 54%', scrub: true, animation: develop(card) }));
-      return () => { section.removeAttribute('data-track'); section.style.removeProperty('--pj-len'); };
-    }
-    cards.forEach((card, i) => ScrollTrigger.create({ id: `projects:card-${i + 1}`, trigger: card, start: 'top 88%', end: 'center 52%', scrub: true, animation: develop(card) }));
-  });
-});
-</script>
-<script data-8b-part="scene:letter">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('letter');
-    const envelope = section.querySelector('.lt-env');
-    const paper = section.querySelector('.lt-paper');
-    const tiles = section.querySelectorAll('.lt-tile');
-    const factor = window.innerWidth < 861 ? 0.4 : 1;
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'letter', trigger: section.querySelector('.lt-front'), start: 'top 96%', endTrigger: envelope, end: 'center 52%', scrub: 0.7
-    }});
-    timeline.fromTo(paper, { yPercent: 76 }, { yPercent: 0, duration: 1, ease: 'power1.out' }, 0);
-    tiles.forEach((tile, i) => gsap.from(tile, { x: Number(tile.dataset.dx || 0) * factor, y: Number(tile.dataset.dy || 0) * factor, rotation: 0, scale: 0.55, ease: 'power2.out', scrollTrigger: { id: `letter:tile-${i + 1}`, trigger: tile, start: 'top bottom', end: 'center 62%', scrub: 0.7 } }));
-  });
-});
-</script>
-<script data-8b-part="scene:snags">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('snags');
-    const sheet = section.querySelector('.sn-sheet');
-    const items = sheet.querySelectorAll('.sn-item');
-    const stamp = sheet.querySelector('.sn-stamp');
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'snags', trigger: sheet, start: 'top 72%', end: 'bottom 78%', scrub: 0.5
-    }});
-    items.forEach((item, i) => {
-      timeline
-        .fromTo(item.querySelector('.sn-ink'), { backgroundSize: '0% 2px' }, { backgroundSize: '100% 2px', duration: 1, ease: 'power1.inOut' }, i)
-        .fromTo(item.querySelector('.sn-tick path'), { strokeDashoffset: 1 }, { autoRound: false, strokeDashoffset: 0, duration: 0.45 }, i + 0.55);
-    });
-    timeline.fromTo(stamp, { scale: 1.9, autoAlpha: 0, rotation: 8 }, { scale: 1, autoAlpha: 1, rotation: -8, duration: 0.9, ease: 'back.out(2)' }, items.length + 0.2);
-  });
-});
-</script>
-<script data-8b-part="scene:faq">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const folder = document.querySelector('#faq .fq-folder');
-    gsap.timeline({ scrollTrigger: { id: 'faq', trigger: folder, start: 'top bottom', end: 'top 32%', scrub: 0.6 } })
-      .fromTo(folder, { y: 150, rotation: -4.5 }, { y: 0, rotation: 0, ease: 'power2.out' });
-  });
-});
-</script>
-<script data-8b-part="scene:footer">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const footer = document.getElementById('footer');
-    const tiles = footer.querySelectorAll('.ft-tile');
-    const timeline = gsap.timeline({ defaults: { ease: 'power2.out' }, scrollTrigger: { id: 'footer', trigger: footer, start: 'top bottom', end: 'center 60%', scrub: 0.6 } });
-    tiles.forEach(tile => timeline.fromTo(tile, { x: Number(tile.dataset.dx || 0), y: Number(tile.dataset.dy || 0), rotation: Number(tile.dataset.r || 0) }, { x: 0, y: 0, rotation: 0, duration: 1 }, 0));
-  });
+<script data-8b-part="scene-script:projects">
+motionKit.scene("projects", () => {
+  const section = document.getElementById('projects');
+  const track = section.querySelector('.pj-track');
+  motionKit.measure(() => motionKit.set(section, { '--pj-len': Math.max(0, track.scrollWidth - window.innerWidth) + 'px' }));
 });
 </script>
 </body>

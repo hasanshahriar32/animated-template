@@ -1,6 +1,6 @@
 # AGENTS.md: boutique hotel website template
 
-One-page website for a small boutique hotel or guesthouse that shows its rooms, its day, its table and its surroundings, and takes enquiries. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a small boutique hotel or guesthouse that shows its rooms, its day, its table and its surroundings, and takes enquiries. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,23 +14,20 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
-  - `scene:opening`: `.opening__view` `.opening__zoom` `.opening__scrim` `.opening__upper` `.opening__lower` `.opening__after` `.opening__second`
-  - `scene:rooms`: `.rooms__track` `.rooms__line` `.rooms__panel` `.rooms__name` `.rooms__facts`
-  - `scene:hours`: `.hours__row` `.hours__what`
-  - `scene:sea`: `.sea__plate`
-  - `scene:harbour`: `.harbour__field` `.harbour__grid` `.harbour__tile`
-  - `scene:guestbook`: `.guestbook__line`
-  - `scene:footer`: `.footer__mark`
   - `section-script:contact`: `.contact__form` `.contact__status` `data-sent`
   - `section-script:navigation`: `.nav__menu` `.menu__close`
   - `section-script:opening`: `.opening__drift` `.opening__view`
   - `section-script:footer`: `.footer__news` `.footer__sent` `data-sent`
+  - `scene-script:rooms`: `.rooms__line` `.rooms__name` `.m-text-2` `.rooms__track`
+  - `scene-script:harbour`: `.harbour__grid` `.harbour__tile`
+  - `scene-script:guestbook`: `.guestbook__line`
 - `style="--len:N"` = characters in that display line, spaces included: `Ostro` is 5.
-- The rooms scene needs exactly one name in the heading line for each room panel, in the same order, and at least two panels. Add or remove a panel and its name together.
+- The rooms scene moves exactly three panels, with one name in the heading line per panel in the same order: CSS :nth-of-type rules, --rooms-n: 3 and the lit-name steps in scene-script:rooms are set for three.
 - The wordmark in the footer is sized by style="--len:5", the number of letters. Change N when you rename the house.
-- Each hours row carries its own --hours-ground and --hours-ink inline; the scene reads them as colours, so keep them as valid CSS colours and set a readable ink for each ground.
-- Each guest-book line must hold two words or more, because the scene splits it into words and slides the halves together.
+- Each hours row carries its own --hours-ground and --hours-ink inline for the static page; the scroll scene repeats the same colours as steps in its keyframes, set for six rows, so change a row's colours in both places.
+- Each guest-book line must hold two words or more, because the inline kit splits it into words (data-8b-split) and the scene slides the halves together.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #f3efea (page ground, full-screen menu, footer and the 07:00 day row), `--color-2` #191615 (text and low-opacity rules, the fill of dark buttons and of light buttons on hover, the opening's dark block, the 21:00 day row and the shade under the room names), `--color-3` #a3401a (room-kind labels, outing times, the form message, the hover fill of dark buttons and the 15:00 day row; blended into the 12:00 and 18:30 rows), `--color-4` #67625d (captions, field and fact labels, the menu head and small footer lines), `--color-5` #fbfaf7 (light buttons, the logo pill, room fact cards, outing plates, the 09:30 day row and text on dark grounds); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -68,9 +65,10 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the Menu button does nothing and the page has no other navigation bar: the footer repeats Rooms, A day here, The table, The harbour and Questions, but The house and From the mole have no link.
 - Both forms send nothing yet; the action is # and the thank-you lines come from scripts.
-- GSAP, ScrollTrigger, SplitText and Lenis load from jsDelivr; without them the page stays a plain static layout.
+- Without CSS scroll-driven animation support (Firefox today) or with reduced motion on, the page shows its finished layout with the browser's own scrolling: the opening window stays small above the dark statement screen, the three rooms follow one another as full-screen panels, each hour row keeps its own colours and the outing plates stick without shrinking. Firefox still plays the opening load-in and photo drift.
+- The CSS moves exactly three room panels, six hour rows and four outing plates (the first three shrink); more need new rules in their scene styles.
 - The rooms stage is held at the screen height for two screens of scroll with the three kinds, and the room names sit as one line at its bottom over a dark gradient, so a long name or a short window can crowd the text panel.
-- The nav hide-on-scroll runs even with reduced motion; the scenes do not.
+- The nav hide-on-scroll runs even with reduced motion (without its slide); the scenes do not.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Hotel Ostro left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Hotel Ostro left only in class names.

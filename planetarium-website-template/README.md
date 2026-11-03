@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my venue: name, address, what I show or teach, the programme with lengths, ages, times and prices, dome or telescope figures, astronomers, events, school offer, opening hours and how people book>. Replace first the venue name, the five shows, the journey stops, the astronomers and the prices. Keep the section ids, the classes AGENTS.md lists and the footer wordmark's len. Ask me for any missing fact and never invent prices, times, figures, names, dates or contacts.
 ```
 
-Replace the venue name first, in any letter case, then the dome figures, show names, lengths, ages, times and prices, which the demo invents. Ask the owner for opening hours, astronomers, school rates, event dates and the telescope policy. Keep the section ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the classes AGENTS.md lists, and set the footer wordmark's --len to the new name's length. A sixth show needs its own band rule. Vibe coding with Claude Code or Cursor goes fastest when these facts arrive in one message.
+Replace the venue name first, in any letter case, then the dome figures, show names, lengths, ages, times and prices, which the demo invents. Ask the owner for opening hours, astronomers, school rates, event dates and the telescope policy. Keep the section ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the classes AGENTS.md lists, and set the footer wordmark's --len to the new name's length. As a planetarium website template for Claude Code or Cursor, vibe coding goes fastest when these facts arrive in one message.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=planetarium-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -65,7 +65,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=plane
 Nowhere yet. Name, email and message are all required, and a valid submit clears the form and shows a thank-you line without sending anything. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or delete the form and keep the email link. Edit the thank-you line, which promises an answer within a day.
 
 **Can I get a site like this without editing code?**  
-Yes, with a different tool. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a one-sentence description, in its own design, not this template. Designing and restyling are free; hosting with SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
+Yes, with a different tool. [8B's AI website builder](https://8b.com/) designs a new site from a one-sentence description, in its own design, not this template. Designing and restyling are free; hosting with SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
 
 **What happens with reduced motion, on a phone or without scripts?**  
 With reduced motion on, entrance and scroll animations and smooth scrolling are off, so the journey shows its five stops as a plain grid and nothing is pinned, while the bar's hide on scroll and the button hovers still run. Without JavaScript the Menu button cannot open its overlay, but the questions still open and the footer links work.

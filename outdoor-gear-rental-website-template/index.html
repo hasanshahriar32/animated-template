@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/outdoor-gear-rental-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -122,10 +123,6 @@
 /* /fallback faces */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body { margin: 0; background: var(--color-1); color: var(--color-2); overflow-x: clip; }
 img { display: block; max-width: 100%; }
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
@@ -250,14 +247,12 @@ button, input { font: inherit; color: inherit; }
   #opening .op-intro { animation: op-settle 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; }
   #opening .op-word__in { animation: op-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.05s backwards; }
   #opening .op-lead, #opening .op-card { animation: op-lift 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s backwards; }
-  #opening .op-drift { animation: op-drift 16s ease-in-out infinite alternate; }
   #opening .op-card__pan { animation: op-pan 9s ease-in-out infinite alternate; }
-  #opening.is-paused .op-drift, #opening.is-paused .op-card__pan { animation-play-state: paused; }
+  #opening.is-paused .op-card__pan { animation-play-state: paused; }
 }
 @keyframes op-settle { from { transform: scale(1.07); } }
 @keyframes op-rise { from { transform: translateY(24%); } }
 @keyframes op-lift { from { transform: translateY(28px); } }
-@keyframes op-drift { from { transform: translateX(-6%); } to { transform: translateX(6%); } }
 @keyframes op-pan { from { transform: translateY(-7%); } to { transform: translateY(7%); } }
 @media (max-width: 760px) {
   #opening .op-word { top: 74px; font-size: calc((100vw - 2 * var(--space-1)) / (var(--len) * 0.62)); }
@@ -273,6 +268,25 @@ button, input { font: inherit; color: inherit; }
   #opening .op-card__price.m-text-4 { font-size: 21px; }
   #opening .op-screen--2 { align-content: center; padding: 110px var(--space-1) 12vh; }
 }
+#opening .op-screen--2 { background: transparent; }
+#opening .op-copy { max-width: 44%; }
+#opening .op-window { inset: 120px var(--space-1) 7vh 52%; border-radius: var(--radius-2); }
+#opening .op-shade { opacity: .3; }
+@media (max-width: 760px) {
+  #opening .op-window { inset: 80px var(--space-1) auto; height: 42svh; }
+  #opening .op-screen--2 { align-content: start; padding-top: calc(108px + 42svh); padding-bottom: 4svh; }
+  #opening .op-copy { max-width: none; }
+  #opening .op-statement { font-size: 25px; }
+  #opening .op-body { margin-top: 14px; font-size: 15px; }
+  #opening .op-copy .m-btn { margin-top: 18px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #opening .op-window { animation: rw-window 1.15s cubic-bezier(.65, 0, .35, 1) backwards; }
+  #opening .op-copy > * { animation: op-lift .8s cubic-bezier(.2, .7, .2, 1) .15s backwards; }
+  #opening .op-copy > :nth-child(2) { animation-delay: .25s; }
+  #opening .op-copy > :nth-child(3) { animation-delay: .35s; }
+}
+@keyframes rw-window { from { clip-path: inset(44% 10% 44% 10% round 999px); } to { clip-path: inset(0 0 0 0 round 28px); } }
 }
 </style>
 
@@ -316,30 +330,6 @@ button, input { font: inherit; color: inherit; }
 }
 }
 </style>
-<style data-8b-part="scene-style:kit-index">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #kit.is-indexed .kit-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 400px) minmax(0, 0.62fr); }
-  #kit.is-indexed .kit-cards { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 4vh 0 12vh; }
-  #kit .kit-index { position: sticky; top: 36vh; grid-column: 3; grid-row: 1; align-self: start; }
-  #kit .kit-index__list { position: relative; display: grid; }
-  #kit .kit-index__link { position: relative; z-index: 1; display: flex; align-items: center; min-height: 52px; padding: 0 22px; border-radius: var(--radius-1); color: var(--color-6); font-family: var(--font-1); font-size: 22px; font-weight: 400; letter-spacing: -0.02em; text-decoration: none; transition: color 0.3s; }
-  #kit .kit-index__link.is-active { color: var(--color-5); }
-  #kit .kit-index__marker { position: absolute; left: 0; top: 0; z-index: 0; width: 100%; height: 52px; border-radius: var(--radius-1); background: var(--color-3); pointer-events: none; }
-}
-@media (prefers-reduced-motion: no-preference) and (hover: hover) {
-  #kit .kit-index__link:not(.is-active):hover { color: var(--color-2); }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
-  #kit.is-indexed .kit-grid { grid-template-columns: minmax(0, 1fr); }
-  #kit.is-indexed .kit-cards { grid-row: 2; grid-column: 1; padding: 0 0 88px; gap: 18px; }
-  #kit .kit-index { position: sticky; top: auto; bottom: 14px; z-index: 5; grid-row: 2; grid-column: 1; align-self: end; padding: 5px; border-radius: var(--radius-1); background: var(--color-5); box-shadow: var(--shadow-1); }
-  #kit .kit-index__list { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
-  #kit .kit-index__link { justify-content: center; min-height: 42px; padding: 0 4px; font-family: var(--font-2); font-size: 13px; font-weight: 500; letter-spacing: 0; }
-  #kit .kit-index__marker { height: 42px; }
-}
-}
-</style>
 <style data-8b-part="section:packs">
 @layer sections {
 #packs { overflow: clip; padding: var(--space-2) var(--space-1); background: var(--color-2); color: var(--color-5); }
@@ -371,17 +361,6 @@ button, input { font: inherit; color: inherit; }
   #packs .pack { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   #packs .pack__media { min-height: 0; aspect-ratio: 16 / 10; }
   #packs .pack__body { padding: 4px 8px 6px; }
-}
-}
-</style>
-<style data-8b-part="scene-style:packs-deal">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #packs.is-dealing .pack { position: relative; will-change: transform; }
-  #packs.is-dealing .pack:nth-child(1) { z-index: 4; }
-  #packs.is-dealing .pack:nth-child(2) { z-index: 3; }
-  #packs.is-dealing .pack:nth-child(3) { z-index: 2; }
-  #packs.is-dealing .pack:nth-child(4) { z-index: 1; }
 }
 }
 </style>
@@ -420,23 +399,6 @@ button, input { font: inherit; color: inherit; }
 }
 }
 </style>
-<style data-8b-part="scene-style:fitting-swap">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #fitting.is-swapping .fit-frame { position: sticky; top: 12vh; display: block; height: 76vh; border-radius: var(--radius-2); overflow: hidden; }
-  #fitting.is-swapping .fit-photo { position: absolute; inset: 0; aspect-ratio: auto; border-radius: 0; }
-  #fitting.is-swapping .fit-stories { gap: 0; padding-bottom: 14vh; }
-  #fitting.is-swapping .fit-story { min-height: 60vh; align-content: center; border-top: 0; padding-top: 0; }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
-  #fitting.is-swapping .fit-copy { display: contents; }
-  #fitting.is-swapping .fit-head { grid-row: 1; grid-column: 1; margin-bottom: 8px; }
-  #fitting.is-swapping .fit-frame { grid-row: 2 / 4; grid-column: 1; align-self: start; top: 10px; z-index: 2; height: 44svh; border-radius: var(--radius-3); }
-  #fitting.is-swapping .fit-stories { grid-row: 3; grid-column: 1; padding: calc(44svh + 32px) 0 6svh; }
-  #fitting.is-swapping .fit-story { min-height: 56svh; align-content: start; padding-top: 6svh; }
-}
-}
-</style>
 <style data-8b-part="section:care">
 @layer sections {
 #care { overflow: clip; background: var(--color-4); }
@@ -455,23 +417,6 @@ button, input { font: inherit; color: inherit; }
 @media (max-width: 900px) {
   #care .care-head { grid-template-columns: minmax(0, 1fr); }
   #care .care-track { grid-template-columns: minmax(0, 1fr); }
-}
-}
-</style>
-<style data-8b-part="scene-style:care-track">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #care.is-tracking .care-pin { display: flex; flex-direction: column; justify-content: center; min-height: 100vh; padding-block: 10vh 6vh; }
-  #care.is-tracking .care-head { margin-bottom: 36px; }
-  #care.is-tracking .care-track { display: flex; gap: 20px; width: max-content; }
-  #care.is-tracking .care-panel { width: min(400px, 78vw); }
-  #care.is-tracking .care-photo { margin-top: 8px; }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
-  #care.is-tracking .care-pin { padding-block: 9vh 4vh; }
-  #care.is-tracking .care-head { gap: 12px; margin-bottom: 22px; }
-  #care.is-tracking .care-panel { padding: 22px; gap: 8px; }
-  #care.is-tracking .care-photo { aspect-ratio: 2 / 1; }
 }
 }
 </style>
@@ -525,14 +470,6 @@ button, input { font: inherit; color: inherit; }
 }
 }
 </style>
-<style data-8b-part="scene-style:trips-zoom">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) and (min-width: 761px) {
-  #trips.is-zooming .trips-stage { height: 100vh; padding: 3vh var(--space-1); overflow: clip; }
-  #trips.is-zooming .trips-grid { height: 100%; grid-template-rows: repeat(3, minmax(0, 1fr)); grid-auto-rows: auto; will-change: transform; }
-}
-}
-</style>
 <style data-8b-part="section:faq">
 @layer sections {
 #faq { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 48px 5vw; align-items: start; padding: var(--space-2) var(--space-1); }
@@ -576,33 +513,184 @@ button, input { font: inherit; color: inherit; }
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .op-screen--2 { background: transparent; }
-#opening .op-copy { max-width: 44%; }
-#opening .op-window { inset: 120px var(--space-1) 7vh 52%; border-radius: var(--radius-2); }
-#opening .op-shade { opacity: .3; }
-@media (max-width: 760px) {
-  #opening .op-window { inset: 80px var(--space-1) auto; height: 42svh; }
-  #opening .op-screen--2 { align-content: start; padding-top: calc(108px + 42svh); padding-bottom: 4svh; }
-  #opening .op-copy { max-width: none; }
-  #opening .op-statement { font-size: 25px; }
-  #opening .op-body { margin-top: 14px; font-size: 15px; }
-  #opening .op-copy .m-btn { margin-top: 18px; }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] [data-8b-motion~="rise"].is-in .line__in { animation: motion-rise 0.95s cubic-bezier(0.25, 1, 0.5, 1) calc(0.09s * var(--i)) backwards; }
+@keyframes motion-rise { from { translate: 0 108%; } }
+[data-8b-live] [data-8b-motion~="window"].is-in { animation: motion-window 1.15s cubic-bezier(0.76, 0, 0.24, 1) backwards; }
+@keyframes motion-window { from { clip-path: inset(44% 10% 44% 10% round 999px); } to { clip-path: inset(0% 0% 0% 0% round 28px); } }
+[data-8b-live] [data-8b-motion~="fill"] { view-timeline: --motion-fill block; view-timeline-inset: 0; }
+[data-8b-live] [data-8b-motion~="fill"] .w { animation-name: motion-fill-w-color; animation-timeline: --motion-fill; animation-range: cover calc(4.2945% * var(--i) + 12vh - 2.7485vh * var(--i)) cover calc(31.2883% + 4.2945% * var(--i) - 8.0245vh - 2.7485vh * var(--i)); animation-timing-function: linear; animation-fill-mode: both; display: inline-block; }
+@keyframes motion-fill-w-color { 0% { color: var(--color-6); } 100% { color: var(--color-2); } }
 }
+</style>
+<style data-8b-part="scene:opening-drift">
+@layer scenes {
+[data-8b-live] #opening .op-drift { animation: opening-drift 16s ease-in-out infinite alternate; }
+[data-8b-live] #opening.is-paused .op-drift { animation-play-state: paused; }
+@keyframes opening-drift { from { transform: translateX(-6%); } to { transform: translateX(6%); } }
+}
+</style>
+<style data-8b-part="scene:kit-index">
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #opening .op-window { animation: rw-window 1.15s cubic-bezier(.65, 0, .35, 1) backwards; }
-  #opening .op-copy > * { animation: op-lift .8s cubic-bezier(.2, .7, .2, 1) .15s backwards; }
-  #opening .op-copy > :nth-child(2) { animation-delay: .25s; }
-  #opening .op-copy > :nth-child(3) { animation-delay: .35s; }
+  [data-8b-live] #kit .kit-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 400px) minmax(0, 0.62fr); }
+  [data-8b-live] #kit .kit-cards { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 4vh 0 12vh; }
+  [data-8b-live] #kit .kit-index { position: sticky; top: 36vh; grid-column: 3; grid-row: 1; align-self: start; }
+  [data-8b-live] #kit .kit-index__list { position: relative; display: grid; }
+  [data-8b-live] #kit .kit-index__link { position: relative; z-index: 1; display: flex; align-items: center; min-height: 52px; padding: 0 22px; border-radius: var(--radius-1); color: var(--color-6); font-family: var(--font-1); font-size: 22px; font-weight: 400; letter-spacing: -0.02em; text-decoration: none; transition: color 0.3s; }
+  [data-8b-live] #kit .kit-index__link.is-active { color: var(--color-5); }
+  [data-8b-live] #kit .kit-index__marker { position: absolute; left: 0; top: 0; z-index: 0; width: 100%; height: 52px; border-radius: var(--radius-1); background: var(--color-3); pointer-events: none; }
 }
-@keyframes rw-window { from { clip-path: inset(44% 10% 44% 10% round 999px); } to { clip-path: inset(0 0 0 0 round 28px); } }</style>
+@media (prefers-reduced-motion: no-preference) and (hover: hover) {
+  [data-8b-live] #kit .kit-index__link:not(.is-active):hover { color: var(--color-2); }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
+  [data-8b-live] #kit .kit-grid { grid-template-columns: minmax(0, 1fr); }
+  [data-8b-live] #kit .kit-cards { grid-row: 2; grid-column: 1; padding: 0 0 88px; gap: 18px; }
+  [data-8b-live] #kit .kit-index { position: sticky; top: auto; bottom: 14px; z-index: 5; grid-row: 2; grid-column: 1; align-self: end; padding: 5px; border-radius: var(--radius-1); background: var(--color-5); box-shadow: var(--shadow-1); }
+  [data-8b-live] #kit .kit-index__list { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+  [data-8b-live] #kit .kit-index__link { justify-content: center; min-height: 42px; padding: 0 4px; font-family: var(--font-2); font-size: 13px; font-weight: 500; letter-spacing: 0; }
+  [data-8b-live] #kit .kit-index__marker { height: 42px; }
+}
+}
+@layer scenes {
+[data-8b-live] #kit .kit-cards > li { view-timeline: --kit-item block; view-timeline-inset: 0; animation-name: kit-kit-tents-scale, kit-kit-tents-rotate, kit-kit-tents-opacity; animation-timeline: --kit-item; animation-range: cover 0% cover 100%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes kit-kit-tents-scale { 0% { scale: 0.84; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 36% { scale: 1; } 64% { scale: 1; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0); } 100% { scale: 0.84; } }
+@keyframes kit-kit-tents-rotate { 0% { rotate: var(--kit-kit-tents-rotate-from, -2.5deg); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 36% { rotate: 0deg; } 64% { rotate: 0deg; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0); } 100% { rotate: var(--kit-kit-tents-rotate-to, 2.5deg); } }
+@keyframes kit-kit-tents-opacity { 0% { opacity: 0.5; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 36% { opacity: 1; } 64% { opacity: 1; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0); } 100% { opacity: 0.5; } }
+}
+</style>
+<style data-8b-part="scene:packs-deal">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #packs .pack { position: relative; z-index: calc(var(--n) - var(--i)); will-change: transform; }
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #packs .packs-grid > li { animation-fill-mode: both; transform: none; }
+@keyframes packs-li-pack-translate-d { 0% { translate: var(--packs-li-pack-translate-from, 0px) var(--packs-li-pack-translate-from-2, 0px); } 100% { translate: 0px 0px; } }
+@keyframes packs-li-pack-translate-m { 0% { translate: -70% 0px; } 100% { translate: 0px 0px; } }
+@keyframes packs-li-pack-rotate-d { 0% { rotate: var(--packs-li-pack-rotate-from, -9deg); } 100% { rotate: 0deg; } }
+@keyframes packs-li-pack-rotate-m { 0% { rotate: -9deg; } 100% { rotate: 0deg; } }
+@keyframes packs-li-pack-scale { 0% { scale: 0.9; } 100% { scale: 1; } }
+@keyframes packs-li-pack-translate-2 { 0% { translate: 70% 0px; } 100% { translate: 0px 0px; } }
+@keyframes packs-li-pack-rotate-2 { 0% { rotate: 9deg; } 100% { rotate: 0deg; } }
+@media (min-width: 761px) {
+  [data-8b-live] #packs .packs-grid { view-timeline: --packs-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #packs .packs-grid > li { animation-name: packs-li-pack-translate-d, packs-li-pack-rotate-d, packs-li-pack-scale; animation-timeline: --packs-t1; animation-range: cover calc(18vh - 3.6vh * var(--i) + 7.5% * var(--i)) cover calc(27.5% + 7.5% * var(--i) + 4.8vh - 3.6vh * var(--i)); animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1), cubic-bezier(0.65, 0, 0.35, 1); }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #packs .packs-grid > li { view-timeline: --packs-item block; view-timeline-inset: 0; animation-timeline: --packs-item; animation-range: cover 4vh cover 42vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+  [data-8b-live] #packs .packs-grid > li:nth-of-type(2n+1) { animation-name: packs-li-pack-translate-m, packs-li-pack-rotate-m; }
+  [data-8b-live] #packs .packs-grid > li:nth-of-type(2n+2) { animation-name: packs-li-pack-translate-2, packs-li-pack-rotate-2; }
+}
+}
+</style>
+<style data-8b-part="scene:fitting-swap">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #fitting .fit-frame { position: sticky; top: 12vh; display: block; height: 76vh; border-radius: var(--radius-2); overflow: hidden; }
+  [data-8b-live] #fitting .fit-photo { position: absolute; inset: 0; aspect-ratio: auto; border-radius: 0; }
+  [data-8b-live] #fitting .fit-stories { gap: 0; padding-bottom: 14vh; }
+  [data-8b-live] #fitting .fit-story { min-height: 60vh; align-content: center; border-top: 0; padding-top: 0; }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
+  [data-8b-live] #fitting .fit-copy { display: contents; }
+  [data-8b-live] #fitting .fit-head { grid-row: 1; grid-column: 1; margin-bottom: 8px; }
+  [data-8b-live] #fitting .fit-frame { grid-row: 2 / 4; grid-column: 1; align-self: start; top: 10px; z-index: 2; height: 44svh; border-radius: var(--radius-3); }
+  [data-8b-live] #fitting .fit-stories { grid-row: 3; grid-column: 1; padding: calc(44svh + 32px) 0 6svh; }
+  [data-8b-live] #fitting .fit-story { min-height: 56svh; align-content: start; padding-top: 6svh; }
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #fitting { timeline-scope: --fitting-t1, --fitting-t2; }
+[data-8b-live] #fitting .fit-stories > li:nth-of-type(2) { view-timeline: --fitting-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #fitting .fit-stories > li:nth-of-type(3) { view-timeline: --fitting-t2 block; view-timeline-inset: 0; }
+[data-8b-live] #fitting .fit-frame > figure:nth-of-type(-n+3), [data-8b-live] #fitting .fit-frame > figure:is(:nth-of-type(2), :nth-of-type(3)) > img { animation-range: cover 15vh cover 55vh; }
+[data-8b-live] #fitting .fit-frame > figure:nth-of-type(2) { animation-name: fitting-figure-fit-photo-clippath, fitting-figure-fit-photo-scale; animation-timeline: --fitting-t1, --fitting-t2; animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.3333, 0, 0.6667, 0.3333); animation-fill-mode: backwards, both; transform: none; }
+[data-8b-live] #fitting .fit-frame > figure:nth-of-type(2) > img { animation-name: fitting-figure-fit-photo-img-scale; animation-timeline: --fitting-t1; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #fitting .fit-frame > figure:nth-of-type(1) { animation-name: fitting-figure-fit-photo-scale; animation-timeline: --fitting-t1; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); animation-fill-mode: both; transform: none; }
+[data-8b-live] #fitting .fit-frame > figure:nth-of-type(3) { animation-name: fitting-figure-fit-photo-clippath; animation-timeline: --fitting-t2; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: backwards; }
+[data-8b-live] #fitting .fit-frame > figure:nth-of-type(3) > img { animation-name: fitting-figure-fit-photo-img-scale; animation-timeline: --fitting-t2; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes fitting-figure-fit-photo-clippath { 0% { clip-path: inset(100% 0% 0%); } 100% { clip-path: inset(0%); } }
+@keyframes fitting-figure-fit-photo-img-scale { 0% { scale: 1.16; } 100% { scale: 1; } }
+@keyframes fitting-figure-fit-photo-scale { 0% { scale: 1; } 100% { scale: 1.08; } }
+}
+</style>
+<style data-8b-part="scene:care-track">
+@layer scenes {
+[data-8b-live] #care { view-timeline: --care-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #care::after { content: ""; display: block; height: var(--care-run, 0px); }
+[data-8b-live] #care .care-pin { position: sticky; top: 0; display: flex; flex-direction: column; justify-content: center; min-height: 100vh; padding-block: 10vh 6vh; }
+[data-8b-live] #care .care-head { margin-bottom: 36px; }
+[data-8b-live] #care .care-track { display: flex; gap: 20px; width: max-content; animation-name: care-run; animation-timeline: --care-t1; animation-range: cover 100vh cover calc(100vh + max(1px, var(--care-run, 0px))); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #care .care-panel { width: min(400px, 78vw); }
+[data-8b-live] #care .care-photo { margin-top: 8px; }
+[data-8b-live] #care .care-tick { scale: calc(0.42 + 0.58 * var(--care-tick, 0)); background-color: color-mix(in srgb, var(--color-3) calc(100% * var(--care-tick, 0)), var(--color-8)); }
+@keyframes care-run { from { translate: 0 0; } to { translate: calc(-1 * var(--care-distance, 0px)) 0; } }
+@media (max-width: 760px) {
+  [data-8b-live] #care .care-pin { padding-block: 9vh 4vh; }
+  [data-8b-live] #care .care-head { gap: 12px; margin-bottom: 22px; }
+  [data-8b-live] #care .care-panel { padding: 22px; gap: 8px; }
+  [data-8b-live] #care .care-photo { aspect-ratio: 2 / 1; }
+}
+}
+</style>
+<style data-8b-part="scene:trips-zoom">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) and (min-width: 761px) {
+  @media (min-width: 761px) {
+  [data-8b-live] #trips .trips-stage { height: 100vh; padding: 3vh var(--space-1); overflow: clip; }
+}
+  @media (min-width: 761px) {
+  [data-8b-live] #trips .trips-grid { height: 100%; grid-template-rows: repeat(3, minmax(0, 1fr)); grid-auto-rows: auto; will-change: transform; }
+}
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+@keyframes trips-ul-trips-grid-scale { 0% { scale: var(--trips-zoom-from, 1); } 100% { scale: 1; } }
+@keyframes trips-ul-trips-grid-settle { 0% { scale: 1.4; } 100% { scale: 1; } }
+@media (min-width: 761px) {
+  [data-8b-live] #trips .trips-stage-room { view-timeline: --trips-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #trips .trips-stage { position: sticky; top: 0%; }
+  [data-8b-live] #trips .trips-stage-room > .trips-stage-room-space { height: 110vh; }
+  [data-8b-live] #trips .trips-grid { animation-name: trips-ul-trips-grid-scale; animation-timeline: --trips-t1; animation-range: cover 100vh cover 193.5vh; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; transform-origin: var(--trips-zoom-origin, 50% 50%); }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #trips .trips-grid { view-timeline: --trips-t2 block; view-timeline-inset: 0; animation-name: trips-ul-trips-grid-settle; animation-timeline: --trips-t2; animation-range: cover 8vh cover 80vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; transform-origin: 50% 0%; }
+}
+}
+</style>
+<style data-8b-part="scene:visit-open">
+@layer scenes {
+[data-8b-live] #visit { view-timeline: --visit-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #visit .visit-frame { animation-timeline: --visit-t1; animation-range: cover 15vh cover 100vh; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: backwards; }
+[data-8b-live] #visit .visit-zoom { animation-name: visit-div-visit-zoom-scale; animation-timeline: --visit-t1; animation-range: cover 15vh cover 100vh; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes visit-div-visit-frame-clippath-d { 0% { clip-path: inset(18% 46% 18% 5% round 28px); } 100% { clip-path: inset(0%); } }
+@keyframes visit-div-visit-frame-clippath-m { 0% { clip-path: inset(9% 16% 64% round 999px); } 100% { clip-path: inset(0%); } }
+@keyframes visit-div-visit-zoom-scale { 0% { scale: 1.25; } 100% { scale: 1; } }
+@media (min-width: 761px) {
+  [data-8b-live] #visit .visit-frame { animation-name: visit-div-visit-frame-clippath-d; }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #visit .visit-frame { animation-name: visit-div-visit-frame-clippath-m; }
+}
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body class="m-text">
 <a class="skip" href="#main">Skip to content</a>
 <!-- navigation: top bar with wordmark, five links and a Book kit button; on small screens a menu button opens a full-screen overlay -->
 <header id="navigation" class="nav" data-8b-section="navigation">
   <a class="nav-logo" href="#opening">Kitfell</a>
-  <nav id="nav-links" class="nav-links" aria-label="Main" data-lenis-prevent>
+  <nav id="nav-links" class="nav-links" aria-label="Main">
     <ul>
       <li><a class="m-link-2" href="#kit">Kit room</a></li>
       <li><a class="m-link-2" href="#packs">Ready packs</a></li>
@@ -617,12 +705,12 @@ button, input { font: inherit; color: inherit; }
   </div>
 </header>
 <main id="main">
-<!-- opening: a statement as the h1, a paragraph and a How hire works button on a pale ground beside a framed mountain photo -->
+<!-- opening: a statement as the h1, a paragraph and a How hire works button on a pale ground beside a framed mountain photo (animation: scene:opening-drift) -->
 <section id="opening" class="op" data-8b-section="opening" aria-labelledby="op-title">
   <div class="op-track"><div class="op-stage">
     <div class="op-window">
       <div class="op-zoom"><div class="op-intro"><div class="op-drift">
-        <img style="background:#262626" class="op-photo" src="https://images.unsplash.com/photo-1772266198063-4d7e53d3904f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8c25vd3klMjBtb3VudGFpbiUyMHBlYWslMjBkZWVwJTIwYmx1ZSUyMHNreXxlbnwxfDB8fHwxNzkxNDYyNzMzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A deep valley between snow-covered peaks under a dark blue sky" width="1600" height="1200" fetchpriority="high">
+        <img class="op-photo" src="https://images.unsplash.com/photo-1772266198063-4d7e53d3904f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8c25vd3klMjBtb3VudGFpbiUyMHBlYWslMjBkZWVwJTIwYmx1ZSUyMHNreXxlbnwxfDB8fHwxNzkxNDYyNzMzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=840&amp;q=60" alt="A deep valley between snow-covered peaks under a dark blue sky" width="1600" height="1200" fetchpriority="high">
       </div></div></div>
       <div class="op-shade"></div>
       
@@ -641,13 +729,13 @@ button, input { font: inherit; color: inherit; }
 <section id="kit" class="kit" data-8b-section="kit" aria-labelledby="kit-title" data-index-label="Kit room shelves">
   <div class="kit-grid">
     <div class="kit-head">
-      <h2 id="kit-title" class="m-text-2" data-8b-motion="rise">Everything in the kit room, by the night.</h2>
+      <h2 id="kit-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines" data-8b-enter="96%">Everything in the kit room, by the night.</h2>
       <p class="kit-intro m-text-7">Six shelves and about four hundred pieces, sized, checked and ready to go. Hire one thing for a night or the whole lot for a fortnight.</p>
       <a class="m-btn" href="#visit"><span class="m-btn__label">Reserve kit</span><span class="m-btn__disc" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span></a>
     </div>
-    <ol class="kit-cards">
-      <li id="kit-tents" class="kit-card m-surface">
-        <div class="kit-card__media"><img style="background:#26260c" src="https://images.unsplash.com/photo-1723556142724-c011cc5eddc2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGRvbWUlMjB0ZW50JTIwY2FtcGluZyUyMGdyYXNzfGVufDF8MXx8fDE3OTE0NjI3Nzl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" alt="A red dome tent pitched on open grass below a snowy ridge" width="1600" height="2400" loading="lazy"></div>
+    <ol class="kit-cards" data-8b-items=":scope > li">
+      <li id="kit-tents" class="kit-card m-surface" style="--kit-kit-tents-rotate-from: -2.5deg; --kit-kit-tents-rotate-to: 2.5deg">
+        <div class="kit-card__media"><img src="https://images.unsplash.com/photo-1723556142724-c011cc5eddc2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGRvbWUlMjB0ZW50JTIwY2FtcGluZyUyMGdyYXNzfGVufDF8MXx8fDE3OTE0NjI3Nzl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="A red dome tent pitched on open grass below a snowy ridge" width="1600" height="2400" loading="lazy"></div>
         <div class="kit-card__body">
           <h3 class="kit-card__title m-text-4">Tents</h3>
           <p class="m-text-7">One-person shelters to six-berth family tunnels, every one pitched and tested in our yard.</p>
@@ -655,8 +743,8 @@ button, input { font: inherit; color: inherit; }
         </div>
         <a class="m-round kit-card__go" href="#visit" aria-label="Reserve a tent"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
       </li>
-      <li id="kit-sleep" class="kit-card m-surface">
-        <div class="kit-card__media"><img style="background:#c0c08c" src="https://images.unsplash.com/photo-1784813488936-d28a470134c0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2xlZXBpbmclMjBiYWclMjBpbnNpZGUlMjB0ZW50JTIwbW9ybmluZ3xlbnwxfDF8fHwxNzkxNDYyNzgwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" alt="A blue sleeping bag inside an open tent looking out over mountains" width="1600" height="2400" loading="lazy"></div>
+      <li id="kit-sleep" class="kit-card m-surface" style="--kit-kit-tents-rotate-from: 2.5deg; --kit-kit-tents-rotate-to: -2.5deg">
+        <div class="kit-card__media"><img src="https://images.unsplash.com/photo-1784813488936-d28a470134c0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2xlZXBpbmclMjBiYWclMjBpbnNpZGUlMjB0ZW50JTIwbW9ybmluZ3xlbnwxfDF8fHwxNzkxNDYyNzgwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="A blue sleeping bag inside an open tent looking out over mountains" width="1600" height="2400" loading="lazy"></div>
         <div class="kit-card__body">
           <h3 class="kit-card__title m-text-4">Sleep</h3>
           <p class="m-text-7">Three-season and winter bags in two lengths, with inflatable or closed-cell mats.</p>
@@ -664,8 +752,8 @@ button, input { font: inherit; color: inherit; }
         </div>
         <a class="m-round kit-card__go" href="#visit" aria-label="Reserve sleeping kit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
       </li>
-      <li id="kit-packs" class="kit-card m-surface">
-        <div class="kit-card__media"><img style="background:#595940" src="https://images.unsplash.com/photo-1606175063459-796dce40e3aa?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGhpa2VyJTIwcmlkZ2UlMjB3YWxraW5nJTIwbW91bnRhaW5zfGVufDF8MXx8fDE3OTE0NjI3MzR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" alt="A walker carrying a large black and red backpack across green hills" width="1600" height="2400" loading="lazy"></div>
+      <li id="kit-packs" class="kit-card m-surface" style="--kit-kit-tents-rotate-from: -2.5deg; --kit-kit-tents-rotate-to: 2.5deg">
+        <div class="kit-card__media"><img src="https://images.unsplash.com/photo-1606175063459-796dce40e3aa?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGhpa2VyJTIwcmlkZ2UlMjB3YWxraW5nJTIwbW91bnRhaW5zfGVufDF8MXx8fDE3OTE0NjI3MzR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="A walker carrying a large black and red backpack across green hills" width="1600" height="2400" loading="lazy"></div>
         <div class="kit-card__body">
           <h3 class="kit-card__title m-text-4">Packs</h3>
           <p class="m-text-7">Day packs to 70-litre trekking packs, adjusted to your back before you leave the shop.</p>
@@ -673,8 +761,8 @@ button, input { font: inherit; color: inherit; }
         </div>
         <a class="m-round kit-card__go" href="#visit" aria-label="Reserve a pack"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
       </li>
-      <li id="kit-cook" class="kit-card m-surface">
-        <div class="kit-card__media"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1768146336038-637fac0ad6bf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2FtcGluZyUyMHN0b3ZlJTIwY29va2luZyUyMHBvdCUyMG91dGRvb3JzfGVufDF8MXx8fDE3OTE0NjI3ODN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" alt="A small gas stove with a pan on a rock outdoors" width="1600" height="2200" loading="lazy"></div>
+      <li id="kit-cook" class="kit-card m-surface" style="--kit-kit-tents-rotate-from: 2.5deg; --kit-kit-tents-rotate-to: -2.5deg">
+        <div class="kit-card__media"><img src="https://images.unsplash.com/photo-1768146336038-637fac0ad6bf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2FtcGluZyUyMHN0b3ZlJTIwY29va2luZyUyMHBvdCUyMG91dGRvb3JzfGVufDF8MXx8fDE3OTE0NjI3ODN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="A small gas stove with a pan on a rock outdoors" width="1600" height="2200" loading="lazy"></div>
         <div class="kit-card__body">
           <h3 class="kit-card__title m-text-4">Cook</h3>
           <p class="m-text-7">Gas stoves, pans, mugs and a full canister, packed together in one bag.</p>
@@ -682,8 +770,8 @@ button, input { font: inherit; color: inherit; }
         </div>
         <a class="m-round kit-card__go" href="#visit" aria-label="Reserve a stove set"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
       </li>
-      <li id="kit-boots" class="kit-card m-surface">
-        <div class="kit-card__media"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1722641277093-247f90661dec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8aGlraW5nJTIwYm9vdHMlMjByb2NrcyUyMGNsb3NldXB8ZW58MXwxfHx8MTc5MTQ2Mjc4NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" alt="A pair of worn hiking boots standing on grass below a mountain" width="1600" height="2400" loading="lazy"></div>
+      <li id="kit-boots" class="kit-card m-surface" style="--kit-kit-tents-rotate-from: -2.5deg; --kit-kit-tents-rotate-to: 2.5deg">
+        <div class="kit-card__media"><img src="https://images.unsplash.com/photo-1722641277093-247f90661dec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8aGlraW5nJTIwYm9vdHMlMjByb2NrcyUyMGNsb3NldXB8ZW58MXwxfHx8MTc5MTQ2Mjc4NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="A pair of worn hiking boots standing on grass below a mountain" width="1600" height="2400" loading="lazy"></div>
         <div class="kit-card__body">
           <h3 class="kit-card__title m-text-4">Boots</h3>
           <p class="m-text-7">Leather and fabric boots in half sizes, already worn in and never straight out of the box.</p>
@@ -691,8 +779,8 @@ button, input { font: inherit; color: inherit; }
         </div>
         <a class="m-round kit-card__go" href="#visit" aria-label="Reserve boots"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
       </li>
-      <li id="kit-shells" class="kit-card m-surface">
-        <div class="kit-card__media"><img style="background:#402626" src="https://images.unsplash.com/photo-1580118587866-c2f60069f0ac?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cmFpbiUyMGphY2tldCUyMGhpa2VyJTIwd2V0fGVufDF8MXx8fDE3OTE0NjI3ODZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" alt="A walker in an orange waterproof jacket on a wet woodland path" width="1600" height="2400" loading="lazy"></div>
+      <li id="kit-shells" class="kit-card m-surface" style="--kit-kit-tents-rotate-from: 2.5deg; --kit-kit-tents-rotate-to: -2.5deg">
+        <div class="kit-card__media"><img src="https://images.unsplash.com/photo-1580118587866-c2f60069f0ac?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cmFpbiUyMGphY2tldCUyMGhpa2VyJTIwd2V0fGVufDF8MXx8fDE3OTE0NjI3ODZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="A walker in an orange waterproof jacket on a wet woodland path" width="1600" height="2400" loading="lazy"></div>
         <div class="kit-card__body">
           <h3 class="kit-card__title m-text-4">Shells</h3>
           <p class="m-text-7">Waterproof jackets and trousers, washed and reproofed after every single hire.</p>
@@ -706,7 +794,7 @@ button, input { font: inherit; color: inherit; }
 <!-- packs: ready packs with a nights switch: four cards with photo, five items, and a price that follows the choice of 2 nights, 3 nights or a week (animation: scene:packs-deal) -->
 <section id="packs" class="packs" data-8b-section="packs" aria-labelledby="packs-title">
   <div class="packs-head">
-    <h2 id="packs-title" class="m-text-2" data-8b-motion="rise">Ready packs, so you only choose the weekend.</h2>
+    <h2 id="packs-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines" data-8b-enter="96%">Ready packs, so you only choose the weekend.</h2>
     <p class="packs-intro m-text-8">Packed, checked and labelled on the shelf the night before you come. Swap anything in the shop when you collect.</p>
     <fieldset class="packs-nights">
       <legend class="m-text-5">Hire for</legend>
@@ -715,12 +803,12 @@ button, input { font: inherit; color: inherit; }
       <label class="packs-nights__option"><input type="radio" name="pack-nights" value="7"><span>A week</span></label>
     </fieldset>
   </div>
-  <ul class="packs-grid">
-    <li class="pack m-surface-2">
-      <div class="pack__media"><img style="background:#262626" src="https://images.unsplash.com/photo-1770276346161-00bd394e92c1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHR3byUyMHBlb3BsZSUyMHdpbGQlMjBjYW1waW5nJTIwdGVudHxlbnwxfDB8fHwxNzkxNDYyODA5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=530&amp;q=60" alt="Two people sitting by a red tent on a rocky coast at sunset" width="1600" height="1067" loading="lazy"></div>
+  <ul class="packs-grid" data-8b-items=":scope > li">
+    <li class="pack m-surface-2" style="--packs-li-pack-rotate-from: -9deg">
+      <div class="pack__media"><img src="https://images.unsplash.com/photo-1770276346161-00bd394e92c1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHR3byUyMHBlb3BsZSUyMHdpbGQlMjBjYW1waW5nJTIwdGVudHxlbnwxfDB8fHwxNzkxNDYyODA5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="Two people sitting by a red tent on a rocky coast at sunset" width="1600" height="1067" loading="lazy"></div>
       <div class="pack__body">
         <h3 class="m-text-4">Wild camp for two</h3>
-        <ul class="pack__items">
+        <ul class="pack__items" data-8b-items=":scope > li">
           <li class="m-badge-2">Two-person tent</li>
           <li class="m-badge-2">Two three-season bags</li>
           <li class="m-badge-2">Two inflatable mats</li>
@@ -733,11 +821,11 @@ button, input { font: inherit; color: inherit; }
         </div>
       </div>
     </li>
-    <li class="pack m-surface-2">
-      <div class="pack__media"><img style="background:#8c8c8c" src="https://images.unsplash.com/photo-1706893838731-3d2d3574cbeb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bW91bnRhaW4lMjBodXQlMjBoaWtlcnN8ZW58MXwwfHx8MTc5MTQ2MjgxMHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=530&amp;q=60" alt="A small mountain hut on a rocky slope with a glacier behind it" width="1600" height="1067" loading="lazy"></div>
+    <li class="pack m-surface-2" style="--packs-li-pack-rotate-from: 6deg">
+      <div class="pack__media"><img src="https://images.unsplash.com/photo-1706893838731-3d2d3574cbeb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bW91bnRhaW4lMjBodXQlMjBoaWtlcnN8ZW58MXwwfHx8MTc5MTQ2MjgxMHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="A small mountain hut on a rocky slope with a glacier behind it" width="1600" height="1067" loading="lazy"></div>
       <div class="pack__body">
         <h3 class="m-text-4">Hut to hut</h3>
-        <ul class="pack__items">
+        <ul class="pack__items" data-8b-items=":scope > li">
           <li class="m-badge-2">38-litre pack</li>
           <li class="m-badge-2">Sleeping-bag liner</li>
           <li class="m-badge-2">Jacket and overtrousers</li>
@@ -750,11 +838,11 @@ button, input { font: inherit; color: inherit; }
         </div>
       </div>
     </li>
-    <li class="pack m-surface-2">
-      <div class="pack__media"><img style="background:#737340" src="https://images.unsplash.com/photo-1708464683223-651106e0295e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8ZmFtaWx5JTIwY2FtcGluZyUyMHRlbnQlMjBjYXJ8ZW58MXwwfHx8MTc5MTQ2MjgxMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=530&amp;q=60" alt="A canvas bell tent pitched on grass next to a campfire" width="1600" height="1067" loading="lazy"></div>
+    <li class="pack m-surface-2" style="--packs-li-pack-rotate-from: -4deg">
+      <div class="pack__media"><img src="https://images.unsplash.com/photo-1708464683223-651106e0295e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8ZmFtaWx5JTIwY2FtcGluZyUyMHRlbnQlMjBjYXJ8ZW58MXwwfHx8MTc5MTQ2MjgxMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="A canvas bell tent pitched on grass next to a campfire" width="1600" height="1067" loading="lazy"></div>
       <div class="pack__body">
         <h3 class="m-text-4">Family camp</h3>
-        <ul class="pack__items">
+        <ul class="pack__items" data-8b-items=":scope > li">
           <li class="m-badge-2">Six-berth tunnel tent</li>
           <li class="m-badge-2">Four sleeping bags</li>
           <li class="m-badge-2">Four foam mats</li>
@@ -767,11 +855,11 @@ button, input { font: inherit; color: inherit; }
         </div>
       </div>
     </li>
-    <li class="pack m-surface-2">
-      <div class="pack__media"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1698521688714-dc482eb1c769?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8d2ludGVyJTIwaGlraW5nJTIwc25vdyUyMHdhbGtlcnN8ZW58MXwwfHx8MTc5MTQ2MjgxM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=530&amp;q=60" alt="Two walkers with packs crossing deep snow between bare trees" width="1600" height="1067" loading="lazy"></div>
+    <li class="pack m-surface-2" style="--packs-li-pack-rotate-from: 10deg">
+      <div class="pack__media"><img src="https://images.unsplash.com/photo-1698521688714-dc482eb1c769?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8d2ludGVyJTIwaGlraW5nJTIwc25vdyUyMHdhbGtlcnN8ZW58MXwwfHx8MTc5MTQ2MjgxM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="Two walkers with packs crossing deep snow between bare trees" width="1600" height="1067" loading="lazy"></div>
       <div class="pack__body">
         <h3 class="m-text-4">Winter day</h3>
-        <ul class="pack__items">
+        <ul class="pack__items" data-8b-items=":scope > li">
           <li class="m-badge-2">B2 winter boots</li>
           <li class="m-badge-2">Crampons</li>
           <li class="m-badge-2">Ice axe</li>
@@ -789,28 +877,28 @@ button, input { font: inherit; color: inherit; }
 <!-- how: four numbered hire steps: Book, Get fitted, Go, Bring it back muddy -->
 <section id="how" class="how" data-8b-section="how" aria-labelledby="how-title">
   <div class="how-head">
-    <h2 id="how-title" class="m-text-2" data-8b-motion="rise">How hire works</h2>
-    <p class="how-intro m-text-6" data-8b-motion="fill">Four steps between our shelf and your pitch, and none of them asks for money up front.</p>
+    <h2 id="how-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines" data-8b-enter="96%">How hire works</h2>
+    <p class="how-intro m-text-6" data-8b-motion="fill" data-8b-split="words">Four steps between our shelf and your pitch, and none of them asks for money up front.</p>
   </div>
-  <ol class="how-steps">
+  <ol class="how-steps" data-8b-items=":scope > li">
     <li class="how-step">
       <span class="how-step__num m-text-5" aria-hidden="true">01</span>
-      <h3 class="how-step__title m-text-2" data-8b-motion="rise">Book</h3>
+      <h3 class="how-step__title m-text-2" data-8b-motion="rise" data-8b-split="lines" data-8b-enter="96%">Book</h3>
       <p class="how-step__text m-text-7">Choose kit online or ring the shop. We hold it for your dates, and nothing is charged until you collect.</p>
     </li>
     <li class="how-step">
       <span class="how-step__num m-text-5" aria-hidden="true">02</span>
-      <h3 class="how-step__title m-text-2" data-8b-motion="rise">Get fitted</h3>
+      <h3 class="how-step__title m-text-2" data-8b-motion="rise" data-8b-split="lines" data-8b-enter="96%">Get fitted</h3>
       <p class="how-step__text m-text-7">Twenty minutes in the fitting room: boots on the slope, packs loaded to weight, bags matched to your height.</p>
     </li>
     <li class="how-step">
       <span class="how-step__num m-text-5" aria-hidden="true">03</span>
-      <h3 class="how-step__title m-text-2" data-8b-motion="rise">Go</h3>
+      <h3 class="how-step__title m-text-2" data-8b-motion="rise" data-8b-split="lines" data-8b-enter="96%">Go</h3>
       <p class="how-step__text m-text-7">Every hire leaves with a route card for the valleys around us and a phone number answered until nine at night.</p>
     </li>
     <li class="how-step">
       <span class="how-step__num m-text-5" aria-hidden="true">04</span>
-      <h3 class="how-step__title m-text-2" data-8b-motion="rise">Bring it back muddy</h3>
+      <h3 class="how-step__title m-text-2" data-8b-motion="rise" data-8b-split="lines" data-8b-enter="96%">Bring it back muddy</h3>
       <p class="how-step__text m-text-7">Drop it at the counter or the after-hours locker. Cleaning is on us; we only charge for damage beyond a stitch.</p>
     </li>
   </ol>
@@ -819,16 +907,16 @@ button, input { font: inherit; color: inherit; }
 <section id="fitting" class="fitting" data-8b-section="fitting" aria-labelledby="fitting-title">
   <div class="fit-grid">
     <div class="fit-frame">
-      <figure class="fit-photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1730974657205-9ac80db8b284?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bGFjaW5nJTIwaGlraW5nJTIwYm9vdHN8ZW58MXwxfHx8MTc5MTQ2MjgxNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="A walker tying a leather boot on a rock above a valley" width="1600" height="1943" loading="lazy"></figure>
-      <figure class="fit-photo"><img style="background:#0c2626" src="https://images.unsplash.com/photo-1622260614529-916d761f2391?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8YWRqdXN0aW5nJTIwYmFja3BhY2slMjBzdHJhcHN8ZW58MXwxfHx8MTc5MTQ2MjgxNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A man in a grey jumper checking a backpack among trees" width="1600" height="2400" loading="lazy"></figure>
-      <figure class="fit-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1567955465154-078c60ff5c9e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cmFpbiUyMGphY2tldCUyMGhpa2VyJTIwd2V0fGVufDF8MXx8fDE3OTE0NjI3ODZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A walker in a blue and orange hooded waterproof, seen from behind" width="1600" height="2589" loading="lazy"></figure>
+      <figure class="fit-photo"><img src="https://images.unsplash.com/photo-1730974657205-9ac80db8b284?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bGFjaW5nJTIwaGlraW5nJTIwYm9vdHN8ZW58MXwxfHx8MTc5MTQ2MjgxNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="A walker tying a leather boot on a rock above a valley" width="1600" height="1943" loading="lazy"></figure>
+      <figure class="fit-photo"><img src="https://images.unsplash.com/photo-1622260614529-916d761f2391?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8YWRqdXN0aW5nJTIwYmFja3BhY2slMjBzdHJhcHN8ZW58MXwxfHx8MTc5MTQ2MjgxNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="A man in a grey jumper checking a backpack among trees" width="1600" height="2400" loading="lazy"></figure>
+      <figure class="fit-photo"><img src="https://images.unsplash.com/photo-1567955465154-078c60ff5c9e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cmFpbiUyMGphY2tldCUyMGhpa2VyJTIwd2V0fGVufDF8MXx8fDE3OTE0NjI3ODZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="A walker in a blue and orange hooded waterproof, seen from behind" width="1600" height="2589" loading="lazy"></figure>
     </div>
     <div class="fit-copy">
       <div class="fit-head">
-        <h2 id="fitting-title" class="m-text-2" data-8b-motion="rise">Fitted, not handed over.</h2>
+        <h2 id="fitting-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines" data-8b-enter="96%">Fitted, not handed over.</h2>
         <p class="fit-intro m-text-7">Kit that fits is kit you forget about on the hill. Every hire starts with twenty minutes in our fitting room, and it costs nothing.</p>
       </div>
-      <ol class="fit-stories">
+      <ol class="fit-stories" data-8b-items=":scope > li" data-8b-fixed="3">
         <li class="fit-story">
           <h3 class="m-text-6">Boots on a slope</h3>
           <p class="m-text">We measure both feet, lace you in and walk you up and down our ramp until your heel stays put on the way down.</p>
@@ -849,60 +937,60 @@ button, input { font: inherit; color: inherit; }
 <section id="care" class="care" data-8b-section="care" aria-labelledby="care-title">
   <div class="care-pin">
     <div class="care-head">
-      <h2 id="care-title" class="m-text-2" data-8b-motion="rise">Between every hire, the same six checks.</h2>
+      <h2 id="care-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines" data-8b-enter="96%">Between every hire, the same six checks.</h2>
       <p class="care-intro m-text-7">Nothing goes back on the shelf until it passes all six. Each piece carries a card with the date and the initials of whoever checked it.</p>
     </div>
-    <ol class="care-track">
+    <ol class="care-track" data-8b-items=":scope > li">
       <li class="care-panel care-panel--photo m-surface">
         <span class="care-tick" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
         <p class="care-step m-text-5">Check 1 of 6</p>
         <h3 class="m-text-6">Washed</h3>
         <p class="m-text-7">Tents rinsed, bags and shells washed with a technical cleaner, boots scrubbed and waxed.</p>
-        <div class="care-photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1646060389308-6fa76f41ab92?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bXVkZHklMjBoaWtpbmclMjBib290cyUyMHdhc2hpbmd8ZW58MXwwfHx8MTc5MTQ2NTg5MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="Muddy walking boots standing in a shallow stream" width="1000" height="667" loading="lazy"></div>
+        <div class="care-photo"><img src="https://images.unsplash.com/photo-1646060389308-6fa76f41ab92?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bXVkZHklMjBoaWtpbmclMjBib290cyUyMHdhc2hpbmd8ZW58MXwwfHx8MTc5MTQ2NTg5MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="Muddy walking boots standing in a shallow stream" width="1000" height="667" loading="lazy"></div>
       </li>
       <li class="care-panel care-panel--photo m-surface">
         <span class="care-tick" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
         <p class="care-step m-text-5">Check 2 of 6</p>
         <h3 class="m-text-6">Dried for two days</h3>
         <p class="m-text-7">Hung in the drying loft for forty-eight hours. Nothing is ever packed away damp.</p>
-        <div class="care-photo"><img style="background:#c0d9d9" src="https://images.unsplash.com/photo-1746824104470-3a57228b1780?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8dGVudCUyMGRyeWluZyUyMHN1bnxlbnwxfDB8fHwxNzkxNDYyODM5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="A tent glowing in low sunlight on a grassy field" width="1600" height="1067" loading="lazy"></div>
+        <div class="care-photo"><img src="https://images.unsplash.com/photo-1746824104470-3a57228b1780?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8dGVudCUyMGRyeWluZyUyMHN1bnxlbnwxfDB8fHwxNzkxNDYyODM5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="A tent glowing in low sunlight on a grassy field" width="1600" height="1067" loading="lazy"></div>
       </li>
       <li class="care-panel care-panel--photo m-surface">
         <span class="care-tick" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
         <p class="care-step m-text-5">Check 3 of 6</p>
         <h3 class="m-text-6">Seams tested</h3>
         <p class="m-text-7">Every tent is pitched in the yard, sprayed with a hose and checked from the inside for drips.</p>
-        <div class="care-photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1697293585549-6eb147d2a8f4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z2FyZGVuJTIwaG9zZSUyMHdhdGVyJTIwc3ByYXl8ZW58MXwwfHx8MTc5MTQ2NjEzMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="A hand holding a hose that sprays a fan of water" width="1000" height="667" loading="lazy"></div>
+        <div class="care-photo"><img src="https://images.unsplash.com/photo-1697293585549-6eb147d2a8f4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z2FyZGVuJTIwaG9zZSUyMHdhdGVyJTIwc3ByYXl8ZW58MXwwfHx8MTc5MTQ2NjEzMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="A hand holding a hose that sprays a fan of water" width="1000" height="667" loading="lazy"></div>
       </li>
       <li class="care-panel care-panel--photo m-surface">
         <span class="care-tick" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
         <p class="care-step m-text-5">Check 4 of 6</p>
         <h3 class="m-text-6">Zips run end to end</h3>
         <p class="m-text-7">Sliders cleaned, pulls replaced and stiff teeth fixed before they can fail on a ridge.</p>
-        <div class="care-photo"><img style="background:#405973" src="https://images.unsplash.com/photo-1785061731121-abd4fb53150e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8emlwcGVyJTIwY2xvc2UlMjB1cCUyMGZhYnJpY3xlbnwxfDB8fHwxNzkxNDY1ODE0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="A close view of a metal zip on blue and brown fabric" width="1000" height="667" loading="lazy"></div>
+        <div class="care-photo"><img src="https://images.unsplash.com/photo-1785061731121-abd4fb53150e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8emlwcGVyJTIwY2xvc2UlMjB1cCUyMGZhYnJpY3xlbnwxfDB8fHwxNzkxNDY1ODE0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="A close view of a metal zip on blue and brown fabric" width="1000" height="667" loading="lazy"></div>
       </li>
       <li class="care-panel care-panel--photo m-surface">
         <span class="care-tick" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
         <p class="care-step m-text-5">Check 5 of 6</p>
         <h3 class="m-text-6">Stoves fired</h3>
         <p class="m-text-7">Each stove is lit and its flame checked; seals and jets are replaced every season.</p>
-        <div class="care-photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1768146336075-c081a5702c50?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y2FtcGluZyUyMHN0b3ZlJTIwY29va2luZyUyMHBvdCUyMG91dGRvb3JzfGVufDF8MXx8fDE3OTE0NjI3ODN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="A man crouching over a lit camping stove outdoors" width="1600" height="2031" loading="lazy"></div>
+        <div class="care-photo"><img src="https://images.unsplash.com/photo-1768146336075-c081a5702c50?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y2FtcGluZyUyMHN0b3ZlJTIwY29va2luZyUyMHBvdCUyMG91dGRvb3JzfGVufDF8MXx8fDE3OTE0NjI3ODN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="A man crouching over a lit camping stove outdoors" width="1600" height="2031" loading="lazy"></div>
       </li>
       <li class="care-panel care-panel--photo m-surface">
         <span class="care-tick" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
         <p class="care-step m-text-5">Check 6 of 6</p>
         <h3 class="m-text-6">Repaired in the workroom</h3>
         <p class="m-text-7">Small tears are patched and re-taped the same week. Whatever we cannot trust, we retire.</p>
-        <div class="care-photo"><img style="background:#8c7373" src="https://images.unsplash.com/photo-1641320197434-6ae0ca235048?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c2V3aW5nJTIwcmVwYWlyJTIwZmFicmljJTIwaGFuZHN8ZW58MXwwfHx8MTc5MTQ2Mjg0MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="Hands guiding fabric through a sewing machine" width="1600" height="1066" loading="lazy"></div>
+        <div class="care-photo"><img src="https://images.unsplash.com/photo-1641320197434-6ae0ca235048?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c2V3aW5nJTIwcmVwYWlyJTIwZmFicmljJTIwaGFuZHN8ZW58MXwwfHx8MTc5MTQ2Mjg0MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="Hands guiding fabric through a sewing machine" width="1600" height="1066" loading="lazy"></div>
       </li>
     </ol>
   </div>
 </section>
 <!-- routes: a photo and a table of four walking routes with distance, ascent, time and grade -->
 <section id="routes" class="routes" data-8b-section="routes" aria-labelledby="routes-title">
-  <figure class="routes-photo" data-8b-motion="window"><img style="background:#c0c0d9" src="https://images.unsplash.com/photo-1788884225354-2b42e4780bdd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8aGlrZXJzJTIwb24lMjByaWRnZSUyMHBhdGh8ZW58MXwwfHx8MTc5MTQ2Mjg0Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="A walker in an orange jacket on a narrow path along a steep grassy ridge" width="1600" height="1067" loading="lazy"></figure>
+  <figure class="routes-photo" data-8b-motion="window" data-8b-enter="96%"><img src="https://images.unsplash.com/photo-1788884225354-2b42e4780bdd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8aGlrZXJzJTIwb24lMjByaWRnZSUyMHBhdGh8ZW58MXwwfHx8MTc5MTQ2Mjg0Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="A walker in an orange jacket on a narrow path along a steep grassy ridge" width="1600" height="1067" loading="lazy"></figure>
   <div class="routes-copy">
-    <h2 id="routes-title" class="m-text-2" data-8b-motion="rise">A route card with every hire.</h2>
+    <h2 id="routes-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines" data-8b-enter="96%">A route card with every hire.</h2>
     <p class="routes-intro m-text-7">Written by the people who rent you the kit and walked again every spring. Four favourites from the shop door:</p>
     <table class="routes-table">
       <caption class="visually-hidden">Four walking routes that start from the shop</caption>
@@ -921,45 +1009,45 @@ button, input { font: inherit; color: inherit; }
 <!-- trips: a 3 by 3 grid of six customer photos and three quotes that zooms out from the centre photo (animation: scene:trips-zoom) -->
 <section id="trips" class="trips" data-8b-section="trips" aria-labelledby="trips-title">
   <div class="trips-head">
-    <h2 id="trips-title" class="m-text-2" data-8b-motion="rise">Where the kit went last month.</h2>
+    <h2 id="trips-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines" data-8b-enter="96%">Where the kit went last month.</h2>
     <p class="trips-intro m-text-7">Photos and notes our customers sent back with the kit, muddy boots and all.</p>
   </div>
   <div class="trips-stage">
-    <ul class="trips-grid">
-      <li class="trips-cell"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1697202120309-5b456026781a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8c2xlZXBpbmclMjBiYWclMjBpbnNpZGUlMjB0ZW50JTIwbW9ybmluZ3xlbnwxfDF8fHwxNzkxNDYyNzgwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=390&amp;q=60" alt="The view from inside a tent door across a range of mountains" width="1600" height="2133" loading="lazy"></li>
+    <ul class="trips-grid" data-8b-items=":scope > li" data-8b-fixed="9">
+      <li class="trips-cell"><img src="https://images.unsplash.com/photo-1697202120309-5b456026781a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8c2xlZXBpbmclMjBiYWclMjBpbnNpZGUlMjB0ZW50JTIwbW9ybmluZ3xlbnwxfDF8fHwxNzkxNDYyNzgwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=60" alt="The view from inside a tent door across a range of mountains" width="1600" height="2133" loading="lazy"></li>
       <li class="trips-cell trips-cell--quote m-surface">
         <blockquote>
           <p class="trips-quote m-text-4">“The tent had been pitched in their yard the day before. It didn’t leak once in two nights of Lakeland rain.”</p>
           <footer class="m-text-7">Hannah and Joe, wild camp for two</footer>
         </blockquote>
       </li>
-      <li class="trips-cell"><img style="background:#262640" src="https://images.unsplash.com/photo-1609788063095-d71bf3c1f01f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dHdvJTIwcGVvcGxlJTIwd2lsZCUyMGNhbXBpbmclMjB0ZW50fGVufDF8MHx8fDE3OTE0NjI4MDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="Friends in camping chairs round a fire at night beside a lit tent" width="1600" height="1067" loading="lazy"></li>
+      <li class="trips-cell"><img src="https://images.unsplash.com/photo-1609788063095-d71bf3c1f01f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dHdvJTIwcGVvcGxlJTIwd2lsZCUyMGNhbXBpbmclMjB0ZW50fGVufDF8MHx8fDE3OTE0NjI4MDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=60" alt="Friends in camping chairs round a fire at night beside a lit tent" width="1600" height="1067" loading="lazy"></li>
       <li class="trips-cell trips-cell--quote m-surface">
         <blockquote>
           <p class="trips-quote m-text-4">“Twenty minutes on my boots in the shop, and I came back off Fairfield without a single blister.”</p>
           <footer class="m-text-7">Priya, Fairfield Horseshoe</footer>
         </blockquote>
       </li>
-      <li class="trips-cell trips-cell--centre"><img style="background:#262626" src="https://images.unsplash.com/photo-1671465184864-1fe3ea6c7734?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8dHdvJTIwcGVvcGxlJTIwd2lsZCUyMGNhbXBpbmclMjB0ZW50fGVufDF8MHx8fDE3OTE0NjI4MDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="A walker standing beside a small tent on a mountain top at dusk" width="1600" height="900" loading="lazy"></li>
-      <li class="trips-cell"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1613560136056-80f1fa43686c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cmFpbiUyMGphY2tldCUyMGhpa2VyJTIwd2V0fGVufDF8MXx8fDE3OTE0NjI3ODZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=390&amp;q=60" alt="Three walkers in waterproofs on a wet woodland track" width="1600" height="2000" loading="lazy"></li>
-      <li class="trips-cell"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1758895342025-205eb6359eaa?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8aGlrZXJzJTIwb24lMjByaWRnZSUyMHBhdGh8ZW58MXwwfHx8MTc5MTQ2Mjg0Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=60" alt="A walker on a rocky ridge disappearing into fog" width="1600" height="900" loading="lazy"></li>
+      <li class="trips-cell trips-cell--centre"><img src="https://images.unsplash.com/photo-1671465184864-1fe3ea6c7734?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8dHdvJTIwcGVvcGxlJTIwd2lsZCUyMGNhbXBpbmclMjB0ZW50fGVufDF8MHx8fDE3OTE0NjI4MDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A walker standing beside a small tent on a mountain top at dusk" width="1600" height="900" loading="lazy"></li>
+      <li class="trips-cell"><img src="https://images.unsplash.com/photo-1613560136056-80f1fa43686c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cmFpbiUyMGphY2tldCUyMGhpa2VyJTIwd2V0fGVufDF8MXx8fDE3OTE0NjI3ODZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=60" alt="Three walkers in waterproofs on a wet woodland track" width="1600" height="2000" loading="lazy"></li>
+      <li class="trips-cell"><img src="https://images.unsplash.com/photo-1758895342025-205eb6359eaa?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8aGlrZXJzJTIwb24lMjByaWRnZSUyMHBhdGh8ZW58MXwwfHx8MTc5MTQ2Mjg0Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=60" alt="A walker on a rocky ridge disappearing into fog" width="1600" height="900" loading="lazy"></li>
       <li class="trips-cell trips-cell--quote m-surface">
         <blockquote>
           <p class="trips-quote m-text-4">“We brought everything back soaked and nobody blinked. The family pack is booked again for August.”</p>
           <footer class="m-text-7">The Okafor family, family camp</footer>
         </blockquote>
       </li>
-      <li class="trips-cell"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1544143740-03aad32d5f7f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8dGVudCUyMGRyeWluZyUyMHN1bnxlbnwxfDB8fHwxNzkxNDYyODM5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="Looking out of a tent onto a sandy shore and the sea" width="1600" height="1067" loading="lazy"></li>
+      <li class="trips-cell"><img src="https://images.unsplash.com/photo-1544143740-03aad32d5f7f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8dGVudCUyMGRyeWluZyUyMHN1bnxlbnwxfDB8fHwxNzkxNDYyODM5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=60" alt="Looking out of a tent onto a sandy shore and the sea" width="1600" height="1067" loading="lazy"></li>
     </ul>
   </div>
 </section>
 <!-- faq: a heading with a photo beside six questions and answers in native <details> elements -->
 <section id="faq" class="faq" data-8b-section="faq" aria-labelledby="faq-title">
   <div class="faq-side">
-    <h2 id="faq-title" class="m-text-2" data-8b-motion="rise">Questions people ask at the counter</h2>
-    <figure class="faq-photo" data-8b-motion="window"><img style="background:#26260c" src="https://images.unsplash.com/photo-1565257074896-83694ab78bb6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dHdvJTIwcGVvcGxlJTIwd2lsZCUyMGNhbXBpbmclMjB0ZW50fGVufDF8MHx8fDE3OTE0NjI4MDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="Two people sitting on a hillside at sunrise beside their tent" width="1600" height="1067" loading="lazy"></figure>
+    <h2 id="faq-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines" data-8b-enter="96%">Questions people ask at the counter</h2>
+    <figure class="faq-photo" data-8b-motion="window" data-8b-enter="96%"><img src="https://images.unsplash.com/photo-1565257074896-83694ab78bb6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dHdvJTIwcGVvcGxlJTIwd2lsZCUyMGNhbXBpbmclMjB0ZW50fGVufDF8MHx8fDE3OTE0NjI4MDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="Two people sitting on a hillside at sunrise beside their tent" width="1600" height="1067" loading="lazy"></figure>
   </div>
-  <div class="faq-list">
+  <div class="faq-list" data-8b-items=":scope > details">
     <details class="faq-item m-surface">
       <summary class="m-text-4">Do I need to book?</summary>
       <p class="m-text-7">For weekends from May to September, yes. Midweek we can usually kit you out on the day if you ring first.</p>
@@ -988,7 +1076,7 @@ button, input { font: inherit; color: inherit; }
 </section>
 <!-- visit: a village photo that widens to full width beside a card with shop address, hours, phone, email and buttons (animation: scene:visit-open) -->
 <section id="visit" class="visit" data-8b-section="visit" aria-labelledby="visit-title">
-  <div class="visit-frame"><div class="visit-zoom"><img style="background:#c0c0a6" src="https://images.unsplash.com/photo-1762436959873-4fb060084e84?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c3RvbmUlMjBjb3R0YWdlJTIwdmlsbGFnZSUyMG1vdW50YWluc3xlbnwxfDB8fHwxNzkxNDY0NDM4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1520&amp;q=60" alt="A row of white cottages along a village road below golden mountains" width="1600" height="1067" loading="lazy"></div></div>
+  <div class="visit-frame"><div class="visit-zoom"><img src="https://images.unsplash.com/photo-1762436959873-4fb060084e84?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c3RvbmUlMjBjb3R0YWdlJTIwdmlsbGFnZSUyMG1vdW50YWluc3xlbnwxfDB8fHwxNzkxNDY0NDM4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A row of white cottages along a village road below golden mountains" width="1600" height="1067" loading="lazy"></div></div>
   <div class="visit-card m-surface">
     <h2 id="visit-title" class="m-text-2">Come and get fitted.</h2>
     <dl class="visit-details">
@@ -1023,7 +1111,7 @@ button, input { font: inherit; color: inherit; }
       <li><a class="m-link-3" href="#visit">Privacy</a></li>
     </ul>
   </div>
-  <p class="foot-word m-text-3" style="--len:7" data-8b-motion="rise">Kitfell</p>
+  <p class="foot-word m-text-3" style="--len:7" data-8b-motion="rise" data-8b-split="lines" data-8b-enter="96%">Kitfell</p>
   <div class="foot-legal m-text-8">
     <p>© 2026 Kitfell Kit Hire Ltd · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a>. Registered in England, no. 00000000.</p>
     <p>Hire since 2011, at the foot of Loughrigg.</p>
@@ -1049,8 +1137,8 @@ button, input { font: inherit; color: inherit; }
     nav.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', toggle.dataset[open ? 'labelClose' : 'labelOpen']);
-    if (open) { window.lenis?.stop(); panel.querySelector('a')?.focus(); }
-    else window.lenis?.start();
+    if (open) { window.motionKit?.wheel?.stop(); panel.querySelector('a')?.focus(); }
+    else window.motionKit?.wheel?.start();
   };
   toggle.addEventListener('click', () => setOpen(!nav.classList.contains('is-open')));
   panel.addEventListener('click', event => { if (event.target.closest('a') && nav.classList.contains('is-open')) setOpen(false); });
@@ -1082,118 +1170,6 @@ button, input { font: inherit; color: inherit; }
   });
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95, anchors: { offset: 0 } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-let resizeTimer;
-window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(refreshScroll, 250); });
-</script>
-<script data-8b-part="motion">
-const effects = {
-  rise(element, vars = {}) {
-    const split = SplitText.create(element, { type: 'lines', mask: 'lines' });
-    return gsap.timeline({ ...vars, onComplete() { split.revert(); } })
-      .from(split.lines, { yPercent: 108, duration: 0.95, ease: 'power3.out', stagger: 0.09 });
-  },
-  fill(element, vars = {}) {
-    const from = getComputedStyle(document.documentElement).getPropertyValue('--color-6').trim();
-    const to = getComputedStyle(element).color;
-    const split = SplitText.create(element, { type: 'words' });
-    return gsap.timeline(vars)
-      .fromTo(split.words, { color: from }, { color: to, duration: 0.3, ease: 'none', stagger: 0.7 / Math.max(1, split.words.length) });
-  },
-  window(element, vars = {}) {
-    return gsap.timeline({ ...vars, onComplete() { gsap.set(element, { clearProps: 'clipPath' }); } })
-      .fromTo(element, { clipPath: 'inset(44% 10% 44% 10% round 999px)' }, { clipPath: 'inset(0% 0% 0% 0% round 28px)', duration: 1.15, ease: 'power3.inOut' });
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  ['rise', 'window', 'fill'].forEach(name => {
-    const elements = [...section.querySelectorAll(`[data-8b-motion~="${name}"]`)];
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => {
-        if (name === 'fill') {
-          ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top 88%', end: 'bottom 52%', scrub: 0.6, animation: effects.fill(element) });
-        } else {
-          ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top 96%', once: true, onEnter: () => effects[name](element) });
-        }
-      });
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-</script>
 
 <script data-8b-part="section-script:packs">
 (() => {
@@ -1211,204 +1187,307 @@ document.querySelectorAll('[data-8b-section]').forEach(section => {
   });
 })();
 </script>
-<script data-8b-part="scene:kit-index">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 761px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 760px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('kit');
-    const grid = section.querySelector('.kit-grid');
-    const cards = [...section.querySelectorAll('.kit-cards > li')];
-    const wide = context.conditions.wide;
-    const nav = document.createElement('nav');
-    nav.className = 'kit-index';
-    nav.setAttribute('aria-label', section.dataset.indexLabel || '');
-    const list = document.createElement('ol');
-    list.className = 'kit-index__list';
-    const marker = document.createElement('span');
-    marker.className = 'kit-index__marker';
-    marker.setAttribute('aria-hidden', 'true');
-    const links = cards.map(card => {
-      const item = document.createElement('li');
-      const link = document.createElement('a');
-      link.className = 'kit-index__link';
-      link.href = `#${card.id}`;
-      link.textContent = card.querySelector('.kit-card__title').textContent;
-      item.append(link);
-      list.append(item);
-      return link;
-    });
-    list.prepend(marker);
-    nav.append(list);
-    grid.append(nav);
-    section.classList.add('is-indexed');
-    let stops = [];
-    const measure = () => { stops = links.map(link => wide ? link.parentElement.offsetTop : link.parentElement.offsetLeft); };
-    const setX = gsap.quickSetter(marker, 'x', 'px');
-    const setY = gsap.quickSetter(marker, 'y', 'px');
-    let active = -1;
-    const place = progress => {
-      const at = progress * (stops.length - 1);
-      const index = Math.min(stops.length - 2, Math.floor(at));
-      const position = gsap.utils.interpolate(stops[index], stops[index + 1], at - index);
-      (wide ? setY : setX)(position);
-      const current = Math.round(at);
-      if (current !== active) {
-        links.forEach((link, i) => link.classList.toggle('is-active', i === current));
-        active = current;
-      }
-    };
-    ScrollTrigger.create({
-      id: 'kit-index', trigger: cards[0], start: 'center center',
-      endTrigger: cards[cards.length - 1], end: 'center center',
-      onRefresh: self => { measure(); if (!wide) gsap.set(marker, { width: links[0].parentElement.offsetWidth }); place(self.progress); },
-      onUpdate: self => place(self.progress)
-    });
-    cards.forEach((card, i) => {
-      const tilt = i % 2 ? 2.5 : -2.5;
-      gsap.timeline({ scrollTrigger: { id: `kit-index:card-${i + 1}`, trigger: card, start: 'top bottom', end: 'bottom top', scrub: 0.4 } })
-        .fromTo(card, { scale: 0.84, rotation: tilt, opacity: 0.5 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.36, ease: 'power2.out' }, 0)
-        .to(card, { scale: 0.84, rotation: -tilt, opacity: 0.5, duration: 0.36, ease: 'power2.in' }, 0.64);
-    });
-    return () => { nav.remove(); section.classList.remove('is-indexed'); };
-  });
-}, { id: 'scene:kit-index' });
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}.line:not(:last-child){margin-bottom:0}.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = typeof Intl.Segmenter === 'function'
+? text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment)
+: text => [...text];
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split');
+if (sources.has(element)) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px 100% 0px' });
+(document.fonts?.ready ?? Promise.resolve()).then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
 </script>
-<script data-8b-part="scene:packs-deal">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 761px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 760px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('packs');
-    const gridEl = section.querySelector('.packs-grid');
-    const cards = [...gridEl.querySelectorAll(':scope > .pack')];
-    section.classList.add('is-dealing');
-    const tilts = [-9, 6, -4, 10, -7, 5];
-    if (context.conditions.wide) {
-      const offset = (card, axis) => {
-        const centre = axis === 'x' ? gridEl.offsetWidth / 2 : gridEl.offsetHeight / 2;
-        return axis === 'x' ? centre - (card.offsetLeft + card.offsetWidth / 2) : centre - (card.offsetTop + card.offsetHeight / 2);
-      };
-      const timeline = gsap.timeline({ scrollTrigger: { id: 'packs-deal', trigger: gridEl, start: 'top 82%', end: 'center 56%', scrub: 0.6, invalidateOnRefresh: true } });
-      cards.forEach((card, i) => {
-        timeline.fromTo(card,
-          { x: () => offset(card, 'x'), y: () => offset(card, 'y'), rotation: tilts[i % tilts.length], scale: 0.9 },
-          { x: 0, y: 0, rotation: 0, scale: 1, duration: 0.55, ease: 'power2.inOut' }, i * 0.15);
-      });
-    } else {
-      cards.forEach((card, i) => {
-        const side = i % 2 ? 1 : -1;
-        gsap.fromTo(card, { xPercent: side * 70, rotation: side * 9 }, {
-          xPercent: 0, rotation: 0, ease: 'power2.out',
-          scrollTrigger: { id: `packs-deal:card-${i + 1}`, trigger: card, start: 'top 96%', end: 'top 58%', scrub: 0.5 }
-        });
-      });
+<script data-8b-part="scene-script:kit-index">
+motionKit.scene("kit-index", () => {
+  const section = document.getElementById('kit');
+  const list = section.querySelector('.kit-cards');
+  const cards = [...list.querySelectorAll(':scope > li')];
+  const nav = document.createElement('nav');
+  nav.className = 'kit-index';
+  nav.setAttribute('aria-label', section.dataset.indexLabel || '');
+  const index = document.createElement('ol');
+  index.className = 'kit-index__list';
+  const marker = document.createElement('span');
+  marker.className = 'kit-index__marker';
+  marker.setAttribute('aria-hidden', 'true');
+  index.append(marker);
+  const links = cards.map(card => {
+    const item = document.createElement('li');
+    const link = document.createElement('a');
+    link.className = 'kit-index__link';
+    link.href = `#${card.id}`;
+    link.textContent = card.querySelector('.kit-card__title').textContent;
+    item.append(link);
+    index.append(item);
+    return link;
+  });
+  nav.append(index);
+  section.querySelector('.kit-grid').append(nav);
+  let wide = true, stops = [], first = 0, last = 0, active = -1;
+  motionKit.measure(() => {
+    wide = matchMedia('(min-width: 761px)').matches;
+    stops = links.map(link => wide ? link.parentElement.offsetTop : link.parentElement.offsetLeft);
+    motionKit.set(marker, { width: wide ? '' : `${links[0].parentElement.offsetWidth}px` });
+    const top = motionKit.box(list).y, centre = card => { const box = motionKit.box(card); return box.y + box.h / 2 - top; };
+    first = centre(cards[0]);
+    last = centre(cards[cards.length - 1]);
+  });
+  motionKit.track(list, 'top 50%', 'bottom 50%', progress => {
+    const middle = progress * list.offsetHeight;
+    const at = Math.min(1, Math.max(0, last > first ? (middle - first) / (last - first) : 0)) * (stops.length - 1);
+    const from = Math.max(0, Math.min(stops.length - 2, Math.floor(at)));
+    const position = stops[from] + ((stops[from + 1] ?? stops[from]) - stops[from]) * (at - from);
+    motionKit.set(marker, { translate: wide ? `0 ${position}px` : `${position}px 0` });
+    const current = Math.round(at);
+    if (current !== active) {
+      links.forEach((link, i) => link.classList.toggle('is-active', i === current));
+      active = current;
     }
-    return () => section.classList.remove('is-dealing');
   });
-}, { id: 'scene:packs-deal' });
+});
 </script>
-<script data-8b-part="scene:fitting-swap">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('fitting');
-    const photos = [...section.querySelectorAll('.fit-photo')];
-    const stories = [...section.querySelectorAll('.fit-story')];
-    section.classList.add('is-swapping');
-    photos.forEach((photo, i) => {
-      if (i === 0 || !stories[i]) return;
-      gsap.timeline({
-        scrollTrigger: {
-          id: `fitting-swap:photo-${i + 1}`, trigger: stories[i], start: 'top 85%', end: 'top 45%', scrub: 0.5,
-          onLeave: () => gsap.set(photo, { clearProps: 'clipPath' })
-        }
-      })
-        .fromTo(photo, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' }, 0)
-        .fromTo(photo.querySelector('img'), { scale: 1.16 }, { scale: 1, ease: 'power2.out' }, 0)
-        .fromTo(photos[i - 1], { scale: 1 }, { scale: 1.08, ease: 'power1.in' }, 0);
-    });
-    return () => section.classList.remove('is-swapping');
+<script data-8b-part="scene-script:packs-deal">
+motionKit.scene("packs-deal", () => {
+  const grid = document.querySelector("#packs .packs-grid"), cards = [...grid.querySelectorAll(":scope > .pack")];
+  motionKit.measure(() => cards.forEach(card => motionKit.set(card, {
+    '--packs-li-pack-translate-from': `${grid.offsetWidth / 2 - (card.offsetLeft + card.offsetWidth / 2)}px`,
+    '--packs-li-pack-translate-from-2': `${grid.offsetHeight / 2 - (card.offsetTop + card.offsetHeight / 2)}px`
+  })));
+});
+</script>
+<script data-8b-part="scene-script:care-track">
+motionKit.scene("care-track", () => {
+  const section = document.getElementById('care');
+  const pin = section.querySelector('.care-pin');
+  const track = section.querySelector('.care-track');
+  const panels = [...track.querySelectorAll('.care-panel')];
+  const ticks = panels.map(panel => panel.querySelector('.care-tick'));
+  let distance = 0, run = 0, lefts = [];
+  motionKit.measure(() => {
+    const style = getComputedStyle(pin);
+    distance = Math.max(0, track.scrollWidth - (pin.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)));
+    run = distance * 1.1;
+    motionKit.set(section, { '--care-distance': `${distance}px`, '--care-run': `${run}px` });
+    lefts = panels.map(panel => motionKit.box(panel).x);
   });
-}, { id: 'scene:fitting-swap' });
-</script>
-<script data-8b-part="scene:care-track">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('care');
-    const pin = section.querySelector('.care-pin');
-    const track = section.querySelector('.care-track');
-    const panels = [...track.querySelectorAll('.care-panel')];
-    section.classList.add('is-tracking');
-    const root = getComputedStyle(document.documentElement);
-    const pale = root.getPropertyValue('--color-8').trim();
-    const solid = root.getPropertyValue('--color-3').trim();
-    const distance = () => {
-      const style = getComputedStyle(pin);
-      const room = pin.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
-      return Math.max(0, track.scrollWidth - room);
-    };
-    const run = gsap.to(track, {
-      x: () => -distance(), ease: 'none',
-      scrollTrigger: { id: 'care-track', trigger: pin, start: 'top top', end: () => `+=${distance() * 1.1}`, pin: true, scrub: 0.6, invalidateOnRefresh: true }
-    });
-    panels.forEach((panel, i) => {
-      gsap.fromTo(panel.querySelector('.care-tick'), { scale: 0.42, backgroundColor: pale }, {
-        scale: 1, backgroundColor: solid, ease: 'power2.out',
-        scrollTrigger: { id: `care-track:tick-${i + 1}`, trigger: panel, containerAnimation: run, start: 'left 96%', end: 'left 70%', scrub: true }
-      });
-    });
-    return () => section.classList.remove('is-tracking');
-  });
-}, { id: 'scene:care-track' });
-</script>
-<script data-8b-part="scene:trips-zoom">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 761px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 760px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('trips');
-    const stage = section.querySelector('.trips-stage');
-    const grid = section.querySelector('.trips-grid');
-    const centre = grid.querySelector('.trips-cell--centre');
-    if (context.conditions.wide) {
-      section.classList.add('is-zooming');
-      const origin = () => `${centre.offsetLeft + centre.offsetWidth / 2}px ${centre.offsetTop + centre.offsetHeight / 2}px`;
-      const start = () => Math.max(stage.clientWidth / centre.offsetWidth, stage.clientHeight / centre.offsetHeight) * 1.04;
-      gsap.timeline({ scrollTrigger: { id: 'trips-zoom', trigger: stage, start: 'top top', end: () => `+=${innerHeight * 1.1}`, pin: true, scrub: 0.6, invalidateOnRefresh: true } })
-        .fromTo(grid, { scale: start, transformOrigin: origin }, { scale: 1, transformOrigin: origin, duration: 0.85, ease: 'power2.inOut' }, 0)
-        .to({}, { duration: 0.15 });
-      return () => section.classList.remove('is-zooming');
-    }
-    gsap.fromTo(grid, { scale: 1.4, transformOrigin: '50% 0%' }, {
-      scale: 1, ease: 'power2.out',
-      scrollTrigger: { id: 'trips-zoom', trigger: grid, start: 'top 92%', end: 'top 20%', scrub: 0.5 }
+  motionKit.track(section, 'top 100%', 'bottom 0%', () => {
+    const travel = (run ? Math.min(1, Math.max(0, -section.getBoundingClientRect().top / run)) : 0) * distance;
+    ticks.forEach((tick, i) => {
+      const from = lefts[i] - innerWidth * 0.96, to = lefts[i] - innerWidth * 0.7;
+      const at = Math.min(1, Math.max(0, (travel - from) / (to - from)));
+      motionKit.set(tick, { '--care-tick': 1 - (1 - at) ** 3 });
     });
   });
-}, { id: 'scene:trips-zoom' });
+});
 </script>
-<script data-8b-part="scene:visit-open">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 761px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 760px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('visit');
-    const frame = section.querySelector('.visit-frame');
-    const zoom = section.querySelector('.visit-zoom');
-    const from = context.conditions.wide ? 'inset(18% 46% 18% 5% round 28px)' : 'inset(9% 16% 64% 16% round 999px)';
-    gsap.timeline({
-      scrollTrigger: {
-        id: 'visit-open', trigger: section, start: 'top 85%', end: 'top top', scrub: 0.5,
-        onLeave: () => gsap.set(frame, { clearProps: 'clipPath' })
-      }
-    })
-      .fromTo(frame, { clipPath: from }, { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'power2.inOut' }, 0)
-      .fromTo(zoom, { scale: 1.25 }, { scale: 1, ease: 'power1.out' }, 0);
-  });
-}, { id: 'scene:visit-open' });
+<script data-8b-part="scene-script:trips-zoom">
+motionKit.scene("trips-zoom", () => {
+  { const stage = document.querySelector("#trips .trips-stage"), room = document.createElement('div'), space = document.createElement('div'); room.className = "trips-stage-room"; space.className = "trips-stage-room-space"; space.setAttribute('aria-hidden', 'true'); stage.before(room); room.append(stage, space); }
+  const stage = document.querySelector("#trips .trips-stage"), grid = stage.querySelector(".trips-grid"), centre = grid.querySelector(".trips-cell--centre");
+  motionKit.measure(() => motionKit.set(grid, {
+    '--trips-zoom-origin': `${centre.offsetLeft + centre.offsetWidth / 2}px ${centre.offsetTop + centre.offsetHeight / 2}px`,
+    '--trips-zoom-from': Math.max(stage.clientWidth / centre.offsetWidth, stage.clientHeight / centre.offsetHeight) * 1.04
+  }));
+});
 </script>
 </body>
 </html>

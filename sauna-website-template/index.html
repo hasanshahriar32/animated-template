@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/sauna-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,7 +20,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%230b0906'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23d0703f'%3EB%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/sourceserif4/v15/vEFI2_tTDB4M7-auWDN0ahZJW1gb8tc.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* cyrillic-ext */
 @font-face {
@@ -102,10 +102,6 @@
   @font-face { font-family: "Source Serif 4 Fallback"; src: local("Georgia"); font-weight: 100 549; size-adjust: 98.1%; ascent-override: 106%; descent-override: 34.7%; line-gap-override: 0%; }
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis.lenis-stopped { overflow: clip; }
-  .lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-smooth iframe { pointer-events: none; }
   body {
     margin: 0;
     background: var(--color-1);
@@ -841,6 +837,178 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
   @media (max-width: 480px) { #footer .ft-grid { grid-template-columns: 1fr; } #footer .ft-next .ft-rule { flex-basis: 18%; } }
 }
 </style>
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); }
+[data-8b-live] [data-8b-motion~="steam"]:not([data-8b-items=":scope > li"], [data-8b-items=":scope > details"]) { animation-duration: 1.1s; animation-delay: 0s; animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="steam"]:not([data-8b-items=":scope > li"], [data-8b-items=":scope > details"]).is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="steam"][data-8b-items=":scope > li"] > li { animation-duration: 1.1s; animation-delay: calc(0s + 0.09s * var(--i)); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="steam"][data-8b-items=":scope > li"].is-in > li { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="steam"][data-8b-items=":scope > details"] > details { animation-duration: 1.1s; animation-delay: calc(0s + 0.09s * var(--i)); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="steam"][data-8b-items=":scope > details"].is-in > details { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="depth"] { view-timeline: --motion-depth block; view-timeline-inset: 0; }
+[data-8b-live] [data-8b-motion~="depth"] img { animation-name: motion-depth-img-translate; animation-timeline: --motion-depth; animation-range: cover 0% cover 50%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] [data-8b-motion~="rule"] { animation-name: motion-rule-scale; animation-duration: 1.3s; animation-delay: 0s; animation-timing-function: var(--ease-power3-inout); animation-fill-mode: both; animation-play-state: paused; transform: none; transform-origin: 0% 50%; }
+[data-8b-live] [data-8b-motion~="rule"].is-in { animation-play-state: running; }
+@keyframes motion-steam-single-translate { 0% { translate: 0px 26px; } 100% { translate: 0px 0px; } }
+@keyframes motion-steam-single-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes motion-steam-single-filter-d { 0% { filter: blur(6px); } 99.998% { filter: blur(0px); } 100% { filter: none; } }
+@keyframes motion-steam-single-filter-m { 0% { filter: blur(0px); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 99.998% { filter: blur(0px); } 100% { filter: none; } }
+@keyframes motion-depth-img-translate { 0% { translate: 0px -10%; } 100% { translate: 0px 0px; } }
+@keyframes motion-rule-scale { 0% { scale: 0 1; } 100% { scale: 1; } }
+@media (min-width: 1024px) {
+  [data-8b-live] [data-8b-motion~="steam"]:not([data-8b-items=":scope > li"], [data-8b-items=":scope > details"]), [data-8b-live] [data-8b-motion~="steam"][data-8b-items=":scope > li"] > li, [data-8b-live] [data-8b-motion~="steam"][data-8b-items=":scope > details"] > details { animation-name: motion-steam-single-translate, motion-steam-single-opacity, motion-steam-single-filter-d; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+}
+@media (max-width: 1023px) {
+  [data-8b-live] [data-8b-motion~="steam"]:not([data-8b-items=":scope > li"], [data-8b-items=":scope > details"]), [data-8b-live] [data-8b-motion~="steam"][data-8b-items=":scope > li"] > li, [data-8b-live] [data-8b-motion~="steam"][data-8b-items=":scope > details"] > details { animation-name: motion-steam-single-translate, motion-steam-single-opacity, motion-steam-single-filter-m; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1), cubic-bezier(0.3333, 1, 0.6667, 1), linear; }
+}
+}
+</style>
+<style data-8b-part="scene:arrival">
+@layer scenes {
+[data-8b-live] #arrival { timeline-scope: --arrival-t2; view-timeline: --arrival-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #arrival .m-text-3 > span:nth-of-type(-n+3), [data-8b-live] #arrival .op-float--1, [data-8b-live] #arrival .op-float--2, [data-8b-live] #arrival .op-float--3, [data-8b-live] #arrival .op-hold, [data-8b-live] #arrival .op-veil, [data-8b-live] #arrival .op-lake, [data-8b-live] #arrival .op-room-dark, [data-8b-live] #arrival .op-room { animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #arrival .m-text-3 > span:nth-of-type(1) { view-timeline: --arrival-t2 block; view-timeline-inset: 0; animation-name: arrival-span-op-line-translate; animation-timeline: --arrival-t2; animation-range: cover 2vh cover 41.1892vh; transform: none; }
+[data-8b-live] #arrival .op-float--1 { view-timeline: --arrival-t3 block; view-timeline-inset: 0; animation-timeline: --arrival-t3; animation-range: cover 0% cover calc(50% - 5vh); transform: none; }
+[data-8b-live] #arrival .op-float--2 { view-timeline: --arrival-t4 block; view-timeline-inset: 0; animation-timeline: --arrival-t4; animation-range: cover 0% cover calc(50% - 5vh); transform: none; }
+[data-8b-live] #arrival .op-float--3 { view-timeline: --arrival-t5 block; view-timeline-inset: 0; animation-timeline: --arrival-t5; animation-range: cover 0% cover calc(50% - 5vh); transform: none; }
+[data-8b-live] #arrival .op-hold { animation-name: arrival-div-op-hold-translate; animation-timeline: --arrival-t1; animation-range: cover 100vh cover calc(100vh + var(--arrival-first)); transform: none; }
+[data-8b-live] #arrival .op-veil { animation-name: arrival-div-op-veil-translate; animation-timeline: --arrival-t1; animation-range: cover 100vh cover calc(100vh + var(--arrival-first)); transform: none; }
+[data-8b-live] #arrival .op-lake { animation-name: arrival-img-op-lake-scale, arrival-img-op-lake-opacity; animation-timeline: --arrival-t1; animation-range: cover 100vh cover calc(100vh + var(--arrival-first) * .5), cover calc(100vh + var(--arrival-first) * .47) cover calc(100vh + var(--arrival-first) * .52); transform: none; }
+[data-8b-live] #arrival .op-room-dark { animation-name: arrival-div-op-room-dark-opacity; animation-timeline: --arrival-t1; animation-range: cover calc(100vh + var(--arrival-first) * .5) cover calc(45% + 10vh + var(--arrival-first) * .275); }
+[data-8b-live] #arrival .op-room { animation-name: arrival-img-op-room-scale; animation-timeline: --arrival-t1; animation-range: cover calc(100vh + var(--arrival-first) * .5) cover calc(100% - 100vh); transform: none; }
+[data-8b-live] #arrival .m-text-3 > span:nth-of-type(2) { animation-name: arrival-span-op-line-translate; animation-timeline: --arrival-t2; animation-range: cover 11.4054vh cover 50.5946vh; transform: none; }
+[data-8b-live] #arrival .m-text-3 > span:nth-of-type(3) { animation-name: arrival-span-op-line-translate; animation-timeline: --arrival-t2; animation-range: cover 20.8108vh cover 60vh; transform: none; }
+@keyframes arrival-div-op-hold-translate { 0% { translate: 0px 0px; } 0.002% { translate: 0px 0.02%; } 100% { translate: 0px 100%; } }
+@keyframes arrival-div-op-veil-translate { 0% { translate: 0px 0px; } 0.002% { translate: 0px -0.01%; } 50% { translate: 0px -50%; } 100% { translate: 0px -113.333%; } }
+@keyframes arrival-img-op-lake-scale { 0% { scale: 1; } 100% { scale: 1.18; } }
+@keyframes arrival-img-op-lake-opacity { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes arrival-div-op-room-dark-opacity { 0% { opacity: 0.92; } 100% { opacity: 0; } }
+@keyframes arrival-img-op-room-scale { 0% { scale: 1.2; } 100% { scale: 1; } }
+@keyframes arrival-span-op-line-translate { 0% { translate: 0px 0px; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 100% { translate: 0px 0px; } }
+@keyframes arrival-figure-m-photo-translate-d { 0% { translate: 0px 160px; } 100% { translate: 0px 0px; } }
+@keyframes arrival-figure-m-photo-translate-m { 0% { translate: 0px 72px; } 100% { translate: 0px 0px; } }
+@keyframes arrival-figure-m-photo-translate-2-d { 0% { translate: 0px 300px; } 100% { translate: 0px 0px; } }
+@keyframes arrival-figure-m-photo-translate-2-m { 0% { translate: 0px 135px; } 100% { translate: 0px 0px; } }
+@keyframes arrival-figure-m-photo-translate-3-d { 0% { translate: 0px 220px; } 100% { translate: 0px 0px; } }
+@keyframes arrival-figure-m-photo-translate-3-m { 0% { translate: 0px 99px; } 100% { translate: 0px 0px; } }
+@media (min-width: 900px) {
+  [data-8b-live] #arrival .op-float--1 { animation-name: arrival-figure-m-photo-translate-d; }
+  [data-8b-live] #arrival .op-float--2 { animation-name: arrival-figure-m-photo-translate-2-d; }
+  [data-8b-live] #arrival .op-float--3 { animation-name: arrival-figure-m-photo-translate-3-d; }
+}
+@media (max-width: 899px) {
+  [data-8b-live] #arrival .op-float--1 { animation-name: arrival-figure-m-photo-translate-m; }
+  [data-8b-live] #arrival .op-float--2 { animation-name: arrival-figure-m-photo-translate-2-m; }
+  [data-8b-live] #arrival .op-float--3 { animation-name: arrival-figure-m-photo-translate-3-m; }
+}
+}
+</style>
+<style data-8b-part="scene:round-frame">
+@layer scenes {
+[data-8b-live] #round { timeline-scope: --round-t1; }
+[data-8b-live] #round .rd-steps { view-timeline: --round-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #round .rd-shot--heat, [data-8b-live] #round .rd-tint--hot, [data-8b-live] #round .rd-shot--cold, [data-8b-live] #round .rd-shot--rest, [data-8b-live] #round .rd-tint--cold { animation-timeline: --round-t1; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #round .rd-tint--hot, [data-8b-live] #round .rd-tint--cold { animation-timing-function: linear(0, 0.005, 0.02, 0.045, 0.08, 0.125, 0.18, 0.245, 0.32, 0.405, 0.5, 0.595, 0.68, 0.755, 0.82, 0.875, 0.92, 0.955, 0.98, 0.995, 1); }
+[data-8b-live] #round .rd-shot--heat { animation-name: round-figure-rd-shot-clippath; animation-range: cover 30vh cover calc(100% - 45vh); }
+[data-8b-live] #round .rd-tint--hot { animation-name: round-span-rd-tint-opacity; animation-range: cover 30vh cover 40%; }
+[data-8b-live] #round .rd-shot--cold { animation-name: round-figure-rd-shot-clippath-2; animation-range: cover calc(17.5% + 16.875vh) cover calc(100% - 45vh); }
+[data-8b-live] #round .rd-shot--rest { animation-name: round-figure-rd-shot-clippath-3; animation-range: cover calc(17.5% + 16.875vh) cover calc(100% - 45vh); }
+[data-8b-live] #round .rd-tint--cold { animation-name: round-span-rd-tint-opacity-2; animation-range: cover calc(30% + 7.5vh) cover calc(68.3333% - 21.25vh); }
+@keyframes round-figure-rd-shot-clippath { 0% { clip-path: inset(0% 67.5% 0% 0%); } 16.6667% { clip-path: inset(0%); } 26.6667% { clip-path: inset(0%); } 43.3333% { clip-path: inset(0% 100% 0% 0%); } 83.3333% { clip-path: inset(0% 100% 0% 0%); } 100% { clip-path: inset(0% 67.5% 0% 0%); } }
+@keyframes round-span-rd-tint-opacity { 0% { opacity: 0; } 41.6667% { opacity: 0.55; } 66.6667% { opacity: 0.55; } 100% { opacity: 0; } }
+@keyframes round-figure-rd-shot-clippath-2 { 0% { clip-path: inset(0% 34.2%); } 0.002% { clip-path: inset(0% 34.1997% 0% 0%); } 1.0101% { clip-path: inset(0% 0.0003% 0% 0%); } 1.0121% { clip-path: inset(0%); } 45.4545% { clip-path: inset(0%); } 65.6566% { clip-path: inset(0% 0% 100%); } 79.798% { clip-path: inset(0% 0% 100%); } 100% { clip-path: inset(0% 34.2%); } }
+@keyframes round-figure-rd-shot-clippath-3 { 0% { clip-path: inset(0% 0% 0% 67.5%); } 1.0101% { clip-path: inset(0% 0% 0% 0.0005%); } 1.0121% { clip-path: inset(0%); } 79.798% { clip-path: inset(0%); } 100% { clip-path: inset(0% 0% 0% 67.5%); } }
+@keyframes round-span-rd-tint-opacity-2 { 0% { opacity: 0; } 34.7826% { opacity: 0.6; } 65.2174% { opacity: 0.6; } 100% { opacity: 0; } }
+}
+</style>
+<style data-8b-part="scene:saunas-heat">
+@layer scenes {
+[data-8b-live] #saunas { background-image: none; }
+[data-8b-live] #saunas { view-timeline: --saunas-t1 block; view-timeline-inset: 0; animation-name: saunas-saunas-backgroundcolor; animation-timeline: --saunas-t1; animation-range: cover 50vh cover calc(100% - 70vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #saunas .sa-list > .sa-row { view-timeline: --saunas-item block; view-timeline-inset: 0; }
+[data-8b-live] #saunas .sa-list > .sa-row > .sa-scale > .sa-track > .sa-line { animation-name: saunas-span-sa-line-clippath; animation-timeline: --saunas-item; animation-range: cover 15vh cover 60vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; }
+@keyframes saunas-saunas-backgroundcolor { 0% { background-color: var(--color-8); } 100% { background-color: var(--color-9); } }
+@keyframes saunas-span-sa-line-clippath { 0% { clip-path: inset(0px 100% 0px 0px); } 100% { clip-path: inset(0px var(--saunas-span-sa-line-clippath-to-2, 84%) 0px 0px); } }
+}
+</style>
+<style data-8b-part="scene:steam-wave">
+@layer scenes {
+[data-8b-live] #steam-title { view-timeline: --steam-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #steam .st-glow, [data-8b-live] #steam-title > span:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5), :nth-of-type(6)) { animation-timeline: --steam-t1; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #steam .st-glow { animation-range: cover 20vh cover calc(90.9091% - 20.9091vh); transform: none; }
+[data-8b-live] #steam-title > span:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5), :nth-of-type(6)) { animation-name: steam-span-st-line-fontweight, steam-span-st-line-color; }
+[data-8b-live] #steam-title > span:nth-of-type(6) { animation-range: cover calc(9.0909% + 15.9091vh) cover calc(45.4545% - 0.4545vh); }
+[data-8b-live] #steam-title > span:nth-of-type(5) { animation-range: cover calc(22.7273% + 9.7727vh) cover calc(59.0909% - 6.5909vh); }
+[data-8b-live] #steam-title > span:nth-of-type(4) { animation-range: cover calc(36.3636% + 3.6364vh) cover calc(72.7273% - 12.7273vh); }
+[data-8b-live] #steam-title > span:nth-of-type(3) { animation-range: cover calc(50% - 2.5vh) cover calc(86.3636% - 18.8636vh); }
+[data-8b-live] #steam-title > span:nth-of-type(2) { animation-range: cover calc(63.6364% - 8.6364vh) cover calc(100% - 25vh); }
+@keyframes steam-span-st-glow-translate-d { 0% { translate: 0px 58.311%; } 100% { translate: 0px -74.972%; } }
+@keyframes steam-span-st-glow-translate-m { 0% { translate: 0px 58.482%; } 100% { translate: 0px -75.192%; } }
+@keyframes steam-span-st-glow-opacity { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes steam-span-st-line-fontweight { 0% { font-weight: 300; animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1); } 40% { font-weight: 560; animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1); } 100% { font-weight: 300; } }
+@keyframes steam-span-st-line-color { 0% { color: var(--color-2); animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1); } 40% { color: var(--color-5); animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1); } 100% { color: var(--color-2); } }
+@media (min-width: 701px) {
+  [data-8b-live] #steam .st-glow { animation-name: steam-span-st-glow-translate-d, steam-span-st-glow-opacity; }
+}
+@media (max-width: 700px) {
+  [data-8b-live] #steam .st-glow { animation-name: steam-span-st-glow-translate-m, steam-span-st-glow-opacity; }
+}
+}
+</style>
+<style data-8b-part="scene:day-light">
+@layer scenes {
+[data-8b-live] #day { view-timeline: --day-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #day .dy-morning, [data-8b-live] #day .dy-tint--dawn, [data-8b-live] #day .dy-night, [data-8b-live] #day .dy-tint--dusk { animation-timeline: --day-t1; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #day .dy-morning { animation-name: day-img-dy-photo-scale; animation-range: cover 100vh cover calc(60% - 20vh); transform: none; }
+[data-8b-live] #day .dy-tint--dawn { animation-name: day-span-dy-tint-opacity; animation-range: cover 100vh cover calc(35% + 30vh); }
+[data-8b-live] #day .dy-night { animation-name: day-img-dy-photo-opacity, day-img-dy-photo-scale-2; animation-range: cover calc(56% - 12vh) cover calc(78% - 56vh), cover calc(56% - 12vh) cover calc(100% - 100vh); transform: none; }
+[data-8b-live] #day .dy-tint--dusk { animation-name: day-span-dy-tint-opacity-2; animation-range: cover calc(62% - 24vh) cover calc(100% - 100vh); }
+@keyframes day-img-dy-photo-scale { 0% { scale: 1.14; } 100% { scale: 1; } }
+@keyframes day-span-dy-tint-opacity { 0% { opacity: 0.7; } 100% { opacity: 0; } }
+@keyframes day-img-dy-photo-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes day-img-dy-photo-scale-2 { 0% { scale: 1.1; } 100% { scale: 1; } }
+@keyframes day-span-dy-tint-opacity-2 { 0% { opacity: 0; } 52.6316% { opacity: 0.45; } 100% { opacity: 0; } }
+}
+</style>
+<style data-8b-part="scene:house-slats">
+@layer scenes {
+@media (min-width: 700px) {
+[data-8b-live] #house .m-photo > img:nth-of-type(1) { mask-image: repeating-linear-gradient(90deg, currentcolor 0%, currentcolor 10%, transparent 10%, transparent 20%); }
+}
+@media (max-width: 699px) {
+[data-8b-live] #house .m-photo > img:nth-of-type(1) { mask-image: repeating-linear-gradient(90deg, currentcolor 0%, currentcolor 16.6667%, transparent 16.6667%, transparent 33.3333%); }
+}
+[data-8b-live] #house { timeline-scope: --house-t1; }
+[data-8b-live] #house .m-photo { view-timeline: --house-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #house .m-photo > img:nth-of-type(1), [data-8b-live] #house .m-photo .hs-clone { animation-timeline: --house-t1; animation-range: cover 8vh cover calc(50% - 2vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #house .m-photo > img:nth-of-type(1) { animation-name: house-figure-m-photo-img-translate; }
+[data-8b-live] #house .m-photo .hs-clone { animation-name: house-figure-m-photo-img-hs-clone-translate; }
+@keyframes house-figure-m-photo-img-translate { 0% { translate: 0px 16%; } 100% { translate: 0px 0px; } }
+@keyframes house-figure-m-photo-img-hs-clone-translate { 0% { translate: 0px -16%; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:passes-hours">
+@layer scenes {
+[data-8b-live] #passes .ps-board { view-timeline: --passes-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #passes .ps-marker { animation-name: passes-span-ps-marker-translate; animation-timeline: --passes-t1; animation-range: cover 30vh cover calc(100% - 50vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes passes-span-ps-marker-translate { 0% { translate: 0px 0px; } 100% { translate: var(--passes-travel) 0px; } }
+}
+</style>
+<style data-8b-part="scene:visit-name">
+@layer scenes {
+[data-8b-live] #visit .vs-name { view-timeline: --visit-name block; view-timeline-inset: 0; --visit-name-blur: 0px; }
+[data-8b-live] #visit .vs-name .w, [data-8b-live] #visit .vs-name .c { display: inline-block; }
+[data-8b-live] #visit .vs-name .c { animation-name: visit-name-gather; animation-timeline: --visit-name; animation-range: entry 0% entry 100%; animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes visit-name-gather { 0% { translate: calc((var(--i) - (var(--n) - 1) / 2) * .2624em) calc((2 * mod(var(--i), 2) - 1) * .1476em); opacity: .14; filter: blur(var(--visit-name-blur)); } 100% { translate: 0px 0px; opacity: 1; filter: blur(0px); } }
+@media (min-width: 1024px) and (hover: hover) {
+  [data-8b-live] #visit .vs-name { --visit-name-blur: 14px; }
+}
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <a class="visually-hidden" href="#main">Skip to content</a>
@@ -858,7 +1026,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
   </nav>
   <a class="m-btn hd-book" href="#visit"><span class="m-btn__label">Book a day</span></a>
   <button class="m-icon hd-menu" type="button" aria-expanded="false" aria-controls="menu"><span class="visually-hidden">Open menu</span><span class="m-icon__glyph" aria-hidden="true"></span></button>
-  <div id="menu" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
     <div class="mn-top"><button class="m-icon mn-close" type="button"><span class="visually-hidden">Close menu</span><span class="m-icon__glyph m-icon__glyph--close" aria-hidden="true"></span></button></div>
     <ul class="mn-list">
       <li><a href="#round">The round</a></li>
@@ -875,14 +1043,14 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 <!-- opening: two screens: a lake under fog with the headline, intro, two actions and live-looking readings; then a warm rest room, a three-line heading and three floating photos (animation: scene:arrival) -->
 <section id="arrival" data-8b-section="opening" aria-label="Brume, sauna and bathing house">
   <div class="op-stage-wrap"><div class="op-stage">
-    <img style="background:#262626" class="op-room" src="https://images.unsplash.com/photo-1758861356142-546a3822ab1a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHNhdW5hJTIwaW50ZXJpb3IlMjB3aW5kb3d8ZW58MXwwfHx8MTc5MTM4NDEwMXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="A wood stove burning in the rest room, with a glass wall onto the lake and the pines" width="1600" height="1200" fetchpriority="low">
+    <img class="op-room" src="https://images.unsplash.com/photo-1758861356142-546a3822ab1a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHNhdW5hJTIwaW50ZXJpb3IlMjB3aW5kb3d8ZW58MXwwfHx8MTc5MTM4NDEwMXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="A wood stove burning in the rest room, with a glass wall onto the lake and the pines" width="1600" height="1200" fetchpriority="low">
     <div class="op-room-shade"></div>
     <div class="op-room-dark"></div>
   </div></div>
   <div class="op-first">
     <div class="op-hold">
       <div class="op-lake-wrap">
-        <img style="background:#262626" class="op-lake" src="https://images.unsplash.com/photo-1781883377971-0984fccbbaa7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGZvZ2d5JTIwcGluZSUyMGZvcmVzdCUyMGxha2V8ZW58MXwwfHx8MTc5MTM4NDEyN3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="Mist lying on the dark water of Ellery Water below a pine forest" width="1600" height="857" fetchpriority="high">
+        <img class="op-lake" src="https://images.unsplash.com/photo-1781883377971-0984fccbbaa7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGZvZ2d5JTIwcGluZSUyMGZvcmVzdCUyMGxha2V8ZW58MXwwfHx8MTc5MTM4NDEyN3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="Mist lying on the dark water of Ellery Water below a pine forest" width="1600" height="857" fetchpriority="high">
       </div>
       <div class="op-veil" aria-hidden="true"><span class="op-fog op-fog--1"></span><span class="op-fog op-fog--2"></span><span class="op-fog op-fog--3"></span></div>
     </div>
@@ -908,9 +1076,9 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
       <a class="m-link" href="#house"><span class="m-link__label">How the house was built</span></a>
     </div>
     <div class="op-floats">
-      <figure class="m-photo op-float op-float--1" data-depth="160"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1749561532113-80b8e0f918bd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d2F0ZXIlMjBwb3VyZWQlMjBzYXVuYSUyMHN0b25lc3xlbnwxfDF8fHwxNzkxMzg0MTg5fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Steam rising from hot stones as water is poured from a ladle" width="1600" height="2400" loading="lazy"></figure>
-      <figure class="m-photo op-float op-float--2" data-depth="300"><img style="background:#262626" src="https://images.unsplash.com/photo-1625774725140-39e0ab1358f6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHdhdGVyJTIwcmlwcGxlJTIwZGFya3xlbnwxfDF8fHwxNzkxMzg0MTkyfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=210&q=60" alt="Rings spreading on still lake water at dusk" width="1600" height="2844" loading="lazy"></figure>
-      <figure class="m-photo op-float op-float--3" data-depth="220"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1770625467797-e1945217b73a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c3RlYW0lMjByb29tJTIwdGlsZXN8ZW58MXwxfHx8MTc5MTM4NDIxMXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=320&q=60" alt="Low light along the benches of the window sauna" width="1600" height="2400" loading="lazy"></figure>
+      <figure class="m-photo op-float op-float--1" data-depth="160"><img src="https://images.unsplash.com/photo-1749561532113-80b8e0f918bd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d2F0ZXIlMjBwb3VyZWQlMjBzYXVuYSUyMHN0b25lc3xlbnwxfDF8fHwxNzkxMzg0MTg5fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Steam rising from hot stones as water is poured from a ladle" width="1600" height="2400" loading="lazy"></figure>
+      <figure class="m-photo op-float op-float--2" data-depth="300"><img src="https://images.unsplash.com/photo-1625774725140-39e0ab1358f6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHdhdGVyJTIwcmlwcGxlJTIwZGFya3xlbnwxfDF8fHwxNzkxMzg0MTkyfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=210&q=60" alt="Rings spreading on still lake water at dusk" width="1600" height="2844" loading="lazy"></figure>
+      <figure class="m-photo op-float op-float--3" data-depth="220"><img src="https://images.unsplash.com/photo-1770625467797-e1945217b73a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c3RlYW0lMjByb29tJTIwdGlsZXN8ZW58MXwxfHx8MTc5MTM4NDIxMXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=320&q=60" alt="Low light along the benches of the window sauna" width="1600" height="2400" loading="lazy"></figure>
     </div>
   </div>
 </section>
@@ -922,7 +1090,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
     <p class="m-text-5" data-8b-motion="steam">Bathers here follow an old order. Repeat it three or four times; nobody keeps count but you.</p>
   </div>
   <div class="rd-body">
-    <ol class="rd-steps">
+    <ol class="rd-steps" data-8b-items=":scope > .rd-step" data-8b-fixed="3">
       <li class="rd-step" data-tone="hot">
         <p class="rd-num m-text-4">Step 1</p>
         <h3 class="m-text-7">Heat</h3>
@@ -947,9 +1115,9 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
     </ol>
     <div class="rd-aside">
       <div class="rd-frame">
-        <figure class="rd-shot rd-shot--heat"><img style="background:#8c7359" src="https://images.unsplash.com/photo-1741601273990-df3fca1d2bd9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8d2F0ZXIlMjBwb3VyZWQlMjBzYXVuYSUyMHN0b25lc3xlbnwxfDF8fHwxNzkxMzg0MTg5fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="A bather pours a ladle of water onto the hot stones" width="1600" height="2400" loading="lazy"></figure>
-        <figure class="rd-shot rd-shot--cold"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1677467836095-c153c1f7a35b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8aWNlJTIwaG9sZSUyMGZyb3plbiUyMGxha2UlMjBzd2ltbWluZ3xlbnwxfDF8fHwxNzkxMzg0MTkwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="A round hole cut through snow and ice into the dark lake" width="1600" height="2133" loading="lazy"></figure>
-        <figure class="rd-shot rd-shot--rest"><img style="background:#402626" src="https://images.unsplash.com/photo-1733324769520-4b26642779de?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cmVzdGluZyUyMGJsYW5rZXQlMjB0ZWElMjB3aW5kb3d8ZW58MXwxfHx8MTc5MTM4NDE5MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="A guest resting under a wool blanket with a warm drink by the window" width="1600" height="2240" loading="lazy"></figure>
+        <figure class="rd-shot rd-shot--heat"><img src="https://images.unsplash.com/photo-1741601273990-df3fca1d2bd9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8d2F0ZXIlMjBwb3VyZWQlMjBzYXVuYSUyMHN0b25lc3xlbnwxfDF8fHwxNzkxMzg0MTg5fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="A bather pours a ladle of water onto the hot stones" width="1600" height="2400" loading="lazy"></figure>
+        <figure class="rd-shot rd-shot--cold"><img src="https://images.unsplash.com/photo-1677467836095-c153c1f7a35b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8aWNlJTIwaG9sZSUyMGZyb3plbiUyMGxha2UlMjBzd2ltbWluZ3xlbnwxfDF8fHwxNzkxMzg0MTkwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="A round hole cut through snow and ice into the dark lake" width="1600" height="2133" loading="lazy"></figure>
+        <figure class="rd-shot rd-shot--rest"><img src="https://images.unsplash.com/photo-1733324769520-4b26642779de?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cmVzdGluZyUyMGJsYW5rZXQlMjB0ZWElMjB3aW5kb3d8ZW58MXwxfHx8MTc5MTM4NDE5MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="A guest resting under a wool blanket with a warm drink by the window" width="1600" height="2240" loading="lazy"></figure>
         <span class="rd-tint rd-tint--hot" aria-hidden="true"></span>
         <span class="rd-tint rd-tint--cold" aria-hidden="true"></span>
       </div>
@@ -964,8 +1132,8 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
     <h2 id="saunas-title" class="m-text-3"><span>Four rooms,</span><span>coldest to hottest</span></h2>
     <p class="m-text-5" data-8b-motion="steam">Each room keeps its own heat and its own pace. Start low; the smoke sauna is for the third round.</p>
   </div>
-  <ol class="sa-list">
-    <li class="sa-row" data-tone="cold">
+  <ol class="sa-list" data-8b-items=":scope > .sa-row">
+    <li class="sa-row" data-tone="cold" style="--saunas-span-sa-line-clippath-to-2: 84%">
       <div class="sa-scale">
         <data class="sa-temp m-text-5" value="16">4–16 °C</data>
         <div class="sa-track" aria-hidden="true"><span class="sa-line"></span></div>
@@ -975,9 +1143,9 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
         <p class="m-text">Open lake water off our own jetty, with a ladder and a rope line out to the buoys. In winter we keep a channel open through the ice.</p>
         <dl class="sa-facts m-text-6"><div><dt>Stay</dt><dd>1–2 minutes</dd></div><div><dt>Depth</dt><dd>3.5 m at the ladder</dd></div></dl>
       </div>
-      <figure class="m-photo sa-photo"><img style="background:#597373" src="https://images.unsplash.com/photo-1649178690667-e519628c015e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8aWNlJTIwaG9sZSUyMGZyb3plbiUyMGxha2UlMjBzd2ltbWluZ3xlbnwxfDF8fHwxNzkxMzg0MTkwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=200&q=60" alt="Two swimmers in an ice channel on the lake at dusk" width="1600" height="2463" loading="lazy"></figure>
+      <figure class="m-photo sa-photo"><img src="https://images.unsplash.com/photo-1649178690667-e519628c015e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8aWNlJTIwaG9sZSUyMGZyb3plbiUyMGxha2UlMjBzd2ltbWluZ3xlbnwxfDF8fHwxNzkxMzg0MTkwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=200&q=60" alt="Two swimmers in an ice channel on the lake at dusk" width="1600" height="2463" loading="lazy"></figure>
     </li>
-    <li class="sa-row" data-tone="warm">
+    <li class="sa-row" data-tone="warm" style="--saunas-span-sa-line-clippath-to-2: 52%">
       <div class="sa-scale">
         <data class="sa-temp m-text-5" value="48">48 °C</data>
         <div class="sa-track" aria-hidden="true"><span class="sa-line"></span></div>
@@ -987,9 +1155,9 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
         <p class="m-text">A tiled steam room scented with birch and juniper from the shore. Soft and wet, gentle enough for a first round.</p>
         <dl class="sa-facts m-text-6"><div><dt>Stay</dt><dd>10–15 minutes</dd></div><div><dt>Seats</dt><dd>10</dd></div></dl>
       </div>
-      <figure class="m-photo sa-photo"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1660735699345-acf9a94cb271?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c21va2UlMjBzYXVuYSUyMGRhcmt8ZW58MXwwfHx8MTc5MTM4NDIxMnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="A cloud of steam rolling off the stove in a pine-lined room" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="m-photo sa-photo"><img src="https://images.unsplash.com/photo-1660735699345-acf9a94cb271?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c21va2UlMjBzYXVuYSUyMGRhcmt8ZW58MXwwfHx8MTc5MTM4NDIxMnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="A cloud of steam rolling off the stove in a pine-lined room" width="1600" height="1067" loading="lazy"></figure>
     </li>
-    <li class="sa-row" data-tone="hot">
+    <li class="sa-row" data-tone="hot" style="--saunas-span-sa-line-clippath-to-2: 20%">
       <div class="sa-scale">
         <data class="sa-temp m-text-5" value="80">80 °C</data>
         <div class="sa-track" aria-hidden="true"><span class="sa-line"></span></div>
@@ -999,9 +1167,9 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
         <p class="m-text">A long glass wall faces the lake, so you watch the water you are about to walk into. Dry heat, three tiers, room for a conversation in whispers.</p>
         <dl class="sa-facts m-text-6"><div><dt>Stay</dt><dd>8–12 minutes</dd></div><div><dt>Seats</dt><dd>14</dd></div></dl>
       </div>
-      <figure class="m-photo sa-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1712659601630-df4ad47defc8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c21va2UlMjBzYXVuYSUyMGRhcmt8ZW58MXwwfHx8MTc5MTM4NDIxMnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="Pale wooden benches beside a tall window onto the frozen lake" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="m-photo sa-photo"><img src="https://images.unsplash.com/photo-1712659601630-df4ad47defc8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c21va2UlMjBzYXVuYSUyMGRhcmt8ZW58MXwwfHx8MTc5MTM4NDIxMnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="Pale wooden benches beside a tall window onto the frozen lake" width="1600" height="1067" loading="lazy"></figure>
     </li>
-    <li class="sa-row" data-tone="hot">
+    <li class="sa-row" data-tone="hot" style="--saunas-span-sa-line-clippath-to-2: 5%">
       <div class="sa-scale">
         <data class="sa-temp m-text-5" value="95">95 °C</data>
         <div class="sa-track" aria-hidden="true"><span class="sa-line"></span></div>
@@ -1011,13 +1179,13 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
         <p class="m-text">Heated for six hours with alder, aired, then sealed. A soft, deep heat and the smell of smoke on your skin all evening. Thursday to Sunday from three.</p>
         <dl class="sa-facts m-text-6"><div><dt>Stay</dt><dd>As you can</dd></div><div><dt>Seats</dt><dd>8</dd></div></dl>
       </div>
-      <figure class="m-photo sa-photo"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1743286159555-ea765c1bc5e6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c21va2UlMjBzYXVuYSUyMGRhcmt8ZW58MXwwfHx8MTc5MTM4NDIxMnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="Dark log walls, hot stones and a water bucket in the smoke sauna" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="m-photo sa-photo"><img src="https://images.unsplash.com/photo-1743286159555-ea765c1bc5e6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c21va2UlMjBzYXVuYSUyMGRhcmt8ZW58MXwwfHx8MTc5MTM4NDIxMnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="Dark log walls, hot stones and a water bucket in the smoke sauna" width="1600" height="1067" loading="lazy"></figure>
     </li>
   </ol>
 </section>
 <!-- statement: a five-line statement over a dark photo; a glow rises through it and the lines swell in weight (animation: scene:steam-wave) -->
 <section id="steam" data-8b-section="statement" aria-labelledby="steam-title">
-  <div class="st-bg"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1660735697672-46b9bdbccc17?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c21va2UlMjBzYXVuYSUyMGRhcmt8ZW58MXwwfHx8MTc5MTM4NDIxMnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="" width="1600" height="1067" loading="lazy"></div>
+  <div class="st-bg"><img src="https://images.unsplash.com/photo-1660735697672-46b9bdbccc17?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c21va2UlMjBzYXVuYSUyMGRhcmt8ZW58MXwwfHx8MTc5MTM4NDIxMnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="" width="1600" height="1067" loading="lazy"></div>
   <div class="st-inner l-sec">
     <p class="m-rail">Löyly</p>
     <div>
@@ -1036,11 +1204,11 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 <!-- lake: a wide photo of the boardwalk into fog beside a heading, a paragraph and four facts -->
 <section id="lake" class="l-sec" data-8b-section="lake" aria-labelledby="lake-title">
   <p class="m-rail">The lake</p>
-  <figure class="m-photo lk-photo" data-8b-motion="depth"><img style="background:#404040" src="https://images.unsplash.com/photo-1468258189056-318bbd4b6085?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Zm9nZ3klMjBwaW5lJTIwZm9yZXN0JTIwbGFrZXxlbnwxfDB8fHwxNzkxMzg0MTI3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1090&q=60" alt="The boardwalk across the reeds disappearing into fog and pines" width="1600" height="1067" loading="lazy"></figure>
+  <figure class="m-photo lk-photo" data-8b-motion="depth"><img src="https://images.unsplash.com/photo-1468258189056-318bbd4b6085?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Zm9nZ3klMjBwaW5lJTIwZm9yZXN0JTIwbGFrZXxlbnwxfDB8fHwxNzkxMzg0MTI3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1090&q=60" alt="The boardwalk across the reeds disappearing into fog and pines" width="1600" height="1067" loading="lazy"></figure>
   <div class="lk-copy">
     <h2 id="lake-title" class="m-text-3"><span>The fifth room</span><span>has no walls</span></h2>
     <p class="m-text" data-8b-motion="steam">Ellery Water is fed by springs and stays cold even in August. A boardwalk crosses the reeds to our jetty, the ladder goes down three and a half metres, and from December a stove burns at the end of the ice channel.</p>
-    <ul class="lk-facts m-text" data-8b-motion="steam" data-steam-items=":scope > li">
+    <ul class="lk-facts m-text" data-8b-motion="steam" data-steam-items=":scope > li" data-8b-items=":scope > li">
       <li>Boardwalk to the jetty, sixty-four metres</li>
       <li>Ladder and rope line out to the buoys</li>
       <li>Ice channel from December to March</li>
@@ -1051,8 +1219,8 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 <!-- schedule: six hours of the day over a held lake photo that goes from morning mist to night; the hour at the middle of the screen lights up (animation: scene:day-light) -->
 <section id="day" data-8b-section="schedule" aria-labelledby="day-title">
   <div class="dy-stage-wrap"><div class="dy-stage">
-    <img style="background:#8c8c8c" class="dy-photo dy-morning" src="https://images.unsplash.com/photo-1761880702819-b2ba3973d00d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Zm9nZ3klMjBwaW5lJTIwZm9yZXN0JTIwbGFrZXxlbnwxfDB8fHwxNzkxMzg0MTI3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="Morning mist over the lake and the pines on the far shore" width="1600" height="1067" loading="lazy">
-    <img style="background:#0c2640" class="dy-photo dy-night" src="https://images.unsplash.com/photo-1782827928667-d99a358cb278?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8c2F1bmElMjBjYWJpbiUyMGxha2UlMjBuaWdodHxlbnwxfDB8fHwxNzkxMzg0MjEwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="A lit cabin on the water at night below dark mountains" width="1600" height="1067" loading="lazy">
+    <img class="dy-photo dy-morning" src="https://images.unsplash.com/photo-1761880702819-b2ba3973d00d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Zm9nZ3klMjBwaW5lJTIwZm9yZXN0JTIwbGFrZXxlbnwxfDB8fHwxNzkxMzg0MTI3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="Morning mist over the lake and the pines on the far shore" width="1600" height="1067" loading="lazy">
+    <img class="dy-photo dy-night" src="https://images.unsplash.com/photo-1782827928667-d99a358cb278?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8c2F1bmElMjBjYWJpbiUyMGxha2UlMjBuaWdodHxlbnwxfDB8fHwxNzkxMzg0MjEwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="A lit cabin on the water at night below dark mountains" width="1600" height="1067" loading="lazy">
     <span class="dy-tint dy-tint--dawn"></span>
     <span class="dy-tint dy-tint--dusk"></span>
     <span class="dy-shade"></span>
@@ -1060,7 +1228,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
   <div class="dy-content l-sec">
     <p class="m-rail">A day</p>
     <h2 id="day-title" class="m-text-3"><span>A day at Brume,</span><span>mist to lanterns</span></h2>
-    <ol class="dy-hours">
+    <ol class="dy-hours" data-8b-items=":scope > .dy-hour">
       <li class="dy-hour"><time class="m-text-7" datetime="08:00">08:00</time><p class="m-text">Doors open with the mist still on the water. Coffee and rye bread by the stove.</p></li>
       <li class="dy-hour"><time class="m-text-7" datetime="10:30">10:30</time><p class="m-text">First round. The window sauna is quiet and the lake lies flat as glass.</p></li>
       <li class="dy-hour"><time class="m-text-7" datetime="13:00">13:00</time><p class="m-text">Lunch at the long table: soup of the day, smoked trout, pickles from the cellar.</p></li>
@@ -1077,18 +1245,18 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
     <div class="tb-copy">
       <h2 id="table-title" class="m-text-3"><span>The long table</span><span>by the stove</span></h2>
       <p class="m-text" data-8b-motion="steam">Food here is simple and warm: what grows around the lake, what our smokehouse makes, and what the baker in Holm sends over at seven.</p>
-      <ul class="tb-menu">
-        <li class="tb-dish"><span class="tb-rule" data-8b-motion="rule"></span><h3 class="m-text-5">Soup of the day</h3><p class="m-text-6">Mushroom, nettle or roots, with rye and cultured butter</p><p class="tb-price m-text-5">£9</p></li>
-        <li class="tb-dish"><span class="tb-rule" data-8b-motion="rule"></span><h3 class="m-text-5">Smoked trout</h3><p class="m-text-6">From our smokehouse, with new potatoes and dill</p><p class="tb-price m-text-5">£14</p></li>
-        <li class="tb-dish"><span class="tb-rule" data-8b-motion="rule"></span><h3 class="m-text-5">Rye and butter</h3><p class="m-text-6">Dark rye baked in Holm, salted butter, pickled cucumber</p><p class="tb-price m-text-5">£5</p></li>
-        <li class="tb-dish"><span class="tb-rule" data-8b-motion="rule"></span><h3 class="m-text-5">Birch-leaf tea</h3><p class="m-text-6">With nettle and honey, poured all day by the stove</p><p class="tb-price m-text-5">£3</p></li>
-        <li class="tb-dish"><span class="tb-rule" data-8b-motion="rule"></span><h3 class="m-text-5">Sea-buckthorn tonic</h3><p class="m-text-6">Sharp, cold and orange, for after the lake</p><p class="tb-price m-text-5">£4</p></li>
+      <ul class="tb-menu" data-8b-items=":scope > .tb-dish">
+        <li class="tb-dish"><span class="tb-rule" data-8b-motion="rule" data-8b-enter="94%"></span><h3 class="m-text-5">Soup of the day</h3><p class="m-text-6">Mushroom, nettle or roots, with rye and cultured butter</p><p class="tb-price m-text-5">£9</p></li>
+        <li class="tb-dish"><span class="tb-rule" data-8b-motion="rule" data-8b-enter="94%"></span><h3 class="m-text-5">Smoked trout</h3><p class="m-text-6">From our smokehouse, with new potatoes and dill</p><p class="tb-price m-text-5">£14</p></li>
+        <li class="tb-dish"><span class="tb-rule" data-8b-motion="rule" data-8b-enter="94%"></span><h3 class="m-text-5">Rye and butter</h3><p class="m-text-6">Dark rye baked in Holm, salted butter, pickled cucumber</p><p class="tb-price m-text-5">£5</p></li>
+        <li class="tb-dish"><span class="tb-rule" data-8b-motion="rule" data-8b-enter="94%"></span><h3 class="m-text-5">Birch-leaf tea</h3><p class="m-text-6">With nettle and honey, poured all day by the stove</p><p class="tb-price m-text-5">£3</p></li>
+        <li class="tb-dish"><span class="tb-rule" data-8b-motion="rule" data-8b-enter="94%"></span><h3 class="m-text-5">Sea-buckthorn tonic</h3><p class="m-text-6">Sharp, cold and orange, for after the lake</p><p class="tb-price m-text-5">£4</p></li>
       </ul>
     </div>
     <div class="tb-photos">
-      <figure class="m-photo tb-photo--bread" data-8b-motion="depth"><img style="background:#40260c" src="https://images.unsplash.com/photo-1789152952866-6104d8837566?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c291cCUyMGJvd2wlMjBkYXJrJTIwdGFibGV8ZW58MXwwfHx8MTc5MTM4NDIzM3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=580&q=60" alt="Slices of dark rye in a wooden bowl beside butter and seeds" width="1600" height="1067" loading="lazy"></figure>
-      <figure class="m-photo tb-photo--tea" data-8b-motion="depth"><img style="background:#f3c08c" src="https://images.unsplash.com/photo-1674707429029-9de78da14b6b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8aGVyYmFsJTIwdGVhJTIwcG90JTIwd29vZGVuJTIwdGFibGV8ZW58MXwxfHx8MTc5MTM4NDIzNHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=250&q=60" alt="A black iron teapot on a wooden table in low sun" width="1600" height="2400" loading="lazy"></figure>
-      <figure class="m-photo tb-photo--soup" data-8b-motion="depth"><img style="background:#262626" src="https://images.unsplash.com/photo-1625940947631-908aa92ef5e7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bXVzaHJvb20lMjBzb3VwJTIwYm93bHxlbnwxfDB8fHwxNzkxMzg0MjU1fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=660&q=60" alt="A bowl of mushroom soup held in both hands" width="1600" height="900" loading="lazy"></figure>
+      <figure class="m-photo tb-photo--bread" data-8b-motion="depth"><img src="https://images.unsplash.com/photo-1789152952866-6104d8837566?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c291cCUyMGJvd2wlMjBkYXJrJTIwdGFibGV8ZW58MXwwfHx8MTc5MTM4NDIzM3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=580&q=60" alt="Slices of dark rye in a wooden bowl beside butter and seeds" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="m-photo tb-photo--tea" data-8b-motion="depth"><img src="https://images.unsplash.com/photo-1674707429029-9de78da14b6b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8aGVyYmFsJTIwdGVhJTIwcG90JTIwd29vZGVuJTIwdGFibGV8ZW58MXwxfHx8MTc5MTM4NDIzNHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=250&q=60" alt="A black iron teapot on a wooden table in low sun" width="1600" height="2400" loading="lazy"></figure>
+      <figure class="m-photo tb-photo--soup" data-8b-motion="depth"><img src="https://images.unsplash.com/photo-1625940947631-908aa92ef5e7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bXVzaHJvb20lMjBzb3VwJTIwYm93bHxlbnwxfDB8fHwxNzkxMzg0MjU1fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=660&q=60" alt="A bowl of mushroom soup held in both hands" width="1600" height="900" loading="lazy"></figure>
     </div>
   </div>
 </section>
@@ -1096,7 +1264,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 <section id="house" class="l-sec" data-8b-section="house" aria-labelledby="house-title">
   <p class="m-rail">The house</p>
   <div class="hs-grid">
-    <figure class="m-photo hs-photo"><img style="background:#0c2640" src="https://images.unsplash.com/photo-1558868630-ecfdd6306e51?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bGFrZSUyMHNob3JlJTIwZHVzayUyMGNhYmluJTIwbGlnaHRzfGVufDF8MHx8fDE3OTEzODQyMTN8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=950&q=60" alt="The bathhouse on stilts at the water's edge, its glass rest room lit at dusk" width="1600" height="1067" loading="lazy"></figure>
+    <figure class="m-photo hs-photo"><img src="https://images.unsplash.com/photo-1558868630-ecfdd6306e51?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bGFrZSUyMHNob3JlJTIwZHVzayUyMGNhYmluJTIwbGlnaHRzfGVufDF8MHx8fDE3OTEzODQyMTN8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=950&q=60" alt="The bathhouse on stilts at the water's edge, its glass rest room lit at dusk" width="1600" height="1067" loading="lazy"></figure>
     <div class="hs-copy">
       <h2 id="house-title" class="m-text-3"><span>A house built</span><span>for the weather</span></h2>
       <p class="m-text" data-8b-motion="steam">Charred larch outside, alder and aspen inside, glass wherever the lake is. The house sits low on its stilts so the mist rolls under it, and every bench in it faces the water.</p>
@@ -1114,7 +1282,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
   </div>
   <div class="ps-board">
     <ol class="ps-axis m-text-4" aria-hidden="true"><li>08</li><li>10</li><li>12</li><li>14</li><li>16</li><li>18</li><li>20</li><li>22</li></ol>
-    <ul class="ps-list">
+    <ul class="ps-list" data-8b-items=":scope > .ps-pass" data-8b-fixed="3">
       <li class="ps-pass" data-from="8" data-to="12">
         <div class="ps-track" aria-hidden="true"><span class="ps-band"></span></div>
         <h3 class="m-text-7">Morning</h3>
@@ -1146,7 +1314,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
   <p class="m-rail">Questions</p>
   <div class="qs-grid">
     <h2 id="questions-title" class="m-text-3"><span>Before</span><span>your first round</span></h2>
-    <div class="qs-list" data-8b-motion="steam" data-steam-items=":scope > details">
+    <div class="qs-list" data-8b-items=":scope > details" data-8b-motion="steam" data-steam-items=":scope > details">
       <details><summary class="m-text-5">Do I need to book?</summary><p class="m-text">Weekends and evenings fill up, so book ahead. On weekday mornings you can usually walk in; ask at the desk.</p></details>
       <details><summary class="m-text-5">What should I bring?</summary><p class="m-text">Nothing at all. A robe, towels, slippers and a locker are included. Bring a swimsuit if you prefer one for the lake.</p></details>
       <details><summary class="m-text-5">Is bathing mixed?</summary><p class="m-text">Yes, every day except Tuesday evenings, which are for women only. Swimwear or a towel in all shared rooms.</p></details>
@@ -1182,12 +1350,12 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
       <p class="vs-status m-text" role="status" aria-live="polite"></p>
     </form>
   </div>
-  <p class="vs-name m-text-2" aria-hidden="true" style="--len:5">Brume</p>
+  <p class="vs-name m-text-2" aria-hidden="true" data-8b-split="chars" style="--len:5">Brume</p>
 </section>
 </main>
 <!-- footer: a Book a day line, four columns (links, address, hours, contact), and a base line with readings, the copyright and a Top link -->
 <footer id="footer" data-8b-section="footer">
-  <div class="ft-next"><span class="ft-rule" data-8b-motion="rule"></span><a href="#visit">Book a day</a></div>
+  <div class="ft-next"><span class="ft-rule" data-8b-motion="rule" data-8b-enter="94%"></span><a href="#visit">Book a day</a></div>
   <div class="ft-grid">
     <div>
       <h2 class="m-text-4">Brume</h2>
@@ -1223,10 +1391,6 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
     <a class="m-link-2 ft-top" href="#arrival">Top</a>
   </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
 <script data-8b-part="section-script:header">
 (() => {
   const header = document.getElementById('header');
@@ -1247,12 +1411,12 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
   const setOpen = state => {
     menu.hidden = !state;
     open.setAttribute('aria-expanded', String(state));
-    if (state) { window.lenis?.stop(); close.focus(); } else { window.lenis?.start(); open.focus(); }
+    if (state) { window.motionKit?.wheel?.stop(); close.focus(); } else { window.motionKit?.wheel?.start(); open.focus(); }
   };
   open.addEventListener('click', () => setOpen(true));
   close.addEventListener('click', () => setOpen(false));
   menu.addEventListener('keydown', event => { if (event.key === 'Escape') setOpen(false); });
-  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { menu.hidden = true; open.setAttribute('aria-expanded', 'false'); window.lenis?.start(); }));
+  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { menu.hidden = true; open.setAttribute('aria-expanded', 'false'); window.motionKit?.wheel?.start(); }));
 })();
 </script>
 <script data-8b-part="section-script:arrival">
@@ -1265,315 +1429,16 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
   })).observe(fog);
 })();
 </script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function refreshScroll() { ScrollTrigger.sort(); ScrollTrigger.refresh(); }
-window.refreshScroll = refreshScroll;
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.075, wheelMultiplier: 0.9, anchors: { offset: 0 } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const softBlur = () => window.matchMedia('(min-width: 1024px) and (hover: hover)').matches;
-const effects = {
-  steam(element, vars = {}) {
-    const targets = element.hasAttribute('data-steam-items') ? element.querySelectorAll(element.getAttribute('data-steam-items')) : [element];
-    return gsap.timeline(vars).from(targets, {
-      y: 26, opacity: 0, filter: softBlur() ? 'blur(6px)' : 'blur(0px)',
-      duration: 1.1, ease: 'power2.out', stagger: 0.09, clearProps: 'filter'
-    });
-  },
-  depth(frame, vars = {}) {
-    const image = frame.querySelector('img');
-    return gsap.timeline(vars).fromTo(image, { yPercent: -10 }, { yPercent: 0, ease: 'none' });
-  },
-  rule(element, vars = {}) {
-    return gsap.timeline(vars).from(element, { scaleX: 0, transformOrigin: '0% 50%', duration: 1.3, ease: 'power3.inOut' });
-  }
-};
-const binders = {
-  steam: (element, id) => ScrollTrigger.create({ id, trigger: element, start: 'top 88%', once: true, animation: effects.steam(element, { paused: true }) }),
-  depth: (element, id) => ScrollTrigger.create({ id, trigger: element, start: 'top bottom', end: 'center center', scrub: true, animation: effects.depth(element) }),
-  rule: (element, id) => ScrollTrigger.create({ id, trigger: element, start: 'top 94%', once: true, animation: effects.rule(element, { paused: true }) })
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  Object.keys(binders).forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => binders[name](element, `${id}:${index}`));
-    }), { first: section.getBoundingClientRect().top < window.innerHeight, id });
-  });
-});
-</script>
-<script data-8b-part="scene:arrival">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('arrival');
-    const first = section.querySelector('.op-first');
-    const hold = section.querySelector('.op-hold');
-    const lake = section.querySelector('.op-lake');
-    const veil = section.querySelector('.op-veil');
-    const room = section.querySelector('.op-room');
-    const dark = section.querySelector('.op-room-dark');
-    const lines = [...section.querySelectorAll('.op-line')];
-    const floats = [...section.querySelectorAll('.op-float')];
-    const firstHeight = () => first.offsetHeight;
-    gsap.fromTo(hold, { y: 0 }, {
-      y: () => firstHeight(), ease: 'none',
-      scrollTrigger: { id: 'arrival:hold', trigger: section, start: 'top top', end: () => `+=${firstHeight()}`, scrub: true, invalidateOnRefresh: true }
-    });
-    gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'arrival', trigger: section, start: 'top top', end: () => `+=${firstHeight()}`, scrub: 0.5, invalidateOnRefresh: true }
-    })
-      .fromTo(veil, { y: 0 }, { y: () => -1.5 * firstHeight(), duration: 0.5 }, 0)
-      .to(veil, { y: () => -3.4 * firstHeight(), duration: 0.5 }, 0.5)
-      .fromTo(lake, { scale: 1 }, { scale: 1.18, duration: 0.5 }, 0)
-      .fromTo(lake, { opacity: 1 }, { opacity: 0, duration: 0.05 }, 0.47);
-    gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'arrival:room', trigger: section, start: () => `top+=${firstHeight() * 0.5} top`, end: 'bottom bottom', scrub: 0.5, invalidateOnRefresh: true }
-    })
-      .fromTo(dark, { opacity: 0.92 }, { opacity: 0, duration: 0.45 }, 0)
-      .fromTo(room, { scale: 1.2 }, { scale: 1, duration: 1 }, 0);
-    const indent = line => line.offsetLeft - lines[0].offsetLeft;
-    gsap.timeline({
-      defaults: { ease: 'power1.out' },
-      scrollTrigger: { id: 'arrival:lines', trigger: lines[0], start: 'top 98%', end: 'top 40%', scrub: 0.5, invalidateOnRefresh: true }
-    }).fromTo(lines, { x: line => -indent(line) }, { x: 0, stagger: 0.12 });
-    floats.forEach((float, index) => {
-      const travel = () => Number(float.dataset.depth) * (window.innerWidth < 900 ? 0.45 : 1);
-      gsap.fromTo(float, { y: () => travel() }, {
-        y: 0, ease: 'none',
-        scrollTrigger: { id: `arrival:float-${index + 1}`, trigger: float, start: 'top bottom', end: 'center 55%', scrub: true, invalidateOnRefresh: true }
-      });
-    });
-  });
-}, { first: true });
-</script>
-<script data-8b-part="scene:round-frame">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('round');
-    const steps = section.querySelector('.rd-steps');
-    const heat = section.querySelector('.rd-shot--heat');
-    const cold = section.querySelector('.rd-shot--cold');
-    const rest = section.querySelector('.rd-shot--rest');
-    const hot = section.querySelector('.rd-tint--hot');
-    const icy = section.querySelector('.rd-tint--cold');
-    const full = 'inset(0% 0% 0% 0%)';
-    gsap.timeline({
-      defaults: { ease: 'power1.inOut' },
-      scrollTrigger: { id: 'round-frame', trigger: steps, start: 'top 70%', end: 'bottom 45%', scrub: 0.6 }
-    })
-      .to(heat, { clipPath: full, duration: 1 }, 0)
-      .to(hot, { opacity: 0.55, duration: 1 }, 0)
-      .to([cold, rest], { clipPath: full, duration: 0.05 }, 1.05)
-      .to(heat, { clipPath: 'inset(0% 100% 0% 0%)', duration: 1 }, 1.6)
-      .to(hot, { opacity: 0, duration: 0.8 }, 1.6)
-      .to(icy, { opacity: 0.6, duration: 0.8 }, 1.8)
-      .to(cold, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1 }, 3.3)
-      .to(icy, { opacity: 0, duration: 0.8 }, 3.3)
-      .to(heat, { clipPath: 'inset(0% 67.5% 0% 0%)', duration: 1 }, 5)
-      .to(cold, { clipPath: 'inset(0% 34.2% 0% 34.2%)', duration: 1 }, 5)
-      .to(rest, { clipPath: 'inset(0% 0% 0% 67.5%)', duration: 1 }, 5);
-  });
-});
-</script>
 <script data-8b-part="section-script:saunas">
 document.querySelectorAll('#saunas .sa-row').forEach(row => {
   const value = Number(row.querySelector('data').value);
   row.style.setProperty('--cut', `${Math.max(0, 100 - value)}%`);
 });
 </script>
-<script data-8b-part="scene:saunas-heat">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('saunas');
-    const root = getComputedStyle(document.documentElement);
-    const coldGround = root.getPropertyValue('--color-8').trim();
-    const hotGround = root.getPropertyValue('--color-9').trim();
-    gsap.set(section, { backgroundImage: 'none', backgroundColor: coldGround });
-    gsap.to(section, {
-      backgroundColor: hotGround, ease: 'none',
-      scrollTrigger: { id: 'saunas-heat', trigger: section, start: 'top 50%', end: 'bottom 70%', scrub: true }
-    });
-    section.querySelectorAll('.sa-row').forEach((row, index) => {
-      const line = row.querySelector('.sa-line');
-      const target = getComputedStyle(line).clipPath;
-      gsap.fromTo(line, { clipPath: 'inset(0px 100% 0px 0px)' }, {
-        clipPath: target, ease: 'power2.out',
-        scrollTrigger: { id: `saunas-heat:row-${index + 1}`, trigger: row, start: 'top 85%', end: 'top 40%', scrub: 0.5 }
-      });
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:steam-wave">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('steam');
-    const statement = section.querySelector('.st-lines');
-    const glow = section.querySelector('.st-glow');
-    const lines = [...section.querySelectorAll('.st-line')].reverse();
-    const root = getComputedStyle(document.documentElement);
-    const warm = root.getPropertyValue('--color-5').trim();
-    const base = root.getPropertyValue('--color-2').trim();
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'steam-wave', trigger: statement, start: 'top 80%', end: 'bottom 25%', scrub: 0.6, invalidateOnRefresh: true }
-    });
-    timeline
-      .fromTo(glow, { y: () => statement.offsetHeight * 0.7 }, { y: () => -statement.offsetHeight * 0.9, duration: 1 }, 0)
-      .fromTo(glow, { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0)
-      .to(glow, { opacity: 0, duration: 0.2 }, 0.8);
-    lines.forEach((line, index) => {
-      const at = 0.1 + index * 0.15;
-      timeline
-        .to(line, { fontWeight: 560, color: warm, duration: 0.16, ease: 'sine.out' }, at)
-        .to(line, { fontWeight: 300, color: base, duration: 0.24, ease: 'sine.inOut' }, at + 0.16);
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:day-light">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('day');
-    const morning = section.querySelector('.dy-morning');
-    const night = section.querySelector('.dy-night');
-    const dawn = section.querySelector('.dy-tint--dawn');
-    const dusk = section.querySelector('.dy-tint--dusk');
-    gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'day-light', trigger: section, start: 'top top', end: 'bottom bottom', scrub: 0.6 }
-    })
-      .fromTo(morning, { scale: 1.14 }, { scale: 1, duration: 0.6 }, 0)
-      .fromTo(dawn, { opacity: 0.7 }, { opacity: 0, duration: 0.35 }, 0)
-      .fromTo(night, { opacity: 0 }, { opacity: 1, duration: 0.22 }, 0.56)
-      .fromTo(night, { scale: 1.1 }, { scale: 1, duration: 0.44 }, 0.56)
-      .fromTo(dusk, { opacity: 0 }, { opacity: 0.45, duration: 0.2 }, 0.62)
-      .to(dusk, { opacity: 0, duration: 0.18 }, 0.82);
-    section.querySelectorAll('.dy-hour').forEach((hour, index) => {
-      ScrollTrigger.create({ id: `day-light:hour-${index + 1}`, trigger: hour, start: 'center 62%', end: 'center 38%', toggleClass: { targets: hour, className: 'is-now' } });
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:house-slats">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('house');
-    const frame = section.querySelector('.hs-photo');
-    const image = frame.querySelector('img');
-    const boards = window.innerWidth < 700 ? 6 : 10;
-    const step = 100 / boards;
-    const stripes = (first, second) => `repeating-linear-gradient(90deg, ${first} 0% ${step}%, ${second} ${step}% ${step * 2}%)`;
-    const clone = image.cloneNode();
-    clone.alt = '';
-    clone.setAttribute('aria-hidden', 'true');
-    clone.classList.add('hs-clone');
-    frame.append(clone);
-    const maskA = stripes('currentColor', 'transparent');
-    const maskB = stripes('transparent', 'currentColor');
-    gsap.set(image, { maskImage: maskA, webkitMaskImage: maskA });
-    gsap.set(clone, { position: 'absolute', inset: 0, maskImage: maskB, webkitMaskImage: maskB });
-    gsap.timeline({
-      defaults: { ease: 'power2.out' },
-      scrollTrigger: { id: 'house-slats', trigger: frame, start: 'top 92%', end: 'center 52%', scrub: 0.6 }
-    })
-      .fromTo(image, { yPercent: 16 }, { yPercent: 0, duration: 1 }, 0)
-      .fromTo(clone, { yPercent: -16 }, { yPercent: 0, duration: 1 }, 0);
-    return () => clone.remove();
-  });
-});
-</script>
 <script data-8b-part="section-script:passes">
 document.querySelectorAll('#passes .ps-pass').forEach(pass => {
   pass.style.setProperty('--from', String(Number(pass.dataset.from) - 8));
   pass.style.setProperty('--to', String(Number(pass.dataset.to) - 8));
-});
-</script>
-<script data-8b-part="scene:passes-hours">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('passes');
-    const board = section.querySelector('.ps-board');
-    const axis = section.querySelector('.ps-axis');
-    const marker = section.querySelector('.ps-marker');
-    const passes = [...section.querySelectorAll('.ps-pass')];
-    const light = progress => {
-      const hour = 8 + 14 * progress;
-      passes.forEach(pass => pass.classList.toggle('is-open', hour >= Number(pass.dataset.from) && hour <= Number(pass.dataset.to)));
-    };
-    gsap.fromTo(marker, { x: 0 }, {
-      x: () => axis.offsetWidth - 1, ease: 'none',
-      scrollTrigger: { id: 'passes-hours', trigger: board, start: 'top 70%', end: 'bottom 50%', scrub: 0.4, invalidateOnRefresh: true, onUpdate: self => light(self.progress) }
-    });
-    return () => passes.forEach(pass => pass.classList.remove('is-open'));
-  });
 });
 </script>
 <script data-8b-part="section-script:visit">
@@ -1590,24 +1455,255 @@ queueMotion(() => {
   });
 })();
 </script>
-<script data-8b-part="scene:visit-name">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const name = document.querySelector('#visit .vs-name');
-    const split = SplitText.create(name, { type: 'chars' });
-    const chars = split.chars;
-    const middle = (chars.length - 1) / 2;
-    const soft = window.matchMedia('(min-width: 1024px) and (hover: hover)').matches;
-    gsap.fromTo(chars, {
-      x: index => (index - middle) * name.offsetHeight * 0.32,
-      y: index => (index % 2 ? 1 : -1) * name.offsetHeight * 0.18,
-      opacity: 0.14,
-      filter: soft ? 'blur(14px)' : 'blur(0px)'
-    }, {
-      x: 0, y: 0, opacity: 1, filter: 'blur(0px)', ease: 'none',
-      scrollTrigger: { id: 'visit-name', trigger: name, start: 'top bottom', end: 'bottom bottom', scrub: 0.6 }
-    });
-    return () => split.revert();
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}.line:not(:last-child){margin-bottom:0}.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = typeof Intl.Segmenter === 'function'
+? text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment)
+: text => [...text];
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split');
+if (sources.has(element)) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px 100% 0px' });
+(document.fonts?.ready ?? Promise.resolve()).then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:arrival">
+motionKit.scene('arrival', () => {
+  const section = document.getElementById('arrival');
+  const first = section.querySelector('.op-first');
+  motionKit.measure(() => motionKit.set(section, { '--arrival-first': `${first.offsetHeight}px` }));
+});
+</script>
+<script data-8b-part="scene-script:day-light">
+motionKit.scene("day-light", () => {
+  { const targets = ["#day .dy-hours > li:nth-of-type(1)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#day .dy-hours > li:nth-of-type(1)"), "50% 62%", "50% 38%", p => targets.forEach(t => t.classList.toggle("is-now", p > 0 && p < 1))); }
+  { const targets = ["#day .dy-hours > li:nth-of-type(2)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#day .dy-hours > li:nth-of-type(2)"), "50% 62%", "50% 38%", p => targets.forEach(t => t.classList.toggle("is-now", p > 0 && p < 1))); }
+  { const targets = ["#day .dy-hours > li:nth-of-type(3)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#day .dy-hours > li:nth-of-type(3)"), "50% 62%", "50% 38%", p => targets.forEach(t => t.classList.toggle("is-now", p > 0 && p < 1))); }
+  { const targets = ["#day .dy-hours > li:nth-of-type(4)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#day .dy-hours > li:nth-of-type(4)"), "50% 62%", "50% 38%", p => targets.forEach(t => t.classList.toggle("is-now", p > 0 && p < 1))); }
+  { const targets = ["#day .dy-hours > li:nth-of-type(5)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#day .dy-hours > li:nth-of-type(5)"), "50% 62%", "50% 38%", p => targets.forEach(t => t.classList.toggle("is-now", p > 0 && p < 1))); }
+  { const targets = ["#day .dy-hours > li:nth-of-type(6)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#day .dy-hours > li:nth-of-type(6)"), "50% 62%", "50% 38%", p => targets.forEach(t => t.classList.toggle("is-now", p > 0 && p < 1))); }
+});
+</script>
+<script data-8b-part="scene-script:house-slats">
+motionKit.scene("house-slats", () => {
+  const copy = (element, deep, attrs = {}) => { const el = element.cloneNode(deep); for (const [k, v] of Object.entries(attrs)) v == null ? el.removeAttribute(k) : el.setAttribute(k, v); return el; };
+  if (matchMedia("(min-width: 700px)").matches) {
+    { const parent = document.querySelector("#house .m-photo"); parent.append(copy(parent.querySelector(":scope > img:nth-of-type(1)"), false, { "alt": "", "aria-hidden": "true", "class": "hs-clone", "style": "mask-image: repeating-linear-gradient(90deg, transparent 0%, transparent 10%, currentcolor 10%, currentcolor 20%); inset: 0px; position: absolute" })); }
+  } else {
+    { const parent = document.querySelector("#house .m-photo"); parent.append(copy(parent.querySelector(":scope > img:nth-of-type(1)"), false, { "alt": "", "aria-hidden": "true", "class": "hs-clone", "style": "mask-image: repeating-linear-gradient(90deg, transparent 0%, transparent 16.6667%, currentcolor 16.6667%, currentcolor 33.3333%); inset: 0px; position: absolute" })); }
+  }
+});
+</script>
+<script data-8b-part="scene-script:passes-hours">
+motionKit.scene('passes-hours', () => {
+  const section = document.getElementById('passes');
+  const board = section.querySelector('.ps-board');
+  const axis = section.querySelector('.ps-axis');
+  const passes = [...section.querySelectorAll('.ps-pass')];
+  motionKit.measure(() => motionKit.set(board, { '--passes-travel': `${axis.offsetWidth - 1}px` }));
+  let started = false;
+  motionKit.track(board, 'top 70%', 'bottom 50%', progress => {
+    started ||= progress > 0;
+    if (!started) return;
+    const hour = 8 + 14 * progress;
+    passes.forEach(pass => pass.classList.toggle('is-open', hour >= Number(pass.dataset.from) && hour <= Number(pass.dataset.to)));
   });
 });
 </script>

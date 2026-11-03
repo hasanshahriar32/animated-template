@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my landscaping firm: name, town and service area, year founded, services, price ranges, gardens built with sizes and weeks, aftercare visits per season, materials and distances, hours, phone, email, company number>. Replace first the name, the three gardens, the client quotes and the numbers in the copy. Keep the section ids, the classes AGENTS.md lists, four service beds and the footer wordmark len. Ask me for missing facts and never invent prices, certifications, reviews, distances or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when you give the agent the facts only the firm has: founding year, service area, price ranges, garden count, sizes and weeks of finished gardens, visits per season, hours and company number. The demo invents all of them, along with the three client quotes. The agent should keep the policy lines, such as no peat and no plastic lawns, only if they are true for you.
+Using this landscaping website template for Claude Code, Cursor or Codex goes fastest when the agent gets the facts only the firm has: founding year, service area, price ranges, garden count, sizes and weeks of finished gardens, visits per season, hours and company number. The demo invents all of them, plus the three client quotes. Keep policy lines such as no peat and no plastic lawns only if they are true for you. In Replit, [Agent starts from its card](https://8b.com/templates/for-replit/) with the design prompt, or import the repository.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=landscaping-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -68,7 +68,7 @@ Yes, with edits. The aftercare section already shows four seasons with a visit c
 Nowhere yet. The form needs a name, an email and a postcode, then prints a thank-you line and clears the fields without sending anything. Connect Formspree or Netlify Forms using the steps in AGENTS.md, or point the Book a site visit buttons at your calendar. Edit the line that promises a call within two working days.
 
 **Can I get a site like this without editing code?**  
-Yes, through [8B's AI website builder](https://8b.com/templates/8b/): you describe the site in a sentence and it designs a new one, its own design rather than this template. Designing and restyling are free. Publishing with hosting and SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, through [8B's AI website builder](https://8b.com/): you describe the site in a sentence and it designs a new one, its own design rather than this template. Designing and restyling are free. Publishing with hosting and SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

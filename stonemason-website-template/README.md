@@ -66,7 +66,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=stone
 No. It checks the required fields, clears itself and shows a thank-you line, but sends nothing until you connect Formspree or Netlify Forms, or delete the form and its script. The phone and email links hold placeholder numbers. The Book a site visit buttons only jump to the form.
 
 **Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). You describe the site in a sentence and it designs a new one, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
+Yes, with [8B's AI website builder](https://8b.com/). You describe the site in a sentence and it designs a new one, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
 
 **Does it work with reduced motion or without JavaScript?**  
 It reads in full either way. With reduced motion the entrance and scroll animations and smooth scrolling are off, and recent work becomes a sideways-scrolling row, but the bar still hides on scroll and hover effects still run. Without JavaScript the Menu button does nothing and the form sends nothing; the question rows still open.

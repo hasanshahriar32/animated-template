@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/driving-school-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -138,10 +139,6 @@
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis.lenis-smooth { scroll-behavior: auto; }
-  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-stopped { overflow: clip; }
   body {
     margin: 0;
     background-color: var(--color-1);
@@ -392,6 +389,18 @@
     #opening .opening__pan { animation: opening-pan 7s ease-in-out infinite alternate; }
     #opening.is-offscreen .opening__pan { animation-play-state: paused; }
   }
+
+  #opening .opening__intro h1 { margin: 0; }
+  #opening .opening__aside { display: grid; gap: 1.1rem; justify-items: start; }
+  #opening .opening__aside .opening__actions { justify-content: flex-start; margin-top: 0; }
+  @media (min-width: 760px) {
+    #opening .opening__aside { justify-self: end; max-width: 30rem; }
+    #opening .opening__intro .opening__aside .m-text { justify-self: start; }
+  }
+  @media (max-width: 759px) {
+    #opening .opening__stages { padding-top: 1.25rem; }
+    #opening .opening__actions .m-btn, #opening .opening__actions .m-btn-2 { min-height: 2.9rem; padding: .7em 1.2em; font-size: .95rem; }
+  }
 }
 </style>
 
@@ -567,18 +576,6 @@
   }
 }
 </style>
-<style data-8b-part="scene-style:signal">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #nervous[data-staged] .nervous__track { height: 330svh; }
-    #nervous[data-staged] .nervous__stage { display: block; position: sticky; top: var(--space-1); height: calc(100svh - 2 * var(--space-1)); }
-    @media (max-width: 1023px) {
-      #nervous[data-staged] .nervous__stage { top: calc(4.5rem + var(--space-1)); height: calc(100svh - 4.5rem - 2 * var(--space-1)); }
-    }
-    #nervous[data-staged] .nervous__panel { position: absolute; inset: 0; min-height: 0; padding-bottom: calc(var(--space-2) + 16vmin); }
-  }
-}
-</style>
 <style data-8b-part="section:method">
 @layer sections {
   #method .method__head { display: grid; gap: 1rem; justify-items: start; padding: clamp(2rem, 5vw, 4.5rem) clamp(.25rem, 1.4vw, 1.25rem) clamp(1.2rem, 3vw, 2.4rem); }
@@ -699,31 +696,137 @@
   }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .opening__intro h1 { margin: 0; }
-#opening .opening__aside { display: grid; gap: 1.1rem; justify-items: start; }
-#opening .opening__aside .opening__actions { justify-content: flex-start; margin-top: 0; }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] [data-8b-motion~="cell"] { animation-name: motion-cell-clippath; animation-duration: 1s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="cell"].is-in { animation-play-state: running; }
+@keyframes motion-cell-clippath { 0% { clip-path: inset(0% 78% 78% 0% round var(--radius-1)); } 99.998% { clip-path: inset(0% round var(--radius-1)); } 100% { clip-path: none; } }
+@keyframes motion-lanes-clip { 0%, 100% { overflow-x: clip; } }
+@keyframes motion-lanes-line { from { translate: var(--motion-lanes-from) 0; opacity: 0; } }
+[data-8b-live] [data-8b-motion~="lanes"] { animation: motion-lanes-clip calc(.85s + (var(--n, 1) - 1) * .18s) linear backwards paused; }
+[data-8b-live] [data-8b-motion~="lanes"] > .line { --motion-lanes-from: -14%; animation: motion-lanes-line calc(.85s + var(--i, 0) * .12s) cubic-bezier(0.25, 1, 0.5, 1) backwards paused; animation-delay: calc(var(--i, 0) * .06s); }
+[data-8b-live] [data-8b-motion~="lanes"] > .line:nth-child(even) { --motion-lanes-from: 14%; }
+[data-8b-live] [data-8b-motion~="lanes"].is-in, [data-8b-live] [data-8b-motion~="lanes"].is-in > .line { animation-play-state: running; }
+}
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+@keyframes opening-intro-rise { from { transform: translateY(28px); opacity: 0; } }
+@keyframes opening-lane-arrive { from { transform: translateX(var(--opening-from)); } }
+[data-8b-live] #opening .opening__intro > * { animation: opening-intro-rise .9s cubic-bezier(.22, 1, .36, 1) backwards; }
+[data-8b-live] #opening .opening__intro > :nth-child(2) { animation-delay: .12s; }
+[data-8b-live] #opening .opening__lane { --opening-from: -46%; animation: opening-lane-arrive .95s cubic-bezier(.22, 1, .36, 1) backwards; animation-delay: calc(.18s + var(--i, 0) * .08s); }
+[data-8b-live] #opening .opening__lane:nth-child(even) { --opening-from: 52%; }
+}
+</style>
+<style data-8b-part="scene:unpack">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] #included { view-timeline: --included-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #included .included__unit { animation-timeline: --included-t1; animation-timing-function: var(--ease-power3-out), cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; transform: none; }
+@keyframes included-unit-move { 0% { translate: var(--included-dx, 0px) var(--included-dy, 0px); } 100% { translate: 0px 0px; } }
+@keyframes included-unit-scale { 0% { scale: var(--included-scale, 1); } 100% { scale: 1; } }
 @media (min-width: 760px) {
-  #opening .opening__aside { justify-self: end; max-width: 30rem; }
-  #opening .opening__intro .opening__aside .m-text { justify-self: start; }
+  [data-8b-live] #included .included__unit--amber { animation-name: included-unit-move, included-unit-scale; animation-range: cover 15vh cover calc(31.25% - 0.625vh); }
+  [data-8b-live] #included .included__unit--lilac { animation-name: included-unit-move, included-unit-scale; animation-range: cover calc(6.25% + 11.875vh) cover calc(37.5% - 3.75vh); }
+  [data-8b-live] #included .included__photo { animation-name: included-unit-move, included-unit-scale; animation-range: cover calc(12.5% + 8.75vh) cover calc(43.75% - 6.875vh); }
+  [data-8b-live] #included .included__hours { animation-name: included-unit-move, included-unit-scale; animation-range: cover calc(18.75% + 5.625vh) cover calc(50% - 10vh); }
 }
 @media (max-width: 759px) {
-  #opening .opening__stages { padding-top: 1.25rem; }
-  #opening .opening__actions .m-btn, #opening .opening__actions .m-btn-2 { min-height: 2.9rem; padding: .7em 1.2em; font-size: .95rem; }
+  [data-8b-live] #included .included__unit--amber { animation-name: included-unit-move, included-unit-scale; animation-range: cover 15vh cover calc(62.5% - 56.875vh); }
+  [data-8b-live] #included .included__unit--lilac { animation-name: included-unit-move, included-unit-scale; animation-range: cover calc(12.5% + 0.625vh) cover calc(75% - 71.25vh); }
+  [data-8b-live] #included .included__photo { animation-name: included-unit-move, included-unit-scale; animation-range: cover calc(25% - 13.75vh) cover calc(87.5% - 85.625vh); }
+  [data-8b-live] #included .included__hours { animation-name: included-unit-move, included-unit-scale; animation-range: cover calc(37.5% - 28.125vh) cover calc(100% - 100vh); }
 }
-@media (prefers-reduced-motion: no-preference) {
-  #opening .opening__intro > * { animation: rw-rise .9s cubic-bezier(.22, 1, .36, 1) backwards; }
-  #opening .opening__intro > :nth-child(2) { animation-delay: .12s; }
-  #opening .opening__lane { animation: rw-lane .95s cubic-bezier(.22, 1, .36, 1) backwards; --from: -46%; }
-  #opening .opening__lane:nth-child(even) { --from: 52%; }
-  #opening .opening__lane:nth-child(1) { animation-delay: .18s; }
-  #opening .opening__lane:nth-child(2) { animation-delay: .26s; }
-  #opening .opening__lane:nth-child(3) { animation-delay: .34s; }
-  #opening .opening__lane:nth-child(4) { animation-delay: .42s; }
-  #opening .opening__lane:nth-child(5) { animation-delay: .5s; }
 }
-@keyframes rw-rise { from { transform: translateY(28px); opacity: 0; } }
-@keyframes rw-lane { from { transform: translateX(var(--from)); } }</style>
+</style>
+<style data-8b-part="scene:tunnel">
+@layer scenes {
+[data-8b-live] #fleet .fleet__tunnel { view-timeline: --fleet-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #fleet .fleet__face--floor > .fleet__track, [data-8b-live] #fleet .fleet__face--ceiling > .fleet__track, [data-8b-live] #fleet .fleet__face--left > .fleet__track, [data-8b-live] #fleet .fleet__face--right > .fleet__track { animation-timeline: --fleet-t1; animation-range: cover 8vh cover calc(100% - 85vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes fleet-track-floor { 0% { translate: 0px calc(var(--fleet-u) * 6); } 100% { translate: 0px 0px; } }
+@keyframes fleet-track-ceiling { 0% { translate: 0px calc(var(--fleet-u) * -6); } 100% { translate: 0px 0px; } }
+@keyframes fleet-track-left { 0% { translate: calc(var(--fleet-u) * -6) 0px; } 100% { translate: 0px 0px; } }
+@keyframes fleet-track-right { 0% { translate: calc(var(--fleet-u) * 6) 0px; } 100% { translate: 0px 0px; } }
+[data-8b-live] #fleet .fleet__face--floor > .fleet__track { animation-name: fleet-track-floor; }
+[data-8b-live] #fleet .fleet__face--ceiling > .fleet__track { animation-name: fleet-track-ceiling; }
+[data-8b-live] #fleet .fleet__face--left > .fleet__track { animation-name: fleet-track-left; }
+[data-8b-live] #fleet .fleet__face--right > .fleet__track { animation-name: fleet-track-right; }
+}
+</style>
+<style data-8b-part="scene:coverage">
+@layer scenes {
+[data-8b-live] #areas .areas__board { view-timeline: --areas-board block; view-timeline-inset: 0; }
+@keyframes areas-cell-fill { 0% { background-color: var(--color-3); } }
+[data-8b-live] #areas .areas__cell:not(.areas__cell--centre) { animation-name: areas-cell-fill; animation-timeline: --areas-board; animation-range: cover calc(20vh + var(--areas-from, 0) * (100% - 90vh)) cover calc(20vh + var(--areas-to, 1) * (100% - 90vh)); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+}
+</style>
+<style data-8b-part="scene:signal">
+@layer scenes {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-8b-live] #nervous .nervous__track { height: 330svh; }
+    [data-8b-live] #nervous .nervous__stage { display: block; position: sticky; top: var(--space-1); height: calc(100svh - 2 * var(--space-1)); }
+    @media (max-width: 1023px) {
+      [data-8b-live] #nervous .nervous__stage { top: calc(4.5rem + var(--space-1)); height: calc(100svh - 4.5rem - 2 * var(--space-1)); }
+    }
+    [data-8b-live] #nervous .nervous__panel { position: absolute; inset: 0; min-height: 0; padding-bottom: calc(var(--space-2) + 16vmin); }
+  }
+}
+@layer scenes {
+[data-8b-live] #nervous .nervous__track { view-timeline: --nervous-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #nervous .nervous__panel--amber { animation-timeline: --nervous-t1; animation-name: nervous-amber-clip; animation-range: cover 100vh cover calc(37.234% + 25.5319vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #nervous .nervous__panel--amber > .nervous__word { animation-name: nervous-p-nervous-word-translate, nervous-p-nervous-word-opacity; animation-timeline: --nervous-t1; animation-range: cover calc(21.2766% + 57.4468vh) cover calc(37.234% + 25.5319vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #nervous .nervous__panel--amber > .nervous__foot { animation-name: nervous-p-nervous-word-translate, nervous-p-nervous-word-opacity; animation-timeline: --nervous-t1; animation-range: cover calc(26.5957% + 46.8085vh) cover calc(42.5532% + 14.8936vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #nervous .nervous__panel--green { animation-timeline: --nervous-t1; animation-name: nervous-green-clip; animation-range: cover calc(44.6809% + 10.6383vh) cover calc(86.1702% - 72.3404vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #nervous .nervous__panel--green > .nervous__word { animation-name: nervous-p-nervous-word-translate, nervous-p-nervous-word-opacity; animation-timeline: --nervous-t1; animation-range: cover calc(70.2128% - 40.4255vh) cover calc(86.1702% - 72.3404vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #nervous .nervous__panel--green > .nervous__foot { animation-name: nervous-p-nervous-word-translate, nervous-p-nervous-word-opacity; animation-timeline: --nervous-t1; animation-range: cover calc(75.5319% - 51.0638vh) cover calc(91.4894% - 82.9787vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes nervous-p-nervous-word-translate { 0% { translate: 0px 10vh; } 0.002% { translate: 0px 9.98vh; } 100% { translate: 0px 0px; } }
+@keyframes nervous-p-nervous-word-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes nervous-amber-clip { 0% { clip-path: inset(calc(100% - 16vmin) 0px 0px calc(100% - 16vmin) round var(--radius-1)); } 17.1429% { clip-path: inset(calc(100% - 16vmin) 0px 0px calc(100% - 16vmin) round var(--radius-1)); animation-timing-function: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); } 97.1429%, 99.998% { clip-path: inset(0px round var(--radius-1)); } 100% { clip-path: none; } }
+@keyframes nervous-green-clip { 0% { clip-path: inset(100% 0px 0px 100% round var(--radius-1)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 15.3846% { clip-path: inset(calc(100% - 16vmin) 0px 0px calc(100% - 16vmin) round var(--radius-1)); } 25.641% { clip-path: inset(calc(100% - 16vmin) 0px 0px calc(100% - 16vmin) round var(--radius-1)); animation-timing-function: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); } 97.4359%, 99.998% { clip-path: inset(0px round var(--radius-1)); } 100% { clip-path: none; } }
+}
+</style>
+<style data-8b-part="scene:plain">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] #method .method__table > .method__row { view-timeline: --method-item block; view-timeline-inset: 0; }
+[data-8b-live] #method .method__table > .method__row > .method__jargon > .method__term { animation-name: method-term-move, method-span-method-term-scale, method-span-method-term-color; animation-timeline: --method-item; animation-range: cover 12.4vh cover 38.8vh; animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1), cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #method .method__table > .method__row > .method__plain > .method__words { animation-name: method-span-method-words-translate; animation-timeline: --method-item; animation-range: cover 34.4vh cover 52vh; animation-timing-function: var(--ease-power3-out); animation-fill-mode: both; transform: none; }
+[data-8b-live] #method .method__table > .method__row > .method__jargon > .method__term > .method__strike { animation-name: method-span-method-strike-scale; animation-timeline: --method-item; animation-range: cover 35.28vh cover 46.28vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes method-term-move { 0% { translate: var(--method-dx, 0px) var(--method-dy, 0px); } 100% { translate: 0px 0px; } }
+@keyframes method-span-method-term-scale { 0% { scale: 1.12; } 100% { scale: 1; } }
+@keyframes method-span-method-term-color { 0% { color: var(--color-2); } 100% { color: var(--color-11); } }
+@keyframes method-span-method-words-translate { 0% { translate: 0px 160%; } 100% { translate: 0px 0px; } }
+@keyframes method-span-method-strike-scale { 0% { scale: 0 1; } 0.002% { scale: 0.0012 1; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:hours">
+@layer scenes {
+@property --prices-fill { syntax: '<number>'; inherits: false; initial-value: 1; }
+@keyframes prices-cell-fill { 0% { --prices-fill: 0; } 100% { --prices-fill: 1; } }
+[data-8b-live] #prices .prices__cells { view-timeline: --prices-cells block; view-timeline-inset: 0; }
+[data-8b-live] #prices .prices__cell { background-color: rgb(from var(--color-2) calc(r * var(--prices-fill)) calc(g * var(--prices-fill)) calc(b * var(--prices-fill)) / var(--prices-fill)); animation-name: prices-cell-fill; animation-timeline: --prices-cells; animation-range: cover calc(12vh + 58vh * var(--prices-at, 0)) cover calc(12vh + 58vh * var(--prices-to, 1)); animation-timing-function: linear; animation-fill-mode: both; }
+}
+</style>
+<style data-8b-part="scene:footer-cells">
+@layer scenes {
+@property --footer-px { syntax: '<number>'; inherits: false; initial-value: 1; }
+@property --footer-py { syntax: '<number>'; inherits: false; initial-value: 1; }
+@keyframes footer-cell-x { 0% { --footer-px: 0; } 100% { --footer-px: 1; } }
+@keyframes footer-cell-y { 0% { --footer-py: 0; } 100% { --footer-py: 1; } }
+[data-8b-live] #footer .footer__field { view-timeline: --footer-field block; view-timeline-inset: 0; }
+[data-8b-live] #footer .footer__cell {
+  translate:
+    calc(var(--footer-dx, 0) * var(--footer-w, 0px) * (1 - min(1, round(down, var(--footer-px) * (var(--footer-nx, 1) + 1), 1) / var(--footer-nx, 1))))
+    calc(var(--footer-dy, 0) * var(--footer-h, 0px) * (1 - min(1, round(down, var(--footer-py) * (var(--footer-ny, 1) + 1), 1) / var(--footer-ny, 1))));
+  animation-name: footer-cell-x, footer-cell-y; animation-timeline: --footer-field; animation-timing-function: linear; animation-fill-mode: both;
+  animation-range: cover calc((100% - 100vh) * var(--footer-x0, 0)) cover calc((100% - 100vh) * var(--footer-x1, 1)), cover calc((100% - 100vh) * var(--footer-y0, 0)) cover calc((100% - 100vh) * var(--footer-y1, 1));
+}
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <a class="skip-link m-btn-3" href="#main"><span class="m-btn__label">Skip to content</span></a>
@@ -744,7 +847,7 @@
   <a class="nav__book m-btn-3" href="#contact"><span class="m-btn__label">Book a lesson</span></a>
   <a data-8b-placeholder="phone" class="nav__phone m-link" href="tel:+441610000000">0161 000 0000</a>
   <button class="nav__menu m-icon-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><svg class="m-icon-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14M5 16h14"/></svg></button>
-  <div class="nav__sheet" id="menu" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="nav__sheet" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
     <div class="nav__sheet-head">
       <span class="nav__word" aria-hidden="true">merge.</span>
       <button class="nav__close m-icon-btn" type="button" aria-label="Close menu"><svg class="m-icon-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -763,7 +866,7 @@
 </header>
 
 <main id="main" class="page-main">
-<!-- opening: headline "Five lanes to a licence.", intro, two buttons, and five coloured lesson stages with hours -->
+<!-- opening: headline "Five lanes to a licence.", intro, two buttons, and five coloured lesson stages with hours (animation: scene:opening) -->
 <section id="opening" data-8b-section="opening">
   
   <div class="opening__stages">
@@ -772,7 +875,7 @@
       <div class="opening__aside"><p class="m-text">Every learner moves through the same five stages. How long each one takes is up to you; the hours below are what our learners usually need.</p>
       <div class="opening__actions"><a class="m-btn" href="#contact"><span class="m-btn__label">Book a first lesson</span><svg class="m-btn__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></a><a class="m-btn-2" href="#prices"><span class="m-btn__label">See prices</span></a></div></div>
     </div>
-    <ol class="opening__lanes">
+    <ol class="opening__lanes" data-8b-items=":scope > .opening__lane">
       <li class="opening__lane"><span class="opening__num m-text-5">01</span><h3 class="opening__name m-text-4">Controls</h3><p class="opening__text m-text">An empty car park, walking pace, nobody watching. Clutch, steering and mirrors until they feel boring.</p><span class="opening__hours m-text-5">4–6 hours</span></li>
       <li class="opening__lane"><span class="opening__num m-text-5">02</span><h3 class="opening__name m-text-4">Town roads</h3><p class="opening__text m-text">Junctions, roundabouts, cyclists and the school run, one new thing at a time.</p><span class="opening__hours m-text-5">8–12 hours</span></li>
       <li class="opening__lane"><span class="opening__num m-text-5">03</span><h3 class="opening__name m-text-4">Faster roads</h3><p class="opening__text m-text">Dual carriageways, the motorway, driving at night and in proper Manchester rain.</p><span class="opening__hours m-text-5">6–10 hours</span></li>
@@ -812,7 +915,7 @@
       </ul>
     </article>
     <figure class="included__unit included__photo">
-      <img style="background:#404040" src="https://images.unsplash.com/photo-1670577835546-9e5607da332d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8eW91bmclMjB3b21hbiUyMGRyaXZpbmclMjBjYXIlMjBzbWlsaW5nfGVufDF8MHx8fDE3OTEzOTgxMjB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=880&q=60" alt="An instructor in the passenger seat turning round with her lesson notes" width="1600" height="1067" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1670577835546-9e5607da332d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8eW91bmclMjB3b21hbiUyMGRyaXZpbmclMjBjYXIlMjBzbWlsaW5nfGVufDF8MHx8fDE3OTEzOTgxMjB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=790&q=60" alt="An instructor in the passenger seat turning round with her lesson notes" width="1600" height="1067" loading="lazy">
     </figure>
     <article class="included__unit included__hours m-surface">
       <h3 class="m-text-4">Hours that fit your week</h3>
@@ -861,16 +964,16 @@
         </div>
         <div class="fleet__face fleet__face--left" data-side="left">
           <div class="fleet__track">
-            <figure class="fleet__item" style="--fleet-near:1;--fleet-len:4;top:25%;height:50%"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1596649714492-a8f90ecb3776?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8dGVlbmFnZXIlMjBkcml2aW5nJTIwY2FyfGVufDF8MHx8fDE3OTEzOTgxMjF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=430&q=60" alt="A learner's hands on the wheel of a modern hatchback with the sat-nav on" width="1600" height="1067" loading="lazy"></figure>
+            <figure class="fleet__item" style="--fleet-near:1;--fleet-len:4;top:25%;height:50%"><img src="https://images.unsplash.com/photo-1596649714492-a8f90ecb3776?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8dGVlbmFnZXIlMjBkcml2aW5nJTIwY2FyfGVufDF8MHx8fDE3OTEzOTgxMjF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=260&q=60" alt="A learner's hands on the wheel of a modern hatchback with the sat-nav on" width="1600" height="1067" loading="lazy"></figure>
             <span class="fleet__item fleet__item--red" style="--fleet-near:8;--fleet-len:2;top:50%;height:25%"></span>
-            <figure class="fleet__item" style="--fleet-near:13;--fleet-len:4;top:0;height:50%"><img style="background:#26260c" src="https://images.unsplash.com/photo-1590520745369-36d668d1ae20?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y2FyJTIwc2lkZSUyMG1pcnJvciUyMHJvYWR8ZW58MXwwfHx8MTc5MTM5ODEyNnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=190&q=60" alt="Traffic seen in a car's side mirror" width="1600" height="1067" loading="lazy"></figure>
+            <figure class="fleet__item" style="--fleet-near:13;--fleet-len:4;top:0;height:50%"><img src="https://images.unsplash.com/photo-1590520745369-36d668d1ae20?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y2FyJTIwc2lkZSUyMG1pcnJvciUyMHJvYWR8ZW58MXwwfHx8MTc5MTM5ODEyNnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=150&q=60" alt="Traffic seen in a car's side mirror" width="1600" height="1067" loading="lazy"></figure>
           </div>
         </div>
         <div class="fleet__face fleet__face--right" data-side="right">
           <div class="fleet__track">
             <span class="fleet__item fleet__item--blue" style="--fleet-near:0;--fleet-len:2;top:0;height:25%"></span>
-            <figure class="fleet__item" style="--fleet-near:4;--fleet-len:4;top:50%;height:50%"><img style="background:#400c0c" src="https://images.unsplash.com/photo-1671785120538-c24cbe823ccc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8ZWxlY3RyaWMlMjBjYXIlMjBjaGFyZ2luZyUyMGNpdHl8ZW58MXwwfHx8MTc5MTM5ODEyNXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=320&q=60" alt="One of the electric school cars charging outside the office" width="1600" height="1067" loading="lazy"></figure>
-            <figure class="fleet__item" style="--fleet-near:11;--fleet-len:4;top:25%;height:50%"><img style="background:#8ca6a6" src="https://images.unsplash.com/photo-1611508106567-6218ae6c5f6a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dGVlbmFnZXIlMjBkcml2aW5nJTIwY2FyfGVufDF8MHx8fDE3OTEzOTgxMjF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=210&q=60" alt="A learner driving through town, seen from the back seat" width="1600" height="1067" loading="lazy"></figure>
+            <figure class="fleet__item" style="--fleet-near:4;--fleet-len:4;top:50%;height:50%"><img src="https://images.unsplash.com/photo-1671785120538-c24cbe823ccc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8ZWxlY3RyaWMlMjBjYXIlMjBjaGFyZ2luZyUyMGNpdHl8ZW58MXwwfHx8MTc5MTM5ODEyNXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=220&q=60" alt="One of the electric school cars charging outside the office" width="1600" height="1067" loading="lazy"></figure>
+            <figure class="fleet__item" style="--fleet-near:11;--fleet-len:4;top:25%;height:50%"><img src="https://images.unsplash.com/photo-1611508106567-6218ae6c5f6a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dGVlbmFnZXIlMjBkcml2aW5nJTIwY2FyfGVufDF8MHx8fDE3OTEzOTgxMjF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=160&q=60" alt="A learner driving through town, seen from the back seat" width="1600" height="1067" loading="lazy"></figure>
           </div>
         </div>
       </div>
@@ -882,12 +985,12 @@
 <section id="instructors" data-8b-section="instructors">
   <div class="instructors__head">
     <p class="m-badge">Instructors</p>
-    <h2 class="m-text-3" data-8b-motion="lanes">The calm voice in the passenger seat.</h2>
+    <h2 class="m-text-3" data-8b-motion="lanes" data-8b-split="lines">The calm voice in the passenger seat.</h2>
     <p class="m-text">Four instructors, all approved by the DVSA, all chosen first for patience. Pick the one who sounds like you, or simply the one who is free.</p>
   </div>
-  <ul class="instructors__list">
+  <ul class="instructors__list" data-8b-items=":scope > .instructors__person">
     <li class="instructors__person">
-      <figure class="instructors__photo" data-8b-motion="cell"><img style="background:#c0d9d9" src="https://images.unsplash.com/photo-1787021029393-61daacd84de2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cG9ydHJhaXQlMjBmcmllbmRseSUyMG1hbiUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTM5ODEyMnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=590&q=60" alt="Ravi Mistry, smiling, in a light blue shirt" width="1600" height="2843" loading="lazy"></figure>
+      <figure class="instructors__photo" data-8b-motion="cell"><img src="https://images.unsplash.com/photo-1787021029393-61daacd84de2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cG9ydHJhaXQlMjBmcmllbmRseSUyMG1hbiUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTM5ODEyMnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=590&q=60" alt="Ravi Mistry, smiling, in a light blue shirt" width="1600" height="2843" loading="lazy"></figure>
       <div class="instructors__card m-surface" data-8b-motion="cell">
         <h3 class="m-text-4">Ravi Mistry</h3>
         <p class="m-text">A former examiner. Knows every test route from Cheetham Hill to Sale, and tells you which roundabouts matter.</p>
@@ -896,7 +999,7 @@
       </div>
     </li>
     <li class="instructors__person">
-      <figure class="instructors__photo" data-8b-motion="cell"><img style="background:#595940" src="https://images.unsplash.com/photo-1601831155536-39cc6afbd284?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG9ydHJhaXQlMjB3b21hbiUyMHNtaWxpbmclMjBjaXR5fGVufDF8MXx8fDE3OTEzOTgxMjN8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=590&q=60" alt="Jess Okafor standing in a city street at sunset" width="1600" height="2400" loading="lazy"></figure>
+      <figure class="instructors__photo" data-8b-motion="cell"><img src="https://images.unsplash.com/photo-1601831155536-39cc6afbd284?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG9ydHJhaXQlMjB3b21hbiUyMHNtaWxpbmclMjBjaXR5fGVufDF8MXx8fDE3OTEzOTgxMjN8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=590&q=60" alt="Jess Okafor standing in a city street at sunset" width="1600" height="2400" loading="lazy"></figure>
       <div class="instructors__card m-surface" data-8b-motion="cell">
         <h3 class="m-text-4">Jess Okafor</h3>
         <p class="m-text">Our nervous-beginners specialist. In nine years she has never once raised her voice in the car.</p>
@@ -905,7 +1008,7 @@
       </div>
     </li>
     <li class="instructors__person">
-      <figure class="instructors__photo" data-8b-motion="cell"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1770096951056-c94a812e9fd4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBvcnRyYWl0JTIwZnJpZW5kbHklMjBtYW4lMjBzbWlsaW5nfGVufDF8MXx8fDE3OTEzOTgxMjJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=590&q=60" alt="Tom Brennan with his arms crossed, smiling outdoors" width="1600" height="2000" loading="lazy"></figure>
+      <figure class="instructors__photo" data-8b-motion="cell"><img src="https://images.unsplash.com/photo-1770096951056-c94a812e9fd4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBvcnRyYWl0JTIwZnJpZW5kbHklMjBtYW4lMjBzbWlsaW5nfGVufDF8MXx8fDE3OTEzOTgxMjJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=590&q=60" alt="Tom Brennan with his arms crossed, smiling outdoors" width="1600" height="2000" loading="lazy"></figure>
       <div class="instructors__card m-surface" data-8b-motion="cell">
         <h3 class="m-text-4">Tom Brennan</h3>
         <p class="m-text">Fifteen years behind the wheel of a city bus. Teaches motorway lessons, night driving and the M60 at rush hour.</p>
@@ -914,7 +1017,7 @@
       </div>
     </li>
     <li class="instructors__person">
-      <figure class="instructors__photo" data-8b-motion="cell"><img style="background:#402626" src="https://images.unsplash.com/photo-1628125662164-e524f30e7403?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cG9ydHJhaXQlMjB3b21hbiUyMHNtaWxpbmclMjBjaXR5fGVufDF8MXx8fDE3OTEzOTgxMjN8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=590&q=60" alt="Ola Nowak in a maroon sweater, smiling" width="1600" height="2400" loading="lazy"></figure>
+      <figure class="instructors__photo" data-8b-motion="cell"><img src="https://images.unsplash.com/photo-1628125662164-e524f30e7403?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cG9ydHJhaXQlMjB3b21hbiUyMHNtaWxpbmclMjBjaXR5fGVufDF8MXx8fDE3OTEzOTgxMjN8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=590&q=60" alt="Ola Nowak in a maroon sweater, smiling" width="1600" height="2400" loading="lazy"></figure>
       <div class="instructors__card m-surface" data-8b-motion="cell">
         <h3 class="m-text-4">Ola Nowak</h3>
         <p class="m-text">Runs our two-week intensive courses and teaches in English and Polish. Drives one of the electric cars.</p>
@@ -941,7 +1044,7 @@
       </div>
     </div>
     <div class="areas__board">
-      <ul class="areas__cells">
+      <ul class="areas__cells" data-8b-items=":scope > .areas__cell" data-8b-fixed="24">
       <li class="areas__cell areas__cell--north"><span class="m-text-5">Prestwich</span></li>
       <li class="areas__cell areas__cell--north"><span class="m-text-5">Crumpsall</span></li>
       <li class="areas__cell areas__cell--north"><span class="m-text-5">Blackley</span></li>
@@ -998,7 +1101,7 @@
     <h2 class="m-text-3">We speak human.</h2>
     <p class="m-text">Driving comes with its own jargon. Your instructor translates it before you need it, and never uses a word twice without checking you know it.</p>
   </div>
-  <dl class="method__table">
+  <dl class="method__table" data-8b-items=":scope > .method__row">
     <div class="method__row">
       <dt class="method__jargon"><span class="method__term"><span class="method__label m-text-4">Mirror, signal, manoeuvre</span><span class="method__strike" aria-hidden="true"></span></span></dt>
       <dd class="method__plain"><span class="method__words m-text-4">Look, tell everyone, then go.</span></dd>
@@ -1026,22 +1129,22 @@
 <section id="passed" data-8b-section="passed">
   <div class="passed__head">
     <p class="m-badge">Recent passes</p>
-    <h2 class="m-text-3" data-8b-motion="lanes">Passed. Recently.</h2>
+    <h2 class="m-text-3" data-8b-motion="lanes" data-8b-split="lines">Passed. Recently.</h2>
     <p class="m-text">Eighty-one of our learners passed this year, fifty-eight of them first time. Here are a few of them, the week they got their licence.</p>
   </div>
   <div class="passed__reel">
-    <ul class="passed__track">
-      <li class="passed__item"><img style="background:#f3f3d9" src="https://images.unsplash.com/photo-1689866499732-db7dd5e77591?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHlvdW5nJTIwd29tYW4lMjBkcml2aW5nJTIwY2FyJTIwc21pbGluZ3xlbnwxfDB8fHwxNzkxMzk4MTIwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A young woman leaning out of the driver's window, smiling" width="1600" height="1067" loading="lazy"></li>
-      <li class="passed__item"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1708347456816-f4d28505c855?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fGZyaWVuZHMlMjBjZWxlYnJhdGluZyUyMGNhcnxlbnwxfDB8fHwxNzkxMzk4MTI0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="Friends celebrating around a red car" width="1600" height="1067" loading="lazy"></li>
-      <li class="passed__item"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1597724903883-84d0be041aa8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8eW91bmclMjB3b21hbiUyMGRyaXZpbmclMjBjYXIlMjBzbWlsaW5nfGVufDF8MHx8fDE3OTEzOTgxMjB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A woman laughing in the driver's seat of a white car" width="1600" height="1067" loading="lazy"></li>
-      <li class="passed__item"><img style="background:#262626" src="https://images.unsplash.com/photo-1608663642079-763dcc2e3b4d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8eW91bmclMjB3b21hbiUyMGRyaXZpbmclMjBjYXIlMjBzbWlsaW5nfGVufDF8MHx8fDE3OTEzOTgxMjB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A smiling driver with sunglasses and a lanyard at the wheel" width="1600" height="1067" loading="lazy"></li>
-      <li class="passed__item"><img style="background:#262626" src="https://images.unsplash.com/photo-1760068670115-6d4e415b0c7a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fHlvdW5nJTIwd29tYW4lMjBkcml2aW5nJTIwY2FyJTIwc21pbGluZ3xlbnwxfDB8fHwxNzkxMzk4MTIwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A young woman looking out of a car window at sunset" width="1600" height="1067" loading="lazy"></li>
-      <li class="passed__item"><img style="background:#402626" src="https://images.unsplash.com/photo-1656769539038-15c9799524c5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fHRlZW5hZ2VyJTIwZHJpdmluZyUyMGNhcnxlbnwxfDB8fHwxNzkxMzk4MTIxfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A woman with glasses resting her chin on her hand in the driver's seat" width="1600" height="1067" loading="lazy"></li>
-      <li class="passed__item"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1739412847848-ac3ec73de1b3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8eW91bmclMjB3b21hbiUyMGRyaXZpbmclMjBjYXIlMjBzbWlsaW5nfGVufDF8MHx8fDE3OTEzOTgxMjB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A driver in a cap smiling with one hand on the wheel" width="1600" height="1067" loading="lazy"></li>
-      <li class="passed__item"><img style="background:#8c8c8c" src="https://images.unsplash.com/photo-1678899091039-9950e7f248b5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8ZHJpdmluZyUyMGluc3RydWN0b3J8ZW58MXwwfHx8MTc5MTM5ODEyMHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A young woman holding the steering wheel, looking out of the window" width="1600" height="1067" loading="lazy"></li>
+    <ul class="passed__track" data-8b-items=":scope > .passed__item">
+      <li class="passed__item"><img src="https://images.unsplash.com/photo-1689866499732-db7dd5e77591?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHlvdW5nJTIwd29tYW4lMjBkcml2aW5nJTIwY2FyJTIwc21pbGluZ3xlbnwxfDB8fHwxNzkxMzk4MTIwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A young woman leaning out of the driver's window, smiling" width="1600" height="1067" loading="lazy"></li>
+      <li class="passed__item"><img src="https://images.unsplash.com/photo-1708347456816-f4d28505c855?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fGZyaWVuZHMlMjBjZWxlYnJhdGluZyUyMGNhcnxlbnwxfDB8fHwxNzkxMzk4MTI0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="Friends celebrating around a red car" width="1600" height="1067" loading="lazy"></li>
+      <li class="passed__item"><img src="https://images.unsplash.com/photo-1597724903883-84d0be041aa8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8eW91bmclMjB3b21hbiUyMGRyaXZpbmclMjBjYXIlMjBzbWlsaW5nfGVufDF8MHx8fDE3OTEzOTgxMjB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A woman laughing in the driver's seat of a white car" width="1600" height="1067" loading="lazy"></li>
+      <li class="passed__item"><img src="https://images.unsplash.com/photo-1608663642079-763dcc2e3b4d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8eW91bmclMjB3b21hbiUyMGRyaXZpbmclMjBjYXIlMjBzbWlsaW5nfGVufDF8MHx8fDE3OTEzOTgxMjB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A smiling driver with sunglasses and a lanyard at the wheel" width="1600" height="1067" loading="lazy"></li>
+      <li class="passed__item"><img src="https://images.unsplash.com/photo-1760068670115-6d4e415b0c7a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fHlvdW5nJTIwd29tYW4lMjBkcml2aW5nJTIwY2FyJTIwc21pbGluZ3xlbnwxfDB8fHwxNzkxMzk4MTIwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A young woman looking out of a car window at sunset" width="1600" height="1067" loading="lazy"></li>
+      <li class="passed__item"><img src="https://images.unsplash.com/photo-1656769539038-15c9799524c5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fHRlZW5hZ2VyJTIwZHJpdmluZyUyMGNhcnxlbnwxfDB8fHwxNzkxMzk4MTIxfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A woman with glasses resting her chin on her hand in the driver's seat" width="1600" height="1067" loading="lazy"></li>
+      <li class="passed__item"><img src="https://images.unsplash.com/photo-1739412847848-ac3ec73de1b3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8eW91bmclMjB3b21hbiUyMGRyaXZpbmclMjBjYXIlMjBzbWlsaW5nfGVufDF8MHx8fDE3OTEzOTgxMjB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A driver in a cap smiling with one hand on the wheel" width="1600" height="1067" loading="lazy"></li>
+      <li class="passed__item"><img src="https://images.unsplash.com/photo-1678899091039-9950e7f248b5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8ZHJpdmluZyUyMGluc3RydWN0b3J8ZW58MXwwfHx8MTc5MTM5ODEyMHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=750&q=60" alt="A young woman holding the steering wheel, looking out of the window" width="1600" height="1067" loading="lazy"></li>
     </ul>
   </div>
-  <ul class="passed__quotes">
+  <ul class="passed__quotes" data-8b-items=":scope > .passed__quote">
     <li class="passed__quote m-surface" data-8b-motion="cell"><blockquote class="m-text-6">“I failed twice with another school. Jess spent my first lesson in a car park talking about anything except driving. I passed first time with merge.”</blockquote><p class="m-text-5">Amira, passed in March</p></li>
     <li class="passed__quote m-surface" data-8b-motion="cell"><blockquote class="m-text-6">“Ravi told me exactly which roundabout catches people out at Cheetham Hill. It came up on my test. I was ready for it.”</blockquote><p class="m-text-5">Daniel, passed in May</p></li>
     <li class="passed__quote m-surface" data-8b-motion="cell"><blockquote class="m-text-6">“Two weeks, thirty hours, one test. Ola's intensive was the most tiring and the best fortnight of my summer.”</blockquote><p class="m-text-5">Kasia, passed in August</p></li>
@@ -1052,10 +1155,10 @@
 <section id="prices" data-8b-section="prices">
   <div class="prices__head">
     <p class="m-badge">Prices</p>
-    <h2 class="m-text-3" data-8b-motion="lanes">Pay for the driving, nothing else.</h2>
+    <h2 class="m-text-3" data-8b-motion="lanes" data-8b-split="lines">Pay for the driving, nothing else.</h2>
     <p class="m-text">Every price includes the car, fuel, insurance and pick-up. Pay as you go at £42 an hour, or save with a package; each square below is one hour behind the wheel.</p>
   </div>
-  <ul class="prices__list">
+  <ul class="prices__list" data-8b-items=":scope > .prices__card" data-8b-fixed="3">
     <li class="prices__card m-surface">
       <h3 class="m-text-4">First ten</h3>
       <p class="prices__price m-text-3">£395</p>
@@ -1087,7 +1190,7 @@
 <section id="contact" data-8b-section="contact">
   <div class="contact__grid">
     <div class="contact__book m-surface-3" data-8b-motion="cell">
-      <h2 class="m-text-3" data-8b-motion="lanes">Book your first lesson.</h2>
+      <h2 class="m-text-3" data-8b-motion="lanes" data-8b-split="lines">Book your first lesson.</h2>
       <p class="m-text">Tell us when you are free and which gearbox you want. We call back within one working day and match you with an instructor.</p>
       <form data-8b-placeholder="form" class="contact__form" action="#" method="post" novalidate>
         <label class="m-field"><span class="m-field__label">Your name</span><input class="m-field__control" name="name" type="text" autocomplete="name" required></label>
@@ -1147,11 +1250,11 @@
   const closeButton = nav.querySelector('.nav__close');
   const open = () => {
     sheet.hidden = false; menuButton.setAttribute('aria-expanded', 'true');
-    window.lenis?.stop(); closeButton.focus();
+    window.motionKit?.wheel?.stop(); closeButton.focus();
   };
   const close = (restore = true) => {
     sheet.hidden = true; menuButton.setAttribute('aria-expanded', 'false');
-    window.lenis?.start(); if (restore) menuButton.focus();
+    window.motionKit?.wheel?.start(); if (restore) menuButton.focus();
   };
   menuButton.addEventListener('click', open);
   closeButton.addEventListener('click', () => close());
@@ -1209,167 +1312,223 @@
   });
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
+
+<script data-8b-part="motion-kit">
 (() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}.line:not(:last-child){margin-bottom:0}.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = typeof Intl.Segmenter === 'function'
+? text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment)
+: text => [...text];
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split');
+if (sources.has(element)) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px 100% 0px' });
+(document.fonts?.ready ?? Promise.resolve()).then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const nav = document.getElementById('navigation');
-  const navOffset = () => (getComputedStyle(nav).position === 'sticky' ? nav.offsetHeight : 0);
-  const lenis = window.lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95, anchors: { offset: -navOffset() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  cell(element, vars = {}) {
-    const radius = getComputedStyle(element).borderTopLeftRadius || '0px';
-    return gsap.fromTo(element,
-      { clipPath: `inset(0% 78% 78% 0% round ${radius})` },
-      { clipPath: `inset(0% 0% 0% 0% round ${radius})`, duration: 1, ease: 'power3.inOut', clearProps: 'clipPath', ...vars });
-  },
-  lanes(element, vars = {}) {
-    const split = SplitText.create(element, { type: 'lines', linesClass: 'lanes-line' });
-    gsap.set(element, { overflowX: 'clip' });
-    const timeline = gsap.timeline({ ...vars, onComplete() { split.revert(); gsap.set(element, { clearProps: 'overflowX' }); vars.onComplete?.(); } });
-    split.lines.forEach((line, index) => {
-      timeline.from(line, { xPercent: index % 2 ? 14 : -14, opacity: 0, duration: .85 + index * .12, ease: 'power3.out' }, index * .06);
-    });
-    return timeline;
-  }
-};
-['cell', 'lanes'].forEach(name => {
-  document.querySelectorAll('[data-8b-section]').forEach(section => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => ScrollTrigger.create({
-        id: `${id}:${index}`, trigger: element, start: 'top 88%', once: true,
-        animation: effects[name](element, { paused: true })
-      }));
-    }), { id, near: elements[0] });
-  });
-});
-</script>
-
-<script data-8b-part="scene:unpack">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 760px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 759px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('included');
-    const main = section.querySelector('.included__main');
-    const units = [...section.querySelectorAll('.included__unit')];
-    const { wide } = context.conditions;
-    const centre = element => ({ x: element.offsetLeft + element.offsetWidth / 2, y: element.offsetTop + element.offsetHeight / 2 });
-    const timeline = gsap.timeline({
-      scrollTrigger: { id: 'unpack', trigger: section, start: 'top 85%', end: wide ? 'center 60%' : 'bottom bottom', scrub: 0.8, invalidateOnRefresh: true }
-    });
+<script data-8b-part="scene-script:unpack">
+motionKit.scene('unpack', () => {
+  const section = document.getElementById('included');
+  const main = section.querySelector('.included__main');
+  const units = [...section.querySelectorAll('.included__unit')];
+  const centre = element => ({ x: element.offsetLeft + element.offsetWidth / 2, y: element.offsetTop + element.offsetHeight / 2 });
+  motionKit.measure(() => {
+    const wide = matchMedia('(min-width: 760px)').matches;
     units.forEach((unit, index) => {
       const from = units[index - 1] && !wide ? units[index - 1] : main;
-      const dx = () => (wide ? centre(main).x - centre(unit).x : 0);
-      const dy = () => (wide ? centre(main).y - centre(unit).y : (from.offsetTop + from.offsetHeight * 0.5) - (unit.offsetTop + unit.offsetHeight * 0.5));
-      const scale = () => (wide ? Math.min(0.55, (main.offsetWidth * 0.9) / unit.offsetWidth) : 0.9);
-      timeline.fromTo(unit, { x: dx, y: dy, scale }, { x: 0, y: 0, scale: 1, duration: 1, ease: 'power3.out' }, index * 0.2);
+      motionKit.set(unit, {
+        '--included-dx': (wide ? centre(main).x - centre(unit).x : 0) + 'px',
+        '--included-dy': (wide ? centre(main).y - centre(unit).y : centre(from).y - centre(unit).y) + 'px',
+        '--included-scale': wide ? Math.min(0.55, (main.offsetWidth * 0.9) / unit.offsetWidth) : 0.9
+      });
     });
   });
-}, { id: 'scene:unpack', near: document.getElementById('included') });
+});
 </script>
-<script data-8b-part="scene:tunnel">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('fleet');
-    const tunnel = section.querySelector('.fleet__tunnel');
-    const travel = () => (parseFloat(getComputedStyle(tunnel).getPropertyValue('--fleet-u')) || 64) * 6;
-    const away = { floor: [0, 1], ceiling: [0, -1], left: [-1, 0], right: [1, 0] };
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'tunnel', trigger: tunnel, start: 'top 92%', end: 'bottom 85%', scrub: 0.6, invalidateOnRefresh: true }
-    });
-    section.querySelectorAll('.fleet__face').forEach(face => {
-      const [sx, sy] = away[face.dataset.side] || [0, 0];
-      timeline.fromTo(face.querySelector('.fleet__track'), { x: () => sx * travel(), y: () => sy * travel() }, { x: 0, y: 0, duration: 1 }, 0);
-    });
-  });
-}, { id: 'scene:tunnel', near: document.querySelector('#fleet .fleet__tunnel') });
-</script>
-<script data-8b-part="scene:coverage">
-queueMotion(() => {
-  gsap.matchMedia().add({ wide: '(min-width: 760px) and (prefers-reduced-motion: no-preference)', narrow: '(max-width: 759px) and (prefers-reduced-motion: no-preference)' }, () => {
-    const section = document.getElementById('areas');
-    const board = section.querySelector('.areas__board');
-    const cells = [...section.querySelectorAll('.areas__cell')];
-    const zone = cell => ['north', 'east', 'south'].find(name => cell.classList.contains('areas__cell--' + name));
-    const position = cell => ({ x: Math.round(cell.offsetLeft / cell.offsetWidth), y: Math.round(cell.offsetTop / cell.offsetHeight) });
-    const centres = cells.filter(cell => cell.classList.contains('areas__cell--centre'));
-    const white = getComputedStyle(document.documentElement).getPropertyValue('--color-3').trim();
+<script data-8b-part="scene-script:coverage">
+motionKit.scene('coverage', () => {
+  const cells = [...document.querySelectorAll('#areas .areas__cell')];
+  const zone = cell => ['north', 'east', 'south'].find(name => cell.classList.contains('areas__cell--' + name));
+  const position = cell => ({ x: Math.round(cell.offsetLeft / cell.offsetWidth), y: Math.round(cell.offsetTop / cell.offsetHeight) });
+  const centres = cells.filter(cell => cell.classList.contains('areas__cell--centre'));
+  motionKit.measure(() => {
     const steps = cells.map(cell => {
       const centre = centres.find(item => zone(item) === zone(cell));
       if (!centre || centre === cell) return null;
@@ -1377,109 +1536,48 @@ queueMotion(() => {
       return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
     });
     const last = Math.max(1, ...steps.filter(step => step !== null));
-    const timeline = gsap.timeline({
-      scrollTrigger: { id: 'coverage', trigger: board, start: 'top 80%', end: 'bottom 70%', scrub: 0.5 }
-    });
+    const total = (Math.max(1, ...steps.filter(step => step !== null)) - 1) * (1 / last) * 1.4 + 0.6;
     cells.forEach((cell, index) => {
-      if (steps[index] === null) return;
-      timeline.fromTo(cell, { backgroundColor: white }, { backgroundColor: getComputedStyle(cell).backgroundColor, duration: 0.6, ease: 'power1.inOut' }, (steps[index] - 1) * (1 / last) * 1.4);
+      if (steps[index] === null) return motionKit.set(cell, { 'animation-name': 'none' });
+      const at = (steps[index] - 1) * (1 / last) * 1.4;
+      motionKit.set(cell, { '--areas-from': at / total, '--areas-to': (at + 0.6) / total });
     });
   });
-}, { id: 'scene:coverage', near: document.querySelector('#areas .areas__board') });
+});
 </script>
-<script data-8b-part="scene:signal">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('nervous');
-    const track = section.querySelector('.nervous__track');
-    const panels = [...section.querySelectorAll('.nervous__panel')];
-    section.setAttribute('data-staged', '');
-    const cell = () => Math.min(innerWidth, innerHeight) * 0.16;
-    const radius = panel => parseFloat(getComputedStyle(panel).borderTopLeftRadius) || 0;
-    const corner = panel => () => `inset(${panel.offsetHeight - cell()}px 0px 0px ${panel.offsetWidth - cell()}px round ${radius(panel)}px)`;
-    const closed = panel => () => `inset(${panel.offsetHeight}px 0px 0px ${panel.offsetWidth}px round ${radius(panel)}px)`;
-    const open = panel => () => `inset(0px 0px 0px 0px round ${radius(panel)}px)`;
-    const parts = panel => [panel.querySelector('.nervous__word'), panel.querySelector('.nervous__foot')];
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'signal', trigger: track, start: 'top top', end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true }
-    });
-    panels.slice(1).forEach((panel, index) => {
-      const at = index * 0.46;
-      if (index === 0) timeline.fromTo(panel, { clipPath: corner(panel) }, { clipPath: corner(panel), duration: 0.01 }, 0);
-      else timeline.fromTo(panel, { clipPath: closed(panel) }, { clipPath: corner(panel), duration: 0.06, ease: 'power2.out' }, at - 0.04);
-      timeline
-        .to(panel, { clipPath: open(panel), duration: 0.28, ease: 'power2.inOut' }, at + 0.06)
-        .set(panel, { clipPath: 'none' }, at + 0.35);
-      parts(panel).forEach((part, order) => {
-        timeline.fromTo(part, { y: () => innerHeight * 0.1, opacity: 0 }, { y: 0, opacity: 1, duration: 0.15, ease: 'power2.out' }, at + 0.2 + order * 0.05);
-      });
-    });
-    timeline.to({}, { duration: 0.08 });
-    return () => section.removeAttribute('data-staged');
-  });
-}, { id: 'scene:signal' });
+<script data-8b-part="scene-script:plain">
+motionKit.scene('plain', () => {
+  const rows = [...document.querySelectorAll('#method .method__row')].map(row => ({
+    jargon: row.querySelector('.method__jargon'), plain: row.querySelector('.method__plain'), term: row.querySelector('.method__term')
+  }));
+  motionKit.measure(() => rows.forEach(({ jargon, plain, term }) => motionKit.set(term, {
+    '--method-dx': (plain.offsetLeft - jargon.offsetLeft) + 'px',
+    '--method-dy': (plain.offsetTop - jargon.offsetTop) + 'px'
+  })));
+});
 </script>
-<script data-8b-part="scene:plain">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('method');
-    section.querySelectorAll('.method__row').forEach((row, index) => {
-      const jargon = row.querySelector('.method__jargon');
-      const plain = row.querySelector('.method__plain');
-      const term = row.querySelector('.method__term');
-      const strike = row.querySelector('.method__strike');
-      const words = row.querySelector('.method__words');
-      const timeline = gsap.timeline({
-        scrollTrigger: { id: `plain:row-${index + 1}`, trigger: row, start: 'top 92%', end: 'top 48%', scrub: 0.6, invalidateOnRefresh: true }
-      });
-      timeline
-        .fromTo(term, { x: () => plain.offsetLeft - jargon.offsetLeft, y: () => plain.offsetTop - jargon.offsetTop, scale: 1.12, color: getComputedStyle(plain).color },
-          { x: 0, y: 0, scale: 1, color: getComputedStyle(term).color, duration: 0.6, ease: 'power2.inOut' }, 0.1)
-        .fromTo(strike, { scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: 'power2.out' }, 0.62)
-        .fromTo(words, { yPercent: 160 }, { yPercent: 0, duration: 0.4, ease: 'power3.out' }, 0.6);
-    });
-  });
-}, { id: 'scene:plain', near: document.querySelector('#method .method__table') });
+<script data-8b-part="scene-script:hours">
+motionKit.scene('hours', () => {
+  const cards = [...document.querySelectorAll('#prices .prices__card')].map(card => [...card.querySelectorAll('.prices__cell')]);
+  const most = Math.max(1, ...cards.map(cells => cells.length));
+  cards.forEach(cells => cells.forEach((cell, order) => motionKit.set(cell, { '--prices-at': order / most, '--prices-to': (order + 1) / most })));
+});
 </script>
-<script data-8b-part="scene:hours">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('prices');
-    const cards = [...section.querySelectorAll('.prices__card')];
-    const most = Math.max(1, ...cards.map(card => card.querySelectorAll('.prices__cell').length));
-    cards.forEach((card, index) => {
-      const cells = [...card.querySelectorAll('.prices__cell')];
-      if (!cells.length) return;
-      const ink = getComputedStyle(cells[0]).backgroundColor;
-      const timeline = gsap.timeline({
-        scrollTrigger: { id: `hours:card-${index + 1}`, trigger: card.querySelector('.prices__cells'), start: 'top 88%', end: 'top 30%', scrub: 0.4 }
-      });
-      cells.forEach((cell, order) => {
-        timeline.fromTo(cell, { backgroundColor: 'rgba(0, 0, 0, 0)' }, { backgroundColor: ink, duration: 1 / most, ease: 'none' }, order / most);
-      });
-      timeline.to({}, { duration: Math.max(0, 1 - cells.length / most) });
+<script data-8b-part="scene-script:footer-cells">
+motionKit.scene('footer-cells', () => {
+  const cells = [...document.querySelectorAll('#footer .footer__cell')];
+  const moves = [[-3, 2], [2, 3], [-4, -1], [3, 1], [-2, -3], [4, 2]];
+  const total = 0.95 + Math.max(0, cells.length - 1) * 0.04;
+  cells.forEach((cell, index) => {
+    const [dx, dy] = moves[index % moves.length];
+    motionKit.set(cell, {
+      '--footer-dx': dx, '--footer-dy': dy, '--footer-nx': Math.abs(dx), '--footer-ny': Math.abs(dy),
+      '--footer-x0': index * 0.04 / total, '--footer-x1': (index * 0.04 + 0.5) / total,
+      '--footer-y0': (0.5 + index * 0.04) / total, '--footer-y1': (0.95 + index * 0.04) / total
     });
   });
-}, { id: 'scene:hours', near: document.querySelector('#prices .prices__list') });
-</script>
-<script data-8b-part="scene:footer-cells">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const footer = document.getElementById('footer');
-    const field = footer.querySelector('.footer__field');
-    const moves = [[-3, 2], [2, 3], [-4, -1], [3, 1], [-2, -3], [4, 2]];
-    const timeline = gsap.timeline({
-      scrollTrigger: { id: 'footer-cells', trigger: field, start: 'top bottom', end: 'bottom bottom', scrub: 0.5, invalidateOnRefresh: true }
-    });
-    footer.querySelectorAll('.footer__cell').forEach((cell, index) => {
-      const [dx, dy] = moves[index % moves.length];
-      timeline
-        .fromTo(cell, { x: () => dx * cell.offsetWidth }, { x: 0, duration: 0.5, ease: `steps(${Math.abs(dx)})` }, index * 0.04)
-        .fromTo(cell, { y: () => dy * cell.offsetHeight }, { y: 0, duration: 0.45, ease: `steps(${Math.abs(dy)})` }, 0.5 + index * 0.04);
-    });
-  });
-}, { id: 'scene:footer-cells', near: document.querySelector('#footer .footer__field') });
+  motionKit.measure(() => cells.forEach(cell => motionKit.set(cell, { '--footer-w': cell.offsetWidth + 'px', '--footer-h': cell.offsetHeight + 'px' })));
+});
 </script>
 </body>
 </html>

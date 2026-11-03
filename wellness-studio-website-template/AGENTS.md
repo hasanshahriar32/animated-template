@@ -1,6 +1,6 @@
 # AGENTS.md: wellness studio website template
 
-One-page website for an emotional fitness studio, coach or course creator who sells a group course, live sessions, team workshops and a printed journal. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for an emotional fitness studio, coach or course creator who sells a group course, live sessions, team workshops and a printed journal. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,19 +14,16 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__toggle` `.nav__overlay` `.nav__close`
   - `section-script:opening`: `.op-band`
   - `section-script:journal`: `data-add-cart` `.jr-status` `data-cart-count` `data-cart-link` `data-count` `data-label-items` `data-added-text`
   - `section-script:contact`: `.ct-form` `.ct-status` `data-sent-text`
-  - `scene:opening`: `.op-band` `.op-band__track`
-  - `scene:momentum`: `.mv-word` `.mv-ast` `.mv-photo` `.mv-box` `.mv-head`
-  - `scene:fine`: `.wd-cell` `.wd-cell__w` `.wd-strike`
-  - `scene:ledger`: `.cr-ledger` `.cr-row`
-  - `scene:calendar`: `.lv-list` `.lv-row`
-  - `scene:circle`: `.tm-photo` `.tm-word` `.tm-num__n` `.tm-offer`
-  - `scene:fan`: `.jr-pile` `.jr-photo`
-  - `scene:exhale`: `.ft-mark`
+  - `scene-script:opening`: `.op-band` `.op-band__track`
+  - `scene-script:fine`: `.wd-wall` `.wd-cell` `data-face`
+  - `scene-script:ledger`: `.cr-ledger` `.cr-row`
+  - `scene-script:circle`: `.tm-photo` `.tm-offer`
 - `style="--len:N"` = characters in that display line, spaces included: `Motivation` is 10, `Fine` is 4, `Together` is 8, `SENTI` is 5.
 - The giant words carry style="--len:N" (Motivation 10, Fine 4, Together 8, wordmark 5) that sizes them to the width. When you change a word, set --len to its number of characters.
 - The words wall is built for 24 cells (6 by 4 on desktop, 2 columns on phones) and the scene adds a "fine" face to each cell; keep the count or check the wall again. The calendar, the ledger and the quote band read their rows from the HTML; the ledger arm measures each row, so weeks can be added or removed.
@@ -46,7 +43,7 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 - Add to cart button in the journal section: now no checkout: a script raises the cart count in the header and shows a line of text; owner's target: your shop or payment link, or a cart script that does the real work.
 - Cart icon in the header: now #journal; owner's target: your cart or shop page.
 - Instagram, TikTok and YouTube icons in the left rail and the footer: now the home pages https://instagram.com/, https://tiktok.com/ and https://youtube.com/; owner's target: your own profile addresses.
-- The form in `#contact` (fields `name`, `email`, `topic`, `message`) sends nothing; `section-script:contact` validates it and shows the thank-you text. Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
+- The form in `#contact` (fields `name`, `email`, `topic`, `message`) sends nothing; `section-script:contact` handles its submit in the page (read it before you connect a service). Formspree: `action="https://formspree.io/f/<id>"` and `fetch` POST `new FormData(form)` first. Netlify: `data-netlify="true"` and a hidden `form-name`. Or delete it and the script.
 - The name SENTI (any letter case); the favicon letter and colours in `<link rel="icon">`.
 - Photos (7, Unsplash: motivation 1, founder 1, live 1, teams 1, journal 3): `src`, no `srcset`/`sizes`, `width`/`height` to the ratio, `alt`, CREDITS.md.
 - `<title>`, meta description, og tags.
@@ -70,9 +67,10 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the menu button on phones cannot open the overlay and the desktop links are hidden under 900 px. The footer repeats Course, Live, Teams and Journal, but Studio and Contact have no other link there.
 - The form posts to # and the Add to cart button changes a count only: both need your own form service and shop. Without JavaScript neither shows any message.
-- Two sections pin while they play (the words wall and the teams photo). At 375 px the teams section is about 1,330 px tall, so the formats and the button sit below the screen until the pin ends, and their rise plays out of sight.
-- The running quote band and the pinned scenes load GSAP, ScrollTrigger, SplitText and Lenis from a CDN; the page stays readable if they fail, but the motion is gone.
-- At 375 px the 24-word wall becomes 12 rows of 2 columns, about 820 px with the heading, while its pin is shorter than on desktop (1.1 screens against 1.5), so the wave runs faster, and on a screen under about 820 px tall part of it plays below the edge.
+- Without scroll-driven animation support (Firefox today) or with reduced motion on, the page shows its finished layout: no section holds, the 24 cells show their feeling words without the flip, no ledger row lights, and the quote band is a wrapped list instead of a running line. In Firefox the opening heading line and buttons still play their load-in; with reduced motion they do not.
+- The journal scene addresses its three photos by CSS :nth-of-type rules; a fourth photo would stay still unless those rules get a fourth entry.
+- Two sections hold while they play (the words wall and the teams photo). At 375 px the teams section is about 1,330 px tall, so the formats and the button sit below the screen until the hold ends, and their rise plays out of sight.
+- At 375 px the 24-word wall becomes 12 rows of 2 columns, about 820 px with the heading, while its hold is shorter than on desktop (1.1 screens against 1.5), so the wave runs faster, and on a screen under about 820 px tall part of it plays below the edge.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and SENTI left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and SENTI left only in class names.

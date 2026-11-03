@@ -1,8 +1,8 @@
-# Free HTML running race website template with GSAP scroll animations
+# Free HTML running race website template with scroll animations and no libraries
 
-This running race website template is one free HTML file for a yearly mountain trail race or ultra. It has a course set out as a sideways row of five parts, three race categories, a kit list, ten past editions with their weather, an entry ballot with fees and a race office form. AGENTS.md lets an AI agent adapt it.
+This running race website template is one free HTML file for a yearly mountain trail race or ultra. It has a course set out as a sideways row of five parts, three race categories, a kit list, ten past editions with their weather, an entry ballot with fees and a race office form. Its scroll motion is CSS, no libraries.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/running-race-website-template/)** · **[Use this template](https://github.com/new?template_name=running-race-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/running-race-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/solsta/)**
 
@@ -24,25 +24,25 @@ curl -LO https://raw.githubusercontent.com/8bsite/running-race-website-template/
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make it the site for <my race: name, place, date, first and last light, distances with climb, altitudes and places, ballot dates, fees, cut-offs, kit list, past results, volunteer rules, legal name and contacts>. Replace the race name, dates, distances, altitudes and fees first. Keep the section ids, the data-8b-section, data-8b-motion and data-8b-part attributes, each course tile's altitude value and each editions row's data-sky value, and update every --len. Ask me for missing facts and never invent cut-offs, safety rules, results, fees or contacts.
+Read AGENTS.md, then edit index.html. Make it the site for <my race: name, place, date, daylight times, distances, altitudes, ballot dates, fees, cut-offs, kit, past results, contacts>. Replace the race name, dates, distances, altitudes and fees first. Motion is CSS scroll-driven animation plus the inline kit: keep the gate script in the head, the section ids, data-8b-section, data-8b-motion and data-8b-items, each course tile's altitude value and each editions row's data-sky; update every --len; add no animation library. Never invent cut-offs, results, fees or contacts; ask me.
 ```
 
-Start with the race name, date, first and last light and the three race cards, then the five course tiles, the fee table and the ten past editions. Claude Code, Cursor or Codex can do this in one pass, and vibe coding works if you hand over the facts. Keep the section ids, the data-8b-section, data-8b-motion and data-8b-part attributes, the altitude value on each course tile and every --len, which stores a heading's character count.
+Start with the race name, date, first and last light and the three race cards, then the five course tiles, the fee table and the ten past editions. As a running race website template for Claude Code, Cursor or Codex it takes one pass, and vibe coding works if you hand over the facts. Keep the section ids, the data-8b-section, data-8b-motion and data-8b-part attributes, the altitude value on each course tile and every --len, which stores a heading's character count.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=running-race-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
-- **Navigation**: black top bar: round mark and wordmark, seven section links, an Enter the ballot button; below 1081 px a menu button opens a full-screen overlay. The top bar slides up out of view when you scroll down and returns on scroll up; this slide keeps running with reduced motion.
+- **Navigation**: black top bar: round mark and wordmark, seven section links, an Enter the ballot button; below 1081 px a menu button opens a full-screen overlay. The top bar slides up out of view when you scroll down and returns on scroll up; this slide keeps running with reduced motion. With a mouse, the wheel scrolls smoothly page-wide.
 - **First light to last light**: first screen on a sky tile: two-line headline, first-light and last-light times, a paragraph about the sixteen hours of daylight, a button and a link. On load the two headline lines slide in from opposite sides, the text row lifts into place and the sky gradient drifts in a slow loop.
-- **58 km over the Kessel ridge**: the course as a sideways row of five part tiles that climb with the altitude, an intro column with a GPX link. Pinned: the row of five tiles slides sideways and each tile sits higher the higher its altitude, so the row climbs to the ridge and drops back, with orange light crossing each photo.
+- **58 km over the Kessel ridge**: the course as a sideways row of five part tiles that climb with the altitude, an intro column with a GPX link. Held in place: the row of five tiles slides sideways and each tile rises to a height set by its altitude as it comes in, so the row climbs to the ridge and drops back, with orange light crossing each photo.
 - **Three races, one day**: three race cards on sky tiles coloured by start hour: Long, Half, Vertical. The three race cards start stacked and slightly turned under the first and spread into their row as you scroll in.
 - **212 people on the mountain**: volunteers: heading with a link, four portraits with name tags and a quote. The heading rises out of its clip, orange light crosses each portrait and the name tags land like stickers.
 - **What you carry**: mandatory kit: a held photo of a runner with a weight badge beside a ten-item checklist. The held photo pulls back from a tight close-up while the ten boxes tick one by one as their items pass the middle of the screen.
 - **The finish closes at last light. The long table opens.**: the finish village: heading, paragraph, one night photo cut into six tiles, a paragraph and three tags. Six small rounded tiles with gaps grow into one seamless night photo while an orange light moves across it.
 - **Ten longest days**: a held sky tile beside a table of ten past editions that shows each edition's weather as you read. The tile held beside the table changes its sky, weather word and year to match the row nearest the middle of the screen.
 - **Getting a place**: entry board: ballot dates with a reminder button, a fees table for three races, three tags and a note about the finisher stone. The heading rises out of its clip and the three tags land like stickers.
-- **One day**: two huge words that widen, two photos and a card about the trail-work day with three steps. The two words "One day" widen from the narrowest to the widest setting of the display font as you scroll, and orange light crosses both photos.
+- **One day**: two huge words that widen, two photos and a card about the trail-work day with three steps. The two words "One day" stretch from the width of the display font's narrowest cut to its widest as you scroll, and orange light crosses both photos.
 - **Before you apply**: eight questions as native details elements beside a heading and a link to the office. The heading lifts in and the Ask the office badge lands like a sticker; the questions open as native details elements.
 - **The race office**: the race office on a sky tile that turns from dusk to night: address, email, phone, hours and a form. The tile's sky goes from dusk to night as you reach the end, and the orange glow sinks behind the cards.
 - **Footer**: footer: giant wordmark, a line about the race, three link columns and a legal line. The See you at first light sticker lands when the footer arrives.
@@ -69,15 +69,15 @@ No agent? Click **[Use this template](https://github.com/new?template_name=runni
 **Where does the race office form send its messages?**  
 Nowhere reliable yet. The form posts to a mailto address as plain text, so it only opens the visitor's mail program and does nothing on a device without one. Connect Formspree or Netlify Forms, or delete the form and keep the email and phone.
 
-**What happens on a phone, with reduced motion or with scripts off?**  
-On a phone the race cards stack in one column and the menu button opens a full-screen overlay. With reduced motion on, the scroll scenes and smooth scrolling stop and the course becomes a plain grid, while button hovers and the bar's slide still run. Without JavaScript the menu cannot open; the questions still open.
+**What happens on a phone, in Firefox or with reduced motion?**  
+On a phone the race cards stack and a menu button opens a full-screen overlay. Without CSS scroll-driven animations, Firefox today, the page shows its finished layout: the course as a plain grid, every kit box ticked, the night photo whole; only the opening load-in plays. With reduced motion that stops too; hovers and the bar's slide still run.
 
 **Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). You describe the race in a sentence and its engine designs a new site, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It runs inside Claude and ChatGPT too.
+Yes, with [8B's AI website builder](https://8b.com/). You describe the race in a sentence and its engine designs a new site, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It runs inside Claude and ChatGPT too.
 
 ## Is it the right base?
 
-Choose it for a yearly event with several distances, a ballot and volunteers. A running club, coaching service or training app needs another shape, and the [app landing page](https://8b.com/templates/kurvo/) template is closer to that. Live tracking, results search and registration are not here: the entry buttons only jump to the entry section until you point them at your sign-up. Owners who do not code can try 8B instead.
+Choose it for a yearly event with several distances, a ballot and volunteers. This is the light build: the same look and scroll behaviour with no JavaScript libraries and no script from a CDN, about 29 KB of code gzipped against about 75 KB and three extra requests for the GSAP version. A running club or training app needs another shape, and the [app landing page](https://8b.com/templates/kurvo/) template is closer. Live tracking, results and registration are not here: entry buttons jump to the entry section.
 
 ## Before you publish
 
@@ -86,7 +86,9 @@ Choose it for a yearly event with several distances, a ballot and volunteers. A 
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 111 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), container query units, cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 116 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), container query units, cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 111 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

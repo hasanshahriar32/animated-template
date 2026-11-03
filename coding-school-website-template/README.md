@@ -73,7 +73,7 @@ Yes, after a text pass. The demo is a part-time school in Sheffield: 24 weeks, t
 No. As shipped it checks the fields, shows a thank-you line and disables the button, and sends nothing. Connect Formspree, Netlify Forms or your own endpoint and remove the script that stops the submit. The Apply buttons and the Book buttons beside the taster dates only jump to the form.
 
 **Can I get a school site like this without editing code?**  
-Yes, with a different tool. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence, and its own design is not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, with a different tool. [8B's AI website builder](https://8b.com/) designs a new site from a sentence, and its own design is not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

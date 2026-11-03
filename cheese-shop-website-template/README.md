@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my shop: name, address, hours, counter cheeses with milk, age and price per kilo, farms we buy from, tasting dates, seats and prices, club plans, posting rules, phone, email>. Replace the shop name, address, cheeses, farms and prices first. Keep the section ids, the classes AGENTS.md lists and the --h, --w and --len values, setting each --len to the new word's character count. Ask me for any missing fact and never invent prices, ages, farms, hours or contacts.
 ```
 
-In vibe coding with Claude Code, Cursor or Codex, give the agent the facts only the shop has: prices per kilo, milk, raw or pasteurised, ageing times, tasting dates, club plans and delivery rules. It should replace the shop name in the bar, the menu and the footer wordmark, give each new counter panel its own height and width, and swap the farms for your suppliers.
+As a cheese shop website template for Claude Code, Cursor or Codex, vibe coding starts with the facts only the shop has: prices per kilo, milk, raw or pasteurised, ageing times, tasting dates, club plans and delivery rules. The agent should replace the shop name in the bar, the menu and the footer wordmark, give each new counter panel its own height and width, and swap the farms for your suppliers. The [steps for editing it in Claude Code](https://8b.com/templates/for-claude-code/) cover the first session.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=cheese-shop-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -67,7 +67,7 @@ Yes, if the shop sells by weight from a counter and buys from named makers. Swap
 No. It checks that a name and a valid email are filled, shows a thank-you line and clears the fields, and nothing is sent. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or delete the form and keep the email link. The tasting and club buttons open a mail program, not a checkout.
 
 **Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). You describe the site in a sentence and its engine designs a new one, in its own style rather than this template. Designing and restyling are free; hosting with SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, with [8B's AI website builder](https://8b.com/). You describe the site in a sentence and its engine designs a new one, in its own style rather than this template. Designing and restyling are free; hosting with SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my research service: firm name and town, how a case runs and how long it takes, what the client receives in the folder, one sample case, researchers and specialties, fixed packages with prices, reading room address and hours, enquiry email and phone>. Replace the demo text, names, prices and photos first. Keep every id, data-8b-section, data-8b-motion and data-8b-part, the classes AGENTS.md lists, fifteen chart entries and four researchers. Never invent fees, memberships or client letters; ask me.
 ```
 
-Vibe coding with Claude Code or Cursor goes fastest when you hand over the facts only the firm has: town, method and timeline, folder contents, one real or anonymised case, researchers, fees, reading room hours and enquiry address. The agent replaces the demo text first, then the photos, which include stock portraits of real people. The pedigree chart is read by position: entry one is the client, then two parents per entry.
+Vibe coding this genealogy website template for Claude Code or Cursor goes fastest when you hand over the facts only the firm has: town, method and timeline, folder contents, one real or anonymised case, researchers, fees, reading room hours and enquiry address. The agent replaces the demo text first, then the photos, which include stock portraits of real people. The pedigree chart is read by position: entry one is the client, then two parents per entry.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=genealogy-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -66,7 +66,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=genea
 No. As shipped it checks the fields, shows a thank-you line and resets, and sends nothing. Connect Formspree or Netlify Forms, or delete the form and its script. Without JavaScript there is no thank-you line, and the email copy button needs it and an https page.
 
 **Can I get a site like this without editing code?**  
-Yes, through a different route. [8B's AI website builder](https://8b.com/templates/8b/) designs a new site from a sentence, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+Yes, through a different route. [8B's AI website builder](https://8b.com/) designs a new site from a sentence, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

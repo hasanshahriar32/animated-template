@@ -1,8 +1,8 @@
-# Free HTML saas landing page template with GSAP scroll animations
+# Free HTML saas landing page template with scroll animations and no libraries
 
-SaaS landing page template: one free HTML file for an app that sends small shops a single weekly message. It has a phone mockup, five coloured data-source columns, two priced plans and a contact form, in maroon, butter and gold with round-ended buttons. AGENTS.md is included, so Claude Code, Cursor or Codex can adapt it.
+SaaS landing page template: one free HTML file for an app that sends small shops a single weekly message. It has a phone mockup, five coloured data-source columns, two priced plans and a contact form, in maroon, butter and gold. Its scroll motion runs on CSS with no libraries, about 26 KB of code gzipped, and AGENTS.md is included.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/saas-landing-page-template/)** · **[Use this template](https://github.com/new?template_name=saas-landing-page-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/saas-landing-page-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/murmur/)**
 
@@ -24,19 +24,19 @@ curl -LO https://raw.githubusercontent.com/8bsite/saas-landing-page-template/mai
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my app: what it does and for whom, what it sends, the data sources it connects to, two plans with prices, privacy promises, customers I can quote, support email>. Replace the wordmark, copy, prices, quotes, photos and contacts first. Keep the section ids, the classes AGENTS.md lists, five source columns and eight field tiles, and set each --len to the character count of its line. Ask me for missing facts and never invent prices, customers, quotes, figures or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my app: what it sends to whom, data sources, two plans with prices, privacy promises, customers, support email>. Replace the wordmark, copy, prices, quotes and photos first. Keep the gate script in the head, the ids, the data-8b-section and data-8b-motion attributes and the classes AGENTS.md lists; add no animation library. Keep five source columns, five makers, eight field tiles and four manifesto lines, and set each --len to its line's length. Never invent prices, quotes or contacts; ask me.
 ```
 
-Hand index.html and AGENTS.md to Claude Code, Cursor or Codex and vibe code the rest. Replace the product, prices, plan limits, privacy promises, customer quotes and sample signals first; the demo invents all of them. The agent should ask the owner for real figures and customer names. Keep the section ids, the classes AGENTS.md lists, the five source columns and the eight field tiles, and update each --len after changing a display line.
+Treat it as a SaaS landing page template for Claude Code: hand index.html and AGENTS.md to Claude Code, Cursor or Codex and vibe code the rest. Replace the product, prices, plan limits, privacy promises, customer quotes and sample signals first; the demo invents all of them. The agent should ask the owner for real figures. Keep the gate script, the section ids, the classes AGENTS.md lists and the five source columns.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=saas-landing-page-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
 - **Navigation**: fixed top bar: drawn wordmark, five section links, Start free button; hides on scroll down; phone menu overlay. The navigation bar hides on scroll down and returns on scroll up, and under 960 px the Menu button opens a full-screen overlay.
-- **Forty signals a week. One sentence on Monday.**: first screen: heading, lead, two calls to action, a field of 18 signal chips and the Monday note card. Pinned for 300svh: the 18 signal chips glide from a rotated scatter into a tidy list, three of them turn maroon and the Monday note card grows from a dot.
-- **Five things it listens to.**: five coloured columns, one per data source, each with a line of text and a sample "Heard this week" line. Pinned: a small strip of five bars unfolds into the five full columns, then the Messages column carries on into the next section.
-- **One sentence. Three reasons. One tap.**: maroon panel with a sticky phone showing the weekly note, beside a heading and three explained parts. On wide screens the maroon panel sweeps in from the Messages column with the phone inside, and each of the three parts lights its block on the phone with a gold outline as you scroll.
+- **Forty signals a week. One sentence on Monday.**: first screen: heading, lead, two calls to action, a field of 18 signal chips and the Monday note card. Smooth wheel scrolling throughout; pinned for 300svh, the 18 signal chips glide from a rotated scatter into a tidy list, three turn maroon and the Monday note card grows from a dot.
+- **Five things it listens to.**: five coloured columns, one per data source, each with a line of text and a sample "Heard this week" line. Pinned: a small strip of five bars unfolds bar by bar into the five full columns.
+- **One sentence. Three reasons. One tap.**: maroon panel with a sticky phone showing the weekly note, beside a heading and three explained parts. On wide screens the maroon panel sweeps in from the right with the phone inside, and each of the three parts lights its block on the phone with a gold outline as you scroll.
 - **Kept by forty-one small studios.**: five arch portraits of customers with a place and a quote each, on a held horizontal track. Pinned: the row of five portraits slides sideways, and the card at the middle of the screen lifts so a wave travels along the row.
 - **Field notes.**: a gutterless moodboard of 8 tiles: 5 photos and 3 coloured note tiles. Pinned: the moodboard opens zoomed in on one note tile and zooms out until the whole grid is in view.
 - **No dashboards. No streaks. No charts at midnight. One sentence on Monday.**: four large lines, three struck out, and two short paragraphs. The four lines slide in from alternating sides, and a bar strikes through each of the first three.
@@ -63,14 +63,14 @@ No agent? Click **[Use this template](https://github.com/new?template_name=saas-
 Not yet. Start free and Start listening jump to the pricing section, and the plan buttons jump to the contact form. The form checks name and email, shows a thank-you line and sends nothing. Point the buttons at your checkout and connect Formspree or Netlify Forms, or delete the form.
 
 **Can I get a site like this without editing code?**  
-Not this exact file, but you can describe your product to [8B's AI website builder](https://8b.com/templates/8b/) and its engine designs a new site, with its own design. Designing and restyling are free. Publishing with hosting, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly, and it also runs inside Claude and ChatGPT.
+Not this exact file, but you can describe your product to [8B's AI website builder](https://8b.com/) and its engine designs a new site, with its own design. Designing and restyling are free. Publishing with hosting, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly, and it also runs inside Claude and ChatGPT.
 
 **What happens on a phone, with reduced motion or without scripts?**  
-On a phone the five source columns stack and their Heard this week lines are hidden. With reduced motion on, the pinned scenes become plain stacked sections and the page reads in full. Without JavaScript the Menu button cannot open its overlay, and the bar links are hidden under 960 px.
+On a phone the five source columns stack and their Heard this week lines are hidden. Without CSS scroll-driven animations, Firefox today, or with reduced motion, nothing is pinned and every section shows its finished layout; in Firefox the first-screen load-in and the footer wave still play. Without JavaScript the Menu cannot open.
 
 ## Is it the right base?
 
-As a SaaS website template it suits a product with a short story and two plans. For another take on an app page, see the [app-focused](https://8b.com/templates/linea/) template. A product that needs docs, a blog, a login or several pages needs more than one page. The weak spot is the logo: it is drawn paths, so a new name needs new paths. If you do not want to edit code, 8B's builder designs a new site from a sentence.
+As a SaaS website template it suits a product with a short story and two plans; for another take on an app page, see the [app-focused](https://8b.com/templates/linea/) template. This light build has the same look and scroll behaviour, with no animation library and no script from a CDN, about 26 KB of code gzipped against 76 KB and four extra requests for the GSAP version. The logo is drawn paths, so a new name needs new paths.
 
 ## Before you publish
 
@@ -79,7 +79,9 @@ As a SaaS website template it suits a product with a short story and two plans. 
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 107 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 101+ (it uses cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 106 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 101+ (it uses cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 107 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

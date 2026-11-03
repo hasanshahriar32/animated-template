@@ -27,7 +27,7 @@ Then fill in the angle brackets and give your agent this prompt:
 Read AGENTS.md, then edit index.html. Make this the site for <my box scheme: what I sell, farms or growers, box sizes and prices, extras, delivery areas with postcode prefixes and days, returns policy, certifier and licence numbers, contacts>. Replace the vegetables, growers, prices and area rows first. Keep the section ids, the classes AGENTS.md lists, the data-price, data-fit, data-label, data-prefix and data-day attributes with your values, and match the footer --len to the new name. Ask me for missing facts; never invent prices, certification, delivery days or contacts.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when the agent gets the facts only the farm has: growers and farms, box sizes and prices, extras, delivery areas and days, certifier and licence numbers, crate policy, phone hours. Replace the seven vegetables, the four growers and the six area rows first. Keep the section ids and the classes AGENTS.md lists, and set the footer wordmark's --len to the new name's letter count.
+Vibe coding this farm delivery website template for Claude Code or Cursor goes fastest when the agent gets the facts only the farm has: growers and farms, box sizes and prices, extras, delivery areas and days, certifier and licence numbers, crate policy, phone hours. Replace the seven vegetables, four growers and six area rows first. Keep the section ids and the classes AGENTS.md lists, and set the footer wordmark's --len to the new name's letter count. The [terminal steps with Claude Code](https://8b.com/templates/for-claude-code/) cover this in more detail.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=farm-delivery-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -61,11 +61,11 @@ No agent? Click **[Use this template](https://github.com/new?template_name=farm-
 **Does the box builder or the postcode check take real orders?**  
 No. The builder adds the size and ticked extras into a total, and the Check button reads the leading letters of a postcode against six area rows, then shows a delivery day or a no. Neither sends anything. Connect them to your checkout or Formspree, and edit each row's data-prefix and data-day. Numeric ZIP codes need a rewrite.
 
-**Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/templates/8b/). You describe the site in a sentence and its engine designs a new site, its own design and not this template. Designing and restyling are free; hosting with SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+**Where is the farm delivery website design prompt, and how do I use it?**  
+Below the short prompt sits a longer farm delivery website design prompt for any AI tool. With the template, put index.html and AGENTS.md in an empty folder with the curl lines in AGENTS.md, and have the agent read it first. Give it the files, not the page address. Bolt opens the repository from [the veg box card on its page](https://8b.com/templates/for-bolt/).
 
-**What happens on a phone, with reduced motion or with scripts off?**  
-On a phone the lists stack and the day section scrolls sideways for about 1,500 px. With reduced motion on, entrance and scroll animations and smooth scrolling are off and the page reads in full; the bar still hides on scroll. Without JavaScript the menu cannot open, the total stays at £23.00 and the postcode check answers nothing.
+**Can I get a site like this without editing code?**  
+Yes, with [8B's AI website builder](https://8b.com/). You describe the site in a sentence and its engine designs a new site, its own design and not this template. Designing and restyling are free; hosting with SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
 ## Is it the right base?
 

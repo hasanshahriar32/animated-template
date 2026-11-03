@@ -1,8 +1,8 @@
-# Free HTML travel agency website template with GSAP scroll animations
+# Free HTML travel agency website template with scroll animations and no libraries
 
-Travel agency website template: a one-page site for a small group tour operator that sells dated rail journeys. It has a three-stop route, four priced lines, a departures table with seats left, a FAQ and an enquiry form, in olive and cream with an amber accent. It is one HTML file an AI agent can adapt.
+Travel agency website template: a one-page site for a small group tour operator that sells dated rail journeys, with a three-stop route, four priced lines, a departures table with seats left, a FAQ and an enquiry form, in olive and cream with an amber accent. Its scroll motion runs on CSS, with no JavaScript library.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/travel-agency-website-template/)** · **[Use this template](https://github.com/new?template_name=travel-agency-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/travel-agency-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/binario-tre/)**
 
@@ -24,17 +24,17 @@ curl -LO https://raw.githubusercontent.com/8bsite/travel-agency-website-template
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. This is a one-page site for <your tour or travel business: the journeys, stops and local hosts, price per person and what is included, departure dates with seats left, group size, office and how to book>. Replace the company, journeys, hosts, departures, prices, address and contacts first, then the photos and alt text. Keep every id, data-8b-section, data-8b-motion and data-8b-part, and change both --len values with the words. Ask me for any missing fact. Never invent prices, dates, licences, VAT numbers, reviews or contacts.
+Read AGENTS.md, then edit index.html. This is a one-page site for <your tour or travel business: the journeys, stops and local hosts, price per person and what is included, departure dates with seats left, group size, office and how to book>. Replace the company, journeys, hosts, departures, prices and contacts first, then the photos. Keep every id, the gate script, the data-8b-section, data-8b-motion and data-8b-items attributes and four tickets; change both --len values with the words. Add no animation library. Never invent prices, dates, licences or contacts; ask me.
 ```
 
-Give index.html and AGENTS.md to Claude Code, Cursor or Codex. In a vibe coding session, start with the company, the four lines, the three hosts, the seven departures, prices and the office details, then the photos and alt text. The agent must keep the ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the selectors AGENTS.md lists. It must ask for dates, seats, terms and the licence line, never invent them.
+As a travel agency website template for Claude Code, Cursor or Codex, it hands over index.html and AGENTS.md. The [Codex setup for these templates](https://8b.com/templates/for-codex/) explains how the CLI picks up AGENTS.md. In a vibe coding session, start with the company, the four lines, the three hosts, the seven departures, prices and the office details, then the photos and alt text. The agent must keep the ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the selectors AGENTS.md lists, and ask for dates, seats, terms and the licence line.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=travel-agency-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
 - **Navigation**: fixed bar: numbered badge and name, six links, Ask for a seat button and a menu button; a menu panel with seven links; hides on scroll down. The bar slides up out of sight after about 24 px of downward scrolling and returns on scroll up or keyboard focus; this keeps running with reduced motion.
-- **Slow trains. Three stops.**: two screens: a full-bleed landscape under a two-line title, intro and buttons, then a carriage screen with a window photo and three facts. On load the landscape settles and the title lines rise, then the photo drifts sideways in a loop; as the carriage screen rises the landscape narrows by clip path into the window photo while the title lines slide apart.
+- **Slow trains. Three stops.**: two screens: a full-bleed landscape under a two-line title, intro and buttons, then a carriage screen with a window photo and three facts. On load (CSS keyframes) the landscape settles and the title lines rise, then the photo drifts sideways and the sleeper bars run in loops; as the carriage screen rises the landscape narrows by clip path into the window photo while the title lines slide apart.
 - **The Tuscan line**: a rail with a marker that travels past three stops, each stop opening from behind slats. On scroll a marker travels along the rail past three stops, across on wide screens and down the left edge on narrow ones, filling the rail behind it, and eight slats over each stop fall away as it arrives.
 - **Four lines for 2027**: four ticket cards with photo, stops, description, price and a Dates button. The four tickets start piled in the middle of the top row and deal out to their places as you scroll; on narrow screens each ticket drops from the one above.
 - **Who waits at each stop**: three hosts with a photo of their hands at work, name, role and a quote. The heading glides in from the left, and each host photo frame opens upward from its bottom edge while the image settles from a zoom, once on arrival.
@@ -63,14 +63,14 @@ No agent? Click **[Use this template](https://github.com/new?template_name=trave
 No. As shipped it checks the fields, shows a thank-you line and sends nothing. Connect Formspree or Netlify Forms, or your booking system, before publishing. The seats-left column in the departures table is plain text as well, so update it by hand.
 
 **What has to stay when I change the text?**  
-Keep every id, data-8b-section, data-8b-motion and data-8b-part, and the class names AGENTS.md lists. The two --len values count the characters of the longer title line and of the wordmark, so change them with the words. The departures table must stay a real table. Tickets and rows can be added; a fourth stop needs the three-column stop grid changed.
+Keep every id, the gate script, the data-8b-section, data-8b-motion, data-8b-items and data-8b-part attributes, and the class names AGENTS.md lists. The two --len values count the characters of the longer title line and of the wordmark. The CSS times exactly four tickets, three stops and six ticket holes; departure rows can be added, and the table must stay a real table.
 
-**Does it work with reduced motion or without JavaScript?**  
-With reduced motion the scroll scenes, smooth scrolling and entrance animations are off and the page reads in full, while the nav still hides on scroll and hover effects keep running. Without JavaScript the menu button opens nothing on narrow screens and the day section shows one photo.
+**What shows in Firefox, with reduced motion or without JavaScript?**  
+Without CSS scroll-driven animations (Firefox today) or with reduced motion on, the [scroll motion](https://8b.com/templates/animated/) and smooth wheel are off and each section shows its finished layout, with the day window on its first photo. Firefox still plays the opening load-in and its loops; the nav still hides on scroll. Without JavaScript the menu button opens nothing on narrow screens.
 
 ## Is it the right base?
 
-Choose it when you sell dated departures at a price per person and want one scrolling page. It has no booking engine, so hotel or flight search needs other software. A product with a model range and a test ride fits the [electric moped](https://8b.com/templates/arco/) template better. The weak spot is the opening, which clips a full-screen layer on every scroll update and is the heaviest effect. Without code, 8B designs a new site.
+Choose it for dated departures at a price per person; it has no booking engine. A product with a model range and a test ride fits the [electric moped](https://8b.com/templates/arco/) template better. This build moves on CSS with no library and no script from a CDN: about 25 KB of code gzipped in one file, against 70 KB and three extra requests for the GSAP version. The weak spot is the opening, which clips a full-screen layer on every scroll update.
 
 ## Before you publish
 
@@ -79,7 +79,9 @@ Choose it when you sell dated departures at a price per person and want one scro
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 84 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 102 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 85 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

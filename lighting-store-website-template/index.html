@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/lighting-store-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -99,10 +100,6 @@ a { color: inherit; }
 button, input, select, textarea { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: clip; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 }
 </style>
 <style data-8b-part="system">
@@ -246,8 +243,6 @@ html.lenis, html.lenis body { height: auto; }
   #opening .op-room__frame { animation: op-open 1.1s cubic-bezier(.3,.7,.2,1) .05s backwards; }
   #opening .op-room--b .op-room__frame { animation-delay: .18s; }
   #opening .op-btn-wrap { animation: op-disc .9s cubic-bezier(.2,.7,.2,1) .25s backwards; }
-  #opening .op-glow__drift { animation: op-drift 7s ease-in-out infinite alternate; }
-  #opening .op-squiggle-wrap { animation: op-sway 5.5s ease-in-out infinite alternate; }
   #opening .op-day.is-paused .op-glow__drift, #opening .op-day.is-paused .op-squiggle-wrap { animation-play-state: paused; }
 }
 @keyframes op-rule { from { transform: scaleY(0); } }
@@ -256,17 +251,22 @@ html.lenis, html.lenis body { height: auto; }
 @keyframes op-disc { from { transform: scaleY(0.35); } }
 @keyframes op-drift { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(7vw, -5vh) scale(1.1); } 100% { transform: translate(-3vw, -9vh) scale(0.94); } }
 @keyframes op-sway { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(14px, -10px) rotate(7deg); } }
-}
-</style>
-<style data-8b-part="scene-style:lights-on">
-@layer scenes {
 #opening .op-night__dome, #opening .op-night__ring { display: none; }
+#opening .op-night__cta { grid-column: 2 / 4; grid-row: 2; align-self: start; padding: clamp(26px, 5vh, 52px) var(--space-2) 0; }
+#opening .op-night__cta .m-btn { min-width: 15.5em; min-height: 4.6em; }
+@media (max-width: 899px) {
+  #opening .op-night__cta { grid-column: 1; grid-row: auto; padding-top: 0; }
+  #opening .op-night__cta .m-btn { min-width: 0; width: 12.5em; min-height: 4em; }
+}
 @media (prefers-reduced-motion: no-preference) {
-  #opening .op-night.is-dusk .op-night__dome, #opening .op-night.is-dusk .op-night__ring { display: block; position: absolute; left: 0; width: 100%; height: 44vh; top: -22vh; border-radius: 50%; pointer-events: none; }
-  #opening .op-night.is-dusk .op-night__dome { background: var(--color-2); }
-  #opening .op-night.is-dusk .op-night__ring { border: 1px solid var(--color-2); top: calc(-22vh - 14px); }
-  #opening .op-night.is-dusk .op-night__dome, #opening .op-night.is-dusk .op-night__ring { z-index: 0; }
-  @media (max-width: 899px) { #opening .op-night.is-dusk .op-night__dome { height: 24vh; top: -12vh; } #opening .op-night.is-dusk .op-night__ring { height: 24vh; top: calc(-12vh - 10px); } }
+  #opening .op-night__rule { animation: op-rule 1.1s cubic-bezier(.3, .7, .2, 1) backwards; }
+  #opening .op-night__rule:nth-child(2) { animation-delay: .1s; }
+  #opening .op-night__title { animation: op-lift .9s cubic-bezier(.2, .7, .2, 1) .05s backwards; }
+  #opening .op-night__cta .m-btn { animation: op-disc .9s cubic-bezier(.2, .7, .2, 1) .25s backwards; }
+  #opening .op-night__media img { animation: op-open 1.1s cubic-bezier(.3, .7, .2, 1) .1s backwards; }
+  #opening .op-night__item { animation: op-lift .9s cubic-bezier(.2, .7, .2, 1) .3s backwards; }
+  #opening .op-night__item:nth-child(2) { animation-delay: .38s; }
+  #opening .op-night__item:nth-child(3) { animation-delay: .46s; }
 }
 }
 </style>
@@ -300,19 +300,6 @@ html.lenis, html.lenis body { height: auto; }
 }
 }
 </style>
-<style data-8b-part="scene-style:rooms">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #rooms.is-track { overflow: hidden; }
-  #rooms.is-track .rm-track { display: flex; flex-wrap: nowrap; width: max-content; height: 100vh; height: 100svh; }
-  #rooms.is-track .rm-col { flex: none; width: 34vw; height: 100%; min-height: 0; border-bottom: 0; border-left: 1px solid var(--color-2); }
-  #rooms.is-track .rm-col:first-child { border-left: 0; }
-  @media (max-width: 899px) {
-    #rooms.is-track .rm-col { width: 86vw; padding-top: calc(var(--space-1) + 24px); }
-  }
-}
-}
-</style>
 <style data-8b-part="section:collection">
 @layer sections {
 #collection { position: relative; padding: clamp(80px, 14vh, 150px) var(--space-2) clamp(60px, 10vh, 110px); }
@@ -335,20 +322,6 @@ html.lenis, html.lenis body { height: auto; }
   #collection .cl-row__name { grid-column: 1; }
   #collection .cl-row__text, #collection .cl-row__meta { grid-column: 1; grid-row: auto; }
   #collection .cl-shot { grid-column: 2; grid-row: 1 / 4; }
-}
-}
-</style>
-<style data-8b-part="scene-style:collection">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #collection.is-index .cl-list { padding-right: calc(40% + var(--space-2)); }
-  #collection.is-index .cl-row { grid-template-columns: minmax(0, 1fr); min-height: 58vh; position: static; }
-  #collection.is-index .cl-row__text, #collection.is-index .cl-row__meta { grid-column: 1; grid-row: auto; }
-  #collection.is-index .cl-row__name { position: relative; }
-  #collection.is-index .cl-row__lamp { display: block; position: absolute; left: calc(-1 * var(--space-2)); top: 0; width: 6px; height: 100%; background: var(--color-4); transform-origin: 50% 100%; }
-  #collection.is-index .cl-shot { position: absolute; top: 0; bottom: 0; right: 0; width: 40%; pointer-events: none; }
-  #collection.is-index .cl-shot__stick { position: sticky; top: calc(var(--space-1) + 6vh); height: calc(100vh - var(--space-1) - 14vh); aspect-ratio: auto; background: transparent; }
-  #collection.is-rows .cl-row__lamp { display: block; position: absolute; left: -14px; top: 0; width: 4px; height: 100%; background: var(--color-4); transform-origin: 50% 100%; }
 }
 }
 </style>
@@ -450,13 +423,6 @@ html.lenis, html.lenis body { height: auto; }
 }
 }
 </style>
-<style data-8b-part="scene-style:repairs">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #repairs.is-restoring .rp-line { display: block; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--color-4); pointer-events: none; z-index: 2; }
-}
-}
-</style>
 <style data-8b-part="section:faq">
 @layer sections {
 #faq { position: relative; display: grid; grid-template-columns: 34fr 66fr; border-top: 1px solid var(--color-2); }
@@ -538,24 +504,176 @@ html.lenis, html.lenis body { height: auto; }
 @media (max-width: 899px) { #footer .ft-cols { grid-template-columns: 1fr; } }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .op-night__cta { grid-column: 2 / 4; grid-row: 2; align-self: start; padding: clamp(26px, 5vh, 52px) var(--space-2) 0; }
-#opening .op-night__cta .m-btn { min-width: 15.5em; min-height: 4.6em; }
-@media (max-width: 899px) {
-  #opening .op-night__cta { grid-column: 1; grid-row: auto; padding-top: 0; }
-  #opening .op-night__cta .m-btn { min-width: 0; width: 12.5em; min-height: 4em; }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] [data-8b-motion~="rise"] > * { animation-name: motion-rise--translate, motion-rise--opacity; animation-duration: 0.9s; animation-delay: calc(0s + 0.09s * var(--i)); animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"].is-in > * { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"] { animation-name: motion-rule---rule; animation-duration: 1.1s; animation-delay: 0s; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="rule"].is-in { animation-play-state: running; }
+[data-8b-live] #try .tr-media, [data-8b-live] #contact { overflow-x: clip; overflow-y: clip; }
+[data-8b-live] [data-8b-motion~="switchOn"] { view-timeline: --motion-switchon block; view-timeline-inset: 0; animation-name: motion-switchon-filter; animation-timeline: --motion-switchon; animation-range: cover 0% cover calc(50% + 5vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] [data-8b-motion~="glow"] { view-timeline: --motion-glow block; view-timeline-inset: 0; animation-name: motion-glow-scale, motion-glow-opacity; animation-timeline: --motion-glow; animation-range: cover 0% cover calc(50% + 5vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes motion-rise--translate { 0% { translate: 0px 26px; } 100% { translate: 0px 0px; } }
+@keyframes motion-rise--opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes motion-rule---rule { 0% { --rule: 0; } 100% { --rule: 1; } }
+@keyframes motion-switchon-filter { 0% { filter: brightness(0.42) grayscale(0.85); } 100% { filter: brightness(1) grayscale(0); } }
+@keyframes motion-glow-scale { 0% { scale: 0.35; } 100% { scale: 1; } }
+@keyframes motion-glow-opacity { 0% { opacity: 0.3; } 100% { opacity: 1; } }
 }
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+[data-8b-live] #opening .op-glow__drift, [data-8b-live] #opening .op-night__pool { animation: op-drift 7s ease-in-out infinite alternate; }
+[data-8b-live] #opening .op-squiggle-wrap { animation: op-sway 5.5s ease-in-out infinite alternate; }
+}
+</style>
+<style data-8b-part="scene:rooms">
+@property --rooms-lit { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --rooms-dash-off { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@layer scenes {
+[data-8b-live] #rooms { overflow: clip; margin-bottom: var(--rooms-pin, 0px); view-timeline: --rooms-t block; view-timeline-inset: 0; animation-name: rooms-pin; animation-timeline: --rooms-t; animation-range: cover 100vh cover calc(100vh + var(--rooms-pin, 0px)); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #rooms .rm-track { display: flex; flex-wrap: nowrap; width: max-content; height: 100vh; height: 100svh; animation-name: rooms-slide; animation-timeline: --rooms-t; animation-range: cover 100vh cover calc(100vh + var(--rooms-pin, 0px)); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #rooms .rm-col { flex: none; width: 34vw; height: 100%; min-height: 0; border-bottom: 0; border-left: 1px solid var(--color-2); }
+[data-8b-live] #rooms .rm-col:first-child { border-left: 0; }
+[data-8b-live] #rooms .rm-room { animation-name: rooms-lit; animation-timeline: --rooms-t; animation-range: cover calc(100vh + var(--rooms-from, 0px)) cover calc(100vh + var(--rooms-to, 1px)); animation-timing-function: linear; animation-fill-mode: both; --rooms-on: min(1, calc(var(--rooms-lit) * 1.2)); }
+[data-8b-live] #rooms .rm-room__strip { scale: 1 var(--rooms-on); }
+[data-8b-live] #rooms .rm-room__media img { filter: brightness(calc(0.42 + 0.58 * var(--rooms-on))) grayscale(calc(0.85 - 0.85 * var(--rooms-on))); }
+[data-8b-live] #rooms .rm-room__squiggle path { --rooms-dash-off: calc(1px * var(--rooms-dash) * (0.5 - 4 * pow(min(var(--rooms-lit), 0.5), 3) + pow(2 - 2 * max(var(--rooms-lit), 0.5), 3) / 2)); stroke-dasharray: var(--rooms-dash); stroke-dashoffset: var(--rooms-dash-off); }
+@keyframes rooms-pin { 0% { translate: 0px 0px; } 100% { translate: 0px var(--rooms-pin, 0px); } }
+@keyframes rooms-slide { 0% { translate: 0px 0px; } 100% { translate: calc(-1 * var(--rooms-travel, 0px)) 0px; } }
+@keyframes rooms-lit { 0% { --rooms-lit: var(--rooms-lit-from, 0); } 100% { --rooms-lit: 1; } }
+@media (max-width: 899px) {
+  [data-8b-live] #rooms .rm-col { width: 86vw; padding-top: calc(var(--space-1) + 24px); }
+}
+}
+</style>
+<style data-8b-part="scene:collection">
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #opening .op-night__rule { animation: op-rule 1.1s cubic-bezier(.3, .7, .2, 1) backwards; }
-  #opening .op-night__rule:nth-child(2) { animation-delay: .1s; }
-  #opening .op-night__title { animation: op-lift .9s cubic-bezier(.2, .7, .2, 1) .05s backwards; }
-  #opening .op-night__cta .m-btn { animation: op-disc .9s cubic-bezier(.2, .7, .2, 1) .25s backwards; }
-  #opening .op-night__media img { animation: op-open 1.1s cubic-bezier(.3, .7, .2, 1) .1s backwards; }
-  #opening .op-night__pool { animation: op-drift 7s ease-in-out infinite alternate; }
-  #opening .op-night__item { animation: op-lift .9s cubic-bezier(.2, .7, .2, 1) .3s backwards; }
-  #opening .op-night__item:nth-child(2) { animation-delay: .38s; }
-  #opening .op-night__item:nth-child(3) { animation-delay: .46s; }
-}</style>
+  @media (min-width: 900px) {
+  [data-8b-live] #collection .cl-list { padding-right: calc(40% + var(--space-2)); }
+}
+  @media (min-width: 900px) {
+  [data-8b-live] #collection .cl-row { grid-template-columns: minmax(0, 1fr); min-height: 58vh; position: static; }
+}
+  @media (min-width: 900px) {
+  [data-8b-live] #collection .cl-row__text, [data-8b-live]  #collection .cl-row__meta { grid-column: 1; grid-row: auto; }
+}
+  @media (min-width: 900px) {
+  [data-8b-live] #collection .cl-row__name { position: relative; }
+}
+  @media (min-width: 900px) {
+  [data-8b-live] #collection .cl-row__lamp { display: block; position: absolute; left: calc(-1 * var(--space-2)); top: 0; width: 6px; height: 100%; background: var(--color-4); transform-origin: 50% 100%; }
+}
+  @media (min-width: 900px) {
+  [data-8b-live] #collection .cl-shot { position: absolute; top: 0; bottom: 0; right: 0; width: 40%; pointer-events: none; }
+}
+  @media (min-width: 900px) {
+  [data-8b-live] #collection .cl-shot__stick { position: sticky; top: calc(var(--space-1) + 6vh); height: calc(100vh - var(--space-1) - 14vh); aspect-ratio: auto; background: transparent; }
+}
+  @media (max-width: 899px) {
+  [data-8b-live] #collection .cl-row__lamp { display: block; position: absolute; left: -14px; top: 0; width: 4px; height: 100%; background: var(--color-4); transform-origin: 50% 100%; }
+}
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power1-inout: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); }
+[data-8b-live] #collection .cl-list > li { view-timeline: --collection-item block; view-timeline-inset: 0; }
+[data-8b-live] #collection .cl-list > li > .cl-row__lamp { animation-name: collection-span-cl-row-lamp-scale; animation-timeline: --collection-item; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes collection-span-cl-row-lamp-scale { 0% { scale: 1 0; } 26.3158% { scale: 1; } 78.9474% { scale: 1; } 100% { scale: 1 0; } }
+@keyframes collection-div-cl-shot-move-translate { 0% { translate: 0px 100%; } 100% { translate: 0px 0px; } }
+@keyframes collection-div-cl-shot-move-img-translate { 0% { translate: 0px -100%; } 100% { translate: 0px 0px; } }
+@media (min-width: 900px) {
+  [data-8b-live] #collection .cl-list > li > .cl-row__lamp { animation-range: cover calc(5% + 15.6vh) cover calc(100% - 30vh); }
+  [data-8b-live] #collection .cl-list > li:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5), :nth-of-type(6)) > .cl-shot > .cl-shot__stick > .cl-shot__move, [data-8b-live] #collection .cl-list > li:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5), :nth-of-type(6)) > .cl-shot > .cl-shot__stick > .cl-shot__move > img { animation-timeline: --collection-item; animation-range: cover 18vh cover calc(30% + 3.6vh); animation-timing-function: var(--ease-power1-inout); animation-fill-mode: both; transform: none; }
+  [data-8b-live] #collection .cl-list > li:nth-of-type(2) > .cl-shot > .cl-shot__stick > .cl-shot__move { animation-name: collection-div-cl-shot-move-translate; }
+  [data-8b-live] #collection .cl-list > li:nth-of-type(2) > .cl-shot > .cl-shot__stick > .cl-shot__move > img { animation-name: collection-div-cl-shot-move-img-translate; }
+  [data-8b-live] #collection .cl-list > li:nth-of-type(3) > .cl-shot > .cl-shot__stick > .cl-shot__move { animation-name: collection-div-cl-shot-move-translate; }
+  [data-8b-live] #collection .cl-list > li:nth-of-type(3) > .cl-shot > .cl-shot__stick > .cl-shot__move > img { animation-name: collection-div-cl-shot-move-img-translate; }
+  [data-8b-live] #collection .cl-list > li:nth-of-type(4) > .cl-shot > .cl-shot__stick > .cl-shot__move { animation-name: collection-div-cl-shot-move-translate; }
+  [data-8b-live] #collection .cl-list > li:nth-of-type(4) > .cl-shot > .cl-shot__stick > .cl-shot__move > img { animation-name: collection-div-cl-shot-move-img-translate; }
+  [data-8b-live] #collection .cl-list > li:nth-of-type(5) > .cl-shot > .cl-shot__stick > .cl-shot__move { animation-name: collection-div-cl-shot-move-translate; }
+  [data-8b-live] #collection .cl-list > li:nth-of-type(5) > .cl-shot > .cl-shot__stick > .cl-shot__move > img { animation-name: collection-div-cl-shot-move-img-translate; }
+  [data-8b-live] #collection .cl-list > li:nth-of-type(6) > .cl-shot > .cl-shot__stick > .cl-shot__move { animation-name: collection-div-cl-shot-move-translate; }
+  [data-8b-live] #collection .cl-list > li:nth-of-type(6) > .cl-shot > .cl-shot__stick > .cl-shot__move > img { animation-name: collection-div-cl-shot-move-img-translate; }
+}
+@media (max-width: 899px) {
+  [data-8b-live] #collection .cl-list > li > .cl-row__lamp { animation-range: cover calc(5% + 5.85vh) cover calc(100% - 35vh); }
+  [data-8b-live] #collection .cl-list > li > .cl-shot > .cl-shot__stick > .cl-shot__move, [data-8b-live] #collection .cl-list > li > .cl-shot > .cl-shot__stick > .cl-shot__move > img { animation-timeline: --collection-item; animation-range: cover 8vh cover calc(30% - 4.9vh); animation-timing-function: var(--ease-power1-inout); animation-fill-mode: both; transform: none; }
+  [data-8b-live] #collection .cl-list > li > .cl-shot > .cl-shot__stick > .cl-shot__move { animation-name: collection-div-cl-shot-move-translate; }
+  [data-8b-live] #collection .cl-list > li > .cl-shot > .cl-shot__stick > .cl-shot__move > img { animation-name: collection-div-cl-shot-move-img-translate; }
+}
+}
+</style>
+<style data-8b-part="scene:makers">
+@property --makers-heat { syntax: '<number>'; inherits: true; initial-value: 0; }
+@layer scenes {
+[data-8b-live] #makers .mk-list > li { view-timeline: --makers-row block; view-timeline-inset: 0; animation-name: makers-heat; animation-timeline: --makers-row; animation-range: cover calc(50% - 40vh) cover calc(50% + 40vh); animation-fill-mode: both; --heat: var(--makers-heat); }
+[data-8b-live] #makers .mk-name { transform-origin: 0 50%; scale: calc(1 + (var(--makers-wide, 1.09) - 1) * var(--makers-heat)) 1; -webkit-text-stroke: calc(0.05em * var(--makers-heat)) currentColor; }
+@keyframes makers-heat { 0% { --makers-heat: 0; animation-timing-function: linear(0, 0.0073, 0.028, 0.0607, 0.104, 0.1563, 0.216, 0.2817, 0.352, 0.4253, 0.5, 0.5748, 0.648, 0.7183, 0.784, 0.8438, 0.896, 0.9392, 0.972, 0.9928, 1); } 50% { --makers-heat: 1; animation-timing-function: linear(0, 0.0073, 0.028, 0.0607, 0.104, 0.1563, 0.216, 0.2817, 0.352, 0.4253, 0.5, 0.5748, 0.648, 0.7183, 0.784, 0.8438, 0.896, 0.9392, 0.972, 0.9928, 1); } 100% { --makers-heat: 0; } }
+}
+</style>
+<style data-8b-part="scene:repairs">
+@property --repairs-lit { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #repairs .rp-line { display: block; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--color-4); pointer-events: none; z-index: 2; }
+}
+}
+@layer scenes {
+[data-8b-live] #repairs .rp-line { right: auto; width: var(--repairs-line-width); top: var(--repairs-line-top); left: var(--repairs-line-left); }
+[data-8b-live] #repairs { timeline-scope: --repairs-t1; }
+[data-8b-live] #repairs .rp-frame { view-timeline: --repairs-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #repairs .rp-after, [data-8b-live] #repairs .rp-after__in, [data-8b-live] #repairs .rp-line, [data-8b-live] #repairs .rp-steps > li { animation-timeline: --repairs-t1; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #repairs .rp-after { animation-name: repairs-div-rp-after-translate; animation-range: cover 28vh cover calc(97.0874% - 39.9612vh); transform: none; }
+[data-8b-live] #repairs .rp-after__in { animation-name: repairs-div-rp-after-in-translate; animation-range: cover 28vh cover calc(97.0874% - 39.9612vh); transform: none; }
+[data-8b-live] #repairs .rp-line { animation-range: cover 28vh cover calc(97.0874% - 39.9612vh), cover 28vh cover calc(100% - 42vh); transform: none; }
+[data-8b-live] #repairs .rp-steps > li { animation-name: repairs-li-rp-step---lit; animation-range: cover calc(4.3689% + 24.2719% * var(--i) + 24.9417vh - 16.9902vh * var(--i)) cover calc(14.0777% + 24.2718% * var(--i) + 18.1456vh - 16.9903vh * var(--i)); --lit: var(--repairs-lit); }
+@keyframes repairs-div-rp-after-translate { 0% { translate: 0px -100%; } 100% { translate: 0px 0px; } }
+@keyframes repairs-div-rp-after-in-translate { 0% { translate: 0px 100%; } 100% { translate: 0px 0px; } }
+@keyframes repairs-span-rp-line-translate { 0% { translate: 0px 0px; } 100% { translate: 0px var(--repairs-line-travel); } }
+@keyframes repairs-span-rp-line-opacity { 0% { opacity: 1; } 94.1748% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes repairs-li-rp-step---lit { 0% { --repairs-lit: 0; } 0.002% { --repairs-lit: 0.001; } 99.998% { --repairs-lit: 0.999; } 100% { --repairs-lit: 1; } }
+[data-8b-live] #repairs .rp-line { animation-name: repairs-span-rp-line-translate, repairs-span-rp-line-opacity; }
+}
+</style>
+<style data-8b-part="scene:thursdays">
+@layer scenes {
+[data-8b-live] #thursdays { timeline-scope: --thursdays-t1; overflow-x: clip; overflow-y: clip; }
+[data-8b-live] #thursdays .th-disc { view-timeline: --thursdays-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #thursdays .th-media { animation-name: thursdays-figure-th-media-clippath; animation-timeline: --thursdays-t1; animation-range: cover 8vh cover calc(50% - 2vh); animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); animation-fill-mode: both; }
+[data-8b-live] #thursdays .th-media > img { animation-name: thursdays-figure-th-media-img-scale; animation-timeline: --thursdays-t1; animation-range: cover 8vh cover calc(50% - 2vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #thursdays .th-ring--a, [data-8b-live] #thursdays .th-ring--b { animation-name: thursdays-span-th-ring-scale; animation-timeline: --thursdays-t1; animation-range: cover 8vh cover calc(50% - 2vh); animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); animation-fill-mode: both; transform: none; }
+[data-8b-live] #thursdays .th-line--a, [data-8b-live] #thursdays .th-line--b { animation-timeline: --thursdays-t1; animation-range: cover 8vh cover calc(35% + 1vh); animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes thursdays-figure-th-media-clippath { 0% { clip-path: ellipse(50% 5% at 50% 50%); } 100% { clip-path: ellipse(50% 50% at 50% 50%); } }
+@keyframes thursdays-figure-th-media-img-scale { 0% { scale: 1.3; } 100% { scale: 1; } }
+@keyframes thursdays-span-th-ring-scale { 0% { scale: 1 0.1; } 100% { scale: 1; } }
+@keyframes thursdays-span-th-line-translate-d { 0% { translate: 12vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes thursdays-span-th-line-translate-m { 0% { translate: 6.716% 0px; } 100% { translate: 0px 0px; } }
+@keyframes thursdays-span-th-line-translate-2-d { 0% { translate: -12vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes thursdays-span-th-line-translate-2-m { 0% { translate: -6vw 0px; } 100% { translate: 0px 0px; } }
+@media (min-width: 900px) {
+  [data-8b-live] #thursdays .th-line--a { animation-name: thursdays-span-th-line-translate-d; }
+  [data-8b-live] #thursdays .th-line--b { animation-name: thursdays-span-th-line-translate-2-d; }
+}
+@media (max-width: 899px) {
+  [data-8b-live] #thursdays .th-line--a { animation-name: thursdays-span-th-line-translate-m; }
+  [data-8b-live] #thursdays .th-line--b { animation-name: thursdays-span-th-line-translate-2-m; }
+}
+}
+</style>
+<style data-8b-part="scene:sign">
+@property --footer-sign { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+[data-8b-live] #footer .ft-mark { view-timeline: --footer-t1 block; view-timeline-inset: 0; animation-name: footer-p-ft-mark---sign; animation-timeline: --footer-t1; animation-range: cover 0% cover calc(100% - 100vh); animation-timing-function: linear; animation-fill-mode: both; --sign: var(--footer-sign); transform-origin: 0 50%; scale: calc(0.869 + 0.131 * var(--footer-sign)) 1; -webkit-text-stroke: calc(0.1em * max(0, 1 - var(--footer-sign) / 0.4)) var(--color-2); }
+[data-8b-live] #footer { overflow-x: clip; overflow-y: clip; }
+@keyframes footer-p-ft-mark---sign { 0% { --footer-sign: 0; } 100% { --footer-sign: 1; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: white top bar: wordmark, five section links and a menu button that opens a full-screen overlay with seven links; hides on scroll down -->
@@ -563,7 +681,7 @@ html.lenis, html.lenis body { height: auto; }
   <nav class="nav-bar" aria-label="Main">
     <a class="nav-mark" href="#opening" aria-label="Glim, back to the top">Glim.</a>
     <div class="nav-right">
-      <ul class="nav-links">
+      <ul class="nav-links" data-8b-items=":scope > li">
         <li><a class="m-link m-text-3" href="#rooms">Rooms</a></li>
         <li><a class="m-link m-text-3" href="#collection">Lamps</a></li>
         <li><a class="m-link m-text-3" href="#plans">Lighting plans</a></li>
@@ -578,7 +696,7 @@ html.lenis, html.lenis body { height: auto; }
       <span class="nav-mark" aria-hidden="true">Glim.</span>
       <button class="m-icon-2 nav-close" type="button" aria-label="Close the menu"><span></span><span></span></button>
     </div>
-    <ul class="nav-menu__list">
+    <ul class="nav-menu__list" data-8b-items=":scope > li">
       <li><a class="m-link-2" href="#rooms">Light by room</a></li>
       <li><a class="m-link-2" href="#collection">The lamps</a></li>
       <li><a class="m-link-2" href="#plans">Lighting plans</a></li>
@@ -592,7 +710,7 @@ html.lenis, html.lenis body { height: auto; }
 </header>
 
 <main>
-<!-- opening: first screen: dark ground with two hairline rules, the headline, a Shop lamps button, a photo of a glowing lamp and three service columns -->
+<!-- opening: first screen: dark ground with two hairline rules, the headline, a Shop lamps button, a photo of a glowing lamp and three service columns (animation: scene:opening) -->
 <section id="opening" data-8b-section="opening" aria-labelledby="opening-title">
   
   <div class="op-night">
@@ -603,9 +721,9 @@ html.lenis, html.lenis body { height: auto; }
     <div class="op-night__cta"><a class="m-btn" href="#collection"><span class="m-btn__label">Shop lamps</span></a></div>
     <figure class="op-night__media">
       <span class="op-night__pool" aria-hidden="true"></span>
-      <img style="background:#40260c" src="https://images.unsplash.com/photo-1717944443951-b5086c3fc417?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGFtcCUyMGdsb3dpbmclMjBkYXJrJTIwcm9vbXxlbnwxfDB8fHwxNzkxNDA3ODc4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=750&amp;q=60" width="7483" height="4989" alt="A yellow lamp shade glowing beside a dark curtain at night" loading="lazy">
+      <img fetchpriority="high" src="https://images.unsplash.com/photo-1717944443951-b5086c3fc417?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGFtcCUyMGdsb3dpbmclMjBkYXJrJTIwcm9vbXxlbnwxfDB8fHwxNzkxNDA3ODc4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=750&amp;q=60" width="7483" height="4989" alt="A yellow lamp shade glowing beside a dark curtain at night">
     </figure>
-    <ul class="op-night__list">
+    <ul class="op-night__list" data-8b-items=":scope > li" data-8b-fixed="3">
       <li class="op-night__item">
         <h3 class="m-text-4">Lamps</h3>
         <p class="m-text">Pendants, table, floor and wall lights from small studios, in the showroom and online.</p>
@@ -625,9 +743,9 @@ html.lenis, html.lenis body { height: auto; }
   </div>
 </section>
 
-<!-- rooms: pinned sideways track: an intro column, six room columns (kitchen, bath, bedroom, living, study, hall) and a closing column with a button (animation: scene:rooms) -->
+<!-- rooms: sideways track held while you scroll (a grid of columns without scroll-driven support): an intro column, six room columns (kitchen, bath, bedroom, living, study, hall) and a closing column with a button (animation: scene:rooms) -->
 <section id="rooms" data-8b-section="rooms" aria-labelledby="rooms-title">
-  <div class="rm-track">
+  <div class="rm-track" data-8b-items=":scope > .rm-room">
     <div class="rm-col rm-head">
       <h2 id="rooms-title" class="m-text-2">Light, room by room</h2>
       <p class="m-text">Every room asks for something different once the sun is down. Six short briefs from our lighting plans, each with the lamps that answer it.</p>
@@ -639,7 +757,7 @@ html.lenis, html.lenis body { height: auto; }
       <p class="m-text rm-room__text">Work light under the cabinets, one low pendant over the table and a dimmer on both, so dinner never happens in the glare of the worktop.</p>
       <a class="m-link m-text rm-room__link" href="#collection">Kitchen pendants →</a>
       <span class="rm-room__strip" aria-hidden="true"></span>
-      <div class="rm-room__media"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1708426045546-8911cfea6162?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bWluaW1hbCUyMGtpdGNoZW4lMjBwZW5kYW50JTIwbGFtcHxlbnwxfDF8fHwxNzkxNDA3NzU1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" width="2500" height="2800" alt="A white kitchen with four glass pendants over an island and wooden stools" loading="lazy"></div>
+      <div class="rm-room__media"><img src="https://images.unsplash.com/photo-1708426045546-8911cfea6162?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bWluaW1hbCUyMGtpdGNoZW4lMjBwZW5kYW50JTIwbGFtcHxlbnwxfDF8fHwxNzkxNDA3NzU1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" width="2500" height="2800" alt="A white kitchen with four glass pendants over an island and wooden stools" loading="lazy"></div>
     </article>
     <article class="rm-col rm-room">
       <h3 class="m-text-2 rm-room__title">Bath</h3>
@@ -647,7 +765,7 @@ html.lenis, html.lenis body { height: auto; }
       <p class="m-text rm-room__text">A mirror light at face height rather than above it, and something soft and splash-rated for the long bath with the big light off.</p>
       <a class="m-link m-text rm-room__link" href="#collection">Bathroom wall lights →</a>
       <span class="rm-room__strip" aria-hidden="true"></span>
-      <div class="rm-room__media"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1719782758789-7dbf0ed54b11?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bWluaW1hbCUyMGJhdGhyb29tJTIwbWFyYmxlfGVufDF8MXx8fDE3OTE0MDc3Njd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" width="4000" height="6000" alt="A white marble basin under a large mirror with a brass frame" loading="lazy"></div>
+      <div class="rm-room__media"><img src="https://images.unsplash.com/photo-1719782758789-7dbf0ed54b11?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bWluaW1hbCUyMGJhdGhyb29tJTIwbWFyYmxlfGVufDF8MXx8fDE3OTE0MDc3Njd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" width="4000" height="6000" alt="A white marble basin under a large mirror with a brass frame" loading="lazy"></div>
     </article>
     <article class="rm-col rm-room">
       <h3 class="m-text-2 rm-room__title">Bedroom</h3>
@@ -655,7 +773,7 @@ html.lenis, html.lenis body { height: auto; }
       <p class="m-text rm-room__text">Two lights at pillow height that dim right down, and a ceiling light you hardly use. Warm bulbs only, and a switch you can reach from bed.</p>
       <a class="m-link m-text rm-room__link" href="#collection">Bedside lights →</a>
       <span class="rm-room__strip" aria-hidden="true"></span>
-      <div class="rm-room__media"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1758803275226-1bfc87aa6660?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8YmVkcm9vbSUyMGJlZHNpZGUlMjBsYW1wJTIwbWluaW1hbHxlbnwxfDF8fHwxNzkxNDA3NzY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" width="3024" height="3780" alt="A white bedroom with a black wall lamp above a wooden bedside table" loading="lazy"></div>
+      <div class="rm-room__media"><img src="https://images.unsplash.com/photo-1758803275226-1bfc87aa6660?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8YmVkcm9vbSUyMGJlZHNpZGUlMjBsYW1wJTIwbWluaW1hbHxlbnwxfDF8fHwxNzkxNDA3NzY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" width="3024" height="3780" alt="A white bedroom with a black wall lamp above a wooden bedside table" loading="lazy"></div>
     </article>
     <article class="rm-col rm-room">
       <h3 class="m-text-2 rm-room__title">Living</h3>
@@ -663,7 +781,7 @@ html.lenis, html.lenis body { height: auto; }
       <p class="m-text rm-room__text">Three pools of light at three heights: a floor lamp by the chair, a table lamp across the room and something low on a shelf.</p>
       <a class="m-link m-text rm-room__link" href="#collection">Floor and table lamps →</a>
       <span class="rm-room__strip" aria-hidden="true"></span>
-      <div class="rm-room__media"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1759722667550-81316a23d723?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGl2aW5nJTIwcm9vbSUyMGZsb29yJTIwbGFtcCUyMG1pbmltYWx8ZW58MXwxfHx8MTc5MTQwNzc4Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" width="2500" height="2800" alt="A grey armchair beside a black tripod floor lamp and a small side table" loading="lazy"></div>
+      <div class="rm-room__media"><img src="https://images.unsplash.com/photo-1759722667550-81316a23d723?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGl2aW5nJTIwcm9vbSUyMGZsb29yJTIwbGFtcCUyMG1pbmltYWx8ZW58MXwxfHx8MTc5MTQwNzc4Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" width="2500" height="2800" alt="A grey armchair beside a black tripod floor lamp and a small side table" loading="lazy"></div>
     </article>
     <article class="rm-col rm-room">
       <h3 class="m-text-2 rm-room__title">Study</h3>
@@ -671,7 +789,7 @@ html.lenis, html.lenis body { height: auto; }
       <p class="m-text rm-room__text">One arm lamp you can aim at the page and a softer light behind the screen, so your eyes are not working against the dark.</p>
       <a class="m-link m-text rm-room__link" href="#collection">Desk lamps →</a>
       <span class="rm-room__strip" aria-hidden="true"></span>
-      <div class="rm-room__media"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1582737068506-19cfa00233ee?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGRlc2slMjBsYW1wJTIwc3R1ZHklMjBtaW5pbWFsfGVufDF8MXx8fDE3OTE0MDc3ODd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" width="5073" height="7609" alt="A black and chrome arm lamp on a desk against a white wall" loading="lazy"></div>
+      <div class="rm-room__media"><img src="https://images.unsplash.com/photo-1582737068506-19cfa00233ee?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGRlc2slMjBsYW1wJTIwc3R1ZHklMjBtaW5pbWFsfGVufDF8MXx8fDE3OTE0MDc3ODd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" width="5073" height="7609" alt="A black and chrome arm lamp on a desk against a white wall" loading="lazy"></div>
     </article>
     <article class="rm-col rm-room">
       <h3 class="m-text-2 rm-room__title">Hall</h3>
@@ -679,7 +797,7 @@ html.lenis, html.lenis body { height: auto; }
       <p class="m-text rm-room__text">A welcome at the door: a wall light on a sensor, and a small lamp on the console for the hours when nobody is home.</p>
       <a class="m-link m-text rm-room__link" href="#collection">Wall lights →</a>
       <span class="rm-room__strip" aria-hidden="true"></span>
-      <div class="rm-room__media"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1785535573604-62e31f0fd341?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZW50cnl3YXklMjBjb25zb2xlJTIwbGFtcHxlbnwxfDF8fHwxNzkxNDA3ODE1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" width="3891" height="5836" alt="A round mirror and a brass wall light above a slim wooden console in a hallway" loading="lazy"></div>
+      <div class="rm-room__media"><img src="https://images.unsplash.com/photo-1785535573604-62e31f0fd341?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZW50cnl3YXklMjBjb25zb2xlJTIwbGFtcHxlbnwxfDF8fHwxNzkxNDA3ODE1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" width="3891" height="5836" alt="A round mirror and a brass wall light above a slim wooden console in a hallway" loading="lazy"></div>
     </article>
     <div class="rm-col rm-end">
       <h3 class="m-text-2">Your room is not on the list?</h3>
@@ -695,48 +813,48 @@ html.lenis, html.lenis body { height: auto; }
     <h2 id="collection-title" class="m-text-2">Six ways to light a room</h2>
     <p class="m-text">Around six hundred lamps from small studios, sorted the way you look for them: by where the light comes from. Everything can be seen switched on in the showroom.</p>
   </div>
-  <ol class="cl-list">
+  <ol class="cl-list" data-8b-items=":scope > li" data-8b-fixed="6">
     <li class="cl-row">
       <span class="cl-row__lamp" aria-hidden="true"></span>
       <h3 class="m-text-2 cl-row__name">Pendants</h3>
       <p class="m-text cl-row__text">Glass, paper and spun metal, hung at the height we measure for your table or your stair.</p>
       <p class="cl-row__meta m-text-3"><span>From £85</span><a class="m-link" href="#contact">Ask about pendants →</a></p>
-      <figure class="cl-shot"><div class="cl-shot__stick"><div class="cl-shot__move"><img style="background:#d9d9c0" src="https://images.unsplash.com/photo-1764757137717-78be1702848a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGVuZGFudCUyMGxhbXAlMjB3aGl0ZSUyMGNlaWxpbmd8ZW58MXwxfHx8MTc5MTQwNzgxMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" width="2729" height="4093" alt="A white globe pendant on a black rod hanging from a pale ceiling" loading="lazy"></div></div></figure>
+      <figure class="cl-shot"><div class="cl-shot__stick"><div class="cl-shot__move"><img src="https://images.unsplash.com/photo-1764757137717-78be1702848a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGVuZGFudCUyMGxhbXAlMjB3aGl0ZSUyMGNlaWxpbmd8ZW58MXwxfHx8MTc5MTQwNzgxMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" width="2729" height="4093" alt="A white globe pendant on a black rod hanging from a pale ceiling" loading="lazy"></div></div></figure>
     </li>
     <li class="cl-row">
       <span class="cl-row__lamp" aria-hidden="true"></span>
       <h3 class="m-text-2 cl-row__name">Table lamps</h3>
       <p class="m-text cl-row__text">Ceramic, stone and brass bases, with linen shades made to order in three weeks.</p>
       <p class="cl-row__meta m-text-3"><span>From £64</span><a class="m-link" href="#contact">Ask about table lamps →</a></p>
-      <figure class="cl-shot"><div class="cl-shot__stick"><div class="cl-shot__move"><img style="background:#c0c0a6" src="https://images.unsplash.com/photo-1655151418942-2bf9df1cfdf3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fGNlcmFtaWMlMjB0YWJsZSUyMGxhbXB8ZW58MXwxfHx8MTc5MTQwNzg3M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" width="3876" height="6240" alt="A patterned ceramic table lamp with a white shade on a woven side table" loading="lazy"></div></div></figure>
+      <figure class="cl-shot"><div class="cl-shot__stick"><div class="cl-shot__move"><img src="https://images.unsplash.com/photo-1655151418942-2bf9df1cfdf3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fGNlcmFtaWMlMjB0YWJsZSUyMGxhbXB8ZW58MXwxfHx8MTc5MTQwNzg3M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" width="3876" height="6240" alt="A patterned ceramic table lamp with a white shade on a woven side table" loading="lazy"></div></div></figure>
     </li>
     <li class="cl-row">
       <span class="cl-row__lamp" aria-hidden="true"></span>
       <h3 class="m-text-2 cl-row__name">Floor lamps</h3>
       <p class="m-text cl-row__text">Arcs, tripods and readers that stand where no ceiling point and no socket can reach.</p>
       <p class="cl-row__meta m-text-3"><span>From £140</span><a class="m-link" href="#contact">Ask about floor lamps →</a></p>
-      <figure class="cl-shot"><div class="cl-shot__stick"><div class="cl-shot__move"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1787676560635-2567cc0d6dd9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTl8fGxpdmluZyUyMHJvb20lMjBmbG9vciUyMGxhbXAlMjBtaW5pbWFsfGVufDF8MXx8fDE3OTE0MDc3ODZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" width="4672" height="6246" alt="A slim black floor lamp leaning over a pale chaise by tall curtains" loading="lazy"></div></div></figure>
+      <figure class="cl-shot"><div class="cl-shot__stick"><div class="cl-shot__move"><img src="https://images.unsplash.com/photo-1787676560635-2567cc0d6dd9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTl8fGxpdmluZyUyMHJvb20lMjBmbG9vciUyMGxhbXAlMjBtaW5pbWFsfGVufDF8MXx8fDE3OTE0MDc3ODZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" width="4672" height="6246" alt="A slim black floor lamp leaning over a pale chaise by tall curtains" loading="lazy"></div></div></figure>
     </li>
     <li class="cl-row">
       <span class="cl-row__lamp" aria-hidden="true"></span>
       <h3 class="m-text-2 cl-row__name">Wall lights</h3>
       <p class="m-text cl-row__text">Plug-in or wired, for halls, bedheads and mirrors, with the cable tidied into the wall or a neat run.</p>
       <p class="cl-row__meta m-text-3"><span>From £58</span><a class="m-link" href="#contact">Ask about wall lights →</a></p>
-      <figure class="cl-shot"><div class="cl-shot__stick"><div class="cl-shot__move"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1655153382868-6f284ebd4aa9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8d2FsbCUyMHNjb25jZSUyMG1pbmltYWx8ZW58MXwxfHx8MTc5MTQwNzgxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" width="3866" height="6240" alt="A pleated white fabric wall light with a brass frame on a white wall" loading="lazy"></div></div></figure>
+      <figure class="cl-shot"><div class="cl-shot__stick"><div class="cl-shot__move"><img src="https://images.unsplash.com/photo-1655153382868-6f284ebd4aa9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8d2FsbCUyMHNjb25jZSUyMG1pbmltYWx8ZW58MXwxfHx8MTc5MTQwNzgxMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" width="3866" height="6240" alt="A pleated white fabric wall light with a brass frame on a white wall" loading="lazy"></div></div></figure>
     </li>
     <li class="cl-row">
       <span class="cl-row__lamp" aria-hidden="true"></span>
       <h3 class="m-text-2 cl-row__name">Outdoor</h3>
       <p class="m-text cl-row__text">Lanterns for the door and posts for the path, rated for a Glasgow winter.</p>
       <p class="cl-row__meta m-text-3"><span>From £72</span><a class="m-link" href="#contact">Ask about outdoor lights →</a></p>
-      <figure class="cl-shot"><div class="cl-shot__stick"><div class="cl-shot__move"><img style="background:#8c8c8c" src="https://images.unsplash.com/photo-1770394644068-c1fd69dda1c6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8b3V0ZG9vciUyMHdhbGwlMjBsYW50ZXJuJTIwZmFjYWRlfGVufDF8MXx8fDE3OTE0MDc4MTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" width="8736" height="11648" alt="An old black wall lantern on a scrolled bracket against a pale wall" loading="lazy"></div></div></figure>
+      <figure class="cl-shot"><div class="cl-shot__stick"><div class="cl-shot__move"><img src="https://images.unsplash.com/photo-1770394644068-c1fd69dda1c6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8b3V0ZG9vciUyMHdhbGwlMjBsYW50ZXJuJTIwZmFjYWRlfGVufDF8MXx8fDE3OTE0MDc4MTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" width="8736" height="11648" alt="An old black wall lantern on a scrolled bracket against a pale wall" loading="lazy"></div></div></figure>
     </li>
     <li class="cl-row">
       <span class="cl-row__lamp" aria-hidden="true"></span>
       <h3 class="m-text-2 cl-row__name">Bulbs and dimmers</h3>
       <p class="m-text cl-row__text">Warm filament and LED bulbs in every fitting, and the dimmers that will not make them flicker.</p>
       <p class="cl-row__meta m-text-3"><span>From £6</span><a class="m-link" href="#contact">Ask about bulbs →</a></p>
-      <figure class="cl-shot"><div class="cl-shot__stick"><div class="cl-shot__move"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1749026731003-5ef32cf691a4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGxpZ2h0JTIwYnVsYiUyMGZpbGFtZW50JTIwZGFya3xlbnwxfDF8fHwxNzkxNDA3ODEzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" width="3648" height="5472" alt="A clear bulb glowing under a brass shade against a dark background" loading="lazy"></div></div></figure>
+      <figure class="cl-shot"><div class="cl-shot__stick"><div class="cl-shot__move"><img src="https://images.unsplash.com/photo-1749026731003-5ef32cf691a4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGxpZ2h0JTIwYnVsYiUyMGZpbGFtZW50JTIwZGFya3xlbnwxfDF8fHwxNzkxNDA3ODEzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" width="3648" height="5472" alt="A clear bulb glowing under a brass shade against a dark background" loading="lazy"></div></div></figure>
     </li>
   </ol>
 </section>
@@ -744,14 +862,14 @@ html.lenis, html.lenis body { height: auto; }
 <!-- plans: split section: heading, paragraph and a photo on the left, three numbered steps and a button on the right -->
 <section id="plans" data-8b-section="plans" aria-labelledby="plans-title">
   <div class="pl-head">
-    <div data-8b-motion="rise">
+    <div data-8b-motion="rise" data-8b-items=":scope > *">
       <h2 id="plans-title" class="m-text-2">A plan before a single hole is drilled</h2>
       <p class="m-text">Most rooms are lit by one light in the middle of the ceiling, because nobody planned otherwise. Our planners draw the light first and choose the lamps after.</p>
     </div>
-    <figure class="pl-media"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1628900941064-ba8df8b51e4a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8YXJjaGl0ZWN0JTIwZmxvb3IlMjBwbGFuJTIwZHJhd2luZyUyMGRlc2t8ZW58MXwwfHx8MTc5MTQwNzg3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=740&amp;q=60" width="4240" height="2384" alt="A lighting drawing of a room on a desk with a pen and material samples" loading="lazy" data-8b-motion="switchOn"></figure>
+    <figure class="pl-media"><img src="https://images.unsplash.com/photo-1628900941064-ba8df8b51e4a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8YXJjaGl0ZWN0JTIwZmxvb3IlMjBwbGFuJTIwZHJhd2luZyUyMGRlc2t8ZW58MXwwfHx8MTc5MTQwNzg3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=740&amp;q=60" width="4240" height="2384" alt="A lighting drawing of a room on a desk with a pen and material samples" loading="lazy" data-8b-motion="switchOn"></figure>
   </div>
   <div class="pl-body">
-    <ol class="pl-steps">
+    <ol class="pl-steps" data-8b-items=":scope > li" data-8b-fixed="3">
       <li class="pl-step" data-8b-motion="rule">
         <span class="pl-step__no m-text-2">1</span>
         <h3 class="m-text-4">Send us the room</h3>
@@ -783,7 +901,7 @@ html.lenis, html.lenis body { height: auto; }
       <p class="m-text">We buy from workshops small enough to answer the phone. Most make fewer than a hundred lamps a year, and we can tell you whose hands wired yours.</p>
     </div>
   </div>
-  <ul class="mk-list">
+  <ul class="mk-list" data-8b-items=":scope > li">
     <li class="mk-row"><span class="mk-name">Atelier Vass</span><span class="mk-where m-text-3"><strong>Porto</strong><span>Spun aluminium pendants</span></span></li>
     <li class="mk-row"><span class="mk-name">Halden Works</span><span class="mk-where m-text-3"><strong>Bergen</strong><span>Oak and paper floor lamps</span></span></li>
     <li class="mk-row"><span class="mk-name">Morrow &amp; Pike</span><span class="mk-where m-text-3"><strong>Leeds</strong><span>Enamel wall lights</span></span></li>
@@ -800,7 +918,7 @@ html.lenis, html.lenis body { height: auto; }
 <!-- try: loan offer: heading, paragraph, button and note beside a large photo, then three day columns (Friday, The weekend, Monday) -->
 <section id="try" data-8b-section="try" aria-labelledby="try-title">
   <div class="tr-intro">
-    <div data-8b-motion="rise">
+    <div data-8b-motion="rise" data-8b-items=":scope > *">
       <h2 id="try-title" class="m-text-2">Borrow a lamp for the weekend</h2>
       <p class="m-text">A lamp looks different at home, at night, next to your own sofa. So take it home first and decide there.</p>
     </div>
@@ -809,9 +927,9 @@ html.lenis, html.lenis body { height: auto; }
   </div>
   <div class="tr-stage">
     <span class="tr-strip" aria-hidden="true"></span>
-    <figure class="tr-media"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1785535573662-417e82193598?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2VyYW1pYyUyMHRhYmxlJTIwbGFtcHxlbnwxfDF8fHwxNzkxNDA3ODczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=790&amp;q=60" width="4000" height="6000" alt="A white ceramic table lamp beside an armchair in front of a marble wall" loading="lazy" data-8b-motion="switchOn"></figure>
+    <figure class="tr-media"><img src="https://images.unsplash.com/photo-1785535573662-417e82193598?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2VyYW1pYyUyMHRhYmxlJTIwbGFtcHxlbnwxfDF8fHwxNzkxNDA3ODczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=790&amp;q=60" width="4000" height="6000" alt="A white ceramic table lamp beside an armchair in front of a marble wall" loading="lazy" data-8b-motion="switchOn"></figure>
   </div>
-  <ol class="tr-days">
+  <ol class="tr-days" data-8b-items=":scope > li" data-8b-fixed="3">
     <li class="tr-day" data-8b-motion="rule"><h3 class="m-text-2 tr-day__name">Friday</h3><p class="m-text">Choose any table or floor lamp in the showroom. We pack it and lend you the right bulb.</p></li>
     <li class="tr-day" data-8b-motion="rule"><h3 class="m-text-2 tr-day__name">The weekend</h3><p class="m-text">Live with it. Try it by the chair, on the dresser, and after dark, when it matters.</p></li>
     <li class="tr-day" data-8b-motion="rule"><h3 class="m-text-2 tr-day__name">Monday</h3><p class="m-text">Bring it back and the £20 deposit comes back too, or keep it and the deposit comes off the price.</p></li>
@@ -827,11 +945,11 @@ html.lenis, html.lenis body { height: auto; }
     <a class="m-btn" href="#contact"><span class="m-btn__label">Book a repair</span></a>
   </div>
   <figure class="rp-frame">
-    <img style="background:#40260c" class="rp-before" src="https://images.unsplash.com/photo-1774916698642-258ea43637e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dmludGFnZSUyMGJyYXNzJTIwbGFtcHxlbnwxfDF8fHwxNzkxNDA3Nzg4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" width="2989" height="4484" alt="A vintage brass lamp with a pleated shade glowing against a yellow wall" loading="lazy">
-    <div class="rp-after" aria-hidden="true"><div class="rp-after__in"><img style="background:#40260c" src="https://images.unsplash.com/photo-1774916698642-258ea43637e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dmludGFnZSUyMGJyYXNzJTIwbGFtcHxlbnwxfDF8fHwxNzkxNDA3Nzg4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" width="2989" height="4484" alt="" loading="lazy"></div></div>
+    <img class="rp-before" src="https://images.unsplash.com/photo-1774916698642-258ea43637e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dmludGFnZSUyMGJyYXNzJTIwbGFtcHxlbnwxfDF8fHwxNzkxNDA3Nzg4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" width="2989" height="4484" alt="A vintage brass lamp with a pleated shade glowing against a yellow wall" loading="lazy">
+    <div class="rp-after" aria-hidden="true"><div class="rp-after__in"><img src="https://images.unsplash.com/photo-1774916698642-258ea43637e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dmludGFnZSUyMGJyYXNzJTIwbGFtcHxlbnwxfDF8fHwxNzkxNDA3Nzg4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" width="2989" height="4484" alt="" loading="lazy"></div></div>
   </figure>
   <span class="rp-line" aria-hidden="true"></span>
-  <ol class="rp-steps">
+  <ol class="rp-steps" data-8b-items=":scope > li">
     <li class="rp-step"><span class="rp-step__no m-text-3">Step 1</span><h3 class="m-text-4">Strip it down</h3><p class="m-text-3">Old flex, perished rubber and the brittle lampholder come out.</p></li>
     <li class="rp-step"><span class="rp-step__no m-text-3">Step 2</span><h3 class="m-text-4">Rewire</h3><p class="m-text-3">New cord, earthed wherever the metal needs it, with proper strain relief.</p></li>
     <li class="rp-step"><span class="rp-step__no m-text-3">Step 3</span><h3 class="m-text-4">Switch and plug</h3><p class="m-text-3">A new switch where your hand expects it, and a fused plug.</p></li>
@@ -841,11 +959,11 @@ html.lenis, html.lenis body { height: auto; }
 
 <!-- faq: heading with a link to the contact form beside five questions as native details elements -->
 <section id="faq" data-8b-section="faq" aria-labelledby="faq-title">
-  <div class="fq-head" data-8b-motion="rise">
+  <div class="fq-head" data-8b-motion="rise" data-8b-items=":scope > *">
     <h2 id="faq-title" class="m-text-2">Before the lamps arrive</h2>
     <p class="m-text">Short answers to what people ask at the counter. Anything else, <a class="m-link" href="#contact">write to us</a>.</p>
   </div>
-  <div class="fq-list">
+  <div class="fq-list" data-8b-items=":scope > details">
     <details class="fq-item" data-8b-motion="rule"><summary class="m-text-4">Do you deliver, and how fast?</summary><p class="m-text">Across the UK in three to five working days, packed in paper and card. Glasgow orders over £150 come in our own van, often the next day.</p></details>
     <details class="fq-item" data-8b-motion="rule"><summary class="m-text-4">Can you fit the lamps as well?</summary><p class="m-text">Yes. Our electrician fits pendants and wall lights across Glasgow from £65 a visit. Plug-in lamps need nobody.</p></details>
     <details class="fq-item" data-8b-motion="rule"><summary class="m-text-4">What does a lighting plan cost?</summary><p class="m-text">Nothing with an order over £600. Otherwise it is £90, and the £90 comes off any lamps you buy from the plan within a year.</p></details>
@@ -861,7 +979,7 @@ html.lenis, html.lenis body { height: auto; }
   <div class="th-disc">
     <span class="th-ring th-ring--a" aria-hidden="true"></span>
     <span class="th-ring th-ring--b" aria-hidden="true"></span>
-    <figure class="th-media"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1578490343589-ec110a8694b5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bGlnaHRpbmclMjBzaG9wJTIwc2hvd3Jvb20lMjBsYW1wc3xlbnwxfDB8fHwxNzkxNDA3Nzg5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=730&amp;q=60" width="3126" height="2192" alt="Glass and brass pendant lamps lit in a dark showroom" loading="lazy"></figure>
+    <figure class="th-media"><img src="https://images.unsplash.com/photo-1578490343589-ec110a8694b5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bGlnaHRpbmclMjBzaG9wJTIwc2hvd3Jvb20lMjBsYW1wc3xlbnwxfDB8fHwxNzkxNDA3Nzg5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=950&amp;q=60" width="3126" height="2192" alt="Glass and brass pendant lamps lit in a dark showroom" loading="lazy"></figure>
   </div>
   <div class="th-info">
     <p class="m-text">Every Thursday the showroom stays open into the evening, with the daylight gone and every lamp switched on. It is the honest way to see how a shade throws its light: after dark, the way you will use it.</p>
@@ -873,7 +991,7 @@ html.lenis, html.lenis body { height: auto; }
 <section id="contact" data-8b-section="contact" aria-labelledby="contact-title">
   <div class="ct-info">
     <span class="ct-glow" aria-hidden="true" data-8b-motion="glow"></span>
-    <div data-8b-motion="rise">
+    <div data-8b-motion="rise" data-8b-items=":scope > *">
       <h2 id="contact-title" class="m-text-2">Come and see them lit</h2>
       <address class="ct-address m-text">Glim Lighting<br>1 Example Street<br>Glasgow G00 0AA</address>
     </div>
@@ -912,7 +1030,7 @@ html.lenis, html.lenis body { height: auto; }
   <div class="ft-cols">
     <nav aria-label="Footer">
       <h2 class="m-text-3">Shop</h2>
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><a class="m-link-2 m-text" href="#collection">The lamps</a></li>
         <li><a class="m-link-2 m-text" href="#rooms">Light by room</a></li>
         <li><a class="m-link-2 m-text" href="#plans">Lighting plans</a></li>
@@ -943,12 +1061,20 @@ html.lenis, html.lenis body { height: auto; }
     menu.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
     nav.classList.toggle('is-open', open);
-    if (open) { window.lenis?.stop(); close.focus(); } else { window.lenis?.start(); }
+    if (open) { window.motionKit?.wheel?.stop(); close.focus(); } else { window.motionKit?.wheel?.start(); }
   };
   toggle.addEventListener('click', () => setOpen(true));
   close.addEventListener('click', () => { setOpen(false); toggle.focus(); });
   menu.addEventListener('click', event => { if (event.target.closest('a')) setOpen(false); });
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !menu.hidden) { setOpen(false); toggle.focus(); } });
+  if (document.documentElement.hasAttribute('data-8b-live')) {
+    let last = window.scrollY;
+    addEventListener('scroll', () => {
+      const now = window.scrollY;
+      if (now !== last && !nav.classList.contains('is-open')) nav.classList.toggle('is-hidden', now > last && now > 140);
+      last = now;
+    }, { passive: true });
+  }
 })();
 </script>
 
@@ -965,289 +1091,165 @@ html.lenis, html.lenis body { height: auto; }
   });
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
+
+<script data-8b-part="motion-kit">
 (() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function navHeight() { const nav = document.getElementById('navigation'); return nav ? nav.offsetHeight : 0; }
-function refreshScroll() { ScrollTrigger.sort(); ScrollTrigger.refresh(); }
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.09, anchors: { offset: -navHeight() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  rise(element, vars = {}) {
-    const items = element.children.length ? [...element.children] : [element];
-    const timeline = gsap.timeline(vars);
-    items.forEach((item, index) => timeline.from(item, { y: 26, opacity: 0, duration: 0.9, ease: 'power3.out' }, index * 0.09));
-    return timeline;
-  },
-  rule(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { '--rule': 0 }, { '--rule': 1, duration: 1.1, ease: 'power2.inOut' });
-  },
-  squiggle(element, vars = {}) {
-    const timeline = gsap.timeline(vars);
-    element.querySelectorAll('path').forEach((path, index) => {
-      const length = Math.ceil(path.getTotalLength()) + 2;
-      timeline.fromTo(path, { strokeDasharray: length, strokeDashoffset: length }, { strokeDashoffset: 0, duration: 1.2, ease: 'power2.inOut' }, index * 0.15);
+<script data-8b-part="scene-script:rooms">
+motionKit.scene('rooms', () => {
+  const section = document.getElementById('rooms');
+  const track = section.querySelector('.rm-track');
+  const rooms = [...track.querySelectorAll('.rm-room')];
+  rooms.forEach(room => room.querySelectorAll('.rm-room__squiggle path').forEach(path => motionKit.set(path, { '--rooms-dash': Math.ceil(path.getTotalLength()) + 2 })));
+  motionKit.measure(() => {
+    const view = document.documentElement.clientWidth;
+    const travel = Math.max(0, track.scrollWidth - view);
+    const pin = Math.round(travel * 0.85);
+    const perPixel = travel ? pin / travel : 0;
+    motionKit.set(section, { '--rooms-travel': travel + 'px', '--rooms-pin': pin + 'px' });
+    rooms.forEach(room => {
+      const from = room.offsetLeft - view * 0.78;
+      const to = room.offsetLeft + room.offsetWidth / 2 - view * 0.5;
+      const start = Math.max(0, from) * perPixel;
+      motionKit.set(room, { '--rooms-from': start + 'px', '--rooms-to': Math.max(start + 1, to * perPixel) + 'px', '--rooms-lit-from': Math.max(0, -from / (to - from)) });
     });
-    return timeline;
-  },
-  switchOn(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { filter: 'brightness(0.42) grayscale(0.85)' }, { filter: 'brightness(1) grayscale(0)', duration: 1, ease: 'none' });
-  },
-  glow(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { scale: 0.35, opacity: 0.3 }, { scale: 1, opacity: 1, duration: 1, ease: 'none' });
-  },
-  thicken(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { fontWeight: 200 }, { fontWeight: 700, duration: 1, ease: 'none' });
-  }
-};
-const onceEffects = ['rise', 'rule', 'squiggle'];
-const scrubEffects = ['switchOn', 'glow'];
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  [...onceEffects, ...scrubEffects].forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => {
-        if (onceEffects.includes(name)) {
-          const animation = effects[name](element, { paused: true });
-          ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top 88%', once: true, animation });
-        } else {
-          ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top bottom', end: 'center 45%', scrub: 0.5, animation: effects[name](element) });
-        }
-      });
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
   });
 });
-queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const nav = document.getElementById('navigation');
-  const trigger = ScrollTrigger.create({ id: 'effect:header:navigation', start: 0, end: 'max', onUpdate: self => {
-    if (nav.classList.contains('is-open')) return;
-    nav.classList.toggle('is-hidden', self.direction === 1 && self.scroll() > 140);
-  } });
-  return () => { trigger.kill(); nav.classList.remove('is-hidden'); };
-}), { first: true, id: 'effect:header:navigation' });
+</script>
+<script data-8b-part="scene-script:makers">
+motionKit.scene('makers', () => {
+  const names = [...document.querySelectorAll('#makers .mk-name')];
+  const pen = document.createElement('canvas').getContext('2d');
+  motionKit.measure(() => names.forEach(name => {
+    const style = getComputedStyle(name);
+    const span = weight => { pen.font = weight + ' ' + style.fontSize + ' ' + style.fontFamily; return pen.measureText(name.textContent).width; };
+    motionKit.set(name, { '--makers-wide': (span(700) / span(300)).toFixed(4) });
+  }));
+});
+</script>
+<script data-8b-part="scene-script:repairs">
+motionKit.scene('repairs', () => {
+  const section = document.getElementById('repairs');
+  const frame = section.querySelector('.rp-frame');
+  const line = section.querySelector('.rp-line');
+  motionKit.measure(() => motionKit.set(line, {
+    '--repairs-line-left': frame.offsetLeft + 'px',
+    '--repairs-line-top': frame.offsetTop + 'px',
+    '--repairs-line-width': (innerWidth >= 900 ? section.clientWidth - frame.offsetLeft : frame.offsetWidth) + 'px',
+    '--repairs-line-travel': frame.offsetHeight + 'px'
+  }));
+});
 </script>
 
-<script data-8b-part="scene:rooms">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('rooms');
-    const track = section.querySelector('.rm-track');
-    const rooms = [...track.querySelectorAll('.rm-room')];
-    section.classList.add('is-track');
-    const distance = () => Math.max(0, track.scrollWidth - document.documentElement.clientWidth);
-    const slide = gsap.to(track, {
-      x: () => -distance(),
-      ease: 'none',
-      scrollTrigger: { id: 'rooms', trigger: section, start: 'top top', end: () => '+=' + Math.round(distance() * 0.85), pin: true, scrub: 0.7, invalidateOnRefresh: true }
-    });
-    rooms.forEach((room, index) => {
-      const strip = room.querySelector('.rm-room__strip');
-      const photo = room.querySelector('.rm-room__media img');
-      const squiggle = room.querySelector('.rm-room__squiggle');
-      const lit = gsap.timeline({ defaults: { ease: 'none' } });
-      if (strip) lit.fromTo(strip, { scaleY: 0 }, { scaleY: 1, duration: 1 }, 0);
-      if (photo) lit.add(effects.switchOn(photo), 0);
-      if (squiggle) lit.add(effects.squiggle(squiggle), 0);
-      ScrollTrigger.create({ id: `rooms:room-${index + 1}`, trigger: room, containerAnimation: slide, start: 'left 78%', end: 'center 50%', scrub: true, animation: lit });
-    });
-    return () => section.classList.remove('is-track');
-  });
-});
-</script>
-<script data-8b-part="scene:collection">
-queueMotion(() => {
-  gsap.matchMedia().add({ motion: '(prefers-reduced-motion: no-preference)', wide: '(min-width: 900px)' }, context => {
-    if (!context.conditions.motion) return;
-    const wide = context.conditions.wide;
-    const section = document.getElementById('collection');
-    const rows = [...section.querySelectorAll('.cl-row')];
-    const mode = wide ? 'is-index' : 'is-rows';
-    section.classList.add(mode);
-    rows.forEach((row, index) => {
-      const move = row.querySelector('.cl-shot__move');
-      const photo = move ? move.querySelector('img') : null;
-      const lamp = row.querySelector('.cl-row__lamp');
-      const timeline = gsap.timeline({ defaults: { ease: 'none' } });
-      if ((index > 0 || !wide) && move && photo) {
-        timeline.fromTo(move, { yPercent: 100 }, { yPercent: 0, duration: 0.3, ease: 'power1.inOut' }, 0)
-          .fromTo(photo, { yPercent: -100 }, { yPercent: 0, duration: 0.3, ease: 'power1.inOut' }, 0);
-      }
-      if (lamp) {
-        timeline.fromTo(lamp, { scaleY: 0 }, { scaleY: 1, duration: 0.25 }, 0.05)
-          .to(lamp, { scaleY: 0, duration: 0.2 }, 0.8);
-      }
-      timeline.set({}, {}, 1);
-      ScrollTrigger.create({ id: `collection:row-${index + 1}`, trigger: row, start: wide ? 'top 82%' : 'top 92%', end: wide ? 'bottom 30%' : 'bottom 35%', scrub: 0.5, animation: timeline });
-    });
-    return () => section.classList.remove(mode);
-  });
-});
-</script>
-<script data-8b-part="scene:makers">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('makers');
-    const list = section.querySelector('.mk-list');
-    const rows = [...list.querySelectorAll('.mk-row')];
-    const names = rows.map(row => row.querySelector('.mk-name'));
-    let centres = [];
-    const measure = () => {
-      centres = rows.map(row => { const box = row.getBoundingClientRect(); return box.top + window.scrollY + box.height / 2; });
-    };
-    const paint = () => {
-      const middle = window.scrollY + innerHeight / 2;
-      const reach = innerHeight * 0.4;
-      rows.forEach((row, index) => {
-        const near = Math.max(0, 1 - Math.abs(centres[index] - middle) / reach);
-        const heat = near * near * (3 - 2 * near);
-        if (names[index]) names[index].style.fontWeight = String(Math.round(300 + heat * 400));
-        row.style.setProperty('--heat', heat.toFixed(3));
-      });
-    };
-    ScrollTrigger.create({ id: 'makers', trigger: list, start: 'top bottom', end: 'bottom top', onRefresh: () => { measure(); paint(); }, onUpdate: paint });
-    measure();
-    paint();
-    return () => {
-      names.forEach(name => name && name.style.removeProperty('font-weight'));
-      rows.forEach(row => row.style.removeProperty('--heat'));
-    };
-  });
-});
-</script>
-<script data-8b-part="scene:repairs">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('repairs');
-    const frame = section.querySelector('.rp-frame');
-    const after = frame.querySelector('.rp-after');
-    const inner = frame.querySelector('.rp-after__in');
-    const line = section.querySelector('.rp-line');
-    const steps = [...section.querySelectorAll('.rp-step')];
-    section.classList.add('is-restoring');
-    const place = () => {
-      const wide = innerWidth >= 900;
-      gsap.set(line, { left: frame.offsetLeft, top: frame.offsetTop, width: wide ? section.clientWidth - frame.offsetLeft : frame.offsetWidth, right: 'auto' });
-    };
-    place();
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'repairs', trigger: frame, start: 'top 72%', end: 'bottom 42%', scrub: 0.5, invalidateOnRefresh: true, onRefresh: place }
-    });
-    timeline
-      .fromTo(after, { yPercent: -100 }, { yPercent: 0, duration: 1 }, 0)
-      .fromTo(inner, { yPercent: 100 }, { yPercent: 0, duration: 1 }, 0)
-      .fromTo(line, { y: 0, opacity: 1 }, { y: () => frame.offsetHeight, duration: 1 }, 0)
-      .to(line, { opacity: 0, duration: 0.06 }, 0.97);
-    steps.forEach((step, index) => {
-      timeline.fromTo(step, { '--lit': 0 }, { '--lit': 1, duration: 0.1 }, Math.max(0, (index + 0.5) / steps.length - 0.08));
-    });
-    return () => section.classList.remove('is-restoring');
-  });
-});
-</script>
-<script data-8b-part="scene:thursdays">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('thursdays');
-    const disc = section.querySelector('.th-disc');
-    const media = disc.querySelector('.th-media');
-    const photo = media.querySelector('img');
-    const rings = [...disc.querySelectorAll('.th-ring')];
-    const first = section.querySelector('.th-line--a');
-    const second = section.querySelector('.th-line--b');
-    const shift = () => innerWidth * (innerWidth >= 900 ? 0.12 : 0.06);
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'thursdays', trigger: disc, start: 'top 92%', end: 'center 52%', scrub: 0.6, invalidateOnRefresh: true }
-    });
-    timeline.fromTo(media, { clipPath: 'ellipse(50% 5% at 50% 50%)' }, { clipPath: 'ellipse(50% 50% at 50% 50%)', duration: 1, ease: 'power1.in' }, 0)
-      .fromTo(photo, { scale: 1.3 }, { scale: 1, duration: 1 }, 0);
-    rings.forEach(ring => timeline.fromTo(ring, { scaleY: 0.1 }, { scaleY: 1, duration: 1, ease: 'power1.in' }, 0));
-    if (first) timeline.fromTo(first, { x: () => shift() }, { x: 0, duration: 0.7, ease: 'power1.out' }, 0);
-    if (second) timeline.fromTo(second, { x: () => -shift() }, { x: 0, duration: 0.7, ease: 'power1.out' }, 0);
-  });
-});
-</script>
-<script data-8b-part="scene:sign">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const footer = document.getElementById('footer');
-    const mark = footer.querySelector('.ft-mark');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'sign', trigger: mark, start: 'top bottom', end: 'bottom bottom', scrub: 0.6 }
-    });
-    timeline.add(effects.thicken(mark), 0)
-      .fromTo(mark, { '--sign': 0 }, { '--sign': 1, duration: 1 }, 0);
-  });
-});
-</script>
 </body>
 </html>

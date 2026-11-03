@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/hair-salon-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -133,10 +134,6 @@
   button, input, select, textarea { font: inherit; color: inherit; }
   :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
   .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-stopped { overflow: hidden; }
-  .lenis.lenis-smooth iframe { pointer-events: none; }
 }
 </style>
 <style data-8b-part="system">
@@ -279,13 +276,10 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
   #opening .opening__title-line { animation: opening-line .9s cubic-bezier(.2, .7, .2, 1) backwards; }
   #opening .opening__title-line + .opening__title-line { animation-delay: .08s; }
   #opening .opening__enter { animation: opening-sheet 1.15s cubic-bezier(.3, .6, .2, 1) backwards; }
-  #opening .opening__drift { animation: opening-drift 5.5s ease-in-out 1.2s infinite alternate; }
-  #opening[data-paused] .opening__drift { animation-play-state: paused; }
 }
 @keyframes opening-rise { from { transform: translateY(5%) scale(1.04); } }
 @keyframes opening-line { from { transform: translateY(32%); } }
 @keyframes opening-sheet { from { transform: translateX(7vw); } }
-@keyframes opening-drift { from { transform: translateX(0); } to { transform: translateX(-4.5vw); } }
 @media (max-width: 900px) {
   #opening .opening__screen--1 { display: flex; flex-direction: column; height: auto; min-height: 100svh; padding: 70px var(--space-1) 28px; gap: 16px; }
   #opening .opening__portrait { position: relative; inset: auto; left: calc(-1 * var(--space-1)); width: calc(100% + 2 * var(--space-1)); height: 40svh; min-height: 260px; flex: none; }
@@ -299,6 +293,18 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
   #opening .opening__close { min-height: 0; aspect-ratio: 4 / 5; }
   #opening .opening__tones { grid-template-columns: 1fr; gap: 22px; }
 }
+#opening .opening__body { grid-column: 1 / 6; grid-row: 2; align-self: start; display: flex; flex-direction: column; align-items: flex-start; gap: 30px; }
+@media (max-width: 900px) {
+  #opening .opening__body { grid-column: 1; grid-row: auto; gap: 22px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #opening .opening__statement, #opening .opening__body, #opening .opening__tones { animation: rw-rise .9s cubic-bezier(.2, .7, .2, 1) backwards; }
+  #opening .opening__body { animation-delay: .12s; }
+  #opening .opening__tones { animation-delay: .24s; }
+  #opening .opening__close img { animation: rw-settle 1.4s cubic-bezier(.2, .7, .2, 1) backwards; }
+}
+@keyframes rw-rise { from { transform: translateY(30px); opacity: 0; } }
+@keyframes rw-settle { from { transform: scale(1.18) translateY(-4%); } }
 }
 </style>
 
@@ -330,18 +336,6 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
   #shades .shades__tone { top: 10px; left: 10px; font-size: 11px; }
   #shades .shades__meta { grid-column: 1; grid-row: 3; padding: 4px 7px 9px; }
   #shades .shades__desc { display: none; }
-}
-}
-</style>
-<style data-8b-part="scene-style:shades">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #shades[data-fan] { height: 250svh; }
-  #shades[data-fan] .shades__stage { position: sticky; top: 0; height: 100svh; min-height: 0; }
-  #shades[data-fan] .shades__strip { min-height: 0; will-change: transform; }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 900px) {
-  #shades[data-fan] { height: 210svh; }
 }
 }
 </style>
@@ -423,15 +417,6 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
 }
 }
 </style>
-<style data-8b-part="scene-style:late">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #late[data-dive] .late__track { height: 230svh; }
-  #late[data-dive] .late__stage { position: sticky; top: 0; }
-  #late[data-dive] .late__photo img { will-change: transform; }
-}
-}
-</style>
 <style data-8b-part="section:chairs">
 @layer sections {
 #chairs { position: relative; overflow-x: clip; background: var(--color-4); padding: 16svh var(--space-1) 14svh; }
@@ -475,13 +460,6 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
   #transform .transform__photo { width: 62vw; }
   #transform .transform__body { grid-template-columns: 1fr; padding-top: 7svh; }
   #transform .transform__title, #transform .transform__copy { grid-column: 1; }
-}
-}
-</style>
-<style data-8b-part="scene-style:transform">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #transform .transform__letter { display: inline-block; will-change: transform; }
 }
 }
 </style>
@@ -538,16 +516,6 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
 }
 }
 </style>
-<style data-8b-part="scene-style:care">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #care[data-fade] { height: 270svh; }
-  #care[data-fade] .care__stage { position: sticky; top: 0; height: 100svh; min-height: 0; }
-  #care[data-fade] .care__rule[data-active] .care__week { color: var(--color-3); }
-  #care[data-fade] .care__photo img, #care[data-fade] .care__marker { will-change: transform, filter; }
-}
-}
-</style>
 <style data-8b-part="section:contact">
 @layer sections {
 #contact { position: relative; overflow-x: clip; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: clamp(12px, 2vw, 28px); row-gap: 64px; padding: 16svh var(--space-1) 18svh; background: var(--color-3); color: var(--color-6); }
@@ -601,19 +569,137 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .opening__body { grid-column: 1 / 6; grid-row: 2; align-self: start; display: flex; flex-direction: column; align-items: flex-start; gap: 30px; }
-@media (max-width: 900px) {
-  #opening .opening__body { grid-column: 1; grid-row: auto; gap: 22px; }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-6a9d03: linear(0, 0.1254, 0.2419, 0.3497, 0.4492, 0.5406, 0.6243, 0.7005, 0.7696, 0.8318, 0.8875, 0.9369, 0.9804, 1.0182, 1.0507, 1.0781, 1.1008, 1.119, 1.1331, 1.1433, 1.15, 1.1534, 1.1539, 1.1517, 1.1472, 1.1406, 1.1323, 1.1225, 1.1116, 1.0998, 1.0875, 1.0749, 1.0624, 1.0502, 1.0387, 1.0281, 1.0188, 1.011, 1.0051, 1.0013, 1); }
+[data-8b-live] [data-8b-motion~="tear"] { animation-name: motion-tear-clippath; animation-duration: 1.15s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="tear"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="stamp"] { animation-name: motion-stamp-scale, motion-stamp-rotate, motion-stamp-opacity, motion-stamp-visibility; animation-duration: 0.55s; animation-delay: 0s; animation-timing-function: var(--ease-6a9d03), var(--ease-6a9d03), var(--ease-6a9d03), linear; animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="stamp"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="tint"] { view-timeline: --motion-tint block; view-timeline-inset: 0; animation-name: motion-tint-filter; animation-timeline: --motion-tint; animation-range: cover 0% cover calc(50% - 5vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] [data-8b-motion~="tear"][data-8b-motion~="tint"] { animation-name: motion-tear-clippath, motion-tint-filter; animation-duration: 1.15s, auto; animation-delay: 0s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1), linear; animation-fill-mode: both; animation-timeline: auto, --motion-tint; animation-range: normal, cover 0% cover calc(50% - 5vh); animation-play-state: paused, running; }
+[data-8b-live] [data-8b-motion~="tear"][data-8b-motion~="tint"].is-in { animation-play-state: running; }
+@keyframes motion-tear-clippath { 0% { clip-path: polygon(0% 0%, -6% 0%, -3.4% 7%, -7.4% 14%, -2.8% 21%, -6.6% 28%, -3.8% 35%, -8.4% 42%, -4.6% 49%, -7.2% 56%, -3% 63%, -6.8% 70%, -3.8% 77%, -7.8% 84%, -4.4% 91%, -6.4% 100%, 0% 100%); } 99.998% { clip-path: polygon(0% 0%, 106% 0%, 108.6% 7%, 104.6% 14%, 109.2% 21%, 105.4% 28%, 108.2% 35%, 103.6% 42%, 107.4% 49%, 104.8% 56%, 109% 63%, 105.2% 70%, 108.2% 77%, 104.2% 84%, 107.6% 91%, 105.6% 100%, 0% 100%); } 100% { clip-path: none; } }
+@keyframes motion-stamp-scale { 0% { scale: 1.3; } 100% { scale: 1; } }
+@keyframes motion-stamp-rotate { 0% { rotate: -9deg; } 100% { rotate: var(--stamp-rotate-to, -3deg); } }
+@keyframes motion-stamp-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes motion-stamp-visibility { 0% { visibility: hidden; } 0.002% { visibility: visible; animation-timing-function: linear(0, 0.1254, 0.2419, 0.3497, 0.4492, 0.5406, 0.6243, 0.7005, 0.7696, 0.8318, 0.8875, 0.9369, 0.9804, 1.0182, 1.0507, 1.0781, 1.1008, 1.119, 1.1331, 1.1433, 1.15, 1.1534, 1.1539, 1.1517, 1.1472, 1.1406, 1.1323, 1.1225, 1.1116, 1.0998, 1.0875, 1.0749, 1.0624, 1.0502, 1.0387, 1.0281, 1.0188, 1.011, 1.0051, 1.0013, 1); } 100% { visibility: visible; } }
+@keyframes motion-tint-filter { 0% { filter: grayscale(1); } 100% { filter: grayscale(0); } }
 }
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+[data-8b-live] #opening .opening__drift { animation: opening-drift 5.5s ease-in-out 1.2s infinite alternate; }
+[data-8b-live] #opening[data-paused] .opening__drift { animation-play-state: paused; }
+@keyframes opening-drift { from { transform: translateX(0); } to { transform: translateX(-4.5vw); } }
+}
+</style>
+<style data-8b-part="scene:shades">
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #opening .opening__statement, #opening .opening__body, #opening .opening__tones { animation: rw-rise .9s cubic-bezier(.2, .7, .2, 1) backwards; }
-  #opening .opening__body { animation-delay: .12s; }
-  #opening .opening__tones { animation-delay: .24s; }
-  #opening .opening__close img { animation: rw-settle 1.4s cubic-bezier(.2, .7, .2, 1) backwards; }
+  [data-8b-live] #shades { height: 250svh; }
+  [data-8b-live] #shades .shades__stage { position: sticky; top: 0; height: 100svh; min-height: 0; }
+  [data-8b-live] #shades .shades__strip { min-height: 0; will-change: transform; }
 }
-@keyframes rw-rise { from { transform: translateY(30px); opacity: 0; } }
-@keyframes rw-settle { from { transform: scale(1.18) translateY(-4%); } }</style>
+@media (prefers-reduced-motion: no-preference) and (max-width: 900px) {
+  [data-8b-live] #shades { height: 210svh; }
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #shades { view-timeline: --shades-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #shades .shades__row > .shades__strip { animation-timeline: --shades-t1; animation-range: cover calc(100vh - 20.4724vh * var(--i) + 10.2362% * var(--i)) cover calc(43.3071% + 10.2362% * var(--i) + 13.3858vh - 20.4724vh * var(--i)); animation-fill-mode: both; transform: none; }
+[data-8b-live] #shades .shades__row > .shades__strip > .shades__photo > img { animation-name: shades-figure-shades-photo-img-filter; animation-timeline: --shades-t1; animation-range: cover calc(25.1969% + 10.2362% * var(--i) + 49.6063vh - 20.4724vh * var(--i)) cover calc(48.8189% + 10.2362% * var(--i) + 2.3622vh - 20.4724vh * var(--i)); animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes shades-li-shades-strip-translate { 0% { translate: var(--shades-dx, 0px) var(--shades-dy, 0px); } 100% { translate: 0px 0px; } }
+@keyframes shades-li-shades-strip-rotate { 0% { rotate: var(--shades-li-shades-strip-rotate-from, -6.5deg); } 100% { rotate: 0deg; } }
+@keyframes shades-li-shades-strip-zindex { 0% { z-index: var(--shades-li-shades-strip-zindex-from, 6); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 100% { z-index: var(--shades-li-shades-strip-zindex-to, 6); } }
+@keyframes shades-figure-shades-photo-img-filter { 0% { filter: grayscale(1); } 100% { filter: grayscale(0); } }
+[data-8b-live] #shades .shades__row > .shades__strip { animation-name: shades-li-shades-strip-translate, shades-li-shades-strip-rotate, shades-li-shades-strip-zindex; animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1), linear; }
+}
+</style>
+<style data-8b-part="scene:cut">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] #cut .cut__stage { view-timeline: --cut-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #cut .cut__rule { animation-name: cut-span-cut-rule-scale; animation-timeline: --cut-t1; animation-range: cover 12vh cover calc(17.5% + 7.1vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; transform-origin: 0% 50%; }
+[data-8b-live] #cut .cut__line--1, [data-8b-live] #cut .cut__half--top, [data-8b-live] #cut .cut__half--bottom, [data-8b-live] #cut .cut__line--2 { animation-timeline: --cut-t1; animation-range: cover 12vh cover calc(50% - 2vh); animation-timing-function: var(--ease-power3-out), cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; transform: none; }
+@keyframes cut-span-cut-rule-scale { 0% { scale: 0 1; } 100% { scale: 1; } }
+@keyframes cut-span-cut-line-translate-d { 0% { translate: -20vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes cut-span-cut-line-translate-m { 0% { translate: -32vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes cut-span-cut-line-rotate { 0% { rotate: -1.8deg; } 100% { rotate: 0deg; } }
+@keyframes cut-div-cut-half-translate-2-d { 0% { translate: 20vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes cut-div-cut-half-translate-2-m { 0% { translate: 32vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes cut-div-cut-half-rotate-2 { 0% { rotate: 1.8deg; } 100% { rotate: 0deg; } }
+@media (min-width: 900px) {
+  [data-8b-live] #cut .cut__line--1, [data-8b-live] #cut .cut__half--top { animation-name: cut-span-cut-line-translate-d, cut-span-cut-line-rotate; }
+  [data-8b-live] #cut .cut__half--bottom, [data-8b-live] #cut .cut__line--2 { animation-name: cut-div-cut-half-translate-2-d, cut-div-cut-half-rotate-2; }
+}
+@media (max-width: 899px) {
+  [data-8b-live] #cut .cut__line--1, [data-8b-live] #cut .cut__half--top { animation-name: cut-span-cut-line-translate-m, cut-span-cut-line-rotate; }
+  [data-8b-live] #cut .cut__half--bottom, [data-8b-live] #cut .cut__line--2 { animation-name: cut-div-cut-half-translate-2-m, cut-div-cut-half-rotate-2; }
+}
+}
+</style>
+<style data-8b-part="scene:late">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #late .late__track { height: 230svh; }
+  [data-8b-live] #late .late__stage { position: sticky; top: 0; }
+  [data-8b-live] #late .late__photo img { will-change: transform; }
+}
+}
+@layer scenes {
+[data-8b-live] #late .late__track { view-timeline: --late-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #late .late__photo > img, [data-8b-live] #late .late__mask { animation-timeline: --late-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #late .late__photo > img { animation-name: late-figure-late-photo-img-scale; animation-range: cover 100vh cover calc(100% - 100vh); }
+[data-8b-live] #late .late__mask { animation-name: late-div-late-mask-scale; animation-range: cover calc(15% + 70vh) cover calc(100% - 100vh); }
+@keyframes late-figure-late-photo-img-scale { 0% { scale: 1.3; } 100% { scale: 1; } }
+@keyframes late-div-late-mask-scale { 0% { scale: 60; } 0.0118% { scale: 59.9722; } 1.9608% { scale: 55.5068; } 3.9215% { scale: 51.2755; } 5.8824% { scale: 47.2952; } 7.8432% { scale: 43.5561; } 9.8039% { scale: 40.0484; } 11.7647% { scale: 36.762; } 13.7255% { scale: 33.6875; } 15.6862% { scale: 30.8158; } 17.6471% { scale: 28.1374; } 19.6079% { scale: 25.6437; } 21.5686% { scale: 23.3261; } 23.5294% { scale: 21.1758; } 25.4902% { scale: 19.1846; } 27.4509% { scale: 17.3448; } 29.4118% { scale: 15.6481; } 31.3726% { scale: 14.0871; } 33.3333% { scale: 12.6543; } 35.2941% { scale: 11.3425; } 37.2549% { scale: 10.1447; } 39.2156% { scale: 9.0541; } 41.1765% { scale: 8.0641; } 43.1373% { scale: 7.1683; } 45.098% { scale: 6.3605; } 47.0588% { scale: 5.6348; } 49.0196% { scale: 4.9853; } 50.9804% { scale: 4.4067; } 52.9412% { scale: 3.8935; } 54.902% { scale: 3.4405; } 56.8627% { scale: 3.043; } 58.8235% { scale: 2.6961; } 60.7844% { scale: 2.3954; } 62.7451% { scale: 2.1365; } 64.7059% { scale: 1.9155; } 66.6667% { scale: 1.7284; } 68.6274% { scale: 1.5715; } 70.5882% { scale: 1.4415; } 72.5491% { scale: 1.335; } 74.5098% { scale: 1.2491; } 76.4706% { scale: 1.1808; } 78.4314% { scale: 1.1277; } 80.3921% { scale: 1.0872; } 82.3529% { scale: 1.0572; } 84.3138% { scale: 1.0357; } 86.2745% { scale: 1.0209; } 88.2353% { scale: 1.0113; } 90.1961% { scale: 1.0055; } 92.1568% { scale: 1.0022; } 96.0785% { scale: 1.0001; } 100% { scale: 1; } }
+[data-8b-live] #late .late__mask { transform-origin: var(--late-origin); }
+}
+</style>
+<style data-8b-part="scene:transform">
+@layer scenes {
+[data-8b-live] #transform .transform__stage { view-timeline: --transform-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #transform .transform__letter, [data-8b-live] #transform .transform__photo { animation-timeline: --transform-t1; animation-range: cover 22vh cover calc(50% + 2vh); animation-fill-mode: both; }
+[data-8b-live] #transform .transform__letter { display: inline-block; will-change: transform; animation-name: transform-letter; animation-timing-function: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] #transform .transform__photo { animation-name: transform-photo; animation-timing-function: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+@keyframes transform-letter { 0% { translate: var(--transform-x, 0px) 0px; scale: 0.5; } 100% { translate: 0px 0px; scale: 1; } }
+@keyframes transform-photo { 0% { translate: 0px var(--transform-y, 0px); scale: 0.78; rotate: -5deg; } 100% { translate: 0px 0px; scale: 1; rotate: 0deg; } }
+}
+</style>
+<style data-8b-part="scene:care">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #care { height: 270svh; }
+  [data-8b-live] #care .care__stage { position: sticky; top: 0; height: 100svh; min-height: 0; }
+  [data-8b-live] #care .care__photo img,[data-8b-live]  #care .care__marker { will-change: transform, filter; }
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-6a9d03: linear(0, 0.1254, 0.2419, 0.3497, 0.4492, 0.5406, 0.6243, 0.7005, 0.7696, 0.8318, 0.8875, 0.9369, 0.9804, 1.0182, 1.0507, 1.0781, 1.1008, 1.119, 1.1331, 1.1433, 1.15, 1.1534, 1.1539, 1.1517, 1.1472, 1.1406, 1.1323, 1.1225, 1.1116, 1.0998, 1.0875, 1.0749, 1.0624, 1.0502, 1.0387, 1.0281, 1.0188, 1.011, 1.0051, 1.0013, 1); }
+@property --care-p { syntax: "<number>"; inherits: true; initial-value: 0; }
+[data-8b-live] #care { view-timeline: --care-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #care .care__marker, [data-8b-live] #care .care__photo > img, [data-8b-live] #care .m-badge-3 { animation-timeline: --care-t1; animation-fill-mode: both; }
+[data-8b-live] #care .care__marker { animation-range: cover 100vh cover calc(80% - 60vh); animation-timing-function: linear; transform: none; }
+[data-8b-live] #care .care__photo > img { animation-name: care-figure-care-photo-img-filter; animation-range: cover 100vh cover calc(87% - 74vh); animation-timing-function: linear; }
+[data-8b-live] #care .m-badge-3 { animation-name: care-span-m-badge-3-scale, care-span-m-badge-3-rotate, care-span-m-badge-3-opacity, care-span-m-badge-3-visibility; animation-range: cover calc(80% - 60vh) cover calc(90% - 80vh); animation-timing-function: var(--ease-6a9d03), var(--ease-6a9d03), var(--ease-6a9d03), linear; transform: none; }
+@keyframes care-span-care-marker-translate { 0% { translate: -80cqw 0px; } 100% { translate: 0px 0px; } }
+@keyframes care-progress { 0% { --care-p: 0; } 100% { --care-p: 1; } }
+@keyframes care-figure-care-photo-img-filter { 0% { filter: saturate(1.2) brightness(1); } 85.0575% { filter: saturate(0.1) brightness(1.2); } 91.954% { filter: saturate(0.1) brightness(1.2); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 100% { filter: saturate(1) brightness(1); } }
+@keyframes care-span-m-badge-3-scale { 0% { scale: 1.3; } 0.002% { scale: 1.2984; } 100% { scale: 1; } }
+@keyframes care-span-m-badge-3-rotate { 0% { rotate: -9deg; } 100% { rotate: 0deg; } }
+@keyframes care-span-m-badge-3-opacity { 0% { opacity: 0; } 0.002% { opacity: 0.0052; } 100% { opacity: 1; } }
+@keyframes care-span-m-badge-3-visibility { 0% { visibility: hidden; } 0.002% { visibility: visible; animation-timing-function: linear(0, 0.1254, 0.2419, 0.3497, 0.4492, 0.5406, 0.6243, 0.7005, 0.7696, 0.8318, 0.8875, 0.9369, 0.9804, 1.0182, 1.0507, 1.0781, 1.1008, 1.119, 1.1331, 1.1433, 1.15, 1.1534, 1.1539, 1.1517, 1.1472, 1.1406, 1.1323, 1.1225, 1.1116, 1.0998, 1.0875, 1.0749, 1.0624, 1.0502, 1.0387, 1.0281, 1.0188, 1.011, 1.0051, 1.0013, 1); } 100% { visibility: visible; } }
+[data-8b-live] #care .care__marker { animation-name: care-span-care-marker-translate; }
+[data-8b-live] #care .care__strip { container-type: inline-size; }
+[data-8b-live] #care { animation-name: care-progress; animation-timeline: --care-t1; animation-range: cover 100vh cover calc(80% - 60vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #care .care__week { --care-d: calc(round(nearest, var(--care-p) * (var(--n) - 1), 1) - var(--i)); color: color-mix(in srgb, var(--color-3) calc(100% * (1 - min(1, max(var(--care-d), -1 * var(--care-d))))), currentColor); }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: top bar: five section links, the wordmark, phone number and a Book a chair button; hides on scroll down; phone menu overlay -->
@@ -634,7 +720,7 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
       <button class="m-iconbtn nav__toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open the menu"><span class="m-iconbtn__icon" aria-hidden="true"></span></button>
     </div>
   </div>
-  <div class="nav__menu" id="menu" data-lenis-prevent hidden>
+  <div class="nav__menu" id="menu" hidden>
     <div class="nav__menu-head">
       <a class="m-text-2 nav__logo" href="#opening">Undertone</a>
       <button class="m-iconbtn nav__close" type="button" aria-label="Close the menu"><span class="m-iconbtn__icon" aria-hidden="true"></span></button>
@@ -654,7 +740,7 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
   </div>
 </header>
 <main id="main">
-<!-- opening: red first screen: statement "We start with the grey", paragraph, Book a chair button, a copper hair photo and two undertone badges -->
+<!-- opening: red first screen: statement "We start with the grey", paragraph, Book a chair button, a copper hair photo and two undertone badges (animation: scene:opening) -->
 <section id="opening" class="opening" data-8b-section="opening" aria-labelledby="opening-title">
   
   <div class="opening__screen opening__screen--2">
@@ -664,7 +750,7 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
     <div class="opening__actions"><a class="m-btn-3" href="#contact"><span class="m-btn-3__label">Book a chair</span></a></div>
     </div>
     <figure class="opening__close">
-      <img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1595966211451-135760c0e4b6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGR5ZWQlMjBoYWlyJTIwY2xvc2UlMjB1cHxlbnwxfDF8fHwxNzkxMzgxMjA5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" width="1600" height="2400" alt="Close-up of copper hair strands lit against a soft pink light" loading="lazy">
+      <img fetchpriority="high" src="https://images.unsplash.com/photo-1595966211451-135760c0e4b6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGR5ZWQlMjBoYWlyJTIwY2xvc2UlMjB1cHxlbnwxfDF8fHwxNzkxMzgxMjA5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" width="1600" height="2400" alt="Close-up of copper hair strands lit against a soft pink light">
     </figure>
     <dl class="opening__tones">
       <div class="opening__tone">
@@ -686,39 +772,39 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
       <h2 class="m-text-2 shades__title" id="shades-title">Six shades we're known for</h2>
       <p class="m-text shades__intro">Mixed in-house, toned to your undertone and priced before we start. Every one of them begins with the daylight read.</p>
     </div>
-    <ul class="shades__row">
-      <li class="shades__strip">
-        <figure class="shades__photo"><img src="https://images.unsplash.com/photo-1730990712053-a8d89d2ac85a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGNvcHBlciUyMGhhaXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMzgxMjA4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="1600" height="2400" alt="A woman with bright copper hair falling over one eye" loading="lazy" style="background:#260c0c;object-position: 55% 30%"></figure>
+    <ul class="shades__row" data-8b-items=":scope > .shades__strip" data-8b-fixed="6">
+      <li class="shades__strip" style="--shades-li-shades-strip-rotate-from: -6.5deg; --shades-li-shades-strip-zindex-from: 6; --shades-li-shades-strip-zindex-to: 6">
+        <figure class="shades__photo"><img src="https://images.unsplash.com/photo-1730990712053-a8d89d2ac85a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGNvcHBlciUyMGhhaXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMzgxMjA4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=280&amp;q=60" width="1600" height="2400" alt="A woman with bright copper hair falling over one eye" loading="lazy" style="object-position: 55% 30%"></figure>
         <span class="m-badge-3 shades__tone">Warm</span>
         <h3 class="m-text-5 shades__name">Rust Riot</h3>
         <div class="shades__meta"><p class="m-text-3 shades__desc">Copper over a rusted root</p><p class="m-text-3 shades__price">From £165</p></div>
       </li>
-      <li class="shades__strip">
-        <figure class="shades__photo"><img src="https://images.unsplash.com/photo-1710787051760-1bd406b7c535?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cGluayUyMGhhaXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMzgxMjA4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" width="1600" height="2018" alt="A man with cherry-red and black hair and a white choker" loading="lazy" style="background:#a6a6a6;object-position: 50% 22%"></figure>
+      <li class="shades__strip" style="--shades-li-shades-strip-rotate-from: -3.9deg; --shades-li-shades-strip-zindex-from: 5; --shades-li-shades-strip-zindex-to: 5">
+        <figure class="shades__photo"><img src="https://images.unsplash.com/photo-1710787051760-1bd406b7c535?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cGluayUyMGhhaXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMzgxMjA4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" width="1600" height="2018" alt="A man with cherry-red and black hair and a white choker" loading="lazy" style="object-position: 50% 22%"></figure>
         <span class="m-badge-3 shades__tone">Warm</span>
         <h3 class="m-text-5 shades__name">Cherry Bruise</h3>
         <div class="shades__meta"><p class="m-text-3 shades__desc">Pink-red over a dark base</p><p class="m-text-3 shades__price">From £150</p></div>
       </li>
-      <li class="shades__strip">
-        <figure class="shades__photo"><img src="https://images.unsplash.com/photo-1558499720-bbfaebeeea9e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cHVycGxlJTIwaGFpciUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTEzODEyMzR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="1600" height="2400" alt="A woman with violet hair and green eyeliner" loading="lazy" style="background:#0c2626;object-position: 50% 24%"></figure>
+      <li class="shades__strip" style="--shades-li-shades-strip-rotate-from: -1.3deg; --shades-li-shades-strip-zindex-from: 4; --shades-li-shades-strip-zindex-to: 4">
+        <figure class="shades__photo"><img src="https://images.unsplash.com/photo-1558499720-bbfaebeeea9e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cHVycGxlJTIwaGFpciUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTEzODEyMzR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="1600" height="2400" alt="A woman with violet hair and green eyeliner" loading="lazy" style="object-position: 50% 24%"></figure>
         <span class="m-badge-2 shades__tone">Cool</span>
         <h3 class="m-text-5 shades__name">Violet Hour</h3>
         <div class="shades__meta"><p class="m-text-3 shades__desc">Purple that fades to lilac</p><p class="m-text-3 shades__price">From £170</p></div>
       </li>
-      <li class="shades__strip">
-        <figure class="shades__photo"><img src="https://images.unsplash.com/photo-1692899213302-dc0911eee10a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Ymx1ZSUyMGhhaXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMzgxMjM0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" width="1600" height="2583" alt="The back of a head of wavy electric-blue hair over a floral dress" loading="lazy" style="background:#a6a6c0;object-position: 50% 30%"></figure>
+      <li class="shades__strip" style="--shades-li-shades-strip-rotate-from: 1.3deg; --shades-li-shades-strip-zindex-from: 3; --shades-li-shades-strip-zindex-to: 3">
+        <figure class="shades__photo"><img src="https://images.unsplash.com/photo-1692899213302-dc0911eee10a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Ymx1ZSUyMGhhaXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMzgxMjM0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" width="1600" height="2583" alt="The back of a head of wavy electric-blue hair over a floral dress" loading="lazy" style="object-position: 50% 30%"></figure>
         <span class="m-badge-2 shades__tone">Cool</span>
         <h3 class="m-text-5 shades__name">Deep End</h3>
         <div class="shades__meta"><p class="m-text-3 shades__desc">Electric blue, ink at the root</p><p class="m-text-3 shades__price">From £185</p></div>
       </li>
-      <li class="shades__strip">
-        <figure class="shades__photo"><img src="https://images.unsplash.com/photo-1674867688577-0ba3be4b7773?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8c2lsdmVyJTIwZ3JleSUyMGhhaXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMzgxMjM1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="1600" height="2400" alt="A woman with a short silver-ash pixie cut" loading="lazy" style="background:#595959;object-position: 42% 30%"></figure>
+      <li class="shades__strip" style="--shades-li-shades-strip-rotate-from: 3.9deg; --shades-li-shades-strip-zindex-from: 2; --shades-li-shades-strip-zindex-to: 2">
+        <figure class="shades__photo"><img src="https://images.unsplash.com/photo-1674867688577-0ba3be4b7773?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8c2lsdmVyJTIwZ3JleSUyMGhhaXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMzgxMjM1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="1600" height="2400" alt="A woman with a short silver-ash pixie cut" loading="lazy" style="object-position: 42% 30%"></figure>
         <span class="m-badge-2 shades__tone">Cool</span>
         <h3 class="m-text-5 shades__name">Ash Static</h3>
         <div class="shades__meta"><p class="m-text-3 shades__desc">Silver for grey you choose</p><p class="m-text-3 shades__price">From £195</p></div>
       </li>
-      <li class="shades__strip">
-        <figure class="shades__photo"><img src="https://images.unsplash.com/photo-1612720779828-8ba209f069ff?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGJsZWFjaGVkJTIwYnV6eiUyMGN1dHxlbnwxfDF8fHwxNzkxMzgxMjM3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="1600" height="2400" alt="A man with a bleached platinum crop in a white shirt" loading="lazy" style="background:#8c8c8c;object-position: 50% 20%"></figure>
+      <li class="shades__strip" style="--shades-li-shades-strip-rotate-from: 6.5deg; --shades-li-shades-strip-zindex-from: 1; --shades-li-shades-strip-zindex-to: 1">
+        <figure class="shades__photo"><img src="https://images.unsplash.com/photo-1612720779828-8ba209f069ff?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGJsZWFjaGVkJTIwYnV6eiUyMGN1dHxlbnwxfDF8fHwxNzkxMzgxMjM3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=280&amp;q=60" width="1600" height="2400" alt="A man with a bleached platinum crop in a white shirt" loading="lazy" style="object-position: 50% 20%"></figure>
         <span class="m-badge-2 shades__tone">Cool</span>
         <h3 class="m-text-5 shades__name">Bone Bleach</h3>
         <div class="shades__meta"><p class="m-text-3 shades__desc">Clean platinum, toned twice</p><p class="m-text-3 shades__price">From £210</p></div>
@@ -729,14 +815,14 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
 <!-- cut: "Cut dry. Cut once." heading over one photo sliced by a red line, then four cuts with prices (demo: blunt bob, shag, crop, fringe) (animation: scene:cut) -->
 <section id="cut" class="cut" data-8b-section="cut" aria-labelledby="cut-title">
   <div class="cut__stage">
-    <div class="cut__half cut__half--top"><img style="background:#262640" src="https://images.unsplash.com/photo-1678199606078-2c4ae58434eb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBsYXRpbnVtJTIwYmxvbmRlJTIwc2hvcnQlMjBoYWlyfGVufDF8MXx8fDE3OTEzODEyMzZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" width="1600" height="2388" alt="A woman with a platinum blunt bob whose hemline sits exactly at her jaw" loading="lazy"></div>
-    <div class="cut__half cut__half--bottom" aria-hidden="true"><img style="background:#262640" src="https://images.unsplash.com/photo-1678199606078-2c4ae58434eb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBsYXRpbnVtJTIwYmxvbmRlJTIwc2hvcnQlMjBoYWlyfGVufDF8MXx8fDE3OTEzODEyMzZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" width="1600" height="2388" alt="" loading="lazy"></div>
+    <div class="cut__half cut__half--top"><img src="https://images.unsplash.com/photo-1678199606078-2c4ae58434eb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBsYXRpbnVtJTIwYmxvbmRlJTIwc2hvcnQlMjBoYWlyfGVufDF8MXx8fDE3OTEzODEyMzZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=60" width="1600" height="2388" alt="A woman with a platinum blunt bob whose hemline sits exactly at her jaw" loading="lazy"></div>
+    <div class="cut__half cut__half--bottom" aria-hidden="true"><img src="https://images.unsplash.com/photo-1678199606078-2c4ae58434eb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBsYXRpbnVtJTIwYmxvbmRlJTIwc2hvcnQlMjBoYWlyfGVufDF8MXx8fDE3OTEzODEyMzZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=60" width="1600" height="2388" alt="" loading="lazy"></div>
     <h2 class="m-text-2 cut__title" id="cut-title"><span class="cut__line cut__line--1">Cut dry.</span> <span class="cut__line cut__line--2">Cut once.</span></h2>
     <span class="cut__rule" aria-hidden="true"></span>
   </div>
   <div class="cut__body">
     <p class="m-text-4 cut__lede">We cut your hair dry, the way it actually lives — no surprises when it dries at home. One clean line, checked in daylight, and we put the scissors down.</p>
-    <ul class="cut__list">
+    <ul class="cut__list" data-8b-items=":scope > .cut__item">
       <li class="cut__item"><h3 class="m-text-5">The blunt bob</h3><p class="m-text-5">£68</p><p class="m-text">One hard line at the jaw or the collarbone, finished with the razor's edge.</p></li>
       <li class="cut__item"><h3 class="m-text-5">The shag</h3><p class="m-text-5">£72</p><p class="m-text">Layers cut into the dry shape, so the movement is there without product.</p></li>
       <li class="cut__item"><h3 class="m-text-5">The crop</h3><p class="m-text-5">£42</p><p class="m-text">Clipper and scissor work for short hair, bleached buzz cuts included.</p></li>
@@ -746,17 +832,17 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
 </section>
 <!-- consult: free daylight consultation: photo, three numbered steps and an example formula card -->
 <section id="consult" class="consult" data-8b-section="consult" aria-labelledby="consult-title">
-  <figure class="consult__photo" data-8b-motion="tear"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1617311454806-1b8b2b8af811?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8aGFpciUyMGNvbG9yaXN0JTIwZm9pbHN8ZW58MXwwfHx8MTc5MTM4MTI2Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=990&amp;q=60" width="1600" height="1200" alt="A woman with long highlighted hair turned towards a white wall in soft daylight" loading="lazy"></figure>
+  <figure class="consult__photo" data-8b-motion="tear"><img src="https://images.unsplash.com/photo-1617311454806-1b8b2b8af811?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8aGFpciUyMGNvbG9yaXN0JTIwZm9pbHN8ZW58MXwwfHx8MTc5MTM4MTI2Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=990&amp;q=60" width="1600" height="1200" alt="A woman with long highlighted hair turned towards a white wall in soft daylight" loading="lazy"></figure>
   <div class="consult__body">
     <h2 class="m-text-2 consult__title" id="consult-title">Fifteen minutes at the window</h2>
     <p class="m-text-4 consult__lede">Every first appointment starts with a free consultation in daylight. No mixing bowl comes out until we agree.</p>
-    <ol class="consult__steps">
+    <ol class="consult__steps" data-8b-items=":scope > .consult__step">
       <li class="consult__step"><span class="m-text-5 consult__num">1</span><h3 class="m-text-5">Daylight read</h3><p class="m-text">Roots, ends and skin by the window, never under salon bulbs.</p></li>
       <li class="consult__step"><span class="m-text-5 consult__num">2</span><h3 class="m-text-5">Strand test</h3><p class="m-text">One strand mixed and timed first, so the result is a fact rather than a guess.</p></li>
       <li class="consult__step"><span class="m-text-5 consult__num">3</span><h3 class="m-text-5">Your formula, written</h3><p class="m-text">You take the card home. Any colourist, anywhere, can repeat it.</p></li>
     </ol>
   </div>
-  <aside class="m-surface consult__card" data-8b-motion="stamp" aria-label="An example formula card">
+  <aside class="m-surface consult__card" data-8b-motion="stamp" aria-label="An example formula card" style="--stamp-rotate-to: -3deg" data-8b-enter="90%">
     <p class="m-text-3">Formula card · R. Ahmed · 14 March</p>
     <dl class="consult__formula">
       <div><dt class="m-text-3">Base</dt><dd class="m-text-5">6.4 copper</dd></div>
@@ -766,11 +852,11 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
     </dl>
   </aside>
 </section>
-<!-- late: pinned night scene: a neon photo seen through the letters of the word "Late", then the Thursday late opening and a button (animation: scene:late) -->
+<!-- late: night scene held on screen: a neon photo seen through the letters of the word "Late", then the Thursday late opening and a button (animation: scene:late) -->
 <section id="late" class="late" data-8b-section="late" aria-labelledby="late-title">
   <div class="late__track">
     <div class="late__stage">
-      <figure class="late__photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1580975916115-b587adeebc22?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bmVvbiUyMGxpZ2h0JTIwcG9ydHJhaXQlMjBoYWlyfGVufDF8MHx8fDE3OTEzODEzOTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" width="1600" height="1068" alt="A young woman with long dark hair between glowing pink neon tubes at night" loading="lazy"></figure>
+      <figure class="late__photo"><img src="https://images.unsplash.com/photo-1580975916115-b587adeebc22?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bmVvbiUyMGxpZ2h0JTIwcG9ydHJhaXQlMjBoYWlyfGVufDF8MHx8fDE3OTEzODEzOTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" width="1600" height="1068" alt="A young woman with long dark hair between glowing pink neon tubes at night" loading="lazy"></figure>
       <div class="late__mask"><h2 class="m-text-2 late__word" id="late-title" style="--len:4">Late</h2></div>
     </div>
   </div>
@@ -788,7 +874,7 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
     <h2 class="m-text-2 chairs__title" id="chairs-title">Four chairs</h2>
     <p class="m-text-4 chairs__lede">Four stylists, four specialisms and one rule: nobody leaves with a colour they didn't choose.</p>
   </div>
-  <ul class="chairs__list">
+  <ul class="chairs__list" data-8b-items=":scope > .chairs__row">
     <li class="chairs__row">
       <h3 class="m-text-2 chairs__name">Ama</h3>
       <div class="chairs__info">
@@ -796,8 +882,8 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
         <p class="m-text">Copper, rust and every red that has to survive Manchester rain. Reads undertones for the whole team.</p>
         <a class="m-link" href="#contact">Book with Ama</a>
       </div>
-      <figure class="chairs__photo" data-8b-motion="tear tint"><img src="https://images.unsplash.com/photo-1633985918830-5a112c01cbd7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mjl8fGhhaXIlMjBzdHlsaXN0JTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTM4MTI2NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" width="1600" height="2400" alt="Ama, smiling, with a full head of copper curls and a denim jacket" loading="lazy" style="background:#8c4026;object-position: 50% 30%"></figure>
-      <span class="m-badge-3 chairs__badge" data-8b-motion="stamp">Warm reds</span>
+      <figure class="chairs__photo" data-8b-motion="tear tint"><img src="https://images.unsplash.com/photo-1633985918830-5a112c01cbd7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mjl8fGhhaXIlMjBzdHlsaXN0JTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTM4MTI2NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" width="1600" height="2400" alt="Ama, smiling, with a full head of copper curls and a denim jacket" loading="lazy" style="object-position: 50% 30%"></figure>
+      <span class="m-badge-3 chairs__badge" data-8b-motion="stamp" style="--stamp-rotate-to: -5deg" data-8b-enter="90%">Warm reds</span>
     </li>
     <li class="chairs__row">
       <h3 class="m-text-2 chairs__name">Jess</h3>
@@ -806,8 +892,8 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
         <p class="m-text">Blunt bobs, shags and fringes, all cut dry. Will talk you out of a fringe if your cowlick disagrees.</p>
         <a class="m-link" href="#contact">Book with Jess</a>
       </div>
-      <figure class="chairs__photo" data-8b-motion="tear tint"><img src="https://images.unsplash.com/photo-1631198824665-9872caf6c6ae?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8d29tYW4lMjBob2xkaW5nJTIwc2Npc3NvcnN8ZW58MXwxfHx8MTc5MTM4MTI5OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" width="1600" height="1999" alt="Jess, with blonde hair and tattooed arms, holding open scissors across her face" loading="lazy" style="background:#0c2626;object-position: 50% 30%"></figure>
-      <span class="m-badge chairs__badge" data-8b-motion="stamp">Dry cuts</span>
+      <figure class="chairs__photo" data-8b-motion="tear tint"><img src="https://images.unsplash.com/photo-1631198824665-9872caf6c6ae?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8d29tYW4lMjBob2xkaW5nJTIwc2Npc3NvcnN8ZW58MXwxfHx8MTc5MTM4MTI5OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" width="1600" height="1999" alt="Jess, with blonde hair and tattooed arms, holding open scissors across her face" loading="lazy" style="object-position: 50% 30%"></figure>
+      <span class="m-badge chairs__badge" data-8b-motion="stamp" style="--stamp-rotate-to: -5deg" data-8b-enter="90%">Dry cuts</span>
     </li>
     <li class="chairs__row">
       <h3 class="m-text-2 chairs__name">Theo</h3>
@@ -816,8 +902,8 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
         <p class="m-text">Violet, cherry, blue and the toners that keep them honest. Wears his own work, currently pink.</p>
         <a class="m-link" href="#contact">Book with Theo</a>
       </div>
-      <figure class="chairs__photo" data-8b-motion="tear tint"><img src="https://images.unsplash.com/photo-1714132948890-ccc911d5b02e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29sb3VyZnVsJTIwaGFpciUyMG1hbiUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTEzODEyOTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" width="1600" height="2400" alt="Theo, with pink-dyed hair and a striped open shirt, against a green wall" loading="lazy" style="background:#262626;object-position: 50% 26%"></figure>
-      <span class="m-badge-2 chairs__badge" data-8b-motion="stamp">Cool vivids</span>
+      <figure class="chairs__photo" data-8b-motion="tear tint"><img src="https://images.unsplash.com/photo-1714132948890-ccc911d5b02e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29sb3VyZnVsJTIwaGFpciUyMG1hbiUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTEzODEyOTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" width="1600" height="2400" alt="Theo, with pink-dyed hair and a striped open shirt, against a green wall" loading="lazy" style="object-position: 50% 26%"></figure>
+      <span class="m-badge-2 chairs__badge" data-8b-motion="stamp" style="--stamp-rotate-to: -5deg" data-8b-enter="90%">Cool vivids</span>
     </li>
     <li class="chairs__row">
       <h3 class="m-text-2 chairs__name">Dez</h3>
@@ -826,8 +912,8 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
         <p class="m-text">Clipper work, skin fades and bleached buzz cuts. Thursdays he takes the late chairs.</p>
         <a class="m-link" href="#contact">Book with Dez</a>
       </div>
-      <figure class="chairs__photo" data-8b-motion="tear tint"><img src="https://images.unsplash.com/photo-1585581905588-9e91f63bdd47?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fGJhcmJlciUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTEzNjU2ODR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" width="1600" height="2400" alt="Dez, in a black cap, holding clippers up to the camera" loading="lazy" style="background:#0c2626;object-position: 50% 40%"></figure>
-      <span class="m-badge chairs__badge" data-8b-motion="stamp">Late chairs</span>
+      <figure class="chairs__photo" data-8b-motion="tear tint"><img src="https://images.unsplash.com/photo-1585581905588-9e91f63bdd47?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fGJhcmJlciUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTEzNjU2ODR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" width="1600" height="2400" alt="Dez, in a black cap, holding clippers up to the camera" loading="lazy" style="object-position: 50% 40%"></figure>
+      <span class="m-badge chairs__badge" data-8b-motion="stamp" style="--stamp-rotate-to: -5deg" data-8b-enter="90%">Late chairs</span>
     </li>
   </ul>
 </section>
@@ -835,7 +921,7 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
 <section id="transform" class="transform" data-8b-section="transform" aria-labelledby="transform-title">
   <div class="transform__stage">
     <p class="m-text-2 transform__spray" aria-hidden="true" style="--len:6">Louder</p>
-    <figure class="transform__photo"><img style="background:#f3d973" src="https://images.unsplash.com/photo-1600456553180-755a72445743?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGJsZWFjaGVkJTIwYnV6eiUyMGN1dHxlbnwxfDF8fHwxNzkxMzgxMjM3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=390&amp;q=60" width="1600" height="2000" alt="A woman with a freshly shaved head and teal eye make-up against a yellow wall" loading="lazy"></figure>
+    <figure class="transform__photo"><img src="https://images.unsplash.com/photo-1600456553180-755a72445743?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGJsZWFjaGVkJTIwYnV6eiUyMGN1dHxlbnwxfDF8fHwxNzkxMzgxMjM3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=60" width="1600" height="2000" alt="A woman with a freshly shaved head and teal eye make-up against a yellow wall" loading="lazy"></figure>
   </div>
   <div class="transform__body">
     <h2 class="m-text-2 transform__title" id="transform-title">Transformation days</h2>
@@ -852,13 +938,13 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
   <div class="prices__head">
     <h2 class="m-text-2 prices__title" id="prices-title">Prices</h2>
     <p class="m-text prices__note">Every price includes the daylight consultation, the strand test, toner and a finish. Very long or very thick hair can add up to 20% — we tell you before we start, never after.</p>
-    <figure class="prices__photo" data-8b-motion="tint"><img style="background:#a68c73" src="https://images.unsplash.com/photo-1712213396688-c6f2d536671f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8aGFpciUyMGNvbG9yaXN0JTIwZm9pbHN8ZW58MXwwfHx8MTc5MTM4MTI2Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" width="1600" height="1067" alt="A colourist brushing colour onto a section of hair laid over foil" loading="lazy"></figure>
+    <figure class="prices__photo" data-8b-motion="tint"><img src="https://images.unsplash.com/photo-1712213396688-c6f2d536671f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8aGFpciUyMGNvbG9yaXN0JTIwZm9pbHN8ZW58MXwwfHx8MTc5MTM4MTI2Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" width="1600" height="1067" alt="A colourist brushing colour onto a section of hair laid over foil" loading="lazy"></figure>
   </div>
   <div class="prices__chart">
     <div class="prices__group">
       <h3 class="m-text-5 prices__group-title">Cut</h3>
       <span class="prices__band prices__band--cut" aria-hidden="true"></span>
-      <ul>
+      <ul data-8b-items=":scope > .prices__item">
         <li class="prices__item"><span class="m-text">Restyle, any length</span><span class="m-text-5 prices__price">£85</span></li>
         <li class="prices__item"><span class="m-text">Blunt bob</span><span class="m-text-5 prices__price">£68</span></li>
         <li class="prices__item"><span class="m-text">Shag</span><span class="m-text-5 prices__price">£72</span></li>
@@ -869,7 +955,7 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
     <div class="prices__group">
       <h3 class="m-text-5 prices__group-title">Colour</h3>
       <span class="prices__band prices__band--colour" aria-hidden="true"></span>
-      <ul>
+      <ul data-8b-items=":scope > .prices__item">
         <li class="prices__item"><span class="m-text">Root colour</span><span class="m-text-5 prices__price">£75</span></li>
         <li class="prices__item"><span class="m-text">Full colour</span><span class="m-text-5 prices__price">£95</span></li>
         <li class="prices__item"><span class="m-text">Signature shade</span><span class="m-text-5 prices__price">from £150</span></li>
@@ -880,7 +966,7 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
     <div class="prices__group">
       <h3 class="m-text-5 prices__group-title">Lightening</h3>
       <span class="prices__band prices__band--light" aria-hidden="true"></span>
-      <ul>
+      <ul data-8b-items=":scope > .prices__item">
         <li class="prices__item"><span class="m-text">Root bleach</span><span class="m-text-5 prices__price">£120</span></li>
         <li class="prices__item"><span class="m-text">Babylights</span><span class="m-text-5 prices__price">£160</span></li>
         <li class="prices__item"><span class="m-text">Balayage</span><span class="m-text-5 prices__price">£180</span></li>
@@ -890,7 +976,7 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
     </div>
   </div>
 </section>
-<!-- care: pinned aftercare strip: a marker walks along a copper hair photo from day 0 to week 6 while the colour fades and a gloss brings it back (animation: scene:care) -->
+<!-- care: aftercare strip held on screen: a marker walks along a copper hair photo from day 0 to week 6 while the colour fades and a gloss brings it back (animation: scene:care) -->
 <section id="care" class="care" data-8b-section="care" aria-labelledby="care-title">
   <div class="care__stage">
     <div class="care__head">
@@ -898,10 +984,10 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
       <p class="m-text-4 care__lede">Vivid colour fades. How fast is up to you: six weeks, five rules, one gloss.</p>
     </div>
     <div class="care__strip">
-      <figure class="care__photo"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1620939391272-b03c1ccdd10c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGNvcHBlciUyMGhhaXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMzgxMjA4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1210&amp;q=60" width="1600" height="2400" alt="Close-up of glossy copper curls" loading="lazy"></figure>
+      <figure class="care__photo"><img src="https://images.unsplash.com/photo-1620939391272-b03c1ccdd10c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGNvcHBlciUyMGhhaXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxMzgxMjA4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1210&amp;q=60" width="1600" height="2400" alt="Close-up of glossy copper curls" loading="lazy"></figure>
       <span class="care__marker" aria-hidden="true"></span>
     </div>
-    <ol class="care__rules">
+    <ol class="care__rules" data-8b-items=":scope > .care__rule" data-8b-fixed="5">
       <li class="care__rule"><p class="m-text-3 care__week">Day 0</p><p class="m-text">Leave it 72 hours before the first wash.</p></li>
       <li class="care__rule"><p class="m-text-3 care__week">Week 1</p><p class="m-text">Wash cool, and half as often as you think.</p></li>
       <li class="care__rule"><p class="m-text-3 care__week">Week 2</p><p class="m-text">Sulphate-free shampoo only — we write down which.</p></li>
@@ -954,18 +1040,18 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
     <button class="m-btn-3 contact__submit" type="submit"><span class="m-btn-3__label">Request a chair</span></button>
     <p class="m-text-4 contact__status" role="status" hidden data-sent="Thank you — we'll call you back within one working day." data-missing="Please add your name and a phone number or email."></p>
   </form>
-  <ul class="contact__rules">
-    <li class="m-surface contact__rule" data-8b-motion="stamp"><p class="m-text-3">Patch test</p><p class="m-text">48 hours before any colour. Ten minutes, free, at the front desk.</p></li>
-    <li class="m-surface contact__rule" data-8b-motion="stamp"><p class="m-text-3">Deposit</p><p class="m-text">£20 holds your chair and comes off the bill.</p></li>
-    <li class="m-surface contact__rule" data-8b-motion="stamp"><p class="m-text-3">Moving it</p><p class="m-text">Give us 24 hours and it costs nothing.</p></li>
+  <ul class="contact__rules" data-8b-items=":scope > .contact__rule">
+    <li class="m-surface contact__rule" data-8b-motion="stamp" style="--stamp-rotate-to: -2deg" data-8b-enter="90%"><p class="m-text-3">Patch test</p><p class="m-text">48 hours before any colour. Ten minutes, free, at the front desk.</p></li>
+    <li class="m-surface contact__rule" data-8b-motion="stamp" style="--stamp-rotate-to: 1.5deg" data-8b-enter="90%"><p class="m-text-3">Deposit</p><p class="m-text">£20 holds your chair and comes off the bill.</p></li>
+    <li class="m-surface contact__rule" data-8b-motion="stamp" style="--stamp-rotate-to: -1deg" data-8b-enter="90%"><p class="m-text-3">Moving it</p><p class="m-text">Give us 24 hours and it costs nothing.</p></li>
   </ul>
-  <figure class="contact__photo" data-8b-motion="tear"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1746723378067-83a345ff3160?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8aGFpciUyMHNhbG9uJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTM4MTI2NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" width="1600" height="1067" alt="The studio: white walls, an arched doorway and shelves of colour behind the front desk" loading="lazy"></figure>
+  <figure class="contact__photo" data-8b-motion="tear"><img src="https://images.unsplash.com/photo-1746723378067-83a345ff3160?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8aGFpciUyMHNhbG9uJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc5MTM4MTI2NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" width="1600" height="1067" alt="The studio: white walls, an arched doorway and shelves of colour behind the front desk" loading="lazy"></figure>
 </section>
 </main>
 <!-- footer: ink footer: portrait, links to nine sections, address, phone, email, Instagram and TikTok, a huge wordmark, copyright with the Design: 8B credit -->
 <footer id="footer" class="footer" data-8b-section="footer">
   <div class="footer__top">
-    <figure class="footer__photo" data-8b-motion="tint"><img style="background:#f38c26" src="https://images.unsplash.com/photo-1633229032316-e9e88274e3fe?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MzF8fGhhaXIlMjBzdHlsaXN0JTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTM4MTI2NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" width="1600" height="2225" alt="A woman flicking long wavy blonde hair in front of an orange wall" loading="lazy"></figure>
+    <figure class="footer__photo" data-8b-motion="tint"><img src="https://images.unsplash.com/photo-1633229032316-e9e88274e3fe?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MzF8fGhhaXIlMjBzdHlsaXN0JTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTM4MTI2NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" width="1600" height="2225" alt="A woman flicking long wavy blonde hair in front of an orange wall" loading="lazy"></figure>
     <nav class="footer__nav" aria-label="Footer">
       <ul>
         <li><a class="m-link-2" href="#shades">Shades</a></li>
@@ -993,9 +1079,6 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
     <a class="m-link-2" href="#opening">Back to the top</a>
   </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
 <script data-8b-part="section-script:nav">
 (() => {
   const nav = document.getElementById('nav');
@@ -1020,8 +1103,8 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
     open = state;
     menu.hidden = !state;
     toggle.setAttribute('aria-expanded', String(state));
-    if (state) { nav.removeAttribute('data-hidden'); window.lenis?.stop(); close.focus(); }
-    else { window.lenis?.start(); }
+    if (state) { nav.removeAttribute('data-hidden'); window.motionKit?.wheel?.stop(); close.focus(); }
+    else { window.motionKit?.wheel?.start(); }
   };
   toggle.addEventListener('click', () => setMenu(true));
   close.addEventListener('click', () => { setMenu(false); toggle.focus(); });
@@ -1030,233 +1113,7 @@ select.m-field__input { background-image: linear-gradient(45deg, transparent 50%
 })();
 </script>
 
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function navHeight() {
-  const bar = document.querySelector('#nav .nav__bar');
-  return bar ? bar.offsetHeight : 0;
-}
-function refreshScroll() {
-  if (window.lenis) window.lenis.options.anchors = { offset: -navHeight() };
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: .085, wheelMultiplier: .95, anchors: { offset: -navHeight() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-let resizeTimer;
-window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(refreshScroll, 200); });
-</script>
-<script data-8b-part="motion">
-const TEAR_EDGE = [[0, 0], [2.6, 7], [-1.4, 14], [3.2, 21], [-.6, 28], [2.2, 35], [-2.4, 42], [1.4, 49], [-1.2, 56], [3, 63], [-.8, 70], [2.2, 77], [-1.8, 84], [1.6, 91], [-.4, 100]];
-function tearPolygon(progress) {
-  const edge = progress * 112 - 6;
-  const points = ['0% 0%'];
-  TEAR_EDGE.forEach(([dx, y]) => points.push(`${(edge + dx).toFixed(2)}% ${y}%`));
-  points.push('0% 100%');
-  return `polygon(${points.join(', ')})`;
-}
-const effects = {
-  tear(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { clipPath: tearPolygon(0) }, { clipPath: tearPolygon(1), duration: 1.15, ease: 'power3.inOut', clearProps: 'clipPath' });
-  },
-  tint(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { filter: 'grayscale(1)' }, { filter: 'grayscale(0)', ease: 'none', duration: 1 });
-  },
-  stamp(element, vars = {}) {
-    return gsap.timeline(vars).from(element, { scale: 1.3, rotation: -9, autoAlpha: 0, duration: .55, ease: 'back.out(2.2)' });
-  }
-};
-const effectBindings = {
-  tear: (element, id) => ScrollTrigger.create({ id, trigger: element, start: 'top 88%', once: true, animation: effects.tear(element) }),
-  tint: (element, id) => ScrollTrigger.create({ id, trigger: element, start: 'top bottom', end: 'center 55%', scrub: true, animation: effects.tint(element) }),
-  stamp: (element, id) => ScrollTrigger.create({ id, trigger: element, start: 'top 90%', once: true, animation: effects.stamp(element) })
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  Object.keys(effectBindings).forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => effectBindings[name](element, `${id}:${index}`));
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-</script>
 
-<script data-8b-part="scene:shades">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('shades');
-    const row = section.querySelector('.shades__row');
-    const strips = gsap.utils.toArray(row.querySelectorAll(':scope > .shades__strip'));
-    const count = strips.length;
-    section.setAttribute('data-fan', '');
-    const dx = strip => row.clientWidth / 2 - (strip.offsetLeft + strip.offsetWidth / 2);
-    const dy = strip => row.clientHeight / 2 - (strip.offsetTop + strip.offsetHeight / 2);
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'shades', trigger: section, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true } });
-    strips.forEach((strip, index) => {
-      const at = index * .13;
-      timeline
-        .fromTo(strip, { x: () => dx(strip), y: () => dy(strip), rotation: (index - (count - 1) / 2) * 2.6, zIndex: count - index }, { x: 0, y: 0, rotation: 0, duration: .55, ease: 'power2.inOut' }, at)
-        .fromTo(strip.querySelector('.shades__photo img'), { filter: 'grayscale(1)' }, { filter: 'grayscale(0)', duration: .3, ease: 'none' }, at + .32);
-    });
-    return () => section.removeAttribute('data-fan');
-  });
-});
-</script>
-<script data-8b-part="scene:cut">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('cut');
-    const stage = section.querySelector('.cut__stage');
-    const upper = [section.querySelector('.cut__line--1'), section.querySelector('.cut__half--top')];
-    const lower = [section.querySelector('.cut__half--bottom'), section.querySelector('.cut__line--2')];
-    const rule = section.querySelector('.cut__rule');
-    const shift = () => innerWidth * (innerWidth < 900 ? .32 : .2);
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'cut', trigger: stage, start: 'top 88%', end: 'center 52%', scrub: .5, invalidateOnRefresh: true } });
-    timeline
-      .fromTo(rule, { scaleX: 0, transformOrigin: '0% 50%' }, { scaleX: 1, duration: .35, ease: 'power2.out' }, 0)
-      .fromTo(upper, { x: () => -shift(), rotation: -1.8 }, { x: 0, rotation: 0, duration: 1, ease: 'power3.out' }, 0)
-      .fromTo(lower, { x: () => shift(), rotation: 1.8 }, { x: 0, rotation: 0, duration: 1, ease: 'power3.out' }, 0);
-  });
-});
-</script>
-<script data-8b-part="scene:late">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('late');
-    const track = section.querySelector('.late__track');
-    const mask = section.querySelector('.late__mask');
-    const word = section.querySelector('.late__word');
-    const photo = section.querySelector('.late__photo img');
-    section.setAttribute('data-dive', '');
-    const origin = () => {
-      const size = parseFloat(getComputedStyle(word).fontSize) || 0;
-      return `${word.offsetLeft + size * .1}px ${word.offsetTop + word.offsetHeight * .55}px`;
-    };
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'late', trigger: track, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true } });
-    timeline
-      .fromTo(mask, { scale: 60, transformOrigin: origin }, { scale: 1, duration: .85, ease: 'power3.out' }, .15)
-      .fromTo(photo, { scale: 1.3 }, { scale: 1, duration: 1, ease: 'none' }, 0);
-    return () => section.removeAttribute('data-dive');
-  });
-});
-</script>
-<script data-8b-part="scene:transform">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('transform');
-    const stage = section.querySelector('.transform__stage');
-    const spray = section.querySelector('.transform__spray');
-    const photo = section.querySelector('.transform__photo');
-    const text = spray.textContent;
-    spray.textContent = '';
-    const letters = [...text].map(letter => {
-      const span = document.createElement('span');
-      span.className = 'transform__letter';
-      span.textContent = letter;
-      spray.appendChild(span);
-      return span;
-    });
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'transform', trigger: stage, start: 'top 78%', end: 'center 48%', scrub: .6, invalidateOnRefresh: true } });
-    letters.forEach(letter => {
-      timeline.fromTo(letter, { x: () => (spray.clientWidth / 2 - (letter.offsetLeft + letter.offsetWidth / 2)) * .92, scale: .5 }, { x: 0, scale: 1, duration: 1, ease: 'power3.out' }, 0);
-    });
-    timeline.fromTo(photo, { y: () => (spray.offsetTop + spray.offsetHeight / 2) - (photo.offsetTop + photo.offsetHeight / 2), scale: .78, rotation: -5 }, { y: 0, scale: 1, rotation: 0, duration: 1, ease: 'power2.inOut' }, 0);
-    return () => { spray.textContent = text; };
-  });
-});
-</script>
-<script data-8b-part="scene:care">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('care');
-    const strip = section.querySelector('.care__strip');
-    const image = section.querySelector('.care__photo img');
-    const marker = section.querySelector('.care__marker');
-    const badge = section.querySelector('.care__badge');
-    const rules = gsap.utils.toArray(section.querySelectorAll('.care__rule'));
-    const last = rules.length - 1;
-    let active = -1;
-    const setActive = index => {
-      if (index === active) return;
-      active = index;
-      rules.forEach((rule, i) => rule.toggleAttribute('data-active', i === index));
-    };
-    section.setAttribute('data-fade', '');
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: 'care', trigger: section, start: 'top top', end: 'bottom bottom', scrub: .5, invalidateOnRefresh: true, onUpdate: self => setActive(Math.round(Math.min(1, self.progress / .8) * last)) } });
-    timeline
-      .fromTo(marker, { x: () => -strip.clientWidth * .8 }, { x: 0, duration: .8 }, 0)
-      .fromTo(image, { filter: 'saturate(1.2) brightness(1)' }, { filter: 'saturate(.1) brightness(1.2)', duration: .74 }, 0)
-      .to(image, { filter: 'saturate(1) brightness(1)', duration: .07, ease: 'power2.out' }, .8)
-      .add(effects.stamp(badge).duration(.1), .8)
-      .to({}, { duration: .1 }, .9);
-    setActive(0);
-    return () => { section.removeAttribute('data-fade'); rules.forEach(rule => rule.removeAttribute('data-active')); };
-  });
-});
-</script>
 <script data-8b-part="section-script:contact">
 (() => {
   const form = document.querySelector('#contact .contact__form');
@@ -1269,6 +1126,157 @@ queueMotion(() => {
     if (!missing) form.reset();
   });
 })();
+</script>
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+</script>
+<script data-8b-part="scene-script:shades">
+motionKit.scene('shades', () => {
+  const row = document.querySelector('#shades .shades__row');
+  const strips = [...row.querySelectorAll(':scope > .shades__strip')];
+  motionKit.measure(() => strips.forEach(strip => motionKit.set(strip, {
+    '--shades-dx': `${row.clientWidth / 2 - (strip.offsetLeft + strip.offsetWidth / 2)}px`,
+    '--shades-dy': `${row.clientHeight / 2 - (strip.offsetTop + strip.offsetHeight / 2)}px`
+  })));
+});
+</script>
+<script data-8b-part="scene-script:late">
+motionKit.scene('late', () => {
+  const mask = document.querySelector('#late .late__mask');
+  const word = mask.querySelector('.late__word');
+  motionKit.measure(() => {
+    const size = parseFloat(getComputedStyle(word).fontSize) || 0;
+    motionKit.set(mask, { '--late-origin': `${word.offsetLeft + size * .1}px ${word.offsetTop + word.offsetHeight * .55}px` });
+  });
+});
+</script>
+<script data-8b-part="scene-script:transform">
+motionKit.scene('transform', () => {
+  const section = document.getElementById('transform');
+  const spray = section.querySelector('.transform__spray');
+  const photo = section.querySelector('.transform__photo');
+  const letters = [...spray.textContent].map(letter => {
+    const span = document.createElement('span');
+    span.className = 'transform__letter';
+    span.textContent = letter;
+    return span;
+  });
+  spray.replaceChildren(...letters);
+  motionKit.measure(() => {
+    letters.forEach(letter => motionKit.set(letter, { '--transform-x': `${(spray.clientWidth / 2 - (letter.offsetLeft + letter.offsetWidth / 2)) * .92}px` }));
+    motionKit.set(photo, { '--transform-y': `${spray.offsetTop + spray.offsetHeight / 2 - (photo.offsetTop + photo.offsetHeight / 2)}px` });
+  });
+});
 </script>
 </body>
 </html>

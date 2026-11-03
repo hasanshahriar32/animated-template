@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/electric-moped-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -28,7 +29,7 @@
   font-weight: 400 600;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/hostgrotesk/v5/co3BmWBnlCJ3U42vbbfdwMjZqljm0U0.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -74,10 +75,6 @@
 @font-face { font-family: "Host Grotesk Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Bold"); font-weight: 550 799; size-adjust: 92.6%; ascent-override: 110.2%; descent-override: 34.6%; line-gap-override: 0%; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis-stopped { overflow: clip; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body { margin: 0; background: var(--color-1); color: var(--color-4); font-family: var(--font-1); font-size: 16px; line-height: 1.55; font-weight: 400; overflow-x: clip; }
 img, svg { display: block; max-width: 100%; }
 img { height: auto; }
@@ -268,6 +265,24 @@ button { cursor: pointer; }
   #opening .op__fact .m-badge { font-size: 32px; }
   #opening .op__fact p { font-size: 14px; }
 }
+#opening .op__frame { clip-path: none; }
+#opening .op__photo { --op-pw: 85.2%; width: var(--op-pw); right: auto; left: calc(66% - var(--op-pw) * .57); bottom: 0; }
+#opening .op__s2 { grid-template-rows: auto auto 1fr; }
+#opening .op__s2 > .op__meta { margin-top: calc(-1 * clamp(8px, 1.6vw, 26px)); }
+@media (max-width: 860px) {
+  #opening .op__photo { --op-pw: 156.8vw; left: calc(50% - var(--op-pw) * .57); bottom: 0; }
+  #opening .op__s2 { grid-template-rows: auto auto auto 1fr; }
+  #opening .op__s2 > .op__meta { margin-top: -10px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #opening .op__line { animation: op-in-left .9s cubic-bezier(.2,.7,.1,1) backwards; }
+  #opening .op__line + .op__line { animation-delay: .08s; }
+  #opening .op__s2 > .op__meta { animation: op-in-up .9s .18s cubic-bezier(.2,.7,.1,1) backwards; }
+  #opening .op__fact { animation: op-in-up .8s cubic-bezier(.2,.7,.1,1) backwards; }
+  #opening .op__fact:nth-child(1) { animation-delay: .3s; }
+  #opening .op__fact:nth-child(2) { animation-delay: .38s; }
+  #opening .op__fact:nth-child(3) { animation-delay: .46s; }
+}
 }
 </style>
 
@@ -304,27 +319,6 @@ button { cursor: pointer; }
   #models .mo__photo { order: -1; aspect-ratio: 1.3; }
   #models .mo__thumb { padding-right: 12px; }
   #models .mo__thumb img { width: 48px; height: 36px; }
-}
-}
-</style>
-<style data-8b-part="scene-style:models">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #models[data-stage] .mo__stage { height: 300vh; height: 300svh; }
-  #models[data-stage] .mo__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: 0; }
-  #models[data-stage] .mo__list { position: relative; display: block; height: min(70vh, 600px); }
-  #models[data-stage] .mo__item { position: absolute; inset: 0; }
-  #models[data-stage] .mo__photo { height: 100%; aspect-ratio: auto; transform-origin: 100% 50%; }
-  #models[data-stage] .mo__stack { position: absolute; z-index: 5; right: calc(var(--space-2) + 22px); top: 50%; margin: -118px 0 0; flex-direction: column; flex-wrap: nowrap; }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 860px) {
-  #models[data-stage] .mo__list { height: min(84svh, 720px); }
-  #models[data-stage] .mo__item { align-content: start; gap: 18px; }
-  #models[data-stage] .mo__photo { height: auto; aspect-ratio: 1.3; }
-  #models[data-stage] .mo__stack { top: calc((100svh - min(84svh, 720px)) / 2 + 10px); right: calc(var(--space-2) + 10px); margin: 0; gap: 6px; }
-  #models[data-stage] .mo__thumb { padding: 4px; }
-  #models[data-stage] .mo__thumb > span { display: none; }
-  #models[data-stage] .mo__thumb img { width: 44px; height: 33px; border-radius: 8px; }
 }
 }
 </style>
@@ -392,18 +386,6 @@ button { cursor: pointer; }
 }
 }
 </style>
-<style data-8b-part="scene-style:details">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #details[data-stage] .de__stage { height: 280vh; height: 280svh; }
-  #details[data-stage] .de__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: 0; }
-  #details[data-stage] .de__strips { display: block; height: min(76vh, 660px); }
-  #details[data-stage] .de__strip { position: absolute; inset: 0; display: block; }
-  #details[data-stage] .de__strip figure { height: 100%; aspect-ratio: auto; border-radius: 0; background: transparent; }
-  #details[data-stage] .de__cap { position: absolute; left: 16px; bottom: 16px; width: min(380px, calc(100% - 32px)); }
-}
-}
-</style>
 <style data-8b-part="section:routes">
 @layer sections {
 #routes { padding: var(--space-3) 0 clamp(48px, 6vw, 96px); }
@@ -432,21 +414,6 @@ button { cursor: pointer; }
   #routes .ro__map { order: 2; }
   #routes .ro__label { padding: 2px 7px; font-size: 11px; }
   #routes .ro__rider { width: 22px; height: 22px; margin: -11px 0 0 -11px; border-width: 3px; }
-}
-}
-</style>
-<style data-8b-part="scene-style:routes">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #routes[data-stage] .ro__stage { height: 300vh; height: 300svh; }
-  #routes[data-stage] .ro__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 860px) {
-  #routes[data-stage] .ro__sticky { align-content: center; gap: 18px; }
-  #routes[data-stage] .ro__text .m-text-4 { display: none; }
-  #routes[data-stage] .ro__charge { margin-top: 14px; }
-  #routes[data-stage] .ro__days { margin-top: 14px; }
-  #routes[data-stage] .ro__days li { padding: 6px 0; }
 }
 }
 </style>
@@ -496,20 +463,6 @@ button { cursor: pointer; }
   #service .se__head { grid-template-columns: 1fr; }
   #service .se__track { grid-template-columns: 1fr; }
   #service .se__step { min-height: 340px; padding: 20px; }
-}
-}
-</style>
-<style data-8b-part="scene-style:service">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #service[data-stage] .se__stage { height: 320vh; height: 320svh; }
-  #service[data-stage] .se__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; align-items: center; padding-top: 0; overflow: hidden; }
-  #service[data-stage] .se__track { display: flex; gap: 16px; padding-inline: var(--space-2); }
-  #service[data-stage] .se__step { flex: none; width: min(34vw, 460px); height: min(72vh, 580px); }
-  #service[data-stage] .se__step--photo { width: min(62vw, 860px); }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 860px) {
-  #service[data-stage] .se__step, #service[data-stage] .se__step--photo { width: 84vw; height: min(70svh, 560px); min-height: 0; }
 }
 }
 </style>
@@ -601,25 +554,207 @@ button { cursor: pointer; }
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .op__frame { clip-path: none; }
-#opening .op__photo { --op-pw: 85.2%; width: var(--op-pw); right: auto; left: calc(66% - var(--op-pw) * .57); bottom: 0; }
-#opening .op__s2 { grid-template-rows: auto auto 1fr; }
-#opening .op__s2 > .op__meta { margin-top: calc(-1 * clamp(8px, 1.6vw, 26px)); }
-@media (max-width: 860px) {
-  #opening .op__photo { --op-pw: 156.8vw; left: calc(50% - var(--op-pw) * .57); bottom: 0; }
-  #opening .op__s2 { grid-template-rows: auto auto auto 1fr; }
-  #opening .op__s2 > .op__meta { margin-top: -10px; }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] [data-8b-motion~="rise"] .line__in { animation-name: motion-rise-line-in-translate; animation-duration: 0.9s; animation-delay: calc(0s + 0.08s * var(--i)); animation-timing-function: var(--ease-power3-out); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"].is-in .line__in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="dock"][data-8b-items=".m-text"] .m-text, [data-8b-live] [data-8b-motion~="dock"][data-8b-items=":scope > li"] > li, [data-8b-live] [data-8b-motion~="dock"][data-8b-items=".m-surface"] .m-surface { animation-name: motion-dock-m-text-m-text-translate, motion-dock-m-text-m-text-opacity; animation-duration: 0.7s; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); }
+[data-8b-live] [data-8b-motion~="dock"][data-8b-items=".m-text"] .m-text { animation-delay: calc(0s + 0.08s * var(--i)); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="dock"][data-8b-items=".m-text"].is-in .m-text { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="dock"][data-8b-items=":scope > li"] > li { animation-delay: calc(0s + 0.08s * var(--i)); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="dock"][data-8b-items=":scope > li"].is-in > li { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="dock"][data-8b-items=".m-surface"] .m-surface { animation-delay: calc(0s + 0.08s * var(--i)); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="dock"][data-8b-items=".m-surface"].is-in .m-surface { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="notch"] { animation-name: motion-notch; animation-duration: 1.15s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: backwards; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="notch"].is-in { animation-play-state: running; }
+@keyframes motion-notch { from { clip-path: inset(0px 0px calc(100% - 72px) calc(100% - 72px) round 36px); } to { clip-path: inset(0px 0px 0px 0px round var(--radius-1)); } }
+@keyframes motion-rise-line-in-translate { 0% { translate: 0px calc(105% + 0.126em); } 100% { translate: 0px 0px; } }
+@keyframes motion-dock-m-text-m-text-translate { 0% { translate: -44px 0px; } 100% { translate: 0px 0px; } }
+@keyframes motion-dock-m-text-m-text-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
 }
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+  [data-8b-live] #opening .op__line, [data-8b-live] #opening .op__s2 > .op__meta, [data-8b-live] #opening .op__fact, [data-8b-live] #opening .op__photo-in { will-change: transform; }
+}
+</style>
+<style data-8b-part="scene:models">
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #opening .op__line { animation: op-in-left .9s cubic-bezier(.2,.7,.1,1) backwards; }
-  #opening .op__line + .op__line { animation-delay: .08s; }
-  #opening .op__s2 > .op__meta { animation: op-in-up .9s .18s cubic-bezier(.2,.7,.1,1) backwards; }
-  #opening .op__fact { animation: op-in-up .8s cubic-bezier(.2,.7,.1,1) backwards; }
-  #opening .op__fact:nth-child(1) { animation-delay: .3s; }
-  #opening .op__fact:nth-child(2) { animation-delay: .38s; }
-  #opening .op__fact:nth-child(3) { animation-delay: .46s; }
-}</style>
+  [data-8b-live] #models .mo__stage { height: 300vh; height: 300svh; }
+  [data-8b-live] #models .mo__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: 0; }
+  [data-8b-live] #models .mo__list { position: relative; display: block; height: min(70vh, 600px); }
+  [data-8b-live] #models .mo__item { position: absolute; inset: 0; }
+  [data-8b-live] #models .mo__photo { height: 100%; aspect-ratio: auto; transform-origin: 100% 50%; }
+  [data-8b-live] #models .mo__stack { position: absolute; z-index: 5; right: calc(var(--space-2) + 22px); top: 50%; margin: -118px 0 0; flex-direction: column; flex-wrap: nowrap; }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 860px) {
+  [data-8b-live] #models .mo__list { height: min(84svh, 720px); }
+  [data-8b-live] #models .mo__item { align-content: start; gap: 18px; }
+  [data-8b-live] #models .mo__photo { height: auto; aspect-ratio: 1.3; }
+  [data-8b-live] #models .mo__stack { top: calc((100svh - min(84svh, 720px)) / 2 + 10px); right: calc(var(--space-2) + 10px); margin: 0; gap: 6px; }
+  [data-8b-live] #models .mo__thumb { padding: 4px; }
+  [data-8b-live] #models .mo__thumb > span { display: none; }
+  [data-8b-live] #models .mo__thumb img { width: 44px; height: 33px; border-radius: 8px; }
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #models .mo__stage { view-timeline: --models-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #mo-nero > .mo__photo { animation-name: models-figure-mo-photo-opacity, models-figure-mo-photo-visibility, models-figure-mo-photo-scale, models-figure-mo-photo-filter; animation-range: cover calc(12% + 76vh) cover calc(86% - 72vh), cover calc(12% + 76vh) cover calc(86% - 72vh), cover calc(12% + 76vh) cover calc(86% - 72vh), cover calc(56% - 12vh) cover calc(86% - 72vh); animation-timing-function: linear, linear, var(--ease-power2-inout), var(--ease-power2-inout); }
+[data-8b-live] #models .mo__list > .mo__item > .mo__photo { animation-timeline: --models-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #mo-uno > .mo__photo { animation-name: models-figure-mo-photo-scale-2, models-figure-mo-photo-filter, models-figure-mo-photo-opacity-2, models-figure-mo-photo-visibility-2; animation-range: cover calc(12% + 76vh) cover calc(42% + 16vh), cover calc(12% + 76vh) cover calc(42% + 16vh), cover calc(42% + 16vh - 1px) cover calc(42% + 16vh), cover calc(42% + 16vh - 1px) cover calc(42% + 16vh); animation-timing-function: var(--ease-power2-inout), var(--ease-power2-inout), linear, linear; }
+[data-8b-live] #models .mo__list > .mo__item > .mo__info > .m-text-5, [data-8b-live] #models .mo__list > .mo__item > .mo__info > .m-badge-2, [data-8b-live] #models .mo__list > .mo__item > .mo__info > .m-text, [data-8b-live] #models .mo__list > .mo__item > .mo__info > .mo__specs, [data-8b-live] #models .mo__list > .mo__item > .mo__info > .m-btn { animation-timeline: --models-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #mo-uno > .mo__info > .m-text-5, [data-8b-live] #mo-uno > .mo__info > .m-badge-2, [data-8b-live] #mo-uno > .mo__info > .m-text, [data-8b-live] #mo-uno > .mo__info > .mo__specs, [data-8b-live] #mo-uno > .mo__info > .m-btn { animation-name: models-figure-mo-photo-opacity-2, models-h3-m-text-5-visibility, models-h3-m-text-5-translate; }
+[data-8b-live] #mo-uno > .mo__info > .m-text-5 { animation-range: cover calc(12% + 76vh) cover calc(22% + 56vh); }
+[data-8b-live] #mo-uno > .mo__info > .m-badge-2 { animation-range: cover calc(13.5% + 73vh) cover calc(23.5% + 53vh); }
+[data-8b-live] #mo-uno > .mo__info > .m-text { animation-range: cover calc(15% + 70vh) cover calc(25% + 50vh); }
+[data-8b-live] #mo-uno > .mo__info > .mo__specs { animation-range: cover calc(16.5% + 67vh) cover calc(26.5% + 47vh); }
+[data-8b-live] #mo-uno > .mo__info > .m-btn { animation-range: cover calc(18% + 64vh) cover calc(28% + 44vh); }
+[data-8b-live] #models .mo__stack > li > .mo__thumb { animation-timeline: --models-t1; animation-range-start: cover calc(12% + 76vh); animation-range-end: cover calc(68% - 36vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #models .mo__stack > li:last-of-type > .mo__thumb { animation-range-start: cover calc(56% - 12vh); }
+[data-8b-live] #models .mo__stack > li:first-of-type > .mo__thumb { animation-range-end: cover calc(24% + 52vh); }
+[data-8b-live] #models .mo__stack > li:nth-of-type(1) > .mo__thumb { animation-name: models-a-mo-thumb-translate; }
+[data-8b-live] #models .mo__stack > li:nth-of-type(2) > .mo__thumb { animation-name: models-a-mo-thumb-translate-2; }
+[data-8b-live] #mo-nero > .mo__info > .m-text-5 { animation-name: models-h3-m-text-5-opacity-2, models-h3-m-text-5-visibility-2, models-h3-m-text-5-translate-2; animation-range: cover calc(26% + 48vh) cover calc(66% - 32vh); }
+[data-8b-live] #mo-nero > .mo__info > .m-badge-2 { animation-name: models-p-m-badge-2-opacity-2, models-p-m-badge-2-visibility-2, models-p-m-badge-2-translate-2; animation-range: cover calc(28% + 44vh) cover calc(67.5% - 35vh); }
+[data-8b-live] #mo-nero > .mo__info > .m-text { animation-name: models-p-m-text-opacity-2, models-p-m-text-visibility-2, models-p-m-text-translate-2; animation-range: cover calc(30% + 40vh) cover calc(69% - 38vh); }
+[data-8b-live] #mo-nero > .mo__info > .mo__specs { animation-name: models-dl-mo-specs-opacity-2, models-dl-mo-specs-visibility-2, models-dl-mo-specs-translate-2; animation-range: cover calc(32% + 36vh) cover calc(70.5% - 41vh); }
+[data-8b-live] #mo-nero > .mo__info > .m-btn { animation-name: models-a-m-btn-opacity-2, models-a-m-btn-visibility-2, models-a-m-btn-translate-2; animation-range: cover calc(34% + 32vh) cover calc(72% - 44vh); }
+[data-8b-live] #mo-argento > .mo__photo { animation-name: models-figure-mo-photo-opacity-3, models-figure-mo-photo-visibility-3, models-figure-mo-photo-scale-3; animation-range: cover calc(56% - 12vh - 1px) cover calc(56% - 12vh), cover calc(56% - 12vh - 1px) cover calc(56% - 12vh), cover calc(56% - 12vh) cover calc(86% - 72vh); animation-timing-function: linear, linear, var(--ease-power2-inout); }
+[data-8b-live] #models .mo__stack > li:nth-of-type(3) > .mo__thumb { animation-name: models-a-mo-thumb-translate-3; }
+[data-8b-live] #mo-argento > .mo__info > .m-text-5, [data-8b-live] #mo-argento > .mo__info > .m-badge-2, [data-8b-live] #mo-argento > .mo__info > .m-text, [data-8b-live] #mo-argento > .mo__info > .mo__specs, [data-8b-live] #mo-argento > .mo__info > .m-btn { animation-name: models-figure-mo-photo-opacity-3, models-h3-m-text-5-visibility-3, models-h3-m-text-5-translate-3; }
+[data-8b-live] #mo-argento > .mo__info > .m-text-5 { animation-range: cover calc(70% - 40vh) cover calc(82% - 64vh); }
+[data-8b-live] #mo-argento > .mo__info > .m-badge-2 { animation-range: cover calc(72% - 44vh) cover calc(84% - 68vh); }
+[data-8b-live] #mo-argento > .mo__info > .m-text { animation-range: cover calc(74% - 48vh) cover calc(86% - 72vh); }
+[data-8b-live] #mo-argento > .mo__info > .mo__specs { animation-range: cover calc(76% - 52vh) cover calc(88% - 76vh); }
+[data-8b-live] #mo-argento > .mo__info > .m-btn { animation-range: cover calc(78% - 56vh) cover calc(90% - 80vh); }
+@keyframes models-figure-mo-photo-opacity { 0% { opacity: 1; } 99.9865% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes models-figure-mo-photo-visibility { 0% { visibility: hidden; } 0.002% { visibility: visible; } 99.998% { visibility: visible; } 100% { visibility: hidden; } }
+@keyframes models-figure-mo-photo-scale { 0% { scale: 0.28; } 40.5405% { scale: 1; } 59.4595% { scale: 1; } 100% { scale: 0.9; } }
+@keyframes models-figure-mo-photo-filter { 0% { filter: none; } 0.002% { filter: brightness(1); } 100% { filter: brightness(0.6); } }
+@keyframes models-figure-mo-photo-scale-2 { 0% { scale: 1; } 100% { scale: 0.9; } }
+@keyframes models-figure-mo-photo-opacity-2 { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes models-figure-mo-photo-visibility-2 { 0% { visibility: visible; } 100% { visibility: hidden; } }
+@keyframes models-h3-m-text-5-visibility { 0% { visibility: visible; } 99.998% { visibility: visible; } 100% { visibility: hidden; } }
+@keyframes models-h3-m-text-5-translate { 0% { translate: 0px 0px; } 100% { translate: 0px -36px; } }
+@keyframes models-a-mo-thumb-translate { 0% { translate: -26px 0px; } 100% { translate: 0px 0px; } }
+@keyframes models-a-mo-thumb-translate-2 { 0% { translate: 0px 0px; } 21.4286% { translate: -26px 0px; } 78.5714% { translate: -26px 0px; } 100% { translate: 0px 0px; } }
+@keyframes models-h3-m-text-5-opacity-2 { 0% { opacity: 0; } 30% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes models-h3-m-text-5-visibility-2 { 0% { visibility: hidden; } 0.002% { visibility: visible; } 30% { visibility: visible; } 75% { visibility: visible; } 99.998% { visibility: visible; } 100% { visibility: hidden; } }
+@keyframes models-h3-m-text-5-translate-2 { 0% { translate: 0px 36px; } 30% { translate: 0px 0px; } 75% { translate: 0px 0px; } 100% { translate: 0px -36px; } }
+@keyframes models-p-m-badge-2-opacity-2 { 0% { opacity: 0; } 30.3797% { opacity: 1; } 74.6835% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes models-p-m-badge-2-visibility-2 { 0% { visibility: hidden; } 0.002% { visibility: visible; } 30.3797% { visibility: visible; } 74.6835% { visibility: visible; } 99.998% { visibility: visible; } 100% { visibility: hidden; } }
+@keyframes models-p-m-badge-2-translate-2 { 0% { translate: 0px 36px; } 30.3797% { translate: 0px 0px; } 74.6835% { translate: 0px 0px; } 100% { translate: 0px -36px; } }
+@keyframes models-p-m-text-opacity-2 { 0% { opacity: 0; } 30.7692% { opacity: 1; } 74.359% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes models-p-m-text-visibility-2 { 0% { visibility: hidden; } 0.002% { visibility: visible; } 30.7692% { visibility: visible; } 74.359% { visibility: visible; } 99.998% { visibility: visible; } 100% { visibility: hidden; } }
+@keyframes models-p-m-text-translate-2 { 0% { translate: 0px 36px; } 30.7692% { translate: 0px 0px; } 74.359% { translate: 0px 0px; } 100% { translate: 0px -36px; } }
+@keyframes models-dl-mo-specs-opacity-2 { 0% { opacity: 0; } 31.1688% { opacity: 1; } 74.026% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes models-dl-mo-specs-visibility-2 { 0% { visibility: hidden; } 0.002% { visibility: visible; } 31.1688% { visibility: visible; } 74.026% { visibility: visible; } 99.998% { visibility: visible; } 100% { visibility: hidden; } }
+@keyframes models-dl-mo-specs-translate-2 { 0% { translate: 0px 36px; } 31.1688% { translate: 0px 0px; } 74.026% { translate: 0px 0px; } 100% { translate: 0px -36px; } }
+@keyframes models-a-m-btn-opacity-2 { 0% { opacity: 0; } 31.5789% { opacity: 1; } 73.6842% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes models-a-m-btn-visibility-2 { 0% { visibility: hidden; } 0.002% { visibility: visible; } 31.5789% { visibility: visible; } 73.6842% { visibility: visible; } 99.998% { visibility: visible; } 100% { visibility: hidden; } }
+@keyframes models-a-m-btn-translate-2 { 0% { translate: 0px 36px; } 31.5789% { translate: 0px 0px; } 73.6842% { translate: 0px 0px; } 100% { translate: 0px -36px; } }
+@keyframes models-figure-mo-photo-opacity-3 { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes models-figure-mo-photo-visibility-3 { 0% { visibility: hidden; } 100% { visibility: visible; } }
+@keyframes models-figure-mo-photo-scale-3 { 0% { scale: 0.28; } 100% { scale: 1; } }
+@keyframes models-a-mo-thumb-translate-3 { 0% { translate: 0px 0px; } 100% { translate: -26px 0px; } }
+@keyframes models-h3-m-text-5-visibility-3 { 0% { visibility: hidden; } 0.002% { visibility: visible; } 100% { visibility: visible; } }
+@keyframes models-h3-m-text-5-translate-3 { 0% { translate: 0px 36px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:battery">
+@layer scenes {
+[data-8b-live] #battery { timeline-scope: --battery-t1; }
+[data-8b-live] #battery .ba__rig { view-timeline: --battery-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #battery .ba__cell, [data-8b-live] #battery .ba__segs > li, [data-8b-live] #battery .ba__times > li > .ba__tick, [data-8b-live] #battery .ba__last { animation-timeline: --battery-t1; animation-fill-mode: both; }
+[data-8b-live] #battery .ba__cell { animation-name: battery-div-ba-cell-translate; animation-range: cover 18vh cover calc(26.5306% + 2.6122vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); transform: none; }
+[data-8b-live] #battery .ba__segs > li { animation-name: battery-ol-ba-segs-li-backgroundcolor; animation-range: cover calc(30.6122% + 5.9184% * var(--i) + 0.2449vh - 3.4327vh * var(--i)) cover calc(35.7143% + 5.9184% * var(--i) - 2.7143vh - 3.4326vh * var(--i)); animation-timing-function: linear; }
+[data-8b-live] #battery .ba__times > li > .ba__tick { animation-name: battery-span-ba-tick-scale-2; animation-range: cover calc(30.6122% + 27.5511% * var(--i) + 0.2449vh - 15.9796vh * var(--i)) cover calc(38.7755% + 27.551% * var(--i) - 4.4898vh - 15.9796vh * var(--i)); animation-timing-function: linear; transform: none; }
+[data-8b-live] #battery .ba__times > li:first-of-type > .ba__tick { animation-name: battery-span-ba-tick-scale; }
+[data-8b-live] #battery .ba__last { animation-name: battery-span-ba-last-color; animation-range: cover calc(91.8367% - 35.2653vh) cover calc(100% - 40vh); animation-timing-function: linear; }
+@keyframes battery-div-ba-cell-translate { 0% { translate: 0px 40%; } 0.002% { translate: 0px 39.954%; } 100% { translate: 0px 0px; } }
+@keyframes battery-ol-ba-segs-li-backgroundcolor { 0% { background-color: var(--color-4); } 100% { background-color: var(--color-6); } }
+@keyframes battery-span-ba-tick-scale { 0% { scale: 0 1; } 0.002% { scale: 0.0013 1; } 99.998% { scale: 0.9988 1; } 100% { scale: 1; } }
+@keyframes battery-span-ba-tick-scale-2 { 0% { scale: 0 1; } 0.002% { scale: 0.0012 1; } 99.998% { scale: 0.9987 1; } 100% { scale: 1; } }
+@keyframes battery-span-ba-last-color { 0% { color: var(--color-3); } 100% { color: var(--color-6); } }
+}
+</style>
+<style data-8b-part="scene:details">
+@layer scenes {
+  [data-8b-live] #details .de__stage { height: 280vh; height: 280svh; }
+  [data-8b-live] #details .de__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: 0; }
+  [data-8b-live] #details .de__strips { display: block; height: min(76vh, 660px); }
+  [data-8b-live] #details .de__strip { position: absolute; inset: 0; display: block; }
+  [data-8b-live] #details .de__strip figure { height: 100%; aspect-ratio: auto; border-radius: 0; background: transparent; }
+  [data-8b-live] #details .de__cap { position: absolute; left: 16px; bottom: 16px; width: min(380px, calc(100% - 32px)); }
+}
+</style>
+<style data-8b-part="scene:routes">
+@layer scenes {
+  [data-8b-live] #routes .ro__stage { height: 300vh; height: 300svh; view-timeline: --routes-stage block; }
+  [data-8b-live] #routes .ro__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; }
+  [data-8b-live] #routes .ro__route, [data-8b-live] #routes .ro__fill, [data-8b-live] #routes .ro__stop, [data-8b-live] #routes .ro__dot { animation-timeline: --routes-stage; animation-timing-function: linear; animation-fill-mode: both; }
+  [data-8b-live] #routes .ro__route { stroke-dasharray: var(--routes-length); animation-name: routes-draw; animation-range: contain 0% contain 100%; }
+  [data-8b-live] #routes .ro__fill { animation-name: routes-charge; animation-range: contain 0% contain 94%; }
+  [data-8b-live] #routes .ro__stop, [data-8b-live] #routes .ro__dot { animation-range: contain calc(var(--routes-at) * 100% - 1.5%) contain calc(var(--routes-at) * 100% + 1.5%); }
+  [data-8b-live] #routes .ro__stop { transform-box: fill-box; transform-origin: 50% 50%; animation-name: routes-stop; }
+  [data-8b-live] #routes .ro__dot { animation-name: routes-dot; }
+  @keyframes routes-draw { from { stroke-dashoffset: var(--routes-length); } to { stroke-dashoffset: 0px; } }
+  @keyframes routes-charge { from { clip-path: inset(0 0% 0 0 round var(--radius-2)); } }
+  @keyframes routes-stop { from { fill: var(--color-3); scale: 1; } to { fill: var(--color-6); scale: 1.35; } }
+  @keyframes routes-dot { from { scale: 0; } to { scale: 1; } }
+  @media (max-width: 860px) {
+    [data-8b-live] #routes .ro__sticky { align-content: center; gap: 18px; }
+    [data-8b-live] #routes .ro__text .m-text-4 { display: none; }
+    [data-8b-live] #routes .ro__charge { margin-top: 14px; }
+    [data-8b-live] #routes .ro__days { margin-top: 14px; }
+    [data-8b-live] #routes .ro__days li { padding: 6px 0; }
+  }
+}
+</style>
+<style data-8b-part="scene:service">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #service .se__stage { height: 320vh; height: 320svh; }
+  [data-8b-live] #service .se__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; align-items: center; padding-top: 0; overflow: hidden; }
+  [data-8b-live] #service .se__track { display: flex; gap: 16px; padding-inline: var(--space-2); }
+  [data-8b-live] #service .se__step { flex: none; width: min(34vw, 460px); height: min(72vh, 580px); }
+  [data-8b-live] #service .se__step--photo { width: min(62vw, 860px); }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 860px) {
+  [data-8b-live] #service .se__step,[data-8b-live]  #service .se__step--photo { width: 84vw; height: min(70svh, 560px); min-height: 0; }
+}
+}
+@layer scenes {
+[data-8b-live] #service .se__stage { view-timeline: --service-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #service .se__track, [data-8b-live] #service .se__track > li:is(:nth-of-type(2), :nth-of-type(4)) > figure > img { animation-timeline: --service-t1; animation-range: cover 100vh cover calc(100% - 100vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #service .se__track { animation-name: service-ol-se-track-translate; }
+[data-8b-live] #service .se__track > li:is(:nth-of-type(2), :nth-of-type(4)) > figure > img { animation-name: service-li-se-step-img-translate; }
+@keyframes service-ol-se-track-translate { 0% { translate: 0px 0px; } 100% { translate: calc(-99.972% + 99.953vw) 0px; } }
+@keyframes service-li-se-step-img-translate { 0% { translate: 6% 0px; } 100% { translate: -6% 0px; } }
+}
+</style>
+<style data-8b-part="scene:reviews">
+@layer scenes {
+[data-8b-live] #reviews .rv__grid { view-timeline: --reviews-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #reviews .rv__grid > li { animation-timeline: --reviews-t1; animation-range: cover calc(12vh - 0.9333vh * var(--i) + 3.3333% * var(--i)) cover calc(33.3333% + 3.3334% * var(--i) + 2.6667vh - 0.9334vh * var(--i)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes reviews-li-rv-card-translate { 0% { translate: var(--reviews-x, 0px) var(--reviews-y, 0px); } 100% { translate: 0px 0px; } }
+@keyframes reviews-li-rv-card-rotate { 0% { rotate: var(--reviews-li-rv-card-rotate-from, -7deg); } 100% { rotate: 0deg; } }
+[data-8b-live] #reviews .rv__grid > li { animation-name: reviews-li-rv-card-translate, reviews-li-rv-card-rotate; }
+}
+</style>
+<style data-8b-part="scene:footer">
+@layer scenes {
+  [data-8b-live] #footer .ft__mark { view-timeline: --footer-mark block; }
+  [data-8b-live] #footer .ft__mark .c { display: inline-block; animation-name: footer-gather; animation-timeline: --footer-mark; animation-range: entry 0% entry 100%; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; }
+  @keyframes footer-gather { from { translate: var(--footer-x, 0px) 0px; } to { translate: 0px 0px; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: fixed top bar: four section links, the Arco logo, a Call us button and a Book a ride button; hides on scroll down; phone menu overlay -->
@@ -641,7 +776,7 @@ button { cursor: pointer; }
       <button class="m-icon-2 nav__menu" type="button" aria-label="Open the menu" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7h14M3 13h14"/></svg></button>
     </div>
   </nav>
-  <div id="menu" class="nav__overlay" data-lenis-prevent hidden>
+  <div id="menu" class="nav__overlay" hidden>
     <div class="nav__overlay-top">
       <span class="nav__logo">Arco.</span>
       <button class="m-icon-2 nav__close" type="button" aria-label="Close the menu"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15"/></svg></button>
@@ -660,11 +795,11 @@ button { cursor: pointer; }
 </header>
 
 <main>
-<!-- opening: first screen: a two-line headline, a test ride button with a price line, three fact pills, and a red moped photo behind them -->
+<!-- opening: first screen: a two-line headline, a test ride button with a price line, three fact pills, and a red moped photo behind them (animation: scene:opening) -->
 <section id="opening" class="op" data-8b-section="opening" aria-labelledby="op-title">
   <div class="op__stage">
     <div class="op__frame">
-      <div class="op__photo"><div class="op__drift"><div class="op__photo-in"><img fetchpriority="high" style="background:#c0c0c0" src="https://images.unsplash.com/photo-1697646382333-0d14cf52b20e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTEyMzIzMzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=870&q=60" width="1600" height="1081" alt="A red Arco Uno moped with a top box, parked against a pale grey wall"></div></div></div>
+      <div class="op__photo"><div class="op__drift"><div class="op__photo-in"><img fetchpriority="high" src="https://images.unsplash.com/photo-1697646382333-0d14cf52b20e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTEyMzIzMzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1100&q=60" width="1600" height="1081" alt="A red Arco Uno moped with a top box, parked against a pale grey wall"></div></div></div>
     </div>
   </div>
   
@@ -674,7 +809,7 @@ button { cursor: pointer; }
         <a class="m-btn" href="#contact"><span class="m-btn__label">Book a test ride</span><span class="m-btn__icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 10h11M11 5l5 5-5 5"/></svg></span></a>
         <p class="m-text">From £2,490, or £69 a month with servicing included.</p>
       </div>
-    <ul class="op__facts">
+    <ul class="op__facts" data-8b-items=":scope > li">
       <li class="op__fact m-surface"><span class="m-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 2 5 13h6l-1 9 8-11h-6z"/></svg></span><p class="m-text">Rides at 45 km/h, and a car licence is all you need.</p></li>
       <li class="op__fact m-surface"><span class="m-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18c3-8 13-8 16 0M12 18l4-6"/></svg></span><p class="m-text">Goes about 80 km on a charge: a week of errands.</p></li>
       <li class="op__fact m-surface"><span class="m-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg></span><p class="m-text">Fills up from a kitchen socket in three and a half hours.</p></li>
@@ -684,17 +819,17 @@ button { cursor: pointer; }
 <!-- models: three models on a pinned switcher: each photo grows from a stack of thumbnails at the right edge, with name, badge, text, four specs and a price tab (demo: Uno, Nero, Argento) (animation: scene:models) -->
 <section id="models" class="mo" data-8b-section="models" aria-labelledby="mo-title">
   <div class="l-wrap mo__head">
-    <h2 id="mo-title" class="m-text-2" data-8b-motion="rise">Three Arcos.<br>One charger.</h2>
+    <h2 id="mo-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Three Arcos.<br>One charger.</h2>
     <p class="m-text-4 mo__lead">Every model shares the battery, the hub motor and the app. Pick the one that suits your street.</p>
   </div>
   <div class="mo__stage">
     <div class="mo__sticky l-wrap">
-      <ol class="mo__stack" aria-label="Jump to a model">
-        <li><a class="mo__thumb m-surface" href="#mo-uno"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1697646382333-0d14cf52b20e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTEyMzIzMzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=870&q=60" width="1600" height="1200" alt=""><span><strong>Uno</strong><span class="m-text-3">City model</span></span></a></li>
-        <li><a class="mo__thumb m-surface" href="#mo-nero"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1598475208509-e8bc55613d93?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZWxlY3RyaWMlMjBzY29vdGVyJTIwbW9wZWQlMjBwYXJrZWR8ZW58MXwwfHx8MTc5MTIzMjMzOXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=760&q=60" width="1600" height="1067" alt="" loading="lazy"><span><strong>Nero</strong><span class="m-text-3">Night edition</span></span></a></li>
-        <li><a class="mo__thumb m-surface" href="#mo-argento"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1550789458-5c1504fbbf55?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTEyMzIzMzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=760&q=60" width="1600" height="1067" alt="" loading="lazy"><span><strong>Argento</strong><span class="m-text-3">Classic line</span></span></a></li>
+      <ol class="mo__stack" aria-label="Jump to a model" data-8b-items=":scope > li" data-8b-fixed="3">
+        <li><a class="mo__thumb m-surface" href="#mo-uno"><img src="https://images.unsplash.com/photo-1697646382333-0d14cf52b20e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTEyMzIzMzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1100&q=60" width="1600" height="1200" alt=""><span><strong>Uno</strong><span class="m-text-3">City model</span></span></a></li>
+        <li><a class="mo__thumb m-surface" href="#mo-nero"><img src="https://images.unsplash.com/photo-1598475208509-e8bc55613d93?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZWxlY3RyaWMlMjBzY29vdGVyJTIwbW9wZWQlMjBwYXJrZWR8ZW58MXwwfHx8MTc5MTIzMjMzOXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=220&q=60" width="1600" height="1067" alt="" loading="lazy"><span><strong>Nero</strong><span class="m-text-3">Night edition</span></span></a></li>
+        <li><a class="mo__thumb m-surface" href="#mo-argento"><img src="https://images.unsplash.com/photo-1550789458-5c1504fbbf55?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTEyMzIzMzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=220&q=60" width="1600" height="1067" alt="" loading="lazy"><span><strong>Argento</strong><span class="m-text-3">Classic line</span></span></a></li>
       </ol>
-      <div class="mo__list">
+      <div class="mo__list" data-8b-items=":scope > .mo__item" data-8b-fixed="3">
         <article id="mo-uno" class="mo__item">
           <div class="mo__info">
             <h3 class="m-text-5 mo__name">Uno</h3>
@@ -709,7 +844,7 @@ button { cursor: pointer; }
             <a class="m-btn" href="#contact"><span class="m-btn__label">Ride an Uno</span><span class="m-btn__icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 10h11M11 5l5 5-5 5"/></svg></span></a>
           </div>
           <figure class="mo__photo">
-            <img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1697646382333-0d14cf52b20e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTEyMzIzMzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=870&q=60" width="1600" height="1200" alt="The red Arco Uno with its top box, side view">
+            <img src="https://images.unsplash.com/photo-1697646382333-0d14cf52b20e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTEyMzIzMzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1100&q=60" width="1600" height="1200" alt="The red Arco Uno with its top box, side view">
             <figcaption class="mo__price m-tab-2"><span class="m-text-5">£2,490</span><span class="m-text-3">or £69 a month</span></figcaption>
           </figure>
         </article>
@@ -727,7 +862,7 @@ button { cursor: pointer; }
             <a class="m-btn" href="#contact"><span class="m-btn__label">Ride a Nero</span><span class="m-btn__icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 10h11M11 5l5 5-5 5"/></svg></span></a>
           </div>
           <figure class="mo__photo">
-            <img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1598475208509-e8bc55613d93?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZWxlY3RyaWMlMjBzY29vdGVyJTIwbW9wZWQlMjBwYXJrZWR8ZW58MXwwfHx8MTc5MTIzMjMzOXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=760&q=60" width="1600" height="1067" alt="The black and cream Arco Nero parked by a white clapboard wall" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1598475208509-e8bc55613d93?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZWxlY3RyaWMlMjBzY29vdGVyJTIwbW9wZWQlMjBwYXJrZWR8ZW58MXwwfHx8MTc5MTIzMjMzOXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=220&q=60" width="1600" height="1067" alt="The black and cream Arco Nero parked by a white clapboard wall" loading="lazy">
             <figcaption class="mo__price m-tab-2"><span class="m-text-5">£2,890</span><span class="m-text-3">or £79 a month</span></figcaption>
           </figure>
         </article>
@@ -745,7 +880,7 @@ button { cursor: pointer; }
             <a class="m-btn" href="#contact"><span class="m-btn__label">Ride an Argento</span><span class="m-btn__icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 10h11M11 5l5 5-5 5"/></svg></span></a>
           </div>
           <figure class="mo__photo">
-            <img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1550789458-5c1504fbbf55?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTEyMzIzMzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=760&q=60" width="1600" height="1067" alt="The silver Arco Argento on its stand in front of a white door" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1550789458-5c1504fbbf55?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTEyMzIzMzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=220&q=60" width="1600" height="1067" alt="The silver Arco Argento on its stand in front of a white door" loading="lazy">
             <figcaption class="mo__price m-tab-2"><span class="m-text-5">£2,690</span><span class="m-text-3">or £74 a month</span></figcaption>
           </figure>
         </article>
@@ -765,11 +900,11 @@ button { cursor: pointer; }
       <div class="ba__dock">
         <div class="ba__cell" role="img" aria-label="The Arco battery, ten charge segments, shown filling up">
           <span class="ba__handle"></span>
-          <ol class="ba__segs"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+          <ol class="ba__segs" data-8b-items=":scope > li" data-8b-fixed="10"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
         </div>
         <p class="ba__slot m-text-3">Under the seat, two clips</p>
       </div>
-      <ol class="ba__times">
+      <ol class="ba__times" data-8b-items=":scope > li" data-8b-fixed="3">
         <li><span class="ba__tick" aria-hidden="true"></span><time datetime="19:00">19:00</time><p class="m-text">Plugged in by the kettle</p></li>
         <li><span class="ba__tick" aria-hidden="true"></span><time datetime="20:45">20:45</time><p class="m-text">Half full after dinner</p></li>
         <li><span class="ba__tick" aria-hidden="true"></span><time datetime="22:30">22:30</time><p class="m-text">Full before bed</p></li>
@@ -782,15 +917,15 @@ button { cursor: pointer; }
 <section id="workshop" class="ws" data-8b-section="workshop" aria-labelledby="ws-title">
   <div class="l-wrap ws__grid">
     <div class="ws__text">
-      <h2 id="ws-title" class="m-text-2" data-8b-motion="rise">Built in Bristol from fewer parts.</h2>
+      <h2 id="ws-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Built in Bristol from fewer parts.</h2>
       <p class="m-text-4">A petrol moped has around two thousand parts. An Arco has two hundred and forty. No oil, no chain, no spark plugs: the motor sits sealed inside the rear wheel.</p>
-      <div class="ws__cols" data-8b-motion="dock">
+      <div class="ws__cols" data-8b-motion="dock" data-8b-items=".m-text">
         <p class="m-text">Frames are welded and painted at our Harbourside works, then every moped rides a test loop of the docks before it leaves.</p>
         <p class="m-text">Fewer parts means fewer things to wear out. A yearly service is mostly tyres, brakes, a software check and a cup of tea.</p>
       </div>
     </div>
-    <figure class="ws__photo" data-8b-motion="notch">
-      <img style="background:#262626" src="https://images.unsplash.com/photo-1578474005126-89909099fed6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bW90b3JjeWNsZSUyMHdvcmtzaG9wJTIwbWVjaGFuaWN8ZW58MXwwfHx8MTc5MTIzMjI0Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=800&q=60" width="1600" height="1351" alt="A technician in the workshop wiping a helmet beside a motorbike, tools on the wall behind" loading="lazy">
+    <figure class="ws__photo" data-8b-motion="notch" data-8b-enter="82%">
+      <img src="https://images.unsplash.com/photo-1578474005126-89909099fed6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bW90b3JjeWNsZSUyMHdvcmtzaG9wJTIwbWVjaGFuaWN8ZW58MXwwfHx8MTc5MTIzMjI0Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=800&q=60" width="1600" height="1351" alt="A technician in the workshop wiping a helmet beside a motorbike, tools on the wall behind" loading="lazy">
       <figcaption class="ws__cap m-tab-3 m-text-3">Final checks at the Harbourside works</figcaption>
     </figure>
   </div>
@@ -799,22 +934,22 @@ button { cursor: pointer; }
 <!-- details: three close-ups on a pinned stage that trade width: the focused strip opens wide, the others close to slivers (demo: lamp, wheel, grips) (animation: scene:details) -->
 <section id="details" class="de" data-8b-section="details" aria-labelledby="de-title">
   <div class="l-wrap de__head">
-    <h2 id="de-title" class="m-text-2" data-8b-motion="rise">Three things you touch every day.</h2>
+    <h2 id="de-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Three things you touch every day.</h2>
     <p class="m-text-4">We spent the longest on the parts your eyes and hands meet on every ride.</p>
   </div>
   <div class="de__stage">
     <div class="de__sticky l-wrap">
-      <ul class="de__strips">
+      <ul class="de__strips" data-8b-items=":scope > li" data-8b-fixed="3">
         <li class="de__strip">
-          <figure><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1639585981169-b80f5e6b4b1e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwxfHx8MTc5MTIzMjI0NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=560&q=60" width="1600" height="2400" alt="Close-up of a white moped's headlamp and mirror on a city street" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1639585981169-b80f5e6b4b1e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwxfHx8MTc5MTIzMjI0NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1170&q=60" width="1600" height="2400" alt="Close-up of a white moped's headlamp and mirror on a city street" loading="lazy"></figure>
           <div class="de__cap m-surface"><h3 class="m-text-5">The lamp</h3><p class="m-text">A round LED lamp that sees sixty metres ahead and dips itself for oncoming traffic.</p></div>
         </li>
         <li class="de__strip">
-          <figure><img style="background:#0c2626" src="https://images.unsplash.com/photo-1770316937406-79eb36f9554c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2Nvb3RlciUyMHdoZWVsJTIwY2xvc2UlMjB1cHxlbnwxfDB8fHwxNzkxMjMyMjQ1fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=740&q=60" width="1600" height="1067" alt="Close-up of a red wheel hub with a white-wall tyre under a red mudguard" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1770316937406-79eb36f9554c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2Nvb3RlciUyMHdoZWVsJTIwY2xvc2UlMjB1cHxlbnwxfDB8fHwxNzkxMjMyMjQ1fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1530&q=60" width="1600" height="1067" alt="Close-up of a red wheel hub with a white-wall tyre under a red mudguard" loading="lazy"></figure>
           <div class="de__cap m-surface"><h3 class="m-text-5">The wheel</h3><p class="m-text">Twelve-inch wheels with the motor inside the hub: no chain, no belt, nothing to oil.</p></div>
         </li>
         <li class="de__strip">
-          <figure><img style="background:#d9d9f3" src="https://images.unsplash.com/photo-1545982217-1227c1eb95ca?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTEyMzIzMzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=740&q=60" width="1600" height="1067" alt="Black foam grips on a silver handlebar against a pale background" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1545982217-1227c1eb95ca?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTEyMzIzMzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1530&q=60" width="1600" height="1067" alt="Black foam grips on a silver handlebar against a pale background" loading="lazy"></figure>
           <div class="de__cap m-surface"><h3 class="m-text-5">The grips</h3><p class="m-text">Heated grips with every control under your thumbs, so winter gloves stay on.</p></div>
         </li>
       </ul>
@@ -827,14 +962,14 @@ button { cursor: pointer; }
   <div class="ro__stage">
     <div class="ro__sticky l-wrap">
       <div class="ro__text">
-        <h2 id="ro-title" class="m-text-2" data-8b-motion="rise">A week on one charge.</h2>
+        <h2 id="ro-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines">A week on one charge.</h2>
         <p class="m-text-4">Five ordinary days in Bristol, ridden on the battery that came off the charger on Monday morning.</p>
         <div class="ro__charge">
           <span class="m-text-3">Battery through the week</span>
           <div class="ro__bar"><span class="ro__fill"></span></div>
           <p class="m-text-3">Still a fifth left on Friday night, after sixty-two kilometres</p>
         </div>
-        <ol class="ro__days">
+        <ol class="ro__days" data-8b-items=":scope > li" data-8b-fixed="5">
           <li><span class="m-badge-2">Mon</span><p class="m-text">To the studio and back, 14 km</p><span class="ro__dot" aria-hidden="true"></span></li>
           <li><span class="m-badge-2">Tue</span><p class="m-text">The market on the way home, 9 km</p><span class="ro__dot" aria-hidden="true"></span></li>
           <li><span class="m-badge-2">Wed</span><p class="m-text">Swimming across the river, 12 km</p><span class="ro__dot" aria-hidden="true"></span></li>
@@ -871,14 +1006,14 @@ button { cursor: pointer; }
 <section id="plans" class="pl" data-8b-section="plans" aria-labelledby="pl-title">
   <div class="l-wrap">
     <div class="pl__head">
-      <h2 id="pl-title" class="m-text-2" data-8b-motion="rise">Buy it, or ride it monthly.</h2>
+      <h2 id="pl-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Buy it, or ride it monthly.</h2>
       <p class="m-text-4">Same moped, same kerbside service. One is yours for good, the other you can hand back with a month's notice.</p>
     </div>
     <div class="pl__panel">
       <article class="pl__plan">
         <h3 class="m-text-5">Own it</h3>
         <p class="pl__price">£2,490<span>once</span></p>
-        <ul class="pl__list" data-8b-motion="dock">
+        <ul class="pl__list" data-8b-motion="dock" data-8b-items=":scope > li">
           <li class="m-text">Two-year warranty on the frame, motor and battery</li>
           <li class="m-text">First service at your kerb, free</li>
           <li class="m-text">A helmet and a disc lock in the box</li>
@@ -889,7 +1024,7 @@ button { cursor: pointer; }
       <article class="pl__plan">
         <h3 class="m-text-5">Ride monthly</h3>
         <p class="pl__price">£69<span>a month</span></p>
-        <ul class="pl__list" data-8b-motion="dock">
+        <ul class="pl__list" data-8b-motion="dock" data-8b-items=":scope > li">
           <li class="m-text">Insurance, servicing and tyres included</li>
           <li class="m-text">Swap to another model once a year</li>
           <li class="m-text">A replacement within a day if yours is off the road</li>
@@ -905,19 +1040,19 @@ button { cursor: pointer; }
 <!-- service: four service steps on one horizontal track: two text cards with chips and two photo cards (demo: kerbside servicing) (animation: scene:service) -->
 <section id="service" class="se" data-8b-section="service" aria-labelledby="se-title">
   <div class="l-wrap se__head">
-    <h2 id="se-title" class="m-text-2" data-8b-motion="rise">Service comes to your kerb.</h2>
+    <h2 id="se-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Service comes to your kerb.</h2>
     <p class="m-text-4">No garage, no lift, no waiting room. A technician rides over and fixes it where it is parked.</p>
   </div>
   <div class="se__stage">
     <div class="se__sticky">
-      <ol class="se__track">
+      <ol class="se__track" data-8b-items=":scope > li" data-8b-fixed="4">
         <li class="se__step">
           <span class="se__num m-tab">1</span>
           <ul class="se__slots" aria-label="Example slots"><li class="m-badge-2">Tue 08:00</li><li class="m-badge-2 se__pick">Tue 18:30</li><li class="m-badge-2">Wed 07:30</li><li class="m-badge-2">Wed 19:00</li></ul>
           <div class="se__text"><h3 class="m-text-5">Tap Service in the app</h3><p class="m-text">Pick a morning or an evening slot. We read your moped's report before we set off, so we bring the right parts.</p></div>
         </li>
         <li class="se__step se__step--photo">
-          <figure><img style="background:#262626" src="https://images.unsplash.com/photo-1597755269789-89407cf1a199?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cmlkaW5nJTIwc2Nvb3RlciUyMHN0cmVldHxlbnwxfDB8fHwxNzkxMjMyMjQ4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=850&q=60" width="1600" height="1067" alt="A rider in a helmet crossing the city on a dark moped, the street blurred with speed" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1597755269789-89407cf1a199?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cmlkaW5nJTIwc2Nvb3RlciUyMHN0cmVldHxlbnwxfDB8fHwxNzkxMjMyMjQ4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=850&q=60" width="1600" height="1067" alt="A rider in a helmet crossing the city on a dark moped, the street blurred with speed" loading="lazy"></figure>
           <span class="se__num m-tab">2</span>
           <div class="se__text"><h3 class="m-text-5">A technician rides over</h3><p class="m-text">On an Arco, of course, with brake pads, tubes and bulbs in the top box.</p></div>
         </li>
@@ -927,7 +1062,7 @@ button { cursor: pointer; }
           <div class="se__text"><h3 class="m-text-5">Forty minutes at your kerb</h3><p class="m-text">Brakes, tyres, lights and a software check. Nothing drips, so it all happens on the pavement.</p></div>
         </li>
         <li class="se__step se__step--photo">
-          <figure><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1787058129675-33787135c1ff?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2Nvb3RlciUyMHdoaXRlJTIwd2FsbCUyMG1pbmltYWx8ZW58MXwwfHx8MTc5MTIzMjA3Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=850&q=60" width="1600" height="1067" alt="A white moped parked by a sunlit white wall next to a planter" loading="lazy"></figure>
+          <figure><img src="https://images.unsplash.com/photo-1787058129675-33787135c1ff?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2Nvb3RlciUyMHdoaXRlJTIwd2FsbCUyMG1pbmltYWx8ZW58MXwwfHx8MTc5MTIzMjA3Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=850&q=60" width="1600" height="1067" alt="A white moped parked by a sunlit white wall next to a planter" loading="lazy"></figure>
           <span class="se__num m-tab">4</span>
           <div class="se__text"><h3 class="m-text-5">Ride on</h3><p class="m-text">The report lands in your inbox. Monthly riders pay nothing extra.</p></div>
         </li>
@@ -940,13 +1075,13 @@ button { cursor: pointer; }
 <section id="faq" class="fq" data-8b-section="faq" aria-labelledby="fq-title">
   <div class="l-wrap fq__grid">
     <div class="fq__aside">
-      <h2 id="fq-title" class="m-text-2" data-8b-motion="rise">Before you ride.</h2>
-      <figure class="fq__call" data-8b-motion="notch">
-        <img style="background:#595959" src="https://images.unsplash.com/photo-1773577516632-9a9720379750?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c2Nvb3RlciUyMHdoaXRlJTIwd2FsbCUyMG1pbmltYWx8ZW58MXwwfHx8MTc5MTIzMjA3Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=730&q=60" width="1600" height="1067" alt="A white moped parked on a kerb in front of a grey brick wall" loading="lazy">
+      <h2 id="fq-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Before you ride.</h2>
+      <figure class="fq__call" data-8b-motion="notch" data-8b-enter="82%">
+        <img src="https://images.unsplash.com/photo-1773577516632-9a9720379750?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c2Nvb3RlciUyMHdoaXRlJTIwd2FsbCUyMG1pbmltYWx8ZW58MXwwfHx8MTc5MTIzMjA3Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=730&q=60" width="1600" height="1067" alt="A white moped parked on a kerb in front of a grey brick wall" loading="lazy">
         <figcaption class="m-tab-2"><span class="m-text">Still unsure? Talk to a rider in our Bristol shop.</span><a data-8b-placeholder="phone" class="m-link m-text-5" href="tel:+441170000000">0117 000 0000</a></figcaption>
       </figure>
     </div>
-    <div class="fq__list">
+    <div class="fq__list" data-8b-items=":scope > details">
       <details open>
         <summary>Which licence do I need?<span class="m-icon-2" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 4v12M4 10h12"/></svg></span></summary>
         <p class="m-text">A full car licence lets you ride any Arco. Without one, you need a CBT certificate from the age of sixteen; we can book the course for you.</p>
@@ -975,36 +1110,36 @@ button { cursor: pointer; }
 <section id="reviews" class="rv" data-8b-section="reviews" aria-labelledby="rv-title">
   <div class="l-wrap">
     <div class="rv__head">
-      <h2 id="rv-title" class="m-text-2" data-8b-motion="rise">Riders rate it 4.8 out of 5.</h2>
+      <h2 id="rv-title" class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Riders rate it 4.8 out of 5.</h2>
       <p class="m-text-4">From more than twelve thousand reviews left in the app after a month of riding.</p>
     </div>
-    <ul class="rv__grid">
-      <li class="rv__card m-surface">
+    <ul class="rv__grid" data-8b-items=":scope > li">
+      <li class="rv__card m-surface" style="--reviews-li-rv-card-rotate-from: -7deg">
         <span class="rv__stars" aria-label="Five stars">★★★★★</span>
         <blockquote><p>I sold the car. The Uno does the school run, the shopping and the gym, and I charge it next to the toaster.</p></blockquote>
-        <div class="rv__who"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1625241152315-4a698f74ceb7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c21pbGluZyUyMG1hbiUyMHBvcnRyYWl0JTIwZmFjZXxlbnwxfDJ8fHwxNzkxMjcyMTkyfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=80&q=60" width="1600" height="1600" alt="Portrait of Yusuf"><p class="m-text">Yusuf<span class="m-text-3">Easton, rides an Uno</span></p></div>
+        <div class="rv__who"><img src="https://images.unsplash.com/photo-1625241152315-4a698f74ceb7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c21pbGluZyUyMG1hbiUyMHBvcnRyYWl0JTIwZmFjZXxlbnwxfDJ8fHwxNzkxMjcyMTkyfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=90&q=60" width="1600" height="1600" alt="Portrait of Yusuf" loading="lazy"><p class="m-text">Yusuf<span class="m-text-3">Easton, rides an Uno</span></p></div>
       </li>
-      <li class="rv__card m-surface">
+      <li class="rv__card m-surface" style="--reviews-li-rv-card-rotate-from: 5deg">
         <span class="rv__stars" aria-label="Five stars">★★★★★</span>
         <blockquote><p>The technician came to my office car park on a Tuesday lunchtime. I didn't even miss a meeting.</p></blockquote>
-        <div class="rv__who"><img style="background:#262626" src="https://images.unsplash.com/photo-1785568485066-cc127f7e8aeb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cG9ydHJhaXQlMjBzbWlsaW5nJTIwZmFjZXxlbnwxfDJ8fHwxNzkxMjMyMjQ3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=80&q=60" width="1600" height="1600" alt="Portrait of Dev"><p class="m-text">Dev<span class="m-text-3">Clifton, rides a Nero</span></p></div>
+        <div class="rv__who"><img src="https://images.unsplash.com/photo-1785568485066-cc127f7e8aeb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cG9ydHJhaXQlMjBzbWlsaW5nJTIwZmFjZXxlbnwxfDJ8fHwxNzkxMjMyMjQ3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=80&q=60" width="1600" height="1600" alt="Portrait of Dev" loading="lazy"><p class="m-text">Dev<span class="m-text-3">Clifton, rides a Nero</span></p></div>
       </li>
-      <li class="rv__card m-surface">
+      <li class="rv__card m-surface" style="--reviews-li-rv-card-rotate-from: -3deg">
         <span class="rv__stars" aria-label="Five stars">★★★★★</span>
         <blockquote><p>Quiet enough that I hear the birds on the Downs. Quick enough that the vans don't bully me on Whiteladies Road.</p></blockquote>
         <div class="rv__who"><span aria-hidden="true">HM</span><p class="m-text">Hannah<span class="m-text-3">Redland, rides an Argento</span></p></div>
       </li>
-      <li class="rv__card m-surface">
+      <li class="rv__card m-surface" style="--reviews-li-rv-card-rotate-from: 8deg">
         <span class="rv__stars" aria-label="Four stars">★★★★</span>
         <blockquote><p>Range drops in January, as they warn you. A spare battery fixed that for my longer commute.</p></blockquote>
-        <div class="rv__who"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1484684096794-03e03b5e713e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cG9ydHJhaXQlMjBzbWlsaW5nJTIwZmFjZXxlbnwxfDJ8fHwxNzkxMjMyMjQ3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=80&q=60" width="1600" height="1601" alt="Portrait of Arthur" loading="lazy"><p class="m-text">Arthur<span class="m-text-3">Keynsham, rides an Uno</span></p></div>
+        <div class="rv__who"><img src="https://images.unsplash.com/photo-1484684096794-03e03b5e713e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cG9ydHJhaXQlMjBzbWlsaW5nJTIwZmFjZXxlbnwxfDJ8fHwxNzkxMjMyMjQ3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=90&q=60" width="1600" height="1601" alt="Portrait of Arthur" loading="lazy"><p class="m-text">Arthur<span class="m-text-3">Keynsham, rides an Uno</span></p></div>
       </li>
-      <li class="rv__card m-surface">
+      <li class="rv__card m-surface" style="--reviews-li-rv-card-rotate-from: -5deg">
         <span class="rv__stars" aria-label="Five stars">★★★★★</span>
         <blockquote><p>Monthly was the right call for a student. Insurance, tyres and a swap to the Nero after my first year.</p></blockquote>
-        <div class="rv__who"><img style="background:#404026" src="https://images.unsplash.com/photo-1713173922799-42c38fc7359c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cG9ydHJhaXQlMjBzbWlsaW5nJTIwZmFjZXxlbnwxfDJ8fHwxNzkxMjMyMjQ3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=80&q=60" width="1600" height="1600" alt="Portrait of Rafi"><p class="m-text">Rafi<span class="m-text-3">Cotham, rides monthly</span></p></div>
+        <div class="rv__who"><img src="https://images.unsplash.com/photo-1713173922799-42c38fc7359c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cG9ydHJhaXQlMjBzbWlsaW5nJTIwZmFjZXxlbnwxfDJ8fHwxNzkxMjMyMjQ3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=80&q=60" width="1600" height="1600" alt="Portrait of Rafi" loading="lazy"><p class="m-text">Rafi<span class="m-text-3">Cotham, rides monthly</span></p></div>
       </li>
-      <li class="rv__card m-surface">
+      <li class="rv__card m-surface" style="--reviews-li-rv-card-rotate-from: 3deg">
         <span class="rv__stars" aria-label="Five stars">★★★★★</span>
         <blockquote><p>People stop me at traffic lights to ask what it is. It's the first thing I've owned that gets compliments.</p></blockquote>
         <div class="rv__who"><span aria-hidden="true">LC</span><p class="m-text">Lucy<span class="m-text-3">Southville, rides an Argento</span></p></div>
@@ -1017,7 +1152,7 @@ button { cursor: pointer; }
 <section id="contact" class="ct" data-8b-section="contact" aria-labelledby="ct-title">
   <div class="l-wrap">
     <div class="ct__panel">
-      <figure data-8b-motion="notch"><img style="background:#737373" src="https://images.unsplash.com/photo-1581598681059-18f5871e1d48?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cmV0cm8lMjBzY29vdGVyJTIwZ3JleXxlbnwxfDB8fHwxNzkxMjMyMDc3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1170&q=60" width="1600" height="1067" alt="A rider putting on his helmet beside a grey moped parked against a concrete wall" loading="lazy"></figure>
+      <figure data-8b-motion="notch" data-8b-enter="82%"><img src="https://images.unsplash.com/photo-1581598681059-18f5871e1d48?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cmV0cm8lMjBzY29vdGVyJTIwZ3JleXxlbnwxfDB8fHwxNzkxMjMyMDc3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1170&q=60" width="1600" height="1067" alt="A rider putting on his helmet beside a grey moped parked against a concrete wall" loading="lazy"></figure>
       <form data-8b-placeholder="form" class="ct__form m-tab" action="#" method="post" novalidate>
         <h2 id="ct-title" class="m-text-2">Ride one this week.</h2>
         <p class="m-text">Thirty minutes on a quiet loop of the harbour with one of our riders. No deposit, helmets provided.</p>
@@ -1034,7 +1169,7 @@ button { cursor: pointer; }
         <p class="ct__done m-text" role="status" hidden>Thanks. We will text you within the hour to confirm your slot.</p>
         <p class="ct__error m-text-3" role="alert" hidden>Please add your name, phone and a valid email so we can confirm.</p>
       </form>
-      <ul class="ct__pills" data-8b-motion="dock">
+      <ul class="ct__pills" data-8b-motion="dock" data-8b-items=".m-surface">
         <li class="m-surface"><span class="m-text-3">Shop and test rides</span><address>1 Example Street, Bristol BS0 0AA</address></li>
         <li class="m-surface"><span class="m-text-3">Call</span><a data-8b-placeholder="phone" class="m-link" href="tel:+441170000000">0117 000 0000</a></li>
         <li class="m-surface"><span class="m-text-3">Write</span><a data-8b-placeholder="email" class="m-link" href="mailto:ride@arco.example">ride@arco.example</a></li>
@@ -1053,16 +1188,11 @@ button { cursor: pointer; }
       <div><h2 class="m-text-3">Riding</h2><ul><li><a class="m-link" href="#battery">Battery</a></li><li><a class="m-link" href="#routes">Range</a></li><li><a class="m-link" href="#service">Service</a></li><li><a class="m-link" href="#faq">Questions</a></li></ul></div>
       <div><h2 class="m-text-3">Talk to us</h2><ul><li><a data-8b-placeholder="phone" class="m-link" href="tel:+441170000000">0117 000 0000</a></li><li><a data-8b-placeholder="email" class="m-link" href="mailto:ride@arco.example">ride@arco.example</a></li><li><a class="m-link" href="#contact">Book a test ride</a></li></ul></div>
     </div>
-    <p class="ft__mark m-text-6" style="--len:5" aria-hidden="true">Arco<span>.</span></p>
+    <p class="ft__mark m-text-6" style="--len:5" aria-hidden="true" data-8b-split="chars">Arco<span>.</span></p>
     <div class="ft__base"><p class="m-text-3">© 2026 Arco Electric Ltd, registered in England. · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></p><p class="m-text-3"><a class="m-link" href="#opening">Back to the top</a></p></div>
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/MotionPathPlugin.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
 <script data-8b-part="section-script:nav">
 (() => {
   const nav = document.getElementById('nav');
@@ -1072,11 +1202,11 @@ button { cursor: pointer; }
   const setMenu = state => {
     menu.hidden = !state;
     open.setAttribute('aria-expanded', String(state));
-    if (state) { window.lenis?.stop(); close.focus(); } else { window.lenis?.start(); open.focus(); }
+    if (state) { window.motionKit?.wheel?.stop(); close.focus(); } else { window.motionKit?.wheel?.start(); open.focus(); }
   };
   open.addEventListener('click', () => setMenu(true));
   close.addEventListener('click', () => setMenu(false));
-  menu.addEventListener('click', event => { if (event.target.closest('a')) { menu.hidden = true; open.setAttribute('aria-expanded', 'false'); window.lenis?.start(); } });
+  menu.addEventListener('click', event => { if (event.target.closest('a')) { menu.hidden = true; open.setAttribute('aria-expanded', 'false'); window.motionKit?.wheel?.start(); } });
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !menu.hidden) setMenu(false); });
   let last = window.scrollY, travel = 0;
   window.addEventListener('scroll', () => {
@@ -1096,61 +1226,6 @@ button { cursor: pointer; }
   new IntersectionObserver(([entry]) => opening.toggleAttribute('data-paused', !entry.isIntersecting)).observe(opening);
 })();
 </script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
 <script data-8b-part="section-script:contact">
 (() => {
   const form = document.querySelector('#contact .ct__form');
@@ -1165,235 +1240,301 @@ button { cursor: pointer; }
   });
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText, MotionPathPlugin);
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const nav = document.getElementById('nav');
-  const lenis = window.lenis = new Lenis({ lerp: .11, anchors: { offset: -nav.offsetHeight } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  rise(element, vars = {}) {
-    const split = SplitText.create(element, { type: 'lines', mask: 'lines' });
-    return gsap.timeline({ ...vars, onComplete: () => split.revert() })
-      .from(split.lines, { yPercent: 105, duration: .9, ease: 'power3.out', stagger: .08 });
-  },
-  notch(element, vars = {}) {
-    const width = element.offsetWidth, height = element.offsetHeight, size = 72;
-    const radius = parseFloat(getComputedStyle(element).borderTopRightRadius) || 0;
-    return gsap.timeline(vars).fromTo(element,
-      { clipPath: `inset(0px 0px ${height - size}px ${width - size}px round ${size / 2}px)` },
-      { clipPath: `inset(0px 0px 0px 0px round ${radius}px)`, duration: 1.15, ease: 'power3.inOut', clearProps: 'clipPath' });
-  },
-  dock(element, vars = {}) {
-    return gsap.timeline(vars).from(element.children, { x: -44, opacity: 0, duration: .7, ease: 'power3.out', stagger: .08 });
-  }
-};
-const bindings = { rise: 'top 88%', notch: 'top 82%', dock: 'top 88%' };
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  Object.entries(bindings).forEach(([name, start]) => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach(element => ScrollTrigger.create({ id, trigger: element, start, once: true, animation: effects[name](element) }));
-    }), section.getBoundingClientRect().top < innerHeight ? { first: true, id } : { near: section, id });
-  });
-});
-</script>
 
-<script data-8b-part="scene:models">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('models');
-    const stage = section.querySelector('.mo__stage');
-    const items = [...section.querySelectorAll('.mo__item')];
-    const thumbs = [...section.querySelectorAll('.mo__thumb')];
-    const photos = items.map(item => item.querySelector('.mo__photo'));
-    const infos = items.map(item => [...item.querySelector('.mo__info').children]);
-    section.setAttribute('data-stage', '');
-    gsap.set(photos.slice(1), { autoAlpha: 0, scale: .28 });
-    gsap.set(infos.slice(1).flat(), { autoAlpha: 0, y: 36 });
-    gsap.set(thumbs[0], { x: -26 });
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'models', trigger: stage, start: 'top top', end: 'bottom bottom', scrub: .5
-    }});
-    [1, 2].forEach(n => {
-      const at = n === 1 ? .12 : .56;
-      timeline
-        .set(photos[n], { autoAlpha: 1 }, at)
-        .fromTo(photos[n], { scale: .28 }, { scale: 1, duration: .3, ease: 'power2.inOut' }, at)
-        .fromTo(photos[n - 1], { scale: 1, filter: 'brightness(1)' }, { scale: .9, filter: 'brightness(.6)', duration: .3, ease: 'power2.inOut', immediateRender: false }, at)
-        .to(infos[n - 1], { autoAlpha: 0, y: -36, duration: .1, stagger: .015 }, at)
-        .fromTo(infos[n], { autoAlpha: 0, y: 36 }, { autoAlpha: 1, y: 0, duration: .12, stagger: .02 }, at + .14)
-        .to(thumbs[n - 1], { x: 0, duration: .12 }, at)
-        .to(thumbs[n], { x: -26, duration: .12 }, at)
-        .set(photos[n - 1], { autoAlpha: 0 }, at + .3);
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts?.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = (document.fonts?.ready ?? Promise.resolve()).then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = /^(\d{1,3}(?:\.\d+)?)%$/.exec((element.getAttribute('data-8b-enter') || '').trim());
+return own && +own[1] <= 100 ? own[1] / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}.line:not(:last-child){margin-bottom:0}.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = typeof Intl.Segmenter === 'function'
+? text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment)
+: text => [...text];
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split');
+if (sources.has(element)) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px 100% 0px' });
+(document.fonts?.ready ?? Promise.resolve()).then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const watch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-8b-off', !entry.isIntersecting)));
+const watched = new WeakSet();
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || watched.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+watched.add(element);
+watch.observe(element);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:details">
+motionKit.scene('details', () => {
+  const section = document.getElementById('details');
+  const box = section.querySelector('.de__strips');
+  const strips = [...box.children];
+  const photos = strips.map(strip => strip.querySelector('img'));
+  const captions = strips.map(strip => strip.querySelector('.de__cap'));
+  const clamp = value => Math.min(1, Math.max(0, value));
+  const gap = 12;
+  motionKit.track(section.querySelector('.de__stage'), 'top top', 'bottom bottom', progress => {
+    const wide = innerWidth > 860;
+    const length = wide ? box.offsetWidth : box.offsetHeight;
+    const radius = parseFloat(getComputedStyle(captions[0]).borderRadius) + 10;
+    const t = progress * (strips.length - 1);
+    const weights = strips.map((_, i) => .32 + 2.1 * Math.max(0, 1 - Math.abs(t - i)));
+    const total = weights.reduce((sum, weight) => sum + weight, 0);
+    const free = length - gap * (strips.length - 1);
+    let start = 0;
+    strips.forEach((strip, i) => {
+      const size = free * weights[i] / total;
+      const end = length - start - size;
+      const middle = start + size / 2 - length / 2;
+      motionKit.set(strip, { 'clip-path': wide ? `inset(0px ${end}px 0px ${start}px round ${radius}px)` : `inset(${start}px 0px ${end}px 0px round ${radius}px)` });
+      motionKit.set(photos[i], { translate: wide ? `${middle}px 0px` : `0px ${middle}px` });
+      motionKit.set(captions[i], wide
+        ? { translate: `${start}px 0px`, opacity: clamp((size - 330) / 120) }
+        : { translate: `0px ${start + size - length}px`, opacity: clamp((size - 240) / 80) });
+      start += size + gap;
     });
-    timeline.to({}, { duration: .1 }, .9);
-    return () => section.removeAttribute('data-stage');
   });
 });
 </script>
-<script data-8b-part="scene:battery">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('battery');
-    const root = getComputedStyle(document.documentElement);
-    const color = name => root.getPropertyValue(name).trim();
-    const segments = section.querySelectorAll('.ba__segs li');
-    const ticks = section.querySelectorAll('.ba__tick');
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'battery', trigger: section.querySelector('.ba__rig'), start: 'top 82%', end: 'bottom 40%', scrub: .6
-    }});
-    timeline
-      .fromTo(section.querySelector('.ba__cell'), { yPercent: 40 }, { yPercent: 0, duration: .26, ease: 'power2.out' }, 0)
-      .fromTo(segments, { backgroundColor: color('--color-4') }, { backgroundColor: color('--color-6'), duration: .05, stagger: .058 }, .3)
-      .fromTo(ticks, { scaleX: 0 }, { scaleX: 1, duration: .08, stagger: .27 }, .3)
-      .fromTo(section.querySelector('.ba__last'), { color: color('--color-3') }, { color: color('--color-6'), duration: .08 }, .9);
-  });
-}, { near: document.getElementById('battery') });
-</script>
-<script data-8b-part="scene:details">
-queueMotion(() => {
-  gsap.matchMedia().add({ wide: '(prefers-reduced-motion: no-preference) and (min-width: 861px)', narrow: '(prefers-reduced-motion: no-preference) and (max-width: 860px)' }, context => {
-    const wide = context.conditions.wide;
-    const section = document.getElementById('details');
-    const box = section.querySelector('.de__strips');
-    const strips = [...box.children];
-    const photos = strips.map(strip => strip.querySelector('img'));
-    const captions = strips.map(strip => strip.querySelector('.de__cap'));
-    section.setAttribute('data-stage', '');
-    const radius = parseFloat(getComputedStyle(section.querySelector('.de__cap')).borderRadius) + 10;
-    const gap = 12;
-    const state = { p: 0 };
-    const render = () => {
-      const length = wide ? box.offsetWidth : box.offsetHeight;
-      const t = state.p * (strips.length - 1);
-      const weights = strips.map((_, i) => .32 + 2.1 * Math.max(0, 1 - Math.abs(t - i)));
-      const total = weights.reduce((sum, w) => sum + w, 0);
-      const free = length - gap * (strips.length - 1);
-      let start = 0;
-      strips.forEach((strip, i) => {
-        const size = free * weights[i] / total;
-        const end = length - start - size;
-        gsap.set(strip, { clipPath: wide ? `inset(0px ${end}px 0px ${start}px round ${radius}px)` : `inset(${start}px 0px ${end}px 0px round ${radius}px)` });
-        gsap.set(photos[i], wide ? { x: start + size / 2 - length / 2 } : { y: start + size / 2 - length / 2 });
-        const room = wide ? size : size;
-        gsap.set(captions[i], wide ? { x: start, opacity: gsap.utils.clamp(0, 1, (room - 330) / 120) } : { y: start + size - length, opacity: gsap.utils.clamp(0, 1, (room - 240) / 80) });
-        start += size + gap;
-      });
-    };
-    gsap.to(state, { p: 1, ease: 'none', onUpdate: render, scrollTrigger: {
-      id: 'details', trigger: section.querySelector('.de__stage'), start: 'top top', end: 'bottom bottom', scrub: .5, onRefresh: render
-    }});
-    render();
-    return () => section.removeAttribute('data-stage');
-  });
-});
-</script>
-<script data-8b-part="scene:routes">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('routes');
-    const route = section.querySelector('.ro__route');
-    const rider = section.querySelector('.ro__rider');
-    const stops = [...section.querySelectorAll('.ro__stop')];
-    const dots = section.querySelectorAll('.ro__dot');
-    const fill = section.querySelector('.ro__fill');
-    const charged = getComputedStyle(fill).clipPath;
-    const full = charged.replace(/^inset\((\S+) \S+/, 'inset($1 0%');
-    const red = getComputedStyle(document.documentElement).getPropertyValue('--color-6').trim();
-    const white = getComputedStyle(document.documentElement).getPropertyValue('--color-3').trim();
-    section.setAttribute('data-stage', '');
-    const length = route.getTotalLength();
-    const samples = Array.from({ length: 241 }, (_, i) => route.getPointAtLength(length * i / 240));
-    const at = stops.map(stop => {
-      const x = +stop.getAttribute('cx'), y = +stop.getAttribute('cy');
-      let best = 0, distance = Infinity;
-      samples.forEach((point, i) => {
-        const d = (point.x - x) ** 2 + (point.y - y) ** 2;
-        if (d < distance) { distance = d; best = i / 240; }
-      });
-      return best;
+<script data-8b-part="scene-script:routes">
+motionKit.scene('routes', () => {
+  const section = document.getElementById('routes');
+  const map = section.querySelector('.ro__map');
+  const route = section.querySelector('.ro__route');
+  const rider = section.querySelector('.ro__rider');
+  const dots = section.querySelectorAll('.ro__dot');
+  const length = route.getTotalLength();
+  const samples = Array.from({ length: 241 }, (_, i) => route.getPointAtLength(length * i / 240));
+  motionKit.set(route, { '--routes-length': `${length}px` });
+  section.querySelectorAll('.ro__stop').forEach((stop, i) => {
+    const x = +stop.getAttribute('cx'), y = +stop.getAttribute('cy');
+    let best = 0, distance = Infinity;
+    samples.forEach((point, n) => {
+      const d = (point.x - x) ** 2 + (point.y - y) ** 2;
+      if (d < distance) { distance = d; best = n / 240; }
     });
-    gsap.set(route, { strokeDasharray: length });
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'routes', trigger: section.querySelector('.ro__stage'), start: 'top top', end: 'bottom bottom', scrub: .6
-    }});
-    timeline
-      .fromTo(route, { strokeDashoffset: length }, { strokeDashoffset: 0, duration: 1 }, 0)
-      .fromTo(rider, { motionPath: { path: route, align: route, alignOrigin: [.5, .5], start: 0, end: 0 } }, { motionPath: { path: route, align: route, alignOrigin: [.5, .5], start: 0, end: 1 }, duration: 1 }, 0)
-      .fromTo(fill, { clipPath: full }, { clipPath: charged, duration: .94 }, 0);
-    stops.forEach((stop, i) => {
-      timeline
-        .fromTo(stop, { fill: white, scale: 1, transformOrigin: '50% 50%' }, { fill: red, scale: 1.35, duration: .03 }, at[i] - .015)
-        .fromTo(dots[i], { scale: 0 }, { scale: 1, duration: .03 }, at[i] - .015);
-    });
-    return () => section.removeAttribute('data-stage');
+    motionKit.set(stop, { '--routes-at': best });
+    motionKit.set(dots[i], { '--routes-at': best });
+  });
+  motionKit.track(section.querySelector('.ro__stage'), 'top top', 'bottom bottom', progress => {
+    const point = route.getPointAtLength(length * progress);
+    const matrix = route.getScreenCTM(), frame = map.getBoundingClientRect();
+    const x = matrix.a * point.x + matrix.e - frame.left - rider.offsetLeft - rider.offsetWidth / 2;
+    const y = matrix.d * point.y + matrix.f - frame.top - rider.offsetTop - rider.offsetHeight / 2;
+    motionKit.set(rider, { translate: `${x}px ${y}px` });
   });
 });
 </script>
-<script data-8b-part="scene:service">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('service');
-    const sticky = section.querySelector('.se__sticky');
-    const track = section.querySelector('.se__track');
-    section.setAttribute('data-stage', '');
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'service', trigger: section.querySelector('.se__stage'), start: 'top top', end: 'bottom bottom', scrub: .5, invalidateOnRefresh: true
-    }});
-    timeline
-      .fromTo(track, { x: 0 }, { x: () => Math.min(0, sticky.clientWidth - track.scrollWidth), duration: 1 }, 0)
-      .fromTo(track.querySelectorAll('figure img'), { xPercent: 6 }, { xPercent: -6, duration: 1 }, 0);
-    return () => section.removeAttribute('data-stage');
+<script data-8b-part="scene-script:reviews">
+motionKit.scene('reviews', () => {
+  const grid = document.querySelector('#reviews .rv__grid');
+  motionKit.measure(() => {
+    const reach = innerWidth > 860 ? Infinity : 140;
+    [...grid.children].forEach(card => motionKit.set(card, {
+      '--reviews-x': `${grid.offsetWidth / 2 - (card.offsetLeft + card.offsetWidth / 2)}px`,
+      '--reviews-y': `${Math.min(reach, Math.max(-reach, grid.offsetHeight / 2 - (card.offsetTop + card.offsetHeight / 2)))}px`
+    }));
   });
 });
 </script>
-<script data-8b-part="scene:reviews">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('reviews');
-    const grid = section.querySelector('.rv__grid');
-    const cards = [...grid.children];
-    const turns = [-7, 5, -3, 8, -5, 3];
-    const reach = () => innerWidth > 860 ? Infinity : 140;
-    const deal = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'reviews', trigger: grid, start: 'top 88%', end: 'center 52%', scrub: .6, invalidateOnRefresh: true
-    }});
-    cards.forEach((card, i) => deal.fromTo(card, {
-      x: () => grid.offsetWidth / 2 - (card.offsetLeft + card.offsetWidth / 2),
-      y: () => gsap.utils.clamp(-reach(), reach(), grid.offsetHeight / 2 - (card.offsetTop + card.offsetHeight / 2)),
-      rotation: turns[i % turns.length]
-    }, { x: 0, y: 0, rotation: 0, ease: 'power2.out', duration: .5 }, i * .05));
+<script data-8b-part="scene-script:footer">
+motionKit.scene('footer', () => {
+  const mark = document.querySelector('#footer .ft__mark');
+  const place = () => mark.querySelectorAll('.c').forEach(char => motionKit.set(char, { '--footer-x': `${(mark.offsetWidth / 2 - (char.offsetLeft + char.offsetWidth / 2)) * .55}px` }));
+  let placed = false;
+  motionKit.measure(place);
+  motionKit.track(mark, 'top 300%', 'top 200%', () => {
+    if (placed || !mark.querySelector('.c')) return;
+    placed = true;
+    place();
   });
-}, { near: document.getElementById('reviews') });
-</script>
-<script data-8b-part="scene:footer">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('footer');
-    const mark = section.querySelector('.ft__mark');
-    const split = SplitText.create(mark, { type: 'chars' });
-    gsap.timeline({ scrollTrigger: {
-      id: 'footer', trigger: mark, start: 'top bottom', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true
-    }}).fromTo(split.chars, {
-      x: (i, char) => (mark.offsetWidth / 2 - (char.offsetLeft + char.offsetWidth / 2)) * .55
-    }, { x: 0, ease: 'power2.out' });
-    return () => split.revert();
-  });
-}, { near: document.getElementById('footer') });
+});
 </script>
 </body>
 </html>
