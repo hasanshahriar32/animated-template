@@ -1,6 +1,6 @@
 # AGENTS.md: toy store website template
 
-One-page website for an independent toy shop and its workshops, repairs and gift lists. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for an independent toy shop and its workshops, repairs and gift lists. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, MotionPathPlugin, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,23 +14,20 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__menu` `.nav__close` `.nav__links`
   - `section-script:tinker`: `.tk-run` `.tk-ribbon` `.tk-session` `.tk-card`
   - `section-script:swap`: `.sw-frame` `.sw-notes` `data-x` `data-y`
-  - `scene:opening`: `.op-board` `.op-tile` `.op-stage`
-  - `scene:shelves`: `.sh-view` `.sh-track` `.sh-list` `.sh-photo`
-  - `scene:squad`: `.sq-deck` `.sq-card`
-  - `scene:tinker`: `.tk-run` `.tk-ribbon` `.tk-ball` `.tk-session` `data-stops`
-  - `scene:swap`: `.sw-frame` `.sw-lens` `.sw-notes` `data-x` `data-y`
-  - `scene:gifts`: `.gf-card` `.gf-burst` `.gf-sticker`
-  - `scene:shop`: `.sp-front` `.sp-shutter`
-  - `scene:contact`: `.ct-list` `.ct-item`
+  - `scene-script:shelves`: `.sh-view` `.sh-track` `.sh-list`
+  - `scene-script:squad`: `.sq-deck` `.sq-card`
+  - `scene-script:tinker`: `.tk-run` `.tk-ribbon` `.tk-ball` `.tk-session` `data-stops`
+  - `scene-script:gifts`: `.gf-card` `.gf-burst`
 - `style="--len:N"` = characters in that display line, spaces included: `squiggle` is 8.
-- The 3 by 3 puzzle is nine .op-tile elements, each showing one ninth of the same photo through its --c and --r custom properties; the scene reads the grid's column count and the position of the tiles, and the ninth tile (class op-tile--last) is the one that drops in last. To change the photo, change the src on all nine images; keep nine tiles in a 3 by 3 grid.
+- The 3 by 3 puzzle is nine .op-tile elements, each showing one ninth of the same photo through its --c and --r custom properties; the ninth tile (class op-tile--last) is the one that drops in last. The CSS gives tiles one to six and the ninth their own sliding paths by :nth-of-type, so keep nine tiles in a 3 by 3 grid in this order. To change the photo, change the src on all nine images.
 - The wordmark "squiggle" in the footer is sized by style="--len:8", the number of characters of the word; update it when you rename the shop.
-- The ribbon in the tinker section is built by section-script:tinker from the position of the cards, and the ball and the lit sessions follow its stops. Keep the order of sessions and one ribbon path in .tk-run; it redraws itself when you change the number of cards, but the zigzag rows are set by nth-child rules for four cards only, so a fifth card needs its own grid-row rule.
-- The notched corners (.u-notch) are drawn with a clip-path: shape() outline; browsers without shape() show a whole rounded card with the tab set inside. The swap lens reads each note's data-x and data-y (percent of the photo) as its spots.
+- The ribbon in the tinker section is built by section-script:tinker from the position of the cards, and the ball (a CSS motion path along that ribbon) and the lit sessions follow its stops. Keep the order of sessions and one ribbon path in .tk-run; it redraws itself when you change the number of cards, but the zigzag rows are set by nth-child rules for four cards only, so a fifth card needs its own grid-row rule.
+- The notched corners (.u-notch) are drawn with a clip-path: shape() outline; browsers without shape() show a whole rounded card with the tab set inside. The swap lens rests on the last note's data-x and data-y (percent of the photo); its travel over the three spots is written into the CSS keyframes, so moving a spot or adding a note needs those keyframes changed too.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #ffffff (page background, form fields, the number discs in the gift steps, text on cobalt), `--color-2` #24201c (text on every light ground, field borders and the outline of the Menu button), `--color-3` #fde77d (hours card, contact card, one ground of the tester and workshop cards, the plus discs in the questions, first shutter), `--color-4` #f7aacb (default pill button, gifts card and address card, some badges and card grounds, open question border, second shutter, lens ring), `--color-5` #a9c34c (opening text card, some badges and card grounds, third shutter, tabs of workshops the ball has not reached), `--color-6` #2d47c6 (cobalt buttons (Start a list, Get directions, Send it), the cobalt badges (Puzzles, Wind-up repairs, Open), the ribbons, fourth shutter, focus ring), `--color-7` #f48a3a (orange badges, the age and date tabs, the ball that rolls down the workshop ribbon), `--color-8` #fbdde9 (repair card, one ground of the tester and workshop cards, photo placeholders, outlines of the logo pill, the link bar and closed questions, footer rule, open question fill); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -66,10 +63,12 @@ All demo text, never to be invented:
 
 ## Known limits
 - Without JavaScript the Menu button on phones cannot open the overlay (wide screens show the links); the tinker ribbon does not appear because its path is drawn by a script, and the orange ball sits alone below the last card; the form still needs an endpoint.
+- Without scroll-driven animation support (Firefox today) and with reduced motion on, the page shows its finished layout with ordinary scrolling: the puzzle is solved, the shelves sit in a grid, the testers are dealt, the shutters are open and nothing is held. The nav bar still hides on scroll and hover effects run, and in Firefox the opening still rises in on load.
+- Counts fixed in CSS by :nth-of-type rules: nine puzzle tiles, three swap notes (the second and third fade in) and four shutters over the shopfront.
 - The contact form has no handler: it posts to "#" and shows no thank-you line, so connect Formspree or Netlify Forms, or remove it.
 - The workshop dates carry no year and their weekdays fit 2024, not 2026; update them before publishing.
 - The opening and the shelves hold the screen while you scroll (about 170svh of scroll for the puzzle, the width of the row for the shelves); on very short screens the held card and board can feel tight.
-- GSAP, ScrollTrigger, MotionPathPlugin and Lenis load as four synchronous scripts from jsDelivr at the end of the body; the swap section shows one 1390 px photo twice (page and lens, one download).
+- The swap section shows one 1390 px photo twice (page and lens, one download).
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Squiggle left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Squiggle left only in class names.

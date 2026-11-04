@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/hardware-store-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -70,11 +71,6 @@
   @font-face { font-family: "Host Grotesk Fallback"; src: local("Arial"), local("ArialMT"), local("Helvetica"); font-weight: 100 549; size-adjust: 102.6%; ascent-override: 99.4%; descent-override: 31.2%; line-gap-override: 0%; }
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis.lenis-smooth { scroll-behavior: auto; }
-  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-stopped { overflow: clip; }
-  .lenis.lenis-smooth iframe { pointer-events: none; }
   body { margin: 0; background: var(--color-1); color: var(--color-2); overflow-x: clip; }
   h1, h2, h3, h4, p, figure, blockquote, dl, dd, ul, ol { margin: 0; }
   ul, ol { padding: 0; list-style: none; }
@@ -224,13 +220,6 @@
   }
 }
 </style>
-<style data-8b-part="scene-style:opening">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #opening.is-staged .opening__stage { position: sticky; top: 0; }
-  }
-}
-</style>
 <style data-8b-part="section:departments">
 @layer sections {
   #departments { position: relative; background: var(--color-2); color: var(--color-3); }
@@ -254,15 +243,6 @@
     #departments .dept__copy { grid-column: 1; grid-row: 4; gap: 20px; }
     #departments .dept__guide { left: var(--space-1); right: var(--space-1); width: auto; bottom: 18px; grid-template-columns: minmax(0, 1fr) 64px; }
     #departments .dept__cover { width: 64px; font-size: 46px; }
-  }
-}
-</style>
-<style data-8b-part="scene-style:departments">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #departments.is-stacked { height: calc(var(--departments-count) * 100svh); }
-    #departments.is-stacked .departments__stage { position: sticky; top: 0; height: 100svh; overflow: clip; }
-    #departments.is-stacked .dept { position: absolute; inset: 0; }
   }
 }
 </style>
@@ -455,6 +435,175 @@
   @media (max-width: 479px) { #footer .footer__grid { grid-template-columns: 1fr; } }
 }
 </style>
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] [data-8b-motion~="rise"] { animation-name: motion-rise; animation-duration: 1s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: backwards; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="rise"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="tint"] img { animation-name: motion-tint-img-clippath, motion-tint-img-scale; animation-duration: 1.2s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="tint"].is-in img { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > span"] { animation-name: motion-rule-scope-span-backgroundsize; animation-duration: 1s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > span"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > span"] > span { animation-name: motion-rule-scope-span-span-translate, motion-rule-scope-span-span-opacity; animation-duration: 0.7s; animation-delay: calc(0.25s + 0.07s * var(--i)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > span"].is-in > span { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > *"] { animation-name: motion-rule-scope-span-backgroundsize; animation-duration: 1s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > *"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > *"] > * { animation-name: motion-rule-scope-span-span-translate, motion-rule-scope-span-span-opacity; animation-duration: 0.7s; animation-delay: calc(0.25s + 0.07s * var(--i)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=":scope > *"].is-in > * { animation-play-state: running; }
+@keyframes motion-rise { 0% { translate: 0px 28%; clip-path: inset(0% 0% 100%); } 100% { translate: 0px 0px; clip-path: inset(0% 0% -25%); } }
+@keyframes motion-tint-img-clippath { 0% { clip-path: inset(100% 0% 0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes motion-tint-img-scale { 0% { scale: 1.16; } 100% { scale: 1; } }
+@keyframes motion-rule-scope-span-backgroundsize { 0% { background-size: 0% 1px; } 100% { background-size: 100% 1px; } }
+@keyframes motion-rule-scope-span-span-translate { 0% { translate: 0px 22px; } 100% { translate: 0px 0px; } }
+@keyframes motion-rule-scope-span-span-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+}
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+[data-8b-live] #opening { --opening-push: 2400px; view-timeline: --opening-t block; view-timeline-inset: 0; }
+[data-8b-live] #opening .opening__stage { position: sticky; top: 0; }
+[data-8b-live] #opening .opening__field { animation-name: opening-field-push; animation-timeline: --opening-t; animation-range: contain 0% contain 64.8755%; animation-timing-function: cubic-bezier(0.333333, 0, 0.666667, 0.333333); animation-fill-mode: both; will-change: translate, scale; }
+[data-8b-live] #opening .opening__space { animation-name: opening-space-out; animation-timeline: --opening-t; animation-range: contain 45.4128% contain 64.8755%; animation-timing-function: linear; animation-fill-mode: both; will-change: opacity; }
+[data-8b-live] #opening .opening__copy { animation-name: opening-copy-recede, opening-copy-out; animation-timeline: --opening-t; animation-range: contain 0% contain 49.7379%, contain 17.3001% contain 49.7379%; animation-timing-function: cubic-bezier(0.333333, 0, 0.666667, 0.333333), linear; animation-fill-mode: both; will-change: translate, scale, opacity; }
+[data-8b-live] #opening .opening__inline { animation-name: opening-inline-open; animation-timeline: --opening-t; animation-range: contain 34.6003% contain 67.038%; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #opening .opening__statement .w { animation-name: opening-word-ink; animation-timeline: --opening-t; animation-range: contain calc(38.9253% + 54.0629% * var(--i) / var(--n)) contain calc(47.5754% + 54.0629% * var(--i) / var(--n)); animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes opening-field-push { 0% { translate: 0px 0px 0px; scale: 1; } 100% { translate: 0px 0px var(--opening-push); scale: 1.3; } }
+@keyframes opening-space-out { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes opening-copy-recede { 0% { translate: 0px 0px; scale: 1; } 100% { translate: 0px -40%; scale: 0.84; } }
+@keyframes opening-copy-out { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes opening-inline-open { 0% { clip-path: inset(0% 50%); } 100% { clip-path: inset(0%); } }
+@keyframes opening-word-ink { 0% { opacity: 0.14; } 100% { opacity: 1; } }
+@media (max-width: 759px) {
+  [data-8b-live] #opening { --opening-push: 1700px; }
+}
+}
+</style>
+<style data-8b-part="scene:departments">
+@layer scenes {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-8b-live] #departments { height: calc(var(--departments-count) * 100svh); }
+    [data-8b-live] #departments .departments__stage { position: sticky; top: 0; height: 100svh; overflow: clip; }
+    [data-8b-live] #departments .dept { position: absolute; inset: 0; }
+  }
+}
+@layer scenes {
+[data-8b-live] #departments { --departments-count: 5; }
+[data-8b-live] #departments { view-timeline: --departments-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #departments .departments__stage > .dept > .dept__photo { animation-name: departments-img-dept-photo-translate, departments-img-dept-photo-scale; animation-timeline: --departments-t1; animation-range: cover calc(-21.7822% + 24.7525% * var(--i) + 143.5643vh - 49.5049vh * var(--i)) cover calc(20.7922% + 24.7524% * var(--i) + 58.4159vh - 49.505vh * var(--i)), cover calc(-21.7822% + 24.7525% * var(--i) + 143.5643vh - 49.5049vh * var(--i)) cover calc(-3.9604% + 24.7525% * var(--i) + 107.9207vh - 49.5049vh * var(--i)); animation-timing-function: linear, cubic-bezier(0.3333, 0.6667, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #departments .departments__stage > article:first-of-type > .dept__photo { animation-name: departments-img-dept-photo-translate-2; animation-range: cover calc(2.9703% + 94.0594vh) cover calc(20.7921% + 58.4158vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+[data-8b-live] #departments .departments__stage > article:last-of-type > .dept__photo { animation-name: departments-img-dept-photo-translate-5, departments-img-dept-photo-scale; animation-range: cover calc(77.2277% - 54.4554vh) cover calc(95.0495% - 90.099vh); animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); }
+[data-8b-live] #departments .departments__stage > .dept > .dept__body > .m-text-6 { animation-name: departments-p-m-text-6-translate-2, departments-p-m-text-6-opacity; animation-timeline: --departments-t1; animation-range: cover calc(-15.3466% + 24.7525% * var(--i) + 130.693vh - 49.5049vh * var(--i)) cover calc(10.8912% + 24.7524% * var(--i) + 78.2179vh - 49.505vh * var(--i)), cover calc(2.9704% + 24.7524% * var(--i) + 94.0595vh - 49.505vh * var(--i)) cover calc(10.8912% + 24.7524% * var(--i) + 78.2179vh - 49.505vh * var(--i)); animation-timing-function: linear, cubic-bezier(0.3333, 0, 0.6667, 0.3333); animation-fill-mode: both; transform: none; }
+[data-8b-live] #departments .departments__stage > article:first-of-type > .dept__body > .m-text-6 { animation-name: departments-p-m-text-6-translate, departments-p-m-text-6-opacity; animation-range: cover calc(2.9703% + 94.0594vh) cover calc(10.8911% + 78.2178vh); animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); }
+[data-8b-live] #departments .departments__stage > article:last-of-type > .dept__body > .m-text-6 { animation-name: departments-p-m-text-6-translate-5; animation-range: cover calc(83.6634% - 67.3267vh) cover calc(96.0396% - 92.0792vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] #departments .departments__stage > .dept > .dept__body > .dept__copy { animation-name: departments-p-m-text-6-translate-2, departments-p-m-text-6-opacity; animation-timeline: --departments-t1; animation-range: cover calc(-15.3466% + 24.7525% * var(--i) + 130.693vh - 49.5049vh * var(--i)) cover calc(10.8912% + 24.7524% * var(--i) + 78.2179vh - 49.505vh * var(--i)), cover calc(2.9704% + 24.7524% * var(--i) + 94.0595vh - 49.505vh * var(--i)) cover calc(10.8912% + 24.7524% * var(--i) + 78.2179vh - 49.505vh * var(--i)); animation-timing-function: linear, cubic-bezier(0.3333, 0, 0.6667, 0.3333); animation-fill-mode: both; transform: none; }
+[data-8b-live] #departments .departments__stage > article:first-of-type > .dept__body > .dept__copy { animation-name: departments-p-m-text-6-translate, departments-p-m-text-6-opacity; animation-range: cover calc(2.9703% + 94.0594vh) cover calc(10.8911% + 78.2178vh); animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); }
+[data-8b-live] #departments .departments__stage > article:last-of-type > .dept__body > .dept__copy { animation-name: departments-p-m-text-6-translate-5; animation-range: cover calc(83.6634% - 67.3267vh) cover calc(96.0396% - 92.0792vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] #departments .departments__stage > .dept { animation-name: departments-article-dept-visibility, departments-article-dept-clippath; animation-timeline: --departments-t1; animation-range: cover calc(-21.7822% + 24.7525% * var(--i) + 143.5643vh - 49.5049vh * var(--i)) cover calc(20.8168% + 24.7525% * var(--i) + 58.3664vh - 49.505vh * var(--i)), cover calc(-21.7822% + 24.7525% * var(--i) + 143.5643vh - 49.5049vh * var(--i)) cover calc(-3.9604% + 24.7525% * var(--i) + 107.9207vh - 49.5049vh * var(--i)); animation-timing-function: linear, linear(0, 0.00125, 0.005, 0.01125, 0.02, 0.03125, 0.045, 0.06125, 0.08, 0.10125, 0.125, 0.15125, 0.18, 0.21125, 0.245, 0.28125, 0.32, 0.36125, 0.405, 0.45125, 0.5, 0.54875, 0.595, 0.63875, 0.68, 0.71875, 0.755, 0.78875, 0.82, 0.84875, 0.875, 0.89875, 0.92, 0.93875, 0.955, 0.96875, 0.98, 0.98875, 0.995, 0.99875, 1); animation-fill-mode: both; }
+[data-8b-live] #departments .departments__stage > article:first-of-type { animation-name: departments-article-dept-visibility-2; animation-range: cover calc(20.7921% + 58.4158vh) cover calc(20.8168% + 58.3663vh); animation-timing-function: linear; }
+[data-8b-live] #departments .departments__stage > article:last-of-type { animation-name: departments-article-dept-visibility-5, departments-article-dept-clippath; animation-range: cover calc(77.2277% - 54.4554vh) cover calc(77.2525% - 54.505vh), cover calc(77.2277% - 54.4554vh) cover calc(95.0495% - 90.099vh); }
+@keyframes departments-article-dept-visibility { 0% { visibility: hidden; } 0.002% { visibility: visible; } 0.0581% { visibility: visible; } 99.9419% { visibility: visible; } 99.9439% { visibility: hidden; } 100% { visibility: hidden; } }
+@keyframes departments-article-dept-clippath { 0% { clip-path: inset(100% 0% 0%); } 100% { clip-path: inset(0%); } }
+@keyframes departments-img-dept-photo-translate { 0% { translate: 0px 14%; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 41.8605% { translate: 0px 0px; } 58.1395% { translate: 0px 0px; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); } 100% { translate: 0px -7%; } }
+@keyframes departments-img-dept-photo-scale { 0% { scale: 1.14; } 100% { scale: 1; } }
+@keyframes departments-img-dept-photo-translate-2 { 0% { translate: 0px 0px; } 100% { translate: 0px -7%; } }
+@keyframes departments-p-m-text-6-translate { 0% { translate: 0px 0px; } 100% { translate: 0px -56px; } }
+@keyframes departments-p-m-text-6-opacity { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes departments-p-m-text-6-translate-2 { 0% { translate: 0px 80px; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 47.1698% { translate: 0px 0px; } 69.8113% { translate: 0px 0px; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 100% { translate: 0px -56px; } }
+@keyframes departments-article-dept-visibility-2 { 0% { visibility: visible; } 0.1% { visibility: hidden; } 100% { visibility: hidden; } }
+@keyframes departments-article-dept-visibility-5 { 0% { visibility: hidden; } 0.1% { visibility: visible; } 100% { visibility: visible; } }
+@keyframes departments-img-dept-photo-translate-5 { 0% { translate: 0px 14%; } 100% { translate: 0px 0px; } }
+@keyframes departments-p-m-text-6-translate-5 { 0% { translate: 0px 80px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:aisles">
+@layer scenes {
+[data-8b-live] #aisles .aisles__list > li, [data-8b-live] #aisles .aisles__list > li > .m-tile { animation-timeline: --aisles-item; animation-range: cover 0% cover 100%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #aisles .aisles__list > li { view-timeline: --aisles-item block; view-timeline-inset: 0; animation-name: aisles-li-aisles-row-scale, aisles-li-aisles-row-opacity; }
+[data-8b-live] #aisles .aisles__list > li > .m-tile { animation-name: aisles-span-m-tile-scale, aisles-span-m-tile-rotate; }
+@keyframes aisles-li-aisles-row-scale { 0% { scale: 0.7; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 36% { scale: 1; } 64% { scale: 1; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 100% { scale: 0.7; } }
+@keyframes aisles-li-aisles-row-opacity { 0% { opacity: 0.3; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 36% { opacity: 1; } 64% { opacity: 1; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 100% { opacity: 0.3; } }
+@keyframes aisles-span-m-tile-scale { 0% { scale: 0.15; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 36% { scale: 1; } 64% { scale: 1; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 100% { scale: 0.15; } }
+@keyframes aisles-span-m-tile-rotate { 0% { rotate: -10deg; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 36% { rotate: 0deg; } 64% { rotate: 0deg; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 100% { rotate: 10deg; } }
+}
+</style>
+<style data-8b-part="scene:brought">
+@layer scenes {
+[data-8b-live] #brought .brought__list > li { view-timeline: --brought-item block; view-timeline-inset: 0; }
+[data-8b-live] #brought .brought__list > li > .brought__item--in, [data-8b-live] #brought .brought__list > li > .brought__item--out { animation-timeline: --brought-item; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes brought-figure-brought-item-translate-d { 0% { translate: calc(min(26vw, 380px) * -1) 0px; } 100% { translate: 0px 0px; } }
+@keyframes brought-figure-brought-item-translate-m { 0% { translate: -60vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes brought-figure-brought-item-rotate { 0% { rotate: -7deg; } 100% { rotate: 0deg; } }
+@keyframes brought-figure-brought-item-translate-2-d { 0% { translate: min(26vw, 380px) 0px; } 100% { translate: 0px 0px; } }
+@keyframes brought-figure-brought-item-translate-2-m { 0% { translate: 60vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes brought-figure-brought-item-rotate-2 { 0% { rotate: 7deg; } 100% { rotate: 0deg; } }
+@media (min-width: 760px) {
+  [data-8b-live] #brought .brought__list > li > .brought__item--in { animation-name: brought-figure-brought-item-translate-d, brought-figure-brought-item-rotate; animation-range: cover 0% cover calc(50% - 8vh); }
+  [data-8b-live] #brought .brought__list > li > .brought__item--out { animation-name: brought-figure-brought-item-translate-2-d, brought-figure-brought-item-rotate-2; animation-range: cover 0% cover calc(50% - 8vh); }
+}
+@media (max-width: 759px) {
+  [data-8b-live] #brought .brought__list > li > .brought__item--in { animation-name: brought-figure-brought-item-translate-m, brought-figure-brought-item-rotate; animation-range: cover 0% cover calc(50% - 14vh); }
+  [data-8b-live] #brought .brought__list > li > .brought__item--out { animation-name: brought-figure-brought-item-translate-2-m, brought-figure-brought-item-rotate-2; animation-range: cover 0% cover calc(50% - 14vh); }
+}
+}
+</style>
+<style data-8b-part="scene:classes">
+@layer scenes {
+@media (min-width: 600px) {
+[data-8b-live] #classes .classes__deck > li { z-index: calc(4 + var(--i) * -1); }
+}
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #classes .classes__deck > li { animation-fill-mode: both; transform: none; }
+@keyframes classes-li-m-surface-translate-d { 0% { translate: var(--classes-dx) calc(var(--classes-dy) - 8px * var(--i)); } 100% { translate: 0px 0px; } }
+@keyframes classes-li-m-surface-translate-m { 0% { translate: -55vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes classes-li-m-surface-rotate-d { 0% { rotate: var(--classes-li-m-surface-rotate-from, -8deg); } 100% { rotate: 0deg; } }
+@keyframes classes-li-m-surface-rotate-m { 0% { rotate: -7deg; } 100% { rotate: 0deg; } }
+@keyframes classes-li-m-surface-translate-2 { 0% { translate: 55vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes classes-li-m-surface-rotate-2 { 0% { rotate: 7deg; } 100% { rotate: 0deg; } }
+@media (min-width: 600px) {
+  [data-8b-live] #classes .classes__deck { view-timeline: --classes-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #classes .classes__deck > li { animation-name: classes-li-m-surface-translate-d, classes-li-m-surface-rotate-d; animation-timeline: --classes-t1; animation-range: cover calc(12vh - 1.3803vh * var(--i) + 4.9296% * var(--i)) cover calc(35.2113% + 4.9295% * var(--i) + 2.1408vh - 1.3802vh * var(--i)); animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1); }
+}
+@media (max-width: 599px) {
+  [data-8b-live] #classes .classes__deck > li { view-timeline: --classes-item block; view-timeline-inset: 0; animation-timeline: --classes-item; animation-range: cover 0% cover 42vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+  [data-8b-live] #classes .classes__deck > li:nth-of-type(2n+1) { animation-name: classes-li-m-surface-translate-m, classes-li-m-surface-rotate-m; }
+  [data-8b-live] #classes .classes__deck > li:nth-of-type(2n+2) { animation-name: classes-li-m-surface-translate-2, classes-li-m-surface-rotate-2; }
+}
+}
+</style>
+<style data-8b-part="scene:hire">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #hire .hire__list > li { view-timeline: --hire-item block; view-timeline-inset: 0; }
+[data-8b-live] #hire .hire__list > li > .hire__tag > .hire__flip { animation-name: hire-span-hire-flip-rotatex; animation-timeline: --hire-item; animation-range: cover 22vh cover 54vh; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #hire .hire__list > li > .hire__tag > .hire__flip > .hire__face--back { animation-name: hire-span-hire-face-visibility; animation-timeline: --hire-item; animation-range: cover 53.968vh cover 54vh; animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes hire-span-hire-flip-rotatex { 0% { rotate: x -180deg; } 100% { rotate: x 0deg; } }
+@keyframes hire-span-hire-face-visibility { 0% { visibility: visible; } 0.1% { visibility: hidden; animation-timing-function: linear(0, 0.0494, 0.0975, 0.1444, 0.19, 0.2344, 0.2775, 0.3194, 0.36, 0.3994, 0.4375, 0.4744, 0.51, 0.5444, 0.5775, 0.6094, 0.64, 0.6694, 0.6975, 0.7244, 0.75, 0.7744, 0.7975, 0.8194, 0.84, 0.8594, 0.8775, 0.8944, 0.91, 0.9244, 0.9375, 0.9494, 0.96, 0.9694, 0.9775, 0.9844, 0.99, 0.9944, 0.9975, 0.9994, 1); } 100% { visibility: hidden; } }
+}
+</style>
+<style data-8b-part="scene:visit">
+@layer scenes {
+[data-8b-live] #visit { view-timeline: --visit-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #visit .visit__photo > img { animation-timeline: --visit-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #visit .visit__info { animation-timeline: --visit-t1; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes visit-figure-visit-photo-img-scale-d { 0% { scale: 1.12; } 100% { scale: 1; } }
+@keyframes visit-figure-visit-photo-img-scale-m { 0% { scale: 1.35; } 100% { scale: 1; } }
+@keyframes visit-figure-visit-photo-clippath { 0% { clip-path: inset(0%); } 100% { clip-path: inset(0% 50% 0% 0%); } }
+@keyframes visit-div-visit-info-translate-d { 0% { translate: 90px 0px; } 100% { translate: 0px 0px; } }
+@keyframes visit-div-visit-info-translate-m { 0% { translate: 0px 70px; } 100% { translate: 0px 0px; } }
+@keyframes visit-div-visit-info-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@media (min-width: 900px) {
+  [data-8b-live] #visit .visit__photo > img { animation-name: visit-figure-visit-photo-img-scale-d; animation-range: cover 20vh cover 89vh; }
+  [data-8b-live] #visit .visit__photo { animation-name: visit-figure-visit-photo-clippath; animation-timeline: --visit-t1; animation-range: cover 26vh cover 80vh; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+  [data-8b-live] #visit .visit__info { animation-name: visit-div-visit-info-translate-d, visit-div-visit-info-opacity; animation-range: cover 71vh cover 98vh; }
+}
+@media (max-width: 899px) {
+  [data-8b-live] #visit .visit__photo > img { animation-name: visit-figure-visit-photo-img-scale-m; animation-range: cover 20vh cover 98vh; }
+  [data-8b-live] #visit .visit__info { animation-name: visit-div-visit-info-translate-m; animation-range: cover 35.6vh cover 98vh; }
+}
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body class="m-text">
 <a class="sr-only" href="#main">Skip to the content</a>
@@ -472,7 +621,7 @@
   </nav>
   <a class="m-btn-3 nav__status" href="#visit"><span class="m-btn-3__label">Open 7 days</span></a>
   <button class="m-btn-3 nav__menu" type="button" aria-expanded="false" aria-controls="menu"><span class="m-btn-3__label">Menu</span></button>
-  <div id="menu" class="menu" hidden data-lenis-prevent>
+  <div id="menu" class="menu" hidden>
     <div class="menu__top">
       <span class="m-text-7">Sixpenny Hardware</span>
       <button class="m-round menu__close" type="button" aria-label="Close the menu"><span class="m-round__icon" aria-hidden="true"></span></button>
@@ -496,32 +645,32 @@
   <div class="opening__stage">
     <div class="opening__space" aria-hidden="true">
       <div class="opening__field">
-<span class="opening__star" style="--x:348px;--y:-44px;--w:112px;--h:112px;--delay:-0.09s;--phase:0.006"><span class="m-tile" data-tone="1"><img style="background:#d9d9d9" class="m-tile__img" src="https://images.unsplash.com/photo-1555877765-925768ce7109?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2NyZXdzJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMTd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:335px;--y:57px;--w:112px;--h:146px;--delay:-6.94s;--phase:0.434"><span class="m-tile" data-tone="2"><img style="background:#d9d9d9" class="m-tile__img" src="https://images.unsplash.com/photo-1555877765-05acc97df582?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2NyZXdzJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMTd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=100&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:357px;--y:169px;--w:146px;--h:112px;--delay:-13.78s;--phase:0.861"><span class="m-tile" data-tone="3"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1633099158408-15e250bd7c6c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8b2xkJTIwa2V5JTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:258px;--y:233px;--w:112px;--h:112px;--delay:-4.51s;--phase:0.282"><span class="m-tile" data-tone="4"><img fetchpriority="high" style="background:#c0c0c0" class="m-tile__img" src="https://images.unsplash.com/photo-1688846413539-ad1e4a67f392?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGFpbnQlMjBicnVzaCUyMGlzb2xhdGVkfGVufDF8MHx8fDE3OTE0NDAyMjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=240&amp;q=60" alt="" width="480" height="318" decoding="async"></span></span>
-<span class="opening__star" style="--x:128px;--y:222px;--w:95px;--h:129px;--delay:-11.2s;--phase:0.700"><span class="m-tile" data-tone="5"><img style="background:#d9d9d9" class="m-tile__img" src="https://images.unsplash.com/photo-1636286484290-cfde2456af97?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cGFpbnQlMjBicnVzaCUyMGlzb2xhdGVkfGVufDF8MHx8fDE3OTE0NDAyMjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="" width="480" height="276" decoding="async"></span></span>
-<span class="opening__star" style="--x:74px;--y:230px;--w:140px;--h:106px;--delay:-1.86s;--phase:0.116"><span class="m-tile" data-tone="1"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1634225103276-aafa6ca5f51c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHRhcGUlMjBtZWFzdXJlJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=130&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:17px;--y:223px;--w:112px;--h:112px;--delay:-8.91s;--phase:0.557"><span class="m-tile" data-tone="2"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1575908393823-8e6ee16403d8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8aGFtbWVyJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=80&amp;q=60" alt="" width="480" height="360" decoding="async"></span></span>
-<span class="opening__star" style="--x:-45px;--y:225px;--w:112px;--h:146px;--delay:-15.55s;--phase:0.972"><span class="m-tile" data-tone="3"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1715498869410-b0fb19ef6fe2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8aGFtbWVyJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="" width="480" height="270" decoding="async"></span></span>
-<span class="opening__star" style="--x:-118px;--y:233px;--w:146px;--h:112px;--delay:-6.36s;--phase:0.397"><span class="m-tile" data-tone="4"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1769447386115-d83f1c26b97a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGlnaHQlMjBidWxiJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="" width="480" height="253" decoding="async"></span></span>
-<span class="opening__star" style="--x:-176px;--y:244px;--w:112px;--h:112px;--delay:-13.21s;--phase:0.826"><span class="m-tile" data-tone="5"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1587195399841-fc7174360a86?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGFkbG9jayUyMHdoaXRlJTIwYmFja2dyb3VuZHxlbnwxfDB8fHwxNzkxNDQwMjI0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:-240px;--y:226px;--w:95px;--h:129px;--delay:-3.96s;--phase:0.248"><span class="m-tile" data-tone="1"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1592744254966-58c65cfd2e69?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cGFkbG9jayUyMHdoaXRlJTIwYmFja2dyb3VuZHxlbnwxfDB8fHwxNzkxNDQwMjI0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=70&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:-311px;--y:180px;--w:140px;--h:106px;--delay:-10.56s;--phase:0.660"><span class="m-tile" data-tone="2"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1591195852446-b206db137197?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cm9wZSUyMGNvaWwlMjBpc29sYXRlZHxlbnwxfDB8fHwxNzkxNDQwMjI1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:-306px;--y:81px;--w:112px;--h:112px;--delay:-1.53s;--phase:0.096"><span class="m-tile" data-tone="3"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1590482972055-81396275b11c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cm9wZSUyMGNvaWwlMjBpc29sYXRlZHxlbnwxfDB8fHwxNzkxNDQwMjI1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=50&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:-335px;--y:-5px;--w:112px;--h:146px;--delay:-8.28s;--phase:0.518"><span class="m-tile" data-tone="4"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1786341594807-6e3f1d6e5acd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c3Bpcml0JTIwbGV2ZWwlMjB0b29sfGVufDF8MHx8fDE3OTE0NDAyMjZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:-323px;--y:-43px;--w:146px;--h:112px;--delay:-14.95s;--phase:0.934"><span class="m-tile" data-tone="5"><img style="background:#a6a6a6" class="m-tile__img" src="https://images.unsplash.com/photo-1734094151911-803ee718a921?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZG9vciUyMGhhbmRsZSUyMGJyYXNzfGVufDF8MHx8fDE3OTE0NDAyMjd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:-314px;--y:-166px;--w:112px;--h:112px;--delay:-5.6s;--phase:0.350"><span class="m-tile" data-tone="1"><img style="background:#d9d9d9" class="m-tile__img" src="https://images.unsplash.com/photo-1664452381331-e8c12ecfba9d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGFpbnQlMjB0aW4lMjBpc29sYXRlZHxlbnwxfDB8fHwxNzkxNDQwMjMwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=80&amp;q=60" alt="" width="480" height="270" decoding="async"></span></span>
-<span class="opening__star" style="--x:-195px;--y:-212px;--w:95px;--h:129px;--delay:-12.42s;--phase:0.777"><span class="m-tile" data-tone="2"><img style="background:#c0c0c0" class="m-tile__img" src="https://images.unsplash.com/photo-1666873901703-29ed5d8fd878?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cGFpbnQlMjB0aW4lMjBpc29sYXRlZHxlbnwxfDB8fHwxNzkxNDQwMjMwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="" width="480" height="360" decoding="async"></span></span>
-<span class="opening__star" style="--x:-172px;--y:-229px;--w:140px;--h:106px;--delay:-3.37s;--phase:0.211"><span class="m-tile" data-tone="3"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1663025290843-5ba43b8fb725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bGlnaHQlMjBidWxiJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=60&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:-78px;--y:-209px;--w:112px;--h:112px;--delay:-9.98s;--phase:0.623"><span class="m-tile" data-tone="5"><img style="background:#d9d9d9" class="m-tile__img" src="https://images.unsplash.com/photo-1555877765-925768ce7109?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2NyZXdzJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMTd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:-42px;--y:-237px;--w:112px;--h:146px;--delay:-0.75s;--phase:0.047"><span class="m-tile" data-tone="1"><img style="background:#d9d9d9" class="m-tile__img" src="https://images.unsplash.com/photo-1555877765-05acc97df582?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2NyZXdzJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMTd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=100&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:18px;--y:-226px;--w:146px;--h:112px;--delay:-7.58s;--phase:0.474"><span class="m-tile" data-tone="2"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1633099158408-15e250bd7c6c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8b2xkJTIwa2V5JTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:74px;--y:-244px;--w:112px;--h:112px;--delay:-14.3s;--phase:0.894"><span class="m-tile" data-tone="3"><img style="background:#c0c0c0" class="m-tile__img" src="https://images.unsplash.com/photo-1688846413539-ad1e4a67f392?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGFpbnQlMjBicnVzaCUyMGlzb2xhdGVkfGVufDF8MHx8fDE3OTE0NDAyMjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=240&amp;q=60" alt="" width="480" height="318" decoding="async"></span></span>
-<span class="opening__star" style="--x:201px;--y:-241px;--w:95px;--h:129px;--delay:-5.13s;--phase:0.320"><span class="m-tile" data-tone="4"><img style="background:#d9d9d9" class="m-tile__img" src="https://images.unsplash.com/photo-1636286484290-cfde2456af97?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cGFpbnQlMjBicnVzaCUyMGlzb2xhdGVkfGVufDF8MHx8fDE3OTE0NDAyMjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="" width="480" height="276" decoding="async"></span></span>
-<span class="opening__star" style="--x:252px;--y:-221px;--w:140px;--h:106px;--delay:-11.91s;--phase:0.745"><span class="m-tile" data-tone="5"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1634225103276-aafa6ca5f51c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHRhcGUlMjBtZWFzdXJlJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=130&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
-<span class="opening__star" style="--x:313px;--y:-122px;--w:112px;--h:112px;--delay:-2.69s;--phase:0.168"><span class="m-tile" data-tone="1"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1575908393823-8e6ee16403d8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8aGFtbWVyJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=80&amp;q=60" alt="" width="480" height="360" decoding="async"></span></span>
-<span class="opening__star" style="--x:325px;--y:-102px;--w:112px;--h:146px;--delay:-9.34s;--phase:0.584"><span class="m-tile" data-tone="2"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1715498869410-b0fb19ef6fe2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8aGFtbWVyJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="" width="480" height="270" decoding="async"></span></span>
+<span class="opening__star" style="--x:348px;--y:-44px;--w:112px;--h:112px;--delay:-0.09s;--phase:0.006"><span class="m-tile" data-tone="1"><img class="m-tile__img" src="https://images.unsplash.com/photo-1555877765-925768ce7109?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2NyZXdzJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMTd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:335px;--y:57px;--w:112px;--h:146px;--delay:-6.94s;--phase:0.434"><span class="m-tile" data-tone="2"><img class="m-tile__img" src="https://images.unsplash.com/photo-1555877765-05acc97df582?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2NyZXdzJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMTd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=100&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:357px;--y:169px;--w:146px;--h:112px;--delay:-13.78s;--phase:0.861"><span class="m-tile" data-tone="3"><img class="m-tile__img" src="https://images.unsplash.com/photo-1633099158408-15e250bd7c6c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8b2xkJTIwa2V5JTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:258px;--y:233px;--w:112px;--h:112px;--delay:-4.51s;--phase:0.282"><span class="m-tile" data-tone="4"><img fetchpriority="high" class="m-tile__img" src="https://images.unsplash.com/photo-1688846413539-ad1e4a67f392?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGFpbnQlMjBicnVzaCUyMGlzb2xhdGVkfGVufDF8MHx8fDE3OTE0NDAyMjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=240&amp;q=60" alt="" width="480" height="318" decoding="async"></span></span>
+<span class="opening__star" style="--x:128px;--y:222px;--w:95px;--h:129px;--delay:-11.2s;--phase:0.700"><span class="m-tile" data-tone="5"><img class="m-tile__img" src="https://images.unsplash.com/photo-1636286484290-cfde2456af97?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cGFpbnQlMjBicnVzaCUyMGlzb2xhdGVkfGVufDF8MHx8fDE3OTE0NDAyMjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="" width="480" height="276" decoding="async"></span></span>
+<span class="opening__star" style="--x:74px;--y:230px;--w:140px;--h:106px;--delay:-1.86s;--phase:0.116"><span class="m-tile" data-tone="1"><img class="m-tile__img" src="https://images.unsplash.com/photo-1634225103276-aafa6ca5f51c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHRhcGUlMjBtZWFzdXJlJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=130&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:17px;--y:223px;--w:112px;--h:112px;--delay:-8.91s;--phase:0.557"><span class="m-tile" data-tone="2"><img class="m-tile__img" src="https://images.unsplash.com/photo-1575908393823-8e6ee16403d8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8aGFtbWVyJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=80&amp;q=60" alt="" width="480" height="360" decoding="async"></span></span>
+<span class="opening__star" style="--x:-45px;--y:225px;--w:112px;--h:146px;--delay:-15.55s;--phase:0.972"><span class="m-tile" data-tone="3"><img class="m-tile__img" src="https://images.unsplash.com/photo-1715498869410-b0fb19ef6fe2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8aGFtbWVyJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="" width="480" height="270" decoding="async"></span></span>
+<span class="opening__star" style="--x:-118px;--y:233px;--w:146px;--h:112px;--delay:-6.36s;--phase:0.397"><span class="m-tile" data-tone="4"><img class="m-tile__img" src="https://images.unsplash.com/photo-1769447386115-d83f1c26b97a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGlnaHQlMjBidWxiJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="" width="480" height="253" decoding="async"></span></span>
+<span class="opening__star" style="--x:-176px;--y:244px;--w:112px;--h:112px;--delay:-13.21s;--phase:0.826"><span class="m-tile" data-tone="5"><img class="m-tile__img" src="https://images.unsplash.com/photo-1587195399841-fc7174360a86?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGFkbG9jayUyMHdoaXRlJTIwYmFja2dyb3VuZHxlbnwxfDB8fHwxNzkxNDQwMjI0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:-240px;--y:226px;--w:95px;--h:129px;--delay:-3.96s;--phase:0.248"><span class="m-tile" data-tone="1"><img class="m-tile__img" src="https://images.unsplash.com/photo-1592744254966-58c65cfd2e69?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cGFkbG9jayUyMHdoaXRlJTIwYmFja2dyb3VuZHxlbnwxfDB8fHwxNzkxNDQwMjI0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=70&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:-311px;--y:180px;--w:140px;--h:106px;--delay:-10.56s;--phase:0.660"><span class="m-tile" data-tone="2"><img class="m-tile__img" src="https://images.unsplash.com/photo-1591195852446-b206db137197?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cm9wZSUyMGNvaWwlMjBpc29sYXRlZHxlbnwxfDB8fHwxNzkxNDQwMjI1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:-306px;--y:81px;--w:112px;--h:112px;--delay:-1.53s;--phase:0.096"><span class="m-tile" data-tone="3"><img class="m-tile__img" src="https://images.unsplash.com/photo-1590482972055-81396275b11c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cm9wZSUyMGNvaWwlMjBpc29sYXRlZHxlbnwxfDB8fHwxNzkxNDQwMjI1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=50&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:-335px;--y:-5px;--w:112px;--h:146px;--delay:-8.28s;--phase:0.518"><span class="m-tile" data-tone="4"><img class="m-tile__img" src="https://images.unsplash.com/photo-1786341594807-6e3f1d6e5acd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c3Bpcml0JTIwbGV2ZWwlMjB0b29sfGVufDF8MHx8fDE3OTE0NDAyMjZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:-323px;--y:-43px;--w:146px;--h:112px;--delay:-14.95s;--phase:0.934"><span class="m-tile" data-tone="5"><img class="m-tile__img" src="https://images.unsplash.com/photo-1734094151911-803ee718a921?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZG9vciUyMGhhbmRsZSUyMGJyYXNzfGVufDF8MHx8fDE3OTE0NDAyMjd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:-314px;--y:-166px;--w:112px;--h:112px;--delay:-5.6s;--phase:0.350"><span class="m-tile" data-tone="1"><img class="m-tile__img" src="https://images.unsplash.com/photo-1664452381331-e8c12ecfba9d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGFpbnQlMjB0aW4lMjBpc29sYXRlZHxlbnwxfDB8fHwxNzkxNDQwMjMwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=80&amp;q=60" alt="" width="480" height="270" decoding="async"></span></span>
+<span class="opening__star" style="--x:-195px;--y:-212px;--w:95px;--h:129px;--delay:-12.42s;--phase:0.777"><span class="m-tile" data-tone="2"><img class="m-tile__img" src="https://images.unsplash.com/photo-1666873901703-29ed5d8fd878?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cGFpbnQlMjB0aW4lMjBpc29sYXRlZHxlbnwxfDB8fHwxNzkxNDQwMjMwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="" width="480" height="360" decoding="async"></span></span>
+<span class="opening__star" style="--x:-172px;--y:-229px;--w:140px;--h:106px;--delay:-3.37s;--phase:0.211"><span class="m-tile" data-tone="3"><img class="m-tile__img" src="https://images.unsplash.com/photo-1663025290843-5ba43b8fb725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bGlnaHQlMjBidWxiJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=60&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:-78px;--y:-209px;--w:112px;--h:112px;--delay:-9.98s;--phase:0.623"><span class="m-tile" data-tone="5"><img class="m-tile__img" src="https://images.unsplash.com/photo-1555877765-925768ce7109?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2NyZXdzJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMTd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:-42px;--y:-237px;--w:112px;--h:146px;--delay:-0.75s;--phase:0.047"><span class="m-tile" data-tone="1"><img class="m-tile__img" src="https://images.unsplash.com/photo-1555877765-05acc97df582?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2NyZXdzJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMTd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=100&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:18px;--y:-226px;--w:146px;--h:112px;--delay:-7.58s;--phase:0.474"><span class="m-tile" data-tone="2"><img class="m-tile__img" src="https://images.unsplash.com/photo-1633099158408-15e250bd7c6c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8b2xkJTIwa2V5JTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:74px;--y:-244px;--w:112px;--h:112px;--delay:-14.3s;--phase:0.894"><span class="m-tile" data-tone="3"><img class="m-tile__img" src="https://images.unsplash.com/photo-1688846413539-ad1e4a67f392?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGFpbnQlMjBicnVzaCUyMGlzb2xhdGVkfGVufDF8MHx8fDE3OTE0NDAyMjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=240&amp;q=60" alt="" width="480" height="318" decoding="async"></span></span>
+<span class="opening__star" style="--x:201px;--y:-241px;--w:95px;--h:129px;--delay:-5.13s;--phase:0.320"><span class="m-tile" data-tone="4"><img class="m-tile__img" src="https://images.unsplash.com/photo-1636286484290-cfde2456af97?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cGFpbnQlMjBicnVzaCUyMGlzb2xhdGVkfGVufDF8MHx8fDE3OTE0NDAyMjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="" width="480" height="276" decoding="async"></span></span>
+<span class="opening__star" style="--x:252px;--y:-221px;--w:140px;--h:106px;--delay:-11.91s;--phase:0.745"><span class="m-tile" data-tone="5"><img class="m-tile__img" src="https://images.unsplash.com/photo-1634225103276-aafa6ca5f51c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHRhcGUlMjBtZWFzdXJlJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=130&amp;q=60" alt="" width="480" height="320" decoding="async"></span></span>
+<span class="opening__star" style="--x:313px;--y:-122px;--w:112px;--h:112px;--delay:-2.69s;--phase:0.168"><span class="m-tile" data-tone="1"><img class="m-tile__img" src="https://images.unsplash.com/photo-1575908393823-8e6ee16403d8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8aGFtbWVyJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=80&amp;q=60" alt="" width="480" height="360" decoding="async"></span></span>
+<span class="opening__star" style="--x:325px;--y:-102px;--w:112px;--h:146px;--delay:-9.34s;--phase:0.584"><span class="m-tile" data-tone="2"><img class="m-tile__img" src="https://images.unsplash.com/photo-1715498869410-b0fb19ef6fe2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8aGFtbWVyJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDAyMjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="" width="480" height="270" decoding="async"></span></span>
       </div>
       <div class="opening__fog"></div>
     </div>
@@ -537,7 +686,7 @@
     <div class="opening__promise-inner wrap">
       <p class="m-text-6 opening__since">Sixpenny Hardware<br>Example Road, since 1968</p>
       <div class="opening__words">
-        <p class="m-text-4 opening__statement"><span class="opening__inline"><img loading="lazy" style="background:#260c0c" src="https://images.unsplash.com/photo-1679973297346-83bf2d311796?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8aGFuZCUyMGhvbGRpbmclMjBzY3Jld3xlbnwxfDB8fHwxNzkxNDQwMzIwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=150&amp;q=60" width="7008" height="4672" alt="A brass cup hook held between finger and thumb"></span>We sell screws by the one, cut keys while you wait, mix paint to the chip in your pocket, and tell you straight when a job needs a tradesperson rather than a trolley.</p>
+        <p class="m-text-4 opening__statement" data-8b-split="words"><span class="opening__inline"><img loading="lazy" src="https://images.unsplash.com/photo-1679973297346-83bf2d311796?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8aGFuZCUyMGhvbGRpbmclMjBzY3Jld3xlbnwxfDB8fHwxNzkxNDQwMzIwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=150&amp;q=60" width="7008" height="4672" alt="A brass cup hook held between finger and thumb"></span>We sell screws by the one, cut keys while you wait, mix paint to the chip in your pocket, and tell you straight when a job needs a tradesperson rather than a trolley.</p>
         <a class="m-link opening__next" href="#counter">What the counter does</a>
       </div>
     </div>
@@ -546,9 +695,9 @@
 <!-- departments: five departments held on one screen, each next panel wiping up over the last, with a guide link and a big letter (animation: scene:departments) -->
 <section id="departments" data-8b-section="departments" data-ground="dark" aria-labelledby="departments-title">
   <h2 class="sr-only" id="departments-title">Departments</h2>
-  <div class="departments__stage">
+  <div class="departments__stage" data-8b-items=":scope > .dept">
     <article class="dept" data-tone="1" aria-labelledby="dept-fixings">
-      <img loading="lazy" style="background:#404040" class="dept__photo" src="https://images.unsplash.com/photo-1562936291-bfe45093d49c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2NyZXdzJTIwaW4lMjBkcmF3ZXJ8ZW58MXwwfHx8MTc5MTQ0MDI2NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=60" width="8256" height="5504" alt="A heap of zinc-plated wood screws">
+      <img loading="lazy" class="dept__photo" src="https://images.unsplash.com/photo-1562936291-bfe45093d49c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2NyZXdzJTIwaW4lMjBkcmF3ZXJ8ZW58MXwwfHx8MTc5MTQ0MDI2NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=60" width="8256" height="5504" alt="A heap of zinc-plated wood screws">
       <div class="dept__body wrap">
         <div class="dept__rule" aria-hidden="true"></div>
         <p class="m-text-6 dept__aisle">Aisles 1–3</p>
@@ -567,7 +716,7 @@
       </aside>
     </article>
     <article class="dept" data-tone="2" aria-labelledby="dept-tools">
-      <img loading="lazy" style="background:#a67326" class="dept__photo" src="https://images.unsplash.com/photo-1669582389450-67a661bccde0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGNhcnBlbnRlciUyMHdvcmtiZW5jaCUyMHRvb2xzfGVufDF8MHx8fDE3OTE0NDAyNjd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=60" width="6000" height="4000" alt="Hand tools hung in rows on a pine wall above a workbench">
+      <img loading="lazy" class="dept__photo" src="https://images.unsplash.com/photo-1669582389450-67a661bccde0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGNhcnBlbnRlciUyMHdvcmtiZW5jaCUyMHRvb2xzfGVufDF8MHx8fDE3OTE0NDAyNjd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=60" width="6000" height="4000" alt="Hand tools hung in rows on a pine wall above a workbench">
       <div class="dept__body wrap">
         <div class="dept__rule" aria-hidden="true"></div>
         <p class="m-text-6 dept__aisle">Aisles 4–6</p>
@@ -586,7 +735,7 @@
       </aside>
     </article>
     <article class="dept" data-tone="3" aria-labelledby="dept-paint">
-      <img loading="lazy" style="background:#d9d9d9" class="dept__photo" src="https://images.unsplash.com/photo-1631127887321-0a2cf902a002?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cGFpbnQlMjBjb2xvciUyMHN3YXRjaGVzfGVufDF8MHx8fDE3OTE0NDAyNjh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=60" width="5472" height="3648" alt="Hands spreading fans of paint colour cards across a table">
+      <img loading="lazy" class="dept__photo" src="https://images.unsplash.com/photo-1631127887321-0a2cf902a002?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cGFpbnQlMjBjb2xvciUyMHN3YXRjaGVzfGVufDF8MHx8fDE3OTE0NDAyNjh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=60" width="5472" height="3648" alt="Hands spreading fans of paint colour cards across a table">
       <div class="dept__body wrap">
         <div class="dept__rule" aria-hidden="true"></div>
         <p class="m-text-6 dept__aisle">Aisles 7–8</p>
@@ -605,7 +754,7 @@
       </aside>
     </article>
     <article class="dept" data-tone="4" aria-labelledby="dept-garden">
-      <img loading="lazy" style="background:#260c0c" class="dept__photo" src="https://images.unsplash.com/photo-1573561368183-fd88bdb4503d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z2FyZGVuJTIwdG9vbHMlMjBzaGVkfGVufDF8MHx8fDE3OTE0NDAyNjl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=60" width="2928" height="2024" alt="A yellow shovel, rakes and a fork lined up against a dark wall">
+      <img loading="lazy" class="dept__photo" src="https://images.unsplash.com/photo-1573561368183-fd88bdb4503d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z2FyZGVuJTIwdG9vbHMlMjBzaGVkfGVufDF8MHx8fDE3OTE0NDAyNjl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=60" width="2928" height="2024" alt="A yellow shovel, rakes and a fork lined up against a dark wall">
       <div class="dept__body wrap">
         <div class="dept__rule" aria-hidden="true"></div>
         <p class="m-text-6 dept__aisle">The yard and aisle 9</p>
@@ -624,7 +773,7 @@
       </aside>
     </article>
     <article class="dept" data-tone="5" aria-labelledby="dept-keys">
-      <img loading="lazy" style="background:#262626" class="dept__photo" src="https://images.unsplash.com/photo-1635237393049-55046279ebb8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGtleSUyMGN1dHRpbmd8ZW58MXwwfHx8MTc5MTQ0MDI3M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=60" width="4784" height="3194" alt="Rows of uncut key blanks on a dark blue ground">
+      <img loading="lazy" class="dept__photo" src="https://images.unsplash.com/photo-1635237393049-55046279ebb8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGtleSUyMGN1dHRpbmd8ZW58MXwwfHx8MTc5MTQ0MDI3M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=60" width="4784" height="3194" alt="Rows of uncut key blanks on a dark blue ground">
       <div class="dept__body wrap">
         <div class="dept__rule" aria-hidden="true"></div>
         <p class="m-text-6 dept__aisle">At the counter</p>
@@ -652,41 +801,41 @@
       <h2 class="m-text-3" id="counter-title" data-8b-motion="rise">Done while you wait</h2>
       <p class="m-text counter__lead" data-8b-motion="rise">Bring the job to the counter. Most of it is finished before a cup of tea would have gone cold, and you see every cut being made.</p>
     </div>
-    <ul class="counter__list">
-      <li class="counter__row" data-8b-motion="rule">
+    <ul class="counter__list" data-8b-items=":scope > li">
+      <li class="counter__row" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > span">
         <span class="m-text-5 counter__name">Keys cut</span>
         <span class="m-text-7 counter__price">from £4.50</span>
         <span class="m-text-8 counter__time">about 3 minutes</span>
       </li>
-      <li class="counter__row" data-8b-motion="rule">
+      <li class="counter__row" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > span">
         <span class="m-text-5 counter__name">Paint mixed to a sample</span>
         <span class="m-text-7 counter__price">from £14 a litre</span>
         <span class="m-text-8 counter__time">about 10 minutes</span>
       </li>
-      <li class="counter__row" data-8b-motion="rule">
+      <li class="counter__row" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > span">
         <span class="m-text-5 counter__name">Timber cut to size</span>
         <span class="m-text-7 counter__price">50p a cut</span>
         <span class="m-text-8 counter__time">about 5 minutes</span>
       </li>
-      <li class="counter__row" data-8b-motion="rule">
+      <li class="counter__row" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > span">
         <span class="m-text-5 counter__name">Glass and acrylic cut</span>
         <span class="m-text-7 counter__price">by the sheet</span>
         <span class="m-text-8 counter__time">about 15 minutes</span>
       </li>
-      <li class="counter__row" data-8b-motion="rule">
+      <li class="counter__row" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > span">
         <span class="m-text-5 counter__name">Blades and chisels sharpened</span>
         <span class="m-text-7 counter__price">from £5</span>
         <span class="m-text-8 counter__time">ready next morning</span>
       </li>
-      <li class="counter__row" data-8b-motion="rule">
+      <li class="counter__row" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > span">
         <span class="m-text-5 counter__name">Lamps rewired</span>
         <span class="m-text-7 counter__price">from £18</span>
         <span class="m-text-8 counter__time">ready in two days</span>
       </li>
     </ul>
     <div class="counter__photos">
-      <figure class="counter__photo" data-tone="5" data-8b-motion="tint"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1710129477453-6de47269341b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8a2V5JTIwZHVwbGljYXRpbmclMjBtYWNoaW5lfGVufDF8MHx8fDE3OTE0NDAzMDd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=810&amp;q=60" width="4192" height="2795" alt="The red key-cutting machine behind the counter, its guide wheel close up" loading="lazy"></figure>
-      <figure class="counter__photo counter__photo--b" data-tone="2" data-8b-motion="tint"><img style="background:#262626" src="https://images.unsplash.com/photo-1685022515804-af2e8b3b75e0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fHNhbmRpbmclMjB3b29kJTIwd29ya3Nob3B8ZW58MXwwfHx8MTc5MTQ0MDMwOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=610&amp;q=60" width="4365" height="2905" alt="A length of timber being cut to size on the saw at the back" loading="lazy"></figure>
+      <figure class="counter__photo" data-tone="5" data-8b-motion="tint" data-8b-enter="86%"><img src="https://images.unsplash.com/photo-1710129477453-6de47269341b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8a2V5JTIwZHVwbGljYXRpbmclMjBtYWNoaW5lfGVufDF8MHx8fDE3OTE0NDAzMDd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" width="4192" height="2795" alt="The red key-cutting machine behind the counter, its guide wheel close up" loading="lazy"></figure>
+      <figure class="counter__photo counter__photo--b" data-tone="2" data-8b-motion="tint" data-8b-enter="86%"><img src="https://images.unsplash.com/photo-1685022515804-af2e8b3b75e0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fHNhbmRpbmclMjB3b29kJTIwd29ya3Nob3B8ZW58MXwwfHx8MTc5MTQ0MDMwOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=700&amp;q=60" width="4365" height="2905" alt="A length of timber being cut to size on the saw at the back" loading="lazy"></figure>
     </div>
   </div>
 </section>
@@ -695,41 +844,41 @@
 <section id="aisles" data-8b-section="aisles" aria-labelledby="aisles-title">
   <div class="wrap">
     <h2 class="m-text-6 aisles__title" id="aisles-title">Every aisle, front to back</h2>
-    <ul class="aisles__list">
+    <ul class="aisles__list" data-8b-items=":scope > li">
       <li class="aisles__row" data-tone="1">
         <span class="aisles__chip" aria-hidden="true"></span>
         <span class="m-text-5 aisles__name">Fixings</span>
-        <span class="m-tile aisles__tile"><img style="background:#f3f3f3" class="m-tile__img" src="https://images.unsplash.com/photo-1641937725629-2adda0f55251?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YXNzb3J0ZWQlMjBzY3Jld3MlMjBhbmQlMjBib2x0c3xlbnwxfDB8fHwxNzkxNDQwMjY1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Screws, bolts and washers on white" loading="lazy"></span>
+        <span class="m-tile aisles__tile"><img class="m-tile__img" src="https://images.unsplash.com/photo-1641937725629-2adda0f55251?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YXNzb3J0ZWQlMjBzY3Jld3MlMjBhbmQlMjBib2x0c3xlbnwxfDB8fHwxNzkxNDQwMjY1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=20&amp;q=60" alt="Screws, bolts and washers on white" loading="lazy"></span>
         <span class="m-text-5 aisles__count">(1,240<span class="sr-only"> lines in stock</span>)</span>
       </li>
       <li class="aisles__row" data-tone="2">
         <span class="aisles__chip" aria-hidden="true"></span>
         <span class="m-text-5 aisles__name">Tools</span>
-        <span class="m-tile aisles__tile"><img style="background:#8c7340" class="m-tile__img" src="https://images.unsplash.com/photo-1617048530929-0edab8608369?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGNhcnBlbnRlciUyMHdvcmtiZW5jaCUyMHRvb2xzfGVufDF8MHx8fDE3OTE0NDAyNjd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Pliers, a square and drill bits on a wooden bench" loading="lazy"></span>
+        <span class="m-tile aisles__tile"><img class="m-tile__img" src="https://images.unsplash.com/photo-1617048530929-0edab8608369?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGNhcnBlbnRlciUyMHdvcmtiZW5jaCUyMHRvb2xzfGVufDF8MHx8fDE3OTE0NDAyNjd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=20&amp;q=60" alt="Pliers, a square and drill bits on a wooden bench" loading="lazy"></span>
         <span class="m-text-5 aisles__count">(860<span class="sr-only"> lines in stock</span>)</span>
       </li>
       <li class="aisles__row" data-tone="3">
         <span class="aisles__chip" aria-hidden="true"></span>
         <span class="m-text-5 aisles__name">Paint</span>
-        <span class="m-tile aisles__tile"><img style="background:#c0a673" class="m-tile__img" src="https://images.unsplash.com/photo-1622250544703-997d69d856e3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBhaW50JTIwY29sb3IlMjBzd2F0Y2hlc3xlbnwxfDB8fHwxNzkxNDQwMjY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="A paintbrush resting on a fan of colour cards" loading="lazy"></span>
+        <span class="m-tile aisles__tile"><img class="m-tile__img" src="https://images.unsplash.com/photo-1622250544703-997d69d856e3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBhaW50JTIwY29sb3IlMjBzd2F0Y2hlc3xlbnwxfDB8fHwxNzkxNDQwMjY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=20&amp;q=60" alt="A paintbrush resting on a fan of colour cards" loading="lazy"></span>
         <span class="m-text-5 aisles__count">(410<span class="sr-only"> lines in stock</span>)</span>
       </li>
       <li class="aisles__row" data-tone="5">
         <span class="aisles__chip" aria-hidden="true"></span>
         <span class="m-text-5 aisles__name">Electrical</span>
-        <span class="m-tile aisles__tile"><img style="background:#d9d9d9" class="m-tile__img" src="https://images.unsplash.com/photo-1761507321319-2d59343016f6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZWxlY3RyaWNhbCUyMHdpcmVzJTIwY2FibGV8ZW58MXwwfHx8MTc5MTQ0MDMxNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="A loose bundle of coloured wires on white" loading="lazy"></span>
+        <span class="m-tile aisles__tile"><img class="m-tile__img" src="https://images.unsplash.com/photo-1761507321319-2d59343016f6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZWxlY3RyaWNhbCUyMHdpcmVzJTIwY2FibGV8ZW58MXwwfHx8MTc5MTQ0MDMxNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=20&amp;q=60" alt="A loose bundle of coloured wires on white" loading="lazy"></span>
         <span class="m-text-5 aisles__count">(330<span class="sr-only"> lines in stock</span>)</span>
       </li>
       <li class="aisles__row" data-tone="2">
         <span class="aisles__chip" aria-hidden="true"></span>
         <span class="m-text-5 aisles__name">Plumbing</span>
-        <span class="m-tile aisles__tile"><img style="background:#a6a6a6" class="m-tile__img" src="https://images.unsplash.com/photo-1560883123-04646fef95df?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29wcGVyJTIwcGlwZSUyMGZpdHRpbmdzfGVufDF8MHx8fDE3OTE0NDAzMTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="A copper pipe with a joint running down a stone wall" loading="lazy"></span>
+        <span class="m-tile aisles__tile"><img class="m-tile__img" src="https://images.unsplash.com/photo-1560883123-04646fef95df?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29wcGVyJTIwcGlwZSUyMGZpdHRpbmdzfGVufDF8MHx8fDE3OTE0NDAzMTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=20&amp;q=60" alt="A copper pipe with a joint running down a stone wall" loading="lazy"></span>
         <span class="m-text-5 aisles__count">(290<span class="sr-only"> lines in stock</span>)</span>
       </li>
       <li class="aisles__row" data-tone="4">
         <span class="aisles__chip" aria-hidden="true"></span>
         <span class="m-text-5 aisles__name">Garden</span>
-        <span class="m-tile aisles__tile"><img style="background:#8c400c" class="m-tile__img" src="https://images.unsplash.com/photo-1647553756926-21a62021b9d2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cG90dGluZyUyMHNoZWQlMjBzZWVkc3xlbnwxfDB8fHwxNzkxNDQwMjcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Packets of vegetable seeds laid out in rows" loading="lazy"></span>
+        <span class="m-tile aisles__tile"><img class="m-tile__img" src="https://images.unsplash.com/photo-1647553756926-21a62021b9d2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cG90dGluZyUyMHNoZWQlMjBzZWVkc3xlbnwxfDB8fHwxNzkxNDQwMjcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=20&amp;q=60" alt="Packets of vegetable seeds laid out in rows" loading="lazy"></span>
         <span class="m-text-5 aisles__count">(520<span class="sr-only"> lines in stock</span>)</span>
       </li>
     </ul>
@@ -746,34 +895,34 @@
     <h2 class="m-text-3" id="brought-title">Bring the old one in</h2>
     <p class="m-text brought__lead">Half a hinge, a washer worn flat, a key snapped in the lock: put it on the counter and we will find its match, or tell you who still makes it.</p>
   </div>
-  <ol class="wrap brought__list">
+  <ol class="wrap brought__list" data-8b-items=":scope > li">
     <li class="brought__pair">
       <figure class="brought__item brought__item--in">
-        <div class="brought__photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1560673429-b9b9338a360a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Zml4aW5nJTIwbGVha2luZyUyMHRhcHxlbnwxfDB8fHwxNzkxNDQwMzE2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" width="4444" height="2963" alt="A chrome tap with a drop of water hanging from it" loading="lazy"></div>
+        <div class="brought__photo"><img src="https://images.unsplash.com/photo-1560673429-b9b9338a360a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Zml4aW5nJTIwbGVha2luZyUyMHRhcHxlbnwxfDB8fHwxNzkxNDQwMzE2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" width="4444" height="2963" alt="A chrome tap with a drop of water hanging from it" loading="lazy"></div>
         <figcaption class="brought__caption"><span class="m-text-6">Brought in</span><span class="m-text-7">An outside tap that would not stop dripping</span></figcaption>
       </figure>
       <figure class="brought__item brought__item--out">
-        <div class="brought__photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1589870446935-ce8bc41685b8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Y29wcGVyJTIwcGlwZSUyMGZpdHRpbmdzfGVufDF8MHx8fDE3OTE0NDAzMTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60" width="4032" height="3024" alt="Brass tap fittings standing on a white ground" loading="lazy"></div>
+        <div class="brought__photo"><img src="https://images.unsplash.com/photo-1589870446935-ce8bc41685b8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Y29wcGVyJTIwcGlwZSUyMGZpdHRpbmdzfGVufDF8MHx8fDE3OTE0NDAzMTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=880&amp;q=60" width="4032" height="3024" alt="Brass tap fittings standing on a white ground" loading="lazy"></div>
         <figcaption class="brought__caption"><span class="m-text-6">Matched</span><span class="m-text-7">A half-inch washer and a new brass jumper, £3.40</span></figcaption>
       </figure>
     </li>
     <li class="brought__pair">
       <figure class="brought__item brought__item--in">
-        <div class="brought__photo"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1590280986931-d675a2cf9b2e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGJyb2tlbiUyMGtleXxlbnwxfDB8fHwxNzkxNDQwMzEyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" width="3872" height="2592" alt="An old brass key in the lock of a wooden door" loading="lazy"></div>
+        <div class="brought__photo"><img src="https://images.unsplash.com/photo-1590280986931-d675a2cf9b2e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGJyb2tlbiUyMGtleXxlbnwxfDB8fHwxNzkxNDQwMzEyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" width="3872" height="2592" alt="An old brass key in the lock of a wooden door" loading="lazy"></div>
         <figcaption class="brought__caption"><span class="m-text-6">Brought in</span><span class="m-text-7">Half a shed key, the other half still in the lock</span></figcaption>
       </figure>
       <figure class="brought__item brought__item--out">
-        <div class="brought__photo"><img style="background:#a68c73" src="https://images.unsplash.com/photo-1643804926339-e94f0a655185?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8a2V5JTIwY3V0dGluZ3xlbnwxfDB8fHwxNzkxNDQwMjczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" width="6000" height="3376" alt="A bunch of newly cut keys on a wooden table" loading="lazy"></div>
+        <div class="brought__photo"><img src="https://images.unsplash.com/photo-1643804926339-e94f0a655185?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8a2V5JTIwY3V0dGluZ3xlbnwxfDB8fHwxNzkxNDQwMjczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" width="6000" height="3376" alt="A bunch of newly cut keys on a wooden table" loading="lazy"></div>
         <figcaption class="brought__caption"><span class="m-text-6">Matched</span><span class="m-text-7">Two new keys cut from the half, six minutes</span></figcaption>
       </figure>
     </li>
     <li class="brought__pair">
       <figure class="brought__item brought__item--in">
-        <div class="brought__photo"><img style="background:#8c7373" src="https://images.unsplash.com/photo-1648804740396-378a48bd01a3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bmV3JTIwaGluZ2VzJTIwaGFyZHdhcmV8ZW58MXwwfHx8MTc5MTQ0MDM2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" width="6000" height="4000" alt="A strap hinge rusted into the boards of a gate" loading="lazy"></div>
+        <div class="brought__photo"><img src="https://images.unsplash.com/photo-1648804740396-378a48bd01a3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bmV3JTIwaGluZ2VzJTIwaGFyZHdhcmV8ZW58MXwwfHx8MTc5MTQ0MDM2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" width="6000" height="4000" alt="A strap hinge rusted into the boards of a gate" loading="lazy"></div>
         <figcaption class="brought__caption"><span class="m-text-6">Brought in</span><span class="m-text-7">A gate hinge rusted through at the knuckle</span></figcaption>
       </figure>
       <figure class="brought__item brought__item--out">
-        <div class="brought__photo"><img style="background:#a6c0c0" src="https://images.unsplash.com/photo-1593801626871-246f5957620a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c3RhaW5sZXNzJTIwc3RlZWwlMjBoaW5nZXxlbnwxfDB8fHwxNzkxNDQwMzU5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" width="6000" height="4000" alt="A small galvanised hinge fitted to a pale grey door" loading="lazy"></div>
+        <div class="brought__photo"><img src="https://images.unsplash.com/photo-1593801626871-246f5957620a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c3RhaW5sZXNzJTIwc3RlZWwlMjBoaW5nZXxlbnwxfDB8fHwxNzkxNDQwMzU5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" width="6000" height="4000" alt="A small galvanised hinge fitted to a pale grey door" loading="lazy"></div>
         <figcaption class="brought__caption"><span class="m-text-6">Matched</span><span class="m-text-7">A galvanised one with the same screw holes, £6.80</span></figcaption>
       </figure>
     </li>
@@ -784,7 +933,7 @@
 <section id="owner" data-8b-section="owner" data-ground="dark" aria-labelledby="owner-title">
   <div class="wrap owner__grid">
     <div class="owner__person">
-      <img style="background:#8c8c8c" class="owner__portrait" src="https://images.unsplash.com/photo-1772470091578-534d72103823?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8b2xkZXIlMjBtYW4lMjBhcHJvbiUyMHBvcnRyYWl0JTIwd29ya3Nob3B8ZW58MXwwfHx8MTc5MTQ0MDMxOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=280&amp;q=60" width="3984" height="2656" alt="Len Hollis in his apron, magnifying glasses pushed up on his forehead" loading="lazy">
+      <img class="owner__portrait" src="https://images.unsplash.com/photo-1772470091578-534d72103823?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8b2xkZXIlMjBtYW4lMjBhcHJvbiUyMHBvcnRyYWl0JTIwd29ya3Nob3B8ZW58MXwwfHx8MTc5MTQ0MDMxOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=280&amp;q=60" width="3984" height="2656" alt="Len Hollis in his apron, magnifying glasses pushed up on his forehead" loading="lazy">
       <div class="owner__who">
         <h2 class="m-text-7" id="owner-title">Len Hollis</h2>
         <p class="m-text-6 owner__role">Third owner, behind the counter since 2004</p>
@@ -799,7 +948,7 @@
       <a class="m-link" href="#visit">Come and say hello</a>
     </blockquote>
     <figure class="owner__shop">
-      <div class="owner__frame" data-tone="3" data-8b-motion="tint"><img style="background:#737359" src="https://images.unsplash.com/photo-1631856954913-c751a44490ec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8aGFyZHdhcmUlMjBzaG9wJTIwc2hlbHZlc3xlbnwxfDB8fHwxNzkxNDQwMjc0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=60" width="7571" height="5050" alt="Shelves of small parts in packets, priced and labelled, running down an aisle" loading="lazy"></div>
+      <div class="owner__frame" data-tone="3" data-8b-motion="tint" data-8b-enter="86%"><img src="https://images.unsplash.com/photo-1631856954913-c751a44490ec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8aGFyZHdhcmUlMjBzaG9wJTIwc2hlbHZlc3xlbnwxfDB8fHwxNzkxNDQwMjc0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=60" width="7571" height="5050" alt="Shelves of small parts in packets, priced and labelled, running down an aisle" loading="lazy"></div>
       <figcaption class="m-text-6">Aisle 2, small parts from floor to ceiling</figcaption>
     </figure>
   </div>
@@ -811,33 +960,33 @@
     <h2 class="m-text-3" id="classes-title">Fix-it Saturdays</h2>
     <p class="m-text classes__lead">Ninety minutes, one job, eight people round the big bench at the back. The tools and parts are ours, the tea is free, and you take home what you made.</p>
   </div>
-  <ul class="wrap classes__deck">
-    <li class="m-surface classes__card" data-tone="5">
-      <div class="classes__photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1553265381-674034b34554?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Zml4aW5nJTIwbGVha2luZyUyMHRhcHxlbnwxfDB8fHwxNzkxNDQwMzE2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=670&amp;q=60" width="6932" height="4104" alt="Hands working on a running chrome tap over a white basin" loading="lazy"></div>
+  <ul class="wrap classes__deck" data-8b-items=":scope > li">
+    <li class="m-surface classes__card" data-tone="5" style="--classes-li-m-surface-rotate-from: -8deg">
+      <div class="classes__photo"><img src="https://images.unsplash.com/photo-1553265381-674034b34554?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Zml4aW5nJTIwbGVha2luZyUyMHRhcHxlbnwxfDB8fHwxNzkxNDQwMzE2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=700&amp;q=60" width="6932" height="4104" alt="Hands working on a running chrome tap over a white basin" loading="lazy"></div>
       <span class="m-badge"><span class="m-badge__chip" aria-hidden="true"></span><span class="m-badge__label">Plumbing</span></span>
       <p class="m-text-6">Saturday 18 October · 10:00–11:30</p>
       <h3 class="m-text-7">Stop a dripping tap</h3>
       <p class="m-text-8">£15 with the washers · 3 places left</p>
       <a data-8b-placeholder="phone" class="m-link m-text-6" href="tel:01130000000">Book by phone</a>
     </li>
-    <li class="m-surface classes__card" data-tone="2">
-      <div class="classes__photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1602516793068-35b73edf3368?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZHJpbGxpbmclMjB3YWxsJTIwc2hlbGZ8ZW58MXwwfHx8MTc5MTQ0MDMxN3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" width="5717" height="4000" alt="A white shelf on wooden brackets holding a plant and a framed print" loading="lazy"></div>
+    <li class="m-surface classes__card" data-tone="2" style="--classes-li-m-surface-rotate-from: 5deg">
+      <div class="classes__photo"><img src="https://images.unsplash.com/photo-1602516793068-35b73edf3368?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZHJpbGxpbmclMjB3YWxsJTIwc2hlbGZ8ZW58MXwwfHx8MTc5MTQ0MDMxN3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=660&amp;q=60" width="5717" height="4000" alt="A white shelf on wooden brackets holding a plant and a framed print" loading="lazy"></div>
       <span class="m-badge"><span class="m-badge__chip" aria-hidden="true"></span><span class="m-badge__label">Fixings</span></span>
       <p class="m-text-6">Saturday 25 October · 10:00–11:30</p>
       <h3 class="m-text-7">Hang a shelf that stays up</h3>
       <p class="m-text-8">£15 with plugs and screws · 5 places left</p>
       <a data-8b-placeholder="phone" class="m-link m-text-6" href="tel:01130000000">Book by phone</a>
     </li>
-    <li class="m-surface classes__card" data-tone="3">
-      <div class="classes__photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1693985120993-e9b203ce7631?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGFpbnQlMjByb2xsZXIlMjB3YWxsfGVufDF8MHx8fDE3OTE0NDAzMTh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=530&amp;q=60" width="4032" height="3024" alt="A paint roller on a pole laying a fresh coat on a wall" loading="lazy"></div>
+    <li class="m-surface classes__card" data-tone="3" style="--classes-li-m-surface-rotate-from: -3deg">
+      <div class="classes__photo"><img src="https://images.unsplash.com/photo-1693985120993-e9b203ce7631?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGFpbnQlMjByb2xsZXIlMjB3YWxsfGVufDF8MHx8fDE3OTE0NDAzMTh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=610&amp;q=60" width="4032" height="3024" alt="A paint roller on a pole laying a fresh coat on a wall" loading="lazy"></div>
       <span class="m-badge"><span class="m-badge__chip" aria-hidden="true"></span><span class="m-badge__label">Paint</span></span>
       <p class="m-text-6">Saturday 1 November · 10:00–12:00</p>
       <h3 class="m-text-7">Fill, sand and paint a wall</h3>
       <p class="m-text-8">£20 with filler and paint · 6 places left</p>
       <a data-8b-placeholder="phone" class="m-link m-text-6" href="tel:01130000000">Book by phone</a>
     </li>
-    <li class="m-surface classes__card" data-tone="4">
-      <div class="classes__photo"><img style="background:#26260c" src="https://images.unsplash.com/photo-1679797878543-66c1e502d413?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fHNhbmRpbmclMjB3b29kJTIwd29ya3Nob3B8ZW58MXwwfHx8MTc5MTQ0MDMwOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" width="4240" height="2832" alt="A man smoothing a block of timber with a power sander" loading="lazy"></div>
+    <li class="m-surface classes__card" data-tone="4" style="--classes-li-m-surface-rotate-from: 7deg">
+      <div class="classes__photo"><img src="https://images.unsplash.com/photo-1679797878543-66c1e502d413?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fHNhbmRpbmclMjB3b29kJTIwd29ya3Nob3B8ZW58MXwwfHx8MTc5MTQ0MDMwOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=690&amp;q=60" width="4240" height="2832" alt="A man smoothing a block of timber with a power sander" loading="lazy"></div>
       <span class="m-badge"><span class="m-badge__chip" aria-hidden="true"></span><span class="m-badge__label">Tools</span></span>
       <p class="m-text-6">Saturday 8 November · 10:00–11:30</p>
       <h3 class="m-text-7">Sand and oil a tabletop</h3>
@@ -854,36 +1003,36 @@
     <div class="hire__intro">
       <h2 class="m-text-3" id="hire-title">Borrow it for the weekend</h2>
       <p class="m-text">A tile cutter you will use once costs more than the tiles. Collect on Friday from three, bring it back by ten on Monday; a deposit and photo ID at the counter.</p>
-      <figure class="hire__photo"><img style="background:#73400c" src="https://images.unsplash.com/photo-1683115099191-51e617fc5ff1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGNhcnBlbnRlciUyMHdvcmtiZW5jaCUyMHRvb2xzfGVufDF8MHx8fDE3OTE0NDAyNjd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=690&amp;q=60" width="4928" height="3264" alt="Drills, saws and sanders hung on the hire wall" loading="lazy"></figure>
+      <figure class="hire__photo"><img src="https://images.unsplash.com/photo-1683115099191-51e617fc5ff1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGNhcnBlbnRlciUyMHdvcmtiZW5jaCUyMHRvb2xzfGVufDF8MHx8fDE3OTE0NDAyNjd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=690&amp;q=60" width="4928" height="3264" alt="Drills, saws and sanders hung on the hire wall" loading="lazy"></figure>
     </div>
     <div>
-      <ul class="hire__list">
-        <li class="hire__row" data-8b-motion="rule">
+      <ul class="hire__list" data-8b-items=":scope > li">
+        <li class="hire__row" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > span">
           <span class="m-text-5 hire__tool">Tile cutter</span>
           <span class="m-text-8 hire__deposit">£40 deposit</span>
           <span class="hire__tag"><span class="hire__flip"><span class="hire__face hire__face--front"><span class="m-text-7">£12</span><span class="m-text-6">a weekend<span class="sr-only">, £180 to buy new</span></span></span><span class="hire__face hire__face--back" aria-hidden="true"><span class="m-text-7">£180</span><span class="m-text-6">to buy new</span></span></span></span>
         </li>
-        <li class="hire__row" data-8b-motion="rule">
+        <li class="hire__row" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > span">
           <span class="m-text-5 hire__tool">Wallpaper steamer</span>
           <span class="m-text-8 hire__deposit">£30 deposit</span>
           <span class="hire__tag"><span class="hire__flip"><span class="hire__face hire__face--front"><span class="m-text-7">£10</span><span class="m-text-6">a weekend<span class="sr-only">, £70 to buy new</span></span></span><span class="hire__face hire__face--back" aria-hidden="true"><span class="m-text-7">£70</span><span class="m-text-6">to buy new</span></span></span></span>
         </li>
-        <li class="hire__row" data-8b-motion="rule">
+        <li class="hire__row" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > span">
           <span class="m-text-5 hire__tool">Hammer drill</span>
           <span class="m-text-8 hire__deposit">£50 deposit</span>
           <span class="hire__tag"><span class="hire__flip"><span class="hire__face hire__face--front"><span class="m-text-7">£15</span><span class="m-text-6">a weekend<span class="sr-only">, £160 to buy new</span></span></span><span class="hire__face hire__face--back" aria-hidden="true"><span class="m-text-7">£160</span><span class="m-text-6">to buy new</span></span></span></span>
         </li>
-        <li class="hire__row" data-8b-motion="rule">
+        <li class="hire__row" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > span">
           <span class="m-text-5 hire__tool">Carpet cleaner</span>
           <span class="m-text-8 hire__deposit">£60 deposit</span>
           <span class="hire__tag"><span class="hire__flip"><span class="hire__face hire__face--front"><span class="m-text-7">£18</span><span class="m-text-6">a weekend<span class="sr-only">, £240 to buy new</span></span></span><span class="hire__face hire__face--back" aria-hidden="true"><span class="m-text-7">£240</span><span class="m-text-6">to buy new</span></span></span></span>
         </li>
-        <li class="hire__row" data-8b-motion="rule">
+        <li class="hire__row" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > span">
           <span class="m-text-5 hire__tool">Ladder, 3.5 metres</span>
           <span class="m-text-8 hire__deposit">£30 deposit</span>
           <span class="hire__tag"><span class="hire__flip"><span class="hire__face hire__face--front"><span class="m-text-7">£9</span><span class="m-text-6">a weekend<span class="sr-only">, £130 to buy new</span></span></span><span class="hire__face hire__face--back" aria-hidden="true"><span class="m-text-7">£130</span><span class="m-text-6">to buy new</span></span></span></span>
         </li>
-        <li class="hire__row" data-8b-motion="rule">
+        <li class="hire__row" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > span">
           <span class="m-text-5 hire__tool">Hedge trimmer</span>
           <span class="m-text-8 hire__deposit">£40 deposit</span>
           <span class="hire__tag"><span class="hire__flip"><span class="hire__face hire__face--front"><span class="m-text-7">£12</span><span class="m-text-6">a weekend<span class="sr-only">, £110 to buy new</span></span></span><span class="hire__face hire__face--back" aria-hidden="true"><span class="m-text-7">£110</span><span class="m-text-6">to buy new</span></span></span></span>
@@ -897,7 +1046,7 @@
 <!-- visit: a shop-front photo that steps back into its half while hours, address, phone, email and a newsletter form come in (animation: scene:visit) -->
 <section id="visit" data-8b-section="visit" aria-labelledby="visit-title">
   <figure class="visit__photo">
-    <img style="background:#0c2626" src="https://images.unsplash.com/photo-1768180316485-2c7306ab38ff?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c2hvcCUyMGRvb3J3YXklMjBvcGVufGVufDF8MHx8fDE3OTE0NDE2OTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1610&amp;q=60" width="5541" height="3694" alt="The open shop door on Example Road, plants on the step and the window full of stock" loading="lazy">
+    <img src="https://images.unsplash.com/photo-1768180316485-2c7306ab38ff?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c2hvcCUyMGRvb3J3YXklMjBvcGVufGVufDF8MHx8fDE3OTE0NDE2OTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1800&amp;q=60" width="5541" height="3694" alt="The open shop door on Example Road, plants on the step and the window full of stock" loading="lazy">
     <figcaption class="m-text-6 visit__caption">1 Example Road, Northfield</figcaption>
   </figure>
   <div class="visit__info">
@@ -929,34 +1078,34 @@
   <div class="wrap faq__grid">
     <div class="faq__main">
       <h2 class="m-text-3" id="faq-title" data-8b-motion="rise">Asked at the counter</h2>
-      <div class="faq__list">
-        <details class="faq__item" data-8b-motion="rule">
+      <div class="faq__list" data-8b-items=":scope > details">
+        <details class="faq__item" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > *">
           <summary class="faq__q"><span class="m-text-7">Do you really sell screws one at a time?</span><span class="faq__mark" aria-hidden="true"></span></summary>
           <p class="m-text faq__a">Yes. Every drawer in aisle 2 is priced by the one, by the ten and by the box, so you buy what the job needs and not a tin of spares for the shed.</p>
         </details>
-        <details class="faq__item" data-8b-motion="rule">
+        <details class="faq__item" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > *">
           <summary class="faq__q"><span class="m-text-7">Can you match a paint colour from a chip?</span><span class="faq__mark" aria-hidden="true"></span></summary>
           <p class="m-text faq__a">Bring a flake the size of a fingernail. The scanner reads it and we mix it in about ten minutes, in any finish from flat matt to full gloss.</p>
         </details>
-        <details class="faq__item" data-8b-motion="rule">
+        <details class="faq__item" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > *">
           <summary class="faq__q"><span class="m-text-7">Do you deliver?</span><span class="faq__mark" aria-hidden="true"></span></summary>
           <p class="m-text faq__a">Within three miles on Tuesdays and Fridays. It costs £5 and is free over £60, timber and sheet materials included.</p>
         </details>
-        <details class="faq__item" data-8b-motion="rule">
+        <details class="faq__item" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > *">
           <summary class="faq__q"><span class="m-text-7">How does tool hire work?</span><span class="faq__mark" aria-hidden="true"></span></summary>
           <p class="m-text faq__a">Reserve by phone, collect from three on Friday and return by ten on Monday. We take a refundable deposit and photo ID, and show you how the tool works before it leaves.</p>
         </details>
-        <details class="faq__item" data-8b-motion="rule">
+        <details class="faq__item" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > *">
           <summary class="faq__q"><span class="m-text-7">Can I bring things back?</span><span class="faq__mark" aria-hidden="true"></span></summary>
           <p class="m-text faq__a">Unused and in its packet, within 30 days, with the receipt. Cut keys, mixed paint and cut timber are made for you, so they stay with you.</p>
         </details>
-        <details class="faq__item" data-8b-motion="rule">
+        <details class="faq__item" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=":scope > *">
           <summary class="faq__q"><span class="m-text-7">Which keys can you cut?</span><span class="faq__mark" aria-hidden="true"></span></summary>
           <p class="m-text faq__a">Most house, shed and padlock keys while you wait. Security and car keys are ordered in and take three to five days.</p>
         </details>
       </div>
     </div>
-    <figure class="faq__photo" data-tone="1" data-8b-motion="tint"><img style="background:#595959" src="https://images.unsplash.com/photo-1573870360817-6099745b491d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c2NyZXdzJTIwaW4lMjBkcmF3ZXJ8ZW58MXwwfHx8MTc5MTQ0MDI2NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=810&amp;q=60" width="5184" height="3456" alt="Clear plastic drawers of nails in the parts cabinet" loading="lazy"></figure>
+    <figure class="faq__photo" data-tone="1" data-8b-motion="tint" data-8b-enter="86%"><img src="https://images.unsplash.com/photo-1573870360817-6099745b491d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c2NyZXdzJTIwaW4lMjBkcmF3ZXJ8ZW58MXwwfHx8MTc5MTQ0MDI2NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" width="5184" height="3456" alt="Clear plastic drawers of nails in the parts cabinet" loading="lazy"></figure>
   </div>
 </section>
 </main>
@@ -998,10 +1147,6 @@
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
 <script data-8b-part="section-script:navigation">
 (() => {
   const nav = document.getElementById('navigation');
@@ -1028,7 +1173,7 @@
   const setMenu = open => {
     menu.hidden = !open;
     openButton.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); closeButton.focus(); } else { window.lenis?.start(); openButton.focus(); }
+    if (open) { window.motionKit?.wheel?.stop(); closeButton.focus(); } else { window.motionKit?.wheel?.start(); openButton.focus(); }
   };
   openButton.addEventListener('click', () => setMenu(true));
   closeButton.addEventListener('click', () => setMenu(false));
@@ -1057,276 +1202,210 @@
   });
 })();
 </script>
-<script data-8b-part="motion-queue">
+<script data-8b-part="motion-kit">
 (() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-split=lines]>.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}[data-8b-split=lines]>.line:not(:last-child){margin-bottom:0}[data-8b-split=lines]>.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment);
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split'), again = sources.has(element);
+if (again) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+if (again) element.getAnimations({ subtree: true }).forEach(animation => { if (animation.timeline === document.timeline) try { animation.finish(); } catch {} });
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px' });
+document.fonts.ready.then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.09, anchors: { offset: 0 } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  rise(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element,
-      { yPercent: 28, clipPath: 'inset(0% 0% 100% 0%)' },
-      { yPercent: 0, clipPath: 'inset(0% 0% -25% 0%)', duration: 1, ease: 'power3.out', clearProps: 'clipPath,transform' });
-  },
-  rule(element, vars = {}) {
-    return gsap.timeline(vars)
-      .fromTo(element, { backgroundSize: '0% 1px' }, { backgroundSize: '100% 1px', duration: 1, ease: 'power2.inOut', clearProps: 'backgroundSize' }, 0)
-      .fromTo(element.children, { y: 22, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out', stagger: 0.07, clearProps: 'transform,opacity' }, 0.25);
-  },
-  tint(element, vars = {}) {
-    const image = element.querySelector('img');
-    return gsap.timeline(vars).fromTo(image,
-      { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.16 },
-      { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, duration: 1.2, ease: 'power3.out', clearProps: 'clipPath,transform' });
-  }
-};
-const effectStarts = { rise: 'top 88%', rule: 'top 92%', tint: 'top 86%' };
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  Object.keys(effects).forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => {
-        ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: effectStarts[name], once: true, animation: effects[name](element, { paused: true }) });
-      });
-    }), section.getBoundingClientRect().top < innerHeight ? { first: true, id } : { near: section, id });
+<script data-8b-part="scene-script:classes">
+motionKit.scene('classes', () => {
+  const deck = document.querySelector('#classes .classes__deck');
+  motionKit.measure(() => {
+    for (const card of deck.children) motionKit.set(card, {
+      '--classes-dx': `${deck.clientWidth / 2 - (card.offsetLeft + card.offsetWidth / 2)}px`,
+      '--classes-dy': `${deck.clientHeight / 2 - (card.offsetTop + card.offsetHeight / 2)}px`
+    });
   });
 });
-</script>
-<script data-8b-part="scene:opening">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('opening');
-    const space = section.querySelector('.opening__space');
-    const field = section.querySelector('.opening__field');
-    const copy = section.querySelector('.opening__copy');
-    const statement = section.querySelector('.opening__statement');
-    const inline = section.querySelector('.opening__inline');
-    section.classList.add('is-staged');
-    const split = SplitText.create(statement, { type: 'words', wordsClass: 'opening__word' });
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'opening', trigger: section, start: 'top top', end: 'bottom bottom', scrub: 0.7, invalidateOnRefresh: true }
-    });
-    timeline
-      .to(field, { z: () => (innerWidth < 760 ? 1700 : 2400), scale: 1.3, duration: 0.6, ease: 'power1.in' }, 0)
-      .to(space, { opacity: 0, duration: 0.18 }, 0.42)
-      .to(copy, { yPercent: -40, scale: 0.84, duration: 0.46, ease: 'power1.in' }, 0)
-      .to(copy, { opacity: 0, duration: 0.3 }, 0.16)
-      .fromTo(inline, { clipPath: 'inset(0% 50% 0% 50%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.3 }, 0.32);
-    const step = 0.5 / split.words.length;
-    split.words.forEach((word, index) => timeline.fromTo(word, { opacity: 0.14 }, { opacity: 1, duration: 0.08 }, 0.36 + index * step));
-    return () => { split.revert(); section.classList.remove('is-staged'); };
-  });
-}, { first: true });
-</script>
-<script data-8b-part="scene:departments">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('departments');
-    const panels = gsap.utils.toArray(section.querySelectorAll('.dept'));
-    if (panels.length < 2) return;
-    section.style.setProperty('--departments-count', panels.length);
-    section.classList.add('is-stacked');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'departments', trigger: section, start: 'top top', end: 'bottom bottom', scrub: 0.6 }
-    });
-    panels.forEach((panel, index) => {
-      if (!index) return;
-      const previous = panels[index - 1];
-      const at = index - 1 + 0.12;
-      timeline
-        .fromTo(panel, { visibility: 'hidden' }, { visibility: 'visible', duration: 0.001 }, at)
-        .fromTo(previous, { visibility: 'visible' }, { visibility: 'hidden', duration: 0.001, immediateRender: false }, at + 0.72)
-        .fromTo(panel, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.72, ease: 'power1.inOut' }, at)
-        .fromTo(panel.querySelector('.dept__photo'), { yPercent: 14, scale: 1.14 }, { yPercent: 0, scale: 1, duration: 0.72, ease: 'power1.out' }, at)
-        .to(previous.querySelector('.dept__photo'), { yPercent: -7, duration: 0.72, ease: 'power1.inOut' }, at)
-        .to(previous.querySelectorAll('.dept__copy, .dept__aisle'), { y: -56, opacity: 0, duration: 0.32, ease: 'power1.in' }, at)
-        .fromTo(panel.querySelectorAll('.dept__copy, .dept__aisle'), { y: 80 }, { y: 0, duration: 0.5, ease: 'power2.out' }, at + 0.26);
-    });
-    timeline.to({}, { duration: 0.16 });
-    return () => { section.classList.remove('is-stacked'); section.style.removeProperty('--departments-count'); };
-  });
-});
-</script>
-<script data-8b-part="scene:aisles">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('aisles');
-    section.querySelectorAll('.aisles__row').forEach((row, index) => {
-      const tile = row.querySelector('.aisles__tile');
-      const timeline = gsap.timeline({
-        defaults: { ease: 'none' },
-        scrollTrigger: { id: `aisles:row-${index}`, trigger: row, start: 'top bottom', end: 'bottom top', scrub: 0.4 }
-      });
-      timeline
-        .fromTo(row, { scale: 0.7, opacity: 0.3 }, { scale: 1, opacity: 1, duration: 0.36, ease: 'power1.out' }, 0)
-        .to(row, { scale: 1, duration: 0.28 }, 0.36)
-        .to(row, { scale: 0.7, opacity: 0.3, duration: 0.36, ease: 'power1.in' }, 0.64);
-      if (tile) {
-        timeline
-          .fromTo(tile, { scale: 0.15, rotation: -10 }, { scale: 1, rotation: 0, duration: 0.36, ease: 'power1.out' }, 0)
-          .to(tile, { scale: 0.15, rotation: 10, duration: 0.36, ease: 'power1.in' }, 0.64);
-      }
-    });
-  });
-}, { near: document.getElementById('aisles') });
-</script>
-<script data-8b-part="scene:brought">
-queueMotion(() => {
-  gsap.matchMedia().add({ wide: '(min-width: 760px) and (prefers-reduced-motion: no-preference)', narrow: '(max-width: 759px) and (prefers-reduced-motion: no-preference)' }, context => {
-    const wide = context.conditions.wide;
-    const section = document.getElementById('brought');
-    const travel = () => (wide ? Math.min(innerWidth * 0.26, 380) : innerWidth * 0.6);
-    section.querySelectorAll('.brought__pair').forEach((pair, index) => {
-      const brought = pair.querySelector('.brought__item--in');
-      const matched = pair.querySelector('.brought__item--out');
-      gsap.timeline({
-        defaults: { ease: 'power2.out' },
-        scrollTrigger: { id: `brought:pair-${index}`, trigger: pair, start: 'top bottom', end: wide ? 'center 58%' : 'center 64%', scrub: 0.5, invalidateOnRefresh: true }
-      })
-        .fromTo(brought, { x: () => -travel(), rotation: -7 }, { x: 0, rotation: 0 }, 0)
-        .fromTo(matched, { x: () => travel(), rotation: 7 }, { x: 0, rotation: 0 }, 0);
-    });
-  });
-}, { near: document.getElementById('brought') });
-</script>
-<script data-8b-part="scene:classes">
-queueMotion(() => {
-  gsap.matchMedia().add({ wide: '(min-width: 600px) and (prefers-reduced-motion: no-preference)', narrow: '(max-width: 599px) and (prefers-reduced-motion: no-preference)' }, context => {
-    const section = document.getElementById('classes');
-    const deck = section.querySelector('.classes__deck');
-    const cards = gsap.utils.toArray(deck.querySelectorAll('.classes__card'));
-    const turns = [-8, 5, -3, 7, -5, 3];
-    if (context.conditions.wide) {
-      const dx = card => deck.clientWidth / 2 - (card.offsetLeft + card.offsetWidth / 2);
-      const dy = card => deck.clientHeight / 2 - (card.offsetTop + card.offsetHeight / 2);
-      const timeline = gsap.timeline({
-        defaults: { ease: 'power2.inOut' },
-        scrollTrigger: { id: 'classes', trigger: deck, start: 'top 88%', end: 'center 52%', scrub: 0.6, invalidateOnRefresh: true }
-      });
-      cards.forEach((card, index) => {
-        gsap.set(card, { zIndex: cards.length - index });
-        timeline.fromTo(card, { x: () => dx(card), y: () => dy(card) - index * 8, rotation: turns[index % turns.length] }, { x: 0, y: 0, rotation: 0, duration: 1 }, index * 0.14);
-      });
-    } else {
-      cards.forEach((card, index) => {
-        const side = index % 2 ? 1 : -1;
-        gsap.fromTo(card, { x: () => side * innerWidth * 0.55, rotation: side * 7 }, {
-          x: 0, rotation: 0, ease: 'power2.out',
-          scrollTrigger: { id: `classes:card-${index}`, trigger: card, start: 'top bottom', end: 'top 58%', scrub: 0.5, invalidateOnRefresh: true }
-        });
-      });
-    }
-  });
-}, { near: document.getElementById('classes') });
-</script>
-<script data-8b-part="scene:hire">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('hire');
-    section.querySelectorAll('.hire__row').forEach((row, index) => {
-      const flip = row.querySelector('.hire__flip');
-      const back = row.querySelector('.hire__face--back');
-      if (!flip || !back) return;
-      gsap.timeline({ scrollTrigger: { id: `hire:row-${index}`, trigger: row, start: 'top 78%', end: 'top 46%', scrub: 0.5 } })
-        .fromTo(flip, { rotationX: -180 }, { rotationX: 0, ease: 'power2.inOut', duration: 1 }, 0)
-        .fromTo(back, { visibility: 'visible' }, { visibility: 'hidden', duration: 0.001 }, 0.999);
-    });
-  });
-}, { near: document.getElementById('hire') });
-</script>
-<script data-8b-part="scene:visit">
-queueMotion(() => {
-  gsap.matchMedia().add({ wide: '(min-width: 900px) and (prefers-reduced-motion: no-preference)', narrow: '(max-width: 899px) and (prefers-reduced-motion: no-preference)' }, context => {
-    const section = document.getElementById('visit');
-    const photo = section.querySelector('.visit__photo');
-    const image = photo.querySelector('img');
-    const info = section.querySelector('.visit__info');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'visit', trigger: section, start: 'top 80%', end: 'top 2%', scrub: 0.6 }
-    });
-    if (context.conditions.wide) {
-      timeline
-        .fromTo(photo, { clipPath: 'inset(0% 0% 0% 0%)' }, { clipPath: 'inset(0% 50% 0% 0%)', duration: 0.9, ease: 'power1.inOut' }, 0.1)
-        .fromTo(image, { scale: 1.12 }, { scale: 1, duration: 1.15 }, 0)
-        .fromTo(info, { x: 90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: 'power2.out' }, 0.85);
-    } else {
-      timeline
-        .fromTo(image, { scale: 1.35 }, { scale: 1, duration: 1 }, 0)
-        .fromTo(info, { y: 70 }, { y: 0, duration: 0.8, ease: 'power2.out' }, 0.2);
-    }
-  });
-}, { near: document.getElementById('visit') });
 </script>
 </body>
 </html>

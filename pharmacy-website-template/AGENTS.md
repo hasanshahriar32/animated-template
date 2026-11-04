@@ -1,6 +1,6 @@
 # AGENTS.md: pharmacy website template
 
-One-page website for an independent pharmacy with weekly medicine packs, a walk-in clinic, vaccinations, a small shop and bike delivery. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for an independent pharmacy with weekly medicine packs, a walk-in clinic, vaccinations, a small shop and bike delivery. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,21 +14,19 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:site-nav`: `.nav__tabs` `data-tab`
-  - `section-script:shop`: `.shop__row` `.shop__drawer`
+  - `section-script:shop`: `.shop__row`
   - `section-script:contact`: `.contact__status`
-  - `scene:packs`: `.packs__week` `.packs__seal` `.packs__dose`
-  - `scene:clinic`: `.clinic__col` `.clinic__cell` `.clinic__marker` `.clinic__photos` `data-step`
-  - `scene:shop`: `.shop__rows` `.shop__row` `.shop__panel` `.shop__photo`
-  - `scene:delivery`: `.delivery__runway` `.delivery__stage` `.delivery__track` `.delivery__fill`
-  - `scene:people`: `.people__frame` `.people__slat` `.people__cell`
-  - `scene:faq`: `.faq__list` `.faq__tab`
+  - `scene-script:packs`: `.packs__week` `.packs__seal`
+  - `scene-script:delivery`: `.delivery__runway` `.delivery__stage` `.delivery__track`
 - `style="--len:N"` = characters in that display line, spaces included: `HALE` is 4.
 - Each section carries data-tab with the position of its header tab (1 to 5; tab 0, Hale, is the fallback before any section reaches the header); a new part needs its tab in the strip and that number.
-- The clinic scene pairs each condition cell with the photo whose data-step equals the cell's position (0 to 3), and the CSS grid and marker are sized for four cells; the people scene is written for exactly three portraits and three cards; each shop button opens the panel named in its aria-controls.
+- The clinic photos are stacked in reverse order: the last figure (data-step 0) belongs to the first condition and is the one shown without motion, the first figure (data-step 3) to the last. Keep the data-step numbers and that order when you swap photos. Each shop button opens the panel named in its aria-controls.
 - The wordmark in the footer takes its size from style="--len:4", the number of characters in "HALE"; update it with the name.
 - The folder tabs, bars and the example week grid are CSS, not images: recolour them through the colour variables in :root. The shop panels are shown or hidden with the hidden attribute by section-script:shop.
+- The delivery script measures how far the row of stops overflows the stage and sets the held scroll length from it, so the number of stops can change.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #c9c9c7 (grey page ground and header bar, empty photo frames, the Visit tab of the questions), `--color-2` #ffffff (white sheets, the first header tab, question cards, text on the dark folders), `--color-3` #131313 (text, black bars and rules, table lines, the seal bar and the route fill), `--color-4` #d4e3f3 (pale blue: weekly packs folder, bedtime row, form fields, default button fill, Repeats tab), `--color-5` #f6d4dc (pink: clinic and vaccination folders, midday row, Clinic tab), `--color-6` #d1e8d9 (green: shop and delivery folders, evening row, the thank-you line, Shop tab), `--color-7` #fbefc4 (yellow: people and story folders, morning row, the form button, People tab), `--color-8` #575757 (dark grey: questions and contact folders, the Visit tab in the header); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -63,9 +61,12 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the shop buttons do nothing and three of the four shelves stay hidden (only Sleep & Calm shows), so the Skin & Sun, Baby & Bath and Travel Kit texts cannot be read. The tab raised in the header does not follow the scroll. The page has no menu to open, so navigation still works.
 - The repeat form asks for a name, a date of birth, a phone number and medicines, but sends nothing: the script only checks it and shows the thank-you line. Connect it to a secure endpoint and add a privacy notice before launch, because the data is health related.
+- Without scroll-driven animation support (Firefox today) and with reduced motion, the scroll and entrance motion and the smooth wheel are off: each folder shows its finished layout, the clinic shows only its first photo, and the delivery stops sit in a grid (one column at 860 px and below) under a full route bar. The weekly packs load-in still plays in Firefox and stops with reduced motion; the header tabs still follow the scroll in both.
+- The CSS animates fixed counts: four clinic conditions with four photos (the marker and the photo wipes are written for four), four shelf rows (:nth-of-type rules for rows 2 to 4) and three portraits with three cards. A fifth condition or shelf, or a fourth person, needs matching rules in the scene CSS or it will not move in step.
+- Section links jump to the very top of a folder, and nothing offsets them for the fixed header (92 px, 78 px on phones), so the top of the folder lands under it.
 - On phones (760 px and below) the header tab labels shrink to 10.5 px to fit six tabs in one row, and the Find us link is hidden.
 - The bike delivery stage is held under the header for the full height of the screen minus the header, and has a minimum height of 520 px, so on windows shorter than about 630 px the held stage is taller than the screen.
-- Photos are lazy-loaded from Unsplash, including the one on the first screen; self-host them before launch.
+- Photos load from Unsplash and all but the first-screen photo are lazy-loaded; self-host them before launch.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Hale left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Hale left only in class names.

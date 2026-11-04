@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/pottery-studio-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,7 +20,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%231d42cf'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23ffffff'%3EF%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/tiktoksans/v8/70l9u7g-Lm8OXGnh_Ow1sUfFMmlnhbRF425wxXH-UGeud7XItbaHtxhgqsbDdQ.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* cyrillic-ext */
 @font-face {
@@ -112,11 +112,6 @@
 /* fallbacks:end */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: clip; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body {
   margin: 0;
   background: var(--color-1);
@@ -290,23 +285,6 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="scene-style:opening">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #opening.is-held .op-screen { position: sticky; top: 0; }
-  #opening .op-hold { display: none; }
-  #opening.is-held .op-hold { display: block; height: 72svh; }
-  #opening .op-strip { z-index: 2; clip-path: none; }
-  #opening .op-strip .op-photo__intro { animation: none; }
-  #opening .op-title--copy { position: absolute; z-index: 1; margin: 0; color: var(--color-3); pointer-events: none; }
-  #opening .op-title--copy .op-line__in { animation: none; }
-  #opening .op-dim { position: absolute; inset: 0; z-index: 3; background: var(--color-2); opacity: 0; pointer-events: none; }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
-  #opening.is-held .op-hold { height: 56svh; }
-}
-}
-</style>
 <style data-8b-part="section:footer">
 @layer sections {
 #footer { position: relative; background: var(--color-2); color: var(--color-3); padding: clamp(64px, 9vw, 120px) var(--space-1) 28px; }
@@ -343,13 +321,6 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="scene-style:commissions">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #commissions.is-opening .cm-room + .cm-room { visibility: visible; }
-}
-}
-</style>
 <style data-8b-part="section:process">
 @layer sections {
 #process { position: relative; padding-block: var(--space-2); }
@@ -366,26 +337,6 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
 @media (max-width: 760px) {
   #process .pr-title, #process .pr-lead { grid-column: 1 / 5; }
   #process .pr-track { grid-template-columns: 1fr; }
-}
-}
-</style>
-<style data-8b-part="scene-style:process">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #process.is-track { padding-block: 0; }
-  #process.is-track .pr-pin { position: relative; height: 100svh; min-height: 620px; padding-top: clamp(84px, 13vh, 132px); overflow: hidden; }
-  #process.is-track .pr-head { margin-bottom: clamp(28px, 5vh, 56px); }
-  #process.is-track .pr-track { display: flex; width: max-content; gap: 0; }
-  #process.is-track .pr-step { width: clamp(300px, 30vw, 430px); flex: none; }
-  #process.is-track .pr-step__photo { transform-origin: 0% 100%; }
-  #process.is-track .pr-rule { display: block; position: absolute; left: var(--space-1); right: var(--space-1); bottom: clamp(20px, 5vh, 44px); height: 1px; background: color-mix(in srgb, var(--color-2) 14%, transparent); }
-  #process.is-track .pr-rule span { display: block; height: 100%; background: var(--color-2); transform-origin: 0 50%; transform: scaleX(0); }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
-  #process.is-track .pr-pin { padding-top: 76px; }
-  #process.is-track .pr-step { width: 76vw; padding-right: 24px; }
-  #process.is-track .pr-title { font-size: clamp(40px, 12vw, 56px); }
-  #process.is-track .pr-lead { font-size: 15px; }
 }
 }
 </style>
@@ -408,14 +359,6 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
   #glazes .gl-photo { grid-column: 3 / 5; grid-row: 2; align-self: start; }
   #glazes .gl-note { grid-column: 1 / 3; grid-row: 2; padding-right: 16px; font-size: 15px; margin-top: 0; }
   #glazes .gl-spec { grid-column: 1 / 5; grid-row: 3; margin-top: 0; }
-}
-}
-</style>
-<style data-8b-part="scene-style:glazes">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #glazes.is-shifting { background: var(--gl-ground); color: var(--gl-ink); }
-  #glazes.is-shifting .gl-row { background: transparent; color: inherit; }
 }
 }
 </style>
@@ -507,14 +450,6 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="scene-style:shop">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #shop.is-glazing .sh-line { position: sticky; top: 50%; z-index: 3; }
-  #shop.is-glazing .sh-bisque { display: block; }
-}
-}
-</style>
 <style data-8b-part="section:faq">
 @layer sections {
 #faq { position: relative; padding-block: var(--space-2); }
@@ -553,6 +488,156 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
 }
 }
 </style>
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] [data-8b-motion~="turn"] { view-timeline: --motion-turn block; view-timeline-inset: 0; animation-name: motion-turn-rotate; animation-timeline: --motion-turn; animation-range: cover 0% cover calc(50% - 8vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"] { animation-name: motion-rise-translate, motion-rise-clippath; animation-duration: 0.9s; animation-delay: calc(0s + var(--rise-delay, 0s)); animation-timing-function: var(--ease-power3-out), cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"].is-in { animation-play-state: running; }
+@keyframes motion-turn-rotate { 0% { rotate: -180deg; } 100% { rotate: 0deg; } }
+@keyframes motion-rise-translate { 0% { translate: 0px 35%; } 100% { translate: 0px 0px; } }
+@keyframes motion-rise-clippath { 0% { clip-path: inset(0% 0% 100%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+}
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #opening { --opening-hold: 72svh; }
+  [data-8b-live] #opening .op-screen { position: sticky; top: 0; }
+  [data-8b-live] #opening .op-hold { display: block; height: var(--opening-hold); }
+  [data-8b-live] #opening .op-strip { z-index: 2; clip-path: none; }
+  [data-8b-live] #opening .op-strip .op-photo__intro { animation: none; }
+  [data-8b-live] #opening .op-title--copy { position: absolute; z-index: 1; margin: 0; color: var(--color-3); pointer-events: none; }
+  [data-8b-live] #opening .op-title--copy .op-line__in { animation: none; }
+  [data-8b-live] #opening .op-dim { position: absolute; inset: 0; z-index: 3; background: var(--color-2); opacity: 0; pointer-events: none; }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
+  [data-8b-live] #opening { --opening-hold: 56svh; }
+}
+}
+@layer scenes {
+[data-8b-live] #opening { timeline-scope: --opening-t1, --opening-t2; view-timeline: --opening-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #about { view-timeline: --opening-t2 block; view-timeline-inset: 0; }
+[data-8b-live] #opening .op-strip { animation-name: opening-strip; animation-timeline: --opening-t1; animation-range: cover calc(100vh + var(--opening-hold) * var(--opening-order) * .3 / 1.9) cover calc(100vh + var(--opening-hold) * (var(--opening-order) * .3 + 1) / 1.9); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; }
+[data-8b-live] #opening .op-screen, [data-8b-live] #opening .op-screen .op-dim { animation-timeline: --opening-t2; animation-range: cover 0% cover 100vh; animation-timing-function: linear; }
+[data-8b-live] #opening .op-screen { animation-name: opening-div-op-screen-scale; animation-fill-mode: both; transform: none; transform-origin: 50% 30%; }
+[data-8b-live] #opening .op-screen .op-dim { animation-name: opening-div-op-screen-div-op-dim-opacity; animation-fill-mode: both; }
+[data-8b-live] #opening .op-statement { view-timeline: --opening-read block; view-timeline-inset: 0; }
+[data-8b-live] #opening .op-statement .w { animation-name: opening-word; animation-timeline: --opening-read; animation-range: cover calc(12vh + (100% - 74vh) * .08 * var(--i) / (.4 + .08 * (var(--n) - 1))) cover calc(12vh + (100% - 74vh) * (.08 * var(--i) + .4) / (.4 + .08 * (var(--n) - 1))); animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes opening-strip { 0% { clip-path: inset(var(--opening-top) var(--opening-right) 0px var(--opening-left)); } 100% { clip-path: inset(0px var(--opening-right) 0px var(--opening-left)); } }
+@keyframes opening-div-op-screen-scale { 0% { scale: 1; } 100% { scale: 0.93; } }
+@keyframes opening-div-op-screen-div-op-dim-opacity { 0% { opacity: 0; } 100% { opacity: 0.5; } }
+@keyframes opening-word { 0% { color: var(--opening-pale); } 100% { color: var(--opening-ink); } }
+}
+</style>
+<style data-8b-part="scene:commissions">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #commissions .cm-room + .cm-room { visibility: visible; }
+}
+}
+@layer scenes {
+[data-8b-live] #commissions { timeline-scope: --commissions-t1, --commissions-t2; }
+[data-8b-live] #commissions .cm-cards > li:nth-of-type(2) > .m-surface { view-timeline: --commissions-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #commissions .cm-cards > li:nth-of-type(3) > .m-surface { view-timeline: --commissions-t2 block; view-timeline-inset: 0; }
+[data-8b-live] #commissions .cm-stick > div:is(:nth-of-type(2), :nth-of-type(3)) { animation-name: commissions-room; animation-range: cover 22vh cover 82vh; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; }
+[data-8b-live] #commissions .cm-stick > div:nth-of-type(2) { animation-timeline: --commissions-t1; }
+[data-8b-live] #commissions .cm-stick > div:nth-of-type(3) { animation-timeline: --commissions-t2; }
+@keyframes commissions-room { 0% { clip-path: var(--commissions-from); } 100% { clip-path: inset(0px); } }
+}
+</style>
+<style data-8b-part="scene:process">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #process { padding-block: 0; height: calc(max(100svh, 620px) + var(--process-travel, 0px)); }
+  [data-8b-live] #process .pr-pin { position: sticky; top: 0; height: 100svh; min-height: 620px; padding-top: clamp(84px, 13vh, 132px); overflow: hidden; }
+  [data-8b-live] #process .pr-head { margin-bottom: clamp(28px, 5vh, 56px); }
+  [data-8b-live] #process .pr-track { display: flex; width: max-content; gap: 0; }
+  [data-8b-live] #process .pr-step { width: clamp(300px, 30vw, 430px); flex: none; }
+  [data-8b-live] #process .pr-step__photo { transform-origin: 0% 100%; }
+  [data-8b-live] #process .pr-rule { display: block; position: absolute; left: var(--space-1); right: var(--space-1); bottom: clamp(20px, 5vh, 44px); height: 1px; background: color-mix(in srgb, var(--color-2) 14%, transparent); }
+  [data-8b-live] #process .pr-rule span { display: block; height: 100%; background: var(--color-2); transform-origin: 0 50%; }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
+  [data-8b-live] #process .pr-pin { padding-top: 76px; }
+  [data-8b-live] #process .pr-step { width: 76vw; padding-right: 24px; }
+  [data-8b-live] #process .pr-title { font-size: clamp(40px, 12vw, 56px); }
+  [data-8b-live] #process .pr-lead { font-size: 15px; }
+}
+}
+@layer scenes {
+[data-8b-live] #process { view-timeline: --process-room block; view-timeline-inset: 0; }
+[data-8b-live] #process .pr-track, [data-8b-live] #process .pr-rule > span { animation-timeline: --process-room; animation-range: cover 100vh cover calc(100vh + var(--process-travel, 0px)); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #process .pr-track { animation-name: process-track; }
+[data-8b-live] #process .pr-rule > span { animation-name: process-div-pr-rule-span-scale; }
+[data-8b-live] #process .pr-step__photo { animation-name: process-photo; animation-timeline: --process-room; animation-range: cover calc(100vh + var(--process-start, 0px)) cover calc(100vh + var(--process-end, 1px)); animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes process-track { 0% { translate: 0px; } 100% { translate: calc(-1 * var(--process-travel, 0px)); } }
+@keyframes process-div-pr-rule-span-scale { 0% { scale: 0 1; } 100% { scale: 1; } }
+@keyframes process-photo { 0% { scale: var(--process-scale, 1); } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:glazes">
+@layer scenes {
+[data-8b-live] #glazes { background-color: var(--glazes-ground-0); color: var(--glazes-ink-0); timeline-scope: --glazes-t1, --glazes-t2, --glazes-t3, --glazes-t4; animation-name: glazes-step-1, glazes-step-2, glazes-step-3, glazes-step-4; animation-timeline: --glazes-t1, --glazes-t2, --glazes-t3, --glazes-t4; animation-range: cover 43vh cover 57vh; animation-timing-function: linear; animation-fill-mode: both, forwards, forwards, forwards; }
+[data-8b-live] #glazes .gl-row { background: transparent; color: inherit; view-timeline-inset: 0; }
+[data-8b-live] #glazes .gl-list > li:nth-of-type(1) { view-timeline: --glazes-t1 block; }
+[data-8b-live] #glazes .gl-list > li:nth-of-type(2) { view-timeline: --glazes-t2 block; }
+[data-8b-live] #glazes .gl-list > li:nth-of-type(3) { view-timeline: --glazes-t3 block; }
+[data-8b-live] #glazes .gl-list > li:nth-of-type(4) { view-timeline: --glazes-t4 block; }
+@keyframes glazes-step-1 { 0% { background-color: var(--glazes-ground-0); color: var(--glazes-ink-0); } 100% { background-color: var(--glazes-ground-1); color: var(--glazes-ink-1); } }
+@keyframes glazes-step-2 { 0% { background-color: var(--glazes-ground-1); color: var(--glazes-ink-1); } 100% { background-color: var(--glazes-ground-2); color: var(--glazes-ink-2); } }
+@keyframes glazes-step-3 { 0% { background-color: var(--glazes-ground-2); color: var(--glazes-ink-2); } 100% { background-color: var(--glazes-ground-3); color: var(--glazes-ink-3); } }
+@keyframes glazes-step-4 { 0% { background-color: var(--glazes-ground-3); color: var(--glazes-ink-3); } 100% { background-color: var(--glazes-ground-4); color: var(--glazes-ink-4); } }
+}
+</style>
+<style data-8b-part="scene:makers">
+@layer scenes {
+[data-8b-live] #makers .mk-list { view-timeline: --makers-list block; view-timeline-inset: 0; }
+[data-8b-live] #makers .mk-photo { position: relative; z-index: var(--makers-z); animation-name: makers-photo; animation-timeline: --makers-list; animation-range: cover 18vh cover calc(18vh + (50% - 24vh) / 1.08); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; }
+[data-8b-live] #makers .mk-text { animation-name: makers-text; animation-timeline: --makers-list; animation-range: cover calc(18vh + (50% - 24vh) * var(--makers-at) / 1.08) cover calc(18vh + (50% - 24vh) * (var(--makers-at) + .35) / 1.08); animation-timing-function: linear(0, 0.0731, 0.1426, 0.2085, 0.271, 0.3301, 0.3859, 0.4385, 0.488, 0.5345, 0.5781, 0.6189, 0.657, 0.6925, 0.7254, 0.7559, 0.784, 0.8099, 0.8336, 0.8553, 0.875, 0.8928, 0.9089, 0.9232, 0.936, 0.9473, 0.9571, 0.9657, 0.973, 0.9792, 0.9844, 0.9886, 0.992, 0.9946, 0.9966, 0.998, 0.999, 0.9996, 0.9999, 1, 1); animation-fill-mode: both; }
+@keyframes makers-photo { 0% { translate: var(--makers-x) var(--makers-y); rotate: var(--makers-r); scale: .9; } 100% { translate: 0px 0px; rotate: 0deg; scale: 1; } }
+@keyframes makers-text { 0% { opacity: 0; translate: 0px 24px; } 100% { opacity: 1; translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:shop">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #shop .sh-line { position: sticky; top: 50%; z-index: 3; }
+  [data-8b-live] #shop .sh-bisque { display: block; }
+}
+}
+@layer scenes {
+[data-8b-live] #shop .sh-grid > .sh-item > .sh-photo { view-timeline-inset: 0; }
+[data-8b-live] #shop .sh-grid > li:nth-of-type(2) > .sh-photo { view-timeline: --shop-t1 block; }
+[data-8b-live] #shop .sh-grid > li:nth-of-type(3) > .sh-photo { view-timeline: --shop-t2 block; }
+[data-8b-live] #shop .sh-grid > li:nth-of-type(4) > .sh-photo { view-timeline: --shop-t3 block; }
+[data-8b-live] #shop .sh-grid > li:nth-of-type(5) > .sh-photo { view-timeline: --shop-t4 block; }
+[data-8b-live] #shop .sh-grid > li:nth-of-type(6) > .sh-photo { view-timeline: --shop-t5 block; }
+[data-8b-live] #shop .sh-grid > li:nth-of-type(7) > .sh-photo { view-timeline: --shop-t6 block; }
+[data-8b-live] #shop .sh-grid > .sh-item > .sh-photo > .sh-bisque { animation-name: shop-span-sh-bisque-clippath; animation-range: cover 50vh cover calc(100% - 50vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #shop .sh-grid > li:nth-of-type(2) > .sh-photo > .sh-bisque { animation-timeline: --shop-t1; }
+[data-8b-live] #shop .sh-grid > li:nth-of-type(3) > .sh-photo > .sh-bisque { animation-timeline: --shop-t2; }
+[data-8b-live] #shop .sh-grid > li:nth-of-type(4) > .sh-photo > .sh-bisque { animation-timeline: --shop-t3; }
+[data-8b-live] #shop .sh-grid > li:nth-of-type(5) > .sh-photo > .sh-bisque { animation-timeline: --shop-t4; }
+[data-8b-live] #shop .sh-grid > li:nth-of-type(6) > .sh-photo > .sh-bisque { animation-timeline: --shop-t5; }
+[data-8b-live] #shop .sh-grid > li:nth-of-type(7) > .sh-photo > .sh-bisque { animation-timeline: --shop-t6; }
+@keyframes shop-span-sh-bisque-clippath { 0% { clip-path: inset(0%); } 0.002% { clip-path: inset(0.02% 0% 0%); } 100% { clip-path: inset(100% 0% 0%); } }
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] #contact-title { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact-title > span:nth-of-type(-n+4) { animation-name: contact-word; animation-timeline: --contact-t1; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #contact-title > span:nth-of-type(1) { animation-range: cover 4vh cover 59.9322vh; }
+[data-8b-live] #contact-title > span:nth-of-type(2) { animation-range: cover 7.3559vh cover 63.2881vh; }
+[data-8b-live] #contact-title > span:nth-of-type(3) { animation-range: cover 10.7119vh cover 66.6441vh; }
+[data-8b-live] #contact-title > span:nth-of-type(4) { animation-range: cover 14.0678vh cover 70vh; }
+@keyframes contact-word { 0% { translate: var(--contact-x) var(--contact-y); } 100% { translate: 0px 0px; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <div class="page-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
@@ -567,7 +652,7 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
     <a class="m-btn-2 nav__cta" href="#contact"><span class="m-btn__fill" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="m-btn__label">Contact us</span></a>
     <button class="m-icon-btn nav__menu" type="button" aria-expanded="false" aria-controls="menu"><span class="m-icon-btn__icon" aria-hidden="true"></span><span class="sr">Open menu</span></button>
   </nav>
-  <div id="menu" class="menu" data-lenis-prevent hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div id="menu" class="menu" hidden role="dialog" aria-modal="true" aria-label="Menu">
     <div class="menu__top">
       <span class="menu__logo">fettle</span>
       <button class="m-icon-btn menu__close" type="button"><span class="m-icon-btn__icon" aria-hidden="true"></span><span class="sr">Close menu</span></button>
@@ -593,7 +678,7 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
 <section id="opening" data-8b-section="opening" aria-labelledby="opening-title">
   <div class="op-screen">
     <div class="op-photo">
-      <div class="op-photo__intro"><div class="op-photo__drift"><img style="background:#40260c" src="https://images.unsplash.com/photo-1772607407371-44031ae3b69f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cG90dGVyeSUyMHN0dWRpbyUyMHNoZWx2ZXN8ZW58MXwwfHx8MTc5MTQxNDQ0OHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="Unglazed bowls drying on long wooden shelves in the studio" width="1600" height="1065" fetchpriority="high"></div></div>
+      <div class="op-photo__intro"><div class="op-photo__drift"><img src="https://images.unsplash.com/photo-1772607407371-44031ae3b69f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cG90dGVyeSUyMHN0dWRpbyUyMHNoZWx2ZXN8ZW58MXwwfHx8MTc5MTQxNDQ0OHww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="Unglazed bowls drying on long wooden shelves in the studio" width="1600" height="1065" fetchpriority="high"></div></div>
     </div>
     <div class="op-hero">
       <h1 class="op-title m-text-2" id="opening-title"><span class="op-line"><span class="op-line__in">Pottery</span></span> <span class="op-line"><span class="op-line__in">Studio</span></span></h1>
@@ -601,20 +686,20 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
         <p class="op-lead m-text">We throw, glaze and fire tableware for restaurants, cafés and homes from a former cutlery works in Sheffield, and teach anyone who wants their hands in clay.</p>
         <a class="m-btn" href="#classes"><span class="m-btn__fill" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="m-btn__label">Book a class</span></a>
       </div>
-      <figure class="op-thumb"><img srcset="https://images.unsplash.com/photo-1764521727337-fe33394efc4f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2VyYW1pYyUyMHBsYXRlcyUyMHN0YWNrfGVufDF8MXx8fDE3OTE0MTQ0ODJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=220&q=60 220w, https://images.unsplash.com/photo-1764521727337-fe33394efc4f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2VyYW1pYyUyMHBsYXRlcyUyMHN0YWNrfGVufDF8MXx8fDE3OTE0MTQ0ODJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=330&q=60 330w" sizes="(max-width: 767px) 73px, 26vw" style="background:#260c0c" src="https://images.unsplash.com/photo-1764521727337-fe33394efc4f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2VyYW1pYyUyMHBsYXRlcyUyMHN0YWNrfGVufDF8MXx8fDE3OTE0MTQ0ODJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=330&q=60" alt="A hand holding a stack of stoneware plates and bowls" width="800" height="1200"></figure>
+      <figure class="op-thumb"><img srcset="https://images.unsplash.com/photo-1764521727337-fe33394efc4f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2VyYW1pYyUyMHBsYXRlcyUyMHN0YWNrfGVufDF8MXx8fDE3OTE0MTQ0ODJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=220&q=60 220w, https://images.unsplash.com/photo-1764521727337-fe33394efc4f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2VyYW1pYyUyMHBsYXRlcyUyMHN0YWNrfGVufDF8MXx8fDE3OTE0MTQ0ODJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=330&q=60 330w" sizes="(max-width: 767px) 73px, 26vw" src="https://images.unsplash.com/photo-1764521727337-fe33394efc4f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2VyYW1pYyUyMHBsYXRlcyUyMHN0YWNrfGVufDF8MXx8fDE3OTE0MTQ0ODJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=330&q=60" alt="A hand holding a stack of stoneware plates and bowls" width="800" height="1200"></figure>
     </div>
     <div class="op-band" aria-hidden="true"></div>
   </div>
   <div class="op-hold" aria-hidden="true"></div>
   <div class="op-about" id="about">
     <p class="op-label m-text-4">About us</p>
-    <p class="op-statement m-text-3">Clay keeps a record of every hand that shapes it. At Fettle we make plates, bowls and cups that carry that record onto busy pass counters and kitchen tables: thrown on the wheel, fired slowly and built to be used every single day.</p>
+    <p class="op-statement m-text-3" data-8b-split="words">Clay keeps a record of every hand that shapes it. At Fettle we make plates, bowls and cups that carry that record onto busy pass counters and kitchen tables: thrown on the wheel, fired slowly and built to be used every single day.</p>
     <hr class="op-rule">
     <div class="op-work">
-      <div class="op-work__photo"><img style="background:#73260c" src="https://images.unsplash.com/photo-1662845114342-256fdc45981d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8aGFuZHMlMjBwb3R0ZXJ5JTIwd2hlZWx8ZW58MXwxfHx8MTc5MTQxNDQ1MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="Hands shaping a terracotta pot on a turning wheel" width="800" height="1198" loading="lazy"></div>
+      <div class="op-work__photo"><img src="https://images.unsplash.com/photo-1662845114342-256fdc45981d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8aGFuZHMlMjBwb3R0ZXJ5JTIwd2hlZWx8ZW58MXwxfHx8MTc5MTQxNDQ1MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=360&q=60" alt="Hands shaping a terracotta pot on a turning wheel" width="800" height="1198" loading="lazy"></div>
       <a class="m-link" href="#commissions"><span class="m-link__plus" aria-hidden="true">+</span><span class="m-link__label">See our work</span></a>
     </div>
-    <div class="op-big">
+    <div class="op-big" data-8b-items=":scope > .op-big__item">
       <a class="op-big__item" href="#commissions"><span class="op-big__word m-text-6">Make<span class="m-mark" aria-hidden="true" data-8b-motion="turn">+</span></span><span class="op-big__cap m-text-5">Tableware made to order for restaurants, cafés and hotels.</span></a>
       <a class="op-big__item" href="#classes"><span class="op-big__word m-text-6">Learn<span class="m-mark-2" aria-hidden="true" data-8b-motion="turn">+</span></span><span class="op-big__cap m-text-5">Wheel and handbuilding classes on evenings and weekends.</span></a>
     </div>
@@ -624,9 +709,9 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
 <section id="commissions" data-8b-section="commissions" aria-labelledby="commissions-title">
   <div class="cm-backdrop" aria-hidden="true">
     <div class="cm-stick">
-      <div class="cm-room"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1771830937809-6f815c091b25?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cmVzdGF1cmFudCUyMHRhYmxlJTIwaGFuZG1hZGUlMjBwbGF0ZXN8ZW58MXwwfHx8MTc5MTQxNDQ1Mnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="" width="1600" height="1067" loading="lazy"></div>
-      <div class="cm-room"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1677729437372-2d35520a3d0e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGNhZmUlMjBjZXJhbWljJTIwY3VwJTIwdGFibGV8ZW58MXwxfHx8MTc5MTQxNDQ1M3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1280&q=60" alt="" width="1600" height="2400" loading="lazy"></div>
-      <div class="cm-room"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1721522291144-4c712d48d371?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGhvdGVsJTIwYnJlYWtmYXN0JTIwY2VyYW1pY3xlbnwxfDF8fHwxNzkxNDE0NDU0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1280&q=60" alt="" width="1600" height="2400" loading="lazy"></div>
+      <div class="cm-room"><img src="https://images.unsplash.com/photo-1771830937809-6f815c091b25?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cmVzdGF1cmFudCUyMHRhYmxlJTIwaGFuZG1hZGUlMjBwbGF0ZXN8ZW58MXwwfHx8MTc5MTQxNDQ1Mnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="" width="1600" height="1067" loading="lazy"></div>
+      <div class="cm-room"><img src="https://images.unsplash.com/photo-1677729437372-2d35520a3d0e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGNhZmUlMjBjZXJhbWljJTIwY3VwJTIwdGFibGV8ZW58MXwxfHx8MTc5MTQxNDQ1M3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1280&q=60" alt="" width="1600" height="2400" loading="lazy"></div>
+      <div class="cm-room"><img src="https://images.unsplash.com/photo-1721522291144-4c712d48d371?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGhvdGVsJTIwYnJlYWtmYXN0JTIwY2VyYW1pY3xlbnwxfDF8fHwxNzkxNDE0NDU0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1280&q=60" alt="" width="1600" height="2400" loading="lazy"></div>
     </div>
   </div>
   <div class="cm-inner">
@@ -635,22 +720,22 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
       <p class="cm-lead m-text">We design and make whole services for kitchens that cook for hundreds: plates sized to the pass, bowls that stack in a dishwasher rack, cups that survive a Saturday brunch. Samples in four weeks, a full order in twelve.</p>
       <a class="m-btn-3" href="#contact"><span class="m-btn__fill" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="m-btn__label">Start a commission</span></a>
     </div>
-    <ol class="cm-cards">
+    <ol class="cm-cards" data-8b-items=":scope > li" data-8b-fixed="3">
       <li>
         <article class="m-surface cm-card">
-          <div class="m-surface__photo"><img style="background:#734026" src="https://images.unsplash.com/photo-1660950644107-64b706f631cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cmVzdGF1cmFudCUyMHRhYmxlJTIwaGFuZG1hZGUlMjBwbGF0ZXN8ZW58MXwwfHx8MTc5MTQxNDQ1Mnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=640&q=60" alt="A long restaurant table set with pale blue stoneware plates" width="1600" height="1067" loading="lazy"></div>
+          <div class="m-surface__photo"><img src="https://images.unsplash.com/photo-1660950644107-64b706f631cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cmVzdGF1cmFudCUyMHRhYmxlJTIwaGFuZG1hZGUlMjBwbGF0ZXN8ZW58MXwwfHx8MTc5MTQxNDQ1Mnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=640&q=60" alt="A long restaurant table set with pale blue stoneware plates" width="1600" height="1067" loading="lazy"></div>
           <div class="m-surface__row"><h3 class="m-text-6">Restaurant</h3><p class="m-text-5">Marrow, Kelham Island</p></div>
         </article>
       </li>
       <li>
         <article class="m-surface cm-card">
-          <div class="m-surface__photo"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1605025515868-c35a7c6cccce?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGNhZmUlMjBjZXJhbWljJTIwY3VwJTIwdGFibGV8ZW58MXwxfHx8MTc5MTQxNDQ1M3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=400&q=60" alt="A black glazed coffee mug on a wooden café table" width="1600" height="2400" loading="lazy"></div>
+          <div class="m-surface__photo"><img src="https://images.unsplash.com/photo-1605025515868-c35a7c6cccce?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGNhZmUlMjBjZXJhbWljJTIwY3VwJTIwdGFibGV8ZW58MXwxfHx8MTc5MTQxNDQ1M3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=400&q=60" alt="A black glazed coffee mug on a wooden café table" width="1600" height="2400" loading="lazy"></div>
           <div class="m-surface__row"><h3 class="m-text-6">Café</h3><p class="m-text-5">Lowfield Coffee, Heeley</p></div>
         </article>
       </li>
       <li>
         <article class="m-surface cm-card">
-          <div class="m-surface__photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1722246616918-272fbbe70d8b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8aG90ZWwlMjBicmVha2Zhc3QlMjBjZXJhbWljfGVufDF8MXx8fDE3OTE0MTQ0NTR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=400&q=60" alt="Sage-green cups and toast on a hotel breakfast tray" width="1600" height="2400" loading="lazy"></div>
+          <div class="m-surface__photo"><img src="https://images.unsplash.com/photo-1722246616918-272fbbe70d8b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8aG90ZWwlMjBicmVha2Zhc3QlMjBjZXJhbWljfGVufDF8MXx8fDE3OTE0MTQ0NTR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=400&q=60" alt="Sage-green cups and toast on a hotel breakfast tray" width="1600" height="2400" loading="lazy"></div>
           <div class="m-surface__row"><h3 class="m-text-6">Hotel</h3><p class="m-text-5">Hallam House, Broomhill</p></div>
         </article>
       </li>
@@ -665,39 +750,39 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
       <h2 class="pr-title m-text-2" id="process-title">Mud to table in six steps</h2>
       <p class="pr-lead m-text">Every Fettle piece goes through the same six steps and two firings. It takes about three weeks, and none of it can be hurried.</p>
     </div>
-    <ol class="pr-track">
+    <ol class="pr-track" data-8b-items=":scope > .pr-step">
       <li class="pr-step">
-        <div class="pr-step__photo"><img style="background:#402626" src="https://images.unsplash.com/photo-1609881583306-39c8b7eea68b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHdlZGdpbmclMjBjbGF5fGVufDF8MHx8fDE3OTE0MTQ0NTh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=650&q=60" alt="Hands pressing a block of clay on a workbench" width="1600" height="1067" loading="lazy"></div>
+        <div class="pr-step__photo"><img src="https://images.unsplash.com/photo-1609881583306-39c8b7eea68b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHdlZGdpbmclMjBjbGF5fGVufDF8MHx8fDE3OTE0MTQ0NTh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=650&q=60" alt="Hands pressing a block of clay on a workbench" width="1600" height="1067" loading="lazy"></div>
         <p class="m-text-4">Step 1</p>
         <h3 class="m-text-6">Wedge</h3>
         <p class="m-text-5">Each block is kneaded on a canvas bench to push out trapped air, so nothing cracks or bursts in the kiln.</p>
       </li>
       <li class="pr-step">
-        <div class="pr-step__photo"><img style="background:#c0a68c" src="https://images.unsplash.com/photo-1771523350747-638a89667c8f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8aGFuZHMlMjBwb3R0ZXJ5JTIwd2hlZWx8ZW58MXwxfHx8MTc5MTQxNDQ1MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=580&q=60" alt="Clay-covered hands raising a pot on the wheel" width="1600" height="2400" loading="lazy"></div>
+        <div class="pr-step__photo"><img src="https://images.unsplash.com/photo-1771523350747-638a89667c8f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8aGFuZHMlMjBwb3R0ZXJ5JTIwd2hlZWx8ZW58MXwxfHx8MTc5MTQxNDQ1MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=580&q=60" alt="Clay-covered hands raising a pot on the wheel" width="1600" height="2400" loading="lazy"></div>
         <p class="m-text-4">Step 2</p>
         <h3 class="m-text-6">Throw</h3>
         <p class="m-text-5">The clay is centred on the wheel, opened and pulled up into a cylinder, then shaped into a bowl, cup or plate.</p>
       </li>
       <li class="pr-step">
-        <div class="pr-step__photo"><img style="background:#40260c" src="https://images.unsplash.com/photo-1609881582441-7c9385db15c3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fHBvdHRlcnklMjBjbGFzc3xlbnwxfDB8fHwxNzkxNDE0NDc5fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=650&q=60" alt="A potter trimming the foot of a terracotta piece on the wheel" width="1600" height="1067" loading="lazy"></div>
+        <div class="pr-step__photo"><img src="https://images.unsplash.com/photo-1609881582441-7c9385db15c3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fHBvdHRlcnklMjBjbGFzc3xlbnwxfDB8fHwxNzkxNDE0NDc5fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=650&q=60" alt="A potter trimming the foot of a terracotta piece on the wheel" width="1600" height="1067" loading="lazy"></div>
         <p class="m-text-4">Step 3</p>
         <h3 class="m-text-6">Trim</h3>
         <p class="m-text-5">Leather-hard pieces go back on the wheel upside down to cut a clean foot ring and lose extra weight.</p>
       </li>
       <li class="pr-step">
-        <div class="pr-step__photo"><img style="background:#a68c73" src="https://images.unsplash.com/photo-1740478949628-ff562c3c3923?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Z2xhemluZyUyMGNlcmFtaWNzfGVufDF8MHx8fDE3OTE0MTQ0NjF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=680&q=60" alt="A pile of pale unglazed dishes after the first firing" width="1600" height="1028" loading="lazy"></div>
+        <div class="pr-step__photo"><img src="https://images.unsplash.com/photo-1740478949628-ff562c3c3923?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Z2xhemluZyUyMGNlcmFtaWNzfGVufDF8MHx8fDE3OTE0MTQ0NjF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=680&q=60" alt="A pile of pale unglazed dishes after the first firing" width="1600" height="1028" loading="lazy"></div>
         <p class="m-text-4">Step 4</p>
         <h3 class="m-text-6">Bisque</h3>
         <p class="m-text-5">A first, slow firing to 1000°C turns dry clay into porous bisque that can soak up glaze.</p>
       </li>
       <li class="pr-step">
-        <div class="pr-step__photo"><img style="background:#8c8c8c" src="https://images.unsplash.com/photo-1599958336382-c6a7c598925c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Z2xhemluZyUyMGNlcmFtaWNzfGVufDF8MHx8fDE3OTE0MTQ0NjF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=640&q=60" alt="A potter brushing glaze onto a white mug" width="1600" height="1092" loading="lazy"></div>
+        <div class="pr-step__photo"><img src="https://images.unsplash.com/photo-1599958336382-c6a7c598925c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Z2xhemluZyUyMGNlcmFtaWNzfGVufDF8MHx8fDE3OTE0MTQ0NjF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=640&q=60" alt="A potter brushing glaze onto a white mug" width="1600" height="1092" loading="lazy"></div>
         <p class="m-text-4">Step 5</p>
         <h3 class="m-text-6">Glaze</h3>
         <p class="m-text-5">Pieces are dipped by hand in one of our house glazes; each foot is waxed so it never sticks to the kiln shelf.</p>
       </li>
       <li class="pr-step">
-        <div class="pr-step__photo"><img style="background:#730c0c" src="https://images.unsplash.com/photo-1510616443155-dbf131a55805?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8a2lsbnxlbnwxfDB8fHwxNzkxNDE0NTQzfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=650&q=60" alt="Red flames filling the dark inside of a kiln" width="1600" height="1067" loading="lazy"></div>
+        <div class="pr-step__photo"><img src="https://images.unsplash.com/photo-1510616443155-dbf131a55805?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8a2lsbnxlbnwxfDB8fHwxNzkxNDE0NTQzfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=650&q=60" alt="Red flames filling the dark inside of a kiln" width="1600" height="1067" loading="lazy"></div>
         <p class="m-text-4">Step 6</p>
         <h3 class="m-text-6">Fire</h3>
         <p class="m-text-5">The glaze firing runs overnight to 1240°C. We open the kiln the next afternoon, never sooner.</p>
@@ -713,30 +798,30 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
     <h2 class="gl-title m-text-2" id="glazes-title">Four glazes, mixed in the back room</h2>
     <p class="gl-lead m-text">We weigh and sieve every bucket ourselves. Each glaze is food safe, tested in the dishwasher and fired on our own clay body.</p>
   </div>
-  <ul class="gl-list">
+  <ul class="gl-list" data-8b-items=":scope > .gl-row" data-8b-fixed="4">
     <li class="gl-row" style="--gl-ground: var(--color-5); --gl-ink: var(--color-3)">
       <h3 class="gl-name m-text-2" style="--len:6">Cobalt</h3>
       <p class="gl-note m-text">A deep, glossy blue that breaks pale where it thins over the rims. The glaze most of our restaurant plates wear.</p>
       <p class="gl-spec m-text-4">Gloss · dinner plates, bowls</p>
-      <figure class="gl-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1639146266039-6c8f7d738b51?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y29iYWx0JTIwYmx1ZSUyMGdsYXplJTIwYm93bHxlbnwxfDF8fHwxNzkxNDE0NDYzfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=330&q=60" alt="A stack of bowls in shades of cobalt and pale blue" width="1600" height="1967" loading="lazy"></figure>
+      <figure class="gl-photo"><img src="https://images.unsplash.com/photo-1639146266039-6c8f7d738b51?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y29iYWx0JTIwYmx1ZSUyMGdsYXplJTIwYm93bHxlbnwxfDF8fHwxNzkxNDE0NDYzfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=330&q=60" alt="A stack of bowls in shades of cobalt and pale blue" width="1600" height="1967" loading="lazy"></figure>
     </li>
     <li class="gl-row" style="--gl-ground: var(--color-6); --gl-ink: var(--color-3)">
       <h3 class="gl-name m-text-2" style="--len:8">Iron red</h3>
       <p class="gl-note m-text">Rust that turns orange on edges and almost black where it pools. Every piece comes out of the kiln a little different.</p>
       <p class="gl-spec m-text-4">Satin · vases, serving dishes</p>
-      <figure class="gl-photo"><img style="background:#c0c08c" src="https://images.unsplash.com/photo-1674390521253-79caf82d0ceb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cmVkJTIwY2VyYW1pYyUyMHZhc2V8ZW58MXwxfHx8MTc5MTQxNDQ3M3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="An orange-red glazed vase on a dark background" width="1600" height="2400" loading="lazy"></figure>
+      <figure class="gl-photo"><img src="https://images.unsplash.com/photo-1674390521253-79caf82d0ceb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cmVkJTIwY2VyYW1pYyUyMHZhc2V8ZW58MXwxfHx8MTc5MTQxNDQ3M3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="An orange-red glazed vase on a dark background" width="1600" height="2400" loading="lazy"></figure>
     </li>
     <li class="gl-row" style="--gl-ground: var(--color-7); --gl-ink: var(--color-2)">
       <h3 class="gl-name m-text-2" style="--len:7">Celadon</h3>
       <p class="gl-note m-text">A pale green-grey you can see the clay through, glassy and calm. Teacups, rice bowls and anything for a slow breakfast.</p>
       <p class="gl-spec m-text-4">Gloss · cups, small bowls</p>
-      <figure class="gl-photo"><img style="background:#a67359" src="https://images.unsplash.com/photo-1768677675311-ad831e8d4be0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Z3JlZW4lMjBjZXJhbWljJTIwYm93bHxlbnwxfDF8fHwxNzkxNDE0NDc0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="A pale blue-green bowl holding dark tea" width="1600" height="2137" loading="lazy"></figure>
+      <figure class="gl-photo"><img src="https://images.unsplash.com/photo-1768677675311-ad831e8d4be0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Z3JlZW4lMjBjZXJhbWljJTIwYm93bHxlbnwxfDF8fHwxNzkxNDE0NDc0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="A pale blue-green bowl holding dark tea" width="1600" height="2137" loading="lazy"></figure>
     </li>
     <li class="gl-row" style="--gl-ground: var(--color-8); --gl-ink: var(--color-3)">
       <h3 class="gl-name m-text-2" style="--len:7">Tenmoku</h3>
       <p class="gl-note m-text">Near-black brown with a bronze shine on the shoulders. Heavy, quiet and the best background for food we know.</p>
       <p class="gl-spec m-text-4">Gloss · sharing plates, jugs</p>
-      <figure class="gl-photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1706655855916-81abe7b19601?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8YnJvd24lMjBnbGF6ZWQlMjBjZXJhbWljfGVufDF8MXx8fDE3OTE0MTQ0NzV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="Close view of a dark brown glazed vase" width="1600" height="2133" loading="lazy"></figure>
+      <figure class="gl-photo"><img src="https://images.unsplash.com/photo-1706655855916-81abe7b19601?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8YnJvd24lMjBnbGF6ZWQlMjBjZXJhbWljfGVufDF8MXx8fDE3OTE0MTQ0NzV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=310&q=60" alt="Close view of a dark brown glazed vase" width="1600" height="2133" loading="lazy"></figure>
     </li>
   </ul>
 </section>
@@ -745,31 +830,31 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
 <section id="classes" data-8b-section="classes" aria-labelledby="classes-title">
   <div class="cl-top cols">
     <div class="cl-head">
-      <h2 class="cl-title m-text-2" id="classes-title" data-8b-motion="rise">Classes for any pair of hands</h2>
-      <p class="m-text-3" data-8b-motion="rise">Small groups of six, a wheel each, clay and firing included. Come alone or bring the friend who keeps saying they would love to try.</p>
+      <h2 class="cl-title m-text-2" id="classes-title" data-8b-motion="rise" style="--rise-delay: 0s" data-8b-enter="90%">Classes for any pair of hands</h2>
+      <p class="m-text-3" data-8b-motion="rise" style="--rise-delay: 0.07s" data-8b-enter="90%">Small groups of six, a wheel each, clay and firing included. Come alone or bring the friend who keeps saying they would love to try.</p>
     </div>
-    <figure class="cl-photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1621846323386-a60faf26f962?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cG90dGVyeSUyMGNsYXNzfGVufDF8MHx8fDE3OTE0MTQ0Nzl8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=610&q=60" alt="A teacher guiding a child's hands on a turning pot" width="1600" height="1066" loading="lazy"></figure>
+    <figure class="cl-photo"><img src="https://images.unsplash.com/photo-1621846323386-a60faf26f962?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cG90dGVyeSUyMGNsYXNzfGVufDF8MHx8fDE3OTE0MTQ0Nzl8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=610&q=60" alt="A teacher guiding a child's hands on a turning pot" width="1600" height="1066" loading="lazy"></figure>
   </div>
-  <ul class="cl-list">
-    <li class="cl-row" data-8b-motion="rise">
+  <ul class="cl-list" data-8b-items=":scope > .cl-row">
+    <li class="cl-row" data-8b-motion="rise" style="--rise-delay: 0s" data-8b-enter="90%">
       <div class="cl-name"><h3 class="m-text-6">Taster evening</h3><span class="m-mark" aria-hidden="true" data-8b-motion="turn">+</span></div>
       <p class="cl-when"><span class="m-text">Thursdays 18:30</span><span class="m-text-5">2.5 hours</span></p>
       <p class="cl-desc m-text">Try the wheel with tea and biscuits. We trim, glaze and fire your two best pieces.</p>
       <div class="cl-buy"><span class="cl-price m-text-6">£48</span><a class="m-link" href="#contact"><span class="m-link__plus" aria-hidden="true">+</span><span class="m-link__label">Book</span></a></div>
     </li>
-    <li class="cl-row" data-8b-motion="rise">
+    <li class="cl-row" data-8b-motion="rise" style="--rise-delay: 0.07s" data-8b-enter="90%">
       <div class="cl-name"><h3 class="m-text-6">Six-week wheel course</h3><span class="m-mark-2" aria-hidden="true" data-8b-motion="turn">+</span></div>
       <p class="cl-when"><span class="m-text">Tuesdays or Saturdays</span><span class="m-text-5">6 × 2.5 hours</span></p>
       <p class="cl-desc m-text">From centring to trimming. You leave with a set of bowls and the skill to make more.</p>
       <div class="cl-buy"><span class="cl-price m-text-6">£285</span><a class="m-link" href="#contact"><span class="m-link__plus" aria-hidden="true">+</span><span class="m-link__label">Book</span></a></div>
     </li>
-    <li class="cl-row" data-8b-motion="rise">
+    <li class="cl-row" data-8b-motion="rise" style="--rise-delay: 0.14s" data-8b-enter="90%">
       <div class="cl-name"><h3 class="m-text-6">Handbuilding weekend</h3><span class="m-mark" aria-hidden="true" data-8b-motion="turn">+</span></div>
       <p class="cl-when"><span class="m-text">First weekend of the month</span><span class="m-text-5">2 days</span></p>
       <p class="cl-desc m-text">Pinch, coil and slab. No wheel needed, just patience and a rolling pin.</p>
       <div class="cl-buy"><span class="cl-price m-text-6">£165</span><a class="m-link" href="#contact"><span class="m-link__plus" aria-hidden="true">+</span><span class="m-link__label">Book</span></a></div>
     </li>
-    <li class="cl-row" data-8b-motion="rise">
+    <li class="cl-row" data-8b-motion="rise" style="--rise-delay: 0.21s" data-8b-enter="90%">
       <div class="cl-name"><h3 class="m-text-6">Private lesson</h3><span class="m-mark-2" aria-hidden="true" data-8b-motion="turn">+</span></div>
       <p class="cl-when"><span class="m-text">By appointment</span><span class="m-text-5">2 hours</span></p>
       <p class="cl-desc m-text">One potter, one wheel and every question you have been saving up.</p>
@@ -785,9 +870,9 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
       <h2 class="mk-title m-text-2" id="makers-title">Three pairs of hands</h2>
       <p class="m-text">Fettle is three potters and a kiln. Whoever answers your email is also the one who will make your plates.</p>
     </div>
-    <ul class="mk-list">
+    <ul class="mk-list" data-8b-items=":scope > .mk-person" data-8b-fixed="3">
       <li class="mk-person">
-        <div class="mk-photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1699391197134-fa0235ac22d5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGNlcmFtaWNpc3QlMjBzdHVkaW8lMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNDE0NDc4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Ruth Ainsley painting a white vase at her bench" width="1600" height="2400" loading="lazy"></div>
+        <div class="mk-photo"><img src="https://images.unsplash.com/photo-1699391197134-fa0235ac22d5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGNlcmFtaWNpc3QlMjBzdHVkaW8lMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNDE0NDc4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Ruth Ainsley painting a white vase at her bench" width="1600" height="2400" loading="lazy"></div>
         <div class="mk-text">
           <p class="m-text-4">Founder, thrower</p>
           <h3 class="m-text-6">Ruth Ainsley</h3>
@@ -795,7 +880,7 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
         </div>
       </li>
       <li class="mk-person">
-        <div class="mk-photo"><img style="background:#404040" src="https://images.unsplash.com/photo-1713652463814-545a8f6c9cfe?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGNlcmFtaWNpc3QlMjBzdHVkaW8lMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNDE0NDc4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Dev Mistry shaping a clay piece in the studio" width="1600" height="2397" loading="lazy"></div>
+        <div class="mk-photo"><img src="https://images.unsplash.com/photo-1713652463814-545a8f6c9cfe?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGNlcmFtaWNpc3QlMjBzdHVkaW8lMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNDE0NDc4fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=260&q=60" alt="Dev Mistry shaping a clay piece in the studio" width="1600" height="2397" loading="lazy"></div>
         <div class="mk-text">
           <p class="m-text-4">Glazes and kilns</p>
           <h3 class="m-text-6">Dev Mistry</h3>
@@ -803,7 +888,7 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
         </div>
       </li>
       <li class="mk-person">
-        <div class="mk-photo"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1673252413454-162352c3df01?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8Y2VyYW1pY2lzdCUyMHN0dWRpbyUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTE0MTQ0Nzh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Hana Kowalska in an apron at a table full of pieces" width="1600" height="2400" loading="lazy"></div>
+        <div class="mk-photo"><img src="https://images.unsplash.com/photo-1673252413454-162352c3df01?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8Y2VyYW1pY2lzdCUyMHN0dWRpbyUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTE0MTQ0Nzh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Hana Kowalska in an apron at a table full of pieces" width="1600" height="2400" loading="lazy"></div>
         <div class="mk-text">
           <p class="m-text-4">Classes</p>
           <h3 class="m-text-6">Hana Kowalska</h3>
@@ -817,17 +902,17 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
 <!-- membership: a photo of studio shelves and the open studio offer with price and five benefits -->
 <section id="membership" data-8b-section="membership" aria-labelledby="membership-title">
   <div class="ms-grid cols">
-    <figure class="ms-photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1610206349499-c932c3b3aacb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Z2xhemluZyUyMGNlcmFtaWNzfGVufDF8MHx8fDE3OTE0MTQ0NjF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1070&q=60" alt="Studio shelves full of members' unglazed work" width="1600" height="1067" loading="lazy"></figure>
+    <figure class="ms-photo"><img src="https://images.unsplash.com/photo-1610206349499-c932c3b3aacb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Z2xhemluZyUyMGNlcmFtaWNzfGVufDF8MHx8fDE3OTE0MTQ0NjF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1070&q=60" alt="Studio shelves full of members' unglazed work" width="1600" height="1067" loading="lazy"></figure>
     <div class="ms-body">
-      <h2 class="ms-title m-text-2" id="membership-title" data-8b-motion="rise">Open studio membership</h2>
-      <p class="m-text-3" data-8b-motion="rise">For anyone who has finished a course and cannot stop. Your own shelf, wheel time six days a week and a kiln that fires every Friday.</p>
-      <p class="ms-price" data-8b-motion="rise"><span class="m-text-6">£95</span><span class="m-text-5">a month, no fixed term</span></p>
-      <ul class="ms-list">
-        <li data-8b-motion="rise"><span class="m-mark" aria-hidden="true" data-8b-motion="turn">+</span><span class="m-text">Wheel time Tuesday to Sunday, booked online</span></li>
-        <li data-8b-motion="rise"><span class="m-mark" aria-hidden="true" data-8b-motion="turn">+</span><span class="m-text">A shelf of your own for work in progress</span></li>
-        <li data-8b-motion="rise"><span class="m-mark" aria-hidden="true" data-8b-motion="turn">+</span><span class="m-text">12.5 kg of clay a month, more at cost</span></li>
-        <li data-8b-motion="rise"><span class="m-mark" aria-hidden="true" data-8b-motion="turn">+</span><span class="m-text">Bisque and glaze firings for anything that fits the shelf</span></li>
-        <li data-8b-motion="rise"><span class="m-mark" aria-hidden="true" data-8b-motion="turn">+</span><span class="m-text">All four house glazes, plus your own tests</span></li>
+      <h2 class="ms-title m-text-2" id="membership-title" data-8b-motion="rise" style="--rise-delay: 0s" data-8b-enter="90%">Open studio membership</h2>
+      <p class="m-text-3" data-8b-motion="rise" style="--rise-delay: 0.07s" data-8b-enter="90%">For anyone who has finished a course and cannot stop. Your own shelf, wheel time six days a week and a kiln that fires every Friday.</p>
+      <p class="ms-price" data-8b-motion="rise" style="--rise-delay: 0.14s" data-8b-enter="90%"><span class="m-text-6">£95</span><span class="m-text-5">a month, no fixed term</span></p>
+      <ul class="ms-list" data-8b-items=":scope > li">
+        <li data-8b-motion="rise" style="--rise-delay: 0s" data-8b-enter="90%"><span class="m-mark" aria-hidden="true" data-8b-motion="turn">+</span><span class="m-text">Wheel time Tuesday to Sunday, booked online</span></li>
+        <li data-8b-motion="rise" style="--rise-delay: 0.07s" data-8b-enter="90%"><span class="m-mark" aria-hidden="true" data-8b-motion="turn">+</span><span class="m-text">A shelf of your own for work in progress</span></li>
+        <li data-8b-motion="rise" style="--rise-delay: 0.14s" data-8b-enter="90%"><span class="m-mark" aria-hidden="true" data-8b-motion="turn">+</span><span class="m-text">12.5 kg of clay a month, more at cost</span></li>
+        <li data-8b-motion="rise" style="--rise-delay: 0.21s" data-8b-enter="90%"><span class="m-mark" aria-hidden="true" data-8b-motion="turn">+</span><span class="m-text">Bisque and glaze firings for anything that fits the shelf</span></li>
+        <li data-8b-motion="rise" style="--rise-delay: 0.28s" data-8b-enter="90%"><span class="m-mark" aria-hidden="true" data-8b-motion="turn">+</span><span class="m-text">All four house glazes, plus your own tests</span></li>
       </ul>
       <a class="m-btn" href="#contact"><span class="m-btn__fill" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="m-btn__label">Join the waiting list</span></a>
     </div>
@@ -840,40 +925,40 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
     <h2 class="sh-title m-text-2" id="shop-title">From the shelf</h2>
     <p class="sh-lead m-text">One-off pieces and small batches left over from commissions. Reserve by email, collect from the studio or we post anywhere in the UK.</p>
   </div>
-  <ul class="sh-grid">
+  <ul class="sh-grid" data-8b-items=":scope > .sh-item" data-8b-fixed="6">
     <li class="sh-line" aria-hidden="true"></li>
     <li class="sh-item">
-      <div class="sh-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1784901389095-9843fdc5463e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y2VyYW1pYyUyMGp1Z3xlbnwxfDF8fHwxNzkxNDE0NDgwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="A pale stoneware pitcher with a pinched spout" width="1600" height="2400" loading="lazy"><span class="sh-bisque" aria-hidden="true"></span></div>
+      <div class="sh-photo"><img src="https://images.unsplash.com/photo-1784901389095-9843fdc5463e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y2VyYW1pYyUyMGp1Z3xlbnwxfDF8fHwxNzkxNDE0NDgwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="A pale stoneware pitcher with a pinched spout" width="1600" height="2400" loading="lazy"><span class="sh-bisque" aria-hidden="true"></span></div>
       <div class="sh-row"><h3 class="m-text-6">Pale pitcher</h3><span class="sh-price m-text">£68</span></div>
       <p class="m-text-5">Clear glaze, 1.2 litres</p>
       <a data-8b-placeholder="email" class="m-link" href="mailto:hello@fettle.example?subject=Reserve%3A%20Pale%20pitcher"><span class="m-link__plus" aria-hidden="true">+</span><span class="m-link__label">Reserve</span></a>
     </li>
     <li class="sh-item">
-      <div class="sh-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1784901392739-c17de5ebeb59?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjV8fHdoaXRlJTIwY2VyYW1pYyUyMHZhc2V8ZW58MXwxfHx8MTc5MTQxNDQ3Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="A rough off-white vase with two small handles" width="1600" height="2400" loading="lazy"><span class="sh-bisque" aria-hidden="true"></span></div>
+      <div class="sh-photo"><img src="https://images.unsplash.com/photo-1784901392739-c17de5ebeb59?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjV8fHdoaXRlJTIwY2VyYW1pYyUyMHZhc2V8ZW58MXwxfHx8MTc5MTQxNDQ3Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="A rough off-white vase with two small handles" width="1600" height="2400" loading="lazy"><span class="sh-bisque" aria-hidden="true"></span></div>
       <div class="sh-row"><h3 class="m-text-6">Two-handled vase</h3><span class="sh-price m-text">£84</span></div>
       <p class="m-text-5">Unglazed outside, 28 cm</p>
       <a data-8b-placeholder="email" class="m-link" href="mailto:hello@fettle.example?subject=Reserve%3A%20Two-handled%20vase"><span class="m-link__plus" aria-hidden="true">+</span><span class="m-link__label">Reserve</span></a>
     </li>
     <li class="sh-item">
-      <div class="sh-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1715690998785-20b918a6392e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Y2VyYW1pYyUyMHBsYXRlcyUyMHN0YWNrfGVufDF8MXx8fDE3OTE0MTQ0ODJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="A stack of white bowls and plates" width="1600" height="2069" loading="lazy"><span class="sh-bisque" aria-hidden="true"></span></div>
+      <div class="sh-photo"><img src="https://images.unsplash.com/photo-1715690998785-20b918a6392e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Y2VyYW1pYyUyMHBsYXRlcyUyMHN0YWNrfGVufDF8MXx8fDE3OTE0MTQ0ODJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="A stack of white bowls and plates" width="1600" height="2069" loading="lazy"><span class="sh-bisque" aria-hidden="true"></span></div>
       <div class="sh-row"><h3 class="m-text-6">Breakfast set</h3><span class="sh-price m-text">£96</span></div>
       <p class="m-text-5">Clear glaze, bowl, plate and side plate</p>
       <a data-8b-placeholder="email" class="m-link" href="mailto:hello@fettle.example?subject=Reserve%3A%20Breakfast%20set"><span class="m-link__plus" aria-hidden="true">+</span><span class="m-link__label">Reserve</span></a>
     </li>
     <li class="sh-item">
-      <div class="sh-photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1687158179173-b9f3eac1fde9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGhhbmRtYWRlJTIwY2VyYW1pYyUyMG11Z3xlbnwxfDF8fHwxNzkxNDE0NDgwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Two white mugs side by side" width="1600" height="2400" loading="lazy"><span class="sh-bisque" aria-hidden="true"></span></div>
+      <div class="sh-photo"><img src="https://images.unsplash.com/photo-1687158179173-b9f3eac1fde9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGhhbmRtYWRlJTIwY2VyYW1pYyUyMG11Z3xlbnwxfDF8fHwxNzkxNDE0NDgwfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=290&q=60" alt="Two white mugs side by side" width="1600" height="2400" loading="lazy"><span class="sh-bisque" aria-hidden="true"></span></div>
       <div class="sh-row"><h3 class="m-text-6">Morning mugs</h3><span class="sh-price m-text">£42</span></div>
       <p class="m-text-5">Clear glaze, a pair, 350 ml</p>
       <a data-8b-placeholder="email" class="m-link" href="mailto:hello@fettle.example?subject=Reserve%3A%20Morning%20mugs"><span class="m-link__plus" aria-hidden="true">+</span><span class="m-link__label">Reserve</span></a>
     </li>
     <li class="sh-item sh-item--wide">
-      <div class="sh-photo"><img style="background:#c0a68c" src="https://images.unsplash.com/photo-1677761821976-4a2b4ed29437?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjR8fHdoaXRlJTIwY2VyYW1pYyUyMHZhc2V8ZW58MXwxfHx8MTc5MTQxNDQ3Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=590&q=60" alt="Speckled grey and black bud vases on a table" width="1600" height="2399" loading="lazy"><span class="sh-bisque" aria-hidden="true"></span></div>
+      <div class="sh-photo"><img src="https://images.unsplash.com/photo-1677761821976-4a2b4ed29437?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjR8fHdoaXRlJTIwY2VyYW1pYyUyMHZhc2V8ZW58MXwxfHx8MTc5MTQxNDQ3Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=590&q=60" alt="Speckled grey and black bud vases on a table" width="1600" height="2399" loading="lazy"><span class="sh-bisque" aria-hidden="true"></span></div>
       <div class="sh-row"><h3 class="m-text-6">Speckled bud vases</h3><span class="sh-price m-text">£56</span></div>
       <p class="m-text-5">Tenmoku and ash, a trio</p>
       <a data-8b-placeholder="email" class="m-link" href="mailto:hello@fettle.example?subject=Reserve%3A%20Speckled%20bud%20vases"><span class="m-link__plus" aria-hidden="true">+</span><span class="m-link__label">Reserve</span></a>
     </li>
     <li class="sh-item sh-item--wide">
-      <div class="sh-photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1666445759502-85124c28524e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8aGFuZG1hZGUlMjBjZXJhbWljJTIwbXVnfGVufDF8MXx8fDE3OTE0MTQ0ODB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=590&q=60" alt="A speckled oatmeal tumbler on a shelf" width="1600" height="2400" loading="lazy"><span class="sh-bisque" aria-hidden="true"></span></div>
+      <div class="sh-photo"><img src="https://images.unsplash.com/photo-1666445759502-85124c28524e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8aGFuZG1hZGUlMjBjZXJhbWljJTIwbXVnfGVufDF8MXx8fDE3OTE0MTQ0ODB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=590&q=60" alt="A speckled oatmeal tumbler on a shelf" width="1600" height="2400" loading="lazy"><span class="sh-bisque" aria-hidden="true"></span></div>
       <div class="sh-row"><h3 class="m-text-6">Speckled tumbler</h3><span class="sh-price m-text">£22</span></div>
       <p class="m-text-5">Raw clay outside, clear inside</p>
       <a data-8b-placeholder="email" class="m-link" href="mailto:hello@fettle.example?subject=Reserve%3A%20Speckled%20tumbler"><span class="m-link__plus" aria-hidden="true">+</span><span class="m-link__label">Reserve</span></a>
@@ -885,28 +970,28 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
 <section id="faq" data-8b-section="faq" aria-labelledby="faq-title">
   <div class="fq-grid cols">
     <div class="fq-head"><h2 class="fq-title m-text-2" id="faq-title">Questions</h2><span class="m-mark-2" aria-hidden="true" data-8b-motion="turn">+</span></div>
-    <div class="fq-list">
-      <details class="fq-item" data-8b-motion="rise">
+    <div class="fq-list" data-8b-items=":scope > .fq-item">
+      <details class="fq-item" data-8b-motion="rise" style="--rise-delay: 0s" data-8b-enter="90%">
         <summary class="fq-q"><span class="m-text-3">Do I need any experience for a class?</span><span class="fq-icon" aria-hidden="true">+</span></summary>
         <p class="fq-a m-text">None at all. The taster evening and the six-week course both start from the very beginning, and the groups are small enough that everyone gets help on the wheel.</p>
       </details>
-      <details class="fq-item" data-8b-motion="rise">
+      <details class="fq-item" data-8b-motion="rise" style="--rise-delay: 0.07s" data-8b-enter="90%">
         <summary class="fq-q"><span class="m-text-3">What should I wear?</span><span class="fq-icon" aria-hidden="true">+</span></summary>
         <p class="fq-a m-text">Clothes you do not mind getting clay on, and short nails if you can. We lend aprons and towels; clay washes out of cotton easily.</p>
       </details>
-      <details class="fq-item" data-8b-motion="rise">
+      <details class="fq-item" data-8b-motion="rise" style="--rise-delay: 0.14s" data-8b-enter="90%">
         <summary class="fq-q"><span class="m-text-3">When can I collect what I made?</span><span class="fq-icon" aria-hidden="true">+</span></summary>
         <p class="fq-a m-text">Three to four weeks after your class, once the pieces have been trimmed, bisque fired, glazed and fired again. We email you when they are on the collection shelf.</p>
       </details>
-      <details class="fq-item" data-8b-motion="rise">
+      <details class="fq-item" data-8b-motion="rise" style="--rise-delay: 0.21s" data-8b-enter="90%">
         <summary class="fq-q"><span class="m-text-3">Is your tableware dishwasher safe?</span><span class="fq-icon" aria-hidden="true">+</span></summary>
         <p class="fq-a m-text">Yes. All four house glazes are food safe and tested in commercial dishwashers and microwaves. Unglazed outsides are best washed by hand.</p>
       </details>
-      <details class="fq-item" data-8b-motion="rise">
+      <details class="fq-item" data-8b-motion="rise" style="--rise-delay: 0.28s" data-8b-enter="90%">
         <summary class="fq-q"><span class="m-text-3">How big does a commission have to be?</span><span class="fq-icon" aria-hidden="true">+</span></summary>
         <p class="fq-a m-text">We start at about 40 pieces of one shape. Samples take four weeks and a full service ten to twelve, and we keep your glaze recipe on file for reorders.</p>
       </details>
-      <details class="fq-item" data-8b-motion="rise">
+      <details class="fq-item" data-8b-motion="rise" style="--rise-delay: 0.35s" data-8b-enter="90%">
         <summary class="fq-q"><span class="m-text-3">Do you sell gift vouchers?</span><span class="fq-icon" aria-hidden="true">+</span></summary>
         <p class="fq-a m-text">For any class or any amount. Email us and we will send a printable voucher the same day; it is valid for a year.</p>
       </details>
@@ -984,10 +1069,6 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
   <div class="ft-base"><span>© 2026 Fettle Pottery Studio Ltd · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></span><a class="m-link" href="#opening"><span class="m-link__plus" aria-hidden="true">+</span><span class="m-link__label">Back to top</span></a></div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
 <script data-8b-part="section-script:nav">
 (() => {
   const root = document.getElementById('nav');
@@ -1004,8 +1085,8 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
     last = y;
   }, { passive: true });
   bar.addEventListener('focusin', () => setHidden(false));
-  const open = () => { menu.hidden = false; openBtn.setAttribute('aria-expanded', 'true'); window.lenis?.stop(); closeBtn.focus(); };
-  const close = (focus = true) => { menu.hidden = true; openBtn.setAttribute('aria-expanded', 'false'); window.lenis?.start(); if (focus) openBtn.focus(); };
+  const open = () => { menu.hidden = false; openBtn.setAttribute('aria-expanded', 'true'); window.motionKit?.wheel?.stop(); closeBtn.focus(); };
+  const close = (focus = true) => { menu.hidden = true; openBtn.setAttribute('aria-expanded', 'false'); window.motionKit?.wheel?.start(); if (focus) openBtn.focus(); };
   openBtn.addEventListener('click', open);
   closeBtn.addEventListener('click', () => close());
   menu.addEventListener('click', event => { if (event.target.closest('a')) close(false); });
@@ -1018,177 +1099,6 @@ textarea.m-field__control { min-height: 104px; resize: vertical; }
   if (!('IntersectionObserver' in window)) return;
   new IntersectionObserver(([entry]) => screen.classList.toggle('is-paused', !entry.isIntersecting)).observe(screen);
 })();
-</script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function refreshScroll() { ScrollTrigger.sort(); ScrollTrigger.refresh(); }
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const bar = document.querySelector('#nav .nav__bar');
-  const lenis = window.lenis = new Lenis({ lerp: .085, wheelMultiplier: .95, anchors: { offset: -(bar ? bar.offsetHeight : 0) } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick); gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-let resizeTimer;
-window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(refreshScroll, 200); });
-</script>
-<script data-8b-part="motion">
-const effects = {
-  turn(element, vars = {}) {
-    return gsap.fromTo(element, { rotation: -180 }, { rotation: 0, ease: 'none', ...vars });
-  },
-  rise(element, vars = {}) {
-    return gsap.fromTo(element, { yPercent: 35, clipPath: 'inset(0% 0% 100% 0%)' }, { yPercent: 0, clipPath: 'inset(0% 0% 0% 0%)', duration: .9, ease: 'power3.out', clearProps: 'clipPath', ...vars });
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  const turns = section.querySelectorAll('[data-8b-motion~="turn"]');
-  const rises = section.querySelectorAll('[data-8b-motion~="rise"]');
-  const first = section.getBoundingClientRect().top < innerHeight;
-  if (turns.length) {
-    const id = `effect:turn:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      turns.forEach((element, i) => ScrollTrigger.create({ id: `${id}:${i}`, trigger: element, start: 'top bottom', end: 'center 58%', scrub: .6, animation: effects.turn(element) }));
-    }), first ? { first: true, id } : { near: section, id });
-  }
-  if (rises.length) {
-    const id = `effect:rise:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      rises.forEach((element, i) => {
-        const siblings = element.parentElement ? [...element.parentElement.children].filter(child => child.matches('[data-8b-motion~="rise"]')) : [];
-        const delay = Math.max(0, siblings.indexOf(element)) * .07;
-        ScrollTrigger.create({ id: `${id}:${i}`, trigger: element, start: 'top 90%', once: true, animation: effects.rise(element, { paused: true, delay }) });
-      });
-    }), first ? { first: true, id } : { near: section, id });
-  }
-});
-</script>
-<script data-8b-part="scene:opening">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('opening');
-    const screen = section.querySelector('.op-screen');
-    const photo = screen.querySelector('.op-photo');
-    const title = screen.querySelector('.op-title');
-    const band = screen.querySelector('.op-band');
-    const hold = section.querySelector('.op-hold');
-    const about = section.querySelector('.op-about');
-    const statement = about.querySelector('.op-statement');
-    const lines = [...document.querySelectorAll('.page-grid i')];
-    section.classList.add('is-held');
-    const strips = [0, 1, 2, 3].map(() => {
-      const strip = photo.cloneNode(true);
-      strip.classList.add('op-strip');
-      strip.setAttribute('aria-hidden', 'true');
-      strip.querySelectorAll('img').forEach(img => { img.alt = ''; img.removeAttribute('fetchpriority'); });
-      const copy = title.cloneNode(true);
-      copy.removeAttribute('id');
-      copy.classList.add('op-title--copy');
-      strip.appendChild(copy);
-      screen.appendChild(strip);
-      return strip;
-    });
-    const source = photo.getAnimations({ subtree: true });
-    strips.forEach(strip => strip.getAnimations({ subtree: true }).forEach((animation, i) => {
-      if (source[i] && source[i].currentTime != null) animation.currentTime = source[i].currentTime;
-    }));
-    const dim = document.createElement('div');
-    dim.className = 'op-dim';
-    screen.appendChild(dim);
-    const geo = { top: 0, edges: [0, 0, 0, 0, 0] };
-    const measure = () => {
-      const width = screen.offsetWidth;
-      geo.top = screen.offsetHeight - band.offsetHeight;
-      geo.edges = [0, lines[1].offsetLeft, lines[2].offsetLeft, lines[3].offsetLeft, width];
-      strips.forEach(strip => {
-        const copy = strip.querySelector('.op-title--copy');
-        copy.style.left = `${title.offsetLeft}px`;
-        copy.style.top = `${title.offsetTop}px`;
-        copy.style.width = `${title.offsetWidth}px`;
-      });
-    };
-    measure();
-    const inset = (i, top) => `inset(${top}px ${geo.edges[4] - geo.edges[i + 1]}px 0px ${geo.edges[i]}px)`;
-    const rise = gsap.timeline({ scrollTrigger: {
-      id: 'opening', trigger: section, start: 'top top', end: () => `+=${hold.offsetHeight}`, scrub: .5, invalidateOnRefresh: true, onRefreshInit: measure
-    } });
-    [3, 2, 1, 0].forEach((i, order) => {
-      rise.fromTo(strips[i], { clipPath: () => inset(i, geo.top) }, { clipPath: () => inset(i, 0), ease: 'power2.inOut', duration: 1 }, order * .3);
-    });
-    const recede = gsap.timeline({ scrollTrigger: {
-      id: 'opening:about', trigger: about, start: 'top bottom', end: 'top top', scrub: .5
-    } });
-    recede.to(screen, { scale: .93, transformOrigin: '50% 30%', ease: 'none' }, 0)
-      .to(dim, { opacity: .5, ease: 'none' }, 0);
-    const split = SplitText.create(statement, { type: 'words' });
-    const ink = getComputedStyle(statement).color;
-    const pale = getComputedStyle(section).getPropertyValue('--color-1').trim();
-    gsap.timeline({ scrollTrigger: { id: 'opening:read', trigger: statement, start: 'top 88%', end: 'bottom 62%', scrub: .4 } })
-      .fromTo(split.words, { color: gsap.utils.interpolate(pale, ink, .22) }, { color: ink, ease: 'none', stagger: .08, duration: .4 });
-    return () => {
-      split.revert();
-      strips.forEach(strip => strip.remove());
-      dim.remove();
-      section.classList.remove('is-held');
-    };
-  });
-}, { first: true });
 </script>
 <script data-8b-part="section-script:contact">
 (() => {
@@ -1207,147 +1117,316 @@ queueMotion(() => {
   });
 })();
 </script>
-<script data-8b-part="scene:commissions">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('commissions');
-    const stick = section.querySelector('.cm-stick');
-    const rooms = [...section.querySelectorAll('.cm-room')];
-    const cards = [...section.querySelectorAll('.cm-card')];
-    const count = Math.min(rooms.length, cards.length);
-    if (count < 2) return;
-    section.classList.add('is-opening');
-    for (let i = 1; i < count; i++) {
-      const card = cards[i];
-      const frame = card.querySelector('.m-surface__photo') || card;
-      const start = () => {
-        const width = stick.offsetWidth, height = stick.offsetHeight;
-        const left = frame.getBoundingClientRect().left;
-        const top = height * .78 + frame.offsetTop - card.offsetTop;
-        const bottom = Math.max(0, height - top - frame.offsetHeight);
-        return `inset(${top.toFixed(1)}px ${Math.max(0, width - left - frame.offsetWidth).toFixed(1)}px ${bottom.toFixed(1)}px ${left.toFixed(1)}px)`;
-      };
-      gsap.fromTo(rooms[i], { clipPath: start }, {
-        clipPath: 'inset(0px 0px 0px 0px)', ease: 'power2.inOut',
-        scrollTrigger: { id: `commissions:${i}`, trigger: card, start: 'top 78%', end: 'top 18%', scrub: .5, invalidateOnRefresh: true }
-      });
-    }
-    return () => section.classList.remove('is-opening');
-  });
-}, { near: document.getElementById('commissions') });
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-split=lines]>.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}[data-8b-split=lines]>.line:not(:last-child){margin-bottom:0}[data-8b-split=lines]>.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment);
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split'), again = sources.has(element);
+if (again) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+if (again) element.getAnimations({ subtree: true }).forEach(animation => { if (animation.timeline === document.timeline) try { animation.finish(); } catch {} });
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px' });
+document.fonts.ready.then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
 </script>
-<script data-8b-part="scene:process">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('process');
-    const pin = section.querySelector('.pr-pin');
-    const track = section.querySelector('.pr-track');
-    const fill = section.querySelector('.pr-rule span');
-    const steps = [...track.querySelectorAll('.pr-step')];
-    section.classList.add('is-track');
-    const distance = () => Math.max(0, track.scrollWidth - pin.clientWidth);
-    const travel = gsap.to(track, {
-      x: () => -distance(), ease: 'none',
-      scrollTrigger: { id: 'process', trigger: pin, start: 'top top', end: () => `+=${distance()}`, pin: true, scrub: .6, invalidateOnRefresh: true }
+<script data-8b-part="scene-script:opening">
+motionKit.scene('opening', () => {
+  const screen = document.querySelector('#opening .op-screen');
+  const photo = screen.querySelector('.op-photo');
+  const title = screen.querySelector('.op-title');
+  const band = screen.querySelector('.op-band');
+  const lines = [...document.querySelectorAll('.page-grid i')];
+  const drift = element => element.querySelector('.op-photo__drift').getAnimations()[0];
+  const strips = [0, 1, 2, 3].map(i => {
+    const strip = photo.cloneNode(true);
+    strip.classList.add('op-strip');
+    strip.setAttribute('aria-hidden', 'true');
+    strip.querySelectorAll('img').forEach(img => { img.alt = ''; img.removeAttribute('fetchpriority'); });
+    const copy = title.cloneNode(true);
+    copy.removeAttribute('id');
+    copy.classList.add('op-title--copy');
+    strip.appendChild(copy);
+    screen.appendChild(strip);
+    motionKit.set(strip, { '--opening-order': String(3 - i) });
+    const loop = drift(strip), source = drift(photo);
+    if (loop && source) loop.currentTime = source.currentTime;
+    return strip;
+  });
+  const statement = document.querySelector('#opening .op-statement');
+  const channels = color => color.match(/[0-9.]+/g).slice(0, 3).map(Number);
+  const ink = channels(getComputedStyle(statement).color), paper = channels(getComputedStyle(document.querySelector('#opening .op-about')).backgroundColor);
+  motionKit.set(statement, { '--opening-ink': 'rgb(' + ink.join(' ') + ')', '--opening-pale': 'rgb(' + paper.map((value, i) => value + (ink[i] - value) * .22).join(' ') + ')' });
+  const dim = document.createElement('div');
+  dim.className = 'op-dim';
+  screen.appendChild(dim);
+  motionKit.measure(() => {
+    const edges = [0, lines[1].offsetLeft, lines[2].offsetLeft, lines[3].offsetLeft, screen.offsetWidth];
+    const top = screen.offsetHeight - band.offsetHeight;
+    strips.forEach((strip, i) => {
+      motionKit.set(strip, { '--opening-top': top + 'px', '--opening-left': edges[i] + 'px', '--opening-right': edges[4] - edges[i + 1] + 'px' });
+      motionKit.set(strip.querySelector('.op-title--copy'), { left: title.offsetLeft + 'px', top: title.offsetTop + 'px', width: title.offsetWidth + 'px' });
     });
-    gsap.fromTo(fill, { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: { id: 'process:rule', trigger: pin, start: 'top top', end: () => `+=${distance()}`, scrub: .6, invalidateOnRefresh: true } });
-    steps.forEach((step, i) => {
-      const photo = step.querySelector('.pr-step__photo');
-      if (!photo) return;
-      gsap.fromTo(photo, { scale: .72 }, { scale: 1, ease: 'none', scrollTrigger: { id: `process:step${i}`, trigger: step, containerAnimation: travel, start: 'left 102%', end: 'left 80%', scrub: true } });
-    });
-    return () => section.classList.remove('is-track');
   });
 });
 </script>
-<script data-8b-part="scene:glazes">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('glazes');
-    const rows = [...section.querySelectorAll('.gl-row')];
-    if (!rows.length) return;
-    const read = (element, ground, ink) => {
-      const style = getComputedStyle(element);
-      return { '--gl-ground': style.getPropertyValue(ground).trim(), '--gl-ink': style.getPropertyValue(ink).trim() };
-    };
-    const states = [read(section, '--color-1', '--color-2'), ...rows.map(row => read(row, '--gl-ground', '--gl-ink'))];
-    section.classList.add('is-shifting');
-    gsap.set(section, states[0]);
-    rows.forEach((row, i) => {
-      gsap.fromTo(section, { ...states[i] }, {
-        ...states[i + 1], ease: 'none', immediateRender: false,
-        scrollTrigger: { id: `glazes:${i}`, trigger: row, start: 'top 57%', end: 'top 43%', scrub: .3 }
-      });
-    });
-    return () => section.classList.remove('is-shifting');
+<script data-8b-part="scene-script:commissions">
+motionKit.scene('commissions', () => {
+  const section = document.getElementById('commissions');
+  const stick = section.querySelector('.cm-stick');
+  const rooms = [...section.querySelectorAll('.cm-room')];
+  const cards = [...section.querySelectorAll('.cm-card')];
+  motionKit.measure(() => {
+    const width = stick.offsetWidth, height = stick.offsetHeight;
+    for (let i = 1; i < Math.min(rooms.length, cards.length); i++) {
+      const frame = cards[i].querySelector('.m-surface__photo') || cards[i];
+      const left = frame.getBoundingClientRect().left;
+      const top = height * .78 + frame.offsetTop - cards[i].offsetTop;
+      const bottom = Math.max(0, height - top - frame.offsetHeight);
+      motionKit.set(rooms[i], { '--commissions-from': `inset(${top.toFixed(1)}px ${Math.max(0, width - left - frame.offsetWidth).toFixed(1)}px ${bottom.toFixed(1)}px ${left.toFixed(1)}px)` });
+    }
   });
-}, { near: document.getElementById('glazes') });
+});
 </script>
-<script data-8b-part="scene:makers">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('makers');
-    const list = section.querySelector('.mk-list');
-    const people = [...list.querySelectorAll('.mk-person')];
-    const photos = people.map(person => person.querySelector('.mk-photo'));
-    const texts = people.map(person => person.querySelector('.mk-text'));
-    if (photos.some(photo => !photo)) return;
-    const mid = Math.floor(photos.length / 2);
-    const dx = i => photos[mid].offsetLeft - photos[i].offsetLeft;
-    const dy = i => photos[mid].offsetTop - photos[i].offsetTop;
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'makers', trigger: list, start: 'top 82%', end: 'center 56%', scrub: .6, invalidateOnRefresh: true } });
-    photos.forEach((photo, i) => {
-      gsap.set(photo, { zIndex: i === mid ? 3 : 2 - Math.abs(i - mid) + 1, position: 'relative' });
-      timeline.fromTo(photo, { x: () => dx(i), y: () => dy(i), rotation: (i - mid) * 5, scale: .9 }, { x: 0, y: 0, rotation: 0, scale: 1, ease: 'power2.inOut', duration: 1 }, 0);
-    });
-    texts.forEach((text, i) => {
-      if (!text) return;
-      timeline.fromTo(text, { opacity: 0, y: 24 }, { opacity: 1, y: 0, ease: 'power2.out', duration: .35 }, .65 + Math.abs(i - mid) * .08);
+<script data-8b-part="scene-script:process">
+motionKit.scene('process', () => {
+  const section = document.getElementById('process');
+  const pin = section.querySelector('.pr-pin');
+  const track = section.querySelector('.pr-track');
+  const steps = [...track.querySelectorAll('.pr-step')];
+  motionKit.measure(() => {
+    motionKit.set(section, { '--process-travel': Math.max(0, track.scrollWidth - pin.clientWidth) + 'px' });
+    steps.forEach(step => {
+      const photo = step.querySelector('.pr-step__photo');
+      if (!photo) return;
+      const start = step.offsetLeft - 1.02 * innerWidth, end = step.offsetLeft - .8 * innerWidth;
+      const reached = Math.min(1, Math.max(0, -start / (end - start)));
+      motionKit.set(photo, { '--process-scale': String(.72 + .28 * reached), '--process-start': Math.max(0, start) + 'px', '--process-end': Math.max(1, end) + 'px' });
     });
   });
-}, { near: document.getElementById('makers') });
+});
 </script>
-<script data-8b-part="scene:shop">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('shop');
-    const overlays = [...section.querySelectorAll('.sh-bisque')];
-    if (!overlays.length) return;
-    section.classList.add('is-glazing');
-    overlays.forEach((overlay, i) => {
-      gsap.fromTo(overlay, { clipPath: 'inset(0% 0% 0% 0%)' }, {
-        clipPath: 'inset(100% 0% 0% 0%)', ease: 'none',
-        scrollTrigger: { id: `shop:${i}`, trigger: overlay.parentElement, start: 'top 50%', end: 'bottom 50%', scrub: true }
-      });
-    });
-    return () => section.classList.remove('is-glazing');
+<script data-8b-part="scene-script:glazes">
+motionKit.scene('glazes', () => {
+  const section = document.getElementById('glazes');
+  const read = (element, ground, ink, n) => {
+    const style = getComputedStyle(element);
+    motionKit.set(section, { [`--glazes-ground-${n}`]: style.getPropertyValue(ground).trim(), [`--glazes-ink-${n}`]: style.getPropertyValue(ink).trim() });
+  };
+  read(section, '--color-1', '--color-2', 0);
+  section.querySelectorAll('.gl-row').forEach((row, i) => read(row, '--gl-ground', '--gl-ink', i + 1));
+});
+</script>
+<script data-8b-part="scene-script:makers">
+motionKit.scene('makers', () => {
+  const people = [...document.querySelectorAll('#makers .mk-person')];
+  const photos = people.map(person => person.querySelector('.mk-photo'));
+  const mid = Math.floor(photos.length / 2);
+  people.forEach((person, i) => {
+    motionKit.set(photos[i], { '--makers-z': String(i === mid ? 3 : 3 - Math.abs(i - mid)), '--makers-r': (i - mid) * 5 + 'deg' });
+    motionKit.set(person.querySelector('.mk-text'), { '--makers-at': String(.65 + Math.abs(i - mid) * .08) });
   });
-}, { near: document.getElementById('shop') });
+  motionKit.measure(() => photos.forEach(photo => motionKit.set(photo, { '--makers-x': photos[mid].offsetLeft - photo.offsetLeft + 'px', '--makers-y': photos[mid].offsetTop - photo.offsetTop + 'px' })));
+});
 </script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const title = section.querySelector('.ct-title');
-    const words = [...title.querySelectorAll('.ct-word')];
-    const lines = [...document.querySelectorAll('.page-grid i')];
-    if (!words.length) return;
-    const heights = [150, 40, 220, 100];
-    const phone = () => window.matchMedia('(max-width: 760px)').matches;
-    const fromX = i => {
-      if (phone()) return (i % 2 ? 1 : -1) * 18;
-      const word = words[i];
-      const titleLeft = title.getBoundingClientRect().left;
+<script data-8b-part="scene-script:contact">
+motionKit.scene('contact', () => {
+  const title = document.querySelector('#contact .ct-title');
+  const words = [...title.querySelectorAll('.ct-word')];
+  const lines = [...document.querySelectorAll('.page-grid i')];
+  const heights = [150, 40, 220, 100];
+  motionKit.measure(() => {
+    const phone = matchMedia('(max-width: 760px)').matches;
+    const titleLeft = title.getBoundingClientRect().left;
+    words.forEach((word, i) => {
       const left = titleLeft + word.offsetLeft;
       const column = lines[i % 4] ? lines[i % 4].offsetLeft : left;
-      const limit = (lines[4] ? lines[4].offsetLeft : window.innerWidth) - (left + word.offsetWidth);
-      return Math.min(column - left, limit);
-    };
-    const fromY = i => phone() ? 40 + i * 46 : heights[i % 4];
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'contact', trigger: title, start: 'top 96%', end: 'top 30%', scrub: .6, invalidateOnRefresh: true } });
-    words.forEach((word, i) => timeline.fromTo(word, { x: () => fromX(i), y: () => fromY(i) }, { x: 0, y: 0, ease: 'power2.out', duration: 1 }, i * .06));
+      const limit = (lines[4] ? lines[4].offsetLeft : innerWidth) - (left + word.offsetWidth);
+      motionKit.set(word, { '--contact-x': (phone ? (i % 2 ? 1 : -1) * 18 : Math.min(column - left, limit)) + 'px', '--contact-y': (phone ? 40 + i * 46 : heights[i % 4]) + 'px' });
+    });
   });
-}, { near: document.getElementById('contact') });
+});
 </script>
 </body>
 </html>

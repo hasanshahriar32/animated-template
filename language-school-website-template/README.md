@@ -1,8 +1,8 @@
-# Free HTML language school website template with GSAP scroll animations
+# Free HTML language school website template with scroll animations and no libraries
 
-This language school website template is one free HTML file for a school or evening class provider teaching adults. It has eight languages on a sideways track, five level bars, a week of classes, three prices and a free-class offer, in wide heavy headings and flat colour shapes. AGENTS.md is included, so an AI agent can adapt it.
+This language school website template is one free HTML file for a school teaching adults. It has eight languages on a sideways track, five level bars, a week of classes, three prices and a free-class offer, in wide heavy headings and flat colour shapes. Scroll motion is CSS, no libraries; AGENTS.md lets an AI agent adapt it.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/language-school-website-template/)** · **[Use this template](https://github.com/new?template_name=language-school-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/language-school-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/saylo/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/language-school-website-templa
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my school: name, city, address, languages with days, times and level ranges, weekly clubs and walks, the free class offer, prices, student quotes with permission, opening hours, how people book>. Replace first the school name, greetings and Leeds details, then prices, quotes and portraits. Keep the section ids, the classes AGENTS.md lists and each --lv-step; set each greeting's --len to its character count. Ask me for missing facts and never invent timetables, prices, teachers, quotes or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my school: name, address, languages with days, times and levels, weekly clubs, the free class offer, prices, student quotes with permission, hours, how people book>. Replace the name, greetings and Leeds details first. Keep the gate script in the head, the section ids, the data-8b-* attributes, the classes AGENTS.md lists, five level bars, five quotes and each --lv-step; set each greeting's --len to its character count. Add no animation library; never invent timetables, prices, teachers, quotes or contacts.
 ```
 
 If you vibe code the site, a language school website template for Claude Code, Cursor or Codex still starts with facts only the school has: languages, days and times, level ranges, prices, the free class offer, hours and address. The demo invents all of them, plus the five student quotes, shown with stock portraits. Ask the agent to change each greeting and its --len value, keep every --lv-step on the level bars, leave the section ids and the animation classes from AGENTS.md alone, and never invent teachers, prices or results.
@@ -34,12 +34,12 @@ No agent? Click **[Use this template](https://github.com/new?template_name=langu
 ## Sections and motion
 
 - **Navigation**: top bar: three-bar mark and wordmark, four links, a Book a free class button and a menu button on phones; a full-screen overlay. The bar hides on scroll down once past 120px and returns on scroll up, and a white pill fades in behind it after 40px.
-- **Eight languages, one front door**: first screen: h1 "Eight languages, one front door", a short paragraph with a button, and a pinned sideways track of eight language panels with a greeting, a name, days and levels. Pinned: the eight panels slide sideways as you scroll, and the shapes on panels that start off screen swing upright as they arrive.
+- **Eight languages, one front door**: first screen: h1 "Eight languages, one front door", a short paragraph with a button, and a sideways track of eight language panels held on screen, each with a greeting, a name, days and levels. Held on screen: a sticky stage keeps the section in view while the eight panels slide sideways as you scroll, and the shapes on panels that start off screen swing upright as they arrive.
 - **From hello to holding your own**: five level bars rising like a voice meter, each with a code and a short text (demo: A1 First words to C1 Thinking in it). As the list crosses the screen the five bars grow one after another, upward on desktop with each code riding the top and sideways under 900px.
 - **A week at Saylo**: four rows for the week with a pill and text, two of them with photos (demo: evening classes, Friday conversation clubs, Saturday market walk, online). The heading block lifts and fades in once, and each day pill springs in small and turned.
 - **Sit in on a real class before you pay a penny**: a panel with a heap of coloured shapes, a heading, a sentence and a Book a free class button (demo: sit in on a real class before you pay). As the panel scrolls in, six shapes drop and bounce onto a half-disc that rocks and settles.
 - **Three ways in**: three price rows, each with a shape, a name, a line, a price and a button (demo: Group course £260, Private lessons £38 an hour, Club pass £45 a term). The heading block and each row lift and fade in once, and the shape inside each white circle springs in.
-- **Overheard at Saylo**: a pinned chat thread of five student sayings, each a face, a line in the language and its English meaning (demo: Spanish, Italian, French, Portuguese, German). Pinned for half a screen per bubble: each face and bubble pops in from its side in turn while the thread climbs to keep the newest line in view.
+- **Overheard at Saylo**: a chat thread of five student sayings held on screen, each a face, a line in the language and its English meaning (demo: Spanish, Italian, French, Portuguese, German). Held on screen for about half a screen per bubble: after the first line, each face and bubble pops in from its side in turn while the thread climbs to keep the newest line in view.
 - **Questions people ask before the first class**: five questions and answers as native &lt;details&gt; rows beside a heading with three popping shapes. The heading block lifts in once, three shapes spring in, and an opened question turns its plus into a cross.
 - **Say your first sentence in a new language this week, in a room of six people who are trying too.**: a speech bubble with a closing statement and a Book a free class button, then four details (visit, call, write, front desk hours). The cream ground opens from a narrow pill into the full speech bubble, its tail grows in, the second half of the statement turns from grey to full colour word by word and three sparkles spring in.
 - **Footer**: a row with two links, the three-bar mark and wordmark, two links, then the school's address and three social buttons. The three-bar logo mark springs in.
@@ -68,12 +68,12 @@ No. There is no form. The three Book a free class buttons in the nav, menu and f
 **Can I get a site like this without editing code?**  
 Yes, with [8B's AI website builder](https://8b.com/). You describe the school in a sentence and it designs a new site, in its own design rather than this template. Designing and restyling are free. Publishing with hosting and SSL, HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs in Claude and ChatGPT.
 
-**What happens with reduced motion or without JavaScript?**  
-With reduced motion the pinned scenes and smooth scrolling switch off, so the language panels become a plain grid and the thread a list. The hiding nav bar and hover fills keep running. Without JavaScript the FAQ still opens, but the phone menu does nothing and the sideways track stays one clipped row, so later panels cannot be reached.
+**What happens in Firefox, with reduced motion or without JavaScript?**  
+Without CSS scroll-driven animations, Firefox today, and with reduced motion, the page shows its finished layout with ordinary scrolling: the language panels sit in a grid, the bars are full and the thread is a plain list. The hiding nav bar and hover fills keep running. Without JavaScript the phone menu does nothing; the FAQ still opens.
 
 ## Is it the right base?
 
-This is the right base for an adult school with several languages, fixed evening groups and a free first class. Parents choosing a place for small children are better served by a [day nursery](https://8b.com/templates/mallow-house/) page with rooms by age. The weak spot is booking: there is no calendar and no form, only mailto buttons, so a school with live timetables needs a booking tool. For no code at all, 8B builds sites from a sentence.
+This is the right base for an adult school with several languages, fixed evening groups and a free first class. Parents of small children are better served by a [day nursery](https://8b.com/templates/mallow-house/) page. This light build keeps the same look and scroll behaviour with no script from a CDN: about 23 KB of code gzipped in one file, against about 71 KB and four more requests for the GSAP version. The weak spot is booking: no calendar or form, only mailto buttons.
 
 ## Before you publish
 
@@ -81,7 +81,9 @@ This is the right base for an adult school with several languages, fixed evening
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 79 KB, no build step. Chrome and Edge 108+, Safari 16+, Firefox 110+ (it uses container query units, cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 93 KB, no build step. Chrome and Edge 108+, Safari 16+, Firefox 110+ (it uses container query units, cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 79 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

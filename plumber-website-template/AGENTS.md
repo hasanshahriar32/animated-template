@@ -1,6 +1,6 @@
 # AGENTS.md: plumber website template
 
-One-page website for a plumbing and heating company that fixes and fits boilers, radiators, bathrooms and heat pumps for households and landlords in one city. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a plumbing and heating company that fixes and fits boilers, radiators, bathrooms and heat pumps for households and landlords in one city. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,23 +14,20 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__menu` `.nav__overlay` `.nav__close` `data-area-select` `data-area-text`
   - `section-script:opening`: `.nav__bar` `.op__first`
-  - `scene:opening`: `.op__first` `.op__band` `.op__img` `.op__shade` `.op__title` `.op__line` `.op__tag` `.op__note` `.op__cta` `.op__star` `.op__title2` `.op__tag2` `.op__sides`
-  - `scene:services`: `.sv__row` `.sv__word` `.sv__pic`
-  - `scene:visit`: `.vi__track` `.vi__fill` `.vi__step`
-  - `scene:work`: `.wk__card` `.wk__band` `.wk__dim`
   - `section-script:contact`: `.ct__form` `.ct__status` `data-invalid` `data-done`
-  - `scene:heat`: `.ht__stage` `.ht__half--cold` `.ht__half--hot` `.ht__pic`
-  - `scene:emergency`: `.em__number` `.em__title` `.em__tag` `.m-star`
-  - `scene:contact`: `.ct__band`
+  - `scene-script:opening`: `.op__first` `.op__frame` `.op__img`
+  - `scene-script:visit`: `.vi__track` `.vi__step` `.vi__num`
+  - `scene-script:reviews`: `data-loop-row` `data-8b-items`
 - `style="--len:N"` = characters in that display line, spaces included: `Plumbing and heating` is 20, `engineers for` is 13, `Sheffield` is 9, `Everything between` is 18, `the stopcock and` is 16, `the flue.` is 9, `What we fix` is 11, `and fit` is 7, `Boilers` is 7, `Radiators` is 9, `Underfloor` is 10, `Leaks` is 5, `Bathrooms` is 9, `Cylinders` is 9, `Heat pumps` is 10, `Prices we` is 9, `put in writing` is 14, `How a visit` is 11, `goes` is 4, `Recent` is 6, `jobs` is 4, `Who turns` is 9, `up` is 2, `Boiler or` is 9, `heat pump?` is 10, `What the` is 8, `neighbours say` is 14, `0114 000 0000` is 13, `Before` is 6, `you ask` is 7, `Tell us what's` is 14, `leaking, banging` is 16, `or cold` is 7, `Ferrule` is 7.
 - Every giant line carries style="--len:N", the number of characters in that line, which sizes it to fill its box: the h1 and the second screen's statement, each section heading's two lines, the seven service words, the emergency phone number, the contact heading and the footer wordmark. Set N to the new length whenever a line's text changes (a real phone number of another length needs a new --len on the emergency link).
 - The nav's area select writes the chosen option's value into the one [data-area-text] span in the first screen (section-script:navigation). Keep that attribute on the span, or remove the select together with it.
 - The asterisk (nine inline SVGs: first screen, prices, emergency, six FAQ toggles), the visit line's gradient, the blue and orange cards and tags are drawn from --color-6 (cold blue, plumbing) and --color-3 (hot orange, heating): recolour through these variables, not per element.
-- The job cards stick at stepped tops set per card in the section CSS (#work .wk__card:nth-child(2) to (5)); a sixth card needs its own top rule, or it sticks at the first card's offset.
-- The reviews loop reads data-loop-row on div.rv__viewport and data-8b-items on each ul.rv__row: keep both, or the row stops looping and becomes a static grid.
+- The job cards stick at stepped tops set per card in the section CSS (#work .wk__card:nth-child(2) to (5)); a sixth card needs its own top rule, or it sticks at the first card's offset. The shrink and dim of a covered card are written for four cards (CSS :nth-of-type rules): a fifth card stacks, but the fourth does not shrink under it.
+- The reviews loop reads data-loop-row on div.rv__viewport and data-8b-items on ul.rv__row, and clones the six cards to make the row endless: keep both attributes, or the row stays a static grid.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #f2f2f2 (page ground, the phone menu overlay, and the emergency block's ground before it darkens), `--color-2` #0e0e0e (text, the black Book a visit pill, dark hover fills, the second screen, the emergency block, the footer, finished step numbers), `--color-3` #ff5b1f (hot orange: the main Book a visit and Send request buttons, the Hot side and Most booked tags, the heat pump card, the asterisks, the emergency number, the end of the visit line), `--color-4` #c63d00 (darker orange for small text on the light ground: the first screen's tagline, area line and note, the service tags, the contact tagline and hours, the form's status line), `--color-5` #ffffff (white pills, review cards, job cards, the form and its fields, step number pills, text on the dark blocks and the blue card), `--color-6` #2a4cff (cold blue: the Cold side tag, the Keep a boiler card, the start of the visit line, focus outlines), `--color-7` #c9c9c9 (pill, card and field outlines, hairlines between rows, the visit line's track, footer address and base text), `--color-8` #5c5c5c (secondary text: price notes and dotted leaders, step texts, job and engineer lines, review names, form labels, service words before they darken); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -64,9 +61,9 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the Menu button cannot open the overlay; below 880 px the link pills are hidden, so on phones the footer links (Services, Prices, How a visit goes, Recent work, Questions, Book a visit) are the way to the sections.
 - The call-back form sends nothing yet. With JavaScript a script checks name and phone and shows the thank-you line; without it the browser posts the form to #contact on the same page, which a static host does not handle. Connect it to a form service.
-- Without JavaScript or with reduced motion the opening's second screen is a plain dark panel with the statement and the two lists: the photo reaches it only through the scene.
+- Without CSS scroll-driven animation support (Firefox today), without JavaScript or with reduced motion, the scroll scenes, the reviews loop and the smooth wheel are off: the opening's second screen is a plain dark panel with the statement and the two lists (the photo reaches it only through the scene), the reviews are a grid of cards, and every section shows its final state. The sticky first screen, price and question columns and job cards still hold; Firefox still plays the opening load-in, the photo drift and the asterisk spin.
 - The area select changes only the small line "Engineers out across ... every day." in the first screen; the h1, the emergency line, the footer and the page title still name Sheffield.
 - On phones the hero photo is drawn wider than its tall band, so Lighthouse lists it under properly sized images; heading lines that slide in from the sides are cut at the screen edge for a moment while they move.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Ferrule left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Ferrule left only in class names.

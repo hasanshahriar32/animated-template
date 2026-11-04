@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/nail-salon-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -131,10 +132,6 @@
 @layer base {
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body { margin: 0; background: var(--color-2); color: var(--color-3); font-family: var(--font-2); font-size: 1rem; line-height: 1.6; font-weight: 400; overflow-x: clip; }
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
@@ -214,6 +211,7 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
   #nav .nav__toggle { display: inline-grid; }
   #nav.is-floating .nav__bar { padding: 8px 10px 8px 18px; }
 }
+#nav.is-docked .nav__bar { transform: none; color: var(--color-4); }
 }
 </style>
 <style data-8b-part="section:opening">
@@ -262,9 +260,6 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
   #opening .opening__line { animation: opening-line .95s .08s cubic-bezier(.2,.7,.2,1) backwards; }
   #opening .opening__line + .opening__line { animation-delay: .16s; }
   #opening .orb__body { animation: opening-orb-in 1.1s cubic-bezier(.2,.7,.2,1) backwards; }
-  #opening .orb { animation: opening-float 5.5s ease-in-out 1.1s infinite alternate; }
-  #opening .orb--big { animation-duration: 5s; }
-  #opening .orb--left { animation-duration: 4.2s; }
   #opening .ring__body { animation: opening-orb-in 1.1s cubic-bezier(.2,.7,.2,1) backwards, opening-turn 14s linear 0s infinite; }
   #opening .ring--low .ring__body { animation-direction: normal, reverse; animation-duration: 1.1s, 11s; }
   #opening .opening__field.is-paused .orb, #opening .opening__field.is-paused .ring__body { animation-play-state: paused; }
@@ -272,8 +267,27 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
 @keyframes opening-pane { from { transform: translateY(26px) scale(.985); } }
 @keyframes opening-line { from { transform: translateY(55%); clip-path: inset(-10% -4% 100% -4%); } to { clip-path: inset(-10% -4% -12% -4%); } }
 @keyframes opening-orb-in { from { scale: .78; } }
-@keyframes opening-float { to { translate: 0 -46px; } }
 @keyframes opening-turn { to { rotate: 360deg; } }
+#opening .opening__field { background: radial-gradient(130% 115% at 30% 0%, var(--color-6) 0%, color-mix(in oklab, var(--color-6) 45%, var(--color-5)) 34%, var(--color-5) 72%, color-mix(in oklab, var(--color-5) 78%, var(--color-7)) 100%); }
+#opening .orb--big { display: none; }
+#opening .orb--left { left: calc(31vw - 3.5vw); top: calc(20vh - 3.5vw); }
+#opening .orb--low { width: 13vw; left: calc(93vw - 6.5vw); top: calc(92vh - 6.5vw); }
+#opening .ring--top { left: calc(7vw - 9.5vw); top: calc(74vh - 9.5vw); transform: rotate(-70deg) rotateX(-38deg); }
+#opening .ring--low { left: calc(50vw - 7.5vw); top: calc(90vh - 7.5vw); transform: rotate(50deg) rotateX(-30deg); }
+#opening .opening__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; }
+@media (max-width: 860px) {
+  #opening .orb--left { left: calc(10vw - 6.5vw); top: calc(96vh - 6.5vw); }
+  #opening .orb--low { width: 27vw; left: calc(92vw - 13.5vw); top: calc(50vh - 13.5vw); }
+  #opening .ring--top { left: calc(10vw - 15vw); top: calc(48vh - 15vw); }
+  #opening .ring--low { left: calc(80vw - 11vw); top: calc(97vh - 11vw); }
+  #opening .opening__pane2 { top: 84px; }
+  #opening .opening__photo { top: 54svh; }
+  #opening .opening__cta { gap: 10px 22px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #opening .opening__pane2 { animation: opening-pane 1.1s cubic-bezier(.2,.7,.2,1) backwards; }
+  #opening .opening__photo { animation: opening-pane 1.3s .12s cubic-bezier(.2,.7,.2,1) backwards; }
+}
 }
 </style>
 <style data-8b-part="section:finishes">
@@ -295,24 +309,6 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
   #finishes .finishes__track { grid-template-columns: repeat(2, 1fr); gap: 5vh 16px; }
 }
 @media (max-width: 520px) { #finishes .finishes__track { grid-template-columns: 1fr; } }
-}
-</style>
-<style data-8b-part="scene-style:finishes">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #finishes.is-track { padding: 0; }
-  #finishes.is-track .finishes__stage { position: relative; height: 100vh; height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; padding-top: 10vh; overflow: clip; }
-  #finishes.is-track .finishes__head { margin-bottom: 0; }
-  #finishes.is-track .finishes__track { align-self: center; width: max-content; margin: 0; display: flex; gap: var(--finishes-gap); padding-inline: calc(50vw - var(--finishes-card) / 2); }
-  #finishes.is-track .finish { width: var(--finishes-card); flex: none; }
-  #finishes.is-track .finishes__frost { display: block; position: absolute; left: 0; right: 0; top: var(--finishes-band-top); height: var(--finishes-band-h); pointer-events: none; }
-  #finishes.is-track .finishes__glass { position: absolute; top: 0; bottom: 0; background: color-mix(in oklab, var(--color-2) 40%, transparent); -webkit-backdrop-filter: blur(16px) saturate(1.1); backdrop-filter: blur(16px) saturate(1.1); }
-  #finishes.is-track .finishes__glass--left { left: 0; right: calc(50% + var(--finishes-window) / 2); border-right: 1px solid color-mix(in oklab, var(--color-3) 45%, transparent); }
-  #finishes.is-track .finishes__glass--right { right: 0; left: calc(50% + var(--finishes-window) / 2); border-left: 1px solid color-mix(in oklab, var(--color-3) 45%, transparent); }
-  #finishes.is-track .finishes__frame { position: absolute; top: 0; bottom: 0; left: calc(50% - var(--finishes-window) / 2); width: var(--finishes-window); border-block: 1px solid color-mix(in oklab, var(--color-3) 45%, transparent); }
-  #finishes.is-track .finish__photo img { scale: 1.16; }
-  @media (max-width: 860px) { #finishes.is-track .finishes__stage { padding-top: 12vh; } #finishes.is-track .finishes__head .m-text-4 { font-size: 1rem; } }
-}
 }
 </style>
 <style data-8b-part="section:layers">
@@ -464,16 +460,6 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="scene-style:club">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #club.is-turning .club__cards { grid-template-columns: minmax(0, 34rem); }
-  #club.is-turning .club__card { grid-area: 1 / 1; min-height: 24rem; }
-  #club.is-turning .club__orb { display: block; }
-  @media (max-width: 860px) { #club.is-turning .club__cards { grid-template-columns: 1fr; } #club.is-turning .club__card { min-height: 22rem; } #club.is-turning .club__orb { display: none; } }
-}
-}
-</style>
 <style data-8b-part="section:faq">
 @layer sections {
 #faq { position: relative; overflow: clip; padding: 16vh 0 14vh; background: var(--color-8); color: var(--color-4); }
@@ -535,28 +521,170 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
 @media (max-width: 760px) { #footer .footer__grid { grid-template-columns: 1fr; } }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#nav.is-docked .nav__bar { transform: none; color: var(--color-4); }
-#opening .opening__field { background: radial-gradient(130% 115% at 30% 0%, var(--color-6) 0%, color-mix(in oklab, var(--color-6) 45%, var(--color-5)) 34%, var(--color-5) 72%, color-mix(in oklab, var(--color-5) 78%, var(--color-7)) 100%); }
-#opening .orb--big { display: none; }
-#opening .orb--left { left: calc(31vw - 3.5vw); top: calc(20vh - 3.5vw); }
-#opening .orb--low { width: 13vw; left: calc(93vw - 6.5vw); top: calc(92vh - 6.5vw); }
-#opening .ring--top { left: calc(7vw - 9.5vw); top: calc(74vh - 9.5vw); transform: rotate(-70deg) rotateX(-38deg); }
-#opening .ring--low { left: calc(50vw - 7.5vw); top: calc(90vh - 7.5vw); transform: rotate(50deg) rotateX(-30deg); }
-#opening .opening__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; }
-@media (max-width: 860px) {
-  #opening .orb--left { left: calc(10vw - 6.5vw); top: calc(96vh - 6.5vw); }
-  #opening .orb--low { width: 27vw; left: calc(92vw - 13.5vw); top: calc(50vh - 13.5vw); }
-  #opening .ring--top { left: calc(10vw - 15vw); top: calc(48vh - 15vw); }
-  #opening .ring--low { left: calc(80vw - 11vw); top: calc(97vh - 11vw); }
-  #opening .opening__pane2 { top: 84px; }
-  #opening .opening__photo { top: 54svh; }
-  #opening .opening__cta { gap: 10px 22px; }
+<style data-8b-part="motion">
+@property --motion-surface-glint { syntax: '<percentage>'; inherits: true; initial-value: 140%; }
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] [data-8b-motion~="rise"] .line__in { animation-name: motion-rise-line-in-translate; animation-duration: 0.95s; animation-delay: calc(0s + 0.09s * var(--i)); animation-timing-function: var(--ease-power3-out); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"].is-in .line__in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="drift"] { display: block; view-timeline: --motion-drift block; view-timeline-inset: 0; animation-name: motion-drift-translate; animation-timeline: --motion-drift; animation-range: cover 0% cover calc(50% - 5vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] [data-8b-motion~="glint"] { --surface-glint: var(--motion-surface-glint); animation-name: motion-glint---surface-glint; animation-duration: 1.4s; animation-delay: 0s; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="glint"].is-in { animation-play-state: running; }
+@keyframes motion-rise-line-in-translate { 0% { translate: 0px 110%; } 100% { translate: 0px 0px; } }
+@keyframes motion-drift-translate { 0% { translate: 0px var(--drift-translate-y-from, 48vh); } 100% { translate: 0px 0px; } }
+@keyframes motion-glint---surface-glint { 0% { --motion-surface-glint: -40%; } 100% { --motion-surface-glint: 140%; } }
 }
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+[data-8b-live] #opening .orb { animation: opening-float 5.5s ease-in-out 1.1s infinite alternate; }
+[data-8b-live] #opening .orb--big { animation-duration: 5s; }
+[data-8b-live] #opening .orb--left { animation-duration: 4.2s; }
+@keyframes opening-float { to { translate: 0 -46px; } }
+}
+</style>
+<style data-8b-part="scene:finishes">
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #opening .opening__pane2 { animation: opening-pane 1.1s cubic-bezier(.2,.7,.2,1) backwards; }
-  #opening .opening__photo { animation: opening-pane 1.3s .12s cubic-bezier(.2,.7,.2,1) backwards; }
-}</style>
+  [data-8b-live] #finishes { padding: 0; }
+  [data-8b-live] #finishes .finishes__stage { position: relative; height: 100vh; height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; padding-top: 10vh; overflow: clip; }
+  [data-8b-live] #finishes .finishes__head { margin-bottom: 0; }
+  [data-8b-live] #finishes .finishes__track { align-self: center; width: max-content; margin: 0; display: flex; gap: var(--finishes-gap); padding-inline: calc(50vw - var(--finishes-card) / 2); }
+  [data-8b-live] #finishes .finish { width: var(--finishes-card); flex: none; }
+  [data-8b-live] #finishes .finishes__frost { display: block; position: absolute; left: 0; right: 0; top: var(--finishes-band-top); height: var(--finishes-band-h); pointer-events: none; }
+  [data-8b-live] #finishes .finishes__glass { position: absolute; top: 0; bottom: 0; background: color-mix(in oklab, var(--color-2) 40%, transparent); -webkit-backdrop-filter: blur(16px) saturate(1.1); backdrop-filter: blur(16px) saturate(1.1); }
+  [data-8b-live] #finishes .finishes__glass--left { left: 0; right: calc(50% + var(--finishes-window) / 2); border-right: 1px solid color-mix(in oklab, var(--color-3) 45%, transparent); }
+  [data-8b-live] #finishes .finishes__glass--right { right: 0; left: calc(50% + var(--finishes-window) / 2); border-left: 1px solid color-mix(in oklab, var(--color-3) 45%, transparent); }
+  [data-8b-live] #finishes .finishes__frame { position: absolute; top: 0; bottom: 0; left: calc(50% - var(--finishes-window) / 2); width: var(--finishes-window); border-block: 1px solid color-mix(in oklab, var(--color-3) 45%, transparent); }
+  [data-8b-live] #finishes .finish__photo img { scale: 1.16; }
+  @media (max-width: 860px) { [data-8b-live] #finishes .finishes__stage { padding-top: 12vh; } [data-8b-live] #finishes .finishes__head .m-text-4 { font-size: 1rem; } }
+}
+}
+@layer scenes {
+[data-8b-live] #finishes .finishes-stage-room { view-timeline: --finishes-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #finishes .finishes__stage { position: sticky; top: 0%; }
+[data-8b-live] #finishes .finishes__track { animation-timeline: --finishes-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #finishes .finishes__track > .finish > .finish__photo > img { animation-name: finishes-figure-finish-photo-img-translate; animation-timeline: --finishes-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; scale: 1.16; }
+@keyframes finishes-ol-finishes-track-translate { 0% { translate: 0px 0px; } 100% { translate: calc(-1 * var(--finishes-distance)) 0px; } }
+@keyframes finishes-figure-finish-photo-img-translate { 0% { translate: 6% 0px; } 100% { translate: -6% 0px; } }
+[data-8b-live] #finishes .finishes-stage-room > .finishes-stage-room-space { height: var(--finishes-pin); }
+[data-8b-live] #finishes .finishes__track { animation-name: finishes-ol-finishes-track-translate; animation-range: cover 100vh cover calc(100vh + var(--finishes-pin)); }
+[data-8b-live] #finishes .finishes__track > .finish > .finish__photo > img { animation-range: cover 100vh cover calc(100vh + var(--finishes-pin)); }
+}
+</style>
+<style data-8b-part="scene:layers">
+@property --layers-surface-glint { syntax: '<percentage>'; inherits: true; initial-value: 140%; }
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #layers .layers__photo > img { animation-timeline: --layers-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes layers-figure-layers-photo-img-scale-d { 0% { scale: 1.16; } 100% { scale: 1; } }
+@keyframes layers-figure-layers-photo-img-scale-m { 0% { scale: 1.14; } 100% { scale: 1; } }
+@keyframes layers-li-sheet-translate { 0% { translate: var(--layers-sheet-from); } 100% { translate: 0px 0px; } }
+@keyframes layers-li-sheet-rotate { 0% { rotate: var(--layers-sheet-tilt); } 100% { rotate: 0deg; } }
+@keyframes layers-li-sheet---surface-glint { 0% { --layers-surface-glint: -40%; } 100% { --layers-surface-glint: 140%; } }
+@media (min-width: 861px) {
+  [data-8b-live] #layers .layers-stage-room { view-timeline: --layers-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #layers .layers__stage { position: sticky; top: 0%; }
+  [data-8b-live] #layers .layers-stage-room > .layers-stage-room-space { height: 200vh; }
+  [data-8b-live] #layers .layers__photo > img { animation-name: layers-figure-layers-photo-img-scale-d; animation-range: cover 100vh cover 300vh; }
+  [data-8b-live] #layers .layers__sheets > .sheet { animation-timeline: --layers-t1; animation-range: cover calc(100vh + 45vh * var(--i)) cover calc(140vh + 45vh * var(--i)), cover calc(100vh + 45vh * var(--i)) cover calc(140vh + 45vh * var(--i)), cover calc(130vh + 45vh * var(--i)) cover calc(155vh + 45vh * var(--i)); animation-timing-function: var(--ease-power3-out), cubic-bezier(0.25, 1, 0.5, 1), var(--ease-power2-inout); animation-name: layers-li-sheet-translate, layers-li-sheet-rotate, layers-li-sheet---surface-glint; animation-fill-mode: both; transform: none; --layers-sheet-from: 10% 95vh; --layers-sheet-tilt: 5deg; --surface-glint: var(--layers-surface-glint); }
+  [data-8b-live] #layers .layers__sheets > li:nth-of-type(2n+2) { --layers-sheet-tilt: -5deg; }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #layers .layers__photo > img { animation-name: layers-figure-layers-photo-img-scale-m; animation-range: cover 0% cover 50%; }
+  [data-8b-live] #layers { view-timeline: --layers-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #layers .layers__sheets > .sheet { view-timeline: --layers-sheet block; view-timeline-inset: 0; animation-name: layers-li-sheet-translate, layers-li-sheet-rotate, layers-li-sheet---surface-glint; animation-timeline: --layers-sheet; animation-range: cover 0% cover 42.857vh, cover 0% cover 42.857vh, cover 23.571vh cover 45vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1), cubic-bezier(0.3333, 1, 0.6667, 1), var(--ease-power2-inout); animation-fill-mode: both; transform: none; --layers-sheet-from: 8% 22vh; --layers-sheet-tilt: 4deg; --surface-glint: var(--layers-surface-glint); }
+  [data-8b-live] #layers .layers__sheets > li:nth-of-type(2n+2) { --layers-sheet-tilt: -4deg; }
+}
+}
+</style>
+<style data-8b-part="scene:studio">
+@layer scenes {
+[data-8b-live] #studio { timeline-scope: --studio-t1; }
+[data-8b-live] #studio .studio__list { view-timeline: --studio-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #studio .studio__frame > img { animation-name: studio-figure-studio-frame-img-scale, studio-figure-studio-frame-img-translate; animation-timeline: --studio-t1; animation-range: cover 30vh cover calc(100% - 30vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; transform-origin: 50% 50%; }
+@keyframes studio-figure-studio-frame-img-scale { 0% { scale: 1; } 21.0526% { scale: 1.55; } 26.3158% { scale: 1.55; } 47.3684% { scale: 1.75; } 52.6316% { scale: 1.75; } 73.6842% { scale: 1.6; } 78.9474% { scale: 1.6; } 100% { scale: 1; } }
+@keyframes studio-figure-studio-frame-img-translate { 0% { translate: 0px 0px; } 21.0526% { translate: 17% 4%; } 26.3158% { translate: 17% 4%; } 47.3684% { translate: -6% 6%; } 52.6316% { translate: -6% 6%; } 73.6842% { translate: -18% 16%; } 78.9474% { translate: -18% 16%; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:file">
+@property --file-fill { syntax: '<number>'; inherits: true; initial-value: 0; }
+@layer scenes {
+[data-8b-live] #file .file__notes > .care > .m-text-3 { background-color: rgb(from var(--color-5) calc(255 - (255 - r) * var(--file-fill)) calc(255 - (255 - g) * var(--file-fill)) calc(255 - (255 - b) * var(--file-fill)) / var(--file-fill)); }
+[data-8b-live] #file { timeline-scope: --file-t2, --file-t3, --file-t4, --file-t5; }
+[data-8b-live] #file .file__care { view-timeline: --file-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #file .file__notes > .care > .m-text-3 { view-timeline-inset: 0; animation-name: file-span-m-text-3-fill; animation-range: cover calc(50% - 25vh) cover calc(50% + 25vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; }
+[data-8b-live] #file .file__notes > li:nth-of-type(1) > .m-text-3 { view-timeline: --file-t2 block; animation-timeline: --file-t2; }
+[data-8b-live] #file .file__notes > li:nth-of-type(2) > .m-text-3 { view-timeline: --file-t3 block; animation-timeline: --file-t3; }
+[data-8b-live] #file .file__notes > li:nth-of-type(3) > .m-text-3 { view-timeline: --file-t4 block; animation-timeline: --file-t4; }
+[data-8b-live] #file .file__notes > li:nth-of-type(4) > .m-text-3 { view-timeline: --file-t5 block; animation-timeline: --file-t5; }
+[data-8b-live] #file .file__ring-body { animation-name: file-span-file-ring-body-rotate; animation-timeline: --file-t1; animation-range: cover 65vh cover calc(100% - 65vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #file .file__notes > .care > .m-text-5 { animation-name: file-h3-m-text-5-translate, file-h3-m-text-5-color; animation-range: cover calc(50% - 25vh) cover calc(50% + 25vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #file .file__notes > li:nth-of-type(1) > .m-text-5, [data-8b-live] #file .file__notes > li:nth-of-type(1) > .m-text { animation-timeline: --file-t2; }
+[data-8b-live] #file .file__notes > .care > .m-text { animation-name: file-h3-m-text-5-translate; animation-range: cover calc(50% - 25vh) cover calc(50% + 25vh); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #file .file__notes > li:nth-of-type(2) > .m-text-5, [data-8b-live] #file .file__notes > li:nth-of-type(2) > .m-text { animation-timeline: --file-t3; }
+[data-8b-live] #file .file__notes > li:nth-of-type(3) > .m-text-5, [data-8b-live] #file .file__notes > li:nth-of-type(3) > .m-text { animation-timeline: --file-t4; }
+[data-8b-live] #file .file__notes > li:nth-of-type(4) > .m-text-5, [data-8b-live] #file .file__notes > li:nth-of-type(4) > .m-text { animation-timeline: --file-t5; }
+@keyframes file-span-file-ring-body-rotate { 0% { rotate: 0deg; } 0.002% { rotate: 0.108deg; } 100% { rotate: 540deg; } }
+@keyframes file-h3-m-text-5-translate { 0% { translate: 0px 0px; } 50% { translate: 18px 0px; } 100% { translate: 0px 0px; } }
+@keyframes file-h3-m-text-5-color { 0% { color: var(--color-4); } 50% { color: var(--color-7); } 100% { color: var(--color-4); } }
+@keyframes file-span-m-text-3-fill { 0% { --file-fill: 0; } 50% { --file-fill: 1; } 100% { --file-fill: 0; } }
+}
+</style>
+<style data-8b-part="scene:club">
+@property --club-surface-glint { syntax: '<percentage>'; inherits: true; initial-value: 140%; }
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #club .club__cards { grid-template-columns: minmax(0, 34rem); }
+  [data-8b-live] #club .club__card { grid-area: 1 / 1; min-height: 24rem; }
+  [data-8b-live] #club .club__orb { display: block; }
+  @media (max-width: 860px) { [data-8b-live] #club .club__cards { grid-template-columns: 1fr; } [data-8b-live] #club .club__card { min-height: 22rem; } [data-8b-live] #club .club__orb { display: none; } }
+}
+[data-8b-live] #club .club-stage-room { view-timeline: --club-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #club .club-stage-room > .club-stage-room-space { height: 160vh; }
+[data-8b-live] #club .club__stage { position: sticky; top: 0%; }
+[data-8b-live] #club .club__card--front, [data-8b-live] #club .club__card--back, [data-8b-live] #club .club__orb { animation-timeline: --club-t1; animation-range: cover 100vh cover 260vh; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #club .club__card--front { animation-name: club-front; transform-origin: 50% 100%; }
+[data-8b-live] #club .club__card--back { animation-name: club-back, club-back-glint; animation-timeline: --club-t1, --club-t1; animation-range: cover 100vh cover 260vh, cover 234.194vh cover 260vh; animation-timing-function: linear, linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); --surface-glint: var(--club-surface-glint); }
+[data-8b-live] #club .club__orb { animation-name: club-orb; }
+@keyframes club-front {
+  0% { transform: perspective(1100px) translateY(20vh) rotateY(0deg) rotateX(58deg) scale(.82); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+  32.258% { transform: perspective(1100px) translateY(0) rotateY(0deg) rotateX(0deg) scale(1); }
+  45.161% { transform: perspective(1100px) translateY(0) rotateY(0deg) rotateX(0deg) scale(1); animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0); }
+  67.742%, 100% { transform: perspective(1100px) translateY(0) rotateY(-90deg) rotateX(0deg) scale(1); }
+}
+@keyframes club-back {
+  0% { transform: perspective(1100px) rotateY(90deg); }
+  67.742% { transform: perspective(1100px) rotateY(90deg); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+  90.323%, 100% { transform: perspective(1100px) rotateY(0deg); }
+}
+@keyframes club-back-glint { 0% { --club-surface-glint: -40%; } 100% { --club-surface-glint: 140%; } }
+@keyframes club-orb {
+  0% { translate: 0px 30vh; scale: .7; }
+  96.774%, 100% { translate: -3vw 0px; scale: 1; }
+}
+}
+</style>
+<style data-8b-part="scene:visit">
+@layer scenes {
+[data-8b-live] { --ease-power1-inout: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); }
+[data-8b-live] #visit { view-timeline: --visit-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #visit .visit__orb, [data-8b-live] #visit .visit__ring, [data-8b-live] #visit .visit__dot { animation-timeline: --visit-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #visit .visit__orb { animation-range: cover 0% cover calc(100% - 100vh); animation-timing-function: var(--ease-power1-inout), cubic-bezier(0.45, 0, 0.55, 1); }
+[data-8b-live] #visit .visit__ring { animation-range: cover 0% cover calc(100% - 100vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] #visit .visit__dot { animation-name: visit-span-visit-dot-translate; animation-range: cover 0% cover 85vh; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); }
+@keyframes visit-span-visit-orb-translate { 0% { translate: -18vw calc(var(--visit-height) * -.85); } 100% { translate: 0px 0px; } }
+@keyframes visit-span-visit-orb-scale { 0% { scale: 0.6; } 100% { scale: 1; } }
+@keyframes visit-span-visit-ring-translate { 0% { translate: 90vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes visit-span-visit-ring-rotate { 0% { rotate: 200deg; } 100% { rotate: 0deg; } }
+@keyframes visit-span-visit-dot-translate { 0% { translate: 0px 50vh; } 100% { translate: 0px 0px; } }
+[data-8b-live] #visit .visit__orb { animation-name: visit-span-visit-orb-translate, visit-span-visit-orb-scale; }
+[data-8b-live] #visit .visit__ring { animation-name: visit-span-visit-ring-translate, visit-span-visit-ring-rotate; }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <a class="skip m-text-3" href="#main">Skip to content</a>
@@ -573,7 +701,7 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
     </nav>
     <button class="m-icon-btn nav__toggle" type="button" aria-expanded="false" aria-controls="site-menu"><span class="m-icon-btn__icon" aria-hidden="true"></span><span class="sr-only">Open menu</span></button>
   </div>
-  <div class="menu" id="site-menu" data-lenis-prevent hidden>
+  <div class="menu" id="site-menu" hidden>
     <div class="menu__top">
       <span class="nav__mark">Glaze</span>
       <button class="m-icon-btn menu__close" type="button"><span class="m-icon-btn__icon" aria-hidden="true"></span><span class="sr-only">Close menu</span></button>
@@ -592,7 +720,7 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
   </div>
 </header>
 <main id="main">
-<!-- opening: one screen: a peach glass pane with the heading "Layers, not coats", a paragraph, a Book a chair button and a link, beside a photo of orange gel nails, over floating orbs and rings -->
+<!-- opening: one screen: a peach glass pane with the heading "Layers, not coats", a paragraph, a Book a chair button and a link, beside a photo of orange gel nails, over floating orbs and rings (animation: scene:opening) -->
 <section class="opening" id="opening" data-8b-section="opening" aria-labelledby="opening-title">
   <div class="opening__field" aria-hidden="true" data-loop>
     <span class="orb orb--low"><span class="orb__move"><span class="orb__body"></span></span></span>
@@ -603,7 +731,7 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
   </div>
   
   <div class="opening__screen opening__screen--second">
-    <figure class="opening__photo"><img style="background:#d9c0a6" src="https://images.unsplash.com/photo-1635791283756-f1b4fbd920ae?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8b3JhbmdlJTIwbmFpbHN8ZW58MXwwfHx8MTc5MTQxMDM0NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="Hands resting on torn denim, every nail in glossy orange gel" width="1600" height="1067" loading="lazy"></figure>
+    <figure class="opening__photo"><img fetchpriority="high" src="https://images.unsplash.com/photo-1635791283756-f1b4fbd920ae?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8b3JhbmdlJTIwbmFpbHN8ZW58MXwwfHx8MTc5MTQxMDM0NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=870&amp;q=60" alt="Hands resting on torn denim, every nail in glossy orange gel" width="1600" height="1067"></figure>
     <div class="opening__pane2 m-surface-2">
       <h1 class="m-text-2" id="opening-title">Layers, not coats</h1>
       <p class="m-text">A coat of polish sits on top of the nail. A layer of gel becomes part of it: brushed thin, cured for sixty seconds, then the next. Six to nine of them make a set that stays glassy for three weeks and comes off without taking the nail with it.</p>
@@ -615,32 +743,32 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
 <section class="finishes" id="finishes" data-8b-section="finishes">
   <div class="finishes__stage">
     <div class="wrap finishes__head">
-      <h2 class="m-text-2" data-8b-motion="rise">Six finishes, one gloss</h2>
+      <h2 class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Six finishes, one gloss</h2>
       <p class="m-text-4">Every set starts on the same clear base. What changes is what we lay inside the glass, and how many layers it takes.</p>
     </div>
-    <ol class="finishes__track">
+    <ol class="finishes__track" data-8b-items=":scope > .finish">
       <li class="finish">
-        <figure class="finish__photo"><img style="background:#c0a68c" src="https://images.unsplash.com/photo-1645566372784-7d017ad7643b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cmVkJTIwbmFpbHN8ZW58MXwxfHx8MTc5MTQxMDQxMHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="Long almond nails in deep glossy red against a black ground" width="1200" height="1800" loading="lazy"></figure>
+        <figure class="finish__photo"><img src="https://images.unsplash.com/photo-1645566372784-7d017ad7643b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cmVkJTIwbmFpbHN8ZW58MXwxfHx8MTc5MTQxMDQxMHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="Long almond nails in deep glossy red against a black ground" width="1200" height="1800" loading="lazy"></figure>
         <div class="finish__text"><h3 class="m-text-5">Glass</h3><p class="m-text">Sheer, high-shine colour in three passes, so the light goes through it and back.</p><p class="m-text-3 finish__price">From £42</p></div>
       </li>
       <li class="finish">
-        <figure class="finish__photo"><img style="background:#26260c" src="https://images.unsplash.com/photo-1736434518489-0eb84070017f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bWFuaWN1cmV8ZW58MXwxfHx8MTc5MTQxMDQxMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="A hand with silver chrome almond nails in front of orange marigolds" width="1200" height="1800" loading="lazy"></figure>
+        <figure class="finish__photo"><img src="https://images.unsplash.com/photo-1736434518489-0eb84070017f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bWFuaWN1cmV8ZW58MXwxfHx8MTc5MTQxMDQxMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="A hand with silver chrome almond nails in front of orange marigolds" width="1200" height="1800" loading="lazy"></figure>
         <div class="finish__text"><h3 class="m-text-5">Chrome</h3><p class="m-text">Pigment powder buffed into the last layer: liquid metal, sealed completely flat.</p><p class="m-text-3 finish__price">From £52</p></div>
       </li>
       <li class="finish">
-        <figure class="finish__photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1754799670410-b282791342c3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTh8fG1hbmljdXJlfGVufDF8MXx8fDE3OTE0MTA0MTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="Two hands in white sleeves with milky white nails and small painted hearts" width="1200" height="1500" loading="lazy"></figure>
+        <figure class="finish__photo"><img src="https://images.unsplash.com/photo-1754799670410-b282791342c3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTh8fG1hbmljdXJlfGVufDF8MXx8fDE3OTE0MTA0MTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="Two hands in white sleeves with milky white nails and small painted hearts" width="1200" height="1500" loading="lazy"></figure>
         <div class="finish__text"><h3 class="m-text-5">Milk</h3><p class="m-text">Soft white suspended in clear gel, with hand-painted details floating on top.</p><p class="m-text-3 finish__price">From £48</p></div>
       </li>
       <li class="finish">
-        <figure class="finish__photo"><img style="background:#d9d9c0" src="https://images.unsplash.com/photo-1643648854897-7b5845b4c04c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fG1hbmljdXJlfGVufDF8MXx8fDE3OTE0MTA0MTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="A relaxed hand with short nude nails resting on white fur" width="1200" height="1915" loading="lazy"></figure>
+        <figure class="finish__photo"><img src="https://images.unsplash.com/photo-1643648854897-7b5845b4c04c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fG1hbmljdXJlfGVufDF8MXx8fDE3OTE0MTA0MTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="A relaxed hand with short nude nails resting on white fur" width="1200" height="1915" loading="lazy"></figure>
         <div class="finish__text"><h3 class="m-text-5">Bare</h3><p class="m-text">Builder gel tinted to your own nail: strength and shape without looking done.</p><p class="m-text-3 finish__price">From £45</p></div>
       </li>
       <li class="finish">
-        <figure class="finish__photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1754799670312-8e7da8e40ad7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fG1hbmljdXJlfGVufDF8MXx8fDE3OTE0MTA0MTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="Hands with nails in navy, gold and white, each one different" width="1200" height="1500" loading="lazy"></figure>
+        <figure class="finish__photo"><img src="https://images.unsplash.com/photo-1754799670312-8e7da8e40ad7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fG1hbmljdXJlfGVufDF8MXx8fDE3OTE0MTA0MTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="Hands with nails in navy, gold and white, each one different" width="1200" height="1500" loading="lazy"></figure>
         <div class="finish__text"><h3 class="m-text-5">Duo</h3><p class="m-text">Two colours on each hand, set side by side or one laid inside the other.</p><p class="m-text-3 finish__price">From £50</p></div>
       </li>
       <li class="finish">
-        <figure class="finish__photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1777287852750-53eb2ca506e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fG5haWwlMjBhcnR8ZW58MXwwfHx8MTc5MTQxMDM4MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1140&amp;q=60" alt="Long sculpted pointed nails with red ombre and fine silver lines" width="1200" height="855" loading="lazy"></figure>
+        <figure class="finish__photo"><img src="https://images.unsplash.com/photo-1777287852750-53eb2ca506e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fG5haWwlMjBhcnR8ZW58MXwwfHx8MTc5MTQxMDM4MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1140&amp;q=60" alt="Long sculpted pointed nails with red ombre and fine silver lines" width="1200" height="855" loading="lazy"></figure>
         <div class="finish__text"><h3 class="m-text-5">Sculpt</h3><p class="m-text">Length built in gel on a form, filed by hand, then painted layer by layer.</p><p class="m-text-3 finish__price">From £68</p></div>
       </li>
     </ol>
@@ -650,12 +778,12 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
 <!-- layers: a photo of a nail artist at work with four smoked glass sheets laid over its edge (demo: Prep, Base, Colour, Seal) (animation: scene:layers) -->
 <section class="layers" id="layers" data-8b-section="layers">
   <div class="wrap layers__intro">
-    <h2 class="m-text-2" data-8b-motion="rise">Built in four layers</h2>
+    <h2 class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Built in four layers</h2>
     <p class="m-text-4">A set takes fifty to eighty minutes. Most of it is waiting for the lamp, and we never rush the lamp.</p>
   </div>
   <div class="layers__stage">
-    <figure class="layers__photo"><img style="background:#264040" src="https://images.unsplash.com/photo-1659391542239-9648f307c0b1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bmFpbCUyMHRlY2huaWNpYW58ZW58MXwwfHx8MTc5MTQxMDM4Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1210&amp;q=60" alt="A nail artist brushing pale gel onto a client's nails, her own nails in teal" width="1200" height="798" loading="lazy"></figure>
-      <ol class="layers__sheets">
+    <figure class="layers__photo"><img src="https://images.unsplash.com/photo-1659391542239-9648f307c0b1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bmFpbCUyMHRlY2huaWNpYW58ZW58MXwwfHx8MTc5MTQxMDM4Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1400&amp;q=60" alt="A nail artist brushing pale gel onto a client's nails, her own nails in teal" width="1200" height="798" loading="lazy"></figure>
+      <ol class="layers__sheets" data-8b-items=":scope > .sheet" data-8b-fixed="4">
         <li class="sheet m-surface"><span class="m-text-3">Layer 1</span><h3 class="m-text-5">Prep</h3><p class="m-text">Cuticles pushed back, never cut. The surface buffed just enough for gel to hold.</p></li>
         <li class="sheet m-surface"><span class="m-text-3">Layer 2</span><h3 class="m-text-5">Base</h3><p class="m-text">A thin structured base levels each nail and carries its shape.</p></li>
         <li class="sheet m-surface"><span class="m-text-3">Layer 3</span><h3 class="m-text-5">Colour</h3><p class="m-text">Two or three sheer passes, each cured for sixty seconds before the next.</p></li>
@@ -668,42 +796,42 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
   <div class="wrap studio__grid">
     <div class="studio__notes">
       <div class="studio__intro">
-        <h2 class="m-text-2" data-8b-motion="rise">The room on Example Street</h2>
+        <h2 class="m-text-2" data-8b-motion="rise" data-8b-split="lines">The room on Example Street</h2>
         <p class="m-text-4">Six tables along one long window, a low sofa for waiting and nothing louder than a murmur. Weekday mornings from ten to eleven are talk-free.</p>
       </div>
-      <ol class="studio__list">
+      <ol class="studio__list" data-8b-items=":scope > .note">
         <li class="note m-surface-3"><h3 class="m-text-5">The sofa</h3><p class="m-text">Wait here with tea, or bring a friend along: the second chair at every table is for them.</p></li>
         <li class="note m-surface-3"><h3 class="m-text-5">The side table</h3><p class="m-text">Pot tea, oat milk and a dish of clementines. Your hands stay free while the lamp does its work.</p></li>
         <li class="note m-surface-3"><h3 class="m-text-5">The long window</h3><p class="m-text">Daylight from nine until four, so the colour you choose is the colour you will see outside.</p></li>
       </ol>
     </div>
-    <div class="studio__frame-col"><figure class="studio__frame"><img style="background:#c0a68c" src="https://images.unsplash.com/photo-1611211235015-e2e3a7d09e97?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8YmVhdXR5JTIwc2Fsb24lMjBpbnRlcmlvcnxlbnwxfDB8fHwxNzkxNDEwMzgxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" alt="The studio's waiting corner: a pale sofa with orange cushions, a small table with a cup and a tall plant by the window" width="1600" height="1087" loading="lazy"></figure></div>
+    <div class="studio__frame-col"><figure class="studio__frame"><img src="https://images.unsplash.com/photo-1611211235015-e2e3a7d09e97?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8YmVhdXR5JTIwc2Fsb24lMjBpbnRlcmlvcnxlbnwxfDB8fHwxNzkxNDEwMzgxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=60" alt="The studio's waiting corner: a pale sofa with orange cushions, a small table with a cup and a tall plant by the window" width="1600" height="1087" loading="lazy"></figure></div>
   </div>
 </section>
 <!-- artists: four artists as glass strips with name, specialty and working days, each with a photo of their work (demo: Mara Osei, Juno Bell, Ines Varga, Theo Lam) -->
 <section class="artists" id="artists" data-8b-section="artists">
-  <span class="artists__orb" aria-hidden="true" data-8b-motion="drift" data-depth="1.6"></span>
+  <span class="artists__orb" aria-hidden="true" data-8b-motion="drift" data-depth="1.6" style="--drift-translate-y-from: 48vh"></span>
   <div class="wrap">
     <div class="artists__head">
-      <h2 class="m-text-2" data-8b-motion="rise">Four people, six tables</h2>
+      <h2 class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Four people, six tables</h2>
       <p class="m-text-4">Each artist keeps her own lamp and her own regulars. Book one by name, or tell us the finish and we will match you.</p>
     </div>
-    <ul class="artists__list">
+    <ul class="artists__list" data-8b-items=":scope > .artist">
       <li class="artist">
-        <figure class="artist__photo"><img style="background:#c08c73" src="https://images.unsplash.com/photo-1735236007245-9dc6e28bbe56?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bmFpbCUyMGFydHxlbnwxfDB8fHwxNzkxNDEwMzgwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Nails hand-painted with white winter trees on blue and grey" width="1200" height="933" loading="lazy"></figure>
-        <div class="artist__strip m-surface" data-8b-motion="glint"><h3 class="m-text-2 artist__name">Mara Osei</h3><div class="artist__meta"><p class="m-text-3">Hand-painting and fine line</p><p class="m-text-3">Tuesday to Saturday</p></div></div>
+        <figure class="artist__photo"><img src="https://images.unsplash.com/photo-1735236007245-9dc6e28bbe56?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bmFpbCUyMGFydHxlbnwxfDB8fHwxNzkxNDEwMzgwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Nails hand-painted with white winter trees on blue and grey" width="1200" height="933" loading="lazy"></figure>
+        <div class="artist__strip m-surface" data-8b-motion="glint" data-8b-enter="75%"><h3 class="m-text-2 artist__name">Mara Osei</h3><div class="artist__meta"><p class="m-text-3">Hand-painting and fine line</p><p class="m-text-3">Tuesday to Saturday</p></div></div>
       </li>
       <li class="artist">
-        <figure class="artist__photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1777288390469-828f8816231c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fG5haWwlMjBhcnR8ZW58MXwwfHx8MTc5MTQxMDM4MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" alt="Almond nails in black, silver and gold metallic patterns, with chunky gold rings" width="1200" height="724" loading="lazy"></figure>
-        <div class="artist__strip m-surface" data-8b-motion="glint"><h3 class="m-text-2 artist__name">Juno Bell</h3><div class="artist__meta"><p class="m-text-3">Chrome and metallics</p><p class="m-text-3">Wednesday to Sunday</p></div></div>
+        <figure class="artist__photo"><img src="https://images.unsplash.com/photo-1777288390469-828f8816231c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fG5haWwlMjBhcnR8ZW58MXwwfHx8MTc5MTQxMDM4MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" alt="Almond nails in black, silver and gold metallic patterns, with chunky gold rings" width="1200" height="724" loading="lazy"></figure>
+        <div class="artist__strip m-surface" data-8b-motion="glint" data-8b-enter="75%"><h3 class="m-text-2 artist__name">Juno Bell</h3><div class="artist__meta"><p class="m-text-3">Chrome and metallics</p><p class="m-text-3">Wednesday to Sunday</p></div></div>
       </li>
       <li class="artist">
-        <figure class="artist__photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1704757671022-e023c45c9d2f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZnJlbmNoJTIwbWFuaWN1cmV8ZW58MXwwfHx8MTc5MTQxMDM4MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=60" alt="Soft white ombre nails beside two pink orchid flowers" width="1200" height="800" loading="lazy"></figure>
-        <div class="artist__strip m-surface" data-8b-motion="glint"><h3 class="m-text-2 artist__name">Ines Varga</h3><div class="artist__meta"><p class="m-text-3">Nail health and bare sets</p><p class="m-text-3">Tuesday to Friday</p></div></div>
+        <figure class="artist__photo"><img src="https://images.unsplash.com/photo-1704757671022-e023c45c9d2f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZnJlbmNoJTIwbWFuaWN1cmV8ZW58MXwwfHx8MTc5MTQxMDM4MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=60" alt="Soft white ombre nails beside two pink orchid flowers" width="1200" height="800" loading="lazy"></figure>
+        <div class="artist__strip m-surface" data-8b-motion="glint" data-8b-enter="75%"><h3 class="m-text-2 artist__name">Ines Varga</h3><div class="artist__meta"><p class="m-text-3">Nail health and bare sets</p><p class="m-text-3">Tuesday to Friday</p></div></div>
       </li>
       <li class="artist">
-        <figure class="artist__photo"><img src="https://images.unsplash.com/photo-1748163432725-454f46f68340?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjZ8fG1hbmljdXJlfGVufDF8MXx8fDE3OTE0MTA0MTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Two hands with short glossy red nails against a pale wall" width="1200" height="1800" loading="lazy" style="background:#d9d9d9;object-position: 50% 30%"></figure>
-        <div class="artist__strip m-surface" data-8b-motion="glint"><h3 class="m-text-2 artist__name">Theo Lam</h3><div class="artist__meta"><p class="m-text-3">Sculpted length</p><p class="m-text-3">Thursday to Sunday</p></div></div>
+        <figure class="artist__photo"><img src="https://images.unsplash.com/photo-1748163432725-454f46f68340?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjZ8fG1hbmljdXJlfGVufDF8MXx8fDE3OTE0MTA0MTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Two hands with short glossy red nails against a pale wall" width="1200" height="1800" loading="lazy" style="object-position: 50% 30%"></figure>
+        <div class="artist__strip m-surface" data-8b-motion="glint" data-8b-enter="75%"><h3 class="m-text-2 artist__name">Theo Lam</h3><div class="artist__meta"><p class="m-text-3">Sculpted length</p><p class="m-text-3">Thursday to Sunday</p></div></div>
       </li>
     </ul>
   </div>
@@ -712,13 +840,13 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
 <section class="file" id="file" data-8b-section="file">
   <div class="wrap file__grid">
     <div class="file__lead">
-      <h2 class="m-text-2" data-8b-motion="rise">Your file is yours</h2>
+      <h2 class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Your file is yours</h2>
       <p class="m-text-4">Your first visit ends with a glass file etched with your initials. It waits in a drawer here between visits, or goes home with you. Never shared, never thrown away.</p>
-      <figure class="file__photo"><img style="background:#595959" src="https://images.unsplash.com/photo-1706040285481-28cc91e92c36?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bmFpbCUyMGZpbGV8ZW58MXwwfHx8MTc5MTQxMDQwN3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A nail artist shaping a client's red nails with a lilac file" width="1200" height="800" loading="lazy"></figure>
+      <figure class="file__photo"><img src="https://images.unsplash.com/photo-1706040285481-28cc91e92c36?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bmFpbCUyMGZpbGV8ZW58MXwwfHx8MTc5MTQxMDQwN3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A nail artist shaping a client's red nails with a lilac file" width="1200" height="800" loading="lazy"></figure>
     </div>
     <div class="file__care">
       <span class="file__ring" aria-hidden="true"><span class="file__ring-body"></span></span>
-      <ol class="file__notes">
+      <ol class="file__notes" data-8b-items=":scope > .care" data-8b-fixed="4">
         <li class="care"><span class="m-text-3 care__step">1</span><h3 class="m-text-5">Oil at night</h3><p class="m-text">A drop of cuticle oil before bed keeps the edges sealed and stops them lifting.</p></li>
         <li class="care"><span class="m-text-3 care__step">2</span><h3 class="m-text-5">File one way</h3><p class="m-text">Short strokes in one direction with your own glass file. Sawing back and forth splits the edge.</p></li>
         <li class="care"><span class="m-text-3 care__step">3</span><h3 class="m-text-5">Gloves at the sink</h3><p class="m-text">Hot water and washing-up liquid soften gel faster than anything else you will do all week.</p></li>
@@ -729,18 +857,18 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
 </section>
 <!-- prices: one light glass price sheet with three groups, Hands, Feet and Extras, over orbs and a ring -->
 <section class="prices" id="prices" data-8b-section="prices">
-  <span class="prices__orb prices__orb--a" aria-hidden="true" data-8b-motion="drift" data-depth="1.5"></span>
-  <span class="prices__ring" aria-hidden="true" data-8b-motion="drift" data-depth="2.2"><span class="prices__ring-body"></span></span>
-  <span class="prices__orb prices__orb--b" aria-hidden="true" data-8b-motion="drift" data-depth="-1"></span>
+  <span class="prices__orb prices__orb--a" aria-hidden="true" data-8b-motion="drift" data-depth="1.5" style="--drift-translate-y-from: 45vh"></span>
+  <span class="prices__ring" aria-hidden="true" data-8b-motion="drift" data-depth="2.2" style="--drift-translate-y-from: 66vh"><span class="prices__ring-body"></span></span>
+  <span class="prices__orb prices__orb--b" aria-hidden="true" data-8b-motion="drift" data-depth="-1" style="--drift-translate-y-from: -30vh"></span>
   <div class="wrap prices__inner">
     <div class="prices__head">
-      <h2 class="m-text-2" data-8b-motion="rise">Prices</h2>
+      <h2 class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Prices</h2>
       <p class="m-text-4">Every price includes soaking off our own gel and a short hand massage. Card or phone payment only.</p>
     </div>
-    <div class="prices__sheet m-surface-3" data-8b-motion="glint">
+    <div class="prices__sheet m-surface-3" data-8b-motion="glint" data-8b-enter="75%">
       <div class="prices__group">
         <h3 class="m-text-5">Hands</h3>
-        <dl class="prices__list">
+        <dl class="prices__list" data-8b-items=":scope > .price">
           <div class="price"><dt class="m-text">Glass gel manicure</dt><dd class="m-text">£42</dd></div>
           <div class="price"><dt class="m-text">Milk with painted detail</dt><dd class="m-text">£48</dd></div>
           <div class="price"><dt class="m-text">Duo, two colours a hand</dt><dd class="m-text">£50</dd></div>
@@ -754,7 +882,7 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
       <div class="prices__col">
         <div class="prices__group">
           <h3 class="m-text-5">Feet</h3>
-          <dl class="prices__list">
+          <dl class="prices__list" data-8b-items=":scope > .price">
             <div class="price"><dt class="m-text">Gel pedicure</dt><dd class="m-text">£48</dd></div>
             <div class="price"><dt class="m-text">Bare pedicure, no colour</dt><dd class="m-text">£36</dd></div>
             <div class="price"><dt class="m-text">Hands and feet together</dt><dd class="m-text">£82</dd></div>
@@ -762,7 +890,7 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
         </div>
         <div class="prices__group">
           <h3 class="m-text-5">Extras</h3>
-          <dl class="prices__list">
+          <dl class="prices__list" data-8b-items=":scope > .price">
             <div class="price"><dt class="m-text">Hand-painted art, per nail</dt><dd class="m-text">£3–8</dd></div>
             <div class="price"><dt class="m-text">Repair, one nail</dt><dd class="m-text">£6</dd></div>
             <div class="price"><dt class="m-text">Paraffin hand soak</dt><dd class="m-text">£10</dd></div>
@@ -777,7 +905,7 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
   <div class="club__stage">
     <span class="club__orb" aria-hidden="true"></span>
     <div class="wrap club__head">
-      <h2 class="m-text-2" data-8b-motion="rise">The three-week club</h2>
+      <h2 class="m-text-2" data-8b-motion="rise" data-8b-split="lines">The three-week club</h2>
       <p class="m-text-4">Your next set booked before you leave, every time, for one monthly price.</p>
     </div>
     <div class="wrap club__cards">
@@ -788,7 +916,7 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
       </article>
       <article class="club__card club__card--back m-surface">
         <div class="club__brand"><h3 class="m-text-5">What it includes</h3><span class="m-text-3">Card two of two</span></div>
-        <ul class="club__perks">
+        <ul class="club__perks" data-8b-items=":scope > li">
           <li class="m-text">A refill or new colour every three weeks</li>
           <li class="m-text">First pick of the Saturday tables</li>
           <li class="m-text">Your glass file kept here and cleaned each visit</li>
@@ -802,13 +930,13 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
 </section>
 <!-- faq: five questions and answers as native <details> rows on light glass, with an orb behind and a sticky heading -->
 <section class="faq" id="faq" data-8b-section="faq">
-  <span class="faq__orb" aria-hidden="true" data-8b-motion="drift" data-depth="1.8"></span>
+  <span class="faq__orb" aria-hidden="true" data-8b-motion="drift" data-depth="1.8" style="--drift-translate-y-from: 54vh"></span>
   <div class="wrap faq__grid">
     <div class="faq__head">
-      <h2 class="m-text-2" data-8b-motion="rise">Before you come</h2>
+      <h2 class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Before you come</h2>
       <p class="m-text-4">Anything else, ask at the desk or write to us. We answer the same day.</p>
     </div>
-    <div class="faq__list">
+    <div class="faq__list" data-8b-items=":scope > details">
       <details class="faq__item m-surface-3"><summary class="m-text-5">How long does a set last?</summary><p class="m-text">Three weeks on most nails, up to four for a bare builder set. Refill before the growth gap reaches a millimetre and a half.</p></details>
       <details class="faq__item m-surface-3"><summary class="m-text-5">Will gel damage my nails?</summary><p class="m-text">Careless removal does, not the gel. We soak and lift, never drill into your own nail, and Ines runs bare sets for nails that need a rest.</p></details>
       <details class="faq__item m-surface-3"><summary class="m-text-5">Can I bring my own design?</summary><p class="m-text">Yes. Add a photo to your booking note so we can set aside time for the painting and pick the right artist.</p></details>
@@ -827,7 +955,7 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
   <div class="wrap">
     <div class="visit__pane m-surface-2">
       <div class="visit__info">
-        <h2 class="m-text-2" data-8b-motion="rise">Book a chair</h2>
+        <h2 class="m-text-2" data-8b-motion="rise" data-8b-split="lines">Book a chair</h2>
         <p class="m-text-4">Send a request and we call back within the day with a time. Or ring us, or simply come in.</p>
         <dl class="visit__facts">
           <div><dt class="m-text-3">Studio</dt><dd class="m-text">1 Example Street, London E8 0AA, five minutes from Hackney Central</dd></div>
@@ -851,7 +979,7 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
 <!-- footer: dark footer: large wordmark filling the width, studio name with address and hours, section links, phone, email and Instagram, copyright with the Design: 8B credit -->
 <footer class="footer" id="footer" data-8b-section="footer">
   <div class="wrap">
-    <p class="footer__mark" style="--len:5" data-8b-motion="rise">Glaze</p>
+    <p class="footer__mark" style="--len:5" data-8b-motion="rise" data-8b-split="lines">Glaze</p>
     <div class="footer__grid">
       <div>
         <p class="m-text-5">Glaze nail studio</p>
@@ -899,8 +1027,8 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
   const setMenu = open => {
     menu.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); menu.querySelector('a').focus(); }
-    else { window.lenis?.start(); }
+    if (open) { window.motionKit?.wheel?.stop(); menu.querySelector('a').focus(); }
+    else { window.motionKit?.wheel?.start(); }
   };
   toggle.addEventListener('click', () => setMenu(true));
   close.addEventListener('click', () => { setMenu(false); toggle.focus(); });
@@ -908,218 +1036,7 @@ textarea.m-field__control { min-height: 92px; resize: vertical; }
   addEventListener('keydown', event => { if (event.key === 'Escape' && !menu.hidden) { setMenu(false); toggle.focus(); } });
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function refreshScroll() { ScrollTrigger.sort(); ScrollTrigger.refresh(); }
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const bar = document.querySelector('#nav .nav__bar');
-  const lenis = window.lenis = new Lenis({ lerp: .085, anchors: { offset: -(bar ? bar.offsetHeight + 24 : 0) } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick); gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  drift(element, vars = {}) {
-    const depth = parseFloat(element.dataset.depth || '1');
-    return gsap.fromTo(element, { y: () => innerHeight * .3 * depth }, { y: 0, ease: 'none', ...vars });
-  },
-  rise(element, vars = {}) {
-    const split = SplitText.create(element, { type: 'lines', mask: 'lines' });
-    const timeline = gsap.timeline({ ...vars, onComplete: () => split.revert() });
-    split.lines.forEach((line, index) => timeline.from(line, { yPercent: 110, duration: .95, ease: 'power3.out' }, index * .09));
-    return timeline;
-  },
-  glint(element, vars = {}) {
-    return gsap.fromTo(element, { '--surface-glint': '-40%' }, { '--surface-glint': '140%', duration: 1.4, ease: 'power2.inOut', ...vars });
-  }
-};
-const loopObserver = new IntersectionObserver(entries => entries.forEach(entry => entry.target.classList.toggle('is-paused', !entry.isIntersecting)));
-document.querySelectorAll('[data-loop]').forEach(element => loopObserver.observe(element));
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  const first = () => section.getBoundingClientRect().top < innerHeight;
-  const drift = section.querySelectorAll('[data-8b-motion~="drift"]');
-  if (drift.length) {
-    const id = `effect:drift:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      drift.forEach((element, index) => ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top bottom', end: 'center 55%', scrub: .8, invalidateOnRefresh: true, animation: effects.drift(element) }));
-    }), { first: first(), id });
-  }
-  const rise = section.querySelectorAll('[data-8b-motion~="rise"]');
-  if (rise.length) {
-    const id = `effect:rise:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      rise.forEach((element, index) => ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top 88%', once: true, animation: effects.rise(element, { paused: true }) }));
-    }), { first: first(), id });
-  }
-  const glint = section.querySelectorAll('[data-8b-motion~="glint"]');
-  if (glint.length) {
-    const id = `effect:glint:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      glint.forEach((element, index) => ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top 75%', once: true, animation: effects.glint(element, { paused: true }) }));
-    }), { first: first(), id });
-  }
-});
-</script>
 
-<script data-8b-part="scene:finishes">
-queueMotion(() => {
-  gsap.matchMedia().add({ wide: '(min-width: 861px) and (prefers-reduced-motion: no-preference)', narrow: '(max-width: 860px) and (prefers-reduced-motion: no-preference)' }, context => {
-    const narrow = context.conditions.narrow;
-    const section = document.getElementById('finishes');
-    const stage = section.querySelector('.finishes__stage');
-    const track = section.querySelector('.finishes__track');
-    const cards = [...track.querySelectorAll('.finish')];
-    const images = cards.map(card => card.querySelector('img'));
-    section.classList.add('is-track');
-    const measure = () => {
-      const head = section.querySelector('.finishes__head');
-      const room = innerHeight - head.getBoundingClientRect().bottom + stage.getBoundingClientRect().top - (narrow ? 200 : 210);
-      const card = Math.max(180, Math.min(narrow ? innerWidth * .64 : Math.max(innerWidth * .25, 280), narrow ? 300 : 360, room / 1.25));
-      const margin = narrow ? 14 : 64;
-      stage.style.setProperty('--finishes-card', card + 'px');
-      stage.style.setProperty('--finishes-gap', (narrow ? card * .26 : card * .42) + 'px');
-      stage.style.setProperty('--finishes-window', (card + margin * 2) + 'px');
-      const photo = cards[0].querySelector('.finish__photo');
-      stage.style.setProperty('--finishes-band-top', (photo.getBoundingClientRect().top - stage.getBoundingClientRect().top - 16) + 'px');
-      stage.style.setProperty('--finishes-band-h', (photo.offsetHeight + 32) + 'px');
-    };
-    measure();
-    const distance = () => track.scrollWidth - innerWidth;
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'finishes', trigger: stage, start: 'top top', end: () => '+=' + distance() * (narrow ? 1.7 : 1.5), pin: true, scrub: .6, invalidateOnRefresh: true, onRefreshInit: measure
-    }});
-    timeline.fromTo(track, { x: 0 }, { x: () => -distance(), duration: 1 }, 0);
-    images.forEach(image => timeline.fromTo(image, { xPercent: 6 }, { xPercent: -6, duration: 1 }, 0));
-    return () => { section.classList.remove('is-track'); ['--finishes-card', '--finishes-gap', '--finishes-window', '--finishes-band-top', '--finishes-band-h'].forEach(name => stage.style.removeProperty(name)); };
-  });
-});
-</script>
-<script data-8b-part="scene:layers">
-queueMotion(() => {
-  gsap.matchMedia().add({ wide: '(min-width: 861px) and (prefers-reduced-motion: no-preference)', narrow: '(max-width: 860px) and (prefers-reduced-motion: no-preference)' }, context => {
-    const section = document.getElementById('layers');
-    const stage = section.querySelector('.layers__stage');
-    const sheets = [...section.querySelectorAll('.sheet')];
-    const image = section.querySelector('.layers__photo img');
-    if (context.conditions.narrow) {
-      sheets.forEach((sheet, index) => {
-        gsap.timeline({ scrollTrigger: { id: 'layers:sheet-' + index, trigger: sheet, start: 'top bottom', end: 'top 55%', scrub: .6 } })
-          .fromTo(sheet, { y: () => innerHeight * .22, rotation: index % 2 ? -4 : 4, xPercent: 8 }, { y: 0, rotation: 0, xPercent: 0, ease: 'power2.out', duration: 1 }, 0)
-          .add(effects.glint(sheet, { duration: .5 }), .55);
-      });
-      gsap.fromTo(image, { scale: 1.14 }, { scale: 1, ease: 'none', scrollTrigger: { id: 'layers:photo', trigger: section, start: 'top bottom', end: 'center center', scrub: true } });
-      return;
-    }
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'layers', trigger: stage, start: 'top top', end: () => '+=' + innerHeight * 2, pin: true, scrub: .6, invalidateOnRefresh: true
-    }});
-    timeline.fromTo(image, { scale: 1.16 }, { scale: 1, duration: 4 }, 0);
-    sheets.forEach((sheet, index) => {
-      timeline.fromTo(sheet, { y: () => innerHeight * .95, rotation: index % 2 ? -5 : 5, xPercent: 10 }, { y: 0, rotation: 0, xPercent: 0, ease: 'power3.out', duration: .8 }, index * .9)
-        .add(effects.glint(sheet, { duration: .5 }), index * .9 + .6);
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:studio">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('studio');
-    const image = section.querySelector('.studio__frame img');
-    const list = section.querySelector('.studio__list');
-    const focus = [{ scale: 1.55, xPercent: 17, yPercent: 4 }, { scale: 1.75, xPercent: -6, yPercent: 6 }, { scale: 1.6, xPercent: -18, yPercent: 16 }];
-    const timeline = gsap.timeline({ defaults: { ease: 'power1.inOut', duration: 1 }, scrollTrigger: {
-      id: 'studio', trigger: list, start: 'top 70%', end: 'bottom 30%', scrub: .8
-    }});
-    timeline.set(image, { transformOrigin: '50% 50%' }, 0);
-    focus.forEach((state, index) => timeline.to(image, state, index * 1.25));
-    timeline.to(image, { scale: 1, xPercent: 0, yPercent: 0 }, focus.length * 1.25);
-  });
-});
-</script>
-<script data-8b-part="scene:file">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('file');
-    const ring = section.querySelector('.file__ring-body');
-    const notes = [...section.querySelectorAll('.care')];
-    const token = name => getComputedStyle(section).getPropertyValue(name).trim();
-    const ink = token('--color-4'), ember = token('--color-7'), orange = token('--color-5');
-    gsap.to(ring, { rotation: 540, ease: 'none', scrollTrigger: { id: 'file:ring', trigger: section.querySelector('.file__care'), start: 'top 35%', end: 'bottom 65%', scrub: .6 } });
-    notes.forEach((note, index) => {
-      const step = note.querySelector('.care__step');
-      const title = note.querySelector('.m-text-5');
-      const copy = note.querySelectorAll('.m-text-5, .m-text');
-      gsap.timeline({ defaults: { ease: 'power1.inOut', duration: 1 }, scrollTrigger: { id: 'file:note-' + index, trigger: step, start: 'center 75%', end: 'center 25%', scrub: .5 } })
-        .fromTo(copy, { x: 0 }, { x: 18 }, 0).to(copy, { x: 0 }, 1)
-        .fromTo(title, { color: ink }, { color: ember }, 0).to(title, { color: ink }, 1)
-        .fromTo(step, { backgroundColor: 'transparent' }, { backgroundColor: orange }, 0).to(step, { backgroundColor: 'transparent' }, 1);
-    });
-  });
-});
-</script>
 <script data-8b-part="section-script:visit">
 (() => {
   const form = document.querySelector('#visit .visit__form');
@@ -1132,40 +1049,228 @@ queueMotion(() => {
   });
 })();
 </script>
-<script data-8b-part="scene:club">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('club');
-    const stage = section.querySelector('.club__stage');
-    const front = section.querySelector('.club__card--front');
-    const back = section.querySelector('.club__card--back');
-    const orb = section.querySelector('.club__orb');
-    section.classList.add('is-turning');
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'club', trigger: stage, start: 'top top', end: () => '+=' + innerHeight * 1.6, pin: true, scrub: .7, invalidateOnRefresh: true
-    }});
-    timeline
-      .fromTo(front, { rotationX: 58, y: () => innerHeight * .2, scale: .82, transformPerspective: 1100, transformOrigin: '50% 100%' }, { rotationX: 0, y: 0, scale: 1, transformPerspective: 1100, ease: 'power2.out', duration: 1 }, 0)
-      .fromTo(orb, { y: () => innerHeight * .3, x: 0, scale: .7 }, { y: 0, x: () => -innerWidth * .03, scale: 1, duration: 3 }, 0)
-      .fromTo(front, { rotationY: 0 }, { rotationY: -90, ease: 'power2.in', duration: .7, immediateRender: false }, 1.4)
-      .fromTo(back, { rotationY: 90, transformPerspective: 1100 }, { rotationY: 0, transformPerspective: 1100, ease: 'power2.out', duration: .7 }, 2.1)
-      .add(effects.glint(back, { duration: .5 }), 2.6);
-    return () => section.classList.remove('is-turning');
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-split=lines]>.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}[data-8b-split=lines]>.line:not(:last-child){margin-bottom:0}[data-8b-split=lines]>.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment);
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split'), again = sources.has(element);
+if (again) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+if (again) element.getAnimations({ subtree: true }).forEach(animation => { if (animation.timeline === document.timeline) try { animation.finish(); } catch {} });
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px' });
+document.fonts.ready.then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+</script>
+<script data-8b-part="scene-script:finishes">
+motionKit.scene("finishes", () => {
+  { const stage = document.querySelector("#finishes .finishes__stage"), room = document.createElement('div'), space = document.createElement('div'); room.className = "finishes-stage-room"; space.className = "finishes-stage-room-space"; space.setAttribute('aria-hidden', 'true'); stage.before(room); room.append(stage, space); }
+  const section = document.getElementById("finishes"), stage = section.querySelector(".finishes__stage"), head = section.querySelector(".finishes__head"), track = section.querySelector(".finishes__track"), photo = section.querySelector(".finish__photo");
+  motionKit.measure(() => {
+    const narrow = matchMedia("(max-width: 860px)").matches;
+    const space = innerHeight - head.getBoundingClientRect().bottom + stage.getBoundingClientRect().top - (narrow ? 200 : 210);
+    const card = Math.max(180, Math.min(narrow ? innerWidth * .64 : Math.max(innerWidth * .25, 280), narrow ? 300 : 360, space / 1.25));
+    motionKit.set(section, { "--finishes-card": card + "px", "--finishes-gap": card * (narrow ? .26 : .42) + "px", "--finishes-window": card + (narrow ? 14 : 64) * 2 + "px" });
+    const distance = track.scrollWidth - innerWidth;
+    motionKit.set(section, { "--finishes-band-top": photo.getBoundingClientRect().top - stage.getBoundingClientRect().top - 16 + "px", "--finishes-band-h": photo.offsetHeight + 32 + "px", "--finishes-distance": distance + "px", "--finishes-pin": distance * (narrow ? 1.7 : 1.5) + "px" });
   });
 });
 </script>
-<script data-8b-part="scene:visit">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('visit');
-    const orb = section.querySelector('.visit__orb');
-    const ring = section.querySelector('.visit__ring');
-    const dot = section.querySelector('.visit__dot');
-    gsap.timeline({ defaults: { ease: 'none', duration: 1 }, scrollTrigger: { id: 'visit', trigger: section, start: 'top bottom', end: 'bottom bottom', scrub: .8, invalidateOnRefresh: true } })
-      .fromTo(orb, { y: () => -section.offsetHeight * .85, x: () => -innerWidth * .18, scale: .6 }, { y: 0, x: 0, scale: 1, ease: 'power1.inOut' }, 0)
-      .fromTo(ring, { x: () => innerWidth * .9, rotation: 200 }, { x: 0, rotation: 0, ease: 'power2.out' }, 0);
-    gsap.fromTo(dot, { y: () => innerHeight * .5 }, { y: 0, ease: 'power1.out', scrollTrigger: { id: 'visit:dot', trigger: section, start: 'top bottom', end: 'top 15%', scrub: .8, invalidateOnRefresh: true } });
-  });
+<script data-8b-part="scene-script:layers">
+motionKit.scene("layers", () => {
+  { const stage = document.querySelector("#layers .layers__stage"), room = document.createElement('div'), space = document.createElement('div'); room.className = "layers-stage-room"; space.className = "layers-stage-room-space"; space.setAttribute('aria-hidden', 'true'); stage.before(room); room.append(stage, space); }
+});
+</script>
+<script data-8b-part="scene-script:club">
+motionKit.scene("club", () => {
+  { const stage = document.querySelector("#club .club__stage"), room = document.createElement('div'), space = document.createElement('div'); room.className = "club-stage-room"; space.className = "club-stage-room-space"; space.setAttribute('aria-hidden', 'true'); stage.before(room); room.append(stage, space); }
+});
+</script>
+<script data-8b-part="scene-script:visit">
+motionKit.scene("visit", () => {
+  const section = document.getElementById("visit");
+  motionKit.measure(() => motionKit.set(section, { "--visit-height": section.offsetHeight + "px" }));
 });
 </script>
 </body>

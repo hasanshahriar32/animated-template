@@ -1,6 +1,6 @@
 # AGENTS.md: comedy club website template
 
-One-page website for a comedy club, theatre or small venue with a weekly programme, a bar and private hire. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a comedy club, theatre or small venue with a weekly programme, a bar and private hire. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,18 +14,16 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:nav`: `.nav__menu` `.menu` `.menu__close`
   - `section-script:openmic`: `.om__form` `.om__status` `data-invalid` `data-sent`
-  - `scene:week`: `.wk__row`
-  - `scene:rules`: `.rl__item` `.rl__old` `.rl__strike` `.rl__new`
-  - `scene:alumni`: `.al__stage` `.al__track` `.al__line` `.al__comic` `.al__pic`
-  - `scene:bar`: `.br__pin` `.br__row` `.br__card` `.br__lean` `.br__pic`
-  - `scene:reviews`: `.rv__grid` `.rv__item` `.rv__face` `.rv__brush`
-  - `scene:visit`: `.vs__blob` `.vs__word`
+  - `scene-script:alumni`: `.al__stage` `.al__track` `.al__line` `.al__comic` `.al__pic`
+  - `scene-script:bar`: `.br__pin` `.br__row` `.br__card` `.br__lean` `.br__pic`
+  - `scene-script:visit`: `.vs__word` `.vs__blob`
 - `style="--len:N"` = characters in that display line, spaces included: `Snort` is 5.
 - The wordmark in the visit section is sized from style="--len:5", the number of characters in the name: update it if you rename the venue.
-- The week rows and the bar cards are laid out by CSS grids and read by their scenes, so they take any number of items; the alumni line-up is a row of five portraits that the spotlight walks along, so check the layout if you change the count.
+- The week rows and the bar cards take any number of items: each week row runs on its own scroll timeline and the bar's sideways travel is measured from the row. The alumni line-up is a row of five portraits that the spotlight walks along, so check the layout if you change the count.
 - The struck-through rules, the arrows beside headings and the brush underlines are inline SVG and CSS, not images: recolour them through the colour variables in :root.
 - Photos are hotlinked Unsplash images with a placeholder background colour set inline on each; replace the src, alt text and the background colour together.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #ffd20a (page ground behind the week, open mic, hire and visit sections, the nav bar, the yellow buttons and the hover fill of the dark ones, and headings and names on dark sections), `--color-2` #141414 (text and borders on light grounds, the first-screen panel, house rules, alumni, reviews, footer and menu overlay grounds, and the dark buttons), `--color-3` #ffffff (grounds of the room, bar and FAQ sections, text on dark grounds, the menu link hover colour and the hover fill of the yellow buttons); body text needs 4.5:1 contrast.
@@ -65,7 +63,8 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the Menu button cannot open the overlay. On phones the five bar links are hidden, so the footer links (five sections) are the only fallback navigation.
 - The open-mic form only checks the fields and shows a message; it sends nothing until you connect a form service or remove it.
-- The bar pins the screen for its sideways track at every width, and the alumni section holds for about 1.8 screens on screens wider than 900 px, which can feel long on short laptop screens.
+- With scroll motion on, the bar holds the screen for its sideways track at every width, and the alumni section holds for about 1.8 screens on screens wider than 900 px, which can feel long on short laptop screens.
+- Without CSS scroll-driven animation support (Firefox today) or with reduced motion on, nothing animates on load or scroll and the smooth wheel is off: the page shows its finished layout, with the old rules struck through, portraits in colour and the bar cards in a grid. The nav bar still hides on scroll down and hover effects stay.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Snort left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Snort left only in class names.

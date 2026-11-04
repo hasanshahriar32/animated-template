@@ -1,6 +1,6 @@
 # AGENTS.md: hardware store website template
 
-One-page website for an independent hardware store with services, workshops and tool hire. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for an independent hardware store with services, workshops and tool hire. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,23 +14,18 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits.
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__menu` `.menu__close` `data-ground`
   - `section-script:opening`: `.opening__stage`
   - `section-script:visit`: `.visit__form` `.visit__fields` `.visit__done`
-  - `scene:opening`: `.opening__space` `.opening__field` `.opening__copy` `.opening__statement` `.opening__inline`
-  - `scene:departments`: `.dept` `.dept__photo` `.dept__copy` `.dept__aisle`
-  - `scene:aisles`: `.aisles__row` `.aisles__tile`
-  - `scene:brought`: `.brought__pair` `.brought__item--in` `.brought__item--out`
-  - `scene:classes`: `.classes__deck` `.classes__card`
-  - `scene:hire`: `.hire__row` `.hire__flip` `.hire__face--back`
-  - `scene:visit`: `.visit__photo` `.visit__info`
+  - `scene-script:classes`: `.classes__deck`
 - `style="--len:N"` = characters in that display line, spaces included: `Sixpenny` is 8.
 - The opening's 26 tiles are positioned by inline custom properties on each tile (--x, --y, --w, --h, --delay, --phase) and fly along a CSS keyframe; to add or remove tiles, copy a tile and give it its own position and a different delay.
 - The footer wordmark is sized from style="--len:8", the number of characters of the name; set it to the length of the new name.
-- The departments scene counts the panels and writes the count to the section as --departments-count, which the CSS uses to set the held height; add or remove a panel and the scroll length follows, but keep the markup of a panel (photo, copy, aisle label).
-- Each hire row has a front and a back face; the hire scene flips the back face away, so keep both faces in every row.
-- The classes scene reads a list of six tilts and reuses them in turn, so the number of cards can change.
+- The departments section is built for exactly five panels: the CSS sets --departments-count: 5 on #departments for the held height and has separate rules for the first and last panel. To add or remove a panel, change that number too, and keep the markup of a panel (photo, copy, aisle label).
+- Each hire row has a front face (the weekend price) and a back face (the price to buy new); the scroll animation turns the tag from the back to the front, so keep both faces in every row.
+- The classes script measures each card's distance from the centre of the row, so the number of cards can change.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #f1eee9 (page background and the soft fog behind the opening heading), `--color-2` #211d1e (text, rules, dark button fills, the departments ground and the menu overlay), `--color-3` #ffffff (button, guide card and class card faces, text on dark sections, the focus ring gap), `--color-4` #e4e17a (footer ground, front of each hire tag, owner role and quote, button hover fill, a yellow tone), `--color-5` #0e2c29 (owner section ground), `--color-6` #ef6a44 (the dot beside Open 7 days and the orange tone behind some photos, badges and guide covers), `--color-7` #b8cda1 (sage tone behind some photos, badges and guide covers), `--color-8` #ceb58c (sand tone behind some photos, badges and guide covers), `--color-9` #93abc9 (blue tone behind some photos, badges and guide covers), `--color-10` #66605b (stock counts, input placeholders and small grey text), `--color-11` #e5e1d9 (ground of the hire and brought photo frames and the newsletter box, and the fallback tone); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -67,9 +62,9 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the menu button cannot open the menu, and the newsletter form posts to the page itself and sends nothing (a static host may answer with an error); the section links in the header stay reachable on wide screens.
 - The departments section holds the screen for about four screens of scrolling (one per panel after the first), which is long on a short screen.
+- Without scroll-driven animation support (Firefox today) and with reduced motion, the scroll motion and the smooth wheel are off: every section shows its finished layout, the departments stack as five screens and the hire tags show the weekend price. The tile loop and the opening load-in still play in Firefox and stop with reduced motion; the bar still hides on scroll down in both.
 - The opening's tiles are small photos on a pale ground; they are decorative, so their alt text is empty.
 - The class dates (18 October onwards) are written into the text and go stale; update them with the year before using the template.
-- gsap, ScrollTrigger, SplitText and Lenis load from jsDelivr at the end of the body without defer; if the CDN fails, the page stays readable with no motion.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Sixpenny Hardware left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Sixpenny Hardware left only in class names.

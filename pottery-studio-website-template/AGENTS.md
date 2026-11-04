@@ -1,6 +1,6 @@
 # AGENTS.md: pottery studio website template
 
-One-page website for a pottery studio that makes tableware to order, teaches classes and sells a few pieces. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a pottery studio that makes tableware to order, teaches classes and sells a few pieces. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,22 +14,22 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:nav`: `.nav__bar` `.nav__menu` `.menu__close`
   - `section-script:opening`: `.op-screen`
-  - `scene:opening`: `.op-screen` `.op-photo` `.op-title` `.op-band` `.op-hold` `.op-about` `.op-statement` `.page-grid` `.op-title--copy`
   - `section-script:contact`: `.ct-form` `.ct-status` `data-invalid` `data-sent`
-  - `scene:commissions`: `.cm-stick` `.cm-room` `.cm-card` `.m-surface__photo`
-  - `scene:process`: `.pr-pin` `.pr-track` `.pr-rule` `.pr-step` `.pr-step__photo`
-  - `scene:glazes`: `.gl-row`
-  - `scene:makers`: `.mk-list` `.mk-person` `.mk-photo` `.mk-text`
-  - `scene:shop`: `.sh-bisque`
-  - `scene:contact`: `.ct-title` `.ct-word` `.page-grid`
+  - `scene-script:opening`: `.op-screen` `.op-photo` `.op-title` `.op-band` `.page-grid` `.op-photo__drift` `.op-statement` `.op-about` `.op-title--copy`
+  - `scene-script:commissions`: `.cm-stick` `.cm-room` `.cm-card` `.m-surface__photo`
+  - `scene-script:process`: `.pr-pin` `.pr-track` `.pr-step` `.pr-step__photo`
+  - `scene-script:glazes`: `.gl-row`
+  - `scene-script:makers`: `.mk-person` `.mk-photo` `.mk-text`
+  - `scene-script:contact`: `.ct-title` `.ct-word` `.page-grid`
 - `style="--len:N"` = characters in that display line, spaces included: `Cobalt` is 6, `Iron red` is 8, `Celadon` is 7, `Tenmoku` is 7, `fettle` is 6.
 - The page-grid layer has five vertical lines that mark four columns, and two scenes read them by position: the opening cuts its photo into four strips at the three inner lines, and the contact heading's words scatter to the start of the first four lines, kept inside the fifth. Keep all five lines in this order if you change the layout.
 - The opening scene clones the photo block and the h1 into four strips at run time, so keep the photo, the h1 and the band inside the first screen's wrappers as they are.
 - Each glaze name and the footer wordmark are sized from an inline style="--len:N" (the number of characters of the word): Cobalt 6, Iron red 8, Celadon 7, Tenmoku 7, the wordmark 6. Set N to the length of each new word.
-- The glaze colours live on each glaze row as --gl-ground and --gl-ink; the glazes scene reads them, so recolour a glaze there, and keep one row per colour state.
+- The glaze colours live on each glaze row as --gl-ground and --gl-ink; the glazes scene script reads them into the section, so recolour a glaze there. The CSS times exactly four glaze rows (data-8b-fixed="4"): a fifth row needs its own timeline and colour step.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #f1f2f2 (page ground, nav bar, about screen, the glazes section before the first glaze), `--color-2` #0f0f10 (text, black buttons, hairlines, footer and phone menu ground, ink on the celadon glaze), `--color-3` #ffffff (venue cards and shop photo frames, button labels, footer text, ink on the cobalt, iron red and tenmoku glazes), `--color-4` #656869 (captions and small descriptions), `--color-5` #1d42cf (plus marks, button hover fill, form status line, the cobalt glaze ground), `--color-6` #b9361a (second plus mark colour, the iron red glaze ground), `--color-7` #a9c4b7 (the celadon glaze ground, used only there), `--color-8` #2a1c15 (the tenmoku glaze ground, the commissions section ground behind its photos, loading colour of photo frames); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -64,10 +64,11 @@ All demo text, never to be invented:
 
 ## Known limits
 - Without JavaScript the menu button cannot open the menu; the nav links stay reachable in the bar on wide screens. The contact form has no sending code.
-- The process section is pinned and moves sideways by the width of the six-step track minus one screen, about 1,200 px of scrolling at 1440 px and about 1,350 px on a 375 px phone (each step is 76vw there), which some visitors find tiring.
-- The shop's pale bisque overlay and the glaze colour blend need JavaScript; without it (and with reduced motion) the shop photos show in colour from the start and each glaze row keeps its own colour band.
+- The process section is held on screen (CSS sticky) and moves sideways by the width of the six-step track minus one screen, about 1,200 px of scrolling at 1440 px and about 1,350 px on a 375 px phone (each step is 76vw there), which some visitors find tiring.
+- The shop's pale bisque overlay and the glaze colour blend need CSS scroll-driven animations; without them (Firefox today, reduced motion or no JavaScript) the shop photos show in colour from the start and each glaze row keeps its own colour band.
 - The Make and Learn links in the about screen and the glaze names are set very large; keep them short. The glaze names and the footer wordmark shrink to fit by --len, Make and Learn do not.
-- gsap, ScrollTrigger, SplitText and Lenis load from jsDelivr at the end of the body; if the CDN is blocked the page shows its still layout (steps in a grid, glaze rows as colour bands) while the menu and form scripts keep working.
+- The commission cards, glaze rows and shop pieces are fixed at three, four and six (data-8b-fixed): the CSS gives the second and third rooms, each glaze row and each shop photo its own timeline by :nth-of-type, so an extra item would stay still.
+- Without CSS scroll-driven animation support (Firefox today) or with reduced motion on, the scroll animations and the smooth wheel are off: the opening and about screens sit in normal flow, the process steps form a grid, the makers stand in their columns and the contact heading is one line. In Firefox the opening still loads in and its photo drifts.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Fettle left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Fettle left only in class names.

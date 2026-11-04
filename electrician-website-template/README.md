@@ -1,8 +1,8 @@
-# Free HTML electrician website template with GSAP scroll animations
+# Free HTML electrician website template with scroll animations and no libraries
 
-Electrician website template: one free HTML file for a home electrician, with a three-step process, room-by-room services, a fixed price list of eight jobs, a landlord checklist, an out-of-hours line and a visit form. Cream sheets sit on dark green with one aqua accent. AGENTS.md is included, so an AI agent can adapt it.
+Electrician website template: one free HTML file for a home electrician, with a three-step process, room-by-room services, a fixed price list of eight jobs, a landlord checklist, an out-of-hours line and a visit form. Cream sheets sit on dark green with one aqua accent; the scroll motion is CSS, no libraries. AGENTS.md guides an AI agent.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/electrician-website-template/)** · **[Use this template](https://github.com/new?template_name=electrician-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/electrician-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/ohmstead/)**
 
@@ -24,10 +24,10 @@ curl -LO https://raw.githubusercontent.com/8bsite/electrician-website-template/m
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my electrical business: company name, area covered, services, fixed price per job, team, registrations and insurance, out-of-hours number and callout fee, hours, how people book>. Replace first the company name, the Sheffield places, the eight prices, the team, the reviews and the phone numbers. Keep the ids, the data-8b-section, data-8b-motion and data-8b-part attributes, the selectors AGENTS.md lists and one photo per room. Ask me for missing facts; never invent prices, registrations, cover, hours, addresses, reviews or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my electrical business: name, area covered, services, fixed prices, team, registrations and insurance, out-of-hours number and fee, hours>. Replace first the company name, the Sheffield places, the eight prices, the team, the reviews and the phone numbers. Keep the ids, the data-8b attributes, the gate script, the selectors AGENTS.md lists and six rooms with one photo each; add no animation library. Ask me for missing facts; never invent prices, registrations, cover, hours, addresses, reviews or contacts.
 ```
 
-Electrician web design by vibe coding goes quickest with an electrician website template for Claude Code, Cursor or Codex, once the agent has the real facts: prices, areas, registrations, insurance, hours and phone numbers. The demo invents all of them, including the nine employed electricians and the eight reviews. Replace those first, keep the ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the selectors AGENTS.md lists, keep one photo per room, and set the footer wordmark's --len to the new name's character count.
+Electrician web design by vibe coding goes quickest with an electrician website template for Claude Code, Cursor or Codex, once the agent has the real facts: prices, areas, registrations, insurance, hours and phone numbers. The demo invents all of them, including the nine employed electricians and the eight reviews. Replace those first, keep the ids, the data-8b attributes and the selectors AGENTS.md lists, keep six rooms with one photo each, and set the footer wordmark's --len to the new name's character count.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=electrician-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -68,12 +68,12 @@ Yes. The electrician website design prompt on this page works without the templa
 **Does the visit form send anything?**  
 No. The script checks that name and phone are filled in, shows a thank-you line and clears the fields. To receive requests, point the form at Formspree or Netlify Forms, or at your own CRM form, and then drop the thank-you script.
 
-**What happens with reduced motion or without JavaScript?**  
-With reduced motion the entrance and scroll animations and smooth scrolling are off and the page still reads in full, though the navigation bar still hides on scroll and button hovers still animate. Without JavaScript the wide-screen links, FAQ and prices work, but the phone Menu button cannot open its overlay and the night grid stays empty.
+**What does it show in Firefox, with reduced motion or without JavaScript?**  
+Without CSS scroll-driven animations (Firefox today) or with reduced motion, nothing moves on load or scroll: the frame keeps the first room's photo, every landlord row reads Passed, the reviews stay a wrapped grid, the night stage shows only the number and scrolling is the browser's own. Without JavaScript the phone Menu button cannot open.
 
 ## Is it the right base?
 
-This is a good base for a one-page electrician with published prices, landlord work and an emergency line. A [plumbing firm](https://8b.com/templates/ferrule/) can reuse the structure with other prices. A firm that needs several pages, a blog, a quote calculator or online booking will outgrow it, because every booking button only jumps to the one form. The copy is British, with pounds, VAT and Sheffield places. Owners who would rather not touch code can use 8B's builder.
+This is a good base for a one-page electrician with published prices, landlord work and an emergency line; a [plumbing firm](https://8b.com/templates/ferrule/) can reuse the structure. It is the light build: no animation library and no script from a CDN, 24 KB of code gzipped against 72 KB and four more requests for the GSAP version. A firm that needs several pages, a blog or online booking will outgrow it: every booking button jumps to the one form.
 
 ## Before you publish
 
@@ -82,7 +82,9 @@ This is a good base for a one-page electrician with published prices, landlord w
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.4 from jsDelivr, 81 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 92 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.4 from jsDelivr, 81 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

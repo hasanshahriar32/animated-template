@@ -1,6 +1,6 @@
 # AGENTS.md: nail salon website template
 
-One-page website for a gel nail studio or beauty salon, for clients who book a chair. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a gel nail studio or beauty salon, for clients who book a chair. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,19 +14,17 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:nav`: `.nav__toggle` `.menu__close`
-  - `scene:finishes`: `.finishes__stage` `.finishes__track` `.finish` `.finishes__head` `.finish__photo`
-  - `scene:layers`: `.layers__stage` `.sheet` `.layers__photo`
-  - `scene:studio`: `.studio__frame` `.studio__list`
-  - `scene:file`: `.file__ring-body` `.care` `.file__care` `.care__step` `.m-text-5` `.m-text`
   - `section-script:visit`: `.visit__form` `.visit__status` `data-sent`
-  - `scene:club`: `.club__stage` `.club__card--front` `.club__card--back` `.club__orb`
-  - `scene:visit`: `.visit__orb` `.visit__ring` `.visit__dot`
+  - `scene-script:finishes`: `.finishes__stage` `.finishes__head` `.finishes__track` `.finish__photo`
+  - `scene-script:layers`: `.layers__stage`
+  - `scene-script:club`: `.club__stage`
 - `style="--len:N"` = characters in that display line, spaces included: `Glaze` is 5.
 - The orbs, rings and glass panes are CSS (radial gradients, masks, backdrop blur), not images: recolour them through the colour variables in :root.
 - The footer wordmark is sized from style="--len:5", the number of letters: update it when the name changes.
-- The finishes scene measures the card size and the track overflow in pixels on load and resize, and the layers scene animates every sheet it finds: after changing the number of cards or sheets, scroll through and check the pin lengths.
+- The finishes scene measures the card size and the track's overflow on load and resize, so finish cards can be added or removed. The four layer sheets and the four care notes are timed one by one in the CSS (data-8b-fixed="4"): keep four of each.
 - The visit form shows its thank-you line from the form's data-sent attribute and sends nothing until you connect a service.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #a6968f (light taupe at the upper end of the booking section's background gradient), `--color-2` #62504c (page background, the ground of the finishes, artists and club sections, and the bottom of the booking gradient), `--color-3` #fbf5f0 (text on dark sections, the pale glass edges and borders, button text on the near black fill), `--color-4` #23171a (near black: the layers and footer backgrounds, text on light sections, the filled Request a time button), `--color-5` #f2671f (orange of the opening ground, the orbs and rings, the button hover fill, the number discs in the care notes as they pass and the favicon), `--color-6` #ffc49b (peach: the top of the opening ground, the care section's ground, finish prices, small labels on dark glass, the light end of the orb gradients and the tint of the peach panes), `--color-7` #98320c (deep ember: the dark end of the orb and ring gradients and the care note titles as they pass the middle of the screen), `--color-8` #bcb0a9 (sand: the ground of the studio, prices and questions sections); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
@@ -62,7 +60,7 @@ All demo text, never to be invented:
 - The footer hours differ from the hours in the Visit section.
 - In the finishes scene the frosted bands use backdrop-filter, which is heavy on older phones; five of the six photos are 650 px wide, the Sculpt photo 1140 px.
 - The orbs and rings are decorative and cross the edges of the screen on phones by design; text on the club cards and the other glass panes sits on translucent glass, so check contrast after changing colours.
-- GSAP, ScrollTrigger, SplitText and Lenis load from a CDN at the end of the body and block rendering for a moment.
+- Without CSS scroll-driven animation support (Firefox today) or with reduced motion on, the scroll animations and the smooth wheel are off: the six finishes sit in a grid of three columns (one on phones), the two club cards stand side by side, the layer sheets, the studio photo, orbs, rings and headings rest in place. In Firefox the opening pane and photo still rise in and its rings turn.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Glaze left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Glaze left only in class names.

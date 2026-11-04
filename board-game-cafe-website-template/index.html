@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/board-game-cafe-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -173,10 +174,6 @@
 @font-face { font-family: "Onest Fallback"; src: local("Arial"), local("ArialMT"), local("Helvetica"); font-weight: 100 549; size-adjust: 104.8%; ascent-override: 92.6%; descent-override: 29.6%; line-gap-override: 0%; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: clip; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body { margin: 0; background: var(--color-6); color: var(--color-1); font-family: var(--font-2); font-size: 1.0625rem; line-height: 1.55; overflow-x: clip; }
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
@@ -343,6 +340,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
   #opening .op-bar { min-height: 5.5rem; padding: 1rem 1.6rem; }
   #opening .op-bar .m-text-2 { font-size: 0.875rem; }
 }
+#opening .op-s2-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.75rem; }
+@media (max-width: 860px) {
+  #opening .op-bars { order: 0; }
+  #opening .op-s2-copy { gap: 1.25rem; }
+  #opening .op-s2-copy .m-echo { font-size: 1.5rem; }
+}
 @media (prefers-reduced-motion: no-preference) {
   #opening .op-in { animation: op-turn-in .62s cubic-bezier(.2,.9,.25,1.15) backwards; animation-delay: calc(var(--i, 0) * 70ms); }
   #opening .op-p .op-in { animation-name: op-scale-in; }
@@ -394,20 +397,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   #library .lb-board { grid-template-columns: minmax(0, 1fr); grid-auto-rows: auto; }
   #library .lb-card { grid-template-columns: minmax(0, 1fr) 38%; padding-block: 1.5rem 1.25rem; }
   #library .lb-photo { margin-top: -1.5rem; }
-}
-}
-</style>
-<style data-8b-part="scene-style:library">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) and (min-width: 861px) and (min-height: 720px) {
-  #library[data-swing] { height: 330vh; }
-  #library[data-swing] .lb-stage { position: sticky; top: 0; height: 100svh; padding-top: calc(var(--nav-h, 4.25rem) + 1.5rem); overflow: clip; }
-  #library[data-swing] .lb-board { grid-template-rows: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; overflow: clip; }
-  #library[data-swing] .lb-card { position: relative; z-index: 1; grid-template-columns: minmax(0, 1fr) min(25%, 7rem); padding-block: 1.25rem 1rem; }
-  #library[data-swing] .lb-photo { margin-top: -1.25rem; }
-  #library[data-swing] .lb-name { font-size: clamp(1.5rem, 2.3vw, 2.125rem); }
-  #library[data-swing] .lb-games { margin-top: 0.9rem; }
-  #library[data-swing] .lb-games li { padding-block: 0.26rem; font-size: 0.9375rem; }
 }
 }
 </style>
@@ -463,19 +452,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 }
 </style>
-<style data-8b-part="scene-style:week">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #week[data-puzzle] { height: 300vh; }
-  #week[data-puzzle] .wk-stage { position: sticky; top: 0; height: 100svh; padding-top: calc(var(--nav-h, 4.25rem) + 1.25rem); grid-template-rows: auto repeat(2, minmax(0, 1fr)); overflow: clip; }
-  #week[data-puzzle] .wk-day { will-change: transform; }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 860px) {
-  #week[data-puzzle] .wk-stage { grid-template-rows: auto repeat(4, minmax(0, 1fr)); padding-top: 1rem; }
-  #week[data-puzzle] .wk-head { padding-bottom: 1rem; }
-}
-}
-</style>
 <style data-8b-part="section:kitchen">
 @layer sections {
 #kitchen { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 3rem var(--space-1); padding: 6rem var(--space-1); background: var(--color-4); color: var(--color-1); }
@@ -517,7 +493,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 #long-table .lt-label { margin-bottom: 1.5rem; }
 #long-table .lt-title { font-stretch: 150%; font-size: min(14rem, 100cqw / (var(--len) * 0.86)); line-height: 0.82; white-space: nowrap; }
 #long-table .lt-word { display: inline-block; }
-#long-table .lt-photo { margin-top: 2.25rem; height: clamp(13rem, 34vw, 28rem); overflow: hidden; clip-path: inset(0 round var(--radius-1)); background: var(--color-2); }
+#long-table .lt-photo { --lt-photo-h: clamp(13rem, 34vw, 28rem); margin-top: 2.25rem; height: var(--lt-photo-h); overflow: hidden; clip-path: inset(0 round var(--radius-1)); background: var(--color-2); }
 #long-table .lt-photo img { width: 100%; height: 100%; object-fit: cover; }
 #long-table .lt-info { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 5fr) auto; gap: 2rem var(--space-1); align-items: start; margin-top: 2.75rem; }
 #long-table .lt-info .m-text-6 { max-width: 34rem; color: var(--color-6); }
@@ -658,32 +634,229 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .op-s2-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.75rem; }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-10566a: linear(0, 0.1064, 0.2058, 0.2984, 0.3844, 0.4641, 0.5376, 0.6052, 0.6672, 0.7237, 0.775, 0.8213, 0.8628, 0.8998, 0.9324, 0.9609, 0.9856, 1.0066, 1.0242, 1.0386, 1.05, 1.0587, 1.0648, 1.0686, 1.0704, 1.0703, 1.0686, 1.0655, 1.0612, 1.056, 1.05, 1.0435, 1.0368, 1.03, 1.0234, 1.0172, 1.0116, 1.0069, 1.0032, 1.0008, 1); }
+[data-8b-live] [data-8b-motion~="slice"] > span:nth-child(-n+2) { animation-name: motion-slice-span-nth-child-1-clippath; animation-duration: 0.55s; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] [data-8b-motion~="slice"] > span:nth-child(1) { animation-delay: 0s; animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="slice"].is-in > span:nth-child(1) { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="slice"] > span:nth-child(2) { animation-delay: 0.14s; animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="slice"].is-in > span:nth-child(2) { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="turn"] { animation-name: motion-turn-rotate; animation-duration: 0.7s; animation-delay: 0s; animation-timing-function: var(--ease-10566a); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="turn"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="deal"] { --motion-deal-side: -1; transform-origin: 0% 100%; animation-name: motion-deal; animation-duration: 0.7s; animation-delay: calc(var(--i, 0) * 0.08s); animation-timing-function: linear(0, 0.1565, 0.2939, 0.4138, 0.5177, 0.6072, 0.6836, 0.7483, 0.8025, 0.8474, 0.8842, 0.9139, 0.9375, 0.9559, 0.9699, 0.9802, 0.9877, 0.9928, 0.9961, 0.9981, 0.9992, 0.9998, 1, 1, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="deal"][data-side="right"] { --motion-deal-side: 1; transform-origin: 100% 100%; }
+[data-8b-live] [data-8b-motion~="deal"].is-in { animation-play-state: running; }
+@keyframes motion-deal { from { translate: calc(var(--motion-deal-side) * 14%) 0; rotate: calc(var(--motion-deal-side) * 3deg); } to { translate: 0 0; rotate: 0deg; } }
+@keyframes motion-slice-span-nth-child-1-clippath { 0% { clip-path: inset(0% 0% 100%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes motion-turn-rotate { 0% { rotate: var(--turn-rotate-from, -90deg); } 100% { rotate: 0deg; } }
+}
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+[data-8b-live] #opening .op-s2-copy > :not(.m-echo) { animation: opening-up .8s cubic-bezier(.2, .8, .2, 1) backwards; }
+[data-8b-live] #opening .op-s2-copy > :nth-child(3) { animation-delay: .1s; }
+[data-8b-live] #opening .op-s2-copy > :nth-child(4) { animation-delay: .18s; }
+[data-8b-live] #opening .op-bar { animation: opening-stretch .9s cubic-bezier(.6, 0, .2, 1) backwards; animation-delay: calc(.15s + var(--i, 0) * .09s); }
+[data-8b-live] #opening .op-bar__in { animation: opening-show .4s ease backwards; animation-delay: calc(.75s + var(--i, 0) * .09s); }
+@keyframes opening-up { from { transform: translateY(2.5rem); opacity: 0; } }
+@keyframes opening-stretch { from { clip-path: inset(calc(50% - 1rem) 38% round 999px); } }
+@keyframes opening-show { from { opacity: 0; } }
+}
+</style>
+<style data-8b-part="scene:library">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) and (min-width: 861px) and (min-height: 720px) {
+  @media (min-width: 861px) {
+  [data-8b-live] #library { height: 330vh; }
+}
+  @media (min-width: 861px) {
+  [data-8b-live] #library .lb-stage { position: sticky; top: 0; height: 100svh; padding-top: calc(var(--nav-h, 4.25rem) + 1.5rem); overflow: clip; }
+}
+  @media (min-width: 861px) {
+  [data-8b-live] #library .lb-board { grid-template-rows: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; overflow: clip; }
+}
+  @media (min-width: 861px) {
+  [data-8b-live] #library .lb-card { position: relative; z-index: 1; grid-template-columns: minmax(0, 1fr) min(25%, 7rem); padding-block: 1.25rem 1rem; }
+}
+  @media (min-width: 861px) {
+  [data-8b-live] #library .lb-photo { margin-top: -1.25rem; }
+}
+  @media (min-width: 861px) {
+  [data-8b-live] #library .lb-name { font-size: clamp(1.5rem, 2.3vw, 2.125rem); }
+}
+  @media (min-width: 861px) {
+  [data-8b-live] #library .lb-games { margin-top: 0.9rem; }
+}
+  @media (min-width: 861px) {
+  [data-8b-live] #library .lb-games li { padding-block: 0.26rem; font-size: 0.9375rem; }
+}
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #library .lb-card--1 { animation-timeline: --library-t1; animation-fill-mode: both; transform: none; transform-origin: 0% 0%; }
+[data-8b-live] #library .lb-card--2 { animation-fill-mode: both; transform: none; transform-origin: 100% 0%; }
+[data-8b-live] #library .lb-card--3, [data-8b-live] #library .lb-card--4 { animation-fill-mode: both; transform: none; }
+@keyframes library-div-lb-card-rotate-d { 0% { rotate: -90deg; } 100% { rotate: 0deg; } }
+@keyframes library-div-lb-card-rotate-m { 0% { rotate: 90deg; } 100% { rotate: 0deg; } }
+@keyframes library-div-lb-card-rotate-3 { 0% { rotate: 90deg; } 100% { rotate: 0deg; } }
+@keyframes library-div-lb-card-rotate-2 { 0% { rotate: -90deg; } 100% { rotate: 0deg; } }
+@media (min-width: 861px) {
+  [data-8b-live] #library { view-timeline: --library-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #library .lb-card--1, [data-8b-live] #library .lb-card--2, [data-8b-live] #library .lb-card--3, [data-8b-live] #library .lb-card--4 { animation-timing-function: var(--ease-power2-inout); }
+  [data-8b-live] #library .lb-card--1 { animation-name: library-div-lb-card-rotate-d; animation-range: cover calc(2.3529% + 95.2941vh) cover calc(25.8824% + 48.2353vh); }
+  [data-8b-live] #library .lb-card--2 { animation-name: library-div-lb-card-rotate-d; animation-timeline: --library-t1; animation-range: cover calc(22.3529% + 55.2941vh) cover calc(45.8824% + 8.2353vh); }
+  [data-8b-live] #library .lb-card--3 { animation-name: library-div-lb-card-rotate-3; animation-timeline: --library-t1; animation-range: cover calc(42.3529% + 15.2941vh) cover calc(65.8824% - 31.7647vh); transform-origin: 0% 100%; }
+  [data-8b-live] #library .lb-card--4 { animation-name: library-div-lb-card-rotate-3; animation-timeline: --library-t1; animation-range: cover calc(62.3529% - 24.7059vh) cover calc(85.8824% - 71.7647vh); transform-origin: 100% 100%; }
+}
 @media (max-width: 860px) {
-  #opening .op-bars { order: 0; }
-  #opening .op-s2-copy { gap: 1.25rem; }
-  #opening .op-s2-copy .m-echo { font-size: 1.5rem; }
+  [data-8b-live] #library .lb-card--1, [data-8b-live] #library .lb-card--2, [data-8b-live] #library .lb-card--3, [data-8b-live] #library .lb-card--4 { animation-range: cover 0% cover 70vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+  [data-8b-live] #library .lb-card--1 { animation-name: library-div-lb-card-rotate-m; }
+  [data-8b-live] #library .lb-card--2 { animation-name: library-div-lb-card-rotate-2; animation-timeline: --library-t2; }
+  [data-8b-live] #library .lb-card--3 { animation-name: library-div-lb-card-rotate-m; animation-timeline: --library-t3; transform-origin: 0% 0%; }
+  [data-8b-live] #library .lb-card--4 { animation-name: library-div-lb-card-rotate-2; animation-timeline: --library-t4; transform-origin: 100% 0%; }
+  [data-8b-live] #library .lb-board > .lb-shelf { view-timeline-inset: 0; }
+  [data-8b-live] #library .lb-board > article:nth-of-type(1) { view-timeline: --library-item block, --library-t1 block; }
+  [data-8b-live] #library .lb-board > article:nth-of-type(2) { view-timeline: --library-item block, --library-t2 block; }
+  [data-8b-live] #library .lb-board > article:nth-of-type(3) { view-timeline: --library-item block, --library-t3 block; }
+  [data-8b-live] #library .lb-board > article:nth-of-type(4) { view-timeline: --library-item block, --library-t4 block; }
 }
+}
+</style>
+<style data-8b-part="scene:week">
+@media (min-width: 861px) and (min-height: 680px), (max-width: 860px) and (min-height: 740px) {
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #opening .op-s2-copy > :not(.m-echo) { animation: rw-up .8s cubic-bezier(.2, .8, .2, 1) backwards; }
-  #opening .op-s2-copy > :nth-child(3) { animation-delay: .1s; }
-  #opening .op-s2-copy > :nth-child(4) { animation-delay: .18s; }
-  #opening .op-bar { animation: rw-stretch .9s cubic-bezier(.6, 0, .2, 1) backwards; animation-delay: calc(.15s + var(--rw-i, 0) * .09s); }
-  #opening .op-bar__in { animation: rw-show .4s ease backwards; animation-delay: calc(.75s + var(--rw-i, 0) * .09s); }
-  #opening .op-bar:nth-child(2) { --rw-i: 1; }
-  #opening .op-bar:nth-child(3) { --rw-i: 2; }
+  [data-8b-live] #week { height: 300vh; }
+  [data-8b-live] #week .wk-stage { position: sticky; top: 0; height: 100svh; padding-top: calc(var(--nav-h, 4.25rem) + 1.25rem); grid-template-rows: auto repeat(2, minmax(0, 1fr)); overflow: clip; }
+  [data-8b-live] #week .wk-day { will-change: transform; }
 }
-@keyframes rw-up { from { transform: translateY(2.5rem); opacity: 0; } }
-@keyframes rw-stretch { from { clip-path: inset(calc(50% - 1rem) 38% round 999px); } }
-@keyframes rw-show { from { opacity: 0; } }</style>
+@media (prefers-reduced-motion: no-preference) and (max-width: 860px) {
+  [data-8b-live] #week .wk-stage { grid-template-rows: auto repeat(4, minmax(0, 1fr)); padding-top: 1rem; }
+  [data-8b-live] #week .wk-head { padding-bottom: 1rem; }
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); }
+[data-8b-live] #week { view-timeline: --week-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #week .wk-day--2 { animation-range: cover calc(3.3784% + 93.2432vh) cover calc(47.2973% + 5.4054vh); }
+[data-8b-live] #week .wk-day--1 { animation-range: cover calc(26.3514% + 47.2973vh) cover calc(35.8108% + 28.3784vh); }
+@keyframes week-li-wk-day-translate-d { 0% { translate: -100% 100.162%; } 21.5385% { translate: 0px 100.162%; } 78.4615% { translate: 0px 100.162%; } 100% { translate: 0px 0px; } }
+@keyframes week-li-wk-day-translate-m { 0% { translate: -100.267% 99.98%; } 21.5385% { translate: 0px 99.98%; } 78.4615% { translate: 0px 99.98%; } 100% { translate: 0px 0px; } }
+@keyframes week-li-wk-day-translate-2-d { 0% { translate: 0px -100.156%; } 100% { translate: 0px 0px; } }
+@keyframes week-li-wk-day-translate-2-m { 0% { translate: -100.267% -99.97%; } 21.5385% { translate: -100.267% 0px; } 78.4615% { translate: -100.267% 0px; } 100% { translate: 0px 0px; } }
+@keyframes week-li-wk-day-translate-3-d { 0% { translate: 100% 0px; } 100% { translate: 0px 0px; } }
+@keyframes week-li-wk-day-translate-3-m { 0% { translate: 100.267% 0px; } 100% { translate: 0px 0px; } }
+@keyframes week-li-wk-day-translate-6 { 0% { translate: 100% 0px; } 100% { translate: 0px 0px; } }
+@keyframes week-li-wk-day-translate-7 { 0% { translate: 0px 99.778%; } 100% { translate: 0px 0px; } }
+@keyframes week-li-wk-day-translate-4 { 0% { translate: 0px 99.97%; } 100% { translate: 0px 0px; } }
+@media (min-width: 861px) {
+  [data-8b-live] #week .wk-day--2 { animation-name: week-li-wk-day-translate-d; }
+  [data-8b-live] #week .wk-day--5 { animation-name: week-li-wk-day-translate-2-d; animation-range: cover calc(14.8649% + 70.2703vh) cover calc(24.3243% + 51.3514vh); }
+  [data-8b-live] #week .wk-board > .wk-day { animation-timeline: --week-t1; animation-timing-function: var(--ease-power3-inout); animation-fill-mode: both; transform: none; }
+  [data-8b-live] #week .wk-day--1 { animation-name: week-li-wk-day-translate-3-d; }
+  [data-8b-live] #week .wk-day--6 { animation-name: week-li-wk-day-translate-3-d; animation-range: cover calc(49.3243% + 1.3514vh) cover calc(58.7838% - 17.5676vh); }
+  [data-8b-live] #week .wk-day--7 { animation-name: week-li-wk-day-translate-2-d; animation-range: cover calc(60.8108% - 21.6216vh) cover calc(70.2703% - 40.5405vh); }
+  [data-8b-live] #week .wk-day--3 { animation-name: week-li-wk-day-translate-6; animation-range: cover calc(72.2973% - 44.5946vh) cover calc(81.7568% - 63.5135vh); }
+  [data-8b-live] #week .wk-day--4 { animation-name: week-li-wk-day-translate-7; animation-range: cover calc(83.7838% - 67.5676vh) cover calc(93.2432% - 86.4865vh); }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #week .wk-day--2, [data-8b-live] #week .wk-day--5, [data-8b-live] #week .wk-day--1, [data-8b-live] #week .wk-day--6, [data-8b-live] #week .wk-day--3, [data-8b-live] #week .wk-day--4 { animation-timeline: --week-t1; animation-timing-function: var(--ease-power3-inout); animation-fill-mode: both; transform: none; }
+  [data-8b-live] #week .wk-day--2 { animation-name: week-li-wk-day-translate-m; }
+  [data-8b-live] #week .wk-day--5 { animation-name: week-li-wk-day-translate-3-m; animation-range: cover calc(72.2973% - 44.5946vh) cover calc(81.7568% - 63.5135vh); }
+  [data-8b-live] #week .wk-day--1 { animation-name: week-li-wk-day-translate-3-m; }
+  [data-8b-live] #week .wk-day--6 { animation-name: week-li-wk-day-translate-4; animation-range: cover calc(83.7838% - 67.5676vh) cover calc(93.2432% - 86.4865vh); }
+  [data-8b-live] #week .wk-day--3 { animation-name: week-li-wk-day-translate-4; animation-range: cover calc(60.8108% - 21.6216vh) cover calc(70.2703% - 40.5405vh); }
+  [data-8b-live] #week .wk-day--4 { animation-name: week-li-wk-day-translate-2-m; animation-range: cover calc(14.8649% + 70.2703vh) cover calc(58.7838% - 17.5676vh); }
+}
+}
+}
+</style>
+<style data-8b-part="scene:long-table">
+@layer scenes {
+[data-8b-live] #long-table-title { view-timeline: --long-table-t1 block; view-timeline-inset: 0; transform-origin: 0% 50%; animation-name: long-table-title-widen; animation-timeline: --long-table-t1; animation-range: cover 5vh cover 70vh; animation-timing-function: linear(0, 0.0042, 0.0168, 0.0377, 0.0671, 0.1049, 0.1512, 0.2058, 0.2719, 0.3575, 0.4606, 0.5632, 0.6549, 0.7352, 0.805, 0.8648, 0.9136, 0.9514, 0.9784, 0.9946, 1); animation-fill-mode: both; }
+[data-8b-live] #long-table .lt-photo { view-timeline: --long-table-t2 block; view-timeline-inset: 0; animation-timeline: --long-table-t2; animation-range: cover 8vh cover calc(50% + 5vh); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; }
+@keyframes long-table-title-widen { 0% { scale: 0.6018 1; } 100% { scale: 1 1; } }
+@keyframes long-table-div-lt-photo-clippath { 0% { clip-path: inset(0px max(0px, 50% - var(--lt-photo-h) / 2) round 999px); } 100% { clip-path: inset(0px 0px round 999px); } }
+[data-8b-live] #long-table .lt-photo { animation-name: long-table-div-lt-photo-clippath; }
+}
+</style>
+<style data-8b-part="scene:regulars">
+@layer scenes {
+[data-8b-live] { --ease-49796a: linear(0, 0.1159, 0.2239, 0.3241, 0.4168, 0.5023, 0.581, 0.6529, 0.7184, 0.7778, 0.8313, 0.8791, 0.9216, 0.959, 0.9916, 1.0195, 1.0432, 1.0628, 1.0787, 1.091, 1.1, 1.106, 1.1094, 1.1102, 1.1088, 1.1055, 1.1004, 1.094, 1.0864, 1.0779, 1.0688, 1.0592, 1.0496, 1.0401, 1.0311, 1.0227, 1.0152, 1.0089, 1.0042, 1.0011, 1); --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] #regulars .rg-card { view-timeline: --regulars-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #regulars .rg-cells > li:is(:nth-of-type(1), :nth-of-type(3), :nth-of-type(5), :nth-of-type(6), :nth-of-type(8)) > .m-shape, [data-8b-live] #regulars .rg-cells > li:is(:nth-of-type(2), :nth-of-type(7)) > .m-shape-2, [data-8b-live] #regulars .rg-cells > li:is(:nth-of-type(4), :nth-of-type(9)) > .m-shape-3, [data-8b-live] #regulars .rg-free { animation-name: regulars-span-m-shape-scale; animation-timing-function: var(--ease-49796a); }
+[data-8b-live] #regulars .rg-cells > li:is(:nth-of-type(1), :nth-of-type(3), :nth-of-type(5), :nth-of-type(6), :nth-of-type(8)) > .m-shape, [data-8b-live] #regulars .rg-cells > li:is(:nth-of-type(2), :nth-of-type(7)) > .m-shape-2, [data-8b-live] #regulars .rg-cells > li:is(:nth-of-type(4), :nth-of-type(9)) > .m-shape-3, [data-8b-live] #regulars .rg-free, [data-8b-live] #regulars .rg-free__label { animation-timeline: --regulars-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #regulars .rg-cells > li:nth-of-type(1) > .m-shape { animation-range: cover 15vh cover calc(14.1643% + 5.7932vh); transform-origin: 100% 100%; }
+[data-8b-live] #regulars .rg-cells > li:nth-of-type(2) > .m-shape-2 { animation-range: cover calc(9.0652% + 9.1076vh) cover calc(23.2295% - 0.0992vh); }
+[data-8b-live] #regulars .rg-cells > li:nth-of-type(3) > .m-shape { animation-range: cover calc(18.1303% + 3.2153vh) cover calc(32.2946% - 5.9915vh); transform-origin: 0% 0%; }
+[data-8b-live] #regulars .rg-cells > li:nth-of-type(4) > .m-shape-3 { animation-range: cover calc(27.1955% - 2.6771vh) cover calc(41.3598% - 11.8839vh); transform-origin: 50% 100%; }
+[data-8b-live] #regulars .rg-cells > li:nth-of-type(5) > .m-shape { animation-range: cover calc(36.2606% - 8.5694vh) cover calc(50.4249% - 17.7762vh); transform-origin: 0% 100%; }
+[data-8b-live] #regulars .rg-cells > li:nth-of-type(6) > .m-shape { animation-range: cover calc(45.3258% - 14.4618vh) cover calc(59.4901% - 23.6686vh); transform-origin: 100% 0%; }
+[data-8b-live] #regulars .rg-cells > li:nth-of-type(7) > .m-shape-2 { animation-range: cover calc(54.3909% - 20.3541vh) cover calc(68.5552% - 29.5609vh); }
+[data-8b-live] #regulars .rg-cells > li:nth-of-type(8) > .m-shape { animation-range: cover calc(63.4561% - 26.2465vh) cover calc(77.6204% - 35.4533vh); transform-origin: 100% 100%; }
+[data-8b-live] #regulars .rg-cells > li:nth-of-type(9) > .m-shape-3 { animation-range: cover calc(72.5212% - 32.1388vh) cover calc(86.6856% - 41.3456vh); transform-origin: 50% 100%; }
+[data-8b-live] #regulars .rg-free { animation-range: cover calc(81.5864% - 38.0312vh) cover calc(95.7507% - 47.238vh); transform-origin: 100% 100%; }
+[data-8b-live] #regulars .rg-free__label { animation-name: regulars-span-m-text-5-translate; animation-range: cover calc(88.6686% - 42.6346vh) cover calc(100% - 50vh); animation-timing-function: var(--ease-power3-out); }
+@keyframes regulars-span-m-shape-scale { 0% { scale: 0; } 100% { scale: 1; } }
+@keyframes regulars-span-m-text-5-translate { 0% { translate: 0px 120%; } 0.002% { translate: 0px 119.88%; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:visit">
+@layer scenes {
+[data-8b-live] { --ease-31c216: linear(0, 0.1017, 0.1968, 0.2856, 0.3682, 0.4449, 0.5159, 0.5814, 0.6416, 0.6967, 0.7469, 0.7924, 0.8334, 0.8701, 0.9028, 0.9316, 0.9568, 0.9785, 0.997, 1.0124, 1.025, 1.035, 1.0425, 1.0479, 1.0512, 1.0527, 1.0527, 1.0512, 1.0486, 1.045, 1.0406, 1.0357, 1.0304, 1.025, 1.0196, 1.0145, 1.0098, 1.0058, 1.0027, 1.0007, 1); }
+[data-8b-live] #visit .vs-field { view-timeline: --visit-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #visit .vs-field > span { animation-name: visit-div-vs-field-span-rotate; animation-timeline: --visit-t1; animation-timing-function: var(--ease-31c216); animation-fill-mode: both; transform: none; }
+@keyframes visit-div-vs-field-span-rotate { 0% { rotate: var(--visit-div-vs-field-span-rotate-from, 90deg); } 100% { rotate: var(--visit-div-vs-field-span-rotate-to, 0deg); } }
+@media (min-width: 861px) {
+  [data-8b-live] #visit .vs-field > span:nth-of-type(1) { animation-range: cover 5vh cover calc(38.61% - 12.3745vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(2) { animation-range: cover calc(4.6332% + 2.9151vh) cover calc(43.2432% - 14.4595vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(3) { animation-range: cover calc(9.2664% + 0.8301vh) cover calc(47.8764% - 16.5444vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(9) { animation-range: cover calc(9.6525% + 0.6564vh) cover calc(48.2625% - 16.7181vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(4) { animation-range: cover calc(13.8996% - 1.2548vh) cover calc(52.5097% - 18.6293vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(10) { animation-range: cover calc(14.2857% - 1.4286vh) cover calc(52.8958% - 18.8031vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(5) { animation-range: cover calc(18.5328% - 3.3398vh) cover calc(57.1429% - 20.7143vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(11) { animation-range: cover calc(18.9189% - 3.5135vh) cover calc(57.529% - 20.888vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(6) { animation-range: cover calc(23.166% - 5.4247vh) cover calc(61.7761% - 22.7992vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(12) { animation-range: cover calc(23.5521% - 5.5985vh) cover calc(62.1622% - 22.973vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(7) { animation-range: cover calc(27.7992% - 7.5097vh) cover calc(66.4093% - 24.8842vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(13) { animation-range: cover calc(28.1853% - 7.6834vh) cover calc(66.7954% - 25.0579vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(8) { animation-range: cover calc(32.4324% - 9.5946vh) cover calc(71.0425% - 26.9691vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(14) { animation-range: cover calc(32.8185% - 9.7683vh) cover calc(71.4286% - 27.1429vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(15) { animation-range: cover calc(37.4517% - 11.8533vh) cover calc(76.0618% - 29.2278vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(16) { animation-range: cover calc(42.0849% - 13.9382vh) cover calc(80.695% - 31.3127vh); }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #visit .vs-field > span:nth-of-type(1) { animation-range: cover 5vh cover calc(38.3142% - 12.2414vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(2) { animation-range: cover calc(4.5977% + 2.931vh) cover calc(42.9119% - 14.3103vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(3) { animation-range: cover calc(9.1954% + 0.8621vh) cover calc(47.5096% - 16.3793vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(9) { animation-range: cover calc(19.1571% - 3.6207vh) cover calc(57.4713% - 20.8621vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(4) { animation-range: cover calc(13.7931% - 1.2069vh) cover calc(52.1073% - 18.4483vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(10) { animation-range: cover calc(23.7548% - 5.6897vh) cover calc(62.069% - 22.931vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(5) { animation-range: cover calc(9.5785% + 0.6897vh) cover calc(47.8927% - 16.5517vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(11) { animation-range: cover calc(28.3525% - 7.7586vh) cover calc(66.6667% - 25vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(6) { animation-range: cover calc(14.1762% - 1.3793vh) cover calc(52.4904% - 18.6207vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(12) { animation-range: cover calc(32.9502% - 9.8276vh) cover calc(71.2644% - 27.069vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(7) { animation-range: cover calc(18.7739% - 3.4483vh) cover calc(57.0881% - 20.6897vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(13) { animation-range: cover calc(28.7356% - 7.931vh) cover calc(67.0498% - 25.1724vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(8) { animation-range: cover calc(23.3716% - 5.5172vh) cover calc(61.6858% - 22.7586vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(14) { animation-range: cover calc(33.3333% - 10vh) cover calc(71.6475% - 27.2414vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(15) { animation-range: cover calc(37.931% - 12.069vh) cover calc(76.2452% - 29.3103vh); }
+  [data-8b-live] #visit .vs-field > span:nth-of-type(16) { animation-range: cover calc(42.5287% - 14.1379vh) cover calc(80.8429% - 31.3793vh); }
+}
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: top bar: four-tile mark and name, five links, a Book a table button; below 861 px a menu button opens a full-screen overlay -->
 <header id="navigation" data-8b-section="navigation">
   <nav class="nav-bar" aria-label="Main">
     <a class="nav-logo" href="#opening" aria-label="Quarter Turn, back to the top"><span class="nav-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span><span>Quarter Turn</span></a>
-    <ul class="nav-links">
+    <ul class="nav-links" data-8b-items=":scope > li">
       <li><a class="m-link" href="#library">Library</a></li>
       <li><a class="m-link" href="#week">The week</a></li>
       <li><a class="m-link" href="#kitchen">Kitchen</a></li>
@@ -693,12 +866,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
     <a class="m-btn nav-book" href="#visit"><span class="m-btn__label">Book<span class="nav-book__more"> a table</span></span></a>
     <button class="m-iconbtn nav-menu" type="button" aria-label="Open the menu" aria-expanded="false" aria-controls="nav-overlay"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
   </nav>
-  <div class="nav-overlay" id="nav-overlay" data-lenis-prevent hidden>
+  <div class="nav-overlay" id="nav-overlay" hidden>
     <div class="nav-overlay__top">
       <span class="m-text-5">Quarter Turn</span>
       <button class="m-iconbtn nav-close" type="button" aria-label="Close the menu"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
     </div>
-    <ul>
+    <ul data-8b-items=":scope > li">
       <li><a class="m-text-4" href="#library">Library</a></li>
       <li><a class="m-text-4" href="#guides">Guides</a></li>
       <li><a class="m-text-4" href="#week">The week</a></li>
@@ -711,17 +884,17 @@ button, input, select, textarea { font: inherit; color: inherit; }
   </div>
 </header>
 <main>
-<!-- opening: first screen: sliced label, headline, paragraph, a button and a link beside three navy pill bars with the main offers -->
+<!-- opening: first screen: sliced label, headline, paragraph, a button and a link beside three navy pill bars with the main offers (animation: scene:opening) -->
 <section id="opening" data-8b-section="opening" aria-labelledby="opening-title">
   
   <div class="op-s2">
     <div class="op-s2-copy">
-      <p class="m-echo" data-8b-motion="slice" style="--len:15">Board game café</p>
+      <p class="m-echo" data-8b-motion="slice" style="--len:15" data-8b-enter="85%">Board game café</p>
       <h1 class="m-text-4" id="opening-title">Pull up a chair. We'll teach you the rest.</h1>
       <p class="m-text-6">Nobody here has to read a rulebook. Tell a guide who is at the table and how long you have, and you'll be playing in ten minutes — whether it's your first game since Monopoly or your fortieth campaign night.</p>
       <div class="op-s2-actions"><a class="m-btn" href="#visit"><span class="m-btn__label">Book a table</span></a><a class="m-link" href="#guides">How the guides teach</a></div>
     </div>
-    <ul class="op-bars">
+    <ul class="op-bars" data-8b-items=":scope > li" data-8b-fixed="3">
       <li class="op-bar"><div class="op-bar__in"><strong class="m-text-5">£6 a head, all day</strong><span class="m-text-2">One table fee and no clock. Under-12s pay £3.</span></div></li>
       <li class="op-bar"><div class="op-bar__in"><strong class="m-text-5">Any game, taught</strong><span class="m-text-2">A guide plays your first round with you.</span></div></li>
       <li class="op-bar"><div class="op-bar__in"><strong class="m-text-5">Plates to the table</strong><span class="m-text-2">Kitchen open until 22:00, built for one hand.</span></div></li>
@@ -732,16 +905,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
 <section id="library" data-8b-section="library" aria-labelledby="library-title">
   <div class="lb-stage">
     <div class="lb-head">
-      <p class="m-echo" style="--len:11" data-8b-motion="slice">The library</p>
+      <p class="m-echo" style="--len:11" data-8b-motion="slice" data-8b-enter="85%">The library</p>
       <h2 class="m-text-4" id="library-title">Seven hundred games, shelved by how your table feels</h2>
       <p class="m-text lb-lead">Ask for a shelf, not a title. A guide pulls three boxes that fit your group, and every game is counted back after it's played, so nothing is missing a piece.</p>
     </div>
-    <div class="lb-board">
+    <div class="lb-board" data-8b-items=":scope > .lb-shelf" data-8b-fixed="4">
       <article class="lb-shelf"><div class="lb-card lb-card--1">
-        <span class="m-shape lb-photo" data-corner="bl"><img style="background:#d9d9f3" src="https://images.unsplash.com/photo-1558919047-ae4820a1906a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGhhbmRzJTIwYm9hcmQlMjBnYW1lJTIwcGllY2VzfGVufDF8Mnx8fDE3OTE0NTQxNzN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" width="1600" height="1600" alt="Round playing pieces on a blue grid board" loading="lazy"></span>
+        <span class="m-shape lb-photo" data-corner="bl"><img fetchpriority="high" src="https://images.unsplash.com/photo-1558919047-ae4820a1906a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGhhbmRzJTIwYm9hcmQlMjBnYW1lJTIwcGllY2VzfGVufDF8Mnx8fDE3OTE0NTQxNzN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" width="1600" height="1600" alt="Round playing pieces on a blue grid board" loading="lazy"></span>
         <h3 class="m-text-5 lb-name">Two of us</h3>
         <p class="m-text-2 lb-note">Head to head, twenty minutes to an hour.</p>
-        <ul class="lb-games">
+        <ul class="lb-games" data-8b-items=":scope > li">
           <li><span>Patchwork</span><span class="m-text-2">2 · 30 min</span></li>
           <li><span>Jaipur</span><span class="m-text-2">2 · 30 min</span></li>
           <li><span>7 Wonders Duel</span><span class="m-text-2">2 · 40 min</span></li>
@@ -750,10 +923,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
         </ul>
       </div></article>
       <article class="lb-shelf"><div class="lb-card lb-card--2">
-        <span class="m-shape lb-photo" data-corner="bl"><img style="background:#8c8ca6" src="https://images.unsplash.com/photo-1759868937448-423d3c7c8133?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGNoaWxkcmVuJTIwcGxheWluZyUyMGJvYXJkJTIwZ2FtZXxlbnwxfDB8fHwxNzkxNDU0MjAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=370&amp;q=60" width="1600" height="1067" alt="Hands slapping down round picture cards around a table" loading="lazy"></span>
+        <span class="m-shape lb-photo" data-corner="bl"><img src="https://images.unsplash.com/photo-1759868937448-423d3c7c8133?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGNoaWxkcmVuJTIwcGxheWluZyUyMGJvYXJkJTIwZ2FtZXxlbnwxfDB8fHwxNzkxNDU0MjAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=370&amp;q=60" width="1600" height="1067" alt="Hands slapping down round picture cards around a table" loading="lazy"></span>
         <h3 class="m-text-5 lb-name">The loud table</h3>
         <p class="m-text-2 lb-note">Five to ten players, lots of shouting.</p>
-        <ul class="lb-games">
+        <ul class="lb-games" data-8b-items=":scope > li">
           <li><span>Codenames</span><span class="m-text-2">4–8 · 20 min</span></li>
           <li><span>Dixit</span><span class="m-text-2">3–8 · 30 min</span></li>
           <li><span>Just One</span><span class="m-text-2">3–7 · 20 min</span></li>
@@ -762,10 +935,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
         </ul>
       </div></article>
       <article class="lb-shelf"><div class="lb-card lb-card--3">
-        <span class="m-shape lb-photo" data-corner="bl"><img src="https://images.unsplash.com/photo-1676651471150-0e3a5f8de05e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZnJpZW5kcyUyMHBsYXlpbmclMjBib2FyZCUyMGdhbWUlMjB0YWJsZXxlbnwxfDB8fHwxNzkxNDU0MTU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" width="1600" height="900" alt="A player holding up a token over a crowded strategy board" loading="lazy" style="background:#260c0c;object-position: 62% 50%"></span>
+        <span class="m-shape lb-photo" data-corner="bl"><img src="https://images.unsplash.com/photo-1676651471150-0e3a5f8de05e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZnJpZW5kcyUyMHBsYXlpbmclMjBib2FyZCUyMGdhbWUlMjB0YWJsZXxlbnwxfDB8fHwxNzkxNDU0MTU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" width="1600" height="900" alt="A player holding up a token over a crowded strategy board" loading="lazy" style="object-position: 62% 50%"></span>
         <h3 class="m-text-5 lb-name">Slow and clever</h3>
         <p class="m-text-2 lb-note">Two to four hours, a quiet room upstairs.</p>
-        <ul class="lb-games">
+        <ul class="lb-games" data-8b-items=":scope > li">
           <li><span>Wingspan</span><span class="m-text-2">1–5 · 70 min</span></li>
           <li><span>Brass: Birmingham</span><span class="m-text-2">2–4 · 2 h</span></li>
           <li><span>Terraforming Mars</span><span class="m-text-2">1–5 · 2 h</span></li>
@@ -774,10 +947,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
         </ul>
       </div></article>
       <article class="lb-shelf"><div class="lb-card lb-card--4">
-        <span class="m-shape lb-photo" data-corner="bl"><img src="https://images.unsplash.com/photo-1651170104468-359c1a7fd53d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y2hpbGRyZW4lMjBwbGF5aW5nJTIwYm9hcmQlMjBnYW1lfGVufDF8MHx8fDE3OTE0NTQyMDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=370&amp;q=60" width="1600" height="1067" alt="A simple race board with coloured pawns on a wooden table" loading="lazy" style="background:#c08c73;object-position: 55% 60%"></span>
+        <span class="m-shape lb-photo" data-corner="bl"><img src="https://images.unsplash.com/photo-1651170104468-359c1a7fd53d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y2hpbGRyZW4lMjBwbGF5aW5nJTIwYm9hcmQlMjBnYW1lfGVufDF8MHx8fDE3OTE0NTQyMDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=370&amp;q=60" width="1600" height="1067" alt="A simple race board with coloured pawns on a wooden table" loading="lazy" style="object-position: 55% 60%"></span>
         <h3 class="m-text-5 lb-name">First timers</h3>
         <p class="m-text-2 lb-note">Rules in five minutes, fun for seven-year-olds.</p>
-        <ul class="lb-games">
+        <ul class="lb-games" data-8b-items=":scope > li">
           <li><span>Ticket to Ride</span><span class="m-text-2">2–5 · 45 min</span></li>
           <li><span>Carcassonne</span><span class="m-text-2">2–5 · 35 min</span></li>
           <li><span>Azul</span><span class="m-text-2">2–4 · 40 min</span></li>
@@ -792,28 +965,28 @@ button, input, select, textarea { font: inherit; color: inherit; }
 <!-- guides: table guides: label, heading, paragraph and a photo with a quarter tile, beside four numbered steps -->
 <section id="guides" data-8b-section="guides" aria-labelledby="guides-title">
   <div class="gd-intro">
-    <p class="m-echo" style="--len:12" data-8b-motion="slice">Table guides</p>
+    <p class="m-echo" style="--len:12" data-8b-motion="slice" data-8b-enter="85%">Table guides</p>
     <h2 class="m-text-4" id="guides-title">We read the rulebook so you don't have to</h2>
     <p class="m-text-6">There is a guide in every room. They have played everything on the shelves at least twice, and teaching you is part of the table fee.</p>
     <div class="gd-photo-row">
-      <span class="m-shape gd-photo" data-corner="tr"><img src="https://images.unsplash.com/photo-1676562330796-593b68d44e20?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZnJpZW5kcyUyMHBsYXlpbmclMjBib2FyZCUyMGdhbWUlMjB0YWJsZXxlbnwxfDB8fHwxNzkxNDU0MTU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=760&amp;q=60" width="1600" height="900" alt="A guide shuffling a deck of game cards over a laid-out board" loading="lazy" style="background:#260c0c;object-position: 58% 50%"></span>
-      <span class="gd-mark" aria-hidden="true"><span class="m-shape" data-corner="bl" data-8b-motion="turn"></span></span>
+      <span class="m-shape gd-photo" data-corner="tr"><img src="https://images.unsplash.com/photo-1676562330796-593b68d44e20?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZnJpZW5kcyUyMHBsYXlpbmclMjBib2FyZCUyMGdhbWUlMjB0YWJsZXxlbnwxfDB8fHwxNzkxNDU0MTU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=760&amp;q=60" width="1600" height="900" alt="A guide shuffling a deck of game cards over a laid-out board" loading="lazy" style="object-position: 58% 50%"></span>
+      <span class="gd-mark" aria-hidden="true"><span class="m-shape" data-corner="bl" data-8b-motion="turn" style="--turn-rotate-from: -90deg"></span></span>
     </div>
   </div>
-  <ol class="gd-steps">
-    <li class="gd-step" data-8b-motion="deal" data-side="right">
+  <ol class="gd-steps" data-8b-items=":scope > li">
+    <li class="gd-step" data-8b-motion="deal" data-8b-enter="90%" data-side="right">
       <span class="gd-pillar"><span class="m-text-5">01</span></span>
       <div class="gd-body"><h3 class="m-text-5">Tell us who's playing</h3><p class="m-text">How many of you, how long you've got, and whether anyone has played anything heavier than snap.</p></div>
     </li>
-    <li class="gd-step" data-8b-motion="deal" data-side="right">
+    <li class="gd-step" data-8b-motion="deal" data-8b-enter="90%" data-side="right">
       <span class="gd-pillar"><span class="m-text-5">02</span></span>
       <div class="gd-body"><h3 class="m-text-5">Pick from three</h3><p class="m-text">Your guide brings three boxes that fit your table. Nobody has to browse seven hundred spines.</p></div>
     </li>
-    <li class="gd-step" data-8b-motion="deal" data-side="right">
+    <li class="gd-step" data-8b-motion="deal" data-8b-enter="90%" data-side="right">
       <span class="gd-pillar"><span class="m-text-5">03</span></span>
       <div class="gd-body"><h3 class="m-text-5">Play the first round together</h3><p class="m-text">They set up, explain the goal in a minute and play the opening turns with you until it clicks.</p></div>
     </li>
-    <li class="gd-step" data-8b-motion="deal" data-side="right">
+    <li class="gd-step" data-8b-motion="deal" data-8b-enter="90%" data-side="right">
       <span class="gd-pillar"><span class="m-text-5">04</span></span>
       <div class="gd-body"><h3 class="m-text-5">Raise the flag card</h3><p class="m-text">Every table has one. Stand it up when a rule starts an argument and a guide comes over to settle it.</p></div>
     </li>
@@ -824,10 +997,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 <section id="week" data-8b-section="week" aria-labelledby="week-title">
   <div class="wk-stage">
     <div class="wk-head">
-      <p class="m-echo" style="--len:8" data-8b-motion="slice">The week</p>
+      <p class="m-echo" style="--len:8" data-8b-motion="slice" data-8b-enter="85%">The week</p>
       <h2 class="m-text-4" id="week-title">Something on every night but Monday</h2>
     </div>
-    <ol class="wk-board">
+    <ol class="wk-board" data-8b-items=":scope > .wk-day" data-8b-fixed="7">
       <li class="wk-day wk-day--1"><h3 class="m-text-5">Mon</h3><p class="m-text-2 wk-what">Closed</p><p class="wk-line">We re-sort the shelves and hunt for missing pieces.</p></li>
       <li class="wk-day wk-day--2"><h3 class="m-text-5">Tue</h3><p class="m-text-2 wk-what">Learn-to-play night</p><p class="m-text-2 wk-when">18:00–23:00</p><p class="wk-line">A guide teaches one new game to every table.</p></li>
       <li class="wk-day wk-day--3"><h3 class="m-text-5">Wed</h3><p class="m-text-2 wk-what">Two-player league</p><p class="m-text-2 wk-when">From 19:00</p><p class="wk-line">Eight weeks, a new opponent each week.</p></li>
@@ -846,53 +1019,53 @@ button, input, select, textarea { font: inherit; color: inherit; }
 <!-- kitchen: menu in four groups with prices and two photos -->
 <section id="kitchen" data-8b-section="kitchen" aria-labelledby="kitchen-title">
   <div class="kt-head">
-    <p class="m-echo" style="--len:11" data-8b-motion="slice">The kitchen</p>
+    <p class="m-echo" style="--len:11" data-8b-motion="slice" data-8b-enter="85%">The kitchen</p>
     <h2 class="m-text-4" id="kitchen-title">Food you can eat with one hand</h2>
     <p class="m-text-6">Nothing drips, nothing needs a knife, and it comes to the table between turns. The cards stay clean; so do you.</p>
   </div>
-  <div class="kt-menu">
-    <span class="m-shape-3 kt-photo kt-photo--1"><img src="https://images.unsplash.com/photo-1712746784291-e29d5d2694d4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8dG9hc3RlZCUyMHNhbmR3aWNoJTIwcGxhdGV8ZW58MXwwfHx8MTc5MTQ1NDE5OXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" width="1600" height="1067" alt="A toasted club sandwich cut in half with salad" loading="lazy" style="background:#f3f3f3;object-position: 50% 45%"></span>
-    <div class="kt-group kt-group--1" data-8b-motion="deal">
-      <span class="kt-mark" aria-hidden="true"><span class="m-shape" data-corner="br" data-8b-motion="turn"></span></span>
+  <div class="kt-menu" data-8b-items=":scope > .kt-group">
+    <span class="m-shape-3 kt-photo kt-photo--1"><img src="https://images.unsplash.com/photo-1712746784291-e29d5d2694d4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8dG9hc3RlZCUyMHNhbmR3aWNoJTIwcGxhdGV8ZW58MXwwfHx8MTc5MTQ1NDE5OXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" width="1600" height="1067" alt="A toasted club sandwich cut in half with salad" loading="lazy" style="object-position: 50% 45%"></span>
+    <div class="kt-group kt-group--1" data-8b-motion="deal" data-8b-enter="90%">
+      <span class="kt-mark" aria-hidden="true"><span class="m-shape" data-corner="br" data-8b-motion="turn" style="--turn-rotate-from: -90deg"></span></span>
       <h3 class="m-text-5">One-hand plates</h3>
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><span>Toastie of the day</span><span class="m-text-2">£7.50</span></li>
         <li><span>Club sandwich, quartered</span><span class="m-text-2">£9.00</span></li>
         <li><span>Flatbread wedges and hummus</span><span class="m-text-2">£6.50</span></li>
         <li><span>Fries in a cone</span><span class="m-text-2">£4.00</span></li>
       </ul>
     </div>
-    <div class="kt-group kt-group--2" data-8b-motion="deal" data-side="right">
-      <span class="kt-mark" aria-hidden="true"><span class="m-shape" data-corner="bl" data-8b-motion="turn"></span></span>
+    <div class="kt-group kt-group--2" data-8b-motion="deal" data-8b-enter="90%" data-side="right">
+      <span class="kt-mark" aria-hidden="true"><span class="m-shape" data-corner="bl" data-8b-motion="turn" style="--turn-rotate-from: 90deg"></span></span>
       <h3 class="m-text-5">Middle of the table</h3>
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><span>Nachos for four</span><span class="m-text-2">£12.00</span></li>
         <li><span>Popcorn by the bucket</span><span class="m-text-2">£5.00</span></li>
         <li><span>Pretzel bites, cheese dip</span><span class="m-text-2">£6.00</span></li>
         <li><span>Crudités and three dips</span><span class="m-text-2">£5.50</span></li>
       </ul>
     </div>
-    <div class="kt-group kt-group--3" data-8b-motion="deal">
-      <span class="kt-mark" aria-hidden="true"><span class="m-shape" data-corner="tr" data-8b-motion="turn"></span></span>
+    <div class="kt-group kt-group--3" data-8b-motion="deal" data-8b-enter="90%">
+      <span class="kt-mark" aria-hidden="true"><span class="m-shape" data-corner="tr" data-8b-motion="turn" style="--turn-rotate-from: -90deg"></span></span>
       <h3 class="m-text-5">Coffee and tea</h3>
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><span>Flat white</span><span class="m-text-2">£3.40</span></li>
         <li><span>Oat latte</span><span class="m-text-2">£3.60</span></li>
         <li><span>Pot of tea for two</span><span class="m-text-2">£4.20</span></li>
         <li><span>Hot chocolate</span><span class="m-text-2">£3.80</span></li>
       </ul>
     </div>
-    <div class="kt-group kt-group--4" data-8b-motion="deal" data-side="right">
-      <span class="kt-mark" aria-hidden="true"><span class="m-shape" data-corner="tl" data-8b-motion="turn"></span></span>
+    <div class="kt-group kt-group--4" data-8b-motion="deal" data-8b-enter="90%" data-side="right">
+      <span class="kt-mark" aria-hidden="true"><span class="m-shape" data-corner="tl" data-8b-motion="turn" style="--turn-rotate-from: 90deg"></span></span>
       <h3 class="m-text-5">Pints and pours</h3>
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><span>Sheffield pale ale</span><span class="m-text-2">£5.60</span></li>
         <li><span>Pilsner</span><span class="m-text-2">£5.20</span></li>
         <li><span>House wine, glass</span><span class="m-text-2">£6.00</span></li>
         <li><span>Alcohol-free IPA</span><span class="m-text-2">£4.50</span></li>
       </ul>
     </div>
-    <span class="m-shape-2 kt-photo kt-photo--2"><img src="https://images.unsplash.com/photo-1630021439100-74a32ab42d3e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bGF0dGUlMjBjb2ZmZWUlMjB0YWJsZSUyMHRvcCUyMHZpZXd8ZW58MXwyfHx8MTc5MTQ1NDE5OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" width="1600" height="1772" alt="A latte with leaf-shaped foam art seen from above" loading="lazy" style="background:#40260c;object-position: 40% 42%"></span>
+    <span class="m-shape-2 kt-photo kt-photo--2"><img src="https://images.unsplash.com/photo-1630021439100-74a32ab42d3e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bGF0dGUlMjBjb2ZmZWUlMjB0YWJsZSUyMHRvcCUyMHZpZXd8ZW58MXwyfHx8MTc5MTQ1NDE5OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" width="1600" height="1772" alt="A latte with leaf-shaped foam art seen from above" loading="lazy" style="object-position: 40% 42%"></span>
   </div>
 </section>
 
@@ -900,10 +1073,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 <section id="long-table" data-8b-section="long-table" aria-labelledby="long-table-title">
   <p class="m-echo lt-label" style="--len:12">Private hire</p>
   <h2 class="m-text-3 lt-title" id="long-table-title" style="--len:14"><span class="lt-word" style="--len:8">The long</span> <span class="lt-word" style="--len:5">table</span></h2>
-  <div class="lt-photo"><img src="https://images.unsplash.com/photo-1646934280686-768a69c444eb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Z3JvdXAlMjBsYXVnaGluZyUyMHBsYXlpbmclMjBjYXJkcyUyMHRhYmxlfGVufDF8MHx8fDE3OTE0NTQxNzR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1220&amp;q=60" width="1600" height="900" alt="Friends laughing and pointing across a long wooden table covered in cards" loading="lazy" style="background:#a68c73;object-position: 50% 42%"></div>
+  <div class="lt-photo"><img src="https://images.unsplash.com/photo-1646934280686-768a69c444eb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Z3JvdXAlMjBsYXVnaGluZyUyMHBsYXlpbmclMjBjYXJkcyUyMHRhYmxlfGVufDF8MHx8fDE3OTE0NTQxNzR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1220&amp;q=60" width="1600" height="900" alt="Friends laughing and pointing across a long wooden table covered in cards" loading="lazy" style="object-position: 50% 42%"></div>
   <div class="lt-info">
     <p class="m-text-6">The back room seats twenty-four at one table: birthdays, team nights, a whole club's campaign weekend. You get the room, a guide for the evening and a games list built for your group before you arrive.</p>
-    <dl class="lt-facts">
+    <dl class="lt-facts" data-8b-items=":scope > div">
       <div><dt class="m-text-2">Seats</dt><dd class="m-text-5">Up to 24</dd></div>
       <div><dt class="m-text-2">Evening hire</dt><dd class="m-text-5">From £180</dd></div>
       <div><dt class="m-text-2">Set menu</dt><dd class="m-text-5">£14 a head</dd></div>
@@ -915,16 +1088,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 <!-- playtest: prototype night: a photo, label, heading and a slip with Bring, We supply and Sign up -->
 <section id="playtest" data-8b-section="playtest" aria-labelledby="playtest-title">
-  <span class="m-shape pt-photo" data-corner="tr"><img src="https://images.unsplash.com/photo-1729710877311-0e8e70bf820b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjF8fHBhcGVyJTIwcHJvdG90eXBlJTIwY2FyZHMlMjBza2V0Y2h8ZW58MXwwfHx8MTc5MTQ1NDIwMHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=750&amp;q=60" width="1600" height="1067" alt="A hand drawing on blank square cards with a pencil" loading="lazy" style="background:#a6a6a6;object-position: 30% 50%"></span>
+  <span class="m-shape pt-photo" data-corner="tr"><img src="https://images.unsplash.com/photo-1729710877311-0e8e70bf820b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjF8fHBhcGVyJTIwcHJvdG90eXBlJTIwY2FyZHMlMjBza2V0Y2h8ZW58MXwwfHx8MTc5MTQ1NDIwMHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=750&amp;q=60" width="1600" height="1067" alt="A hand drawing on blank square cards with a pencil" loading="lazy" style="object-position: 30% 50%"></span>
   <div class="pt-copy">
-    <p class="m-echo" style="--len:15" data-8b-motion="slice">Prototype night</p>
+    <p class="m-echo" style="--len:15" data-8b-motion="slice" data-8b-enter="85%">Prototype night</p>
     <h2 class="m-text-4" id="playtest-title">Bring the game you haven't finished</h2>
     <div class="pt-slip">
       <span class="pt-pillar" aria-hidden="true"></span>
-      <div class="pt-cols">
-        <div data-8b-motion="deal"><h3 class="m-text-5">Bring</h3><p class="m-text">A playable draft — paper, pens and sticky tape are fine — and a one-line pitch we can read to the room.</p></div>
-        <div data-8b-motion="deal"><h3 class="m-text-5">We supply</h3><p class="m-text">A table for the evening, six players who have never seen your game and a free coffee for the designer.</p></div>
-        <div data-8b-motion="deal"><h3 class="m-text-5">Sign up</h3><p class="m-text">Email your pitch by Monday. We take four games each Thursday, first come, first served.</p></div>
+      <div class="pt-cols" data-8b-items=":scope > div">
+        <div data-8b-motion="deal" data-8b-enter="90%"><h3 class="m-text-5">Bring</h3><p class="m-text">A playable draft — paper, pens and sticky tape are fine — and a one-line pitch we can read to the room.</p></div>
+        <div data-8b-motion="deal" data-8b-enter="90%"><h3 class="m-text-5">We supply</h3><p class="m-text">A table for the evening, six players who have never seen your game and a free coffee for the designer.</p></div>
+        <div data-8b-motion="deal" data-8b-enter="90%"><h3 class="m-text-5">Sign up</h3><p class="m-text">Email your pitch by Monday. We take four games each Thursday, first come, first served.</p></div>
       </div>
     </div>
     <a data-8b-placeholder="email" class="m-link pt-link" href="mailto:playtest@quarterturn.example?subject=Prototype%20night">Send a pitch for Thursday</a>
@@ -934,10 +1107,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 <!-- regulars: loyalty card: label, heading, price, four perks and a button beside a card of ten cells (animation: scene:regulars) -->
 <section id="regulars" data-8b-section="regulars" aria-labelledby="regulars-title">
   <div class="rg-copy">
-    <p class="m-echo" style="--len:14" data-8b-motion="slice">Regulars' card</p>
+    <p class="m-echo" style="--len:14" data-8b-motion="slice" data-8b-enter="85%">Regulars' card</p>
     <h2 class="m-text-4" id="regulars-title">Every tenth visit is on us</h2>
     <p class="m-text-6">£35 a year, paid once at the counter. The card lives on the board by the door, so you never have to remember it.</p>
-    <ul class="rg-terms">
+    <ul class="rg-terms" data-8b-items=":scope > li">
       <li class="m-text">Half-price table fee every Tuesday</li>
       <li class="m-text">10% off the kitchen and the bar</li>
       <li class="m-text">First go at new games before they're shelved</li>
@@ -947,7 +1120,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   </div>
   <div class="rg-card" role="img" aria-label="A regulars' card of ten cells: nine visits stamped, the tenth on the house">
     <div class="rg-card__top"><span class="m-text-5">Quarter Turn</span><span class="m-text-2">Regular</span></div>
-    <ol class="rg-cells">
+    <ol class="rg-cells" data-8b-items=":scope > li" data-8b-fixed="10">
       <li class="rg-cell"><span class="m-shape" data-corner="tl"></span></li>
       <li class="rg-cell"><span class="m-shape-2"></span></li>
       <li class="rg-cell"><span class="m-shape" data-corner="br"></span></li>
@@ -965,33 +1138,33 @@ button, input, select, textarea { font: inherit; color: inherit; }
 <!-- faq: seven questions as native details elements with a phone link in the heading -->
 <section id="faq" data-8b-section="faq" aria-labelledby="faq-title">
   <div class="fq-head">
-    <p class="m-echo" style="--len:9" data-8b-motion="slice">Questions</p>
+    <p class="m-echo" style="--len:9" data-8b-motion="slice" data-8b-enter="85%">Questions</p>
     <h2 class="m-text-4" id="faq-title">Before you come</h2>
     <p class="m-text">Anything else, ring the café on <a data-8b-placeholder="phone" class="m-link" href="tel:+441140000000">0114 000 0000</a>.</p>
   </div>
-  <div class="fq-list">
-    <details class="fq-item" data-8b-motion="deal" data-side="right"><summary><span class="m-text-5">Do we need to book?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">Walk-ins are welcome on weekdays. Book for Friday and Saturday evenings, and for groups of six or more.</p></details>
-    <details class="fq-item" data-8b-motion="deal" data-side="right"><summary><span class="m-text-5">How long can we stay?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">As long as you like: the table fee covers the whole day. On busy evenings we ask big groups to keep to four hours.</p></details>
-    <details class="fq-item" data-8b-motion="deal" data-side="right"><summary><span class="m-text-5">Can you teach us a game we've never played?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">That is what the guides are for, and it is included in the table fee. Ask as often as you like.</p></details>
-    <details class="fq-item" data-8b-motion="deal" data-side="right"><summary><span class="m-text-5">Is it all right to bring children?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">Yes. Under-12s pay £3, Saturday mornings are set aside for families and the first-timers shelf is full of games for seven-year-olds.</p></details>
-    <details class="fq-item" data-8b-motion="deal" data-side="right"><summary><span class="m-text-5">Can we bring our own game?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">Of course. The table fee is the same, and a guide will help you set it up.</p></details>
-    <details class="fq-item" data-8b-motion="deal" data-side="right"><summary><span class="m-text-5">Do you cater for allergies?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">Tell us when you order. The kitchen keeps gluten-free bread and vegan cheese, and the full allergen list is at the counter.</p></details>
-    <details class="fq-item" data-8b-motion="deal" data-side="right"><summary><span class="m-text-5">Is the café step-free?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">The ground floor, the toilets and the long table room are step-free. The quiet room upstairs is reached by stairs.</p></details>
+  <div class="fq-list" data-8b-items=":scope > details">
+    <details class="fq-item" data-8b-motion="deal" data-8b-enter="90%" data-side="right"><summary><span class="m-text-5">Do we need to book?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">Walk-ins are welcome on weekdays. Book for Friday and Saturday evenings, and for groups of six or more.</p></details>
+    <details class="fq-item" data-8b-motion="deal" data-8b-enter="90%" data-side="right"><summary><span class="m-text-5">How long can we stay?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">As long as you like: the table fee covers the whole day. On busy evenings we ask big groups to keep to four hours.</p></details>
+    <details class="fq-item" data-8b-motion="deal" data-8b-enter="90%" data-side="right"><summary><span class="m-text-5">Can you teach us a game we've never played?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">That is what the guides are for, and it is included in the table fee. Ask as often as you like.</p></details>
+    <details class="fq-item" data-8b-motion="deal" data-8b-enter="90%" data-side="right"><summary><span class="m-text-5">Is it all right to bring children?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">Yes. Under-12s pay £3, Saturday mornings are set aside for families and the first-timers shelf is full of games for seven-year-olds.</p></details>
+    <details class="fq-item" data-8b-motion="deal" data-8b-enter="90%" data-side="right"><summary><span class="m-text-5">Can we bring our own game?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">Of course. The table fee is the same, and a guide will help you set it up.</p></details>
+    <details class="fq-item" data-8b-motion="deal" data-8b-enter="90%" data-side="right"><summary><span class="m-text-5">Do you cater for allergies?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">Tell us when you order. The kitchen keeps gluten-free bread and vegan cheese, and the full allergen list is at the counter.</p></details>
+    <details class="fq-item" data-8b-motion="deal" data-8b-enter="90%" data-side="right"><summary><span class="m-text-5">Is the café step-free?</span><span class="fq-mark" aria-hidden="true"></span></summary><p class="m-text">The ground floor, the toilets and the long table room are step-free. The quiet room upstairs is reached by stairs.</p></details>
   </div>
 </section>
 
 <!-- visit: address, hours, contact links and a table request form over a field of arc tiles (animation: scene:visit) -->
 <section id="visit" data-8b-section="visit" aria-labelledby="visit-title">
-  <div class="vs-field" aria-hidden="true">
-    <span data-turn="0"></span><span data-turn="90"></span><span data-turn="0"></span><span data-turn="90"></span><span data-turn="0"></span><span data-turn="90"></span><span data-turn="0"></span><span data-turn="90"></span>
-    <span data-turn="90"></span><span data-turn="0"></span><span data-turn="90"></span><span data-turn="0"></span><span data-turn="90"></span><span data-turn="0"></span><span data-turn="90"></span><span data-turn="0"></span>
+  <div class="vs-field" aria-hidden="true" data-8b-items=":scope > span" data-8b-fixed="16">
+    <span data-turn="0" style="--visit-div-vs-field-span-rotate-from: 90deg; --visit-div-vs-field-span-rotate-to: 0deg"></span><span data-turn="90" style="--visit-div-vs-field-span-rotate-from: -180deg; --visit-div-vs-field-span-rotate-to: 90deg"></span><span data-turn="0" style="--visit-div-vs-field-span-rotate-from: -270deg; --visit-div-vs-field-span-rotate-to: 0deg"></span><span data-turn="90" style="--visit-div-vs-field-span-rotate-from: 360deg; --visit-div-vs-field-span-rotate-to: 90deg"></span><span data-turn="0" style="--visit-div-vs-field-span-rotate-from: -90deg; --visit-div-vs-field-span-rotate-to: 0deg"></span><span data-turn="90" style="--visit-div-vs-field-span-rotate-from: 0deg; --visit-div-vs-field-span-rotate-to: 90deg"></span><span data-turn="0" style="--visit-div-vs-field-span-rotate-from: 90deg; --visit-div-vs-field-span-rotate-to: 0deg"></span><span data-turn="90" style="--visit-div-vs-field-span-rotate-from: 180deg; --visit-div-vs-field-span-rotate-to: 90deg"></span>
+    <span data-turn="90" style="--visit-div-vs-field-span-rotate-from: -180deg; --visit-div-vs-field-span-rotate-to: 90deg"></span><span data-turn="0" style="--visit-div-vs-field-span-rotate-from: -270deg; --visit-div-vs-field-span-rotate-to: 0deg"></span><span data-turn="90" style="--visit-div-vs-field-span-rotate-from: 360deg; --visit-div-vs-field-span-rotate-to: 90deg"></span><span data-turn="0" style="--visit-div-vs-field-span-rotate-from: -90deg; --visit-div-vs-field-span-rotate-to: 0deg"></span><span data-turn="90" style="--visit-div-vs-field-span-rotate-from: 0deg; --visit-div-vs-field-span-rotate-to: 90deg"></span><span data-turn="0" style="--visit-div-vs-field-span-rotate-from: 90deg; --visit-div-vs-field-span-rotate-to: 0deg"></span><span data-turn="90" style="--visit-div-vs-field-span-rotate-from: 180deg; --visit-div-vs-field-span-rotate-to: 90deg"></span><span data-turn="0" style="--visit-div-vs-field-span-rotate-from: -270deg; --visit-div-vs-field-span-rotate-to: 0deg"></span>
   </div>
   <div class="vs-body">
     <div class="vs-info">
       <p class="m-echo" style="--len:5">Visit</p>
       <h2 class="m-text-4" id="visit-title">Come and play</h2>
       <address class="m-text-6 vs-address">1 Example Street<br>Sheffield S0 0AA</address>
-      <dl class="vs-hours">
+      <dl class="vs-hours" data-8b-items=":scope > div">
         <div><dt class="m-text-2">Tuesday–Sunday</dt><dd class="m-text">11:00–23:00</dd></div>
         <div><dt class="m-text-2">Monday</dt><dd class="m-text">Closed</dd></div>
         <div><dt class="m-text-2">Kitchen</dt><dd class="m-text">Until 22:00</dd></div>
@@ -1082,7 +1255,7 @@ document.querySelectorAll('.m-echo').forEach(label => {
   const setOpen = state => {
     overlay.hidden = !state;
     open.setAttribute('aria-expanded', String(state));
-    if (state) { window.lenis?.stop(); close.focus(); } else { window.lenis?.start(); }
+    if (state) { window.motionKit?.wheel?.stop(); close.focus(); } else { window.motionKit?.wheel?.start(); }
   };
   open.addEventListener('click', () => setOpen(true));
   close.addEventListener('click', () => { setOpen(false); open.focus(); });
@@ -1104,255 +1277,124 @@ document.querySelectorAll('.m-echo').forEach(label => {
   });
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function refreshScroll() {
-  const bar = document.querySelector('#navigation .nav-bar');
-  if (bar) document.documentElement.style.setProperty('--nav-h', `${bar.offsetHeight}px`);
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const bar = document.querySelector('#navigation .nav-bar');
-  const lenis = window.lenis = new Lenis({ lerp: 0.11, anchors: { offset: -(bar ? bar.offsetHeight : 0) } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  turn(element, vars = {}) {
-    const { from = -90, to = 0, ...rest } = vars;
-    return gsap.fromTo(element, { rotation: from }, { rotation: to, ease: 'back.out(1.4)', duration: 0.7, ...rest });
-  },
-  slice(label, vars = {}) {
-    const cuts = label.querySelectorAll('.m-echo__cut');
-    return gsap.timeline(vars).fromTo(cuts, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.55, ease: 'power2.out', stagger: 0.14, clearProps: 'clipPath' });
-  },
-  deal(element, vars = {}) {
-    const { side = -1, index = 0, ...rest } = vars;
-    return gsap.from(element, { xPercent: 14 * side, rotation: 3 * side, transformOrigin: side < 0 ? '0% 100%' : '100% 100%', duration: 0.7, ease: 'power3.out', delay: index * 0.08, ...rest });
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  const marked = section.querySelectorAll('[data-8b-motion]');
-  if (!marked.length) return;
-  const id = `effect:bindings:${section.id}`;
-  queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    section.querySelectorAll('[data-8b-motion~="turn"]').forEach((element, index) => ScrollTrigger.create({
-      id: `effect:turn:${section.id}:${index}`, trigger: element, start: 'top 88%', once: true,
-      animation: effects.turn(element, { from: index % 2 ? 90 : -90 })
-    }));
-    section.querySelectorAll('[data-8b-motion~="slice"]').forEach((element, index) => ScrollTrigger.create({
-      id: `effect:slice:${section.id}:${index}`, trigger: element, start: 'top 85%', once: true,
-      animation: effects.slice(element)
-    }));
-    const dealt = [...section.querySelectorAll('[data-8b-motion~="deal"]')];
-    dealt.forEach((element, index) => ScrollTrigger.create({
-      id: `effect:deal:${section.id}:${index}`, trigger: element, start: 'top 90%', once: true,
-      animation: effects.deal(element, { side: element.dataset.side === 'right' ? 1 : -1, index: dealt.filter(other => other.parentElement === element.parentElement).indexOf(element) })
-    }));
-  }), section.getBoundingClientRect().top < innerHeight ? { first: true, id } : { near: section, id });
-});
-</script>
 
-<script data-8b-part="scene:library">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 861px) and (min-height: 720px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 860px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('library');
-    const shelves = [...section.querySelectorAll('.lb-shelf')];
-    const cards = shelves.map(shelf => shelf.querySelector('.lb-card'));
-    if (cards.length !== 4 || cards.some(card => !card)) throw new Error('library: four shelf cards expected');
-    if (context.conditions.wide) {
-      section.setAttribute('data-swing', '');
-      const plan = [['0% 0%', -90], ['100% 0%', -90], ['0% 100%', 90], ['100% 100%', 90]];
-      const timeline = gsap.timeline({
-        defaults: { ease: 'power2.inOut' },
-        scrollTrigger: { id: 'library', trigger: section, start: 'top top', end: 'bottom bottom', scrub: 0.5 }
-      });
-      cards.forEach((card, index) => {
-        timeline.fromTo(card, { rotation: plan[index][1], transformOrigin: plan[index][0] }, { rotation: 0, duration: 1 }, 0.1 + index * 0.85);
-      });
-      timeline.to({}, { duration: 0.6 });
-      return () => section.removeAttribute('data-swing');
-    }
-    cards.forEach((card, index) => {
-      gsap.fromTo(card, { rotation: index % 2 ? -90 : 90, transformOrigin: index % 2 ? '100% 0%' : '0% 0%' }, {
-        rotation: 0, ease: 'power2.out',
-        scrollTrigger: { id: `library:shelf-${index + 1}`, trigger: shelves[index], start: 'top bottom', end: 'top 30%', scrub: 0.5 }
-      });
-    });
-  });
-}, { id: 'scene:library' });
-</script>
-<script data-8b-part="scene:week">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 861px) and (min-height: 680px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 860px) and (min-height: 740px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('week');
-    const tiles = [...section.querySelectorAll('.wk-day')];
-    const slot = section.querySelector('.wk-slot');
-    if (tiles.length !== 7 || !slot) throw new Error('week: seven days and a slot expected');
-    const cells = [...tiles, slot];
-    const box = element => {
-      let x = 0, y = 0;
-      for (let node = element; node; node = node.offsetParent) { x += node.offsetLeft; y += node.offsetTop; }
-      return { x, y };
-    };
-    const offset = (tile, cell, axis) => box(cells[cell])[axis] - box(tiles[tile])[axis];
-    const path = context.conditions.wide ? [7, 3, 2, 6, 5, 1, 0, 4, 5] : [7, 5, 4, 2, 3, 1, 0, 2, 3];
-    const at = tiles.map((tile, index) => index);
-    const moves = [];
-    for (let step = 1; step < path.length; step += 1) {
-      const tile = at.indexOf(path[step]);
-      at[tile] = path[step - 1];
-      moves.push({ tile, from: path[step], to: path[step - 1] });
-    }
-    section.setAttribute('data-puzzle', '');
-    const timeline = gsap.timeline({
-      scrollTrigger: { id: 'week', trigger: section, start: 'top top', end: 'bottom bottom', scrub: 0.4, invalidateOnRefresh: true }
-    });
-    const moved = new Set();
-    moves.reverse().forEach(({ tile, from, to }, step) => {
-      const first = !moved.has(tile);
-      moved.add(tile);
-      timeline.fromTo(tiles[tile], {
-        x: () => offset(tile, to, 'x'), y: () => offset(tile, to, 'y')
-      }, {
-        x: () => offset(tile, from, 'x'), y: () => offset(tile, from, 'y'),
-        duration: 0.7, ease: 'power3.inOut', immediateRender: first
-      }, 0.25 + step * 0.85);
-    });
-    timeline.to({}, { duration: 0.5 });
-    return () => section.removeAttribute('data-puzzle');
-  });
-}, { id: 'scene:week' });
-</script>
-<script data-8b-part="scene:long-table">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('long-table');
-    const title = section.querySelector('.lt-title');
-    const photo = section.querySelector('.lt-photo');
-    if (!title || !photo) throw new Error('long-table: title and photo expected');
-    gsap.fromTo(title, { fontStretch: '75%' }, {
-      fontStretch: '150%', ease: 'power1.inOut',
-      scrollTrigger: { id: 'long-table', trigger: title, start: 'top 95%', end: 'top 30%', scrub: 0.5 }
-    });
-    gsap.fromTo(photo, {
-      clipPath: () => { const side = Math.max(0, (photo.offsetWidth - photo.offsetHeight) / 2); return `inset(0px ${side}px 0px ${side}px round 999px)`; }
-    }, {
-      clipPath: 'inset(0px 0px 0px 0px round 999px)', ease: 'power2.inOut',
-      scrollTrigger: { id: 'long-table:photo', trigger: photo, start: 'top 92%', end: 'center 45%', scrub: 0.5, invalidateOnRefresh: true }
-    });
-  });
-}, { near: document.getElementById('long-table'), id: 'scene:long-table' });
-</script>
-<script data-8b-part="scene:regulars">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('regulars');
-    const card = section.querySelector('.rg-card');
-    const shapes = [...section.querySelectorAll('.rg-cell > span:first-child')];
-    const label = section.querySelector('.rg-free__label');
-    if (!card || shapes.length !== 10 || !label) throw new Error('regulars: card with ten cells expected');
-    const origins = { tl: '100% 100%', tr: '0% 100%', br: '0% 0%', bl: '100% 0%' };
-    const timeline = gsap.timeline({
-      scrollTrigger: { id: 'regulars', trigger: card, start: 'top 85%', end: 'bottom 50%', scrub: 0.4 }
-    });
-    shapes.forEach((shape, index) => {
-      const origin = shape.classList.contains('m-shape-3') ? '50% 100%' : (origins[shape.dataset.corner] || '50% 50%');
-      timeline.fromTo(shape, { scale: 0, transformOrigin: origin }, { scale: 1, duration: 0.5, ease: 'back.out(1.8)' }, index * 0.32);
-    });
-    timeline.fromTo(label, { yPercent: 120 }, { yPercent: 0, duration: 0.4, ease: 'power3.out' }, 9 * 0.32 + 0.25);
-  });
-}, { near: document.getElementById('regulars'), id: 'scene:regulars' });
-</script>
-<script data-8b-part="scene:visit">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('visit');
-    const field = section.querySelector('.vs-field');
-    const tiles = field ? [...field.children] : [];
-    if (!tiles.length) throw new Error('visit: arc tiles expected');
-    const turns = [90, -90, 270, -270, 90, -90, -270];
-    const columns = getComputedStyle(field).gridTemplateColumns.split(' ').length;
-    const timeline = gsap.timeline({
-      scrollTrigger: { id: 'visit', trigger: field, start: 'top 95%', end: 'bottom 40%', scrub: 0.5 }
-    });
-    tiles.forEach((tile, index) => {
-      const rest = Number(tile.dataset.turn) || 0;
-      timeline.fromTo(tile, { rotation: rest + turns[(index * 3) % turns.length] }, { rotation: rest, duration: 1, ease: 'back.out(1.2)' }, (index % columns) * 0.12 + Math.floor(index / columns) * 0.25);
-    });
-    timeline.to({}, { duration: 0.5 });
-  });
-}, { near: document.getElementById('visit'), id: 'scene:visit' });
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
 </script>
 </body>
 </html>

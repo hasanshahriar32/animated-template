@@ -1,8 +1,8 @@
-# Free HTML hardware store website template with GSAP scroll animations
+# Free HTML hardware store website template with scroll animations and no libraries
 
-Hardware store website template: a free one-page HTML site for an independent shop that sells by the single screw, cuts keys, mixes paint, runs Saturday workshops and hires out tools. A cloud of product tiles flies past the opening, then pale paper and dark department panels follow. One file with AGENTS.md, ready for an AI agent.
+Hardware store website template: a free one-page HTML site for an independent shop that sells by the single screw, cuts keys, mixes paint, runs Saturday workshops and hires out tools. Product tiles fly past the opening, then dark department panels follow. The motion is CSS with no JavaScript libraries, about 28 KB gzipped.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/hardware-store-website-template/)** · **[Use this template](https://github.com/new?template_name=hardware-store-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/hardware-store-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/sixpenny/)**
 
@@ -24,10 +24,10 @@ curl -LO https://raw.githubusercontent.com/8bsite/hardware-store-website-templat
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my shop: name, address, year opened, owner and a quote, aisles with stock counts, counter jobs with prices, workshop dates and prices, hire tools with deposits, opening hours, delivery and returns rules, phone, email>. Replace first the name, hours, prices and dates. Keep the section ids, the classes AGENTS.md lists and both faces of every hire row; set the footer wordmark's len to the new name's length. Ask me for missing facts and never invent prices, hours or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my shop: name, address, year opened, owner and a quote, aisles with stock counts, counter jobs with prices, workshop dates, hire tools with deposits, opening hours, delivery and returns, phone, email>. Replace first the name, hours, prices and dates. Motion is CSS plus the inline kit: keep the gate script, section ids, data-8b attributes, both hire faces and the listed classes; add no library. Set the footer wordmark's --len to the name's length. Never invent prices or contacts.
 ```
 
-A hardware store website template for Claude Code, Cursor or Codex needs you to hand the agent the facts only the shop has: hours, prices, deposits, workshop dates, delivery rules and stock counts. The demo invents all of them, including the owner's story. Ask the agent to replace the name everywhere, then set the footer wordmark's --len to its length. A hire or classes section you do not offer can go, along with its style block, animation script and the links to its id.
+A hardware store website template for Claude Code, Cursor or Codex needs you to hand the agent the facts only the shop has: hours, prices, deposits, workshop dates, delivery rules and stock counts. The demo invents all of them, including the owner's story. Ask the agent to replace the name everywhere, then set the footer wordmark's --len to its length. A hire or classes section you do not offer can go, along with its style blocks, its script if it has one and the links to its id.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=hardware-store-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -35,14 +35,14 @@ No agent? Click **[Use this template](https://github.com/new?template_name=hardw
 
 - **Navigation**: a logo mark, five section links and an Open 7 days link; a menu button opens a full-screen menu. The bar hides on a scroll down past 160 pixels and returns on a scroll up, and its logo turns white over the dark sections.
 - **The small parts that hold a home together.**: a cloud of product tiles flying past under the heading, then a promise screen with a highlighted sentence. On load the heading and buttons slide in and the tile cloud flies toward you in a loop; on scroll the cloud rushes past, the heading shrinks away and the promise sentence fades in word by word.
-- **Departments**: five departments held on one screen, each next panel wiping up over the last, with a guide link and a big letter. Pinned for about four screens of scroll: each next photo panel wipes up over the last while its text rises.
+- **Departments**: five departments held on one screen, each next panel wiping up over the last, with a guide link and a big letter. Held on screen for about four screens of scroll: each next photo panel wipes up over the last while its text rises.
 - **Done while you wait**: six jobs done while you wait, each with a price and a time, beside two photos. The heading and lead rise into view, each job row draws its rule and slides its cells in, and the two photos unveil.
 - **Every aisle, front to back**: an index of six aisle names that grow to full size as each reaches the middle of the screen, each with a photo tile and a stock count. Each aisle name grows from 70 percent to full size as it nears the middle of the screen and shrinks away after, with its photo tile turning into place.
 - **Bring the old one in**: three pairs: a part brought in and the match, sliding together as they rise. On scroll the brought-in part slides in from the left and its match from the right, both tilted, until they level out in place.
 - **Len Hollis**: a portrait of the owner with a short history, a quote and a photo of the small-parts shelves, on a dark ground. The quote rises into view and the shelf photo unveils.
-- **Fix-it Saturdays**: four Saturday workshop cards dealt out of a stack, each with date, price, places left and a phone link. On wide screens the four workshop cards start stacked at the centre and deal out to their places; on a phone each slides in from alternate sides.
+- **Fix-it Saturdays**: four Saturday workshop cards dealt out of a stack, each with date, price, places left and a phone link. On screens 600 pixels and wider the four workshop cards start stacked at the centre and deal out to their places; on a phone each slides in from alternate sides.
 - **Borrow it for the weekend**: six hire rows; each tag turns over from the buy-new price to the weekend price. As each hire row nears the middle, its tag flips from the buy-new price to the weekend price.
-- **Come in, the kettle is on**: a shop-front photo that steps back into its half while hours, address, phone, email and a newsletter form come in. On wide screens the shop photo starts full width and steps back into the left half while the hours and newsletter box slide in; on a phone the photo zooms out.
+- **Come in, the kettle is on**: a shop-front photo that steps back into its half while hours, address, phone, email and a newsletter form come in. On wide screens the shop photo starts full width and steps back into the left half while the hours and newsletter box slide in; on a phone the photo zooms out and the information rises.
 - **Asked at the counter**: six questions as native &lt;details&gt; beside a photo of the parts cabinet. The heading rises, a rule draws above each question, and the photo unveils; opening a question turns its plus into a minus.
 - **Footer**: a huge wordmark, the shop's address and hours, contact links, page links and small print. The big wordmark rises into view.
 
@@ -70,12 +70,12 @@ No. There is no cart, checkout or product pages. The buttons jump to sections or
 **Does the newsletter form send anything?**  
 No. The form checks that the email address is valid, then swaps itself for a thank-you line and sends nothing. AGENTS.md gives the steps for Formspree or Netlify Forms; a newsletter service such as Mailchimp or Buttondown needs its own form code. Or delete the form and its script. Also edit the line that promises a monthly email.
 
-**Can I get a site like this without editing code?**  
-Yes, with [8B's AI website builder](https://8b.com/): you describe the shop in a sentence and its engine designs a new site, not this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+**Does this version need GSAP, and what do Firefox and reduced motion show?**  
+No. The motion is CSS scroll-driven animation and a small inline script: 28 KB gzipped against 75 KB and four more requests for the GSAP build. In Firefox today and with reduced motion, sections show their finished layout, the departments stack as five screens and hire tags show the weekend price. Firefox still plays the tile loop and opening load-in.
 
 ## Is it the right base?
 
-As a hardware shop website template free of licence fees, it suits a neighbourhood shop that wants to sound friendly and practical, with a long catalogue shown as an index. If you sell mainly online, the page is too small: the buttons jump to anchors or a phone number, and there is no cart or product pages. Shops with a few lamps and repairs may prefer the [lamp shop](https://8b.com/templates/glim/) template. Owners who do not code can also try 8B's builder.
+As a hardware shop website template free of licence fees, it suits a neighbourhood shop that wants to sound friendly and practical. This is the light build: the same look and scroll behaviour with no animation library, about 28 KB gzipped against 75 KB for the GSAP version. If you sell mainly online, it is too small: no cart or product pages. Shops with a few lamps and repairs may prefer the [lamp shop](https://8b.com/templates/glim/) template. Owners who do not code can also try 8B's builder.
 
 ## Before you publish
 
@@ -84,7 +84,9 @@ As a hardware shop website template free of licence fees, it suits a neighbourho
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.4 from jsDelivr, 107 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 122 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.4 from jsDelivr, 107 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/pharmacy-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -119,10 +120,6 @@
 /* end fallback faces */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body { margin: 0; background: var(--color-1); color: var(--color-3); font-family: var(--font-2); font-size: 16px; line-height: 1.5; overflow-x: clip; }
 img { display: block; max-width: 100%; }
 a { color: inherit; }
@@ -248,6 +245,22 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
   #packs .packs__table td { height: 44px; }
   #packs .packs__dose .m-text-4 { font-size: 18px; }
 }
+#packs .packs__title { font-size: clamp(32px, 3.3vw, 48px); max-width: 14ch; }
+#packs .packs__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; }
+@media (max-width: 860px) {
+  #packs .packs__title { font-size: 30px; }
+  #packs .packs__actions { gap: 10px 20px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #packs .packs__intro > :not(.packs__photo) { animation: packs-rise .9s cubic-bezier(.2, .7, .1, 1) .05s backwards; }
+  #packs .packs__intro > :nth-child(2) { animation-delay: .15s; }
+  #packs .packs__intro > :nth-child(3) { animation-delay: .25s; }
+  #packs .packs::before, #packs .packs::after { animation: packs-bar .8s cubic-bezier(.6, 0, .1, 1) backwards; }
+  #packs .packs__week { animation: packs-fade .5s ease .25s backwards; }
+}
+@keyframes packs-rise { from { transform: translateY(34px); clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 -20% 0); } }
+@keyframes packs-bar { from { transform: scaleX(0); } }
+@keyframes packs-fade { from { opacity: 0; } }
 }
 </style>
 <style data-8b-part="section:clinic">
@@ -445,19 +458,6 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
 }
 }
 </style>
-<style data-8b-part="scene-style:delivery">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #delivery[data-rolling] .delivery__stage { position: sticky; top: var(--l-nav-h); grid-template-rows: auto auto 1fr; align-content: start; height: calc(100svh - var(--l-nav-h) - var(--space-2)); min-height: 520px; }
-  #delivery[data-rolling] .delivery__track { display: flex; align-items: flex-start; width: max-content; }
-  #delivery[data-rolling] .delivery__stop { width: clamp(270px, 27vw, 380px); }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 860px) {
-  #delivery[data-rolling] .delivery__stop { width: 76vw; }
-  #delivery[data-rolling] .delivery__stop .m-photo { aspect-ratio: 4 / 4.2; }
-}
-}
-</style>
 <style data-8b-part="section:footer">
 @layer sections {
 #footer { position: relative; margin-top: var(--space-4); padding: 0 var(--space-1) 28px; }
@@ -469,23 +469,146 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
 @media (max-width: 760px) { #footer .footer__grid { grid-template-columns: 1fr 1fr; } #footer .footer__grid > :first-child { grid-column: 1 / -1; } }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#packs .packs__title { font-size: clamp(32px, 3.3vw, 48px); max-width: 14ch; }
-#packs .packs__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); }
+[data-8b-live] [data-8b-motion~="tabopen"] { animation-name: motion-tabopen-clippath; animation-duration: 1.1s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="tabopen"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"] { animation-name: motion-rule---m-surface-bar; animation-duration: 0.9s; animation-delay: 0s; animation-timing-function: var(--ease-power3-inout); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="rule"].is-in { animation-play-state: running; }
+@keyframes motion-tabopen-clippath { 0% { clip-path: polygon(0% 0%, 34% 0%, calc(34% + 14px) calc(0% + 14px), calc(34% + 14px) calc(0% + 14px), calc(34% + 14px) calc(0% + 14px), 0% calc(0% + 14px)); } 100% { clip-path: polygon(0% 0%, 34% 0%, calc(34% + 14px) calc(0% + 14px), 100% calc(0% + 14px), 100% 100%, 0% 100%); } }
+@keyframes motion-rule---m-surface-bar { 0% { --m-surface-bar: 0; } 100% { --m-surface-bar: 1; } }
+}
+</style>
+<style data-8b-part="scene:packs">
+@layer scenes {
+[data-8b-live] #packs .packs__seal { animation: packs-seal 1.5455s linear .35s both paused; }
+[data-8b-live] #packs .packs__dose { animation: packs-dose calc(1.5455s / var(--n)) linear calc(.35s + var(--i) * 1.5455s / var(--n)) both paused; }
+[data-8b-live] #packs .packs__week--sealing :is(.packs__seal, .packs__dose) { animation-play-state: running; }
+@keyframes packs-seal { from { translate: 0 var(--packs-seal-from, 0px); } to { translate: 0 0; } }
+@keyframes packs-dose { from { clip-path: inset(0% 0% 100% 0%); } to { clip-path: inset(0% 0% 0% 0%); } }
+}
+</style>
+<style data-8b-part="scene:clinic">
+@layer scenes {
+[data-8b-live] #clinic .clinic__photos > figure:nth-of-type(1) { z-index: 4; }
+[data-8b-live] #clinic .clinic__photos > figure:nth-of-type(2) { z-index: 3; }
+[data-8b-live] #clinic .clinic__photos > figure:nth-of-type(3) { z-index: 2; }
+[data-8b-live] #clinic .clinic__photos > figure:nth-of-type(4) { z-index: 1; }
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #clinic { timeline-scope: --clinic-t1; }
+[data-8b-live] #clinic .clinic__col { view-timeline: --clinic-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #clinic .clinic__marker, [data-8b-live] #clinic .clinic__photos > figure:nth-of-type(-n+3) > img { animation-timeline: --clinic-t1; animation-fill-mode: both; }
+[data-8b-live] #clinic .clinic__marker { animation-range: cover calc(8.6957% + 31.3913vh) cover calc(91.3043% - 31.3913vh); animation-timing-function: var(--ease-power2-inout); transform: none; }
+[data-8b-live] #clinic .clinic__photos > figure:nth-of-type(-n+3) > img { animation-name: clinic-figure-m-photo-img-clippath; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #clinic .clinic__photos > figure:nth-of-type(3) > img { animation-range: cover calc(8.6957% + 31.3913vh) cover calc(30.4348% + 14.8696vh); }
+[data-8b-live] #clinic .clinic__photos > figure:nth-of-type(2) > img { animation-range: cover calc(39.1304% + 8.2609vh) cover calc(60.8696% - 8.2609vh); }
+[data-8b-live] #clinic .clinic__photos > figure:nth-of-type(1) > img { animation-range: cover calc(69.5652% - 14.8696vh) cover calc(91.3043% - 31.3913vh); }
+@keyframes clinic-span-clinic-marker-translate-d { 0% { translate: 0px 0px; } 26.3158% { translate: 0px 106.477%; } 36.8421% { translate: 0px 106.477%; } 63.1579% { translate: 0px 213.624%; } 73.6842% { translate: 0px 213.624%; } 100% { translate: 0px 320.1%; } }
+@keyframes clinic-span-clinic-marker-translate-m { 0% { translate: 0px 0px; } 26.3158% { translate: 0px 146px; } 36.8421% { translate: 0px 146px; } 63.1579% { translate: 0px 292px; } 73.6842% { translate: 0px 292px; } 100% { translate: 0px 437px; } }
+@keyframes clinic-figure-m-photo-img-clippath { 0% { clip-path: inset(0% 0% 100%); } 100% { clip-path: inset(0%); } }
+@media (min-width: 861px) {
+  [data-8b-live] #clinic .clinic__marker { animation-name: clinic-span-clinic-marker-translate-d; }
+}
 @media (max-width: 860px) {
-  #packs .packs__title { font-size: 30px; }
-  #packs .packs__actions { gap: 10px 20px; }
+  [data-8b-live] #clinic .clinic__marker { animation-name: clinic-span-clinic-marker-translate-m; }
 }
+}
+</style>
+<style data-8b-part="scene:shop">
+@layer scenes {
+[data-8b-live] #shop .shop__rows > .shop__row { z-index: calc(10 + var(--i) * -1); }
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #shop .shop__rows { view-timeline: --shop-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #shop .shop__rows > button:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4)) { animation-timeline: --shop-t1; animation-range: cover 8vh cover 68vh; animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; transform: none; }
+@keyframes shop-button-shop-row-translate-d { 0% { translate: 0px -100.451%; } 100% { translate: 0px 0px; } }
+@keyframes shop-button-shop-row-translate-m { 0% { translate: 0px -68px; } 100% { translate: 0px 0px; } }
+@keyframes shop-button-shop-row-rotate { 0% { rotate: -3deg; } 100% { rotate: 0deg; } }
+@keyframes shop-button-shop-row-translate-2-d { 0% { translate: 0px -199.971%; } 100% { translate: 0px 0px; } }
+@keyframes shop-button-shop-row-translate-2-m { 0% { translate: 0px -136px; } 100% { translate: 0px 0px; } }
+@keyframes shop-button-shop-row-rotate-2 { 0% { rotate: 2.2deg; } 100% { rotate: 0deg; } }
+@keyframes shop-button-shop-row-translate-3-d { 0% { translate: 0px -300.421%; } 100% { translate: 0px 0px; } }
+@keyframes shop-button-shop-row-translate-3-m { 0% { translate: 0px -204px; } 100% { translate: 0px 0px; } }
+@keyframes shop-button-shop-row-rotate-3 { 0% { rotate: -1.4deg; } 100% { rotate: 0deg; } }
+@media (min-width: 861px) {
+  [data-8b-live] #shop .shop__rows > button:nth-of-type(2) { animation-name: shop-button-shop-row-translate-d, shop-button-shop-row-rotate; }
+  [data-8b-live] #shop .shop__rows > button:nth-of-type(3) { animation-name: shop-button-shop-row-translate-2-d, shop-button-shop-row-rotate-2; }
+  [data-8b-live] #shop .shop__rows > button:nth-of-type(4) { animation-name: shop-button-shop-row-translate-3-d, shop-button-shop-row-rotate-3; }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #shop .shop__rows > button:nth-of-type(2) { animation-name: shop-button-shop-row-translate-m, shop-button-shop-row-rotate; }
+  [data-8b-live] #shop .shop__rows > button:nth-of-type(3) { animation-name: shop-button-shop-row-translate-2-m, shop-button-shop-row-rotate-2; }
+  [data-8b-live] #shop .shop__rows > button:nth-of-type(4) { animation-name: shop-button-shop-row-translate-3-m, shop-button-shop-row-rotate-3; }
+}
+}
+</style>
+<style data-8b-part="scene:delivery">
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #packs .packs__intro > :not(.packs__photo) { animation: rw-rise .9s cubic-bezier(.2, .7, .1, 1) .05s backwards; }
-  #packs .packs__intro > :nth-child(2) { animation-delay: .15s; }
-  #packs .packs__intro > :nth-child(3) { animation-delay: .25s; }
-  #packs .packs::before, #packs .packs::after { animation: rw-bar .8s cubic-bezier(.6, 0, .1, 1) backwards; }
-  #packs .packs__week { animation: rw-fade .5s ease .25s backwards; }
+  [data-8b-live] #delivery .delivery__stage { position: sticky; top: var(--l-nav-h); grid-template-rows: auto auto 1fr; align-content: start; height: calc(100svh - var(--l-nav-h) - var(--space-2)); min-height: 520px; }
+  [data-8b-live] #delivery .delivery__track { display: flex; align-items: flex-start; width: max-content; }
+  [data-8b-live] #delivery .delivery__stop { width: clamp(270px, 27vw, 380px); }
 }
-@keyframes rw-rise { from { transform: translateY(34px); clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 -20% 0); } }
-@keyframes rw-bar { from { transform: scaleX(0); } }
-@keyframes rw-fade { from { opacity: 0; } }</style>
+@media (prefers-reduced-motion: no-preference) and (max-width: 860px) {
+  [data-8b-live] #delivery .delivery__stop { width: 76vw; }
+  [data-8b-live] #delivery .delivery__stop .m-photo { aspect-ratio: 4 / 4.2; }
+}
+}
+@layer scenes {
+[data-8b-live] #delivery .delivery__runway { --delivery-stage: max(520px, 100svh - var(--l-nav-h) - var(--space-2)); height: calc(var(--delivery-stage) + var(--delivery-travel, 0px)); view-timeline: --delivery-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #delivery .delivery__track, [data-8b-live] #delivery .delivery__fill { animation-timeline: --delivery-t1; animation-range: cover calc(100vh - var(--l-nav-h)) cover calc(100% - var(--l-nav-h) - var(--delivery-stage)); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #delivery .delivery__track { animation-name: delivery-track; }
+[data-8b-live] #delivery .delivery__fill { animation-name: delivery-fill; }
+@keyframes delivery-track { 0% { translate: 0px 0px; } 100% { translate: calc(var(--delivery-travel, 0px) * -1) 0px; } }
+@keyframes delivery-fill { 0% { scale: 0 1; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:people">
+@property --people-l { syntax: '<percentage>'; inherits: true; initial-value: 66.667%; }
+@property --people-r { syntax: '<percentage>'; inherits: true; initial-value: 0%; }
+@property --people-x { syntax: '<percentage>'; inherits: true; initial-value: 33.3335%; }
+@property --people-m-surface-bar { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #people .people__frame > div:nth-of-type(-n+3), [data-8b-live] #people .people__list > li { animation-timeline: --people-t1; animation-fill-mode: both; }
+[data-8b-live] #people .people__frame > div:nth-of-type(1) { animation-name: people-div-people-slat---people-l, people-div-people-slat---people-r, people-div-people-slat---people-x; animation-timing-function: linear, var(--ease-power2-inout), var(--ease-power2-inout); }
+[data-8b-live] #people .people__frame > div:nth-of-type(2) { animation-name: people-div-people-slat---people-l-2, people-div-people-slat---people-r-2, people-div-people-slat---people-x-2; animation-timing-function: var(--ease-power2-inout); }
+[data-8b-live] #people .people__frame > div:nth-of-type(3) { animation-name: people-div-people-slat---people-l-3, people-div-people-slat---people-r-3, people-div-people-slat---people-x-3; animation-timing-function: var(--ease-power2-inout), linear, var(--ease-power2-inout); }
+[data-8b-live] #people .people__list > li { animation-name: people-li-people-cell---m-surface-bar; animation-timing-function: var(--ease-power2-inout); --m-surface-bar: var(--people-m-surface-bar); }
+@keyframes people-div-people-slat---people-l { 0% { --people-l: 0%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 20.4082% { --people-l: 0%; } 26.5306% { --people-l: 0%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 46.9388% { --people-l: 0%; } 53.0612% { --people-l: 0%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 73.4694% { --people-l: 0%; } 79.5918% { --people-l: 0%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 100% { --people-l: 0%; } }
+@keyframes people-div-people-slat---people-r { 0% { --people-r: 66.667%; } 20.4082% { --people-r: 38%; } 26.5306% { --people-r: 38%; } 46.9388% { --people-r: 81%; } 53.0612% { --people-r: 81%; } 73.4694% { --people-r: 81%; } 79.5918% { --people-r: 81%; } 100% { --people-r: 66.667%; } }
+@keyframes people-div-people-slat---people-x { 0% { --people-x: -33.333%; } 20.4082% { --people-x: -19%; } 26.5306% { --people-x: -19%; } 46.9388% { --people-x: -40.5%; } 53.0612% { --people-x: -40.5%; } 73.4694% { --people-x: -40.5%; } 79.5918% { --people-x: -40.5%; } 100% { --people-x: -33.3335%; } }
+@keyframes people-div-people-slat---people-l-2 { 0% { --people-l: 33.333%; } 20.4082% { --people-l: 62%; } 26.5306% { --people-l: 62%; } 46.9388% { --people-l: 19%; } 53.0612% { --people-l: 19%; } 73.4694% { --people-l: 19%; } 79.5918% { --people-l: 19%; } 100% { --people-l: 33.333%; } }
+@keyframes people-div-people-slat---people-r-2 { 0% { --people-r: 33.333%; } 20.4082% { --people-r: 19%; } 26.5306% { --people-r: 19%; } 46.9388% { --people-r: 19%; } 53.0612% { --people-r: 19%; } 73.4694% { --people-r: 62%; } 79.5918% { --people-r: 62%; } 100% { --people-r: 33.333%; } }
+@keyframes people-div-people-slat---people-x-2 { 0% { --people-x: 0%; } 20.4082% { --people-x: 21.5%; } 26.5306% { --people-x: 21.5%; } 46.9388% { --people-x: 0%; } 53.0612% { --people-x: 0%; } 73.4694% { --people-x: -21.5%; } 79.5918% { --people-x: -21.5%; } 100% { --people-x: 0%; } }
+@keyframes people-div-people-slat---people-l-3 { 0% { --people-l: 66.667%; } 20.4082% { --people-l: 81%; } 26.5306% { --people-l: 81%; } 46.9388% { --people-l: 81%; } 53.0612% { --people-l: 81%; } 73.4694% { --people-l: 38%; } 79.5918% { --people-l: 38%; } 100% { --people-l: 66.667%; } }
+@keyframes people-div-people-slat---people-r-3 { 0% { --people-r: 0%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 20.4082% { --people-r: 0%; } 26.5306% { --people-r: 0%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 46.9388% { --people-r: 0%; } 53.0612% { --people-r: 0%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 73.4694% { --people-r: 0%; } 79.5918% { --people-r: 0%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 100% { --people-r: 0%; } }
+@keyframes people-div-people-slat---people-x-3 { 0% { --people-x: 33.333%; } 20.4082% { --people-x: 40.5%; } 26.5306% { --people-x: 40.5%; } 46.9388% { --people-x: 40.5%; } 53.0612% { --people-x: 40.5%; } 73.4694% { --people-x: 19%; } 79.5918% { --people-x: 19%; } 100% { --people-x: 33.3335%; } }
+@keyframes people-li-people-cell---m-surface-bar { 0% { --people-m-surface-bar: 0; } 100% { --people-m-surface-bar: 1; } }
+@media (min-width: 861px) {
+  [data-8b-live] #people { view-timeline: --people-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #people .people__frame > div:nth-of-type(-n+3) { animation-range: cover calc(8.4746% + 36.9492vh) cover calc(91.5254% - 41.9492vh); }
+  [data-8b-live] #people .people__list > li { animation-range: cover calc(11.8644% + 22.0339% * var(--i) + 33.7288vh - 20.9322vh * var(--i)) cover calc(25.4237% + 22.0339% * var(--i) + 20.8475vh - 20.9322vh * var(--i)); }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #people { timeline-scope: --people-t1; }
+  [data-8b-live] #people .people__frame > div:nth-of-type(-n+3) { animation-range: cover calc(8.4746% + 31.5593vh) cover calc(91.5254% - 31.5593vh); }
+  [data-8b-live] #people .people__list > li { animation-range: cover calc(11.8644% + 22.0339% * var(--i) + 28.9831vh - 16.7458vh * var(--i)) cover calc(25.4237% + 22.0339% * var(--i) + 18.678vh - 16.7458vh * var(--i)); }
+  [data-8b-live] #people .people__frame { view-timeline: --people-t1 block; view-timeline-inset: 0; }
+}
+}
+</style>
+<style data-8b-part="scene:faq">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #faq .faq__list { view-timeline: --faq-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #faq .faq__list > .faq__item > .faq__tab { animation-timeline: --faq-t1; animation-range: cover calc(12vh - 0.913vh * var(--i) + 3.8043% * var(--i)) cover calc(27.1739% + 3.8044% * var(--i) + 5.4783vh - 0.9131vh * var(--i)); animation-name: faq-tab; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+@keyframes faq-tab { 0% { translate: calc(var(--l-tab-i, 0) * (var(--m-tab-slant) - 100%)) 0px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: fixed header: HALE wordmark with a caption, two quick links and a strip of six coloured file tabs that marks where you are -->
@@ -497,7 +620,7 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
       <a class="m-link nav__quick" href="#order"><svg class="m-link__icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0l1.3 4.7L12 6l-4.7 1.3L6 12 4.7 7.3 0 6l4.7-1.3z" fill="currentColor"/></svg><span>Order a repeat</span></a>
     </nav>
   </div>
-  <nav class="nav__tabs" aria-label="Sections">
+  <nav class="nav__tabs" aria-label="Sections" data-8b-items=":scope > a" data-8b-fixed="6">
     <a class="m-tab l-tab" href="#packs" style="--l-tab-i:0; --m-tab-ground:var(--color-2)" aria-current="true">Hale</a>
     <a class="m-tab l-tab" href="#packs" style="--l-tab-i:1; --m-tab-ground:var(--color-4)">Repeats</a>
     <a class="m-tab l-tab" href="#clinic" style="--l-tab-i:2; --m-tab-ground:var(--color-5)">Clinic</a>
@@ -516,13 +639,13 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
       <h1 class="m-text-3 packs__title" id="opening-title">Sealed by the week, sorted by the hour</h1>
       <p class="m-text">On four or more medicines? We pack them a week at a time: every pocket labelled with the day and the hour, checked by a second pharmacist, sealed. Free, and one less thing to count at the kitchen table.</p>
       <div class="packs__actions"><a class="m-btn" href="#order"><span class="m-btn__label">Order a repeat</span></a><a class="m-link" href="#order">Ask about weekly packs</a></div>
-      <figure class="m-photo packs__photo" data-8b-motion="tabopen"><img style="background:#0c598c" src="https://images.unsplash.com/photo-1655913197738-6a96ae5e9664?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bWVkaWNpbmUlMjBib3hlc3xlbnwxfDF8fHwxNzkxNDA1MTk3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Blue weekly pill boxes marked by day, open over capsules on a pink tray" width="1600" height="2400" loading="lazy"></figure>
+      <figure class="m-photo packs__photo" data-8b-motion="tabopen"><img fetchpriority="high" src="https://images.unsplash.com/photo-1655913197738-6a96ae5e9664?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bWVkaWNpbmUlMjBib3hlc3xlbnwxfDF8fHwxNzkxNDA1MTk3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Blue weekly pill boxes marked by day, open over capsules on a pink tray" width="1600" height="2400"></figure>
     </div>
     <div class="packs__week">
       <table class="packs__table">
         <caption class="m-text-5">An example week: tablets in each pocket</caption>
         <thead><tr><td></td><th scope="col" class="m-text-6">Mon</th><th scope="col" class="m-text-6">Tue</th><th scope="col" class="m-text-6">Wed</th><th scope="col" class="m-text-6">Thu</th><th scope="col" class="m-text-6">Fri</th><th scope="col" class="m-text-6">Sat</th><th scope="col" class="m-text-6">Sun</th></tr></thead>
-        <tbody>
+        <tbody data-8b-items=":scope > tr">
           <tr class="packs__am"><th scope="row" class="m-text-5">Morning</th><td><span class="packs__dose"><span class="m-text-4">2</span></span></td><td><span class="packs__dose"><span class="m-text-4">2</span></span></td><td><span class="packs__dose"><span class="m-text-4">2</span></span></td><td><span class="packs__dose"><span class="m-text-4">2</span></span></td><td><span class="packs__dose"><span class="m-text-4">2</span></span></td><td><span class="packs__dose"><span class="m-text-4">2</span></span></td><td><span class="packs__dose"><span class="m-text-4">2</span></span></td></tr>
           <tr class="packs__mid"><th scope="row" class="m-text-5">Midday</th><td><span class="packs__dose"><span class="m-text-4">1</span></span></td><td><span class="packs__dose"><span class="m-text-4">1</span></span></td><td><span class="packs__dose"><span class="m-text-4">1</span></span></td><td><span class="packs__dose"><span class="m-text-4">1</span></span></td><td><span class="packs__dose"><span class="m-text-4">1</span></span></td><td><span class="packs__dose"><span class="m-text-4">1</span></span></td><td><span class="packs__dose"><span class="m-text-4">1</span></span></td></tr>
           <tr class="packs__pm"><th scope="row" class="m-text-5">Evening</th><td><span class="packs__dose"><span class="m-text-4">3</span></span></td><td><span class="packs__dose"><span class="m-text-4">3</span></span></td><td><span class="packs__dose"><span class="m-text-4">3</span></span></td><td><span class="packs__dose"><span class="m-text-4">3</span></span></td><td><span class="packs__dose"><span class="m-text-4">3</span></span></td><td><span class="packs__dose"><span class="m-text-4">3</span></span></td><td><span class="packs__dose"><span class="m-text-4">3</span></span></td></tr>
@@ -540,10 +663,10 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
   <div class="clinic__sheet m-surface">
     <h2 class="m-text-3 clinic__head">Seen today in the room behind the counter, with no appointment</h2>
     <div class="clinic__photos">
-      <figure class="m-photo" data-step="3"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1631815590016-ebce183022ce?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Ymxvb2QlMjBwcmVzc3VyZSUyMGNoZWNrfGVufDF8MHx8fDE3OTE0MDUxMjV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=710&amp;q=60" alt="A pharmacist in red takes an older woman's blood pressure" width="1600" height="1064" loading="lazy"></figure>
-      <figure class="m-photo" data-step="2"><img style="background:#40c040" src="https://images.unsplash.com/photo-1737098150410-a82d4950ef16?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c29yZSUyMHRocm9hdHxlbnwxfDF8fHwxNzkxNDA1MTI2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="A woman in a striped scarf about to sneeze into a tissue" width="1600" height="2400" loading="lazy"></figure>
-      <figure class="m-photo" data-step="1"><img style="background:#59a640" src="https://images.unsplash.com/photo-1737093889885-8e827af13eb6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c29yZSUyMHRocm9hdHxlbnwxfDF8fHwxNzkxNDA1MTI2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="A woman pressing her hands over both ears, eyes shut" width="1600" height="2400" loading="lazy"></figure>
-      <figure class="m-photo" data-step="0"><img style="background:#264040" src="https://images.unsplash.com/photo-1635817301822-0f6fe9a4c0b2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHNvcmUlMjB0aHJvYXR8ZW58MXwxfHx8MTc5MTQwNTEyNnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="A woman with her head tipped back, a hand at her throat" width="1600" height="2400" loading="lazy"></figure>
+      <figure class="m-photo" data-step="3"><img src="https://images.unsplash.com/photo-1631815590016-ebce183022ce?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Ymxvb2QlMjBwcmVzc3VyZSUyMGNoZWNrfGVufDF8MHx8fDE3OTE0MDUxMjV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=710&amp;q=60" alt="A pharmacist in red takes an older woman's blood pressure" width="1600" height="1064" loading="lazy"></figure>
+      <figure class="m-photo" data-step="2"><img src="https://images.unsplash.com/photo-1737098150410-a82d4950ef16?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c29yZSUyMHRocm9hdHxlbnwxfDF8fHwxNzkxNDA1MTI2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="A woman in a striped scarf about to sneeze into a tissue" width="1600" height="2400" loading="lazy"></figure>
+      <figure class="m-photo" data-step="1"><img src="https://images.unsplash.com/photo-1737093889885-8e827af13eb6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c29yZSUyMHRocm9hdHxlbnwxfDF8fHwxNzkxNDA1MTI2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="A woman pressing her hands over both ears, eyes shut" width="1600" height="2400" loading="lazy"></figure>
+      <figure class="m-photo" data-step="0"><img src="https://images.unsplash.com/photo-1635817301822-0f6fe9a4c0b2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHNvcmUlMjB0aHJvYXR8ZW58MXwxfHx8MTc5MTQwNTEyNnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="A woman with her head tipped back, a hand at her throat" width="1600" height="2400" loading="lazy"></figure>
     </div>
     <div class="clinic__word">
       <p class="m-text-2 clinic__big">Walk in</p>
@@ -553,7 +676,7 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
   </div>
   <div class="clinic__col">
   <span class="clinic__marker" aria-hidden="true"></span>
-  <ul class="clinic__list">
+  <ul class="clinic__list" data-8b-items=":scope > li">
     <li class="clinic__cell m-surface-2"><p class="m-text-5">Ages 5 and over</p><p class="m-text-4">Sore throat</p><p class="m-text-5 clinic__note">Checked, treated or referred the same day.</p></li>
     <li class="clinic__cell m-surface-2"><p class="m-text-5">Ages 1 to 17</p><p class="m-text-4">Earache</p><p class="m-text-5 clinic__note">We look inside with an otoscope before anything is prescribed.</p></li>
     <li class="clinic__cell m-surface-2"><p class="m-text-5">Ages 12 and over</p><p class="m-text-4">Sinusitis</p><p class="m-text-5 clinic__note">Most clear by themselves; we tell you which ones won't.</p></li>
@@ -565,7 +688,7 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
 <!-- vaccinations: sheet with a photo and a table of four vaccines: who, when and a Book link -->
 <section id="jabs" class="l-folder" data-8b-section="vaccinations" data-tab="2">
   <div class="jabs m-surface" data-8b-motion="rule">
-    <figure class="m-photo jabs__photo" data-8b-motion="tabopen"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1691139599738-bee6565dcacb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fHZhY2NpbmF0aW9ufGVufDF8MHx8fDE3OTE0MDUxOTV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="A smiling man in glasses holds up his sleeve to show a plaster on his arm" width="1600" height="1067" loading="lazy"></figure>
+    <figure class="m-photo jabs__photo" data-8b-motion="tabopen"><img src="https://images.unsplash.com/photo-1691139599738-bee6565dcacb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fHZhY2NpbmF0aW9ufGVufDF8MHx8fDE3OTE0MDUxOTV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="A smiling man in glasses holds up his sleeve to show a plaster on his arm" width="1600" height="1067" loading="lazy"></figure>
     <div class="jabs__body">
       <h2 class="m-text-3 jabs__head">Jabs by the season, given in the same room</h2>
       <table class="jabs__table">
@@ -585,7 +708,7 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
 <section id="shop" class="l-folder" data-8b-section="shop" data-tab="3">
   <span class="l-folder__tab l-tab m-tab" aria-hidden="true">Shop</span>
   <h2 class="base-sr">The shop: four shelves chosen by our pharmacists</h2>
-  <div class="shop__rows">
+  <div class="shop__rows" data-8b-items=":scope > .shop__row" data-8b-fixed="4">
     <button class="shop__row m-surface-2" type="button" aria-expanded="false" aria-controls="shelf-skin"><span class="m-text-2 shop__name">Skin &amp; Sun</span><span class="m-icon" aria-hidden="true"><svg class="m-icon__svg" viewBox="0 0 24 24"><path d="M12 5v13M6 12l6 6 6-6"/></svg></span></button>
     <button class="shop__row m-surface-2" type="button" aria-expanded="true" aria-controls="shelf-sleep"><span class="m-text-2 shop__name">Sleep &amp; Calm</span><span class="m-icon" aria-hidden="true"><svg class="m-icon__svg" viewBox="0 0 24 24"><path d="M12 5v13M6 12l6 6 6-6"/></svg></span></button>
     <button class="shop__row m-surface-2" type="button" aria-expanded="false" aria-controls="shelf-baby"><span class="m-text-2 shop__name">Baby &amp; Bath</span><span class="m-icon" aria-hidden="true"><svg class="m-icon__svg" viewBox="0 0 24 24"><path d="M12 5v13M6 12l6 6 6-6"/></svg></span></button>
@@ -593,19 +716,19 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
   </div>
   <div class="shop__drawer">
     <div class="shop__panel m-surface" id="shelf-skin" hidden>
-      <figure class="m-photo shop__photo"><img style="background:#a67359" src="https://images.unsplash.com/photo-1751821195194-0bbc1caab446?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c3Vuc2NyZWVuJTIwc2tpbmNhcmV8ZW58MXwxfHx8MTc5MTQwNTE0Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="Sun cream drawn in white shapes on two sunlit legs" width="1600" height="2133" loading="lazy"></figure>
+      <figure class="m-photo shop__photo"><img src="https://images.unsplash.com/photo-1751821195194-0bbc1caab446?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c3Vuc2NyZWVuJTIwc2tpbmNhcmV8ZW58MXwxfHx8MTc5MTQwNTE0Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="Sun cream drawn in white shapes on two sunlit legs" width="1600" height="2133" loading="lazy"></figure>
       <div class="shop__body"><h3 class="m-text-3">Skin &amp; Sun</h3><ul class="shop__items"><li class="m-text">Mineral SPF 50 for children and for skin that reacts to everything</li><li class="m-text">Unscented emollients for eczema, in tubs and pumps</li><li class="m-text">After-sun with no alcohol, and plain advice on burns</li></ul><a class="m-link" href="#contact">Ask us to order something</a></div>
     </div>
     <div class="shop__panel m-surface" id="shelf-sleep">
-      <figure class="m-photo shop__photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1686059437289-e4c4c2320a17?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8aGVyYmFsJTIwdGVhJTIwc2xlZXB8ZW58MXwxfHx8MTc5MTQwNTE0N3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="A cup of tea with floating daisies on white bed linen" width="1600" height="2400" loading="lazy"></figure>
+      <figure class="m-photo shop__photo" data-8b-motion="tabopen" data-8b-enter="85%"><img src="https://images.unsplash.com/photo-1686059437289-e4c4c2320a17?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8aGVyYmFsJTIwdGVhJTIwc2xlZXB8ZW58MXwxfHx8MTc5MTQwNTE0N3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="A cup of tea with floating daisies on white bed linen" width="1600" height="2400" loading="lazy"></figure>
       <div class="shop__body"><h3 class="m-text-3">Sleep &amp; Calm</h3><ul class="shop__items"><li class="m-text">Herbal teas and remedies we would take ourselves</li><li class="m-text">Earplugs, eye masks and a quiet word about what keeps you up</li><li class="m-text">Short-term sleep aids, only after a chat at the counter</li></ul><a class="m-link" href="#contact">Ask us to order something</a></div>
     </div>
     <div class="shop__panel m-surface" id="shelf-baby" hidden>
-      <figure class="m-photo shop__photo"><img style="background:#c0d9f3" src="https://images.unsplash.com/photo-1640447067543-55cd45ab3e46?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGJhYnklMjBmZWV0JTIwdG93ZWx8ZW58MXwwfHx8MTc5MTQwNTM5Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A baby's bare feet on a soft blue towel" width="1600" height="1068" loading="lazy"></figure>
+      <figure class="m-photo shop__photo"><img src="https://images.unsplash.com/photo-1640447067543-55cd45ab3e46?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGJhYnklMjBmZWV0JTIwdG93ZWx8ZW58MXwwfHx8MTc5MTQwNTM5Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A baby's bare feet on a soft blue towel" width="1600" height="1068" loading="lazy"></figure>
       <div class="shop__body"><h3 class="m-text-3">Baby &amp; Bath</h3><ul class="shop__items"><li class="m-text">Formula kept in stock, including the hard-to-find ones</li><li class="m-text">Nappy cream, saline drops and a thermometer that works</li><li class="m-text">Teething, colic and fevers talked through, day or evening</li></ul><a class="m-link" href="#contact">Ask us to order something</a></div>
     </div>
     <div class="shop__panel m-surface" id="shelf-travel" hidden>
-      <figure class="m-photo shop__photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1650886714591-d654bf096487?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dHJhdmVsJTIwdG9pbGV0cnklMjBiYWd8ZW58MXwxfHx8MTc5MTQwNTE0OXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A white knitted wash bag of travel-size toiletries beside a comb" width="1600" height="2000" loading="lazy"></figure>
+      <figure class="m-photo shop__photo"><img src="https://images.unsplash.com/photo-1650886714591-d654bf096487?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dHJhdmVsJTIwdG9pbGV0cnklMjBiYWd8ZW58MXwxfHx8MTc5MTQwNTE0OXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A white knitted wash bag of travel-size toiletries beside a comb" width="1600" height="2000" loading="lazy"></figure>
       <div class="shop__body"><h3 class="m-text-3">Travel Kit</h3><ul class="shop__items"><li class="m-text">Travel-size everything, and a first-aid pouch we pack to order</li><li class="m-text">Motion sickness, altitude and insect bite remedies</li><li class="m-text">Malaria tablets with a consultation, priced before you commit</li></ul><a class="m-link" href="#contact">Ask us to order something</a></div>
     </div>
   </div>
@@ -620,12 +743,12 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
         <p class="m-text">Prescriptions and shop orders within a mile and a half of the counter come by bike, free. Further out, we post them tracked for £3.</p>
       </div>
       <div class="delivery__route" aria-hidden="true"><span class="delivery__fill"></span></div>
-      <ol class="delivery__track">
-        <li class="delivery__stop m-surface"><figure class="m-photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1633253549370-798512c6f0ef?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGNhcmdvJTIwYmlrZSUyMGRlbGl2ZXJ5fGVufDF8MHx8fDE3OTE0MDQ4NDd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="A rider in a white helmet cycles past with a crate on the back rack" width="1600" height="1068" loading="lazy"></figure><p class="m-text-5">Leaves 9:30</p><p class="m-text-4 delivery__street">Example Street</p><p class="m-text-5">Bags sealed at the counter, names checked twice.</p></li>
-        <li class="delivery__stop m-surface"><figure class="m-photo"><img style="background:#595940" src="https://images.unsplash.com/photo-1651964723487-722c8acc07d6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8dGVycmFjZWQlMjBob3VzZXMlMjBzdHJlZXR8ZW58MXwwfHx8MTc5MTQwNTE1MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="A brick terrace with coloured front doors and cars parked outside" width="1600" height="1121" loading="lazy"></figure><p class="m-text-5">Around 9:45</p><p class="m-text-4 delivery__street">Brudenell Row</p><p class="m-text-5">Two repeats and a weekly pack, handed over at the door.</p></li>
-        <li class="delivery__stop m-surface"><figure class="m-photo"><img style="background:#a68c73" src="https://images.unsplash.com/photo-1698431194884-295617261396?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dGVycmFjZWQlMjBob3VzZXMlMjBzdHJlZXR8ZW58MXwwfHx8MTc5MTQwNTE1MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Tall stone houses in a row, one with a red front door" width="1600" height="757" loading="lazy"></figure><p class="m-text-5">Around 10:05</p><p class="m-text-4 delivery__street">Hollis Avenue</p><p class="m-text-5">A fridge item, carried in its own cool bag.</p></li>
-        <li class="delivery__stop m-surface"><figure class="m-photo"><img style="background:#a6c0d9" src="https://images.unsplash.com/photo-1774156720905-11b4f15b284d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8dGVycmFjZWQlMjBob3VzZXMlMjBzdHJlZXR8ZW58MXwwfHx8MTc5MTQwNTE1MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="Red-brick houses with gables and a tree in blossom" width="1600" height="995" loading="lazy"></figure><p class="m-text-5">Around 10:20</p><p class="m-text-4 delivery__street">Cardigan Grove</p><p class="m-text-5">Last week's pack collected, this week's left in its place.</p></li>
-        <li class="delivery__stop m-surface"><figure class="m-photo"><img style="background:#595959" src="https://images.unsplash.com/photo-1649182359601-a55bba9eacd9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8dGVycmFjZWQlMjBob3VzZXMlMjBzdHJlZXR8ZW58MXwwfHx8MTc5MTQwNTE1MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="A curving lane of old stone cottages under a grey sky" width="1600" height="1067" loading="lazy"></figure><p class="m-text-5">Around 10:40</p><p class="m-text-4 delivery__street">Kirk Lane</p><p class="m-text-5">Back at the counter by eleven, before the clinic opens.</p></li>
+      <ol class="delivery__track" data-8b-items=":scope > li">
+        <li class="delivery__stop m-surface"><figure class="m-photo"><img src="https://images.unsplash.com/photo-1633253549370-798512c6f0ef?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGNhcmdvJTIwYmlrZSUyMGRlbGl2ZXJ5fGVufDF8MHx8fDE3OTE0MDQ4NDd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="A rider in a white helmet cycles past with a crate on the back rack" width="1600" height="1068" loading="lazy"></figure><p class="m-text-5">Leaves 9:30</p><p class="m-text-4 delivery__street">Example Street</p><p class="m-text-5">Bags sealed at the counter, names checked twice.</p></li>
+        <li class="delivery__stop m-surface"><figure class="m-photo"><img src="https://images.unsplash.com/photo-1651964723487-722c8acc07d6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8dGVycmFjZWQlMjBob3VzZXMlMjBzdHJlZXR8ZW58MXwwfHx8MTc5MTQwNTE1MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="A brick terrace with coloured front doors and cars parked outside" width="1600" height="1121" loading="lazy"></figure><p class="m-text-5">Around 9:45</p><p class="m-text-4 delivery__street">Brudenell Row</p><p class="m-text-5">Two repeats and a weekly pack, handed over at the door.</p></li>
+        <li class="delivery__stop m-surface"><figure class="m-photo"><img src="https://images.unsplash.com/photo-1698431194884-295617261396?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dGVycmFjZWQlMjBob3VzZXMlMjBzdHJlZXR8ZW58MXwwfHx8MTc5MTQwNTE1MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Tall stone houses in a row, one with a red front door" width="1600" height="757" loading="lazy"></figure><p class="m-text-5">Around 10:05</p><p class="m-text-4 delivery__street">Hollis Avenue</p><p class="m-text-5">A fridge item, carried in its own cool bag.</p></li>
+        <li class="delivery__stop m-surface"><figure class="m-photo"><img src="https://images.unsplash.com/photo-1774156720905-11b4f15b284d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8dGVycmFjZWQlMjBob3VzZXMlMjBzdHJlZXR8ZW58MXwwfHx8MTc5MTQwNTE1MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="Red-brick houses with gables and a tree in blossom" width="1600" height="995" loading="lazy"></figure><p class="m-text-5">Around 10:20</p><p class="m-text-4 delivery__street">Cardigan Grove</p><p class="m-text-5">Last week's pack collected, this week's left in its place.</p></li>
+        <li class="delivery__stop m-surface"><figure class="m-photo"><img src="https://images.unsplash.com/photo-1649182359601-a55bba9eacd9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8dGVycmFjZWQlMjBob3VzZXMlMjBzdHJlZXR8ZW58MXwwfHx8MTc5MTQwNTE1MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="A curving lane of old stone cottages under a grey sky" width="1600" height="1067" loading="lazy"></figure><p class="m-text-5">Around 10:40</p><p class="m-text-4 delivery__street">Kirk Lane</p><p class="m-text-5">Back at the counter by eleven, before the clinic opens.</p></li>
       </ol>
     </div>
   </div>
@@ -637,13 +760,13 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
   <div class="people__sheet m-surface">
     <h2 class="m-text-3 people__title">The people at the counter</h2>
     <div class="people__frame">
-      <div class="people__slat" data-slat="0"><img style="background:#262626" src="https://images.unsplash.com/photo-1783099780182-c758ca9fc563?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cG9ydHJhaXQlMjB3b21hbiUyMHdoaXRlJTIwc2hpcnQlMjBzbWlsaW5nfGVufDF8MXx8fDE3OTE0MDUxNzF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="Nadia, laughing in a white shirt, balances a storage jar on her head" width="1600" height="2399" loading="lazy"></div>
-      <div class="people__slat" data-slat="1"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1657551856874-d492ef8ecba0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cGhhcm1hY2lzdCUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTQwNTM5N3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="Sami in a white coat, standing by the dispensary shelves" width="1600" height="2400" loading="lazy"></div>
-      <div class="people__slat" data-slat="2"><img style="background:#c0a6a6" src="https://images.unsplash.com/photo-1731338493464-db479f155a3a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHBvcnRyYWl0JTIwb2xkZXIlMjB3b21hbnxlbnwxfDF8fHwxNzkxNDA1MTczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="June, smiling in a white T-shirt in front of a red wall" width="1600" height="2400" loading="lazy"></div>
+      <div class="people__slat" data-slat="0"><img src="https://images.unsplash.com/photo-1783099780182-c758ca9fc563?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cG9ydHJhaXQlMjB3b21hbiUyMHdoaXRlJTIwc2hpcnQlMjBzbWlsaW5nfGVufDF8MXx8fDE3OTE0MDUxNzF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="Nadia, laughing in a white shirt, balances a storage jar on her head" width="1600" height="2399" loading="lazy"></div>
+      <div class="people__slat" data-slat="1"><img src="https://images.unsplash.com/photo-1657551856874-d492ef8ecba0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cGhhcm1hY2lzdCUyMHBvcnRyYWl0JTIwd29tYW58ZW58MXwxfHx8MTc5MTQwNTM5N3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="Sami in a white coat, standing by the dispensary shelves" width="1600" height="2400" loading="lazy"></div>
+      <div class="people__slat" data-slat="2"><img src="https://images.unsplash.com/photo-1731338493464-db479f155a3a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHBvcnRyYWl0JTIwb2xkZXIlMjB3b21hbnxlbnwxfDF8fHwxNzkxNDA1MTczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="June, smiling in a white T-shirt in front of a red wall" width="1600" height="2400" loading="lazy"></div>
     </div>
     <p class="m-text-5">Two pharmacists, one counter assistant and a dog. Nobody here works for a head office.</p>
   </div>
-  <ul class="people__list">
+  <ul class="people__list" data-8b-items=":scope > li" data-8b-fixed="3">
     <li class="people__cell m-surface-2"><p class="m-text-5">Owner and superintendent pharmacist</p><h3 class="m-text-2 people__name">Nadia</h3><p class="m-text-5 people__about">Twenty-two years at this counter. Ask her about blood pressure, weekly packs and anything you would rather not say out loud.</p></li>
     <li class="people__cell m-surface-2"><p class="m-text-5">Pharmacist, clinic lead</p><h3 class="m-text-2 people__name">Sami</h3><p class="m-text-5 people__about">Runs the walk-in room. Ask him about earache, travel jabs and which cough mixture is worth the money.</p></li>
     <li class="people__cell m-surface-2"><p class="m-text-5">Counter and dispensary</p><h3 class="m-text-2 people__name">June</h3><p class="m-text-5 people__about">Has known the street since it had a post office. Ask her where your prescription is; she will know.</p></li>
@@ -652,7 +775,7 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
 
 <!-- independent-since-1987: the story of the shop as a letter with a photo of the shop dog -->
 <section id="story" class="l-folder" data-8b-section="independent-since-1987" data-tab="4">
-  <figure class="m-photo story__photo" data-8b-motion="tabopen"><img style="background:#404040" src="https://images.unsplash.com/photo-1788487638307-00c3fb38bf51?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBoYXJtYWN5JTIwc2hlbHZlc3xlbnwxfDF8fHwxNzkxNDA1MDk4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=60" alt="A brown dog asleep on the wooden counter in front of shelves of jars" width="1600" height="2400" loading="lazy"><figcaption class="m-text-5">Biscuit, on the counter since 2015</figcaption></figure>
+  <figure class="m-photo story__photo" data-8b-motion="tabopen"><img src="https://images.unsplash.com/photo-1788487638307-00c3fb38bf51?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBoYXJtYWN5JTIwc2hlbHZlc3xlbnwxfDF8fHwxNzkxNDA1MDk4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=60" alt="A brown dog asleep on the wooden counter in front of shelves of jars" width="1600" height="2400" loading="lazy"><figcaption class="m-text-5">Biscuit, on the counter since 2015</figcaption></figure>
   <article class="story__letter m-surface" data-8b-motion="rule">
     <h2 class="m-text-3 story__head">Independent since 1987, and still nobody's branch</h2>
     <div class="story__text">
@@ -670,7 +793,7 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
     <h2 class="m-text-2 faq__title">Asked at the counter</h2>
     <p class="m-text">The questions we hear most, each filed under the part of the pharmacy that answers it.</p>
   </div>
-  <div class="faq__list">
+  <div class="faq__list" data-8b-items=":scope > .faq__item" data-8b-fixed="7">
     <div class="faq__item" style="--l-tab-i:1"><span class="faq__tab m-tab l-tab" aria-hidden="true" style="--m-tab-ground:var(--color-4)">Repeats</span><details class="faq__q"><summary><span class="m-text-3">Can you order my repeat from the surgery for me?</span><span class="m-icon" aria-hidden="true"><svg class="m-icon__svg" viewBox="0 0 24 24"><path d="M12 5v13M6 12l6 6 6-6"/></svg></span></summary><p class="m-text faq__answer">Yes. Tell us once which surgery you use and what you take. We request each repeat seven days before you run out and text you when it is packed.</p></details></div>
     <div class="faq__item" style="--l-tab-i:1"><span class="faq__tab m-tab l-tab" aria-hidden="true" style="--m-tab-ground:var(--color-4)">Repeats</span><details class="faq__q"><summary><span class="m-text-3">What happens to my weekly pack if a dose changes?</span><span class="m-icon" aria-hidden="true"><svg class="m-icon__svg" viewBox="0 0 24 24"><path d="M12 5v13M6 12l6 6 6-6"/></svg></span></summary><p class="m-text faq__answer">We repack it the same day your GP sends the change, and swap the old pack at your door or at the counter. You never have to pick tablets out yourself.</p></details></div>
     <div class="faq__item" style="--l-tab-i:2"><span class="faq__tab m-tab l-tab" aria-hidden="true" style="--m-tab-ground:var(--color-5)">Clinic</span><details class="faq__q"><summary><span class="m-text-3">Do I need an appointment for the walk-in room?</span><span class="m-icon" aria-hidden="true"><svg class="m-icon__svg" viewBox="0 0 24 24"><path d="M12 5v13M6 12l6 6 6-6"/></svg></span></summary><p class="m-text faq__answer">No. Come in, tell the counter what is wrong, and the next free pharmacist sees you, usually within twenty minutes. Jabs are the only thing we book ahead.</p></details></div>
@@ -695,7 +818,7 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
       </tbody>
     </table>
     <p class="contact__reach"><a data-8b-placeholder="phone" class="m-text-4 contact__phone" href="tel:+441130000000">0113 000 0000</a><a data-8b-placeholder="email" class="m-link" href="mailto:counter@hale.example">counter@hale.example</a></p>
-    <figure class="m-photo contact__photo" data-8b-motion="tabopen"><img style="background:#26260c" src="https://images.unsplash.com/photo-1763168829003-33755769b975?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHNtYWxsJTIwc2hvcCUyMGZyb250JTIwZG9vcnxlbnwxfDF8fHwxNzkxNDA1MTc0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="A white sign reading Open hangs inside a glass shop door" width="1600" height="2000" loading="lazy"></figure>
+    <figure class="m-photo contact__photo" data-8b-motion="tabopen"><img src="https://images.unsplash.com/photo-1763168829003-33755769b975?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHNtYWxsJTIwc2hvcCUyMGZyb250JTIwZG9vcnxlbnwxfDF8fHwxNzkxNDA1MTc0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="A white sign reading Open hangs inside a glass shop door" width="1600" height="2000" loading="lazy"></figure>
   </div>
   <form data-8b-placeholder="form" class="contact__form m-surface" id="order" action="#order" method="post" data-8b-motion="rule">
     <h3 class="m-text-3">Order a repeat</h3>
@@ -763,16 +886,13 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
   const section = document.getElementById('shop');
   if (!section) return;
   const rows = [...section.querySelectorAll('.shop__row')];
-  const drawer = section.querySelector('.shop__drawer');
   rows.forEach(row => row.addEventListener('click', () => {
-    const before = drawer.offsetHeight;
     rows.forEach(other => {
       const open = other === row;
       other.setAttribute('aria-expanded', String(open));
       const panel = document.getElementById(other.getAttribute('aria-controls'));
       if (panel) panel.hidden = !open;
     });
-    if (drawer.offsetHeight !== before && window.refreshScroll && window.ScrollTrigger) window.refreshScroll();
   }));
 })();
 </script>
@@ -789,250 +909,148 @@ body { --l-nav-h: 92px; padding-top: var(--l-nav-h); }
   });
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
+
+<script data-8b-part="motion-kit">
 (() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-const pageNav = document.getElementById('site-nav');
-function measureNav() {
-  const height = pageNav.offsetHeight;
-  document.body.style.setProperty('--l-nav-h', height + 'px');
-  return height;
-}
-measureNav();
-function refreshScroll() {
-  measureNav();
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-window.refreshScroll = refreshScroll;
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: .1, anchors: { offset: -measureNav() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
+<script data-8b-part="scene-script:packs">
+motionKit.scene('packs', () => {
+  const week = document.querySelector('#packs .packs__week');
+  const body = week.querySelector('tbody');
+  const seal = week.querySelector('.packs__seal');
+  motionKit.measure(() => motionKit.set(seal, { '--packs-seal-from': body.getBoundingClientRect().top - week.getBoundingClientRect().top - seal.offsetTop + 'px' }));
+  motionKit.track(week, 'top 100%', 'top 100%', progress => { if (progress) week.classList.add('packs__week--sealing'); });
 });
-let pageResize;
-addEventListener('resize', () => { clearTimeout(pageResize); pageResize = setTimeout(refreshScroll, 250); });
 </script>
-<script data-8b-part="motion">
-const fileShape = {
-  open: 'polygon(calc(0% + 0px) calc(0% + 0px), calc(34% + 0px) calc(0% + 0px), calc(34% + 14px) calc(0% + 14px), calc(100% + 0px) calc(0% + 14px), calc(100% + 0px) calc(100% + 0px), calc(0% + 0px) calc(100% + 0px))',
-  tab: 'polygon(calc(0% + 0px) calc(0% + 0px), calc(34% + 0px) calc(0% + 0px), calc(34% + 14px) calc(0% + 14px), calc(34% + 14px) calc(0% + 14px), calc(34% + 14px) calc(0% + 14px), calc(0% + 0px) calc(0% + 14px))'
-};
-const effects = {
-  rule(element, vars = {}) {
-    return gsap.fromTo(element, { '--m-surface-bar': 0 }, { '--m-surface-bar': 1, duration: .9, ease: 'power3.inOut', ...vars });
-  },
-  tabopen(element, vars = {}) {
-    return gsap.fromTo(element, { clipPath: fileShape.tab }, { clipPath: fileShape.open, duration: 1.1, ease: 'power3.inOut', ...vars });
-  },
-  deal(items, vars = {}) {
-    const list = gsap.utils.toArray(items);
-    const timeline = gsap.timeline(vars);
-    list.forEach((item, i) => {
-      if (!i) return;
-      timeline.fromTo(item, {
-        y: () => list[0].offsetTop - item.offsetTop + i * 10,
-        rotation: [0, -3, 2.2, -1.4][i % 4]
-      }, { y: 0, rotation: 0, duration: 1, ease: 'power2.inOut', immediateRender: true }, 0);
-    });
-    return timeline;
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  ['rule', 'tabopen'].forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach(element => ScrollTrigger.create({ id, trigger: element, start: 'top 88%', once: true, animation: effects[name](element) }));
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
+<script data-8b-part="scene-script:shop">
+motionKit.scene('shop', () => {
+  document.getElementById('shop').addEventListener('animationend', event => {
+    if (event.animationName === 'motion-tabopen-clippath') event.target.removeAttribute('data-8b-motion');
   });
 });
 </script>
-
-<script data-8b-part="scene:packs">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('packs');
-    const week = section.querySelector('.packs__week');
-    const body = week.querySelector('tbody');
-    const seal = week.querySelector('.packs__seal');
-    const rows = [...body.rows];
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'packs', trigger: week, start: 'top bottom', toggleActions: 'play none none none'
-    }});
-    timeline.fromTo(seal, { y: () => body.getBoundingClientRect().top - (seal.getBoundingClientRect().top - gsap.getProperty(seal, 'y')) }, { y: 0, duration: .85 }, 0);
-    rows.forEach((row, i) => {
-      timeline.fromTo(row.querySelectorAll('.packs__dose'), { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: .85 / rows.length }, i * .85 / rows.length);
-    });
-    timeline.to({}, { duration: .15 }).timeScale(.55).delay(.35);
-  });
-}, { first: true });
-</script>
-<script data-8b-part="scene:clinic">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('clinic');
-    const col = section.querySelector('.clinic__col');
-    const cells = [...col.querySelectorAll('.clinic__cell')];
-    const marker = col.querySelector('.clinic__marker');
-    const photos = cells.map((cell, i) => section.querySelector(`.clinic__photos [data-step="${i}"]`));
-    gsap.set(photos, { zIndex: i => i + 1 });
-    const timeline = gsap.timeline({ defaults: { ease: 'power2.inOut' }, scrollTrigger: {
-      id: 'clinic', trigger: col, start: 'top 62%', end: 'bottom 38%', scrub: .6, invalidateOnRefresh: true
-    }});
-    cells.forEach((cell, i) => {
-      if (!i) return;
-      const at = (i - 1) * 1.4 + .4;
-      timeline.to(marker, { y: () => cell.offsetTop - cells[0].offsetTop, duration: 1 }, at);
-      timeline.fromTo(photos[i].querySelector('img'), { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1 }, at);
-    });
-    timeline.to({}, { duration: .4 });
-  });
-});
-</script>
-<script data-8b-part="scene:shop">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('shop');
-    const list = section.querySelector('.shop__rows');
-    const rows = list.querySelectorAll('.shop__row');
-    gsap.set(rows, { zIndex: i => 10 - i });
-    gsap.timeline({ scrollTrigger: {
-      id: 'shop', trigger: list, start: 'top 92%', end: 'top 32%', scrub: .6, invalidateOnRefresh: true
-    }}).add(effects.deal(rows), 0);
-    const photo = section.querySelector('.shop__panel:not([hidden]) .shop__photo');
-    if (photo) ScrollTrigger.create({ id: 'shop:drawer', trigger: photo, start: 'top 85%', once: true, animation: effects.tabopen(photo) });
-  });
-});
-</script>
-<script data-8b-part="scene:delivery">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('delivery');
-    const nav = document.getElementById('site-nav');
-    const runway = section.querySelector('.delivery__runway');
-    const stage = section.querySelector('.delivery__stage');
-    const track = section.querySelector('.delivery__track');
-    const fill = section.querySelector('.delivery__fill');
-    section.setAttribute('data-rolling', '');
-    const distance = () => {
-      const style = getComputedStyle(stage);
-      return Math.max(0, track.scrollWidth - (stage.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)));
-    };
-    const fitRunway = () => { runway.style.height = stage.offsetHeight + distance() + 'px'; };
-    fitRunway();
-    ScrollTrigger.addEventListener('refreshInit', fitRunway);
-    gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'delivery', trigger: runway, start: () => `top ${nav.offsetHeight}px`, end: () => `bottom ${nav.offsetHeight + stage.offsetHeight}px`, scrub: .5, invalidateOnRefresh: true
-    }})
-      .to(track, { x: () => -distance(), duration: 1 }, 0)
-      .fromTo(fill, { scaleX: 0 }, { scaleX: 1, duration: 1 }, 0);
-    return () => {
-      ScrollTrigger.removeEventListener('refreshInit', fitRunway);
-      runway.style.removeProperty('height');
-      section.removeAttribute('data-rolling');
-    };
-  });
-});
-</script>
-<script data-8b-part="scene:people">
-queueMotion(() => {
-  gsap.matchMedia().add({ motion: '(prefers-reduced-motion: no-preference)', wide: '(min-width: 861px)' }, context => {
-    if (!context.conditions.motion) return;
-    const section = document.getElementById('people');
-    const frame = section.querySelector('.people__frame');
-    const slats = [...frame.querySelectorAll('.people__slat')];
-    const cells = [...section.querySelectorAll('.people__cell')];
-    const states = [[62, 81], [19, 81], [19, 38], [33.333, 66.667]];
-    const varsFor = ([b1, b2]) => [
-      { '--people-l': '0%', '--people-r': `${100 - b1}%`, '--people-x': `${b1 / 2 - 50}%` },
-      { '--people-l': `${b1}%`, '--people-r': `${100 - b2}%`, '--people-x': `${(b1 + b2) / 2 - 50}%` },
-      { '--people-l': `${b2}%`, '--people-r': '0%', '--people-x': `${(b2 + 100) / 2 - 50}%` }
-    ];
-    const timeline = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 1 }, scrollTrigger: {
-      id: 'people', trigger: context.conditions.wide ? section : frame,
-      start: context.conditions.wide ? 'top 55%' : 'top 62%', end: context.conditions.wide ? 'bottom 50%' : 'bottom 38%', scrub: .6
-    }});
-    states.forEach((state, k) => {
-      const vars = varsFor(state);
-      slats.forEach((slat, i) => timeline.to(slat, vars[i], .5 + k * 1.3));
-      if (cells[k]) timeline.fromTo(cells[k], { '--m-surface-bar': 0 }, { '--m-surface-bar': 1, duration: .8 }, .7 + k * 1.3);
-    });
-    timeline.to({}, { duration: .5 });
-  });
-});
-</script>
-<script data-8b-part="scene:faq">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('faq');
-    const list = section.querySelector('.faq__list');
-    const tabs = [...list.querySelectorAll('.faq__tab')];
-    const timeline = gsap.timeline({ defaults: { ease: 'power2.inOut' }, scrollTrigger: {
-      id: 'faq', trigger: list, start: 'top 88%', end: 'center 50%', scrub: .6, invalidateOnRefresh: true
-    }});
-    tabs.forEach((tab, i) => timeline.fromTo(tab, { x: () => -tab.offsetLeft }, { x: 0, duration: 1 }, i * .14));
+<script data-8b-part="scene-script:delivery">
+motionKit.scene('delivery', () => {
+  const section = document.getElementById('delivery');
+  const runway = section.querySelector('.delivery__runway');
+  const stage = section.querySelector('.delivery__stage');
+  const track = section.querySelector('.delivery__track');
+  motionKit.measure(() => {
+    const style = getComputedStyle(stage);
+    const travel = track.scrollWidth - (stage.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight));
+    motionKit.set(runway, { '--delivery-travel': Math.max(1, travel) + 'px' });
   });
 });
 </script>

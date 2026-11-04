@@ -1,6 +1,6 @@
 # AGENTS.md: language school website template
 
-One-page website for a language school or evening class provider, for adults who want to start or return to a language. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a language school or evening class provider, for adults who want to start or return to a language. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,16 +14,15 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav-menu` `.nav-close`
-  - `scene:languages-track`: `.lg-stage` `.lg-viewport` `.lg-track` `.lg-panel` `.lg-shape`
-  - `scene:levels-meter`: `.lv-meter` `.lv-level` `.lv-fill` `.lv-code`
-  - `scene:trial-pile`: `.tr-pile` `.tr-piece` `.tr-panel`
-  - `scene:overheard-thread`: `.oh-stage` `.oh-window` `.oh-thread` `.oh-line` `.oh-face` `.oh-bubble`
-  - `scene:contact-bubble`: `.ct-bubble` `.ct-ground` `.ct-tail`
+  - `scene-script:languages-track`: `.lg-viewport` `.lg-track` `.lg-panel`
+  - `scene-script:trial-pile`: `.tr-pile` `.tr-piece`
+  - `scene-script:overheard-thread`: `.oh-stage` `.oh-thread` `.oh-window`
 - `style="--len:N"` = characters in that display line, spaces included: `¡Hola!` is 6, `Bonjour!` is 8, `Ciao!` is 5, `Hallo!` is 6, `Olá!` is 4, `Konnichiwa!` is 11, `Annyeong!` is 9, `Marhaba!` is 8.
 - Each greeting in the language panels has style="--len:N", the number of characters (for example 6 for "¡Hola!"): update it when a greeting changes.
-- Each level bar has style="--lv-step:N" from 1 to 5, which sets how much of the bar is filled (a larger step fills more); the levels scene animates every .lv-fill it finds.
+- Each level bar has style="--lv-step:N" from 1 to 5, which sets how much of the bar is filled (a larger step fills more) and how far its code rides; the CSS animates every .lv-fill in the meter, timed for five bars.
 - The shapes (circles, scallops, rings, bars) are CSS and one SVG symbol, not images: recolour them through the colour variables in :root.
 - The page has no copyright line; the credit link is added after the address line in the footer.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #ffffff (page background, the pill behind the nav bar once scrolled, level code tags, the circles holding the price shapes, text on dark panels), `--color-2` #4a231c (all main text, the menu overlay, the trial panel, the dark language panels, the Private lessons row, the C1 level bar, the button hover fill), `--color-3` #fcefe2 (the cream ground and tail of the closing speech bubble), `--color-4` #f4783a (orange panels, price row, level 3 bar, day pill and chat bubble), `--color-5` #f7c744 (the main button fill, the logo mark, the FAQ plus circle, yellow panels, pills and bubbles), `--color-6` #24804f (green panel, level 4 bar, day pill and chat bubble), `--color-7` #f49cb0 (pink panel, level 1 bar and chat bubble), `--color-8` #6fa8f2 (blue panel, price circle shape, day pill and chat bubble), `--color-9` #6e625c (small captions, level descriptions, the thread and FAQ leads, contact labels), `--color-10` #8c807a (the second half of the closing statement before it inks in), `--color-11` #e9ddd5 (hairlines between rows and questions, placeholder behind photos, the trial panel's paragraph); body text needs 4.5:1 contrast.
@@ -57,10 +56,10 @@ All demo text, never to be invented:
 
 ## Known limits
 - Without JavaScript the menu button does nothing on phones, so the section links are not reachable there except through the footer, which repeats the same four.
-- Without JavaScript the language track stays one clipped row (the data-track attribute is in the markup and only a script removes it), so the panels past the screen edge cannot be seen or scrolled to; with reduced motion they show as a grid.
-- The pinned language track and the pinned chat thread are long on a phone: the track is the full width of eight panels and the thread holds for 2.5 screens.
+- Without scroll-driven animation support (Firefox today), with reduced motion on and without JavaScript, the page shows its finished layout with ordinary scrolling: the language panels sit in a grid (four, two or one across), the level bars are full, the shapes rest in the pile and the chat thread is a plain list. The nav bar's hide on scroll and the hover fills still run.
+- The chat thread pops in exactly five lines through CSS :nth-of-type rules; a sixth line would stand still unless those rules get a sixth entry.
+- The held language track and the held chat thread are long on a phone: the track is the full width of eight panels and the thread holds for 2.5 screens.
 - The five student portraits are stock photos of real people with first names as alt texts: replace them with your own students' photos, with their consent.
-- GSAP, ScrollTrigger, SplitText and Lenis load from a CDN at the end of the body.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Saylo left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Saylo left only in class names.

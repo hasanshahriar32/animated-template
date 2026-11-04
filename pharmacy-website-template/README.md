@@ -1,8 +1,8 @@
-# Free HTML pharmacy website template with GSAP scroll animations
+# Free HTML pharmacy website template with scroll animations and no libraries
 
-Pharmacy website template: one free HTML file for an independent chemist, with weekly packs, a walk-in clinic, a vaccination table, a four-shelf shop, a bike delivery round and a repeat form. Each part is a pastel paper folder on a grey ground, filed under a header tab. AGENTS.md is included, so Claude Code, Cursor or Codex can adapt it.
+Pharmacy website template: one free HTML file for an independent chemist, with weekly packs, a walk-in clinic, a vaccination table, a four-shelf shop, a bike delivery round and a repeat form. Each part is a pastel paper folder on a grey ground. The motion is CSS with no JavaScript libraries, about 24 KB gzipped, ready for Claude Code or Cursor.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/pharmacy-website-template/)** · **[Use this template](https://github.com/new?template_name=pharmacy-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/pharmacy-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/hale/)**
 
@@ -24,10 +24,10 @@ curl -LO https://raw.githubusercontent.com/8bsite/pharmacy-website-template/main
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my pharmacy: name, town, address, services (repeats, packs, clinic, jabs, shop, delivery), hours, delivery days and stops, team, how people order a repeat>. Replace first the name, Leeds address, hours, delivery stops, people, and the clinic and jab rules. Keep the section ids, the data-tab and data-step numbers and the three portraits; set the footer wordmark's --len to the new name's length. Ask me for missing facts; never invent prices, eligibility rules, hours, registration numbers or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my pharmacy: name, town, address, services (repeats, packs, clinic, jabs, shop, delivery), hours, delivery days and stops, team, how people order a repeat>. Replace first the name, Leeds address, hours, delivery stops, people and the clinic and jab rules. Motion is CSS plus the inline kit: keep the gate script, section ids, data-tab, data-step and data-8b attributes, four shelves and three portraits; add no library. Set the footer wordmark's --len to the name's length. Never invent rules or contacts.
 ```
 
-Give the agent the facts only the pharmacy has: name, address, hours, which conditions the clinic treats, who qualifies for each jab, delivery days and area, and the team. The demo invents all of them, NHS Pharmacy First wording included. Replace the pharmacy name, and set the footer wordmark's --len to match it. Vibe coding this in Claude Code is quick if the agent leaves the counts the animations are written for: four conditions with four photos, three people, and each shelf button tied to its panel by aria-controls.
+Give the agent the facts only the pharmacy has: name, address, hours, which conditions the clinic treats, who qualifies for each jab, delivery days and area, and the team. The demo invents all of them, NHS Pharmacy First wording included. Replace the pharmacy name, and set the footer wordmark's --len to match it. Vibe coding this in Claude Code is quick if the agent keeps the counts the CSS animates: four conditions with four photos, four shelves, three people, and each shelf button tied to its panel by aria-controls.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=pharmacy-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -63,15 +63,15 @@ No agent? Click **[Use this template](https://github.com/new?template_name=pharm
 **Does the repeat form send anything?**  
 No. The script checks the fields, shows a thank-you line and clears the form; nothing leaves the page. Connect Formspree, Netlify Forms or your own secure endpoint and add a privacy notice, because the form asks for name, date of birth, phone and medicines, which is health data.
 
+**Does this version need GSAP, and what do Firefox and reduced motion show?**  
+No. The motion is CSS scroll-driven animation and a small inline script: 24 KB gzipped against 70 KB and three more requests for the GSAP build. In Firefox today and with reduced motion, each folder shows its finished layout: the clinic shows its first photo, the delivery stops form a grid. The load-in still plays in Firefox.
+
 **How to create a pharmacy website like this without editing code?**  
 Use [8B's AI website builder](https://8b.com/). You describe the site in a sentence and it designs a new one, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
 
-**Can a US or Canadian pharmacy use it?**  
-Yes, after a text pass. The layout suits any counter-based practice, but the demo is British: pounds, NHS Pharmacy First, a Leeds address and a 0113 phone number. Replace those, and the eligibility lines for the flu and Covid jabs, with your own region's rules.
-
 ## Is it the right base?
 
-If you are comparing templates for pharmacy sites, this is the right base when one counter offers several services and you want each filed as its own part of a single page. A business that sells timed classes, like a [class studio](https://8b.com/templates/hundred/), needs a different page shape. The weak spot is health data: the form sends nothing and asks for a date of birth. A no-code route exists too: 8B's builder designs a site from a sentence.
+If you are comparing templates for pharmacy sites, this suits one counter that offers several services, each filed as its own part of a single page. It is the light build: the same look and scroll behaviour without an animation library, 24 KB gzipped against 70 KB for the GSAP version. A business selling timed classes, like a [class studio](https://8b.com/templates/hundred/), needs another shape. The weak spot is health data: the form sends nothing and asks for a date of birth. 8B's builder needs no code.
 
 ## Before you publish
 
@@ -80,7 +80,9 @@ If you are comparing templates for pharmacy sites, this is the right base when o
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 84 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 92 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 84 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

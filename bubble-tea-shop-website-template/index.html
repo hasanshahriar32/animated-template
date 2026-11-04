@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/bubble-tea-shop-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -217,7 +218,6 @@
   --color-5: #53c690;
   --color-6: #f6f07a;
   --color-7: #e3a2f8;
-  --color-8: #c8400c;
   --color-9: #596078;
   --font-1: "Bricolage Grotesque", "Bricolage Grotesque Fallback", "Arial Narrow", Arial, sans-serif;
   --font-2: "Radio Canada Big", "Radio Canada Big Fallback", Arial, sans-serif;
@@ -240,10 +240,6 @@
 /* fallbacks:end */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis-stopped { overflow: clip; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body { margin: 0; background: var(--color-1); color: var(--color-2); font-family: var(--font-2); font-size: 1.0625rem; line-height: 1.5; overflow-x: clip; }
 img { display: block; max-width: 100%; height: auto; }
 h1, h2, h3, h4, p, ul, ol, figure, blockquote, dl, dd { margin: 0; }
@@ -345,6 +341,20 @@ button, input, textarea, select { font: inherit; color: inherit; }
   #drinks .drinks__grid { grid-template-columns: minmax(0, 1fr); }
   #drinks .drink:nth-child(even) { margin-top: 0; }
 }
+#drinks { padding-top: max(var(--space-2), 7rem); }
+#drinks .drinks__where, #drinks #drinks-title { grid-column: 1; }
+#drinks .drinks__head .drinks__actions { grid-column: 2; grid-row: 1 / span 3; align-self: end; display: flex; flex-wrap: wrap; gap: .75rem; }
+@media (max-width: 699.98px) {
+  #drinks { padding-top: 6.5rem; }
+  #drinks .drinks__head .drinks__actions { grid-column: 1; grid-row: auto; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #drinks .drinks__head > * { animation: open-cta .8s .2s cubic-bezier(.2, .9, .25, 1) backwards; }
+  #drinks #drinks-title { animation: open-line 1s cubic-bezier(.2, .9, .25, 1) backwards; }
+  #drinks .drinks__head > .drinks__actions { animation-delay: .35s; }
+}
+@keyframes open-line { from { transform: translateY(32%) scale(.94); } }
+@keyframes open-cta { from { transform: translateY(1.5rem); opacity: 0; } }
 }
 </style>
 <style data-8b-part="section:build">
@@ -522,44 +532,172 @@ button, input, textarea, select { font: inherit; color: inherit; }
 }
 }
 </style>
-<style data-8b-part="scene-style:drops">
+<style data-8b-part="motion">
 @layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #drops.is-track { height: calc(100svh + var(--drops-run, 0px)); }
-  #drops.is-track .drops__stage { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; align-items: center; padding: 5.5rem 0 1.5rem var(--space-1); }
-  #drops.is-track .drops__rail { display: flex; align-items: center; gap: clamp(1.5rem, 4vw, 4rem); width: max-content; max-width: none; margin: 0; }
-  #drops.is-track .drops__intro { width: min(30rem, 34vw); margin: 0; }
-  #drops.is-track .drops__track { display: flex; gap: clamp(1rem, 2vw, 1.75rem); }
-  #drops.is-track .drop { width: min(22rem, 26vw, calc((100svh - 14rem) * .72)); }
-  @media (max-width: 699.98px) {
-    #drops.is-track .drops__intro { width: 80vw; }
-    #drops.is-track .drop { width: min(74vw, calc((100svh - 15rem) * .72)); }
-  }
+[data-8b-live] { --ease-ffc11a: linear(0, 0.0943, 0.2003, 0.3129, 0.4279, 0.5415, 0.6505, 0.7525, 0.8455, 0.9283, 1, 1.0603, 1.1093, 1.1472, 1.1747, 1.1928, 1.2023, 1.2043, 1.1999, 1.1904, 1.1768, 1.1601, 1.1414, 1.1215, 1.1011, 1.0811, 1.0618, 1.0438, 1.0273, 1.0127, 1, 0.9893, 0.9807, 0.974, 0.9691, 0.9659, 0.9642, 0.9639, 0.9647, 0.9663, 0.9688, 0.9717, 0.975, 0.9785, 0.9821, 0.9857, 0.9891, 0.9923, 0.9952, 0.9978, 1, 1.0019, 1.0034, 1.0046, 1.0055, 1.006, 1.0063, 1.0064, 1.0062, 1.006, 1.0055, 1.005, 1.0044, 1.0038, 1.0032, 1.0025, 1.0019, 1.0014, 1.0009, 1.0004, 1, 0.9997, 0.9994, 0.9992, 0.999, 0.9989, 0.9989, 0.9989, 0.9989, 0.9989, 1); }
+[data-8b-live] [data-8b-motion~="swing"] { animation-name: motion-swing-rotate, motion-swing-translate; animation-duration: 1.3s; animation-delay: 0s; animation-timing-function: var(--ease-ffc11a); animation-fill-mode: both; animation-play-state: paused; transform: none; transform-origin: 50% 0%; }
+[data-8b-live] [data-8b-motion~="swing"].is-in { animation-play-state: running; }
+@keyframes motion-swing-rotate { 0% { rotate: var(--swing-rotate-from, -6deg); } 100% { rotate: 0deg; } }
+[data-8b-live] :has(> * > [data-8b-motion~="rise"]) { view-timeline: --motion-rise block; view-timeline-inset: 0; }
+[data-8b-live] [data-8b-motion~="rise"] { animation-name: motion-rise; animation-timeline: --motion-rise; animation-range: cover 0% cover calc(100% - 100vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes motion-rise { 0% { translate: 0px calc(var(--rise-lag) * 100%); } 100% { translate: 0px 0px; } }
+@keyframes motion-swing-translate { 0% { translate: 0px 6%; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:drinks">
+@layer scenes {
+[data-8b-live] #drinks .drinks__grid > li { view-timeline: --drinks-item block; view-timeline-inset: 0; }
+[data-8b-live] #drinks .drinks__grid > li > .drink__body { animation-timeline: --drinks-item; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes drinks-div-drink-body-translate-d { 0% { translate: -80% 0px; } 100% { translate: 0px 0px; } }
+@keyframes drinks-div-drink-body-translate-m { 0% { translate: -55% 0px; } 100% { translate: 0px 0px; } }
+@keyframes drinks-div-drink-body-rotate-d { 0% { rotate: -16deg; } 100% { rotate: 0deg; } }
+@keyframes drinks-div-drink-body-rotate-m { 0% { rotate: -11deg; } 100% { rotate: 0deg; } }
+@keyframes drinks-div-drink-body-translate-2-d { 0% { translate: 80% 0px; } 100% { translate: 0px 0px; } }
+@keyframes drinks-div-drink-body-translate-2-m { 0% { translate: 55% 0px; } 100% { translate: 0px 0px; } }
+@keyframes drinks-div-drink-body-rotate-2-d { 0% { rotate: 16deg; } 100% { rotate: 0deg; } }
+@keyframes drinks-div-drink-body-rotate-2-m { 0% { rotate: 11deg; } 100% { rotate: 0deg; } }
+@media (min-width: 700px) {
+  [data-8b-live] #drinks .drinks__grid > li > .drink__body { animation-range: cover 0% cover 62vh; }
+  [data-8b-live] #drinks .drinks__grid > li:nth-of-type(2n+1) > .drink__body { animation-name: drinks-div-drink-body-translate-d, drinks-div-drink-body-rotate-d; }
+  [data-8b-live] #drinks .drinks__grid > li:nth-of-type(2n+2) > .drink__body { animation-name: drinks-div-drink-body-translate-2-d, drinks-div-drink-body-rotate-2-d; }
+}
+@media (max-width: 699px) {
+  [data-8b-live] #drinks .drinks__grid > li > .drink__body { animation-range: cover 0% cover 48vh; }
+  [data-8b-live] #drinks .drinks__grid > li:nth-of-type(2n+1) > .drink__body { animation-name: drinks-div-drink-body-translate-m, drinks-div-drink-body-rotate-m; }
+  [data-8b-live] #drinks .drinks__grid > li:nth-of-type(2n+2) > .drink__body { animation-name: drinks-div-drink-body-translate-2-m, drinks-div-drink-body-rotate-2-m; }
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#drinks { padding-top: max(var(--space-2), 7rem); }
-#drinks .drinks__where, #drinks #drinks-title { grid-column: 1; }
-#drinks .drinks__head .drinks__actions { grid-column: 2; grid-row: 1 / span 3; align-self: end; display: flex; flex-wrap: wrap; gap: .75rem; }
-@media (max-width: 699.98px) {
-  #drinks { padding-top: 6.5rem; }
-  #drinks .drinks__head .drinks__actions { grid-column: 1; grid-row: auto; }
+<style data-8b-part="scene:build">
+@layer scenes {
+[data-8b-live] #build .build__stack { view-timeline: --build-stack block; view-timeline-inset: 0; }
+[data-8b-live] #build .layer { --build-at: calc(var(--layer-i) * var(--build-step, 0px)); --build-stick: calc(var(--nav-offset, 6rem) + var(--layer-i) * var(--build-band)); }
+[data-8b-live] #build .layer:not(:first-child) { animation-name: build-layer-scale, build-layer-translate; animation-timeline: --build-stack; animation-range: cover var(--build-at) cover calc(var(--build-at) + 100vh - var(--build-stick)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #build .layer:not(:last-child) > .layer__card { --build-next: calc(var(--build-at) + var(--build-step, 0px)); --build-land: calc(100vh - var(--build-stick) - var(--build-band)); animation-name: build-card-recede; animation-timeline: --build-stack; animation-range: cover calc(var(--build-next) + .45 * var(--build-land)) cover calc(var(--build-next) + var(--build-land)); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes build-layer-scale { 0% { scale: 0.84; } 100% { scale: 1; } }
+@keyframes build-layer-translate { 0% { translate: 0px 8%; } 100% { translate: 0px 0px; } }
+@keyframes build-card-recede { 0% { scale: 1; } 100% { scale: 0.955; } }
 }
+</style>
+<style data-8b-part="scene:pearls">
+@layer scenes {
+[data-8b-live] { --ease-8387a2: linear(0, 0.1088, 0.2103, 0.3048, 0.3925, 0.4736, 0.5484, 0.6171, 0.68, 0.7372, 0.7891, 0.8357, 0.8775, 0.9146, 0.9472, 0.9756, 1, 1.0207, 1.0378, 1.0517, 1.0625, 1.0705, 1.0759, 1.079, 1.08, 1.0791, 1.0766, 1.0726, 1.0675, 1.0614, 1.0547, 1.0475, 1.04, 1.0325, 1.0253, 1.0186, 1.0125, 1.0074, 1.0034, 1.0009, 1); }
+[data-8b-live] #pearls .pearls__stage { view-timeline: --pearls-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #pearls .pearls__frame { animation-name: pearls-figure-pearls-frame-scale, pearls-figure-pearls-frame-rotate; animation-timeline: --pearls-t1; animation-range: cover 15vh cover calc(47.619% - 1.1905vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #pearls .pearls__chips > li > .m-badge { animation-timeline: --pearls-t1; animation-timing-function: var(--ease-8387a2); animation-fill-mode: both; transform: none; }
+[data-8b-live] #pearls .pearls__chips > li:nth-of-type(1) > .m-badge { animation-range: cover calc(14.2857% + 10.1429vh) cover calc(38.0952% + 2.0476vh); }
+[data-8b-live] #pearls .pearls__chips > li:nth-of-type(2) > .m-badge { animation-range: cover calc(16.6667% + 9.3333vh) cover calc(40.4762% + 1.2381vh); }
+[data-8b-live] #pearls .pearls__chips > li:is(:nth-of-type(3), :nth-of-type(5)) > .m-badge { animation-range: cover calc(19.0476% + 8.5238vh) cover calc(42.8571% + 0.4286vh); }
+[data-8b-live] #pearls .pearls__chips > li:is(:nth-of-type(4), :nth-of-type(6)) > .m-badge { animation-range: cover calc(21.4286% + 7.7143vh) cover calc(45.2381% - 0.381vh); }
+[data-8b-live] #pearls .pearls__chips > li:nth-of-type(7) > .m-badge { animation-range: cover calc(23.8095% + 6.9048vh) cover calc(47.619% - 1.1905vh); }
+[data-8b-live] #pearls .pearls__chips > li:nth-of-type(8) > .m-badge { animation-range: cover calc(26.1905% + 6.0952vh) cover calc(50% - 2vh); }
+@keyframes pearls-figure-pearls-frame-scale { 0% { scale: 0.55; } 100% { scale: 1; } }
+@keyframes pearls-figure-pearls-frame-rotate { 0% { rotate: -6deg; } 100% { rotate: 0deg; } }
+@keyframes pearls-span-m-badge-translate { 0% { translate: var(--pearls-x, 0px) var(--pearls-y, 0px); } 100% { translate: 0px 0px; } }
+@keyframes pearls-span-m-badge-scale { 0% { scale: 0.3; } 100% { scale: 1; } }
+@keyframes pearls-span-m-badge-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+[data-8b-live] #pearls .pearls__chips > li > .m-badge { animation-name: pearls-span-m-badge-translate, pearls-span-m-badge-scale, pearls-span-m-badge-opacity; }
+}
+</style>
+<style data-8b-part="scene:rules">
+@layer scenes {
+[data-8b-live] { --ease-64ef59: linear(0, 0.1349, 0.26, 0.3754, 0.4816, 0.5789, 0.6677, 0.7482, 0.8208, 0.8859, 0.9438, 0.9947, 1.0392, 1.0775, 1.1099, 1.1367, 1.1584, 1.1752, 1.1875, 1.1957, 1.2, 1.2008, 1.1984, 1.1933, 1.1856, 1.1758, 1.1642, 1.151, 1.1368, 1.1218, 1.1062, 1.0906, 1.0752, 1.0603, 1.0464, 1.0336, 1.0224, 1.0131, 1.0061, 1.0016, 1); }
+[data-8b-live] #rules { timeline-scope: --rules-t1; }
+[data-8b-live] #rules .rules__band, [data-8b-live] #rules .rules__hem, [data-8b-live] #rules .rules__cards > li { animation-timeline: --rules-t1; animation-fill-mode: both; }
+[data-8b-live] #rules .rules__band, [data-8b-live] #rules .rules__hem { animation-range: cover 28vh cover calc(100% - 96vh); animation-timing-function: linear; }
+[data-8b-live] #rules .rules__band { view-timeline: --rules-t1 block; view-timeline-inset: 0; animation-name: rules-div-rules-band-clippath; }
+[data-8b-live] #rules .rules__hem { animation-name: rules-div-rules-hem-translate; transform: none; }
+[data-8b-live] #rules .rules__cards > li { animation-range: cover calc(28vh + var(--rules-at, 0) * (100% - 124vh)) cover calc(28vh + (var(--rules-at, 0) + .32) * (100% - 124vh)); animation-timing-function: var(--ease-64ef59); transform: none; }
+[data-8b-live] #rules .rules__cards > li:nth-of-type(2n+1) { animation-name: rules-li-rules-card-rotate; }
+[data-8b-live] #rules .rules__cards > li:nth-of-type(2n+2) { animation-name: rules-li-rules-card-rotate-2; }
+@keyframes rules-div-rules-band-clippath { 0% { clip-path: inset(0% 0% 100%); } 99.998% { clip-path: inset(0% 0% 0.01%); } 100% { clip-path: inset(0%); } }
+@keyframes rules-div-rules-hem-translate { 0% { translate: 0px calc(-1 * var(--rules-run, 0px)); } 100% { translate: 0px 0px; } }
+@keyframes rules-li-rules-card-rotate { 0% { rotate: -10deg; } 100% { rotate: 0deg; } }
+@keyframes rules-li-rules-card-rotate-2 { 0% { rotate: 10deg; } 100% { rotate: 0deg; } }
+}
+</style>
+<style data-8b-part="scene:regulars">
+@layer scenes {
+[data-8b-live] { --ease-cb0991: linear(0, 0.1207, 0.2329, 0.3369, 0.433, 0.5215, 0.6026, 0.6767, 0.744, 0.8048, 0.8594, 0.908, 0.951, 0.9886, 1.0211, 1.0488, 1.072, 1.0909, 1.1059, 1.1171, 1.125, 1.1297, 1.1316, 1.131, 1.128, 1.123, 1.1164, 1.1083, 1.099, 1.0889, 1.0781, 1.0671, 1.056, 1.0452, 1.0349, 1.0254, 1.017, 1.01, 1.0046, 1.0012, 1); }
+[data-8b-live] #regulars .chat > li { view-timeline: --regulars-item block; view-timeline-inset: 0; }
+[data-8b-live] #regulars .chat > li > .chat__msg > .chat__bubble { animation-name: regulars-blockquote-chat-bubble-scale, regulars-blockquote-chat-bubble-rotate; animation-timeline: --regulars-item; animation-timing-function: var(--ease-cb0991); animation-fill-mode: both; transform: none; transform-origin: 0% 100%; }
+[data-8b-live] #regulars .chat > li > .chat__reply { animation-timeline: --regulars-item; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes regulars-blockquote-chat-bubble-scale { 0% { scale: 0.72; } 100% { scale: 1; } }
+@keyframes regulars-blockquote-chat-bubble-rotate { 0% { rotate: -5deg; } 100% { rotate: 0deg; } }
+@keyframes regulars-p-chat-reply-translate-d { 0% { translate: 0px 320px; } 100% { translate: 0px 0px; } }
+@keyframes regulars-p-chat-reply-translate-m { 0% { translate: 80% 0px; } 100% { translate: 0px 0px; } }
+@keyframes regulars-p-chat-reply-rotate { 0% { rotate: 7deg; } 100% { rotate: 0deg; } }
+@media (min-width: 700px) {
+  [data-8b-live] #regulars .chat > li > .chat__msg > .chat__bubble { animation-range: cover 8vh cover calc(22.5% + 4.4vh); }
+  [data-8b-live] #regulars .chat > li > .chat__reply { animation-name: regulars-p-chat-reply-translate-d, regulars-p-chat-reply-rotate; animation-range: cover 8vh cover 50%; }
+}
+@media (max-width: 699px) {
+  [data-8b-live] #regulars .chat > li > .chat__msg > .chat__bubble { animation-range: cover 8vh cover calc(45% - 27.1vh); }
+  [data-8b-live] #regulars .chat > li > .chat__reply { animation-name: regulars-p-chat-reply-translate-m, regulars-p-chat-reply-rotate; animation-range: cover 8vh cover calc(100% - 70vh); }
+}
+}
+</style>
+<style data-8b-part="scene:drops">
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #drinks .drinks__head > * { animation: open-cta .8s .2s cubic-bezier(.2, .9, .25, 1) backwards; }
-  #drinks #drinks-title { animation: open-line 1s cubic-bezier(.2, .9, .25, 1) backwards; }
-  #drinks .drinks__head > .drinks__actions { animation-delay: .35s; }
+  [data-8b-live] #drops { height: calc(100svh + var(--drops-run, 0px)); }
+  [data-8b-live] #drops .drops__stage { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; align-items: center; padding: 5.5rem 0 1.5rem var(--space-1); }
+  [data-8b-live] #drops .drops__rail { display: flex; align-items: center; gap: clamp(1.5rem, 4vw, 4rem); width: max-content; max-width: none; margin: 0; }
+  [data-8b-live] #drops .drops__intro { width: min(30rem, 34vw); margin: 0; }
+  [data-8b-live] #drops .drops__track { display: flex; gap: clamp(1rem, 2vw, 1.75rem); }
+  [data-8b-live] #drops .drop { width: min(22rem, 26vw, calc((100svh - 14rem) * .72)); }
+  @media (max-width: 699.98px) {
+    [data-8b-live] #drops .drops__intro { width: 80vw; }
+    [data-8b-live] #drops .drop { width: min(74vw, calc((100svh - 15rem) * .72)); }
+  }
 }
-@keyframes open-line { from { transform: translateY(32%) scale(.94); } }
-@keyframes open-cta { from { transform: translateY(1.5rem); opacity: 0; } }</style>
+}
+@layer scenes {
+[data-8b-live] #drops { view-timeline: --drops-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #drops .drops__rail, [data-8b-live] #drops .drops__stage { animation-timeline: --drops-t1; animation-timing-function: linear; }
+[data-8b-live] #drops .drops__rail { animation-name: drops-rail; animation-range: cover 100vh cover calc(100vh + var(--drops-travel, 1px)); animation-fill-mode: both; transform: none; }
+[data-8b-live] #drops .drops__stage { background-color: var(--color-1); animation-name: drops-flood-1, drops-flood-2, drops-flood-3, drops-flood-4; animation-fill-mode: forwards;
+  animation-range: cover calc(100vh + var(--drops-at-0, 99999px)) cover calc(100vh + var(--drops-at-0, 99999px) + var(--drops-flood, 1px)),
+    cover calc(100vh + var(--drops-at-1, 99999px)) cover calc(100vh + var(--drops-at-1, 99999px) + var(--drops-flood, 1px)),
+    cover calc(100vh + var(--drops-at-2, 99999px)) cover calc(100vh + var(--drops-at-2, 99999px) + var(--drops-flood, 1px)),
+    cover calc(100vh + var(--drops-at-3, 99999px)) cover calc(100vh + var(--drops-at-3, 99999px) + var(--drops-flood, 1px)); }
+@keyframes drops-rail { 0% { translate: 0px 0px; } 100% { translate: calc(-1 * var(--drops-run, 0px)) 0px; } }
+@keyframes drops-flood-1 { 0% { background-color: var(--color-1); } 100% { background-color: var(--color-3); } }
+@keyframes drops-flood-2 { 0% { background-color: var(--color-3); } 100% { background-color: var(--color-4); } }
+@keyframes drops-flood-3 { 0% { background-color: var(--color-4); } 100% { background-color: var(--color-5); } }
+@keyframes drops-flood-4 { 0% { background-color: var(--color-5); } 100% { background-color: var(--color-7); } }
+}
+</style>
+<style data-8b-part="scene:visit">
+@layer scenes {
+[data-8b-live] { --ease-cb0991: linear(0, 0.1207, 0.2329, 0.3369, 0.433, 0.5215, 0.6026, 0.6767, 0.744, 0.8048, 0.8594, 0.908, 0.951, 0.9886, 1.0211, 1.0488, 1.072, 1.0909, 1.1059, 1.1171, 1.125, 1.1297, 1.1316, 1.131, 1.128, 1.123, 1.1164, 1.1083, 1.099, 1.0889, 1.0781, 1.0671, 1.056, 1.0452, 1.0349, 1.0254, 1.017, 1.01, 1.0046, 1.0012, 1); }
+[data-8b-live] #visit .visit__hero { view-timeline: --visit-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #visit .visit__photo, [data-8b-live] #visit .visit__photo > img, [data-8b-live] #visit .visit__bumps > span:nth-of-type(-n+5), [data-8b-live] #visit-title { animation-timeline: --visit-t1; animation-fill-mode: both; }
+[data-8b-live] #visit .visit__photo { animation-name: visit-div-visit-photo-clippath; animation-range: cover 8vh cover 84.1905vh; animation-timing-function: linear; }
+[data-8b-live] #visit .visit__photo > img { animation-name: visit-div-visit-photo-img-scale; animation-range: cover 8vh cover 84.1905vh; animation-timing-function: linear; transform: none; }
+[data-8b-live] #visit .visit__bumps > span:nth-of-type(3) { animation-name: visit-span-visit-bump-translate; animation-range: cover 19.4286vh cover 57.5238vh; animation-timing-function: var(--ease-cb0991); transform: none; }
+[data-8b-live] #visit-title { animation-name: visit-visit-title-scale, visit-visit-title-translate; animation-range: cover 23.2381vh cover 84.1905vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); transform: none; }
+[data-8b-live] #visit .visit__bumps > span:nth-of-type(1) { animation-name: visit-span-visit-bump-translate; animation-range: cover 27.0476vh cover 65.1429vh; animation-timing-function: var(--ease-cb0991); transform: none; }
+[data-8b-live] #visit .visit__bumps > span:nth-of-type(5) { animation-name: visit-span-visit-bump-translate; animation-range: cover 34.6667vh cover 72.7619vh; animation-timing-function: var(--ease-cb0991); transform: none; }
+[data-8b-live] #visit .visit__bumps > span:nth-of-type(2) { animation-name: visit-span-visit-bump-translate; animation-range: cover 42.2857vh cover 80.381vh; animation-timing-function: var(--ease-cb0991); transform: none; }
+[data-8b-live] #visit .visit__bumps > span:nth-of-type(4) { animation-name: visit-span-visit-bump-translate; animation-range: cover 49.9048vh cover 88vh; animation-timing-function: var(--ease-cb0991); transform: none; }
+@keyframes visit-div-visit-photo-clippath { 0% { clip-path: inset(8% 9% round 40px); } 99.998% { clip-path: inset(0.0008% 0.0009% round 0.004px); } 100% { clip-path: inset(0%); } }
+@keyframes visit-div-visit-photo-img-scale { 0% { scale: 1.22; } 100% { scale: 1; } }
+@keyframes visit-span-visit-bump-translate { 0% { translate: 0px 105%; } 0.002% { translate: 0px 104.895%; } 100% { translate: 0px 0px; } }
+@keyframes visit-visit-title-scale { 0% { scale: 0.82; } 100% { scale: 1; } }
+@keyframes visit-visit-title-translate { 0% { translate: 0px 18%; } 100% { translate: 0px 0px; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: floating pill bar with the wordmark and four colour-outlined links -->
 <header id="nav" data-8b-section="navigation">
   <nav class="nav__bar" aria-label="Main">
     <a class="nav__mark" href="#drinks" aria-label="Chewsday, back to the top">Chewsday</a>
-    <ul class="nav__links">
+    <ul class="nav__links" data-8b-items=":scope > li">
       <li><a class="m-btn-3" href="#drinks">Menu</a></li>
       <li><a class="m-btn-3" href="#build">Build</a></li>
       <li><a class="m-btn-3" href="#drops">Drops</a></li>
@@ -577,10 +715,10 @@ button, input, textarea, select { font: inherit; color: inherit; }
     <p class="drinks__lede m-text-6">Four cups we would defend in court. Every one comes with pearls cooked within the hour.</p>
     <div class="drinks__actions"><a class="m-btn" href="#visit"><span class="m-btn__label">Find the bar</span></a><a class="m-btn-2" href="#build"><span class="m-btn-2__label">Build your own</span></a></div>
   </div>
-  <ul class="drinks__grid">
+  <ul class="drinks__grid" data-8b-items=":scope > li">
     <li class="drink">
       <div class="drink__body">
-        <figure class="drink__photo"><img style="background:#a68ca6" src="https://images.unsplash.com/photo-1745883949374-baeba0ed57c3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YnViYmxlJTIwdGVhfGVufDF8MXx8fDE3OTE0NzA5NDR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=570&q=60" alt="A hand raising a cup of brown sugar milk tea with dark pearls against pink blossom" width="1200" height="1500" loading="lazy"></figure>
+        <figure class="drink__photo"><img fetchpriority="high" src="https://images.unsplash.com/photo-1745883949374-baeba0ed57c3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8YnViYmxlJTIwdGVhfGVufDF8MXx8fDE3OTE0NzA5NDR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=570&q=60" alt="A hand raising a cup of brown sugar milk tea with dark pearls against pink blossom" width="1200" height="1500"></figure>
         <h3 class="m-text-4">Brown Sugar Tiger</h3>
         <p class="drink__note m-text">Fresh milk striped with warm brown-sugar syrup and a heap of soft pearls.</p>
         <p class="m-text-5">Milk tea · £4.90</p>
@@ -588,7 +726,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
     </li>
     <li class="drink">
       <div class="drink__body">
-        <figure class="drink__photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1718065598477-505b9c2e764d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YnViYmxlJTIwdGVhfGVufDF8MXx8fDE3OTE0NzA5NDR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=570&q=60" alt="A tall cup of orange Thai milk tea with pearls at the bottom on a counter" width="1200" height="1500" loading="lazy"></figure>
+        <figure class="drink__photo"><img src="https://images.unsplash.com/photo-1718065598477-505b9c2e764d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YnViYmxlJTIwdGVhfGVufDF8MXx8fDE3OTE0NzA5NDR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=700&q=60" alt="A tall cup of orange Thai milk tea with pearls at the bottom on a counter" width="1200" height="1500" loading="lazy"></figure>
         <h3 class="m-text-4">Sunset Thai</h3>
         <p class="drink__note m-text">Ceylon black tea with star anise and condensed milk, shaken until it foams.</p>
         <p class="m-text-5">Black tea · £4.60</p>
@@ -596,7 +734,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
     </li>
     <li class="drink">
       <div class="drink__body">
-        <figure class="drink__photo"><img style="background:#404040" src="https://images.unsplash.com/photo-1749280447307-31a68eb38673?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bWF0Y2hhJTIwbGF0dGUlMjBpY2VkfGVufDF8MXx8fDE3OTE0NzA5NDh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=570&q=60" alt="An iced matcha latte in layers of green and white with a black straw on a small round table" width="1200" height="1500" loading="lazy"></figure>
+        <figure class="drink__photo"><img src="https://images.unsplash.com/photo-1749280447307-31a68eb38673?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bWF0Y2hhJTIwbGF0dGUlMjBpY2VkfGVufDF8MXx8fDE3OTE0NzA5NDh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=700&q=60" alt="An iced matcha latte in layers of green and white with a black straw on a small round table" width="1200" height="1500" loading="lazy"></figure>
         <h3 class="m-text-4">Matcha Cloud</h3>
         <p class="drink__note m-text">Ceremonial matcha whisked to order over oat milk, with a cold-foam cap.</p>
         <p class="m-text-5">Matcha · £5.20</p>
@@ -604,7 +742,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
     </li>
     <li class="drink">
       <div class="drink__body">
-        <figure class="drink__photo"><img style="background:#a6d9d9" src="https://images.unsplash.com/photo-1650420367441-b8fac2062869?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c3RyYXdiZXJyeSUyMG1pbGslMjBkcmlua3xlbnwxfDF8fHwxNzkxNDcwOTc1fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=570&q=60" alt="A glass of pink strawberry milk on a pale blue background" width="1200" height="1500" loading="lazy"></figure>
+        <figure class="drink__photo"><img src="https://images.unsplash.com/photo-1650420367441-b8fac2062869?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c3RyYXdiZXJyeSUyMG1pbGslMjBkcmlua3xlbnwxfDF8fHwxNzkxNDcwOTc1fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=700&q=60" alt="A glass of pink strawberry milk on a pale blue background" width="1200" height="1500" loading="lazy"></figure>
         <h3 class="m-text-4">Pink Milk</h3>
         <p class="drink__note m-text">Strawberry purée folded into cold fresh milk, with popping strawberry pearls.</p>
         <p class="m-text-5">Fruit milk · £4.80</p>
@@ -618,20 +756,20 @@ button, input, textarea, select { font: inherit; color: inherit; }
     <h2 class="m-text-2" id="build-title">Build your cup</h2>
     <p class="m-text-6">Five layers, each one your call. The order screen at the counter walks you through the same five steps.</p>
   </div>
-  <ol class="build__stack">
+  <ol class="build__stack" data-8b-items=":scope > li" data-8b-fixed="5">
     <li class="layer" style="--layer-i:0" data-8b-sticky-under-nav>
       <div class="layer__card">
         <div class="layer__band"><span class="layer__step m-text-2">1</span><h3 class="m-text-4">Tea</h3></div>
         <div class="layer__body">
           <p class="layer__line m-text">Loose leaf, brewed in small pots every two hours. Never from powder, never from a carton.</p>
-          <ul class="layer__options m-text">
+          <ul class="layer__options m-text" data-8b-items=":scope > li">
             <li><span>Jasmine green</span><span>light, floral</span></li>
             <li><span>Assam black</span><span>malty, strong</span></li>
             <li><span>Roasted oolong</span><span>toasty</span></li>
             <li><span>Butterfly pea</span><span>caffeine-free</span></li>
           </ul>
         </div>
-        <figure class="layer__photo"><img style="background:#738c59" src="https://images.unsplash.com/photo-1760074057726-e94ee8ff1eb4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGxvb3NlJTIwbGVhZiUyMHRlYXxlbnwxfDB8fHwxNzkxNDcwOTY3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="Close-up of long dried green tea leaves" width="1200" height="800" loading="lazy"></figure>
+        <figure class="layer__photo"><img src="https://images.unsplash.com/photo-1760074057726-e94ee8ff1eb4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGxvb3NlJTIwbGVhZiUyMHRlYXxlbnwxfDB8fHwxNzkxNDcwOTY3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="Close-up of long dried green tea leaves" width="1200" height="800" loading="lazy"></figure>
       </div>
     </li>
     <li class="layer" style="--layer-i:1" data-8b-sticky-under-nav>
@@ -639,14 +777,14 @@ button, input, textarea, select { font: inherit; color: inherit; }
         <div class="layer__band"><span class="layer__step m-text-2">2</span><h3 class="m-text-4">Milk or fruit</h3></div>
         <div class="layer__body">
           <p class="layer__line m-text">Creamy, fruity or both. Every fruit base is pressed or puréed here each morning.</p>
-          <ul class="layer__options m-text">
+          <ul class="layer__options m-text" data-8b-items=":scope > li">
             <li><span>Fresh whole milk</span><span>from Wharfedale</span></li>
             <li><span>Oat milk</span><span>+30p</span></li>
             <li><span>Mango and passion fruit</span><span>dairy-free</span></li>
             <li><span>Lychee and rose</span><span>dairy-free</span></li>
           </ul>
         </div>
-        <figure class="layer__photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1602697914286-e3b77239b1eb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bWlsayUyMHBvdXJpbmclMjBpY2VkfGVufDF8MHx8fDE3OTE0NzA5Njh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="Milk swirling into a glass of iced tea held over a wooden table" width="1200" height="800" loading="lazy"></figure>
+        <figure class="layer__photo"><img src="https://images.unsplash.com/photo-1602697914286-e3b77239b1eb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bWlsayUyMHBvdXJpbmclMjBpY2VkfGVufDF8MHx8fDE3OTE0NzA5Njh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=430&q=60" alt="Milk swirling into a glass of iced tea held over a wooden table" width="1200" height="800" loading="lazy"></figure>
       </div>
     </li>
     <li class="layer" style="--layer-i:2" data-8b-sticky-under-nav>
@@ -654,14 +792,14 @@ button, input, textarea, select { font: inherit; color: inherit; }
         <div class="layer__band"><span class="layer__step m-text-2">3</span><h3 class="m-text-4">Pearls and toppings</h3></div>
         <div class="layer__body">
           <p class="layer__line m-text">Cooked in batches of forty cups and binned after two hours, so they are always soft.</p>
-          <ul class="layer__options m-text">
+          <ul class="layer__options m-text" data-8b-items=":scope > li">
             <li><span>Brown-sugar pearls</span><span>included</span></li>
             <li><span>Popping strawberry</span><span>+60p</span></li>
             <li><span>Coconut jelly</span><span>+60p</span></li>
             <li><span>Taro paste</span><span>+80p</span></li>
           </ul>
         </div>
-        <figure class="layer__photo"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1686860792691-d324f79d3fcc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YnViYmxlJTIwdGVhfGVufDF8MXx8fDE3OTE0NzA5NDR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="A tall glass of milk tea with dark pearls settled at the bottom" width="1200" height="1500" loading="lazy"></figure>
+        <figure class="layer__photo"><img src="https://images.unsplash.com/photo-1686860792691-d324f79d3fcc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YnViYmxlJTIwdGVhfGVufDF8MXx8fDE3OTE0NzA5NDR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=430&q=60" alt="A tall glass of milk tea with dark pearls settled at the bottom" width="1200" height="1500" loading="lazy"></figure>
       </div>
     </li>
     <li class="layer" style="--layer-i:3" data-8b-sticky-under-nav>
@@ -669,14 +807,14 @@ button, input, textarea, select { font: inherit; color: inherit; }
         <div class="layer__band"><span class="layer__step m-text-2">4</span><h3 class="m-text-4">Sweetness</h3></div>
         <div class="layer__body">
           <p class="layer__line m-text">Four levels, from none at all to properly sweet. Good tea needs less than you think.</p>
-          <ul class="layer__options m-text">
+          <ul class="layer__options m-text" data-8b-items=":scope > li">
             <li><span>None</span><span>tea and nothing else</span></li>
             <li><span>Quarter</span><span>a hint</span></li>
             <li><span>Half</span><span>how we drink it</span></li>
             <li><span>Full</span><span>dessert in a cup</span></li>
           </ul>
         </div>
-        <figure class="layer__photo"><img style="background:#264040" src="https://images.unsplash.com/photo-1756132539966-8d65f7a9eed8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8YnViYmxlJTIwdGVhfGVufDF8MXx8fDE3OTE0NzA5NDR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="A creamy drink with caramel syrup running down the inside of the glass" width="1200" height="1500" loading="lazy"></figure>
+        <figure class="layer__photo"><img src="https://images.unsplash.com/photo-1756132539966-8d65f7a9eed8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8YnViYmxlJTIwdGVhfGVufDF8MXx8fDE3OTE0NzA5NDR8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=430&q=60" alt="A creamy drink with caramel syrup running down the inside of the glass" width="1200" height="1500" loading="lazy"></figure>
       </div>
     </li>
     <li class="layer" style="--layer-i:4" data-8b-sticky-under-nav>
@@ -684,14 +822,14 @@ button, input, textarea, select { font: inherit; color: inherit; }
         <div class="layer__band"><span class="layer__step m-text-2">5</span><h3 class="m-text-4">Ice and shake</h3></div>
         <div class="layer__body">
           <p class="layer__line m-text">Every cup is shaken by hand for ten seconds, then sealed. You can watch.</p>
-          <ul class="layer__options m-text">
+          <ul class="layer__options m-text" data-8b-items=":scope > li">
             <li><span>No ice</span><span>more drink</span></li>
             <li><span>Light ice</span><span>our default</span></li>
             <li><span>Regular ice</span><span>extra cold</span></li>
             <li><span>Hot</span><span>October to March</span></li>
           </ul>
         </div>
-        <figure class="layer__photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1623400518626-6ea9ab64c5ec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bWFuZ28lMjBzbW9vdGhpZXxlbnwxfDF8fHwxNzkxNDcwOTcyfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=510&q=60" alt="A sealed cup of iced mango drink surrounded by scattered ice cubes on a dark counter" width="1200" height="1500" loading="lazy"></figure>
+        <figure class="layer__photo"><img src="https://images.unsplash.com/photo-1623400518626-6ea9ab64c5ec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bWFuZ28lMjBzbW9vdGhpZXxlbnwxfDF8fHwxNzkxNDcwOTcyfDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=430&q=60" alt="A sealed cup of iced mango drink surrounded by scattered ice cubes on a dark counter" width="1200" height="1500" loading="lazy"></figure>
       </div>
     </li>
   </ol>
@@ -701,8 +839,8 @@ button, input, textarea, select { font: inherit; color: inherit; }
   <div class="pearls__inner">
     <h2 class="m-text-2" id="pearls-title">Cooked every two hours</h2>
     <div class="pearls__stage">
-      <figure class="pearls__frame"><img style="background:#262626" src="https://images.unsplash.com/photo-1557454797-9f817f449cbf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YnViYmxlJTIwdGVhJTIwc2hvcHxlbnwxfDB8fHwxNzkxNDcwOTY0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=710&q=60" alt="An iced peach tea with dark pearls and a black straw on a blue table outdoors" width="1500" height="1000" loading="lazy"></figure>
-      <ul class="pearls__chips">
+      <figure class="pearls__frame"><img src="https://images.unsplash.com/photo-1557454797-9f817f449cbf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YnViYmxlJTIwdGVhJTIwc2hvcHxlbnwxfDB8fHwxNzkxNDcwOTY0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=450&q=60" alt="An iced peach tea with dark pearls and a black straw on a blue table outdoors" width="1500" height="1000" loading="lazy"></figure>
+      <ul class="pearls__chips" data-8b-items=":scope > li" data-8b-fixed="8">
         <li><span class="m-badge">Soft centre</span></li>
         <li><span class="m-badge">Brown-sugar glaze</span></li>
         <li><span class="m-badge">Bouncy</span></li>
@@ -722,18 +860,18 @@ button, input, textarea, select { font: inherit; color: inherit; }
     <h2 class="m-text-2" id="ritual-title">How to order</h2>
     <p class="m-text-6">Three steps, about three minutes, no app needed.</p>
   </div>
-  <ol class="ritual__steps">
-    <li class="ritual__step" data-8b-motion="swing">
+  <ol class="ritual__steps" data-8b-items=":scope > li" data-8b-fixed="3">
+    <li class="ritual__step" data-8b-motion="swing" style="--swing-rotate-from: -6deg">
       <span class="m-text-5">Step 1</span>
       <h3 class="ritual__word m-text-2">Pick</h3>
       <p class="m-text">Choose a signature cup or build your own on the counter screen. Tasters of any tea are free.</p>
     </li>
-    <li class="ritual__step" data-8b-motion="swing">
+    <li class="ritual__step" data-8b-motion="swing" style="--swing-rotate-from: 5deg">
       <span class="m-text-5">Step 2</span>
       <h3 class="ritual__word m-text-2">Shake</h3>
       <p class="m-text">We brew, pour and shake it in front of you, ten seconds by hand, then seal the lid.</p>
     </li>
-    <li class="ritual__step" data-8b-motion="swing">
+    <li class="ritual__step" data-8b-motion="swing" style="--swing-rotate-from: -6deg">
       <span class="m-text-5">Step 3</span>
       <h3 class="ritual__word m-text-2">Sip</h3>
       <p class="m-text">Stab the lid with the fat straw, give it a swirl and get a pearl in every sip.</p>
@@ -745,7 +883,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
   <div class="rules__top" aria-hidden="true"></div>
   <div class="rules__band">
     <h2 class="rules__title m-text-2" id="rules-title">House rules</h2>
-    <ul class="rules__cards">
+    <ul class="rules__cards" data-8b-items=":scope > li" data-8b-fixed="4">
       <li class="rules__card m-surface">
         <h3 class="m-text-4">Tea, not powder</h3>
         <p class="m-text">Every base is brewed from loose leaf in small pots, and a pot that turns two hours old is poured away.</p>
@@ -772,7 +910,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
     <h2 class="m-text-2" id="regulars-title">Overheard at the counter</h2>
     <p class="m-text-6">Messages from regulars, and what the crew wrote back.</p>
   </div>
-  <ol class="chat">
+  <ol class="chat" data-8b-items=":scope > li">
     <li class="chat__row">
       <figure class="chat__msg">
         <blockquote class="chat__bubble m-text-4">Brown Sugar Tiger at four o’clock is the only reason I finished my dissertation.</blockquote>
@@ -796,7 +934,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
     </li>
     <li class="chat__row">
       <figure class="chat__msg">
-        <div class="chat__photo"><img style="background:#a6c0c0" src="https://images.unsplash.com/photo-1774103418678-a67823128849?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGJvYmElMjB0ZWElMjBjdXB8ZW58MXwxfHx8MTc5MTQ3MDk0NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="A young woman in a white cap and sports jacket sipping an iced drink outside" width="1200" height="1500" loading="lazy"></div>
+        <div class="chat__photo"><img src="https://images.unsplash.com/photo-1774103418678-a67823128849?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGJvYmElMjB0ZWElMjBjdXB8ZW58MXwxfHx8MTc5MTQ3MDk0NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="A young woman in a white cap and sports jacket sipping an iced drink outside" width="1200" height="1500" loading="lazy"></div>
         <blockquote class="chat__bubble m-text-4">Peach oolong on the bench outside, sun out. Ten out of ten.</blockquote>
         <figcaption class="chat__who m-text-5"><span class="chat__avatar" aria-hidden="true">JL</span><span>Jess L. · sent a photo</span></figcaption>
       </figure>
@@ -813,27 +951,27 @@ button, input, textarea, select { font: inherit; color: inherit; }
         <p class="drops__lede m-text">Every Tuesday, sorry, Chewsday, a new limited cup lands at 11am and stays until it sells out. Here is what is coming.</p>
         <a class="m-btn" href="#visit"><span class="m-btn__label">Reserve a cup</span></a>
       </div>
-      <ol class="drops__track">
+      <ol class="drops__track" data-8b-items=":scope > li">
         <li class="drop m-surface">
-          <figure class="drop__photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1786602181631-a5207b485411?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8aWNlZCUyMHRlYSUyMGNvbG9yZnVsfGVufDF8MXx8fDE3OTE0NzA5Nzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=530&q=60" alt="A hand holding a layered iced matcha drink with red berry swirls" width="1200" height="1500" loading="lazy"></figure>
+          <figure class="drop__photo"><img src="https://images.unsplash.com/photo-1786602181631-a5207b485411?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8aWNlZCUyMHRlYSUyMGNvbG9yZnVsfGVufDF8MXx8fDE3OTE0NzA5Nzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=530&q=60" alt="A hand holding a layered iced matcha drink with red berry swirls" width="1200" height="1500" loading="lazy"></figure>
           <h3 class="m-text-4">Berry Matcha</h3>
           <p class="m-text">Matcha over raspberry compote and oat milk.</p>
           <p class="drop__date m-text-5"><time datetime="2026-10-13">Tue 13 Oct</time></p>
         </li>
         <li class="drop m-surface">
-          <figure class="drop__photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1648178628415-b410fc1d58bc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c3RyYXdiZXJyeSUyMG1pbGslMjBkcmlua3xlbnwxfDF8fHwxNzkxNDcwOTc1fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=530&q=60" alt="A strawberry milkshake over strawberry syrup in a cut-glass tumbler with fresh strawberries" width="1200" height="1500" loading="lazy"></figure>
+          <figure class="drop__photo"><img src="https://images.unsplash.com/photo-1648178628415-b410fc1d58bc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c3RyYXdiZXJyeSUyMG1pbGslMjBkcmlua3xlbnwxfDF8fHwxNzkxNDcwOTc1fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=530&q=60" alt="A strawberry milkshake over strawberry syrup in a cut-glass tumbler with fresh strawberries" width="1200" height="1500" loading="lazy"></figure>
           <h3 class="m-text-4">Strawberry Shortcake</h3>
           <p class="m-text">Strawberry milk, vanilla cream and biscuit crumb.</p>
           <p class="drop__date m-text-5"><time datetime="2026-10-20">Tue 20 Oct</time></p>
         </li>
         <li class="drop m-surface">
-          <figure class="drop__photo"><img style="background:#d9c0a6" src="https://images.unsplash.com/photo-1557454789-19d82704675d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGJ1YmJsZSUyMHRlYXxlbnwxfDF8fHwxNzkxNDcwOTQ0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=530&q=60" alt="A cup of orange peach oolong with pearls on a sunny table" width="1200" height="1500" loading="lazy"></figure>
+          <figure class="drop__photo"><img src="https://images.unsplash.com/photo-1557454789-19d82704675d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGJ1YmJsZSUyMHRlYXxlbnwxfDF8fHwxNzkxNDcwOTQ0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=530&q=60" alt="A cup of orange peach oolong with pearls on a sunny table" width="1200" height="1500" loading="lazy"></figure>
           <h3 class="m-text-4">Peach Oolong</h3>
           <p class="m-text">Roasted oolong, white peach and lychee jelly.</p>
           <p class="drop__date m-text-5"><time datetime="2026-10-27">Tue 27 Oct</time></p>
         </li>
         <li class="drop m-surface">
-          <figure class="drop__photo"><img style="background:#8c7359" src="https://images.unsplash.com/photo-1600680731610-0744c3ffa3db?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZnJpZW5kcyUyMGRyaW5raW5nJTIwYnViYmxlJTIwdGVhfGVufDF8MHx8fDE3OTE0NzA5NTB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=530&q=60" alt="Two glasses of honey lemon tea with jelly pearls on a café table" width="1200" height="1500" loading="lazy"></figure>
+          <figure class="drop__photo"><img src="https://images.unsplash.com/photo-1600680731610-0744c3ffa3db?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZnJpZW5kcyUyMGRyaW5raW5nJTIwYnViYmxlJTIwdGVhfGVufDF8MHx8fDE3OTE0NzA5NTB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=530&q=60" alt="Two glasses of honey lemon tea with jelly pearls on a café table" width="1200" height="1500" loading="lazy"></figure>
           <h3 class="m-text-4">Honey Lemon Jelly</h3>
           <p class="m-text">Green tea, Yorkshire honey, lemon and aiyu jelly.</p>
           <p class="drop__date m-text-5"><time datetime="2026-11-03">Tue 3 Nov</time></p>
@@ -849,24 +987,24 @@ button, input, textarea, select { font: inherit; color: inherit; }
       <h2 class="m-text-2" id="faq-title">Good questions</h2>
       <p class="m-text">Anything else, ask at the counter or message us. We answer within the hour while we are open.</p>
     </div>
-    <div class="faq__list">
-      <details class="faq__item m-surface" data-8b-motion="swing">
+    <div class="faq__list" data-8b-items=":scope > details">
+      <details class="faq__item m-surface" data-8b-motion="swing" style="--swing-rotate-from: -6deg">
         <summary class="m-text-4">Is anything vegan?</summary>
         <p class="m-text">Yes. Every tea, oat milk, all fruit bases and our brown-sugar pearls are vegan. Only fresh milk, cheese foam and taro paste are not.</p>
       </details>
-      <details class="faq__item m-surface" data-8b-motion="swing">
+      <details class="faq__item m-surface" data-8b-motion="swing" style="--swing-rotate-from: 5deg">
         <summary class="m-text-4">How much caffeine is in a cup?</summary>
         <p class="m-text">A regular jasmine or Assam cup has about as much as a small coffee. Butterfly pea and every fruit base have none.</p>
       </details>
-      <details class="faq__item m-surface" data-8b-motion="swing">
+      <details class="faq__item m-surface" data-8b-motion="swing" style="--swing-rotate-from: -6deg">
         <summary class="m-text-4">Where can I see allergens?</summary>
         <p class="m-text">The full allergen sheet sits on the counter and on the order screen. Popping pearls contain seaweed extract; taro paste contains milk.</p>
       </details>
-      <details class="faq__item m-surface" data-8b-motion="swing">
+      <details class="faq__item m-surface" data-8b-motion="swing" style="--swing-rotate-from: 5deg">
         <summary class="m-text-4">Can I order ahead?</summary>
         <p class="m-text">Call us and we will have it shaken as you walk in. For ten cups or more, use the group order form below.</p>
       </details>
-      <details class="faq__item m-surface" data-8b-motion="swing">
+      <details class="faq__item m-surface" data-8b-motion="swing" style="--swing-rotate-from: -6deg">
         <summary class="m-text-4">Can I bring my own cup?</summary>
         <p class="m-text">Please do. Any clean cup up to 700 ml gets 50p off, hot or cold.</p>
       </details>
@@ -877,7 +1015,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
 <section id="visit" data-8b-section="visit" aria-labelledby="visit-title">
   <div class="visit__hero">
     <div class="visit__photo">
-      <img style="background:#E4A678" src="https://images.unsplash.com/photo-1603354608820-de2b281b8f20?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8ZnJpZW5kcyUyMGRyaW5raW5nJTIwYnViYmxlJTIwdGVhfGVufDF8MHx8fDE3OTE0NzA5NTB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="Two friends laughing over cups of milk tea at a café table" width="1600" height="1067" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1603354608820-de2b281b8f20?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8ZnJpZW5kcyUyMGRyaW5raW5nJTIwYnViYmxlJTIwdGVhfGVufDF8MHx8fDE3OTE0NzA5NTB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="Two friends laughing over cups of milk tea at a café table" width="1600" height="1067" loading="lazy">
       <h2 class="visit__title m-text-2" id="visit-title">Come chew it over</h2>
       <div class="visit__bumps" aria-hidden="true"><span class="visit__bump"></span><span class="visit__bump"></span><span class="visit__bump"></span><span class="visit__bump"></span><span class="visit__bump"></span></div>
     </div>
@@ -916,280 +1054,16 @@ button, input, textarea, select { font: inherit; color: inherit; }
   <div class="foot__panel">
     <p class="foot__mark m-text-2">Chewsday</p>
     <p class="foot__contact m-text"><a data-8b-placeholder="email" class="m-link" href="mailto:hello@chewsday.example">hello@chewsday.example</a><a data-8b-placeholder="phone" class="m-link" href="tel:+441130000000">0113 000 0000</a><a data-8b-placeholder="social" class="m-link" href="https://www.instagram.com/">Instagram</a><a data-8b-placeholder="social" class="m-link" href="https://www.tiktok.com/">TikTok</a></p>
-    <ul class="foot__tiles">
-      <li><a class="foot__tile" href="#drinks" data-8b-motion="rise">Menu</a></li>
-      <li><a class="foot__tile" href="#build" data-8b-motion="rise">Build</a></li>
-      <li><a class="foot__tile" href="#drops" data-8b-motion="rise">Drops</a></li>
-      <li><a class="foot__tile" href="#visit" data-8b-motion="rise">Visit</a></li>
+    <ul class="foot__tiles" data-8b-items=":scope > li" data-8b-fixed="4">
+      <li><a class="foot__tile" href="#drinks" data-8b-motion="rise" style="--rise-lag: .35">Menu</a></li>
+      <li><a class="foot__tile" href="#build" data-8b-motion="rise" style="--rise-lag: .7">Build</a></li>
+      <li><a class="foot__tile" href="#drops" data-8b-motion="rise" style="--rise-lag: .5">Drops</a></li>
+      <li><a class="foot__tile" href="#visit" data-8b-motion="rise" style="--rise-lag: .9">Visit</a></li>
     </ul>
     <div class="foot__legal m-text-5"><span>© 2026 Chewsday Tea Bar Ltd, Leeds · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></span><span>Allergens listed at the counter</span></div>
   </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function navOffset() {
-  const bar = document.querySelector('#nav .nav__bar');
-  return bar ? Math.round(bar.getBoundingClientRect().height + 28) : 0;
-}
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: .09, anchors: { offset: -navOffset() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  swing(element, options = {}) {
-    return gsap.timeline().fromTo(element, { rotate: options.tilt ?? -6, yPercent: 6, transformOrigin: '50% 0%' }, { rotate: 0, yPercent: 0, duration: 1.3, ease: 'elastic.out(1, .5)' });
-  },
-  rise(element, options = {}) {
-    return gsap.timeline().fromTo(element, { y: options.lag ?? 80 }, { y: 0, duration: 1, ease: 'none' });
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  const swings = section.querySelectorAll('[data-8b-motion~="swing"]');
-  if (swings.length) {
-    const id = `effect:swing:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      swings.forEach((element, index) => ScrollTrigger.create({
-        id: `${id}:${index}`, trigger: element, start: 'top 88%', once: true,
-        animation: effects.swing(element, { tilt: index % 2 ? 5 : -6 })
-      }));
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  }
-  const rises = section.querySelectorAll('[data-8b-motion~="rise"]');
-  if (rises.length) {
-    const id = `effect:rise:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      const lags = [.35, .7, .5, .9];
-      rises.forEach((element, index) => ScrollTrigger.create({
-        id: `${id}:${index}`, trigger: element.parentElement.parentElement, start: 'top bottom', end: 'bottom bottom', scrub: true,
-        animation: effects.rise(element, { lag: element.offsetHeight * lags[index % lags.length] })
-      }));
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  }
-});
-</script>
 
-<script data-8b-part="scene:drinks">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(prefers-reduced-motion: no-preference) and (min-width: 700px)',
-    narrow: '(prefers-reduced-motion: no-preference) and (max-width: 699.98px)'
-  }, context => {
-    const wide = context.conditions.wide;
-    const section = document.getElementById('drinks');
-    section.querySelectorAll('.drink').forEach((card, index) => {
-      const side = index % 2 ? 1 : -1;
-      gsap.fromTo(card.querySelector('.drink__body'), { xPercent: side * (wide ? 80 : 55), rotate: side * (wide ? 16 : 11) }, {
-        xPercent: 0, rotate: 0, ease: 'power2.out',
-        scrollTrigger: { id: `drinks:card-${index}`, trigger: card, start: 'top bottom', end: wide ? 'top 38%' : 'top 52%', scrub: true }
-      });
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:build">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('build');
-    const stack = section.querySelector('.build__stack');
-    const layers = [...stack.querySelectorAll('.layer')];
-    const natural = index => stack.getBoundingClientRect().top + window.scrollY + index * (layers[0].offsetHeight + (parseFloat(getComputedStyle(stack).rowGap) || 0));
-    const stickTop = layer => parseFloat(getComputedStyle(layer).top) || 0;
-    layers.forEach((layer, index) => {
-      if (!index) return;
-      const covered = layers[index - 1].querySelector('.layer__card');
-      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-        id: `build:layer-${index}`, start: () => natural(index) - window.innerHeight, end: () => natural(index) - stickTop(layer), scrub: true, invalidateOnRefresh: true
-      }});
-      timeline.fromTo(layer, { scale: .84, yPercent: 8 }, { scale: 1, yPercent: 0, duration: 1, ease: 'power2.out' }, 0);
-      timeline.fromTo(covered, { scale: 1 }, { scale: .955, duration: .55 }, .45);
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:pearls">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('pearls');
-    const stage = section.querySelector('.pearls__stage');
-    const frame = section.querySelector('.pearls__frame');
-    const chips = [...section.querySelectorAll('.pearls__chips .m-badge')];
-    const centre = element => {
-      let x = element.offsetWidth / 2, y = element.offsetHeight / 2, node = element;
-      while (node && node !== stage) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
-      return { x, y };
-    };
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'pearls', trigger: stage, start: 'top 85%', end: 'center 52%', scrub: true, invalidateOnRefresh: true
-    }});
-    timeline.fromTo(frame, { scale: .55, rotate: -6 }, { scale: 1, rotate: 0, duration: 1, ease: 'power2.out' }, 0);
-    chips.forEach((chip, index) => {
-      timeline.fromTo(chip, {
-        x: () => centre(frame).x - centre(chip).x,
-        y: () => centre(frame).y - centre(chip).y,
-        scale: .3, opacity: 0
-      }, { x: 0, y: 0, scale: 1, opacity: 1, duration: .5, ease: 'back.out(1.5)' }, .3 + (index % 4) * .05 + Math.floor(index / 4) * .1);
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:rules">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('rules');
-    const band = section.querySelector('.rules__band');
-    const hem = section.querySelector('.rules__hem');
-    const cards = [...band.querySelectorAll('.rules__card')];
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'rules', trigger: band, start: 'top 72%', end: 'bottom 96%', scrub: true, invalidateOnRefresh: true
-    }});
-    timeline.fromTo(band, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1 }, 0);
-    timeline.fromTo(hem, { y: () => -band.offsetHeight }, { y: 0, duration: 1 }, 0);
-    cards.forEach((card, index) => {
-      const at = Math.min(.68, Math.max(0, card.offsetTop / band.offsetHeight - .04));
-      timeline.fromTo(card, { rotate: index % 2 ? 10 : -10 }, { rotate: 0, duration: .32, ease: 'back.out(2.6)' }, at);
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:regulars">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(prefers-reduced-motion: no-preference) and (min-width: 700px)',
-    narrow: '(prefers-reduced-motion: no-preference) and (max-width: 699.98px)'
-  }, context => {
-    const wide = context.conditions.wide;
-    const section = document.getElementById('regulars');
-    section.querySelectorAll('.chat__row').forEach((row, index) => {
-      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-        id: `regulars:row-${index}`, trigger: row, start: 'top 92%', end: wide ? 'center 50%' : 'bottom 70%', scrub: true
-      }});
-      timeline.fromTo(row.querySelector('.chat__bubble'), { scale: .72, rotate: -5, transformOrigin: '0% 100%' }, { scale: 1, rotate: 0, duration: .45, ease: 'back.out(2)' }, 0);
-      timeline.fromTo(row.querySelector('.chat__reply'), wide ? { y: 320, xPercent: 0, rotate: 7 } : { y: 0, xPercent: 80, rotate: 7 }, { y: 0, xPercent: 0, rotate: 0, duration: 1, ease: 'power2.out' }, 0);
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:drops">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('drops');
-    const stage = section.querySelector('.drops__stage');
-    const rail = section.querySelector('.drops__rail');
-    const tiles = [...rail.querySelectorAll('.drop')];
-    section.classList.add('is-track');
-    const pad = () => parseFloat(getComputedStyle(stage).paddingLeft) || 0;
-    const run = () => Math.max(0, Math.round(rail.offsetWidth + pad() * 2 - stage.clientWidth));
-    const setRun = () => section.style.setProperty('--drops-run', run() + 'px');
-    setRun();
-    ScrollTrigger.addEventListener('refreshInit', setRun);
-    const ground = getComputedStyle(stage).backgroundColor === 'rgba(0, 0, 0, 0)' ? getComputedStyle(document.body).backgroundColor : getComputedStyle(stage).backgroundColor;
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'drops', trigger: section, start: 'top top', end: () => '+=' + run(), scrub: true, invalidateOnRefresh: true
-    }});
-    timeline.fromTo(rail, { x: 0 }, { x: () => -run(), duration: 1 }, 0);
-    timeline.set(stage, { backgroundColor: ground }, 0);
-    const total = run() || 1;
-    tiles.forEach(tile => {
-      let left = tile.offsetLeft, node = tile.offsetParent;
-      while (node && node !== rail && node !== section) { left += node.offsetLeft; node = node.offsetParent; }
-      const at = Math.min(.92, Math.max(0, (pad() + left + tile.offsetWidth / 2 - stage.clientWidth / 2) / total - .08));
-      timeline.to(stage, { backgroundColor: getComputedStyle(tile).getPropertyValue('--drop-fill').trim(), duration: .06 }, at + .03);
-    });
-    return () => {
-      ScrollTrigger.removeEventListener('refreshInit', setRun);
-      section.classList.remove('is-track');
-      section.style.removeProperty('--drops-run');
-    };
-  });
-});
-</script>
-<script data-8b-part="scene:visit">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('visit');
-    const hero = section.querySelector('.visit__hero');
-    const photo = hero.querySelector('.visit__photo');
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'visit', trigger: hero, start: 'top 92%', end: 'top 12%', scrub: true
-    }});
-    timeline.fromTo(photo, { clipPath: 'inset(8% 9% 8% 9% round 40px)' }, { clipPath: 'inset(0% 0% 0% 0% round 0px)', duration: 1 }, 0);
-    timeline.fromTo(photo.querySelector('img'), { scale: 1.22 }, { scale: 1, duration: 1 }, 0);
-    timeline.fromTo(hero.querySelector('.visit__title'), { scale: .82, yPercent: 18 }, { scale: 1, yPercent: 0, duration: .8, ease: 'power2.out' }, .2);
-    const lags = [.25, .45, .15, .55, .35];
-    hero.querySelectorAll('.visit__bump').forEach((bump, index) => {
-      timeline.fromTo(bump, { yPercent: 105 }, { yPercent: 0, duration: .5, ease: 'back.out(2)' }, lags[index % lags.length]);
-    });
-  });
-});
-</script>
 <script data-8b-part="section-script:visit">
 (() => {
   const form = document.querySelector('#visit .visit__form');
@@ -1225,5 +1099,158 @@ queueMotion(() => {
 })();
 </script>
 
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+</script>
+<script data-8b-part="scene-script:build">
+motionKit.scene('build', () => {
+  const stack = document.querySelector('#build .build__stack');
+  const first = stack.querySelector('.layer');
+  motionKit.measure(() => motionKit.set(stack, { '--build-step': first.offsetHeight + (parseFloat(getComputedStyle(stack).rowGap) || 0) + 'px' }));
+});
+</script>
+<script data-8b-part="scene-script:pearls">
+motionKit.scene('pearls', () => {
+  const stage = document.querySelector('#pearls .pearls__stage');
+  const frame = stage.querySelector('.pearls__frame');
+  const chips = [...stage.querySelectorAll('.pearls__chips .m-badge')];
+  const centre = element => {
+    let x = element.offsetWidth / 2, y = element.offsetHeight / 2, node = element;
+    while (node && node !== stage) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+    return { x, y };
+  };
+  motionKit.measure(() => {
+    const middle = centre(frame);
+    chips.forEach(chip => {
+      const own = centre(chip);
+      motionKit.set(chip, { '--pearls-x': middle.x - own.x + 'px', '--pearls-y': middle.y - own.y + 'px' });
+    });
+  });
+});
+</script>
+<script data-8b-part="scene-script:rules">
+motionKit.scene('rules', () => {
+  const band = document.querySelector('#rules .rules__band');
+  const hem = document.querySelector('#rules .rules__hem');
+  const cards = [...band.querySelectorAll('.rules__card')];
+  motionKit.measure(() => {
+    motionKit.set(hem, { '--rules-run': band.offsetHeight + 'px' });
+    cards.forEach(card => motionKit.set(card, { '--rules-at': Math.min(.68, Math.max(0, card.offsetTop / band.offsetHeight - .04)) }));
+  });
+});
+</script>
+<script data-8b-part="scene-script:drops">
+motionKit.scene('drops', () => {
+  const section = document.getElementById('drops');
+  const stage = section.querySelector('.drops__stage');
+  const rail = section.querySelector('.drops__rail');
+  const tiles = [...rail.querySelectorAll('.drop')];
+  motionKit.measure(() => {
+    const pad = parseFloat(getComputedStyle(stage).paddingLeft) || 0;
+    const run = Math.max(0, Math.round(rail.offsetWidth + pad * 2 - stage.clientWidth));
+    const starts = tiles.map(tile => {
+      let left = tile.offsetLeft, node = tile.offsetParent;
+      while (node && node !== rail && node !== section) { left += node.offsetLeft; node = node.offsetParent; }
+      return Math.min(.92, Math.max(0, (pad + left + tile.offsetWidth / 2 - stage.clientWidth / 2) / (run || 1) - .08)) + .03;
+    });
+    const scroll = (run || 1) / Math.max(1, ...starts.map(start => start + .06));
+    motionKit.set(section, { '--drops-run': run + 'px', '--drops-travel': scroll + 'px', '--drops-flood': .06 * scroll + 'px' });
+    starts.forEach((start, index) => motionKit.set(section, { ['--drops-at-' + index]: start * scroll + 'px' }));
+  });
+});
+</script>
 </body>
 </html>

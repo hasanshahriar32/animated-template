@@ -1,6 +1,6 @@
 # AGENTS.md: electrician website template
 
-One-page website for a home electrician with fixed prices, landlord reports and an emergency line. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a home electrician with fixed prices, landlord reports and an emergency line. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,20 +14,18 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__menu` `.menu__close` `.nav__links`
   - `section-script:contact`: `.contact__form` `.contact__status`
-  - `scene:rooms`: `.rooms__row` `.rooms__photo` `.rooms__name`
-  - `scene:charge`: `.charge__panel` `.charge__sheet` `.charge__tab` `.charge__view`
-  - `scene:landlords`: `.ll__row` `.ll__fill` `.ll__item`
-  - `scene:team`: `.team__grid` `.team__member`
-  - `scene:night`: `.night__grid` `.night__phone` `data-tone`
-  - `scene:reviews`: `.reviews__track` `.reviews__list`
+  - `scene-script:charge`: `.charge__panel` `.charge__sheet` `.charge__tab`
+  - `scene-script:team`: `.team__grid`
+  - `scene-script:night`: `.night__grid` `.night__phone` `data-tone`
 - `style="--len:N"` = characters in that display line, spaces included: `Ohmstead` is 8.
 - The wordmark "Ohmstead" in the footer is sized by style="--len:8", the number of characters of the word; update it when you rename the business.
-- The rooms scene pairs the list rows with the photos in the frame by position (the smaller of the two counts); keep one photo per room, in the same order.
-- The step numbers in the opening come from a CSS counter, and the Due and Passed badges in the landlord rows are both in the HTML (CSS and the scene decide which shows); keep both badges in every row.
-- The cells of the night grid are created by the script from the stage size; do not add cells by hand. Headings with the lines effect are cut into lines by SplitText and put back when they land, so keep them as plain text.
+- The rooms are fixed at six rows and six photos in the frame (data-8b-fixed="6"): the CSS gives each row its own scroll timeline by :nth-of-type and opens the photo in the same position, so keep six rooms with one photo each, in the same order.
+- The step numbers in the opening come from a CSS counter, and the Due and Passed badges in the landlord rows are both in the HTML (CSS decides which shows); keep both badges in every row.
+- The cells of the night grid are created by the inline motion kit from the stage size; do not add cells by hand. Headings with the lines effect are cut into lines by the kit and put back when they land, so keep them as plain text.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #f8f6f1 (cream: reading sheets, photo tabs, form fields and text on the dark green bands), `--color-2` #212320 (near-black ink: text on cream and aqua, button hover fill, landlord rule lines), `--color-3` #575953 (grey for secondary text on cream, the Due badge and landlord rows before they are checked), `--color-4` #e0dcd3 (stone: hairline rules between rows, review card borders and the photo placeholder ground), `--color-5` #a4e6f4 (aqua accent: opening sheet, primary buttons, Passed badges, charger price tab and lit night cells), `--color-6` #10231a (dark green: page ground, tidy promise, prices, night stage panel, footer and the tab notch on dark photos), `--color-7` #a6b8ac (sage: secondary text on the dark green bands), `--color-8` #1c3428 (deep green: charger and contact photo panels, dark photo ground, the rule above the footer credit line); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -64,9 +62,8 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the Menu button on narrow screens cannot open the overlay (wide screens show the links), and the night grid stays empty because its cells are made by script.
 - The visit form sends nothing: its handler is a script that shows the thank-you line and clears the fields, and without JavaScript the form posts to the page itself (action "#"), so connect a form service or CRM.
-- The night section is 230vh tall and the rooms frame is sticky; check both on short laptop screens, where the rooms frame can crowd the list.
-- The reviews turn into two clipped sliding rows only when the script runs; with reduced motion they stay a wrapped grid, as do the other scenes.
-- GSAP, ScrollTrigger and SplitText load from the jsDelivr CDN at the end of the body, so the effects depend on that request succeeding.
+- With the scroll motion on, the night section is 230vh tall; the rooms frame is sticky in every case. Check both on short laptop screens, where the rooms frame can crowd the list.
+- Without CSS scroll-driven animation support (Firefox today) or with reduced motion on, nothing moves on load or scroll and the wheel scrolls natively: the rooms frame keeps the first photo, every landlord row shows Passed, the reviews stay two wrapped grids and the night stage shows only the number on its dark ground. The navigation bar still hides on scroll and the button hovers still run.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Ohmstead left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Ohmstead left only in class names.

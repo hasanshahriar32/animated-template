@@ -1,6 +1,6 @@
 # AGENTS.md: cheese shop website template
 
-One-page website for a cheese shop with its own maturing cellar, with a counter list, tastings, a monthly club and a visit form. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a cheese shop with its own maturing cellar, with a counter list, tastings, a monthly club and a visit form. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,20 +14,17 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__menu-btn` `.nav__close` `.nav__overlay`
   - `section-script:visit`: `.visit__form` `.visit__status` `data-sent` `data-invalid`
-  - `scene:opening`: `.opening__flood` `.opening__line` `.opening__ghost` `.opening__actions` `.opening__aside` `.opening__product` `.opening__cellar` `.opening__word` `.opening__copy`
-  - `scene:counter`: `.counter__row` `.counter__item` `.counter__photo`
-  - `scene:cellar`: `.cellar__turn` `.cellar__still` `.cellar__photo` `.cellar__step` `.cellar__steps` `.cellar__fill`
-  - `scene:milks`: `.milks__row` `.milks__field` `.milks__field-bg` `.milks__word` `.milks__copy` `.milks__photo`
-  - `scene:farms`: `.farms__stage` `.farms__track` `.farms__photo`
-  - `scene:club`: `.club__parcels` `.club__parcel`
-  - `scene:visit`: `.visit__photo` `.visit__col`
+  - `scene-script:cellar`: `.cellar__photo` `.cellar__step`
+  - `scene-script:farms`: `.farms__stage` `.farms__track` `.farms__photo`
 - `style="--len:N"` = characters in that display line, spaces included: `Cow` is 3, `Ewe` is 3, `Goat` is 4, `Affina.` is 7.
 - The wordmark in the footer is sized by style="--len:7", the number of characters including the full stop, and the three giant milk words by --len:3, --len:3 and --len:4. Change N when you change a word.
 - The counter panels get their height from inline --h (the stepped skyline on wide screens) and their width on phones from inline --w; give a new cheese a pair of its own.
-- The cellar frame holds one photo for each step in the same order and the scene uses the smaller of the two counts, so add a photo with each step. It turns 360 / (count - 1) degrees per step: a quarter turn only with five steps; with another count the square rests tilted between steps.
+- The cellar holds exactly five steps and five photos in the frame, one per step in the same order (data-8b-fixed="5"): its quarter turns and photo fades are CSS keyframes for five, so another count leaves the frame out of step with the list.
+- The milk bands and the club parcels are fixed at three (data-8b-fixed): the CSS motion picks each band's sweep and each parcel's timing by its :nth-of-type position.
 - The visit photo is the same image three times (two hidden from screen readers), shown as three columns; change the photo in all three.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #f3f3f3 (page ground of the first screen, counter, milk, cut, tastings, questions and footer sections, and the bar once scrolled), `--color-2` #0e0e0e (text and button borders on light grounds, and the ground of the second screen, cellar, farms, club, visit and the labels), `--color-3` #5c5c5c (intro paragraphs, tasting descriptions, seats, cut tip terms, answers and the footer base line on light grounds), `--color-4` #d3d3d3 (hairlines on light grounds, the outlined ghost word and the grid rules of the first screen), `--color-5` #ffffff (text and outline buttons on black grounds, the label text, and the visit form's inputs), `--color-6` #a5a5a5 (small text on black: label meta, step numbers, paragraphs on black, form labels and the milk cheese lists), `--color-7` #2e2e2e (rules on black, the ground of club parcels and the cellar frame, and the placeholder behind photos); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
@@ -65,8 +62,8 @@ All demo text, never to be invented:
 - Without JavaScript the menu button does nothing: on phones the bar shows only the wordmark and the button, and Three milks and Our farms are linked only from the menu; the footer links to Cheeses, Cellar, Cellar club, Visit, Tastings and Questions.
 - The visit form sends nothing yet: the action is # and the thank-you line comes from a script.
 - The tasting and club buttons open a mail program, not a checkout, until you replace the links.
-- GSAP, ScrollTrigger, SplitText and Lenis load from jsDelivr; without them, or with reduced motion, the scenes do not run and the cellar frame shows only the first of its five photos.
+- Without CSS scroll-driven animation support (Firefox today) or with reduced motion on, the scroll scenes do not run and the wheel scrolls natively: the first screen keeps its small black block, the cellar frame stays square on the first of its five photos, the farms are a plain grid and the club parcels sit in their row. The opening load-in and the two slow loops still play in Firefox, not with reduced motion.
 - The nav hide-on-scroll and hover transitions keep running with reduced motion.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Affina left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Affina left only in class names.
