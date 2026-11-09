@@ -1,8 +1,8 @@
-# Free HTML pizzeria website template with GSAP scroll animations
+# Free HTML pizzeria website template with scroll animations and no libraries
 
-Pizzeria website template: one free HTML file for a neighbourhood pizzeria with a slice window, four priced pies, the dough told in five steps, weekly nights and a table request form. The look is tomato red and cream with wavy section edges and loud type. AGENTS.md is included, so Claude Code, Cursor or Codex can adapt it.
+Pizzeria website template: one free HTML file for a neighbourhood pizzeria with a slice window, four priced pies, five dough steps, weekly nights and a table request form. Tomato red and cream, wavy edges, loud type, and scroll motion in plain CSS with no JavaScript libraries. AGENTS.md is included for Claude Code, Cursor or Codex.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/pizzeria-website-template/)** · **[Use this template](https://github.com/new?template_name=pizzeria-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/pizzeria-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/monella/)**
 
@@ -24,19 +24,19 @@ curl -LO https://raw.githubusercontent.com/8bsite/pizzeria-website-template/main
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my pizzeria: name, address, year founded, pies with prices, slice window list, opening hours, delivery area, group booking rule, weekly nights, regulars, phone, email, how people book>. Replace first the name in every letter case, the pound prices, the founding story, the four regulars and their quotes. Keep the ids, the classes AGENTS.md lists, one dough photo per step and each --len matching its text. Ask me for missing facts; never invent prices, hours, addresses, allergens, reviews or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my pizzeria: name, address, year founded, pies with prices, slice window list, opening hours, delivery area, group booking rule, weekly nights, regulars, phone, email, how people book>. Replace the name in every letter case, the pound prices, the founding story and the four regulars. Keep the ids, the gate script, the data-8b-* attributes AGENTS.md lists, five dough steps with five photos and each --len; add no animation library. Never invent prices, hours, addresses, allergens, reviews or contacts; ask me.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when the agent gets the facts only the shop has: pie names and prices, the slice list, hours, address, founding year, delivery area and group rules. It then replaces the name in every letter case, the invented regulars and quotes, and the pound prices. Leave the ids and the classes AGENTS.md lists alone, and set each big line's --len to its new character count.
+A pizzeria website template for Claude Code, Cursor or Codex goes fastest when the agent gets the facts only the shop has: pie names and prices, the slice list, hours, address, founding year and delivery area. It then replaces the name in every letter case, the invented regulars and the pound prices. Leave the ids and the classes AGENTS.md lists alone, keep five dough steps (the styles count five), and set each big line's --len to its new character count.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=pizzeria-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
 - **Navigation**: an Instagram round button, the name Monella pizza and a round menu button; a full-screen menu with six links, address, phone and email. The bar slides away on a scroll down and returns on a scroll up, and the logo and round buttons change colour to stay readable over red and cream bands.
-- **Pizza for the Whole block**: a red first screen with a two-part heading, a pill photo and rings, then a cream screen with a circular photo window and a first-person statement. On load the heading lines rise and the pill photo swings in and bobs; on scroll the two lines slide apart, the pill tips over, the wavy edge swells and a round window opens onto hands reaching for slices.
-- **I take my time**: five steps of the dough held in one tilted frame, each next photo wiping up over the last as the step names light up. Pinned for about three screens: the framed photo swings through 13 degrees, each next photo wipes up over the last and step names 2 to 5 turn from dark to cream.
-- **The house rule**: the house rule: a huge slab line that enters at nearly three times its size and shrinks to fit, beside a pill photo. Pinned for a little over two screens: on wider screens the line enters from the right at 2.8 times its size and shrinks into place, while on phones its three words slide in from alternating sides.
+- **Pizza for the Whole block**: a red first screen with a two-part heading, a pill photo and rings, then a cream screen with a circular photo window and a first-person statement. On load the heading lines rise and the pill photo swings in and bobs; as you scroll the two lines slide apart, the pill tips over, the wavy edge swells and a round window opens onto hands reaching for slices.
+- **I take my time**: five steps of the dough held in one tilted frame, each next photo wiping up over the last as the step names light up. Held on screen for about three screens of scrolling: the framed photo swings through 13 degrees, each next photo wipes up over the last and step names 2 to 5 turn from dark to cream.
+- **The house rule**: the house rule: a huge slab line that enters at nearly three times its size and shrinks to fit, beside a pill photo. Held for a little over two screens: on wider screens the line enters from the right at 2.8 times its size and shrinks into place, while on phones its three words slide in from alternating sides.
 - **My pies**: four pies dealt out of a pile, each with a photo, a description, a tag and a price. On wider screens the four cards start fanned in a pile in the middle and slide out to their places; on phones each slides in from alternating sides.
 - **The little slice window**: a photo of trays and a price list for the slice window. The wavy edge grows as it arrives, two rings float up, the pill photo swings into its slight tilt and the heading's raised word pops up.
 - **My people**: four regulars as portraits with a short quote each. Each portrait climbs into the row from its own depth, the far ones further, and each outline ring springs to size.
@@ -66,12 +66,12 @@ No. The form checks for a name and a phone or email, shows a thank-you line and 
 **Can it work as a restaurant website template with online ordering?**  
 Not as shipped. There is no cart, payment or menu data: the pies are plain text with prices. The Call to order button is a phone link, which you can point at your own ordering or delivery page, and an ordering widget would be a developer's or agent's addition.
 
-**What has to stay the same when I edit it?**  
-Keep every id, the data-8b-section, data-8b-motion and data-8b-part attributes, the classes AGENTS.md lists, one dough photo per step and a --len equal to each big line's length. Keep the header comment and the 8B meta tag in the head. Keep the Design: 8B footer link unless the site owner asks to remove it.
+**What has to stay the same, and what does Firefox show?**  
+Keep every id, the gate script in the head, the data-8b-section, data-8b-motion and data-8b-items attributes, five dough steps and photos, and each --len. In Firefox today and with reduced motion the scroll motion and smooth wheel are off: the dough lists all five steps with its last photo. Firefox still plays the opening load-in and loops.
 
 ## Is it the right base?
 
-This pizza website design suits a pizzeria or family restaurant that wants to sound like its owner: loud, warm and first person. A [brasserie or bistro](https://8b.com/templates/ombrelle/) with a long menu and service times fits a different template better. The weak spots are ordering and booking: Call to order is a phone link, and the form sends nothing until connected. Owners who would rather not edit code can describe the site to 8B's AI website builder instead.
+This pizza website design suits a pizzeria or family restaurant that wants to sound like its owner: loud, warm and first person. This is the light build, with the same look and scroll behaviour and no script from a CDN: about 26 KB of code gzipped in one file, where the GSAP version needs 71 KB and three more requests. A [brasserie or bistro](https://8b.com/templates/ombrelle/) with a long menu fits another template. Call to order is a phone link, and the form sends nothing until connected.
 
 ## Before you publish
 
@@ -80,7 +80,9 @@ This pizza website design suits a pizzeria or family restaurant that wants to so
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 97 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 101+ (it uses cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 113 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 101+ (it uses cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 97 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

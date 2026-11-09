@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/pilates-studio-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,7 +20,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%23c3331c'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23f6f4e9'%3EH%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/golostext/v7/q5uCsoe9Lv5t7Meb31EcExN8hA.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* cyrillic-ext */
 @font-face {
@@ -27,7 +27,7 @@
   font-style: normal;
   font-weight: 400 800;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/golostext/v7/q5uCsoe9Lv5t7Meb31EcEx58hLxR.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/l/font?kit=q5uosoe9Lv5t7Meb31EcOR9UdVTNs822plVRRWxXME_rwW-33YtFHpZbdOZV&skey=f2913e9c409e508d&v=v7) format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -36,7 +36,7 @@
   font-style: normal;
   font-weight: 400 800;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/golostext/v7/q5uCsoe9Lv5t7Meb31EcExd8hLxR.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/l/font?kit=q5uosoe9Lv5t7Meb31EcOR9UdVTNs822plVRRWxXME_rwW-33YtFHpZbfeZV&skey=f2913e9c409e508d&v=v7) format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* latin-ext */
@@ -45,7 +45,7 @@
   font-style: normal;
   font-weight: 400 800;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/golostext/v7/q5uCsoe9Lv5t7Meb31EcEx18hLxR.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/l/font?kit=q5uosoe9Lv5t7Meb31EcOR9UdVTNs822plVRRWxXME_rwW-33YtFHpZbd-ZV&skey=f2913e9c409e508d&v=v7) format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -54,7 +54,7 @@
   font-style: normal;
   font-weight: 400 800;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/golostext/v7/q5uCsoe9Lv5t7Meb31EcExN8hA.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/l/font?kit=q5uosoe9Lv5t7Meb31EcOR9UdVTNs822plVRRWxXME_rwW-33YtFHpZbeeZV&skey=f2913e9c409e508d&v=v7) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 </style>
@@ -86,10 +86,6 @@
 /* fallbacks:end */
 *, *::before, *::after { box-sizing: border-box; }
 html { background: var(--color-2); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body { margin: 0; background: var(--color-2); color: var(--color-4); }
 h1, h2, h3, h4, p, ul, ol, figure, dl, dd { margin: 0; padding: 0; }
 ul, ol { list-style: none; }
@@ -244,6 +240,10 @@ select.m-field__input { cursor: pointer; }
   @keyframes o-breath { from { transform: translateX(-100%); } to { transform: translateX(0); } }
   @keyframes o-turn { to { transform: rotate(360deg); } }
 }
+#opening .o-second { border-radius: var(--radius-1) var(--radius-1) 0 0; }
+@media (max-width: 700px) {
+  #opening .o-second { padding-top: calc(62px + 40px); }
+}
 @media (hover: hover) {
   #opening .o-card__title:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 }
@@ -274,21 +274,15 @@ select.m-field__input { cursor: pointer; }
 }
 }
 </style>
-<style data-8b-part="scene-style:classes">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #classes.is-carried .cl-carriage { display: block; position: absolute; z-index: 0; top: 0; left: 0; width: 100%; border-radius: var(--radius-2); background: var(--color-3); pointer-events: none; }
-  #classes.is-carried .cl-rail.is-on { background: transparent; }
-}
-}
-</style>
 <style data-8b-part="section:method">
 @layer sections {
 #method { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 2.4fr); gap: 28px clamp(32px, 5vw, 88px); padding: clamp(72px, 9vw, 130px) var(--space-2); border-top: 1px solid color-mix(in srgb, var(--color-2) 32%, transparent); }
 #method .me-title { font-size: clamp(30px, 3.2vw, 46px); }
 #method .me-rules { color: var(--color-4); max-width: 34em; }
+#method .me-rules { --motion-lag: .07s; }
 @media (max-width: 760px) {
   #method { grid-template-columns: minmax(0, 1fr); }
+  #method .me-rules { --motion-lag: 0s; }
 }
 }
 </style>
@@ -318,25 +312,6 @@ select.m-field__input { cursor: pointer; }
 }
 }
 </style>
-<style data-8b-part="scene-style:fifty">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #fifty.is-tracking { padding-block: 0; }
-  #fifty.is-tracking .fi-stage { grid-template-columns: minmax(0, 1fr); min-height: 100svh; align-content: center; padding-block: clamp(84px, 11svh, 110px) clamp(24px, 4svh, 40px); }
-  #fifty.is-tracking .fi-rail { display: block; position: relative; height: 44px; margin-inline: var(--space-2); }
-  #fifty.is-tracking .fi-rail__line { position: absolute; left: 0; right: 0; top: 30px; height: 2px; background: color-mix(in srgb, var(--color-2) 30%, transparent); }
-  #fifty.is-tracking .fi-rail__fill { position: absolute; left: 0; right: 0; top: 30px; height: 2px; background: var(--color-3); transform: scaleX(0); transform-origin: 0 50%; }
-  #fifty.is-tracking .fi-rail__ticks { position: absolute; inset: 0 0 auto; display: flex; justify-content: space-between; color: var(--color-3); }
-  #fifty.is-tracking .fi-rail__dot { position: absolute; left: -9px; top: 22px; width: 18px; height: 18px; border-radius: 50%; background: var(--color-3); }
-  #fifty.is-tracking .fi-track { display: flex; width: max-content; }
-  #fifty.is-tracking .fi-block { flex: none; width: clamp(280px, 29vw, 390px); }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 560px) {
-  #fifty.is-tracking .fi-block { width: 78vw; }
-  #fifty.is-tracking .fi-block figure { aspect-ratio: 16 / 10; }
-}
-}
-</style>
 <style data-8b-part="section:teachers">
 @layer sections {
 #teachers { padding: clamp(80px, 10vw, 140px) var(--space-2); overflow-x: clip; }
@@ -351,6 +326,7 @@ select.m-field__input { cursor: pointer; }
 @media (max-width: 900px) {
   #teachers .te-head { grid-template-columns: minmax(0, 1fr); }
   #teachers .te-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #teachers .te-list > :nth-child(2n+1) { --motion-lag: 0s; }
 }
 @media (max-width: 480px) {
   #teachers .te-card { padding: 10px 10px 14px; }
@@ -411,6 +387,7 @@ select.m-field__input { cursor: pointer; }
 @media (max-width: 980px) {
   #timetable .tt-head { grid-template-columns: minmax(0, 1fr); }
   #timetable .tt-week { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  #timetable .tt-day { --motion-lag: 0s; }
   #timetable .tt-day { grid-template-columns: 64px minmax(0, 1fr); align-items: start; }
   #timetable .tt-day > h3 { padding: 10px 0 0; border: 0; }
   #timetable .tt-list { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); }
@@ -477,18 +454,110 @@ select.m-field__input { cursor: pointer; }
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .o-second { border-radius: var(--radius-1) var(--radius-1) 0 0; }
-@media (max-width: 700px) {
-  #opening .o-second { padding-top: calc(62px + 40px); }
+<style data-8b-part="motion">
+@layer scenes {
+  @keyframes motion-rise { from { translate: 0 40px; opacity: 0; visibility: hidden; } to { translate: 0 0; opacity: 1; visibility: visible; } }
+  @keyframes motion-glide { from { translate: 70px 0; opacity: 0; visibility: hidden; } to { translate: 0 0; opacity: 1; visibility: visible; } }
+  @keyframes motion-lengthen { from { clip-path: inset(46% 0% 46% 0%); } to { clip-path: inset(0%); } }
+  [data-8b-live] [data-8b-motion~="rise"] { animation: motion-rise .9s cubic-bezier(0.25, 1, 0.5, 1) var(--motion-lag, 0s) both paused; }
+  [data-8b-live] [data-8b-motion~="glide"] { animation: motion-glide 1.1s cubic-bezier(0.16, 1, 0.3, 1) var(--motion-lag, calc(var(--i, 0) * .07s)) both paused; }
+  [data-8b-live] [data-8b-motion~="lengthen"] { animation: motion-lengthen 1.2s cubic-bezier(0.76, 0, 0.24, 1) var(--motion-lag, 0s) both paused; }
+  [data-8b-live] [data-8b-motion].is-in { animation-play-state: running; }
 }
-@media (prefers-reduced-motion: no-preference) {
-  #opening .o-second__text > * { animation: o-card .8s cubic-bezier(.2, .75, .15, 1) backwards; }
-  #opening .o-second__text > :nth-child(2) { animation-delay: .1s; }
-  #opening .o-second__text > :nth-child(3) { animation-delay: .2s; }
-  #opening .o-second__photo { animation: rw-lengthen 1.2s cubic-bezier(.65, 0, .35, 1) .15s backwards; }
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+  @keyframes opening-rise { from { transform: translateY(26px); opacity: 0; } }
+  @keyframes opening-lengthen { from { clip-path: inset(46% 0% 46% 0%); } to { clip-path: inset(0%); } }
+  [data-8b-live] #opening .o-second__text > * { animation: opening-rise .8s cubic-bezier(.2, .75, .15, 1) calc(var(--opening-beat, 0) * .1s) backwards; }
+  [data-8b-live] #opening .o-second__text > :nth-child(2) { --opening-beat: 1; }
+  [data-8b-live] #opening .o-second__text > :nth-child(3) { --opening-beat: 2; }
+  [data-8b-live] #opening .o-second__photo { animation: opening-lengthen 1.2s cubic-bezier(.65, 0, .35, 1) .15s backwards; }
 }
-@keyframes rw-lengthen { from { clip-path: inset(46% 0% 46% 0%); } to { clip-path: inset(0%); } }</style>
+</style>
+<style data-8b-part="scene:classes">
+@layer scenes {
+  [data-8b-live] #classes .cl-carriage { display: block; position: absolute; z-index: 0; top: 0; left: 0; width: 100%; border-radius: var(--radius-2); background: var(--color-3); pointer-events: none; }
+  [data-8b-live] #classes .cl-rail.is-on { background: transparent; }
+}
+</style>
+<style data-8b-part="scene:fifty">
+@layer scenes {
+  [data-8b-live] #fifty { padding-block: 0; view-timeline: --fifty-room block; view-timeline-inset: 0; }
+  [data-8b-live] #fifty::after { content: ""; display: block; height: var(--fifty-distance, 0px); }
+  [data-8b-live] #fifty .fi-stage { position: sticky; top: 0; grid-template-columns: minmax(0, 1fr); min-height: 100svh; align-content: center; padding-block: clamp(84px, 11svh, 110px) clamp(24px, 4svh, 40px); }
+  [data-8b-live] #fifty .fi-rail { display: block; position: relative; height: 44px; margin-inline: var(--space-2); }
+  [data-8b-live] #fifty .fi-rail__line { position: absolute; left: 0; right: 0; top: 30px; height: 2px; background: color-mix(in srgb, var(--color-2) 30%, transparent); }
+  [data-8b-live] #fifty .fi-rail__fill { position: absolute; left: 0; right: 0; top: 30px; height: 2px; background: var(--color-3); scale: 0 1; transform-origin: 0 50%; animation-name: fifty-fill; }
+  [data-8b-live] #fifty .fi-rail__ticks { position: absolute; inset: 0 0 auto; display: flex; justify-content: space-between; color: var(--color-3); }
+  [data-8b-live] #fifty .fi-rail__dot { position: absolute; left: -9px; top: 22px; width: 18px; height: 18px; border-radius: 50%; background: var(--color-3); animation-name: fifty-dot; }
+  [data-8b-live] #fifty .fi-track { display: flex; width: max-content; animation-name: fifty-track; }
+  [data-8b-live] #fifty .fi-block { flex: none; width: clamp(280px, 29vw, 390px); }
+  [data-8b-live] #fifty .fi-track, [data-8b-live] #fifty .fi-rail__dot, [data-8b-live] #fifty .fi-rail__fill { animation-timeline: --fifty-room; animation-range: cover 100vh cover calc(100vh + max(1px, var(--fifty-distance, 0px))); animation-timing-function: linear; animation-fill-mode: both; }
+  @keyframes fifty-track { from { translate: 0 0; } to { translate: calc(-1 * var(--fifty-distance, 0px)) 0; } }
+  @keyframes fifty-dot { from { translate: 0 0; } to { translate: var(--fifty-rail, 0px) 0; } }
+  @keyframes fifty-fill { from { scale: 0 1; } to { scale: 1 1; } }
+  @media (max-width: 560px) {
+    [data-8b-live] #fifty .fi-block { width: 78vw; }
+    [data-8b-live] #fifty .fi-block figure { aspect-ratio: 16 / 10; }
+  }
+}
+</style>
+<style data-8b-part="scene:bodies">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #bodies .bo-list > li > .bo-frame { animation-name: bodies-figure-bo-frame-clippath; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; }
+[data-8b-live] #bodies .bo-list > li > .bo-name, [data-8b-live] #bodies .bo-list > li > .bo-text { animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+@keyframes bodies-figure-bo-frame-clippath { 0% { clip-path: inset(30% 0%); } 100% { clip-path: inset(0%); } }
+@keyframes bodies-name { 0% { translate: 0px var(--bodies-shift, 0px); } 100% { translate: 0px 0px; } }
+@keyframes bodies-text { 0% { translate: 0px calc(-1 * var(--bodies-shift, 0px)); } 100% { translate: 0px 0px; } }
+@media (min-width: 761px) {
+  [data-8b-live] #bodies .bo-list { view-timeline: --bodies-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #bodies .bo-list > li > .bo-frame, [data-8b-live] #bodies .bo-list > li > .bo-name, [data-8b-live] #bodies .bo-list > li > .bo-text { animation-timeline: --bodies-t1; animation-range: cover calc(12vh - 11.76vh * var(--i) + 14% * var(--i)) cover calc(58% + 14% * var(--i) - 36.72vh - 11.76vh * var(--i)); }
+  [data-8b-live] #bodies .bo-list > li > .bo-name { animation-name: bodies-name; }
+  [data-8b-live] #bodies .bo-list > li > .bo-text { animation-name: bodies-text; }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #bodies .bo-list > li > .bo-frame { animation-timeline: --bodies-item; }
+  [data-8b-live] #bodies .bo-list > li > .bo-name { animation-name: bodies-name; animation-timeline: --bodies-item; }
+  [data-8b-live] #bodies .bo-list > li > .bo-text { animation-name: bodies-text; animation-timeline: --bodies-item; }
+  [data-8b-live] #bodies .bo-list > li { view-timeline: --bodies-item block; view-timeline-inset: 0; }
+  [data-8b-live] #bodies .bo-list > li:nth-of-type(2n+1) > .bo-frame { animation-range: cover 5vh cover 52vh; }
+  [data-8b-live] #bodies .bo-list > li:nth-of-type(2n+2) > .bo-frame { animation-range: cover 5vh cover 62vh; }
+  [data-8b-live] #bodies .bo-list > li:nth-of-type(2n+1) > .bo-name { animation-range: cover 5vh cover 52vh; }
+  [data-8b-live] #bodies .bo-list > li:nth-of-type(2n+2) > .bo-name { animation-range: cover 5vh cover 62vh; }
+  [data-8b-live] #bodies .bo-list > li:nth-of-type(2n+1) > .bo-text { animation-range: cover 5vh cover 52vh; }
+  [data-8b-live] #bodies .bo-list > li:nth-of-type(2n+2) > .bo-text { animation-range: cover 5vh cover 62vh; }
+}
+}
+</style>
+<style data-8b-part="scene:studio">
+@layer scenes {
+[data-8b-live] #studio .st-lanes { view-timeline: --studio-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #studio .st-lane--a, [data-8b-live] #studio .st-lane--b { animation-timeline: --studio-t1; animation-range: cover 0% cover calc(50% - 5vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #studio .st-lane--a { animation-name: studio-div-st-lane-translate; }
+[data-8b-live] #studio .st-lane--b { animation-name: studio-div-st-lane-translate-2; }
+@keyframes studio-div-st-lane-translate { 0% { translate: 24% 0px; } 100% { translate: 0px 0px; } }
+@keyframes studio-div-st-lane-translate-2 { 0% { translate: -24% 0px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:prices">
+@layer scenes {
+[data-8b-live] #prices .pr-list { view-timeline: --prices-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #prices .pr-list > li { animation-timeline: --prices-t1; animation-range: cover 0% cover 70vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes prices-li-pr-plan-translate-d { 0% { translate: 0px var(--prices-li-pr-plan-translate-from-2, 132px); } 100% { translate: 0px 0px; } }
+@keyframes prices-li-pr-plan-translate-m { 0% { translate: var(--prices-li-pr-plan-translate-from, -9.052%) 0px; } 100% { translate: 0px 0px; } }
+@media (min-width: 861px) {
+  [data-8b-live] #prices .pr-list > li { animation-name: prices-li-pr-plan-translate-d; }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #prices .pr-list > li { animation-name: prices-li-pr-plan-translate-m; }
+}
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body class="m-text">
 <!-- navigation: cream top bar inside the coral frame: wordmark, five section links, Book a class button; hides on scroll down; full-screen menu on phones -->
@@ -507,7 +576,7 @@ select.m-field__input { cursor: pointer; }
       <button class="m-btn nav__menu" type="button" aria-expanded="false" aria-controls="nav-sheet"><span class="m-btn__label">Menu</span></button>
     </div>
   </div>
-  <div class="nav__sheet" id="nav-sheet" data-lenis-prevent hidden>
+  <div class="nav__sheet" id="nav-sheet" hidden>
     <div class="nav__sheet-top">
       <span class="nav__mark m-text-4">Hundred<sup>®</sup></span>
       <button class="m-icon nav__close" type="button" aria-label="Close the menu"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5.6 4.2 12 10.6l6.4-6.4 1.4 1.4-6.4 6.4 6.4 6.4-1.4 1.4-6.4-6.4-6.4 6.4-1.4-1.4 6.4-6.4-6.4-6.4z"/></svg></button>
@@ -523,7 +592,7 @@ select.m-field__input { cursor: pointer; }
   </div>
 </header>
 <main class="sheet">
-<!-- opening: deep coral first screen: large heading, a lead paragraph, a booking button with the first-class prices, and a tall reformer photo -->
+<!-- opening: deep coral first screen: large heading, a lead paragraph, a booking button with the first-class prices, and a tall reformer photo (animation: scene:opening) -->
 <section id="opening" data-8b-section="opening" aria-labelledby="opening-title">
   
   <div class="o-second">
@@ -535,7 +604,7 @@ select.m-field__input { cursor: pointer; }
         <p class="m-text-7">First class £15 · One-to-one intro £45</p>
       </div>
     </div>
-    <figure class="o-second__photo"><img style="background:#c0a68c" src="https://images.unsplash.com/photo-1747239202356-764770773c9a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cGlsYXRlcyUyMHJlZm9ybWVyfGVufDF8MXx8fDE3OTE1Njc3NjZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=530&amp;q=60" width="3761" height="5320" alt="A woman in a long side reach on a reformer, one arm lifted towards the ceiling, in a sunlit studio" loading="lazy"></figure>
+    <figure class="o-second__photo"><img fetchpriority="high" src="https://images.unsplash.com/photo-1747239202356-764770773c9a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cGlsYXRlcyUyMHJlZm9ybWVyfGVufDF8MXx8fDE3OTE1Njc3NjZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=530&amp;q=60" width="3761" height="5320" alt="A woman in a long side reach on a reformer, one arm lifted towards the ceiling, in a sunlit studio"></figure>
   </div>
 </section>
 <!-- classes: four class formats as full-width rounded rails: big name, description, length, level and class size, and a photo (demo: Reformer, Tower, Mat, Ring) (animation: scene:classes) -->
@@ -546,14 +615,14 @@ select.m-field__input { cursor: pointer; }
   </header>
   <div class="cl-wrap">
     <div class="cl-carriage" aria-hidden="true"></div>
-    <ol class="cl-rails">
+    <ol class="cl-rails" data-8b-items=":scope > li">
       <li class="cl-rail m-surface is-on">
         <h3 class="cl-name m-text-8">Reformer</h3>
         <div class="cl-text">
           <p class="m-text">A sliding carriage on springs, with straps for hands and feet. The springs resist both ways, so every movement is worked on the way out and again on the way back.</p>
           <p class="cl-meta m-text-7">50 minutes · All levels · Up to 8 people</p>
         </div>
-        <figure class="cl-photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1717500251741-cdbc93342d5a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGlsYXRlcyUyMHJlZm9ybWVyJTIwY2xhc3N8ZW58MXwwfHx8MTc5MTU2Nzc2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=610&amp;q=60" width="7008" height="4672" alt="A woman in a side stretch on a wooden reformer, one arm reaching over her head" loading="lazy"></figure>
+        <figure class="cl-photo"><img src="https://images.unsplash.com/photo-1717500251741-cdbc93342d5a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGlsYXRlcyUyMHJlZm9ybWVyJTIwY2xhc3N8ZW58MXwwfHx8MTc5MTU2Nzc2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=610&amp;q=60" width="7008" height="4672" alt="A woman in a side stretch on a wooden reformer, one arm reaching over her head" loading="lazy"></figure>
       </li>
       <li class="cl-rail m-surface">
         <h3 class="cl-name m-text-8">Tower</h3>
@@ -561,7 +630,7 @@ select.m-field__input { cursor: pointer; }
           <p class="m-text">A frame of springs and bars fixed to the wall. Slower, heavier work for hips and shoulders, and the class we send stiff backs to first.</p>
           <p class="cl-meta m-text-7">50 minutes · Level 2 · Up to 4 people</p>
         </div>
-        <figure class="cl-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1717500251718-42ace0648aca?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBpbGF0ZXMlMjByZWZvcm1lcnxlbnwxfDF8fHwxNzkxNTY3NzY2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="4672" height="7008" alt="A woman lying on a tower bed with both feet in sprung straps, legs lifted" loading="lazy"></figure>
+        <figure class="cl-photo"><img src="https://images.unsplash.com/photo-1717500251718-42ace0648aca?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHBpbGF0ZXMlMjByZWZvcm1lcnxlbnwxfDF8fHwxNzkxNTY3NzY2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="4672" height="7008" alt="A woman lying on a tower bed with both feet in sprung straps, legs lifted" loading="lazy"></figure>
       </li>
       <li class="cl-rail m-surface">
         <h3 class="cl-name m-text-8">Mat</h3>
@@ -569,7 +638,7 @@ select.m-field__input { cursor: pointer; }
           <p class="m-text">No machine, just your own weight and a mat. The original repertoire, taught slowly, and the one you can take home with you.</p>
           <p class="cl-meta m-text-7">45 minutes · All levels · Up to 12 people</p>
         </div>
-        <figure class="cl-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1763403921315-f2ef8697199f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cGlsYXRlcyUyMHN0dWRpb3xlbnwxfDF8fHwxNzkxNTY3Nzk0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=310&amp;q=60" width="4160" height="5547" alt="Three women on mats lifting one leg each from a shoulder bridge" loading="lazy"></figure>
+        <figure class="cl-photo"><img src="https://images.unsplash.com/photo-1763403921315-f2ef8697199f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cGlsYXRlcyUyMHN0dWRpb3xlbnwxfDF8fHwxNzkxNTY3Nzk0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=310&amp;q=60" width="4160" height="5547" alt="Three women on mats lifting one leg each from a shoulder bridge" loading="lazy"></figure>
       </li>
       <li class="cl-rail m-surface">
         <h3 class="cl-name m-text-8">Ring</h3>
@@ -577,7 +646,7 @@ select.m-field__input { cursor: pointer; }
           <p class="m-text">A flexible ring held between the hands or the knees. Short, focused classes for inner thighs, chest and arms, good after a long day at a desk.</p>
           <p class="cl-meta m-text-7">30 minutes · All levels · Up to 10 people</p>
         </div>
-        <figure class="cl-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1715780463401-b9ef0567943e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGlsYXRlcyUyMHN0dWRpb3xlbnwxfDF8fHwxNzkxNTY3Nzk0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="5464" height="8192" alt="Hands pressing a black Pilates ring while seated on a reformer" loading="lazy"></figure>
+        <figure class="cl-photo"><img src="https://images.unsplash.com/photo-1715780463401-b9ef0567943e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGlsYXRlcyUyMHN0dWRpb3xlbnwxfDF8fHwxNzkxNTY3Nzk0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="5464" height="8192" alt="Hands pressing a black Pilates ring while seated on a reformer" loading="lazy"></figure>
       </li>
     </ol>
   </div>
@@ -587,7 +656,7 @@ select.m-field__input { cursor: pointer; }
   <h2 class="me-title m-text-3" id="method-title" data-8b-motion="rise">Six rules we teach by</h2>
   <p class="me-rules m-text-9" data-8b-motion="rise"><strong class="m-text-5">Breath</strong> leads every movement, never the other way round. <strong class="m-text-5">Centre</strong> is where it starts: the band from ribs to hips that holds you up. <strong class="m-text-5">Control</strong> beats speed, so nothing swings and nothing is thrown. <strong class="m-text-5">Precision</strong> beats repetition: five careful reps over twenty loose ones. <strong class="m-text-5">Concentration</strong> keeps your mind on the muscle doing the work. <strong class="m-text-5">Flow</strong> joins it all, so the class moves like one long exercise.</p>
 </section>
-<!-- fifty: one class in order: six blocks on a pinned track under a minute rail from 0 to 50 (demo: warm-up, legs, arms, centre, length, release) (animation: scene:fifty) -->
+<!-- fifty: one class in order: six blocks on a held track under a minute rail from 0 to 50 (demo: warm-up, legs, arms, centre, length, release) (animation: scene:fifty) -->
 <section id="fifty" data-8b-section="fifty" aria-labelledby="fifty-title">
   <div class="fi-stage">
     <header class="fi-head">
@@ -598,7 +667,7 @@ select.m-field__input { cursor: pointer; }
       <ol class="fi-rail__ticks m-text-7"><li>0</li><li>10</li><li>20</li><li>30</li><li>40</li><li>50 min</li></ol>
       <span class="fi-rail__line"></span><span class="fi-rail__fill"></span><span class="fi-rail__dot"></span>
     </div>
-    <ol class="fi-track">
+    <ol class="fi-track" data-8b-items=":scope > li">
       <li class="fi-block fi-block--text m-surface" data-from="0" data-to="5">
         <svg class="m-glyph" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5v25M5.2 9.75l21.6 12.5M5.2 22.25l21.6-12.5"/></svg>
         <div class="fi-copy">
@@ -608,25 +677,25 @@ select.m-field__input { cursor: pointer; }
         </div>
       </li>
       <li class="fi-block m-surface" data-from="5" data-to="12">
-        <figure><img style="background:#735940" src="https://images.unsplash.com/photo-1747239069226-55382c570116?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGlsYXRlcyUyMHJlZm9ybWVyfGVufDF8MXx8fDE3OTE1Njc3NjZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" width="3761" height="5320" alt="A woman lying on a reformer with both legs raised straight up in the straps" loading="lazy"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1747239069226-55382c570116?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGlsYXRlcyUyMHJlZm9ybWVyfGVufDF8MXx8fDE3OTE1Njc3NjZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" width="3761" height="5320" alt="A woman lying on a reformer with both legs raised straight up in the straps" loading="lazy"></figure>
         <p class="fi-time m-text-7">Minutes 5 to 12</p>
         <h3 class="m-text-4">Feet and legs</h3>
         <p class="m-text">Feet on the bar, then in the straps: legs warmed and lined up before they carry any load.</p>
       </li>
       <li class="fi-block m-surface" data-from="12" data-to="22">
-        <figure><img style="background:#8c7359" src="https://images.unsplash.com/photo-1747237602396-20cb5331ee7b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGlsYXRlcyUyMHJlZm9ybWVyfGVufDF8MXx8fDE3OTE1Njc3NjZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" width="3761" height="5320" alt="A woman kneeling on a reformer carriage pulling a strap back past her hip" loading="lazy"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1747237602396-20cb5331ee7b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGlsYXRlcyUyMHJlZm9ybWVyfGVufDF8MXx8fDE3OTE1Njc3NjZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" width="3761" height="5320" alt="A woman kneeling on a reformer carriage pulling a strap back past her hip" loading="lazy"></figure>
         <p class="fi-time m-text-7">Minutes 12 to 22</p>
         <h3 class="m-text-4">Arms in straps</h3>
         <p class="m-text">Kneeling and seated work that opens the chest and gives the shoulders a job they rarely get.</p>
       </li>
       <li class="fi-block m-surface" data-from="22" data-to="32">
-        <figure><img style="background:#a68c73" src="https://images.unsplash.com/photo-1747240549807-fc3962949818?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGlsYXRlcyUyMHJlZm9ybWVyJTIwY2xhc3N8ZW58MXwwfHx8MTc5MTU2Nzc2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=510&amp;q=60" width="6188" height="4375" alt="A woman holding a long plank between the reformer frame and the carriage" loading="lazy"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1747240549807-fc3962949818?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGlsYXRlcyUyMHJlZm9ybWVyJTIwY2xhc3N8ZW58MXwwfHx8MTc5MTU2Nzc2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" width="6188" height="4375" alt="A woman holding a long plank between the reformer frame and the carriage" loading="lazy"></figure>
         <p class="fi-time m-text-7">Minutes 22 to 32</p>
         <h3 class="m-text-4">Centre</h3>
         <p class="m-text">Planks, curls and the long stretch: the heaviest ten minutes, taken slowly and counted out loud.</p>
       </li>
       <li class="fi-block m-surface" data-from="32" data-to="42">
-        <figure><img style="background:#a68c73" src="https://images.unsplash.com/photo-1747240031720-dced770be260?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGlsYXRlcyUyMHJlZm9ybWVyJTIwY2xhc3N8ZW58MXwwfHx8MTc5MTU2Nzc2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=510&amp;q=60" width="6188" height="4375" alt="A woman in a side plank on the reformer reaching her top arm to the ceiling" loading="lazy"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1747240031720-dced770be260?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGlsYXRlcyUyMHJlZm9ybWVyJTIwY2xhc3N8ZW58MXwwfHx8MTc5MTU2Nzc2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" width="6188" height="4375" alt="A woman in a side plank on the reformer reaching her top arm to the ceiling" loading="lazy"></figure>
         <p class="fi-time m-text-7">Minutes 32 to 42</p>
         <h3 class="m-text-4">Length</h3>
         <p class="m-text">Side work and long reaches that lengthen everything the centre block just shortened.</p>
@@ -648,28 +717,28 @@ select.m-field__input { cursor: pointer; }
     <h2 class="m-text-3" id="teachers-title" data-8b-motion="rise">Teachers who watch</h2>
     <p class="m-text" data-8b-motion="rise">Four teachers, each trained for 450 hours on every piece of apparatus. They teach small rooms on purpose: correcting you is the job.</p>
   </header>
-  <ul class="te-list">
+  <ul class="te-list" data-8b-items=":scope > li">
     <li class="te-card m-surface" data-8b-motion="glide">
       <div class="te-top"><h3 class="m-text-4">Isla Kerr</h3><svg class="m-glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="9.8" r="5.6"/><circle cx="16" cy="22.2" r="5.6"/><circle cx="9.8" cy="16" r="5.6"/><circle cx="22.2" cy="16" r="5.6"/></svg></div>
-      <figure class="te-photo"><img style="background:#0c4059" src="https://images.unsplash.com/photo-1581423880338-b9e4f9718df6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Zml0bmVzcyUyMGluc3RydWN0b3IlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNTY3ODQ1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" width="4480" height="6720" alt="Portrait of Isla Kerr, arms folded, in a black sports top" loading="lazy"></figure>
+      <figure class="te-photo"><img src="https://images.unsplash.com/photo-1581423880338-b9e4f9718df6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Zml0bmVzcyUyMGluc3RydWN0b3IlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNTY3ODQ1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" width="4480" height="6720" alt="Portrait of Isla Kerr, arms folded, in a black sports top" loading="lazy"></figure>
       <p class="te-role m-text-7">Founder · Tower and back care</p>
       <p class="m-text">Eleven years as a physiotherapist before she bought her first reformer. Teaches the Tuesday back class.</p>
     </li>
     <li class="te-card m-surface" data-8b-motion="glide">
       <div class="te-top"><h3 class="m-text-4">Callum Reid</h3><svg class="m-glyph" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5v25M5.2 9.75l21.6 12.5M5.2 22.25l21.6-12.5"/></svg></div>
-      <figure class="te-photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1652550616981-e4dcabc0b489?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGZpdG5lc3MlMjBpbnN0cnVjdG9yJTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTU2Nzg0NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" width="3885" height="5820" alt="Portrait of Callum Reid, bearded, in a white vest" loading="lazy"></figure>
+      <figure class="te-photo"><img src="https://images.unsplash.com/photo-1652550616981-e4dcabc0b489?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGZpdG5lc3MlMjBpbnN0cnVjdG9yJTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTU2Nzg0NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" width="3885" height="5820" alt="Portrait of Callum Reid, bearded, in a white vest" loading="lazy"></figure>
       <p class="te-role m-text-7">Reformer · Early classes</p>
       <p class="m-text">Rebuilt his own knee on a reformer after rugby. Runs the seven o'clock classes and the runners' block.</p>
     </li>
     <li class="te-card m-surface" data-8b-motion="glide">
       <div class="te-top"><h3 class="m-text-4">Marisol Ortega</h3><svg class="m-glyph" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12"/><circle cx="16" cy="11.5" r="4.6" fill="currentColor" stroke="none"/></svg></div>
-      <figure class="te-photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1685811984028-4e545c757abc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fGZpdG5lc3MlMjBpbnN0cnVjdG9yJTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTU2Nzg0NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" width="4000" height="6000" alt="Portrait of Marisol Ortega, smiling, in glasses and a black sports top" loading="lazy"></figure>
+      <figure class="te-photo"><img src="https://images.unsplash.com/photo-1685811984028-4e545c757abc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fGZpdG5lc3MlMjBpbnN0cnVjdG9yJTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTU2Nzg0NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" width="4000" height="6000" alt="Portrait of Marisol Ortega, smiling, in glasses and a black sports top" loading="lazy"></figure>
       <p class="te-role m-text-7">Mat · Pregnancy and after</p>
       <p class="m-text">Trained in pre- and postnatal Pilates in Madrid. Teaches Mat and the mothers' mornings.</p>
     </li>
     <li class="te-card m-surface" data-8b-motion="glide">
       <div class="te-top"><h3 class="m-text-4">Tom Baird</h3><svg class="m-glyph" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 16V4.5a5.75 5.75 0 0 1 0 11.5zM16 16h11.5a5.75 5.75 0 0 1-11.5 0zM16 16v11.5a5.75 5.75 0 0 1 0-11.5zM16 16H4.5a5.75 5.75 0 0 1 11.5 0z" fill="currentColor" stroke="none"/></svg></div>
-      <figure class="te-photo"><img style="background:#73c0a6" src="https://images.unsplash.com/photo-1595886509089-b691b210fc5c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8Zml0bmVzcyUyMGluc3RydWN0b3IlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNTY3ODQ1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" width="3648" height="4560" alt="Portrait of Tom Baird, hands on hips, in a black T-shirt" loading="lazy"></figure>
+      <figure class="te-photo"><img src="https://images.unsplash.com/photo-1595886509089-b691b210fc5c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8Zml0bmVzcyUyMGluc3RydWN0b3IlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNTY3ODQ1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" width="3648" height="4560" alt="Portrait of Tom Baird, hands on hips, in a black T-shirt" loading="lazy"></figure>
       <p class="te-role m-text-7">Ring · Strength</p>
       <p class="m-text">A strength coach who came for his hamstrings and stayed to teach. Leads Ring and the Sunday release.</p>
     </li>
@@ -681,25 +750,25 @@ select.m-field__input { cursor: pointer; }
     <h2 class="m-text-3" id="bodies-title">Who walks in on a Monday</h2>
     <p class="m-text">There is no Pilates body. There are runners, new mothers, people who sit all day and people who would like to keep getting up off the floor.</p>
   </header>
-  <ul class="bo-list">
+  <ul class="bo-list" data-8b-items=":scope > li">
     <li class="bo-item">
       <h3 class="bo-name m-text-4">Runners</h3>
-      <figure class="bo-frame"><img style="background:#a64040" src="https://images.unsplash.com/photo-1788709443347-f961ffc0670b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fHJ1bm5lciUyMHN0cmV0Y2hpbmd8ZW58MXwxfHx8MTc5MTU2Nzg1OXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="4000" height="6000" alt="A runner stretching on a red running track" loading="lazy"></figure>
+      <figure class="bo-frame"><img src="https://images.unsplash.com/photo-1788709443347-f961ffc0670b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fHJ1bm5lciUyMHN0cmV0Y2hpbmd8ZW58MXwxfHx8MTc5MTU2Nzg1OXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="4000" height="6000" alt="A runner stretching on a red running track" loading="lazy"></figure>
       <p class="bo-text m-text">Hips that open, ankles that stop rolling and a stride that lasts past the tenth mile.</p>
     </li>
     <li class="bo-item">
       <h3 class="bo-name m-text-4">Pregnancy and after</h3>
-      <figure class="bo-frame"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1710897872898-3bc4353682ce?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cHJlZ25hbnQlMjB3b21hbiUyMGV4ZXJjaXNlfGVufDF8MXx8fDE3OTE1Njc4NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="4160" height="6240" alt="A pregnant woman standing tall in profile, one hand under her bump" loading="lazy"></figure>
+      <figure class="bo-frame"><img src="https://images.unsplash.com/photo-1710897872898-3bc4353682ce?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cHJlZ25hbnQlMjB3b21hbiUyMGV4ZXJjaXNlfGVufDF8MXx8fDE3OTE1Njc4NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="4160" height="6240" alt="A pregnant woman standing tall in profile, one hand under her bump" loading="lazy"></figure>
       <p class="bo-text m-text">Breath, pelvic floor and a safe way back to strength, with a teacher trained for both.</p>
     </li>
     <li class="bo-item">
       <h3 class="bo-name m-text-4">Desk backs</h3>
-      <figure class="bo-frame"><img style="background:#404040" src="https://images.unsplash.com/photo-1787089574694-42a0de36f9c3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2VuaW9yJTIwd29tYW4lMjBzdHJldGNoaW5nfGVufDF8MXx8fDE3OTE1Njc4NzN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="4000" height="6000" alt="A woman on all fours on a mat by a window, stretching her back" loading="lazy"></figure>
+      <figure class="bo-frame"><img src="https://images.unsplash.com/photo-1787089574694-42a0de36f9c3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2VuaW9yJTIwd29tYW4lMjBzdHJldGNoaW5nfGVufDF8MXx8fDE3OTE1Njc4NzN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="4000" height="6000" alt="A woman on all fours on a mat by a window, stretching her back" loading="lazy"></figure>
       <p class="bo-text m-text">Eight hours in a chair undone on a carriage: a spine that moves again and shoulders that drop.</p>
     </li>
     <li class="bo-item">
       <h3 class="bo-name m-text-4">Sixty and over</h3>
-      <figure class="bo-frame"><img style="background:#8c7373" src="https://images.unsplash.com/photo-1790868939305-33a355941002?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c2VuaW9yJTIwd29tYW4lMjBzdHJldGNoaW5nfGVufDF8MXx8fDE3OTE1Njc4NzN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="4640" height="6960" alt="A woman with white hair rolling her shoulders, eyes closed" loading="lazy"></figure>
+      <figure class="bo-frame"><img src="https://images.unsplash.com/photo-1790868939305-33a355941002?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c2VuaW9yJTIwd29tYW4lMjBzdHJldGNoaW5nfGVufDF8MXx8fDE3OTE1Njc4NzN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" width="4640" height="6960" alt="A woman with white hair rolling her shoulders, eyes closed" loading="lazy"></figure>
       <p class="bo-text m-text">Balance, bone strength and getting up off the floor without having to think about it.</p>
     </li>
   </ul>
@@ -710,7 +779,7 @@ select.m-field__input { cursor: pointer; }
     <h2 class="m-text-3" id="studio-title">One room on Example Street</h2>
     <div class="st-copy">
       <p class="m-text">Tall windows onto the Shore, eight reformers in two rows, two towers on the back wall and a changing room with showers that stay hot.</p>
-      <ul class="st-facts">
+      <ul class="st-facts" data-8b-items=":scope > li">
         <li class="m-text"><span class="m-text-5">Eight reformers</span> Two rows, one teacher</li>
         <li class="m-text"><span class="m-text-5">Two towers</span> For the small classes</li>
         <li class="m-text"><span class="m-text-5">Showers and lockers</span> Towels included</li>
@@ -720,12 +789,12 @@ select.m-field__input { cursor: pointer; }
   </div>
   <div class="st-lanes">
     <div class="st-lane st-lane--a">
-      <figure><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1717500252709-05a73fc4f1da?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGlsYXRlcyUyMHN0dWRpb3xlbnwxfDB8fHwxNzkxNTY3NzY5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" width="7008" height="4672" alt="The studio floor with wooden towers and reformers under a white ceiling" loading="lazy"></figure>
-      <figure><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1717500252297-b09508db7ceb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGlsYXRlcyUyMHN0dWRpb3xlbnwxfDF8fHwxNzkxNTY3Nzk0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" width="4672" height="7008" alt="Two wooden towers with springs and bars by a plant" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1717500252709-05a73fc4f1da?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGlsYXRlcyUyMHN0dWRpb3xlbnwxfDB8fHwxNzkxNTY3NzY5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" width="7008" height="4672" alt="The studio floor with wooden towers and reformers under a white ceiling" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1717500252297-b09508db7ceb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGlsYXRlcyUyMHN0dWRpb3xlbnwxfDF8fHwxNzkxNTY3Nzk0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" width="4672" height="7008" alt="Two wooden towers with springs and bars by a plant" loading="lazy"></figure>
     </div>
     <div class="st-lane st-lane--b">
-      <figure><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1756367201409-8a05f0d9aed4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fHBpbGF0ZXMlMjByZWZvcm1lcnxlbnwxfDF8fHwxNzkxNTY3NzY2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" width="3024" height="4032" alt="The padded headrest and shoulder blocks of a reformer by a curtained window" loading="lazy"></figure>
-      <figure><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1717500252573-d31d4bf5ddf1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cGlsYXRlcyUyMHJlZm9ybWVyJTIwY2xhc3N8ZW58MXwwfHx8MTc5MTU2Nzc2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" width="7008" height="4672" alt="A woman on her back on a tower bed, feet in the sprung loops" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1756367201409-8a05f0d9aed4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fHBpbGF0ZXMlMjByZWZvcm1lcnxlbnwxfDF8fHwxNzkxNTY3NzY2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" width="3024" height="4032" alt="The padded headrest and shoulder blocks of a reformer by a curtained window" loading="lazy"></figure>
+      <figure><img src="https://images.unsplash.com/photo-1717500252573-d31d4bf5ddf1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cGlsYXRlcyUyMHJlZm9ybWVyJTIwY2xhc3N8ZW58MXwwfHx8MTc5MTU2Nzc2OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" width="7008" height="4672" alt="A woman on her back on a tower bed, feet in the sprung loops" loading="lazy"></figure>
     </div>
   </div>
 </section>
@@ -738,10 +807,10 @@ select.m-field__input { cursor: pointer; }
       <a class="m-btn" href="#contact"><span class="m-btn__label">Book a place</span></a>
     </div>
   </header>
-  <div class="tt-week">
+  <div class="tt-week" data-8b-items=":scope > .tt-day">
     <div class="tt-day" data-8b-motion="glide">
       <h3 class="m-text-4">Mon</h3>
-      <ul class="tt-list">
+      <ul class="tt-list" data-8b-items=":scope > li">
         <li class="tt-slot m-surface-2"><time class="m-text-7">07:00</time><span class="tt-class m-text-4">Reformer</span><span class="m-text-7">Callum</span></li>
         <li class="tt-slot m-surface"><time class="m-text-7">12:15</time><span class="tt-class m-text-4">Mat</span><span class="m-text-7">Marisol</span></li>
         <li class="tt-slot m-surface-2"><time class="m-text-7">18:00</time><span class="tt-class m-text-4">Reformer</span><span class="m-text-7">Isla</span></li>
@@ -750,7 +819,7 @@ select.m-field__input { cursor: pointer; }
     </div>
     <div class="tt-day" data-8b-motion="glide">
       <h3 class="m-text-4">Tue</h3>
-      <ul class="tt-list">
+      <ul class="tt-list" data-8b-items=":scope > li">
         <li class="tt-slot m-surface-2"><time class="m-text-7">07:00</time><span class="tt-class m-text-4">Reformer</span><span class="m-text-7">Callum</span></li>
         <li class="tt-slot m-surface"><time class="m-text-7">10:00</time><span class="tt-class m-text-4">Mat</span><span class="m-text-7">Mothers · Marisol</span></li>
         <li class="tt-slot m-surface"><time class="m-text-7">18:30</time><span class="tt-class m-text-4">Tower</span><span class="m-text-7">Backs · Isla</span></li>
@@ -759,7 +828,7 @@ select.m-field__input { cursor: pointer; }
     </div>
     <div class="tt-day" data-8b-motion="glide">
       <h3 class="m-text-4">Wed</h3>
-      <ul class="tt-list">
+      <ul class="tt-list" data-8b-items=":scope > li">
         <li class="tt-slot m-surface-2"><time class="m-text-7">07:00</time><span class="tt-class m-text-4">Reformer</span><span class="m-text-7">Callum</span></li>
         <li class="tt-slot m-surface-2"><time class="m-text-7">12:15</time><span class="tt-class m-text-4">Reformer</span><span class="m-text-7">Isla</span></li>
         <li class="tt-slot m-surface-2"><time class="m-text-7">18:00</time><span class="tt-class m-text-4">Reformer</span><span class="m-text-7">Runners · Callum</span></li>
@@ -768,7 +837,7 @@ select.m-field__input { cursor: pointer; }
     </div>
     <div class="tt-day" data-8b-motion="glide">
       <h3 class="m-text-4">Thu</h3>
-      <ul class="tt-list">
+      <ul class="tt-list" data-8b-items=":scope > li">
         <li class="tt-slot m-surface-2"><time class="m-text-7">07:00</time><span class="tt-class m-text-4">Reformer</span><span class="m-text-7">Tom</span></li>
         <li class="tt-slot m-surface"><time class="m-text-7">10:00</time><span class="tt-class m-text-4">Mat</span><span class="m-text-7">Sixty plus · Isla</span></li>
         <li class="tt-slot m-surface"><time class="m-text-7">18:00</time><span class="tt-class m-text-4">Tower</span><span class="m-text-7">Isla</span></li>
@@ -777,7 +846,7 @@ select.m-field__input { cursor: pointer; }
     </div>
     <div class="tt-day" data-8b-motion="glide">
       <h3 class="m-text-4">Fri</h3>
-      <ul class="tt-list">
+      <ul class="tt-list" data-8b-items=":scope > li">
         <li class="tt-slot m-surface-2"><time class="m-text-7">07:00</time><span class="tt-class m-text-4">Reformer</span><span class="m-text-7">Callum</span></li>
         <li class="tt-slot m-surface"><time class="m-text-7">12:15</time><span class="tt-class m-text-4">Ring</span><span class="m-text-7">Tom</span></li>
         <li class="tt-slot m-surface-2"><time class="m-text-7">17:30</time><span class="tt-class m-text-4">Reformer</span><span class="m-text-7">Isla</span></li>
@@ -785,7 +854,7 @@ select.m-field__input { cursor: pointer; }
     </div>
     <div class="tt-day" data-8b-motion="glide">
       <h3 class="m-text-4">Sat</h3>
-      <ul class="tt-list">
+      <ul class="tt-list" data-8b-items=":scope > li">
         <li class="tt-slot m-surface-2"><time class="m-text-7">08:30</time><span class="tt-class m-text-4">Reformer</span><span class="m-text-7">Tom</span></li>
         <li class="tt-slot m-surface-2"><time class="m-text-7">10:00</time><span class="tt-class m-text-4">Reformer</span><span class="m-text-7">Isla</span></li>
         <li class="tt-slot m-surface"><time class="m-text-7">11:30</time><span class="tt-class m-text-4">Mat</span><span class="m-text-7">Marisol</span></li>
@@ -793,7 +862,7 @@ select.m-field__input { cursor: pointer; }
     </div>
     <div class="tt-day" data-8b-motion="glide">
       <h3 class="m-text-4">Sun</h3>
-      <ul class="tt-list">
+      <ul class="tt-list" data-8b-items=":scope > li">
         <li class="tt-slot m-surface-2"><time class="m-text-7">10:00</time><span class="tt-class m-text-4">Reformer</span><span class="m-text-7">Callum</span></li>
         <li class="tt-slot m-surface"><time class="m-text-7">11:30</time><span class="tt-class m-text-4">Mat</span><span class="m-text-7">Release · Tom</span></li>
       </ul>
@@ -806,22 +875,22 @@ select.m-field__input { cursor: pointer; }
     <h2 class="m-text-3" id="prices-title">Three ways to pay</h2>
     <p class="m-text">No joining fee and no contract to sign. Grip socks are lent free, and a one-to-one intro with any teacher costs £45.</p>
   </header>
-  <ul class="pr-list">
-    <li class="pr-plan m-surface">
+  <ul class="pr-list" data-8b-items=":scope > li">
+    <li class="pr-plan m-surface" style="--prices-li-pr-plan-translate-from-2: calc(.55 * min(240px, 30vh)); --prices-li-pr-plan-translate-from: -7.7vw">
       <h3 class="m-text-4">First class</h3>
       <p class="pr-price m-text-8">£15</p>
       <p class="pr-unit m-text-7">One Reformer class</p>
       <p class="m-text">A full fifty minutes in a normal class, with a few minutes before it for your teacher to ask about your body.</p>
       <a class="m-btn" href="#contact"><span class="m-btn__label">Book a first class</span></a>
     </li>
-    <li class="pr-plan m-surface-2">
+    <li class="pr-plan m-surface-2" style="--prices-li-pr-plan-translate-from-2: calc(.15 * min(240px, 30vh)); --prices-li-pr-plan-translate-from: 2.1vw">
       <h3 class="m-text-4">Ten classes</h3>
       <p class="pr-price m-text-8">£180</p>
       <p class="pr-unit m-text-7">£18 a class · four months to use them</p>
       <p class="m-text">Any class, any teacher, any time on the timetable. Most people come twice a week and finish a pass in five.</p>
       <a class="m-btn-2" href="#contact"><span class="m-btn-2__label">Buy ten classes</span></a>
     </li>
-    <li class="pr-plan m-surface">
+    <li class="pr-plan m-surface" style="--prices-li-pr-plan-translate-from-2: calc(1 * min(240px, 30vh)); --prices-li-pr-plan-translate-from: -14vw">
       <h3 class="m-text-4">Unlimited</h3>
       <p class="pr-price m-text-8">£165</p>
       <p class="pr-unit m-text-7">A month · a month's notice to stop</p>
@@ -883,80 +952,6 @@ select.m-field__input { cursor: pointer; }
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const nav = document.querySelector('[data-8b-section="navigation"] .nav__inner');
-  const lenis = window.lenis = new Lenis({ lerp: .085, anchors: { offset: -Math.round(nav ? nav.offsetHeight * .5 : 0) } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
 <script data-8b-part="section-script:nav">
 (() => {
   const header = document.getElementById('nav');
@@ -974,43 +969,15 @@ gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
   const setOpen = state => {
     sheet.hidden = !state;
     open.setAttribute('aria-expanded', String(state));
-    if (state) { window.lenis?.stop(); close.focus(); } else { window.lenis?.start(); open.focus(); }
+    if (state) { window.motionKit?.wheel?.stop(); close.focus(); } else { window.motionKit?.wheel?.start(); open.focus(); }
   };
   open.addEventListener('click', () => setOpen(true));
   close.addEventListener('click', () => setOpen(false));
-  sheet.addEventListener('click', event => { if (event.target.closest('a')) { sheet.hidden = true; open.setAttribute('aria-expanded', 'false'); window.lenis?.start(); } });
+  sheet.addEventListener('click', event => { if (event.target.closest('a')) { sheet.hidden = true; open.setAttribute('aria-expanded', 'false'); window.motionKit?.wheel?.start(); } });
   addEventListener('keydown', event => { if (event.key === 'Escape' && !sheet.hidden) setOpen(false); });
 })();
 </script>
 
-<script data-8b-part="motion">
-const effects = {
-  rise(element, vars = {}, lag = 0) {
-    return gsap.timeline(vars).fromTo(element, { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .9, ease: 'power3.out' }, lag);
-  },
-  glide(element, vars = {}, lag = 0) {
-    return gsap.timeline(vars).fromTo(element, { x: 70, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 1.1, ease: 'expo.out' }, lag);
-  },
-  lengthen(element, vars = {}, lag = 0) {
-    return gsap.timeline(vars).fromTo(element, { clipPath: 'inset(46% 0% 46% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'power3.inOut' }, lag);
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  const bound = [...section.querySelectorAll('[data-8b-motion]')];
-  const names = [...new Set(bound.flatMap(element => element.getAttribute('data-8b-motion').split(/\s+/)))].filter(name => effects[name]);
-  names.forEach(name => {
-    const elements = bound.filter(element => element.getAttribute('data-8b-motion').split(/\s+/).includes(name));
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => {
-        const previous = elements[index - 1];
-        const lag = previous && Math.abs(previous.offsetTop - element.offsetTop) < 4 && previous.parentElement === element.parentElement ? (index % 7) * .07 : 0;
-        ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top 88%', once: true, animation: effects[name](element, { paused: true }, lag) });
-      });
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-</script>
 
 <script data-8b-part="section-script:contact">
 (() => {
@@ -1025,145 +992,195 @@ document.querySelectorAll('[data-8b-section]').forEach(section => {
 })();
 </script>
 
-<script data-8b-part="scene:classes">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('classes');
-    const wrap = section.querySelector('.cl-wrap');
-    const carriage = wrap.querySelector('.cl-carriage');
-    const rails = [...wrap.querySelectorAll('.cl-rail')];
-    section.classList.add('is-carried');
-    let stops = [], sizes = [], active = -1;
-    const measure = () => {
-      stops = rails.map(rail => rail.offsetTop);
-      sizes = rails.map(rail => rail.offsetHeight);
-      carriage.style.height = sizes[0] + 'px';
-    };
-    const setY = gsap.quickSetter(carriage, 'y', 'px');
-    const smooth = t => t * t * (3 - 2 * t);
-    const place = self => {
-      if (!stops.length) measure();
-      const centre = self.progress * wrap.offsetHeight;
-      let y = stops[0], index = 0;
-      for (let i = 0; i < stops.length - 1; i++) {
-        const boundary = (stops[i] + sizes[i] + stops[i + 1]) / 2;
-        const zone = (stops[i + 1] - stops[i]) * .13;
-        if (centre <= boundary - zone) break;
-        if (centre >= boundary + zone) { y = stops[i + 1]; index = i + 1; continue; }
-        const t = smooth((centre - boundary + zone) / (2 * zone));
-        y = stops[i] + (stops[i + 1] - stops[i]) * t;
-        index = t < .5 ? i : i + 1;
-        break;
-      }
-      setY(y);
-      if (index !== active) { rails.forEach((rail, i) => rail.classList.toggle('is-on', i === index)); active = index; }
-    };
-    measure();
-    ScrollTrigger.create({ id: 'classes', trigger: wrap, start: 'top center', end: 'bottom center', onUpdate: place, onRefresh: self => { measure(); place(self); } });
-    return () => {
-      section.classList.remove('is-carried');
-      rails.forEach((rail, i) => rail.classList.toggle('is-on', i === 0));
-      carriage.style.removeProperty('height');
-    };
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); });
+};
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:classes">
+motionKit.scene('classes', () => {
+  const wrap = document.querySelector('#classes .cl-wrap');
+  const carriage = wrap.querySelector('.cl-carriage');
+  const rails = [...wrap.querySelectorAll('.cl-rail')];
+  const smooth = t => t * t * (3 - 2 * t);
+  let stops = [], sizes = [], active = -1;
+  motionKit.measure(() => {
+    stops = rails.map(rail => rail.offsetTop);
+    sizes = rails.map(rail => rail.offsetHeight);
+    motionKit.set(carriage, { height: sizes[0] + 'px' });
+  });
+  motionKit.track(wrap, 'top 50%', 'bottom 50%', progress => {
+    const centre = progress * wrap.offsetHeight;
+    let y = stops[0], index = 0;
+    for (let i = 0; i < stops.length - 1; i++) {
+      const boundary = (stops[i] + sizes[i] + stops[i + 1]) / 2;
+      const zone = (stops[i + 1] - stops[i]) * .13;
+      if (centre <= boundary - zone) break;
+      if (centre >= boundary + zone) { y = stops[i + 1]; index = i + 1; continue; }
+      const t = smooth((centre - boundary + zone) / (2 * zone));
+      y = stops[i] + (stops[i + 1] - stops[i]) * t;
+      index = t < .5 ? i : i + 1;
+      break;
+    }
+    motionKit.set(carriage, { translate: '0 ' + y + 'px' });
+    if (index !== active) { rails.forEach((rail, i) => rail.classList.toggle('is-on', i === index)); active = index; }
   });
 });
 </script>
-<script data-8b-part="scene:fifty">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('fifty');
-    const stage = section.querySelector('.fi-stage');
-    const track = section.querySelector('.fi-track');
-    const blocks = [...track.querySelectorAll(':scope > .fi-block')];
-    const rail = section.querySelector('.fi-rail');
-    const dot = rail.querySelector('.fi-rail__dot');
-    const fill = rail.querySelector('.fi-rail__fill');
-    const ranges = blocks.map(block => [Number(block.dataset.from), Number(block.dataset.to)]);
-    const total = Math.max(...ranges.map(range => range[1]));
-    section.classList.add('is-tracking');
-    const distance = () => Math.max(0, track.scrollWidth - stage.clientWidth);
-    let now = -1;
-    const mark = progress => {
-      const minute = progress * total;
-      let index = ranges.findIndex(([from, to]) => minute >= from && minute < to);
-      if (index < 0) index = ranges.length - 1;
-      if (index !== now) { blocks.forEach((block, i) => block.classList.toggle('is-now', i === index)); now = index; }
-    };
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'fifty', trigger: stage, start: 'top top', end: () => '+=' + distance(), pin: true, scrub: .6, invalidateOnRefresh: true,
-      onUpdate: self => mark(self.progress)
-    } });
-    timeline
-      .fromTo(track, { x: 0 }, { x: () => -distance() }, 0)
-      .fromTo(dot, { x: 0 }, { x: () => rail.offsetWidth }, 0)
-      .fromTo(fill, { scaleX: 0 }, { scaleX: 1 }, 0);
-    mark(0);
-    return () => { section.classList.remove('is-tracking'); blocks.forEach(block => block.classList.remove('is-now')); };
+<script data-8b-part="scene-script:fifty">
+motionKit.scene('fifty', () => {
+  const section = document.getElementById('fifty');
+  const stage = section.querySelector('.fi-stage');
+  const track = section.querySelector('.fi-track');
+  const blocks = [...track.querySelectorAll(':scope > .fi-block')];
+  const rail = section.querySelector('.fi-rail');
+  const ranges = blocks.map(block => [Number(block.dataset.from), Number(block.dataset.to)]);
+  const total = Math.max(...ranges.map(range => range[1]));
+  let distance = 0, now = -1;
+  motionKit.measure(() => {
+    distance = Math.max(0, track.scrollWidth - stage.clientWidth);
+    motionKit.set(section, { '--fifty-distance': distance + 'px', '--fifty-rail': rail.offsetWidth + 'px' });
+  });
+  motionKit.track(section, 'top 0%', 'bottom 0%', progress => {
+    const minute = (distance ? Math.min(1, progress * section.offsetHeight / distance) : 1) * total;
+    let index = ranges.findIndex(([from, to]) => minute >= from && minute < to);
+    if (index < 0) index = ranges.length - 1;
+    if (index !== now) { blocks.forEach((block, i) => block.classList.toggle('is-now', i === index)); now = index; }
   });
 });
 </script>
-<script data-8b-part="scene:bodies">
-queueMotion(() => {
-  const section = document.getElementById('bodies');
-  const list = section.querySelector('.bo-list');
-  const items = [...list.querySelectorAll(':scope > .bo-item')];
-  const grow = (timeline, item, at) => {
-    const frame = item.querySelector('.bo-frame');
-    const name = item.querySelector('.bo-name');
-    const text = item.querySelector('.bo-text');
-    const shift = () => frame.offsetHeight * .3;
-    timeline
-      .fromTo(frame, { clipPath: 'inset(30% 0% 30% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: .58, ease: 'power2.inOut' }, at)
-      .fromTo(name, { y: () => shift() }, { y: 0, duration: .58, ease: 'power2.inOut' }, at)
-      .fromTo(text, { y: () => -shift() }, { y: 0, duration: .58, ease: 'power2.inOut' }, at);
-  };
-  const mm = gsap.matchMedia();
-  mm.add('(prefers-reduced-motion: no-preference) and (min-width: 761px)', () => {
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'bodies', trigger: list, start: 'top 88%', end: 'bottom 72%', scrub: .6, invalidateOnRefresh: true
-    } });
-    items.forEach((item, index) => grow(timeline, item, index * .14));
-  });
-  mm.add('(prefers-reduced-motion: no-preference) and (max-width: 760px)', () => {
-    items.forEach((item, index) => grow(gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: `bodies:${index}`, trigger: item, start: 'top 95%', end: `top ${index % 2 ? 38 : 48}%`, scrub: .6, invalidateOnRefresh: true
-    } }), item, 0));
-  });
-});
-</script>
-<script data-8b-part="scene:studio">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('studio');
-    const lanes = section.querySelector('.st-lanes');
-    const a = lanes.querySelector('.st-lane--a');
-    const b = lanes.querySelector('.st-lane--b');
-    gsap.timeline({ defaults: { ease: 'power2.out' }, scrollTrigger: {
-      id: 'studio', trigger: lanes, start: 'top bottom', end: 'center 55%', scrub: .8
-    } })
-      .fromTo(a, { xPercent: 24 }, { xPercent: 0 }, 0)
-      .fromTo(b, { xPercent: -24 }, { xPercent: 0 }, 0);
-  });
-});
-</script>
-<script data-8b-part="scene:prices">
-queueMotion(() => {
-  const section = document.getElementById('prices');
-  const list = section.querySelector('.pr-list');
-  const plans = [...list.querySelectorAll(':scope > .pr-plan')];
-  const pattern = [.55, .15, 1];
-  const build = axis => () => {
-    const timeline = gsap.timeline({ defaults: { ease: 'power2.out' }, scrollTrigger: {
-      id: 'prices', trigger: list, start: 'top bottom', end: 'top 30%', scrub: .6, invalidateOnRefresh: true
-    } });
-    plans.forEach((plan, index) => {
-      const offset = () => axis === 'y' ? pattern[index % 3] * Math.min(240, innerHeight * .3) : (index % 2 ? 1 : -1) * pattern[index % 3] * innerWidth * .14;
-      timeline.fromTo(plan, { [axis]: offset }, { [axis]: 0, duration: 1 }, 0);
-    });
-  };
-  const mm = gsap.matchMedia();
-  mm.add('(prefers-reduced-motion: no-preference) and (min-width: 861px)', build('y'));
-  mm.add('(prefers-reduced-motion: no-preference) and (max-width: 860px)', build('x'));
+<script data-8b-part="scene-script:bodies">
+motionKit.scene('bodies', () => {
+  const items = [...document.querySelectorAll('#bodies .bo-list > .bo-item')];
+  motionKit.measure(() => items.forEach(item => motionKit.set(item, { '--bodies-shift': item.querySelector('.bo-frame').offsetHeight * .3 + 'px' })));
 });
 </script>
 </body>

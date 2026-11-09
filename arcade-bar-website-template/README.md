@@ -1,8 +1,8 @@
-# Free HTML arcade bar website template with GSAP scroll animations
+# Free HTML arcade bar website template with scroll animations and no libraries
 
-Arcade bar website template: one free HTML file for a bar or game venue that runs league nights and private hire. It has a room tour, a week of events, a high-score board, prices, a drinks menu and a booking form, in cream and charcoal with pink, blue and yellow photo frames. AGENTS.md is included for Claude Code or Cursor.
+Arcade bar website template: one free HTML file for a bar or game venue that runs league nights and private hire. It has a room tour, events, a high-score board, prices, a drinks menu and a booking form, in cream and charcoal with pink, blue and yellow photo frames. Its scroll motion runs on CSS with no libraries.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/arcade-bar-website-template/)** · **[Use this template](https://github.com/new?template_name=arcade-bar-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/arcade-bar-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/quarter-moon/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/arcade-bar-website-template/ma
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my venue: name, address, machines, weekly events and league rules, prices, private hire options, menu, hours, owners' names, how people book>. Replace first the venue name everywhere, the owners' story, the league board, prices, menu, hours and photos. Keep the section ids, the classes AGENTS.md lists and the board rows in rank order, and set the footer wordmark's --len to the new name's length. Ask me for any missing fact; never invent prices, hours, scores, reviews, addresses or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my venue: name, address, machines, weekly events and league rules, prices, private hire options, menu, hours, owners' names, how people book>. Replace the venue name everywhere, keep the board rows in rank order and set the footer wordmark's --len to the new name's length. Motion is CSS scroll-driven animation plus the inline kit: keep the gate script, the data-8b-motion attributes and the classes AGENTS.md lists; add no animation library. Never invent prices, hours, scores, reviews or contacts; ask me.
 ```
 
 Give Claude Code, Cursor or Codex the facts only the venue has: hours, machine counts, league rules, coin and hire prices, menu, address and the owners' names. The demo invents all of them, along with the board's scores and the three reviews. The agent should replace the venue name everywhere, set the footer wordmark's --len to the new name's length and point the Book buttons at your booking page. A one-file page suits [vibe coding in Claude Code](https://8b.com/templates/for-claude-code/).
@@ -34,15 +34,15 @@ No agent? Click **[Use this template](https://github.com/new?template_name=arcad
 ## Sections and motion
 
 - **Navigation**: chunky two-colour wordmark, five links, a Book a booth button and a menu button that opens a full-screen overlay. The bar hides when you scroll down past 120px and returns on scroll up, with or without reduced motion; the menu button opens a full-screen overlay.
-- **What's on the floor**: dark rounded panel with the h1, a short intro, two actions and four framed room cards that stack as you scroll. The heading, intro and buttons rise in on load; the four photo cards then stick one under another, each shrinking to 90% and dimming as the next covers it, while three coloured bands drift sideways behind.
+- **What's on the floor**: dark rounded panel with the h1, a short intro, two actions and four framed room cards that stack as you scroll. The heading, intro and buttons rise in on load; as you scroll, the four photo cards stick one under another, each shrinking to 90% and dimming as the next covers it, while three coloured bands drift sideways behind.
 - **This week under the arches**: a featured event card with a Tonight tab and three dated event rows with thumbnails. The Tonight tab drops out of the card edge and the three event rows slide in from alternating sides as they arrive.
 - **We're Ailsa and Dev. We fixed our first cabinet on a kitchen table in Partick.**: tall portrait in a yellow frame, the owners' story in a blue panel, social links and three loose prints. The portrait eases from a 1.24 times zoom to its frame while three small prints, piled in the middle, fan out to their tilted places.
 - **Your initials on the board by Sunday**: copy and a join button beside a six-row high-score board that sorts itself into rank order. As the board crosses the screen the champion row climbs past each row from the bottom until all six stand in rank order and the first row turns yellow.
 - **Quote**: black-and-white photo of friends in a dark frame with the house rule laid over it. The tab drops in and the quote and its signature slide in from opposite sides.
 - **Three ways to play**: pink wall of repeated Insert coin rows around a dark card with three ways to play. The four Insert coin rows drift in opposite directions as the section crosses the screen and rest briefly in the middle; the card title tab drops in.
 - **Have the arches to yourselves**: three hire options with prices beside a framed party photo. The three hire rows slide in from alternating sides and the photo tab drops in.
-- **Behind the long bar**: six drinks and plates as framed cards in one row that travels sideways while the section holds. The section holds the screen while the six cards slide left by the full length of their overflow; without the script or with reduced motion it is a native sideways scroller.
-- **What the regulars say**: three regulars' reviews whose words light up as they rise. Each quote fades in word by word as it rises, and the signatures slide in.
+- **Behind the long bar**: six drinks and plates as framed cards in one row that travels sideways while the section holds. The section holds the screen while the six cards slide left by the full length of their overflow; without scroll-driven support or with reduced motion it is a native sideways scroller.
+- **What the regulars say**: three regulars' reviews whose words light up as they rise. As each quote crosses the screen its words light one after another from a faint trace to full ink, and the signatures slide in.
 - **Find the green-lit arches**: address, opening hours, phone and email beside a photo, and a booth booking form. The tab on the photo drops in on arrival.
 - **Footer**: big wordmark, email sign-up with a photo, a dark card with a blurb, three link columns and the base line. The two O discs of the wordmark roll in from beyond the right edge and settle into place as the wordmark scrolls into view.
 
@@ -62,17 +62,17 @@ No agent? Click **[Use this template](https://github.com/new?template_name=arcad
 ## Questions
 
 **Does it work as an arcade game website template for a venue without a bar?**  
-Yes, after a text pass. Bowling, escape rooms, mini golf and pinball halls reuse the events, league board, ways to play, hire and booking sections of its [single-scroll layout](https://8b.com/templates/one-page/). With no bar, delete the drinks menu section, its menu-track script block and the three Menu links, in the header, the phone overlay and the footer.
+Yes, after a text pass. Bowling, escape rooms, mini golf and pinball halls reuse the events, league board, ways to play, hire and booking sections of its [single-scroll layout](https://8b.com/templates/one-page/). With no bar, delete the drinks menu section, its menu-track style and script blocks and the three Menu links, in the header, the phone overlay and the footer.
 
 **Does the booking form send bookings?**  
 No. As shipped, the booth form and the newsletter form check their fields, show a thank-you or error line and send nothing. Connect them to Formspree or Netlify Forms, or point the Book a booth buttons at your own booking page or ticketing link.
 
-**Can I get a site like this without editing code?**  
-Yes. [8B's AI website builder](https://8b.com/) designs a new site from a one-sentence description; it is its own design, not this template. Designing and restyling are free; publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT.
+**Does this version need GSAP, Lenis or any other library?**  
+No. The scroll scenes are CSS scroll-driven animations with a short inline script; visitors see the same page from about a third of the code, 25 KB gzipped against 74 KB. In Firefox today and with reduced motion it shows the finished layout: the cards still stack, the board stands in rank order, the menu scrolls sideways by hand.
 
 ## Is it the right base?
 
-It fits a venue that sells a night out: events, a league, hire and a short menu. A cafe built around a library of board games is better served by [a layout made for game shelves](https://8b.com/templates/quarter-turn/), and a venue that sells tickets by the time slot needs a real booking tool. The weak spot is length: the room tour and the sideways menu both take a long scroll on a short phone. Without a coding agent, 8B's builder is the no-code route.
+This is the light build: the same look and scroll behaviour, with no animation library and no script from a CDN. Measured here, it downloads about 25 KB of code gzipped in one file; the GSAP version needs about 74 KB and four extra requests. A cafe built around board games is better served by [a layout made for game shelves](https://8b.com/templates/quarter-turn/). The room tour and the menu take a long scroll on a phone. Without a coding agent, 8B's builder is the no-code route.
 
 ## Before you publish
 
@@ -81,7 +81,9 @@ It fits a venue that sells a night out: events, a league, hire and a short menu.
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 93 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 98 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 93 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

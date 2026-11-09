@@ -1,6 +1,6 @@
 # AGENTS.md: boat tour website template
 
-One-page website for a boat trip and charter operator that sells seats from a pier kiosk. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a boat trip and charter operator that sells seats from a pier kiosk. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,19 +14,18 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
-  - `scene:trips`: `.trip`
-  - `scene:route`: `.route__track` `.place__lift`
-  - `scene:onboard`: `.onboard__stage` `.onboard__window` `.onboard__line`
-  - `scene:charter`: `.occasion` `.charter__photos`
-  - `scene:reviews`: `.quote`
-  - `scene:contact`: `.contact__swing`
   - `section-script:navigation`: `.nav__toggle` `.nav__toggle-label` `.nav__menu` `data-close`
+  - `scene-script:route`: `.route__track` `.place__lift`
+  - `scene-script:onboard`: `.onboard__stage` `.onboard__window` `.onboard__line`
+  - `scene-script:reviews`: `.reviews__hold` `.quote`
 - `style="--len:N"` = characters in that display line, spaces included: `Pierhead` is 8.
 - The wordmark in the footer sets its size from style="--len:8", the number of characters of the name. Change the number when the name changes length.
-- The route section is a flex strip only while the scene runs: the script adds .is-track, and the wave offsets are measured from the five .place cards. Keep each card inside its .place__lift wrapper.
-- The reviews deck stacks cards in one grid cell through .is-deck and the scene reads every .quote in the section; each card adds about half a screen of scroll. The stacking order comes from nth-child z-index rules for four cards: from a sixth card on, add matching rules or the later cards cover the earlier ones.
-- The trip rows are laid out by CSS grid and the scene reads each row's cells to spread them, so keep a card and its two photos as the direct children of each .trip.
+- The route section becomes a sideways strip only while scroll motion runs: CSS lays the cards out in a flex row and holds the section for 1.15 times the row's overflow, and a short script measures the overflow into --route-distance and the wave from each .place__lift. Keep each card inside its .place__lift wrapper.
+- The reviews deck stacks every .quote in one grid cell, front card first from --i and --n, and adds about half a screen of scroll per card; a card more or less only changes the hold.
+- The trip rows are laid out by CSS grid and their sideways spread is set per row: an inline style on each .trip holds its start offsets, and the photo pan rules are written for three rows (the second carries .trip--flip). Keep a card and its two photos as the direct children of each .trip; a fourth row needs its own offsets and pan rule.
+- The charter frame wipes to photos 2 to 4 as occasions 2 to 4 reach the middle of the screen (CSS :nth-of-type rules): keep four occasions and four photos, or add matching rules.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #eef0f2 (page background, the solid nav bar and the wordmark tab, the charter photo frame backing on phones), `--color-2` #0c0d10 (text and headings on the light ground, dark button pills, the wordmark in the nav tab), `--color-3` #070a0f (background of the opening frame and of the trips, onboard, reviews, contact and footer panels, and of the phone menu overlay), `--color-4` #ffffff (text on dark panels, the white button pills, the FAQ question cards and the phone card over the FAQ photo), `--color-5` #ff8a1f (the only accent: hover fill on buttons and round icon buttons, focus outlines, the five stars in the opening), `--color-6` #545a63 (secondary text on the light ground: route, fleet and charter intros, place and crew captions, FAQ answers), `--color-7` #a1a8b2 (secondary text on dark panels: trip lines and facts, onboard notes, review captions, footer text), `--color-8` #11161e (the dark cards inside panels (trip cards, review cards) and the colour behind photos while they load); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -64,8 +63,8 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the Menu button cannot open the overlay at 900px and narrower; the desktop bar links and the footer anchors stay reachable. The questions are native details and open without it.
 - The sailing news form does not send anything: it posts to # until you connect it to a service.
-- The route and reviews sections are pinned: the route holds for about 1.15 times its overflow width and the reviews for roughly 1.65 screen heights, which feels long on short laptop screens.
-- gsap, ScrollTrigger, SplitText and Lenis load from a CDN before the motion scripts; offline they are missing and the motion does not run.
+- The route and reviews sections are held while you scroll: the route for about 1.15 times its overflow width and the reviews for roughly 1.65 screen heights, which feels long on short laptop screens.
+- In browsers without CSS scroll-driven animations (Firefox today), with reduced motion or without JavaScript, the scroll motion and the smooth wheel are off: the route is a grid of five cards, the reviews a two-column grid, onboard shows its full picture and the charter frame its last photo. Firefox still plays the opening load-in.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Pierhead left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Pierhead left only in class names.

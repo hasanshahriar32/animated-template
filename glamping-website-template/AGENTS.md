@@ -1,6 +1,6 @@
 # AGENTS.md: glamping website template
 
-One-page website for a glamping or remote cabin business that rents a handful of stays on a few sites. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a glamping or remote cabin business that rents a handful of stays on a few sites. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,22 +14,19 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__bar` `.nav__menu` `.nav__overlay` `.nav__close`
   - `section-script:opening`: `.op__search` `.op__stage`
   - `section-script:contact`: `.contact__form` `.contact__status` `data-sent` `data-missing`
-  - `scene:opening`: `.op__stage` `.op__rim` `.op__window` `.op__fg` `.op__drift` `.op__title` `.op__title-wrap` `.op__dusk` `.op__night` `.op__search` `.op__lead` `.op__rail` `.op__card-l` `.op__card-r` `.op__seal`
-  - `scene:ridges`: `.ridges__stage` `.ridge` `.ridge__frame` `.ridge__card`
-  - `scene:stays`: `.stay` `.stay__card` `.stay__frame`
-  - `scene:night`: `.night__ground` `.moment` `.moment__frame`
-  - `scene:hosts`: `.hosts__list` `.host` `.host__photo` `.m-text-5`
-  - `scene:pledge`: `.pledge__rule` `.pledge__line` `.pledge__note`
-  - `scene:notes`: `.notes__stage` `.note` `.notes__list` `.notes__photo`
-  - `scene:contact`: `.contact__side` `.contact__ground` `.contact__title`
+  - `scene-script:opening`: `.op__fg` `.op__drift` `.op__title` `.op__title-wrap`
+  - `scene-script:ridges`: `.ridges__stage`
+  - `scene-script:stays`: `.stay` `.stay__card`
+  - `scene-script:night`: `.night__ground` `.moment`
 - `style="--len:N"` = characters in that display line, spaces included: `Farlight` is 8.
-- The heading in the first screen sets behind a cut-out copy of the cabin photo: the polygon points in scene:opening (the shape array, fractions of the photo) outline the cabin and the snowfield, and both image copies share the same src and width and height attributes. A new hero photo needs its own points and both copies updated, or the heading sinks behind the wrong silhouette.
+- The heading in the first screen sets behind a cut-out copy of the cabin photo: the polygon points in scene-script:opening (the shape array, fractions of the photo) outline the cabin and the snowfield, and both image copies share the same src and width and height attributes. A new hero photo needs its own points and both copies updated, or the heading sinks behind the wrong silhouette.
 - The footer wordmark is sized from style="--len:8", the number of characters of the name; set it to the length of the new name.
-- The scenes read colours from the CSS variables on :root at run time (the night section from the colours of its five moments, the pledge from --color-5, --color-7 and --color-3, the contact section from --color-4, --color-8, --color-2 and --color-3): recolour the page through them, not through the scripts.
+- The scroll scenes take their colours from the CSS variables on :root (the pledge from --color-5, --color-7 and --color-3, the contact section from --color-4, --color-8, --color-2 and --color-3), and scene-script:night reads the background and text colour of each of the five moments at run time: recolour the page through these, not through the scripts.
 - The stay finder in the first screen and the booking form share the same options; keep the option lists identical, since section-script:opening copies the chosen values into the selects #contact-ridge, #contact-stay and #contact-nights, and a value missing from the form's list leaves that select empty.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #eef0f7 (page ground of the first screen, ridges, stays, supper, getting-there, guestbook and questions sections, and the fill of the form fields), `--color-2` #211c55 (body text, filled buttons, the rail icons, step discs, the Firelight moment ground and the text on the rose contact ground), `--color-3` #ffffff (photo frame borders, white cards, the pill buttons, the current rail mark, the hosts section ground and text on dark grounds), `--color-4` #0d0b27 (the second screen, menu panel, pledge and footer grounds, the Starlight moment and the start of the contact ground), `--color-5` #f2783f (the only accent: round button discs, the top of the logo mark, arrow strokes, the open question sign and the pledge lines while they burn), `--color-6` #57547a (lead paragraphs, field labels, captions and secondary card text), `--color-7` #b8c1ee (periwinkle for pledge lines after they switch off, the footer wordmark, the shuttle note band, the status line and muted text on dark grounds), `--color-8` #e7b6cb (dawn rose for the Last light and First light moments, the contact ground and the pink glow over the first photo), `--color-9` #323d80 (the Blue hour moment ground and the base behind the first photo window); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
@@ -68,11 +65,12 @@ All demo text, never to be invented:
 
 ## Known limits
 - Without JavaScript the menu button cannot open the panel; the links stay reachable in the footer and the rail. The booking form does nothing useful: it has no sending code, and the stay finder only jumps to the form without carrying the choices.
-- The cut-out copy of the cabin photo stays hidden until the scene script runs, so without JavaScript the heading sits plainly over the photo.
+- The cut-out copy of the cabin photo shows only while scroll motion is on, so in Firefox, with reduced motion or without JavaScript the heading sits plainly over the photo.
 - On phones the white "Find Your Own Ridge" card is hidden under 720 px, the section rail only appears from 1024 px, and on phones shorter than 700 px the first-screen paragraph is hidden too.
-- The ridges frame is pinned and the opening is a sticky screen of at least 560 px, so short or landscape screens show tightly packed windows.
-- gsap, ScrollTrigger, SplitText and Lenis load from jsDelivr at the end of the body; if the CDN fails, the page still reads in full but stays still. The three 46 px round thumbnails in the first screen carry a srcset of 1020 and 1290 px images, and three stay photos repeat their src attribute: trim both when you swap photos.
-- The opening stage is sticky for one screen even with reduced motion, so the night screen slides over the first photo; the heading then stays over the photo without the cut-out.
+- The ridges scene is written for four windows (data-8b-fixed="4" on the list): the sticky stage is held for a fixed 285vh of scroll, so a fifth ridge needs a longer hold in scene:ridges.
+- Without CSS scroll-driven animations (Firefox today) or with reduced motion, the smooth wheel, the entrances and the scroll scenes are off: the ridges stand as four windows in a column, each night moment keeps its own ground, the pledge lines rest in periwinkle, the guest cards sit still over the photo and the contact ground is dawn rose. Firefox still plays the opening load-in, the photo drift and the glow loop.
+- The three 46 px round thumbnails in the first screen carry a srcset of 1020 and 1290 px images, and three stay photos repeat their src attribute: trim both when you swap photos.
+- The opening stage is sticky for one screen in every browser, so the night screen slides over the first photo; on short or landscape screens of under 560 px the first screen packs its windows tightly.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Farlight left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Farlight left only in class names.

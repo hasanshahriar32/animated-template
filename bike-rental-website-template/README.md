@@ -1,8 +1,8 @@
-# Free HTML bike rental website template with GSAP scroll animations
+# Free HTML bike rental website template with scroll animations and no libraries
 
-Bike rental website template: one free HTML file for an e-bike or bike hire business with several pick-up stands, guided rides and prices by the hour, day and week. Near black and pale grey with one acid-lime accent, tight sans type and double rules that draw across the page. AGENTS.md is included for Claude Code, Cursor or Codex.
+Bike rental website template: one free HTML file for an e-bike or bike hire business with several pick-up stands, guided rides and prices by the hour, day and week. Near black and pale grey with one acid-lime accent, tight sans type and double rules that draw across the page. Its scroll motion runs on CSS with no libraries.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/bike-rental-website-template/)** · **[Use this template](https://github.com/new?template_name=bike-rental-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/bike-rental-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/kickstand/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/bike-rental-website-template/m
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my hire business: name, town, bikes and prices, stands with addresses and hours, routes, hire terms, deposit, excess, phone, email, legal name>. Replace first the bike specs, the five stands, the four routes, the prices and the Saturday dates. If the number of stands changes, edit the letters A to E by hand too. Keep the section ids and the classes AGENTS.md lists. Ask me for missing facts and never invent prices, hours, addresses, reviews or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my hire business: name, town, bikes and prices, stands with addresses and hours, routes, hire terms, deposit, excess, phone, email, legal name>. Keep four bike articles; if the number of stands changes, edit the letters A to E by hand too. Motion is CSS scroll-driven animation plus the inline kit: keep the gate script, the data-8b-motion attributes and the classes AGENTS.md lists; add no animation library. Never invent prices, hours, addresses, reviews or contacts; ask me.
 ```
 
 Vibe coding goes fastest when the agent gets the facts only the business has: bike specs and prices, stand addresses and hours, route distances, deposit, excess and hire terms. The demo invents all of them, plus the Sheffield places, rider quotes and Saturday dates. Change the bike articles with the bike options and price rows, and the stand rows with the collect-from options; edit the letters A to E by hand. As a bike rental website template for Claude Code, Cursor or Codex it needs only those facts.
@@ -33,11 +33,11 @@ No agent? Click **[Use this template](https://github.com/new?template_name=bike-
 
 ## Sections and motion
 
-- **Navigation**: round starburst logo, eight links in two columns and a menu button that opens a full-screen overlay. Smooth scrolling runs page-wide; the bar slides out of view as you scroll down and returns as you scroll up.
+- **Navigation**: round starburst logo, eight links in two columns and a menu button that opens a full-screen overlay. Smooth wheel scrolling runs page-wide on a mouse or trackpad; the bar slides out of view as you scroll down and returns as you scroll up.
 - **Sheffield climbs seven hills. You just pedal.**: dark first screen: a three-line h1 stepping in like stairs, a lead, four facts, a booking button and a street photo. On load the three heading lines step in like stairs, the street photo levels from a slanted upper edge, and the lead, facts and buttons rise in.
-- **Four bikes, one push**: held stage that steps through four bikes: the next photo wipes in from the right while the name tabs and text change. Pinned for about two and a third screens of scrolling: each next bike's photo wipes in from the right, the text swaps, and a marker slides along a strip of bike names that the script builds.
+- **Four bikes, one push**: held stage that steps through four bikes: the next photo wipes in from the right while the name tabs and text change. The stage holds for about two and a third screens of scrolling: each next bike's photo wipes in from the right, the text swaps, and a marker slides along a strip of bike names that the script builds.
 - **Five stands, one line**: dark band with a night photo and a line of letters A to E over it, then five stand rows. Each stand row rises into place as it enters; the line of letters over the night photo stays still.
-- **Four rides from the stands**: four ride panels that slide sideways past a held stage while a lime line fills and a disc rolls along it. Pinned for as many pixels as the row overflows: the four ride panels slide sideways while a lime line fills and a round marker rolls along it.
+- **Four rides from the stands**: four ride panels that slide sideways past a held stage while a lime line fills and a disc rolls along it. The stage holds for as many pixels as the row overflows: the four ride panels slide sideways while a lime line fills and a round marker rolls along it.
 - **Three steps to a ride**: dark band with three numbered booking steps joined by a filling lime line. A lime line fills across the three steps (down them on a phone) as they scroll into view, and each step comes up from dim with its number sliding in from the left.
 - **In every basket**: photo and a list of six things included with every hire. The photo and the six kit items rise in as they enter.
 - **Saturday rides**: dark band: a group-ride photo opens from a slit while the two words of the heading part, then a date list and a join button. The group photo opens from a central slit to full width while the two words of the heading part toward the edges.
@@ -67,12 +67,12 @@ Not from this file, which needs an AI coding agent or a developer. For no code, 
 **Does the booking form send anything?**  
 No. The form requires a name, an email and a date, then shows a thank-you line and disables the button without sending anything. Connect Formspree or Netlify Forms with the steps in AGENTS.md, or point the Book buttons at your own booking page, and edit the promise to confirm within the hour.
 
-**What happens on a phone, with reduced motion or without JavaScript?**  
-On a phone the header links give way to the menu button and the held bike stage hides the spec lists. With reduced motion, entrance motion, [the pinned bike wipes](https://8b.com/templates/animated/) and smooth scrolling are off, and bikes and routes sit in plain grids. Without JavaScript the menu cannot open; the nine footer links remain on phones.
+**Does this version need GSAP, Lenis or any other library?**  
+No. The scroll scenes are CSS scroll-driven animations with a short inline script; visitors see the same page from about a third of the code, 25 KB gzipped against 70 KB. Keep the gate script, the data-8b-motion attributes and four bike articles, because the CSS times each bike's wipe by its position. Route panels can be added or removed.
 
 ## Is it the right base?
 
-Among bike rental website templates this one suits a business that sells time, not products, and wants a hard, technical look with one bright accent. A shop that rents tents and boots by the night is closer to the [tent and boot hire](https://8b.com/templates/kitfell/) template. Anyone after a bike shop website template that sells bikes will miss a cart: there is no checkout, and booking is a form that sends nothing yet. Without an agent, 8B can design a site from a sentence.
+Among bike rental website templates this is the light build: the same look and scroll behaviour, with no animation library and no script from a CDN. Measured here, it downloads about 25 KB of code gzipped in one file; the GSAP version needs about 70 KB and three extra requests. A shop that rents tents and boots suits the [tent and boot hire](https://8b.com/templates/kitfell/) template; a bike shop website template that sells bikes needs a cart.
 
 ## Before you publish
 
@@ -81,7 +81,9 @@ Among bike rental website templates this one suits a business that sells time, n
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 91 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 109 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 91 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

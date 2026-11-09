@@ -1,6 +1,6 @@
 # AGENTS.md: coffee roaster website template
 
-One-page website for a small coffee roastery with a counter that sells beans, drinks and refills. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a small coffee roastery with a counter that sells beans, drinks and refills. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,15 +14,13 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:nav`: `.nav__menu-btn` `.nav__menu-label` `.nav__rail` `.nav__list`
-  - `scene:beans`: `.beans__list` `.beans__turn` `.beans__row` `.beans__shot`
-  - `scene:roast-days`: `.roast__step` `.roast__cell` `.m-stamp`
-  - `scene:counter`: `.counter__list` `.counter__row` `.counter__in`
-  - `scene:refills`: `.refills__track` `.refills__tin` `.refills__lid`
-  - `scene:people`: `.people__photo`
-  - `scene:visit`: `.visit__window`
-- The bean photos and rows are matched by position, and the scene throws an error if the counts differ: keep one photo per coffee. The roast-day ticket likewise needs one cell per step, four of each.
+  - `scene-script:beans`: `.beans__row`
+  - `scene-script:refills`: `.refills__tin` `.refills__lid`
+  - `scene-script:people`: `.people__photo`
+- The bean rows and photos are matched by position in the CSS (:nth-of-type rules for five of each): a sixth coffee gets no scroll timeline, and its photo would sit open over the others from the start. The roast-day ticket likewise has four cells for four steps, and the drinks board's fan-out has start offsets for seven rows.
 - Each heading is a lockup of three spans (small line, big line, small line) that the lockup effect animates line by line; the effect animates whatever lines it finds, but the ruled look is built for three, so keep three.
 - The round stamps are inline SVG with a word in a span; recolour them through the colour variables, and keep the word short so it stays inside the ring. The ring text is stretched to one full circle by textLength="490", so a much shorter or longer phrase looks spaced out or squeezed.
 - The bag count in the top bar is plain text; it is not connected to any cart.
@@ -63,8 +61,9 @@ All demo text, never to be invented:
 - Without JavaScript the Menu button cannot open the link rail on screens narrower than 1024 px and the sections are not marked as current; the FAQ opens natively.
 - Add to bag buttons and the bag count do not work as a shop: they link to the visit section until you connect a checkout.
 - The beans and roast-days scenes sync photos and stamps to scroll position; on short laptop screens the sticky ticket and the round bean frame take most of the height.
-- The slatted owners' photo is built at run time, so it is the plain photo until the script runs and in reduced motion.
-- gsap, ScrollTrigger and Lenis load from a CDN near the end of the body, and the motion scripts after them wait for those files.
+- The slatted owners' photo is built by the script once, at load: four slats on screens 700 px wide or more, three below, by the width at that moment (not rebuilt on resize). Without scroll-driven animation support or with reduced motion the plain photo shows.
+- The drink rows' fan-out starts from fixed offsets (about 54 px a row), set for one-line rows; a drink name that wraps to two lines makes the rows start a little out of their stack.
+- Without CSS scroll-driven animation support (Firefox today) or with reduced motion on, the scroll motion, stamps, rules, heading lockups and smooth wheel are off and each section shows its finished layout: the round bean frame shows only the last coffee's photo and no coffee name turns rust. The opening's load-in still plays in Firefox, not with reduced motion.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Little Drum Coffee Roasters left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Little Drum Coffee Roasters left only in class names.

@@ -1,8 +1,8 @@
-# Free HTML dance studio website template with GSAP scroll animations
+# Free HTML dance studio website template with scroll animations and no libraries
 
-This dance studio website template is one free HTML file for a school that runs weekly classes. It has six styles, a drawn path through a first class, a seven-day timetable, five teachers, four passes and a booking form, in bold grotesque type with hand-drawn red loops. An AI agent can adapt it.
+This dance studio website template is one free HTML file for a school that runs weekly classes. It has six styles, a drawn path through a first class, a seven-day timetable, five teachers, four passes and a booking form, in bold grotesque type with hand-drawn red loops. Its motion is CSS, with no JavaScript libraries.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/dance-studio-website-template/)** · **[Use this template](https://github.com/new?template_name=dance-studio-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/dance-studio-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/twirl/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/dance-studio-website-template/
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my studio: name, city, styles with beginner and improver times, the weekly timetable with teachers, teacher bios, passes and prices, trial offer, show date if any, address, hours, phone, email, how to book>. Replace the six styles, the timetable cards, the five teachers, the four passes and the contact details first. Keep the ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the class names AGENTS.md lists. Ask me for any missing fact; never invent prices, times, bios or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my studio: name, city, styles with beginner and improver times, the weekly timetable with teachers, teacher bios, passes and prices, trial offer, show date if any, address, hours, phone, email, how to book>. Replace the six styles, timetable cards, five teachers, four passes and contacts first. Motion is CSS scroll-driven animation plus the inline kit: keep the gate script, ids, data-8b attributes and listed classes; add no library. Never invent prices, times, bios or contacts.
 ```
 
 If you vibe code the site, treat this as a dance studio website template for Claude Code and Cursor: hand the agent index.html and AGENTS.md. Replace the thirteen timetable cards, the five teachers and the four passes first. The opening ring is built for eight portraits and the styles line-up for six photos, so keep those counts. Ask the owner for real times, prices, bios and the show date, and never invent them.
@@ -34,16 +34,16 @@ No agent? Click **[Use this template](https://github.com/new?template_name=dance
 ## Sections and motion
 
 - **Navigation**: fixed top bar: wordmark, four section links, Timetable link, Free first class button, menu button; full-screen menu overlay. The bar turns solid after a few pixels, slides away when you scroll down and returns when you scroll up, and the menu opens as a full-screen overlay.
-- **Come alone. Leave with a crew.**: first screen: the heading "Come alone. Leave with a crew.", two paragraphs, two buttons and a ring of eight student portraits with a note. On load the text slides up in turn, a ring line draws itself and the eight portraits spread from a tight fan onto the circle.
-- **Six styles, one floor**: six dance styles as a list beside a line-up of six photos; each photo steps forward as its name crosses the middle of the screen. Scrubbed: as each style name crosses the middle of the screen, its photo steps into the centre of the line-up and back while a red loop draws around the name and is erased.
-- **Your first class, step by step**: a first class in four steps along a hand-drawn path with a red dot walking it, and a class photo. Scrubbed: a hand-drawn path draws itself while a red dot walks it and each step number fills in when the dot arrives; on phones a straight line runs beside the steps.
+- **Come alone. Leave with a crew.**: first screen: the heading "Come alone. Leave with a crew.", two paragraphs, two buttons and a ring of eight student portraits with a note. Smooth wheel scrolling throughout. On load the text slides up in turn, a ring line draws itself and the eight portraits spread from a tight fan onto the circle.
+- **Six styles, one floor**: six dance styles as a list beside a line-up of six photos; each photo steps forward as its name crosses the middle of the screen. With your scroll, as each style name crosses the middle of the screen, its photo steps into the centre of the line-up and back while a red loop draws around the name and is erased.
+- **Your first class, step by step**: a first class in four steps along a hand-drawn path with a red dot walking it, and a class photo. With your scroll, a hand-drawn path draws itself while a red dot walks it and each step number fills in when the dot arrives; on phones a straight line runs beside the steps.
 - **This week on the floor**: the week as seven day columns, each with one or two classes (time, style, level, teacher), and a closing line. The seven day columns step in once, one beat at a time, and a yellow plus shape turns with the scroll.
-- **The people who count you in**: five teachers as photo cards on coloured blocks, each with a name, a style and a short story. Scrubbed: as each card rises, the coloured block behind its photo makes a full turn and the photo lifts into place.
-- **On stage in June**: the twice-a-year show: a sideways row of six stage photos and a card with date, place and tickets. Pinned: the section holds while the photo row slides sideways, the photos bob in alternate beats and the bars on the ticket card pulse.
-- **Heard after class**: three student quotes with a name and how long they have danced. A red loop draws once around a phrase in each quote, and a large pale blue disc and a yellow plus turn with the scroll.
-- **Pick a pass**: four passes as cards: First class (free), Drop-in, Ten classes, Unlimited. Scrubbed: the four passes start fanned on the first card and spread into their row; a loop draws once around the word Free.
+- **The people who count you in**: five teachers as photo cards on coloured blocks, each with a name, a style and a short story. With your scroll, as each card rises, the coloured block behind its photo makes a full turn and the photo lifts into place.
+- **On stage in June**: the twice-a-year show: six stage photos (a sideways row with scroll motion on, a grid otherwise) and a card with date, place and tickets. The section holds while the photo row slides sideways with your scroll, the photos bob in alternate beats and the bars on the ticket card pulse; without scroll motion the photos wrap into a grid.
+- **Heard after class**: three student quotes with a name and how long they have danced. A red loop draws once around a phrase in each quote, and a large pale blue disc and a yellow plus turn and grow into place with the scroll.
+- **Pick a pass**: four passes as cards: First class (free), Drop-in, Ten classes, Unlimited. With your scroll, the four passes start fanned on the first card and spread into their row; a loop draws once around the word Free.
 - **Asked before the first class**: six questions and answers in native &lt;details&gt; elements beside a heading with a hand-drawn loop. The six questions step in one after another, a loop circles the heading words, and a yellow plus turns with the scroll on wide screens.
-- **See you on the floor**: booking: heading, studio address, hours, phone and email beside a form for the free first class. Scrubbed: a pale disc rolls in from the right edge while a yellow plus spins down beside the heading.
+- **See you on the floor**: booking: heading, studio address, hours, phone and email beside a form for the free first class. With your scroll, a pale disc rolls in from the right edge while a yellow plus spins down beside the heading.
 - **Footer**: footer: four columns (Studio, Open, Explore, Say hello), a huge wordmark and the copyright line with the Design: 8B credit. The four footer columns step in once, one beat at a time.
 
 ## Design
@@ -73,7 +73,7 @@ Not this exact file, but [8B's AI website builder](https://8b.com/) makes a new 
 
 ## Is it the right base?
 
-Choose this base for a class business with a free trial, a weekly grid and a ticketed show. Take a [gym or training club](https://8b.com/templates/arcline/) template when coaches and memberships matter more than a free trial and a show. The honest weak spot is the pinned showcase, which holds the screen while its photo row slides sideways and can feel long on a short laptop.
+Choose this base for a class business with a free trial, a weekly grid and a ticketed show. Take a [gym or training club](https://8b.com/templates/arcline/) template when coaches and memberships matter more. The motion needs no animation library: about 29 KB of code gzipped against 83 KB and four more requests for the GSAP version. The honest weak spot is the held showcase, which keeps the screen while its photo row slides sideways and can feel long on a short laptop.
 
 ## Before you publish
 
@@ -82,7 +82,9 @@ Choose this base for a class business with a free trial, a weekly grid and a tic
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, MotionPathPlugin, Lenis 1.3.27 from jsDelivr, 105 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 101+ (it uses cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 115 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 101+ (it uses cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, MotionPathPlugin, Lenis 1.3.27 from jsDelivr, 105 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

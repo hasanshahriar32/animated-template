@@ -1,8 +1,8 @@
-# Free HTML it support website template with GSAP scroll animations
+# Free HTML it support website template with scroll animations and no libraries
 
-IT support website template: one free HTML file for a managed IT provider that looks after the computers, Wi-Fi, email and backups of small offices. It has a phone line, a price calculator by headcount, five security layers and a free audit form, in cool grey with one orange accent. AGENTS.md lets Claude Code or Cursor adapt it.
+IT support website template: one free HTML file for a managed IT provider that looks after the computers, Wi-Fi, email and backups of small offices. It has a phone line, a headcount price calculator, five security layers and an audit form in cool grey and orange. Scroll motion is CSS with no libraries; AGENTS.md lets Claude Code adapt it.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/it-support-website-template/)** · **[Use this template](https://github.com/new?template_name=it-support-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/it-support-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/quiet-systems/)**
 
@@ -24,10 +24,10 @@ curl -LO https://raw.githubusercontent.com/8bsite/it-support-website-template/ma
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my support firm: name, area, services, price per person and headcount range, hours, clients, team, how people book, legal name>. Replace first the firm name, the eight service rows, the client offices, the before and after notes and the team. Change data-rate together with the visible price, keep the ids and the listed classes, and set the phone number's --len to its character count. Ask me for missing facts and never invent prices, clients, response times or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my support firm: name, area, services, price per person and headcount range, hours, clients, team, how people book, legal name>. Replace the firm name, services, client offices, notes and team first. Change data-rate with the visible price and set the phone number's --len to its character count. Keep the ids, the listed classes, the gate script in the head, the data-8b-motion attributes and five team members; add no animation library. Never invent prices, clients or contacts; ask me.
 ```
 
-Vibe coding with Claude Code, Cursor or Codex goes fastest when the agent has the facts only the firm knows: services, area, hours, price per person and slider range, client names, team and legal name. The demo invents all of them, including the five offices, the three before and after notes and the portraits. The agent should change the data-rate attribute together with the visible price, keep the ids and the classes AGENTS.md lists, and ask before naming any client.
+Using this IT support website template for Claude Code or Cursor goes fastest when the agent has the facts only the firm knows: services, area, hours, price per person and slider range, client names, team and legal name. The demo invents all of them, including the five offices, the three notes and the portraits. If you [vibe code the site](https://8b.com/templates/vibe-coding/), the agent should change data-rate with the visible price, keep the ids and the classes AGENTS.md lists, and ask before naming any client.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=it-support-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
@@ -66,12 +66,12 @@ Yes. The price section has a slider for people in the office, from 3 to 60 and s
 **Does the free audit form send anything?**  
 No. The form has name, company, contact, office size and message fields; as shipped the script checks them and shows a thank-you line, and nothing leaves the page. Connect Formspree or Netlify Forms for real requests, or point the booking buttons at your Calendly or Cal.com page instead.
 
-**What happens with reduced motion or without JavaScript?**  
-With reduced motion on, the scroll scenes, smooth scrolling and the heading's load-in are off, but the nav bar still slides away on scroll and hover effects still run. Without JavaScript the Menu button, the slider total and the form stop working; the four header links stay on wide screens and the questions still open.
+**What happens in Firefox, with reduced motion or without JavaScript?**  
+Without CSS scroll-driven animations, Firefox today, or with reduced motion, the page shows its finished layout with ordinary scrolling and the team as a plain grid; the nav still hides on scroll, and Firefox still plays the heading's load-in. Without JavaScript the Menu, the slider total and the form stop; the [one-scroll page](https://8b.com/templates/one-page/) still reads.
 
 ## Is it the right base?
 
-As an it company web template it suits a firm that sells a calm, fixed monthly service to small offices and wants to sound exact rather than loud. The weak spot is the single page: a firm with many service pages, a client portal or a ticket form needs more. A shop that [fixes phones and laptops](https://8b.com/templates/reflow/) over the counter fits a different layout, and an owner who will not edit HTML can design a site in 8B's builder instead.
+As an it company web template it suits a firm selling a calm, fixed monthly service to small offices. This build has no JavaScript libraries and no script from a CDN: the same look and scroll behaviour in about 35 KB of gzipped code, against about 81 KB and three more requests for the GSAP version. Many service pages, a client portal or a ticket form need more, and a shop that [fixes phones and laptops](https://8b.com/templates/reflow/) over the counter fits a different layout.
 
 ## Before you publish
 
@@ -80,7 +80,9 @@ As an it company web template it suits a firm that sells a calm, fixed monthly s
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 131 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 136 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 131 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

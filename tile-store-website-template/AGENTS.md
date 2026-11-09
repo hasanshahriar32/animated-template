@@ -1,6 +1,6 @@
 # AGENTS.md: tile store website template
 
-One-page website for a tile shop or bathroom studio with a showroom, free samples and its own fitters. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a tile shop or bathroom studio with a showroom, free samples and its own fitters. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,17 +14,17 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits.
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__menu` `.nav__list`
   - `section-script:samples`: `.sp__form` `.sp__msg` `data-limit` `data-missing` `data-sent`
-  - `scene:bonds`: `.bd__row` `.bd__name` `.bd__track`
-  - `scene:rooms`: `.rm__room` `.rm__item` `.rm__marker` `.rm__track`
-  - `scene:glazes`: `.gz__stage` `.gz__rail` `.gz__bay` `.gz__field` `.fill`
-  - `scene:service`: `.sv__marker` `.sv__step` `.sv__steps`
-  - `scene:contact`: `.ct__photo` `.ct__red` `.fill` `.ct__yellow`
+  - `scene-script:bonds`: `.bd__name` `.bd__track`
+  - `scene-script:rooms`: `.rm__item` `.rm__marker`
+  - `scene-script:glazes`: `.gz__stage` `.gz__rail` `.gz__bay`
+  - `scene-script:service`: `.sv__steps` `.sv__step`
 - The blue, yellow and red fields, the ruled cells and the bond wall are CSS, not images: recolour them through the colour variables in :root (yellow is --color-3, blue --color-4, red --color-5).
-- The bond wall has four rows of seven cells, and the scene reads the first cell's width and the gap to set how far each row slides; keep seven cells of equal size in every row (five show at once on a wide screen), so a shifted row never opens a gap at the right.
-- The four room photos are stacked layers clipped by the rooms scene: keep exactly four photos, one per caption, in the same order as the list.
+- The bond wall has four rows of seven cells, and each row's slide to half bond and third bond is written in the bonds scene CSS as a share of the wall's width for seven equal cells; keep seven cells of equal size in every row (five show at once on a wide screen, 3.5 on phones), or a shifted row opens a gap at the right and the joints miss.
+- The four room photos are stacked layers, and the rooms scene CSS gives each of .rm__room--1 to .rm__room--4 its own clip-path keyframes: keep exactly four photos, one per caption, in the same order as the list.
 - The glazes row is measured by the script, so the scroll length follows the number of bays; a new bay needs its own .gz__bay--<name> rule for its field colour, and the photo and colour field of each bay sit in its own .gz__top.
 - The sample form text lives in data-limit, data-missing and data-sent on the status line: change the sentences there and keep {name} and {count}.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #ffffff (page ground and the fill of every cell between the rules, button text on black, text of checked sample chips and lit step numbers), `--color-2` #121212 (text, the rules between cells, primary buttons, checked sample chips, lit step numbers, the black wall cell and the Ink glaze field), `--color-3` #ffcf00 (yellow: the blocks in the navigation bar, opening and contact, button hover wipe, current-section underline, active bond and room markers, the current step, guarantee and phone cards, the Saffron glaze), `--color-4` #1858b8 (blue: the block in the opening and the strip beside the samples form, the moving step marker, focus outlines on buttons and fields, the Cobalt glaze), `--color-5` #e1251b (red: end of the navigation bar, blocks in the opening, materials, contact and footer, the Signal glaze and wall cells), `--color-6` #d9d9d9 (grey: the table header row, the Chalk glaze field, one wall cell and the ground behind the glaze photos), `--color-7` #5c5c5c (captions and descriptions in small text, and the No cells in the materials table); body text needs 4.5:1 contrast.
@@ -64,8 +64,10 @@ All demo text, never to be invented:
 - The sample form is a demo and sends nothing; connect it to Formspree, Netlify Forms or your own endpoint.
 - The basket icon is decoration: it goes to the top of the page and its count is never updated.
 - The opening hours line says Monday to Saturday 9 to 5:30 while the contact section lists Saturday until 16:00; make them agree.
-- The top bar hides while you scroll down and returns on scroll up, also with reduced motion on.
-- The bonds (two screens of scrolling), rooms (three screens) and glazes (about one screen on a laptop) sections hold the screen for long stretches of scrolling, which feels long on a phone.
+- The top bar hides while you scroll down and returns on scroll up, also with reduced motion on and in Firefox.
+- The bonds (two screens of scrolling), rooms (three screens) and glazes (about one screen on a laptop) sections hold the screen (CSS sticky) for long stretches of scrolling, which feels long on a phone.
+- Section links jump straight to the section with no offset for the sticky top bar, so after a jump upward the bar can cover the top of the section.
+- Without CSS scroll-driven animation support (Firefox today) or with reduced motion on, the scroll animations and the smooth wheel are off and no section is held: the bond wall stays in stack bond with no bond name marked, the rooms keep their first cell layout, the glaze bays wrap into a grid and the service marker rests on the first step. In Firefox the opening still loads in.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and TEGEL left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and TEGEL left only in class names.

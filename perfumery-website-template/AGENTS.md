@@ -1,6 +1,6 @@
 # AGENTS.md: perfumery website template
 
-One-page website for an independent perfumery that sells by appointment and by post. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for an independent perfumery that sells by appointment and by post. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,20 +14,18 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:nav`: `.nav-toggle` `.nav-close`
-  - `scene:opening`: `.op-line` `.op-strip` `.op-strips` `.op-dome` `.op-copy` `.op-card--l` `.op-card--r` `.op-arch` `.op-act`
   - `section-script:visit`: `.vs-form` `.vs-status` `data-sent` `data-error`
-  - `scene:origins`: `.or-track` `.or-stage` `.or-grid` `.or-tile--c` `.or-photo` `.or-tile`
-  - `scene:cabinet`: `.cb-track` `.cb-title` `.cb-word` `.cb-deck` `.cb-card`
-  - `scene:accord`: `.ac-frame` `.ac-half` `.ac-gap`
-  - `scene:noses`: `.ns-word` `.ns-person` `.ns-arch`
-  - `scene:blind-set`: `.bs-visual` `.bs-photo` `.bs-slots`
+  - `scene-script:opening`: `.op-strips` `.op-strip`
+  - `scene-script:origins`: `.or-stage` `.or-tile--c` `.or-photo` `.or-tile`
+  - `scene-script:cabinet`: `.cb-title` `.cb-word` `.cb-deck` `.cb-card`
 - `style="--len:N"` = characters in that display line, spaces included: `Noses` is 5.
-- The origins grid has six tiles placed by named CSS classes (tile a to f, one grid area each, two layouts for desktop and phone) and the scene starts the tile with the class or-tile--c (the rose, in the middle column) full screen. Add or remove tiles only together with their grid areas.
-- The cabinet scene reads a list of four tilts for the cards; a fifth card would need a fifth value in that list and a longer scroll track.
-- The six round openings of the sample set are placed by nth-child rules on the labels (one set for desktop, one for phone) and the scene opens them with the custom property --bs-r; keep six labels, or add rules for more.
-- The drawn thread lines are SVG paths of pathLength 1, drawn by the stroke-dashoffset tween with autoRound off; keep that flag if you edit the tween, or the line pops instead of drawing.
+- The origins grid has six tiles placed by their classes (or-tile--a to or-tile--f, with one layout for desktop and one for phone), and the CSS scene targets each class: or-tile--c (the rose, in the middle column) starts full screen and the other five fly in at their own times. Add or remove tiles only together with their grid placement and their scene rules.
+- The cabinet deals four cards: each card carries its starting tilt inline (--cabinet-li-cb-card-rotate-from), and the CSS spaces the deal for four over a scroll track 330vh tall; a fifth card needs its own tilt, a new spacing and a longer track.
+- The six round openings of the sample set are six radial gradients in the photo's mask (one set for desktop, one for phone), widened by the custom property --blind-set-r and lined up with the six numbered labels; keep six labels, or add gradients for more.
+- The four tasting strips in the opening carry their starting fan angles inline (--opening-li-op-strip-rotate-from and its phone twin); a new strip needs its own pair.
 - The big word "Noses" is sized from style="--len:5", the number of characters; change it with the word.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #141213 (near-black: page ground, nav bar once it turns solid, opening second screen, origins, noses and footer grounds, and the text colour on cream and white sections), `--color-2` #f1eade (warm cream: type on the dark sections, ground of shelf, accord, resting, questions and visit, the four tasting strips, the numbered vial discs and the hover fill of dark buttons), `--color-3` #573726 (dark brown: top of the first screen's gradient, ground of the sample set section and backing of the portrait arches), `--color-4` #8c5f43 (mid brown: lower end of the first screen's gradient), `--color-5` #ffffff (white: ground of the cabinet section, the footer card, white buttons and the menu button, the disc behind the number on the shelf, and the thread line on the visit section), `--color-6` #675a50 (muted brown-grey: small print, batch numbers, notes labels, FAQ answers and form placeholders on the light sections), `--color-7` #a99d91 (muted warm grey: secondary text on the dark sections, such as the origin places, the second heading half and the portrait bios), `--color-8` #b48a5a (amber: the thread lines on the cream sections and footer card, and the ring around the number of scents on the shelf); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
@@ -66,7 +64,7 @@ All demo text, never to be invented:
 - The origins and cabinet sections sit in tall scroll tracks with held stages, so on short screens the photos and cards are cramped.
 - The two small notes beside the heading are 13 px cream text over the brown gradient and photos; check their contrast again when you change the photos or colours.
 - The scenes move large parts (the ink dome, the origins stage, the dealt deck), which can feel heavy on slow phones.
-- gsap, ScrollTrigger, SplitText and Lenis load from jsDelivr at the end of the body without defer; if the CDN fails, the scroll scenes and smooth scrolling are missing but every section still shows.
+- Without CSS scroll-driven animation support (Firefox today) or with reduced motion on, the scroll scenes do not run and the wheel scrolls natively: the origins and cabinet sit as plain grids, the thread lines show fully drawn and the dark second screen simply slides over the sticky first one. The opening's load-in and its two slow loops (floating cards, panning arch photo) still play in Firefox, not with reduced motion.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and The Resin Cabinet left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and The Resin Cabinet left only in class names.

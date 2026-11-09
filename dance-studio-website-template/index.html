@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/dance-studio-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -88,11 +89,6 @@ a { color: inherit; text-decoration: none; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--color-2); outline-offset: 3px; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis [data-lenis-prevent], .lenis [data-lenis-prevent-wheel], .lenis [data-lenis-prevent-touch] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
-.lenis.lenis-autoToggle { transition-property: overflow; transition-duration: 1ms; transition-behavior: allow-discrete; }
 }
 </style>
 <style data-8b-part="system">
@@ -294,6 +290,12 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
   #opening .op-b__copy { gap: 1.1rem; }
   #opening .op-ring { width: min(80vw, 42svh); }
 }
+
+@media (min-width: 900px) { #opening .op-ring { width: min(calc(var(--u) * 46), 82%); } } /* the faces at 3 o'clock reached past the screen edge */
+#opening .op-b__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: .4rem; }
+@media (max-width: 899px) {
+  #opening .op-b__cta { gap: 10px 22px; margin-top: .2rem; }
+}
 }
 </style>
 
@@ -462,23 +464,6 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="scene-style:showcase">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #showcase[data-sh-live] .sh__pin { height: 100svh; padding: clamp(80px, 11svh, 120px) 0 clamp(24px, 5svh, 56px); grid-template-rows: auto minmax(0, 1fr); }
-  #showcase[data-sh-live] .sh__track { display: flex; align-items: center; gap: clamp(28px, 4vw, 64px); width: max-content; height: 100%; padding: 0 var(--space-1) 0 17.8vw; }
-  #showcase[data-sh-live] .sh__item { width: auto; }
-  #showcase[data-sh-live] .sh__item figure { width: auto; height: min(46svh, 34vw); }
-  #showcase[data-sh-live] .sh__item:nth-child(even) figure { height: min(38svh, 28vw); }
-  #showcase[data-sh-live] .sh__info { width: min(380px, 80vw); height: min(52svh, 440px); min-height: 0; }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 899px) {
-  #showcase[data-sh-live] .sh__track { padding-left: var(--space-1); }
-  #showcase[data-sh-live] .sh__item figure { height: 40svh; }
-  #showcase[data-sh-live] .sh__item:nth-child(even) figure { height: 32svh; }
-}
-}
-</style>
 <style data-8b-part="section:voices">
 @layer sections {
 #voices { position: relative; overflow: clip; padding: var(--space-2) 0; }
@@ -588,26 +573,145 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 @media (max-width: 899px) { #footer .ft__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2.5rem; } }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-@property --rw-spread { syntax: '<number>'; inherits: true; initial-value: 1; }
-@media (min-width: 900px) { #opening .op-ring { width: min(calc(var(--u) * 46), 82%); } } /* the faces at 3 o'clock reached past the screen edge */
-#opening .op-b__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: .4rem; }
-#opening .op-face { --a: calc(-90deg + (var(--i) - 3.5) * 9deg + (var(--i) * 45deg - (var(--i) - 3.5) * 9deg) * var(--rw-spread)); }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-a21692: linear(0, 0.1302, 0.2509, 0.3626, 0.4654, 0.5598, 0.646, 0.7243, 0.7952, 0.8589, 0.9156, 0.9658, 1.0098, 1.0478, 1.0803, 1.1074, 1.1296, 1.1471, 1.1603, 1.1695, 1.175, 1.1771, 1.1762, 1.1725, 1.1664, 1.1582, 1.1482, 1.1368, 1.1242, 1.1108, 1.0969, 1.0828, 1.0688, 1.0553, 1.0425, 1.0309, 1.0206, 1.0121, 1.0056, 1.0014, 1); }
+[data-8b-live] [data-8b-motion~="spinIn"] { view-timeline: --motion-spinin block; view-timeline-inset: 0; animation-name: motion-spinin-rotate, motion-spinin-scale; animation-timeline: --motion-spinin; animation-range: cover 0% cover calc(50% - 5vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] [data-8b-motion~="beatIn"][data-8b-items=":scope > .tt__day"] > .tt__day, [data-8b-live] [data-8b-motion~="beatIn"][data-8b-items=":scope > details"] > details, [data-8b-live] [data-8b-motion~="beatIn"][data-8b-items=".ft__col"] .ft__col { animation-name: motion-beatin-scope-tt-day-tt-day-translate, motion-beatin-scope-tt-day-tt-day-rotate; animation-duration: 0.55s; animation-delay: calc(0s + 0.125s * var(--i)); animation-timing-function: var(--ease-a21692); }
+[data-8b-live] [data-8b-motion~="beatIn"][data-8b-items=":scope > .tt__day"] > .tt__day { animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="beatIn"][data-8b-items=":scope > .tt__day"].is-in > .tt__day { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="beatIn"][data-8b-items=":scope > details"] > details { animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="beatIn"][data-8b-items=":scope > details"].is-in > details { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="beatIn"][data-8b-items=".ft__col"] .ft__col { animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="beatIn"][data-8b-items=".ft__col"].is-in .ft__col { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="loopDraw"] path { animation-name: motion-loopdraw-path-strokedashoffset; animation-duration: 1.1s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="loopDraw"].is-in path { animation-play-state: running; }
+@keyframes motion-spinin-rotate { 0% { rotate: -150deg; } 100% { rotate: 0deg; } }
+@keyframes motion-spinin-scale { 0% { scale: 0.35; } 100% { scale: 1; } }
+@keyframes motion-beatin-scope-tt-day-tt-day-translate { 0% { translate: 0px 34px; } 100% { translate: 0px 0px; } }
+@keyframes motion-beatin-scope-tt-day-tt-day-rotate { 0% { rotate: -2.5deg; } 100% { rotate: 0deg; } }
+@keyframes motion-loopdraw-path-strokedashoffset { 0% { stroke-dashoffset: 1px; } 100% { stroke-dashoffset: 0px; } }
+}
+</style>
+<style data-8b-part="scene:opening">
+@property --opening-spread { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+[data-8b-live] #opening .op-face { --a: calc(-90deg + (var(--i) - 3.5) * 9deg + (var(--i) * 45deg - (var(--i) - 3.5) * 9deg) * var(--opening-spread)); animation: op-pop 1.5s .25s cubic-bezier(.3, .7, .2, 1) backwards; }
+[data-8b-live] #opening .op-b__copy > * { animation: opening-up .9s cubic-bezier(.2, .8, .2, 1) backwards; }
+[data-8b-live] #opening .op-b__copy > :nth-child(2) { animation-delay: .08s; }
+[data-8b-live] #opening .op-b__copy > :nth-child(3) { animation-delay: .16s; }
+[data-8b-live] #opening .op-b__copy > :nth-child(4) { animation-delay: .24s; }
+[data-8b-live] #opening .op-ring__line circle { animation: op-draw 1.3s .2s cubic-bezier(.4, 0, .2, 1) backwards; }
+[data-8b-live] #opening .op-ring { animation: opening-spread 1.5s .25s cubic-bezier(.3, .7, .2, 1) backwards; }
+[data-8b-live] #opening .op-ring__label { animation: opening-up .8s .9s cubic-bezier(.2, .8, .2, 1) backwards; }
+@keyframes opening-up { from { translate: 0 24px; opacity: 0; } }
+@keyframes opening-spread { from { --opening-spread: 0; } }
+}
+</style>
+<style data-8b-part="scene:styles">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #styles { timeline-scope: --styles-t1; }
+[data-8b-live] #styles .st__list { view-timeline: --styles-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #styles .st__cast > .st__photo { --styles-tilt: -4deg; animation-name: styles-figure-st-photo-zindex, styles-photo-translate, styles-photo-scale, styles-photo-rotate; animation-timeline: --styles-t1; animation-timing-function: linear, var(--ease-power2-inout), var(--ease-power2-inout), var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #styles .st__cast > .st__photo:nth-of-type(even) { --styles-tilt: 4deg; }
+[data-8b-live] #styles .st__list > .st__item > .st__name > .st__loop > path { animation-name: styles-svg-st-loop-path-strokedashoffset; animation-timeline: --styles-t1; animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes styles-figure-st-photo-zindex { 0% { z-index: 1; } 0.002% { z-index: 4; } 99.998% { z-index: 4; } 100% { z-index: 1; } }
+@keyframes styles-photo-translate { 0%, 100% { translate: 0px 0px; } 35.1648%, 67.033% { translate: var(--styles-x, 0px) var(--styles-y, 0px); } }
+@keyframes styles-photo-scale { 0%, 100% { scale: 1; } 35.1648%, 67.033% { scale: var(--styles-scale, 1); } }
+@keyframes styles-photo-rotate { 0%, 100% { rotate: 0deg; } 35.1648%, 67.033% { rotate: var(--styles-tilt); } }
+@keyframes styles-svg-st-loop-path-strokedashoffset { 0% { stroke-dashoffset: 1px; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 36.1446% { stroke-dashoffset: 0px; } 69.8795% { stroke-dashoffset: 0px; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); } 100% { stroke-dashoffset: 1px; } }
+@media (min-width: 900px) {
+  [data-8b-live] #styles .st__cast > .st__photo { animation-range: cover calc(0.8333% + 16.6667% * var(--i) + 44.1667vh - 16.6667vh * var(--i)) cover calc(16.1667% + 16.6666% * var(--i) + 28.8333vh - 16.6666vh * var(--i)), cover calc(0.8333% + 16.6667% * var(--i) + 44.1667vh - 16.6667vh * var(--i)) cover calc(16% + 16.6667% * var(--i) + 29vh - 16.6667vh * var(--i)), cover calc(0.8333% + 16.6667% * var(--i) + 44.1667vh - 16.6667vh * var(--i)) cover calc(16% + 16.6667% * var(--i) + 29vh - 16.6667vh * var(--i)), cover calc(0.8333% + 16.6667% * var(--i) + 44.1667vh - 16.6667vh * var(--i)) cover calc(16% + 16.6667% * var(--i) + 29vh - 16.6667vh * var(--i)); }
+  [data-8b-live] #styles .st__list > .st__item > .st__name > .st__loop > path { animation-range: cover calc(2% + 16.6667% * var(--i) + 43vh - 16.6667vh * var(--i)) cover calc(15.8333% + 16.6667% * var(--i) + 29.1667vh - 16.6667vh * var(--i)); }
+}
 @media (max-width: 899px) {
-  #opening .op-b__cta { gap: 10px 22px; margin-top: .2rem; }
+  [data-8b-live] #styles .st__cast > .st__photo { animation-range: cover calc(0.8333% + 16.6667% * var(--i) + 27.1667vh - 16.6667vh * var(--i)) cover calc(16.1667% + 16.6666% * var(--i) + 11.8333vh - 16.6666vh * var(--i)), cover calc(0.8333% + 16.6667% * var(--i) + 27.1667vh - 16.6667vh * var(--i)) cover calc(16% + 16.6667% * var(--i) + 12vh - 16.6667vh * var(--i)), cover calc(0.8333% + 16.6667% * var(--i) + 27.1667vh - 16.6667vh * var(--i)) cover calc(16% + 16.6667% * var(--i) + 12vh - 16.6667vh * var(--i)), cover calc(0.8333% + 16.6667% * var(--i) + 27.1667vh - 16.6667vh * var(--i)) cover calc(16% + 16.6667% * var(--i) + 12vh - 16.6667vh * var(--i)); }
+  [data-8b-live] #styles .st__list > .st__item > .st__name > .st__loop > path { animation-range: cover calc(2% + 16.6667% * var(--i) + 26vh - 16.6667vh * var(--i)) cover calc(15.8333% + 16.6667% * var(--i) + 12.1667vh - 16.6667vh * var(--i)); }
 }
-@media (prefers-reduced-motion: no-preference) {
-  #opening .op-b__copy > * { animation: rw-up .9s cubic-bezier(.2, .8, .2, 1) backwards; }
-  #opening .op-b__copy > :nth-child(2) { animation-delay: .08s; }
-  #opening .op-b__copy > :nth-child(3) { animation-delay: .16s; }
-  #opening .op-b__copy > :nth-child(4) { animation-delay: .24s; }
-  #opening .op-ring__line circle { animation: op-draw 1.3s .2s cubic-bezier(.4, 0, .2, 1) backwards; }
-  #opening .op-ring { animation: rw-spread 1.5s .25s cubic-bezier(.3, .7, .2, 1) backwards; }
-  #opening .op-face { animation: op-pop 1.5s .25s cubic-bezier(.3, .7, .2, 1) backwards; }
-  #opening .op-ring__label { animation: rw-up .8s .9s cubic-bezier(.2, .8, .2, 1) backwards; }
 }
-@keyframes rw-up { from { translate: 0 24px; opacity: 0; } }
-@keyframes rw-spread { from { --rw-spread: 0; } }</style>
+</style>
+<style data-8b-part="scene:first-class">
+@layer scenes {
+[data-8b-live] #first-class .fc__map { view-timeline: --first-class-map block; view-timeline-inset: 0; }
+[data-8b-live] #first-class .fc__path path, [data-8b-live] #first-class .fc__line { animation-timeline: --first-class-map; animation-range: cover 30vh cover calc(100% - 75vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #first-class .fc__path path { animation-name: first-class-draw; }
+[data-8b-live] #first-class .fc__line { animation-name: first-class-grow; }
+@keyframes first-class-draw { 0% { stroke-dashoffset: 1px; } 100% { stroke-dashoffset: 0px; } }
+@keyframes first-class-grow { 0% { scale: 1 0; } 100% { scale: 1 1; } }
+}
+</style>
+<style data-8b-part="scene:teachers">
+@layer scenes {
+[data-8b-live] { --ease-power1-inout: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); }
+[data-8b-live] #teachers .te__line > .te__card { view-timeline-inset: 0; }
+[data-8b-live] #teachers .te__line > li:nth-of-type(1) { view-timeline: --teachers-item block; }
+[data-8b-live] #teachers .te__line > li:nth-of-type(3) { view-timeline: --teachers-item block, --teachers-t2 block; }
+[data-8b-live] #teachers .te__line > li:nth-of-type(5) { view-timeline: --teachers-item block, --teachers-t3 block; }
+[data-8b-live] #teachers .te__line > li:nth-of-type(2) { view-timeline: --teachers-item block, --teachers-t4 block; }
+[data-8b-live] #teachers .te__line > li:nth-of-type(4) { view-timeline: --teachers-item block, --teachers-t5 block; }
+[data-8b-live] #teachers .te__line > li:nth-of-type(1) > .te__visual > .te__block { animation-name: teachers-span-te-block-rotate; animation-timeline: --teachers-item; animation-range: cover 2vh cover 62vh; animation-timing-function: var(--ease-power1-inout); animation-fill-mode: both; transform: none; transform-origin: 50% 50%; }
+[data-8b-live] #teachers .te__line > li:nth-of-type(1) > .te__visual > .te__photo { animation-name: teachers-figure-te-photo-translate, teachers-figure-te-photo-rotate; animation-timeline: --teachers-item; animation-range: cover 2vh cover 50vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #teachers .te__block.m-surface-3 { animation-name: teachers-span-te-block-rotate; animation-timeline: --teachers-t2; animation-range: cover 2vh cover 62vh; animation-timing-function: var(--ease-power1-inout); animation-fill-mode: both; transform: none; transform-origin: 50% 50%; }
+[data-8b-live] #teachers .te__photo.m-frame-4 { animation-name: teachers-figure-te-photo-translate, teachers-figure-te-photo-rotate; animation-timeline: --teachers-t2; animation-range: cover 2vh cover 50vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #teachers .te__line > li:nth-of-type(5) > .te__visual > .te__block { animation-name: teachers-span-te-block-rotate; animation-timeline: --teachers-item; animation-range: cover 2vh cover 62vh; animation-timing-function: var(--ease-power1-inout); animation-fill-mode: both; transform: none; transform-origin: 50% 50%; }
+[data-8b-live] #teachers .te__photo.m-frame { animation-name: teachers-figure-te-photo-translate, teachers-figure-te-photo-rotate; animation-timeline: --teachers-t3; animation-range: cover 2vh cover 50vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #teachers .te__block.m-plus { animation-name: teachers-span-te-block-rotate-4; animation-timeline: --teachers-t4; animation-range: cover 2vh cover 62vh; animation-timing-function: var(--ease-power1-inout); animation-fill-mode: both; transform: none; transform-origin: 50% 50%; }
+[data-8b-live] #teachers .te__photo.m-frame-2 { animation-name: teachers-figure-te-photo-translate, teachers-figure-te-photo-rotate-4; animation-timeline: --teachers-t4; animation-range: cover 2vh cover 50vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #teachers .te__block.m-surface { animation-name: teachers-span-te-block-rotate-4; animation-timeline: --teachers-t5; animation-range: cover 2vh cover 62vh; animation-timing-function: var(--ease-power1-inout); animation-fill-mode: both; transform: none; transform-origin: 50% 50%; }
+[data-8b-live] #teachers .te__line > li:nth-of-type(4) > .te__visual > .te__photo { animation-name: teachers-figure-te-photo-translate, teachers-figure-te-photo-rotate-4; animation-timeline: --teachers-item; animation-range: cover 2vh cover 50vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes teachers-span-te-block-rotate { 0% { rotate: 0deg; } 100% { rotate: 360deg; } }
+@keyframes teachers-figure-te-photo-translate { 0% { translate: 0px 70px; } 100% { translate: 0px 0px; } }
+@keyframes teachers-figure-te-photo-rotate { 0% { rotate: -5deg; } 100% { rotate: 0deg; } }
+@keyframes teachers-span-te-block-rotate-4 { 0% { rotate: 0deg; } 100% { rotate: -360deg; } }
+@keyframes teachers-figure-te-photo-rotate-4 { 0% { rotate: 5deg; } 100% { rotate: 0deg; } }
+}
+</style>
+<style data-8b-part="scene:showcase">
+@property --showcase-p { syntax: '<number>'; inherits: true; initial-value: 0; }
+@layer scenes {
+[data-8b-live] #showcase { view-timeline: --showcase-hold block; view-timeline-inset: 0; animation-name: showcase-hold; animation-timeline: --showcase-hold; animation-range: contain 0% contain 100%; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #showcase::after { content: ''; display: block; height: var(--showcase-distance, 0px); }
+[data-8b-live] #showcase .sh__pin { position: sticky; top: 0; height: 100svh; padding: clamp(80px, 11svh, 120px) 0 clamp(24px, 5svh, 56px); grid-template-rows: auto minmax(0, 1fr); }
+[data-8b-live] #showcase .sh__track { display: flex; align-items: center; gap: clamp(28px, 4vw, 64px); width: max-content; height: 100%; padding: 0 var(--space-1) 0 17.8vw; translate: calc(var(--showcase-p) * var(--showcase-distance, 0px) * -1) 0px; }
+[data-8b-live] #showcase .sh__item { --showcase-bob: 1; width: auto; translate: 0px calc(sin(var(--showcase-p) * 18.849556) * min(40px, 4.5vh) * var(--showcase-bob)); }
+[data-8b-live] #showcase .sh__item:nth-child(even) { --showcase-bob: -1; }
+[data-8b-live] #showcase .sh__item figure { width: auto; height: min(46svh, 34vw); }
+[data-8b-live] #showcase .sh__item:nth-child(even) figure { height: min(38svh, 28vw); }
+[data-8b-live] #showcase .sh__info { width: min(380px, 80vw); height: min(52svh, 440px); min-height: 0; }
+[data-8b-live] #showcase .sh__bars i { --showcase-beat: sin(var(--showcase-p) * 18.849556 + var(--i) * 0.7); scale: 1 calc(1 - 0.6 * max(var(--showcase-beat), -1 * var(--showcase-beat)) * sin(var(--showcase-p) * 3.141593)); }
+@keyframes showcase-hold { 0% { --showcase-p: 0; } 100% { --showcase-p: 1; } }
+@media (max-width: 899px) {
+  [data-8b-live] #showcase .sh__track { padding-left: var(--space-1); }
+  [data-8b-live] #showcase .sh__item figure { height: 40svh; }
+  [data-8b-live] #showcase .sh__item:nth-child(even) figure { height: 32svh; }
+}
+}
+</style>
+<style data-8b-part="scene:pricing">
+@layer scenes {
+[data-8b-live] #pricing .pr__passes > .pr__pass { position: relative; z-index: calc(4 + var(--i) * -1); }
+[data-8b-live] #pricing .pr__loop > path { stroke-dashoffset: 0px; }
+[data-8b-live] #pricing .pr__passes { view-timeline: --pricing-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #pricing .pr__passes > .pr__pass { animation-timeline: --pricing-t1; animation-range: cover calc(8vh + 5.4706vh * var(--i)) cover calc(53.5882vh + 5.4706vh * var(--i)); animation-name: pricing-pass-deal, pricing-article-pr-pass-rotate; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes pricing-pass-deal { 0% { translate: var(--pricing-x, 0px) var(--pricing-y, 0px); } 100% { translate: 0px 0px; } }
+@keyframes pricing-article-pr-pass-rotate { 0% { rotate: var(--pricing-article-pr-pass-rotate-from, -9deg); } 100% { rotate: 0deg; } }
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] #contact { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact .ct__disc, [data-8b-live] #contact .ct__plus { animation-timeline: --contact-t1; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #contact .ct__disc { animation-name: contact-disc-roll; animation-range: cover 15vh cover 85vh; }
+[data-8b-live] #contact .ct__plus { animation-name: contact-span-ct-plus-translate, contact-span-ct-plus-rotate; animation-range: cover 29vh cover 85vh; }
+@keyframes contact-disc-roll { 0% { translate: var(--contact-roll, 0px) 0px; rotate: var(--contact-turn, 0deg); } 100% { translate: 0px 0px; rotate: 0deg; } }
+@keyframes contact-span-ct-plus-translate { 0% { translate: 0px -50vh; } 100% { translate: 0px 0px; } }
+@keyframes contact-span-ct-plus-rotate { 0% { rotate: -270deg; } 100% { rotate: 0deg; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: fixed top bar: wordmark, four section links, Timetable link, Free first class button, menu button; full-screen menu overlay -->
@@ -626,7 +730,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
       <button class="m-icon-btn nav__menu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open the menu"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="5" width="16" height="2"/><rect x="2" y="13" width="16" height="2"/></svg></button>
     </div>
   </div>
-  <div id="menu" class="menu" data-lenis-prevent hidden>
+  <div id="menu" class="menu" hidden>
     <div class="menu__top">
       <span class="nav__brand">Twirl</span>
       <button class="m-icon-btn menu__close" type="button" aria-label="Close the menu"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.2 2.8 10 8.6l5.8-5.8 1.4 1.4L11.4 10l5.8 5.8-1.4 1.4L10 11.4l-5.8 5.8-1.4-1.4L8.6 10 2.8 4.2z"/></svg></button>
@@ -647,7 +751,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 </header>
 
 <main>
-<!-- opening: first screen: the heading "Come alone. Leave with a crew.", two paragraphs, two buttons and a ring of eight student portraits with a note -->
+<!-- opening: first screen: the heading "Come alone. Leave with a crew.", two paragraphs, two buttons and a ring of eight student portraits with a note (animation: scene:opening) -->
 <section id="opening" data-8b-section="opening" aria-labelledby="opening-title">
   
   <div class="op-b-track">
@@ -658,16 +762,16 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
         <p class="m-text-6">Classes of 12 to 20 · ages 18 to 80 · trainers and water, nothing else to buy</p>
         <div class="op-b__cta"><a class="m-btn" href="#contact"><span class="m-btn__label">Book a free first class</span></a><a class="m-link" href="#first-class">How a first class goes</a></div>
       </div>
-      <div class="op-ring">
+      <div class="op-ring" data-8b-items=":scope > .op-face" data-8b-fixed="8">
         <svg class="op-ring__line" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="49" pathLength="1"/></svg>
-        <figure class="op-face m-frame" style="--i:0"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1657152042407-64b755c7558a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bGF1Z2hpbmclMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Smiling student, Tuesday salsa" width="800" height="889" loading="lazy"></figure>
-        <figure class="op-face m-frame" style="--i:1"><img style="background:#262626" src="https://images.unsplash.com/photo-1702207761808-ed9844a23b8c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bGF1Z2hpbmclMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Laughing student, Thursday swing" width="800" height="822" loading="lazy"></figure>
-        <figure class="op-face m-frame" style="--i:2"><img style="background:#262626" src="https://images.unsplash.com/photo-1621802480244-412824a13680?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGF1Z2hpbmclMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Student smiling over her shoulder, heels class" width="800" height="780" loading="lazy"></figure>
-        <figure class="op-face m-frame" style="--i:3"><img style="background:#262626" src="https://images.unsplash.com/photo-1622012070740-4f753ebb9bad?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bGF1Z2hpbmclMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Student in a crew-neck T-shirt, Monday hip-hop" width="800" height="800" loading="lazy"></figure>
-        <figure class="op-face m-frame" style="--i:4"><img style="background:#262626" src="https://images.unsplash.com/photo-1669334179658-7098a164bdea?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8bGF1Z2hpbmclMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Student laughing with her eyes closed, bachata" width="800" height="869" loading="lazy"></figure>
-        <figure class="op-face m-frame" style="--i:5"><img style="background:#d9a68c" src="https://images.unsplash.com/photo-1711206367381-b464d4a738a4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bGF1Z2hpbmclMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Student with long hair, contemporary" width="800" height="800" loading="lazy"></figure>
-        <figure class="op-face m-frame" style="--i:6"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1658932447761-8a59cd02d201?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cG9ydHJhaXQlMjBvbGRlciUyMHdvbWFuJTIwc21pbGluZyUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Student with long fair hair, salsa" width="800" height="800" loading="lazy"></figure>
-        <figure class="op-face m-frame" style="--i:7"><img style="background:#262626" src="https://images.unsplash.com/photo-1768247695912-ed8f44d62649?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cG9ydHJhaXQlMjBvbGRlciUyMHdvbWFuJTIwc21pbGluZyUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Student with her hands near her face, swing" width="800" height="800" loading="lazy"></figure>
+        <figure class="op-face m-frame" style="--i:0"><img fetchpriority="high" src="https://images.unsplash.com/photo-1657152042407-64b755c7558a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bGF1Z2hpbmclMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Smiling student, Tuesday salsa" width="800" height="889"></figure>
+        <figure class="op-face m-frame" style="--i:1"><img src="https://images.unsplash.com/photo-1702207761808-ed9844a23b8c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8bGF1Z2hpbmclMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Laughing student, Thursday swing" width="800" height="822"></figure>
+        <figure class="op-face m-frame" style="--i:2"><img src="https://images.unsplash.com/photo-1621802480244-412824a13680?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGF1Z2hpbmclMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Student smiling over her shoulder, heels class" width="800" height="780"></figure>
+        <figure class="op-face m-frame" style="--i:3"><img src="https://images.unsplash.com/photo-1622012070740-4f753ebb9bad?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bGF1Z2hpbmclMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Student in a crew-neck T-shirt, Monday hip-hop" width="800" height="800"></figure>
+        <figure class="op-face m-frame" style="--i:4"><img src="https://images.unsplash.com/photo-1669334179658-7098a164bdea?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8bGF1Z2hpbmclMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Student laughing with her eyes closed, bachata" width="800" height="869" loading="lazy"></figure>
+        <figure class="op-face m-frame" style="--i:5"><img src="https://images.unsplash.com/photo-1711206367381-b464d4a738a4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bGF1Z2hpbmclMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Student with long hair, contemporary" width="800" height="800"></figure>
+        <figure class="op-face m-frame" style="--i:6"><img src="https://images.unsplash.com/photo-1658932447761-8a59cd02d201?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cG9ydHJhaXQlMjBvbGRlciUyMHdvbWFuJTIwc21pbGluZyUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Student with long fair hair, salsa" width="800" height="800"></figure>
+        <figure class="op-face m-frame" style="--i:7"><img src="https://images.unsplash.com/photo-1768247695912-ed8f44d62649?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cG9ydHJhaXQlMjBvbGRlciUyMHdvbWFuJTIwc21pbGluZyUyMHN0dWRpb3xlbnwxfDJ8fHwxNzkxNDA1MDY4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Student with her hands near her face, swing" width="800" height="800"></figure>
         <p class="op-ring__label m-text-3">Partners change every song</p>
       </div>
     </div>
@@ -681,7 +785,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
       <p class="st__lead m-text-4">Pick the music you already move to in the kitchen. Every style has a beginners' class each week, and you can switch whenever you like.</p>
     </div>
     <div class="st__body">
-      <ol class="st__list">
+      <ol class="st__list" data-8b-items=":scope > .st__item" data-8b-fixed="6">
         <li class="st__item">
           <h3 class="st__name m-text-2">Hip-hop<svg class="st__loop m-mark" viewBox="0 0 220 90" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M38 20 C80 6 170 6 200 26 C222 42 204 72 140 80 C76 88 14 76 12 50 C10 26 62 12 120 12 C168 12 212 22 214 44"/></svg></h3>
           <p class="st__text m-text">Grooves, bounces and short routines to new and old-school tracks. Loud, sweaty and very forgiving.</p>
@@ -714,15 +818,15 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
         </li>
       </ol>
       <div class="st__stage">
-        <div class="st__cast">
+        <div class="st__cast" data-8b-items=":scope > .st__photo" data-8b-fixed="6">
           <div class="st__floor m-surface-3"><p class="m-text-5">Take the middle when it's your turn</p></div>
           <span class="st__plus m-plus" aria-hidden="true"></span>
-          <figure class="st__photo m-frame-2"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1761882628233-1e23102da76d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c3RyZWV0JTIwZGFuY2UlMjBzdHVkaW98ZW58MXwxfHx8MTc5MTQwNTA0N3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="A hip-hop dancer in sunglasses kicking out one leg" width="1600" height="2400" loading="lazy"></figure>
-          <figure class="st__photo m-frame"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1561310666-b4c550415625?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8YWR1bHRzJTIwZGFuY2UlMjBjbGFzc3xlbnwxfDB8fHwxNzkxNDA1MDI2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="A salsa couple in white mid-turn" width="1600" height="900" loading="lazy"></figure>
-          <figure class="st__photo m-frame-3"><img style="background:#262626" src="https://images.unsplash.com/photo-1690267590629-2fe06a978cd5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fGNvbnRlbXBvcmFyeSUyMGRhbmNlcnxlbnwxfDF8fHwxNzkxNDA1MDI4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A contemporary dancer bending low under a spotlight" width="1600" height="2400" loading="lazy"></figure>
-          <figure class="st__photo m-frame-4"><img style="background:#d90c0c" src="https://images.unsplash.com/photo-1686668572519-1793f1f5f37f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8aGVlbHMlMjBkYW5jZSUyMHdvbWFufGVufDF8MXx8fDE3OTE0MDUwNDZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="A dancer in a red dress and red heels mid-step" width="1600" height="2400" loading="lazy"></figure>
-          <figure class="st__photo m-frame"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1733347950164-069ba0a97848?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c3dpbmclMjBkYW5jZSUyMGNvdXBsZXxlbnwxfDF8fHwxNzkxNDA1MDI3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=60" alt="A swing couple spinning, her pink skirt flaring" width="1600" height="2400" loading="lazy"></figure>
-          <figure class="st__photo m-frame-2"><img style="background:#262626" src="https://images.unsplash.com/photo-1634274203792-7caa82c34342?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHNhbHNhJTIwY291cGxlJTIwZGFuY2luZ3xlbnwxfDF8fHwxNzkxNDA1MDI2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A bachata couple holding hands in a dark room" width="1600" height="2400" loading="lazy"></figure>
+          <figure class="st__photo m-frame-2"><img src="https://images.unsplash.com/photo-1761882628233-1e23102da76d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c3RyZWV0JTIwZGFuY2UlMjBzdHVkaW98ZW58MXwxfHx8MTc5MTQwNTA0N3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="A hip-hop dancer in sunglasses kicking out one leg" width="1600" height="2400" loading="lazy"></figure>
+          <figure class="st__photo m-frame"><img src="https://images.unsplash.com/photo-1561310666-b4c550415625?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8YWR1bHRzJTIwZGFuY2UlMjBjbGFzc3xlbnwxfDB8fHwxNzkxNDA1MDI2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=270&amp;q=60" alt="A salsa couple in white mid-turn" width="1600" height="900" loading="lazy"></figure>
+          <figure class="st__photo m-frame-3"><img src="https://images.unsplash.com/photo-1690267590629-2fe06a978cd5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fGNvbnRlbXBvcmFyeSUyMGRhbmNlcnxlbnwxfDF8fHwxNzkxNDA1MDI4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A contemporary dancer bending low under a spotlight" width="1600" height="2400" loading="lazy"></figure>
+          <figure class="st__photo m-frame-4"><img src="https://images.unsplash.com/photo-1686668572519-1793f1f5f37f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8aGVlbHMlMjBkYW5jZSUyMHdvbWFufGVufDF8MXx8fDE3OTE0MDUwNDZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="A dancer in a red dress and red heels mid-step" width="1600" height="2400" loading="lazy"></figure>
+          <figure class="st__photo m-frame"><img src="https://images.unsplash.com/photo-1733347950164-069ba0a97848?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c3dpbmclMjBkYW5jZSUyMGNvdXBsZXxlbnwxfDF8fHwxNzkxNDA1MDI3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=60" alt="A swing couple spinning, her pink skirt flaring" width="1600" height="2400" loading="lazy"></figure>
+          <figure class="st__photo m-frame-2"><img src="https://images.unsplash.com/photo-1634274203792-7caa82c34342?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHNhbHNhJTIwY291cGxlJTIwZGFuY2luZ3xlbnwxfDF8fHwxNzkxNDA1MDI2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="A bachata couple holding hands in a dark room" width="1600" height="2400" loading="lazy"></figure>
         </div>
       </div>
     </div>
@@ -740,7 +844,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
       <svg class="fc__path m-mark" viewBox="0 0 1200 860" aria-hidden="true"><path pathLength="1" d="M20 90 C80 80 140 150 168 200 C196 250 200 330 250 350 C300 370 330 330 300 315 C270 300 250 360 330 385 C480 420 640 400 720 360 C770 335 790 300 816 280 C830 330 860 420 900 430 C950 440 960 400 930 395 C890 390 880 470 800 470 C680 470 500 440 420 455 C380 462 350 495 360 520 C370 560 360 640 400 680 C440 720 480 690 455 670 C430 650 420 730 520 735 C620 740 700 720 760 650 C790 700 780 780 860 795 C960 812 1080 790 1170 800"/></svg>
       <span class="fc__line" aria-hidden="true"></span>
       <span class="fc__walker" aria-hidden="true"></span>
-      <ol class="fc__steps">
+      <ol class="fc__steps" data-8b-items=":scope > .fc__step" data-8b-fixed="4">
         <li class="fc__step" style="--x:14%;--y:23.26%">
           <span class="fc__num m-text-5">1</span>
           <div class="fc__text"><h3 class="fc__name m-text-5">Walk in on your own</h3><p class="m-text">Most people do. Say hi at the desk, leave your coat in a locker and keep your trainers on.</p></div>
@@ -758,7 +862,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
           <div class="fc__text"><h3 class="fc__name m-text-5">Dance it, swap, again</h3><p class="m-text">Once with the lights up, once with them down, a new partner each time. Then tea, and usually a plan for next week.</p></div>
         </li>
       </ol>
-      <figure class="fc__photo m-frame-2"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1702648158754-484755fadf79?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8YWR1bHRzJTIwZGFuY2UlMjBjbGFzc3xlbnwxfDB8fHwxNzkxNDA1MDI2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="A class of adult beginners dancing together in a bright studio" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="fc__photo m-frame-2"><img src="https://images.unsplash.com/photo-1702648158754-484755fadf79?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8YWR1bHRzJTIwZGFuY2UlMjBjbGFzc3xlbnwxfDB8fHwxNzkxNDA1MDI2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="A class of adult beginners dancing together in a bright studio" width="1600" height="1067" loading="lazy"></figure>
     </div>
   </div>
 </section>
@@ -771,37 +875,37 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
       <h2 id="timetable-title" class="tt__title m-text-2">This week on the floor</h2>
       <p class="tt__lead m-text-4">Fourteen classes and one open night. Beginners' classes need no experience at all; improvers' classes suit anyone with a term behind them.</p>
     </div>
-    <div class="tt__week" data-8b-motion="beatIn">
-      <div class="tt__day">
+    <div class="tt__week" data-8b-items=":scope > .tt__day" data-8b-motion="beatIn" data-8b-enter="86%">
+      <div class="tt__day" data-8b-items=":scope > .tt__class">
         <h3 class="m-text-3">Monday</h3>
         <article class="tt__class m-surface"><p class="m-text-3">18:30–19:30</p><p class="tt__style m-text-4">Hip-hop</p><p class="m-text-3">Beginners</p><p class="tt__who m-text-3">with Kofi</p></article>
         <article class="tt__class m-surface-2"><p class="m-text-3">19:45–20:45</p><p class="tt__style m-text-4">Salsa</p><p class="m-text-3">Beginners</p><p class="tt__who m-text-3">with Marco</p></article>
       </div>
-      <div class="tt__day">
+      <div class="tt__day" data-8b-items=":scope > .tt__class">
         <h3 class="m-text-3">Tuesday</h3>
         <article class="tt__class m-surface-3"><p class="m-text-3">18:30–19:30</p><p class="tt__style m-text-4">Contemporary</p><p class="m-text-3">Open level</p><p class="tt__who m-text-3">with Ines</p></article>
         <article class="tt__class m-surface-2"><p class="m-text-3">19:45–20:45</p><p class="tt__style m-text-4">Bachata</p><p class="m-text-3">Beginners</p><p class="tt__who m-text-3">with Marco</p></article>
       </div>
-      <div class="tt__day">
+      <div class="tt__day" data-8b-items=":scope > .tt__class">
         <h3 class="m-text-3">Wednesday</h3>
         <article class="tt__class m-surface-4"><p class="m-text-3">18:30–19:30</p><p class="tt__style m-text-4">Heels</p><p class="m-text-3">Beginners</p><p class="tt__who m-text-3">with Tash</p></article>
         <article class="tt__class m-surface"><p class="m-text-3">19:45–20:45</p><p class="tt__style m-text-4">Hip-hop</p><p class="m-text-3">Improvers</p><p class="tt__who m-text-3">with Kofi</p></article>
       </div>
-      <div class="tt__day">
+      <div class="tt__day" data-8b-items=":scope > .tt__class">
         <h3 class="m-text-3">Thursday</h3>
         <article class="tt__class m-surface-5"><p class="m-text-3">18:30–19:30</p><p class="tt__style m-text-4">Swing</p><p class="m-text-3">Beginners</p><p class="tt__who m-text-3">with Dev</p></article>
         <article class="tt__class m-surface-2"><p class="m-text-3">19:45–20:45</p><p class="tt__style m-text-4">Salsa</p><p class="m-text-3">Improvers</p><p class="tt__who m-text-3">with Marco</p></article>
       </div>
-      <div class="tt__day">
+      <div class="tt__day" data-8b-items=":scope > .tt__class">
         <h3 class="m-text-3">Friday</h3>
         <article class="tt__class tt__class--wide m-surface"><p class="m-text-3">19:00–21:00</p><p class="tt__style m-text-4">Open class</p><p class="m-text-3">All styles, all levels</p><p class="tt__who m-text-3">with the whole team</p></article>
       </div>
-      <div class="tt__day">
+      <div class="tt__day" data-8b-items=":scope > .tt__class">
         <h3 class="m-text-3">Saturday</h3>
         <article class="tt__class m-surface-3"><p class="m-text-3">11:00–12:00</p><p class="tt__style m-text-4">Contemporary</p><p class="m-text-3">Beginners</p><p class="tt__who m-text-3">with Ines</p></article>
         <article class="tt__class m-surface-4"><p class="m-text-3">12:30–13:30</p><p class="tt__style m-text-4">Heels</p><p class="m-text-3">Improvers</p><p class="tt__who m-text-3">with Tash</p></article>
       </div>
-      <div class="tt__day">
+      <div class="tt__day" data-8b-items=":scope > .tt__class">
         <h3 class="m-text-3">Sunday</h3>
         <article class="tt__class m-surface-5"><p class="m-text-3">11:00–12:00</p><p class="tt__style m-text-4">Swing</p><p class="m-text-3">Open level</p><p class="tt__who m-text-3">with Dev</p></article>
         <article class="tt__class m-surface-2"><p class="m-text-3">12:30–13:30</p><p class="tt__style m-text-4">Bachata</p><p class="m-text-3">Improvers</p><p class="tt__who m-text-3">with Marco</p></article>
@@ -820,33 +924,33 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
       <h2 id="teachers-title" class="te__title m-text-2">The people who count you in</h2>
       <p class="te__lead m-text-4">Five teachers who still remember their own first class. They teach the whole room, not the front row.</p>
     </div>
-    <ul class="te__line">
+    <ul class="te__line" data-8b-items=":scope > .te__card" data-8b-fixed="5">
       <li class="te__card">
-        <div class="te__visual"><span class="te__block m-surface-2" aria-hidden="true"></span><figure class="te__photo m-frame-3"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1761882636448-cf48b733786f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mjl8fGNvbnRlbXBvcmFyeSUyMGRhbmNlcnxlbnwxfDF8fHwxNzkxNDA1MDI4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" alt="Kofi dancing in a loose jacket and trainers" width="1600" height="2400" loading="lazy"></figure></div>
+        <div class="te__visual"><span class="te__block m-surface-2" aria-hidden="true"></span><figure class="te__photo m-frame-3"><img src="https://images.unsplash.com/photo-1761882636448-cf48b733786f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mjl8fGNvbnRlbXBvcmFyeSUyMGRhbmNlcnxlbnwxfDF8fHwxNzkxNDA1MDI4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=260&amp;q=60" alt="Kofi dancing in a loose jacket and trainers" width="1600" height="2400" loading="lazy"></figure></div>
         <h3 class="te__name m-text-5">Kofi</h3>
         <p class="m-text-3">Hip-hop</p>
         <p class="m-text-6">Learnt in a church hall in Chapeltown and still warms up to Motown. Judges battles at weekends.</p>
       </li>
       <li class="te__card">
-        <div class="te__visual"><span class="te__block m-plus" aria-hidden="true"></span><figure class="te__photo m-frame-2"><img style="background:#404040" src="https://images.unsplash.com/photo-1558717501-a5c52f98333d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8eW91bmclMjBtYW4lMjBkYW5jZXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNDA0OTg2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" alt="Marco mid-step in black clothes against a grey wall" width="1600" height="2400" loading="lazy"></figure></div>
+        <div class="te__visual"><span class="te__block m-plus" aria-hidden="true"></span><figure class="te__photo m-frame-2"><img src="https://images.unsplash.com/photo-1558717501-a5c52f98333d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8eW91bmclMjBtYW4lMjBkYW5jZXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNDA0OTg2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=260&amp;q=60" alt="Marco mid-step in black clothes against a grey wall" width="1600" height="2400" loading="lazy"></figure></div>
         <h3 class="te__name m-text-5">Marco</h3>
         <p class="m-text-3">Salsa and bachata</p>
         <p class="m-text-6">Ten years of Cuban salsa in Leeds. Rotates partners faster than anyone, himself included.</p>
       </li>
       <li class="te__card">
-        <div class="te__visual"><span class="te__block m-surface-3" aria-hidden="true"></span><figure class="te__photo m-frame-4"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1779400203775-3baef1c33090?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d29tYW4lMjBkYW5jaW5nJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MXx8fDE3OTE0MDQ5ODZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" alt="Ines dancing with her hair flying" width="1600" height="2413" loading="lazy"></figure></div>
+        <div class="te__visual"><span class="te__block m-surface-3" aria-hidden="true"></span><figure class="te__photo m-frame-4"><img src="https://images.unsplash.com/photo-1779400203775-3baef1c33090?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d29tYW4lMjBkYW5jaW5nJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MXx8fDE3OTE0MDQ5ODZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=260&amp;q=60" alt="Ines dancing with her hair flying" width="1600" height="2413" loading="lazy"></figure></div>
         <h3 class="te__name m-text-5">Ines</h3>
         <p class="m-text-3">Contemporary</p>
         <p class="m-text-6">Danced with two touring companies; now teaches floor work to accountants and nurses.</p>
       </li>
       <li class="te__card">
-        <div class="te__visual"><span class="te__block m-surface" aria-hidden="true"></span><figure class="te__photo m-frame-3"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1642804479877-03311d91a15a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fGhlZWxzJTIwZGFuY2UlMjB3b21hbnxlbnwxfDF8fHwxNzkxNDA1MDQ2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" alt="Tash in heels kicking one leg high against a wall" width="1600" height="2000" loading="lazy"></figure></div>
+        <div class="te__visual"><span class="te__block m-surface" aria-hidden="true"></span><figure class="te__photo m-frame-3"><img src="https://images.unsplash.com/photo-1642804479877-03311d91a15a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fGhlZWxzJTIwZGFuY2UlMjB3b21hbnxlbnwxfDF8fHwxNzkxNDA1MDQ2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=260&amp;q=60" alt="Tash in heels kicking one leg high against a wall" width="1600" height="2000" loading="lazy"></figure></div>
         <h3 class="te__name m-text-5">Tash</h3>
         <p class="m-text-3">Heels</p>
         <p class="m-text-6">Dances in music videos and believes everyone has a walk in them, including you.</p>
       </li>
       <li class="te__card">
-        <div class="te__visual"><span class="te__block m-surface-2" aria-hidden="true"></span><figure class="te__photo m-frame"><img style="background:#737373" src="https://images.unsplash.com/photo-1596518997952-3bcbf6583301?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8eW91bmclMjBtYW4lMjBkYW5jZXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNDA0OTg2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" alt="Dev kicking out a leg on a concrete floor" width="1600" height="2400" loading="lazy"></figure></div>
+        <div class="te__visual"><span class="te__block m-surface-2" aria-hidden="true"></span><figure class="te__photo m-frame"><img src="https://images.unsplash.com/photo-1596518997952-3bcbf6583301?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8eW91bmclMjBtYW4lMjBkYW5jZXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNDA0OTg2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=250&amp;q=60" alt="Dev kicking out a leg on a concrete floor" width="1600" height="2400" loading="lazy"></figure></div>
         <h3 class="te__name m-text-5">Dev</h3>
         <p class="m-text-3">Swing</p>
         <p class="m-text-6">Found lindy hop at thirty and never stopped bouncing. Runs the Sunday social upstairs.</p>
@@ -862,13 +966,13 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
       <h2 id="showcase-title" class="sh__title m-text-2">On stage in June</h2>
       <p class="sh__lead m-text-4">Twice a year every class performs its routine on a real stage, lights and all. Bring your mum. Bring your boss.</p>
     </div>
-    <ul class="sh__track">
-      <li class="sh__item"><figure class="m-frame-2"><img style="background:#260c26" src="https://images.unsplash.com/photo-1621976360623-004223992275?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZGFuY2UlMjBwZXJmb3JtYW5jZSUyMHN0YWdlJTIwYXVkaWVuY2V8ZW58MXwwfHx8MTc5MTQwNTA0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=990&amp;q=60" alt="A hip-hop crew in green and white shirts on a purple-lit stage" width="1600" height="1122" loading="lazy"></figure><p class="m-text-3">Hip-hop improvers, June 2025</p></li>
-      <li class="sh__item"><figure class="m-frame"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1602800805409-f40cc632bb05?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjR8fGNvbnRlbXBvcmFyeSUyMGRhbmNlcnxlbnwxfDF8fHwxNzkxNDA1MDI4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A dancer in a white dress turning under a warm spotlight" width="1600" height="2400" loading="lazy"></figure><p class="m-text-3">Contemporary solo, December 2025</p></li>
-      <li class="sh__item"><figure class="m-frame-4"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1591162689269-a3fcdab967e3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGRhbmNlJTIwcGVyZm9ybWFuY2UlMjBzdGFnZSUyMGF1ZGllbmNlfGVufDF8MHx8fDE3OTE0MDUwNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=790&amp;q=60" alt="Three dancers in pink dresses leaping across a red stage" width="1600" height="900" loading="lazy"></figure><p class="m-text-3">Heels beginners, June 2025</p></li>
-      <li class="sh__item"><figure class="m-frame-3"><img style="background:#262640" src="https://images.unsplash.com/photo-1589460562162-847ebc689d7a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjB8fGRhbmNlJTIwcGVyZm9ybWFuY2UlMjBzdGFnZSUyMGF1ZGllbmNlfGVufDF8MHx8fDE3OTE0MDUwNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1040&amp;q=60" alt="A dancer in a white vest dropping to the floor on a dark stage" width="1600" height="1068" loading="lazy"></figure><p class="m-text-3">Hip-hop beginners, December 2025</p></li>
-      <li class="sh__item"><figure class="m-frame"><img style="background:#262626" src="https://images.unsplash.com/photo-1560088161-ca82e528afc9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGRhbmNlJTIwcGVyZm9ybWFuY2UlMjBzdGFnZSUyMGF1ZGllbmNlfGVufDF8MHx8fDE3OTE0MDUwNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=990&amp;q=60" alt="A large group performing a routine in a row of lights" width="1600" height="900" loading="lazy"></figure><p class="m-text-3">Open class finale, June 2025</p></li>
-      <li class="sh__item"><figure class="m-frame-2"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1651329660382-5d5220c25367?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fGRhbmNlJTIwcGVyZm9ybWFuY2UlMjBzdGFnZSUyMGF1ZGllbmNlfGVufDF8MHx8fDE3OTE0MDUwNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1040&amp;q=60" alt="A crowd of dancers lit in blue, arms raised" width="1600" height="1067" loading="lazy"></figure><p class="m-text-3">Everyone, December 2025</p></li>
+    <ul class="sh__track" data-8b-items=":scope > .sh__item">
+      <li class="sh__item"><figure class="m-frame-2"><img src="https://images.unsplash.com/photo-1621976360623-004223992275?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZGFuY2UlMjBwZXJmb3JtYW5jZSUyMHN0YWdlJTIwYXVkaWVuY2V8ZW58MXwwfHx8MTc5MTQwNTA0OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=770&amp;q=60" alt="A hip-hop crew in green and white shirts on a purple-lit stage" width="1600" height="1122" loading="lazy"></figure><p class="m-text-3">Hip-hop improvers, June 2025</p></li>
+      <li class="sh__item"><figure class="m-frame"><img src="https://images.unsplash.com/photo-1602800805409-f40cc632bb05?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjR8fGNvbnRlbXBvcmFyeSUyMGRhbmNlcnxlbnwxfDF8fHwxNzkxNDA1MDI4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="A dancer in a white dress turning under a warm spotlight" width="1600" height="2400" loading="lazy"></figure><p class="m-text-3">Contemporary solo, December 2025</p></li>
+      <li class="sh__item"><figure class="m-frame-4"><img src="https://images.unsplash.com/photo-1591162689269-a3fcdab967e3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGRhbmNlJTIwcGVyZm9ybWFuY2UlMjBzdGFnZSUyMGF1ZGllbmNlfGVufDF8MHx8fDE3OTE0MDUwNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=60" alt="Three dancers in pink dresses leaping across a red stage" width="1600" height="900" loading="lazy"></figure><p class="m-text-3">Heels beginners, June 2025</p></li>
+      <li class="sh__item"><figure class="m-frame-3"><img src="https://images.unsplash.com/photo-1589460562162-847ebc689d7a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjB8fGRhbmNlJTIwcGVyZm9ybWFuY2UlMjBzdGFnZSUyMGF1ZGllbmNlfGVufDF8MHx8fDE3OTE0MDUwNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="A dancer in a white vest dropping to the floor on a dark stage" width="1600" height="1068" loading="lazy"></figure><p class="m-text-3">Hip-hop beginners, December 2025</p></li>
+      <li class="sh__item"><figure class="m-frame"><img src="https://images.unsplash.com/photo-1560088161-ca82e528afc9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGRhbmNlJTIwcGVyZm9ybWFuY2UlMjBzdGFnZSUyMGF1ZGllbmNlfGVufDF8MHx8fDE3OTE0MDUwNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=60" alt="A large group performing a routine in a row of lights" width="1600" height="900" loading="lazy"></figure><p class="m-text-3">Open class finale, June 2025</p></li>
+      <li class="sh__item"><figure class="m-frame-2"><img src="https://images.unsplash.com/photo-1651329660382-5d5220c25367?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fGRhbmNlJTIwcGVyZm9ybWFuY2UlMjBzdGFnZSUyMGF1ZGllbmNlfGVufDF8MHx8fDE3OTE0MDUwNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="A crowd of dancers lit in blue, arms raised" width="1600" height="1067" loading="lazy"></figure><p class="m-text-3">Everyone, December 2025</p></li>
       <li class="sh__item sh__info m-surface">
         <h3 class="m-text-5">Summer Showcase</h3>
         <dl class="m-text">
@@ -876,7 +980,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
           <dt class="m-text-3">Where</dt><dd>Holbeck Hall, Leeds</dd>
           <dt class="m-text-3">Tickets</dt><dd>£8, students in the show free</dd>
         </dl>
-        <span class="sh__bars" aria-hidden="true"><i style="--h:40"></i><i style="--h:75"></i><i style="--h:100"></i><i style="--h:60"></i><i style="--h:85"></i><i style="--h:35"></i><i style="--h:70"></i><i style="--h:95"></i><i style="--h:50"></i><i style="--h:80"></i><i style="--h:30"></i><i style="--h:65"></i><i style="--h:90"></i><i style="--h:45"></i></span>
+        <span class="sh__bars" aria-hidden="true" data-8b-items=":scope > i"><i style="--h:40"></i><i style="--h:75"></i><i style="--h:100"></i><i style="--h:60"></i><i style="--h:85"></i><i style="--h:35"></i><i style="--h:70"></i><i style="--h:95"></i><i style="--h:50"></i><i style="--h:80"></i><i style="--h:30"></i><i style="--h:65"></i><i style="--h:90"></i><i style="--h:45"></i></span>
         <a class="m-btn-2" href="#contact"><span class="m-btn-2__label">Ask for tickets</span></a>
       </li>
     </ul>
@@ -889,17 +993,17 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
   <span class="vo__plus m-plus" data-8b-motion="spinIn" aria-hidden="true"></span>
   <div class="wrap">
     <h2 id="voices-title" class="vo__title m-text-2">Heard after class</h2>
-    <div class="vo__list">
+    <div class="vo__list" data-8b-items=":scope > .vo__quote">
       <figure class="vo__quote">
-        <blockquote><p class="m-text-5">“I came to one salsa class to get my steps up. That was two years and about <span class="vo__mark">four hundred partners<svg class="vo__loop m-mark" data-8b-motion="loopDraw" viewBox="0 0 220 90" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M30 22 C80 4 176 8 204 30 C224 48 200 76 132 82 C70 88 12 74 12 50 C12 28 66 12 124 14 C170 16 206 26 212 40"/></svg></span> ago.”</p></blockquote>
+        <blockquote><p class="m-text-5">“I came to one salsa class to get my steps up. That was two years and about <span class="vo__mark">four hundred partners<svg class="vo__loop m-mark" data-8b-motion="loopDraw" viewBox="0 0 220 90" preserveAspectRatio="none" aria-hidden="true" data-8b-enter="82%"><path pathLength="1" d="M30 22 C80 4 176 8 204 30 C224 48 200 76 132 82 C70 88 12 74 12 50 C12 28 66 12 124 14 C170 16 206 26 212 40"/></svg></span> ago.”</p></blockquote>
         <figcaption class="vo__who"><span class="m-text-5">Priya</span><span class="m-badge">Salsa since 2024</span></figcaption>
       </figure>
       <figure class="vo__quote">
-        <blockquote><p class="m-text-5">“Nobody looked when I got it wrong, because everyone was getting it wrong <span class="vo__mark">at the same time<svg class="vo__loop m-mark" data-8b-motion="loopDraw" viewBox="0 0 220 90" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M30 22 C80 4 176 8 204 30 C224 48 200 76 132 82 C70 88 12 74 12 50 C12 28 66 12 124 14 C170 16 206 26 212 40"/></svg></span>.”</p></blockquote>
+        <blockquote><p class="m-text-5">“Nobody looked when I got it wrong, because everyone was getting it wrong <span class="vo__mark">at the same time<svg class="vo__loop m-mark" data-8b-motion="loopDraw" viewBox="0 0 220 90" preserveAspectRatio="none" aria-hidden="true" data-8b-enter="82%"><path pathLength="1" d="M30 22 C80 4 176 8 204 30 C224 48 200 76 132 82 C70 88 12 74 12 50 C12 28 66 12 124 14 C170 16 206 26 212 40"/></svg></span>.”</p></blockquote>
         <figcaption class="vo__who"><span class="m-text-5">Gareth</span><span class="m-badge">Hip-hop since 2025</span></figcaption>
       </figure>
       <figure class="vo__quote">
-        <blockquote><p class="m-text-5">“Heels on a Wednesday is the one hour of the week I <span class="vo__mark">forget my phone<svg class="vo__loop m-mark" data-8b-motion="loopDraw" viewBox="0 0 220 90" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M30 22 C80 4 176 8 204 30 C224 48 200 76 132 82 C70 88 12 74 12 50 C12 28 66 12 124 14 C170 16 206 26 212 40"/></svg></span> exists.”</p></blockquote>
+        <blockquote><p class="m-text-5">“Heels on a Wednesday is the one hour of the week I <span class="vo__mark">forget my phone<svg class="vo__loop m-mark" data-8b-motion="loopDraw" viewBox="0 0 220 90" preserveAspectRatio="none" aria-hidden="true" data-8b-enter="82%"><path pathLength="1" d="M30 22 C80 4 176 8 204 30 C224 48 200 76 132 82 C70 88 12 74 12 50 C12 28 66 12 124 14 C170 16 206 26 212 40"/></svg></span> exists.”</p></blockquote>
         <figcaption class="vo__who"><span class="m-text-5">Amaka</span><span class="m-badge">Heels since 2023</span></figcaption>
       </figure>
     </div>
@@ -913,29 +1017,29 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
       <h2 id="pricing-title" class="pr__title m-text-2">Pick a pass</h2>
       <p class="pr__lead m-text-4">Start free, pay per class, or come every night. Passes work for every style and every teacher.</p>
     </div>
-    <div class="pr__passes">
-      <article class="pr__pass m-surface-4">
+    <div class="pr__passes" data-8b-items=":scope > .pr__pass" data-8b-fixed="4">
+      <article class="pr__pass m-surface-4" style="--pricing-article-pr-pass-rotate-from: -9deg">
         <h3 class="m-text-3">First class</h3>
-        <p class="pr__price m-text-2">Free<svg class="pr__loop m-mark" data-8b-motion="loopDraw" viewBox="0 0 220 90" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M30 22 C80 4 176 8 204 30 C224 48 200 76 132 82 C70 88 12 74 12 50 C12 28 66 12 124 14 C170 16 206 26 212 40"/></svg></p>
+        <p class="pr__price m-text-2">Free<svg class="pr__loop m-mark" data-8b-motion="loopDraw" viewBox="0 0 220 90" preserveAspectRatio="none" aria-hidden="true" data-8b-enter="82%"><path pathLength="1" d="M30 22 C80 4 176 8 204 30 C224 48 200 76 132 82 C70 88 12 74 12 50 C12 28 66 12 124 14 C170 16 206 26 212 40"/></svg></p>
         <p class="m-text-3">once, any beginners' class</p>
         <p class="m-text">No card needed. Come early, tell the desk it is your first time and we will find you a spot in the circle.</p>
         <a class="m-btn" href="#contact"><span class="m-btn__label">Book it</span></a>
       </article>
-      <article class="pr__pass m-surface-5">
+      <article class="pr__pass m-surface-5" style="--pricing-article-pr-pass-rotate-from: -3deg">
         <h3 class="m-text-3">Drop-in</h3>
         <p class="pr__price m-text-2">£12</p>
         <p class="m-text-3">per class</p>
         <p class="m-text">One class, any style, any night. Pay at the desk or book ahead when the class is busy.</p>
         <a class="m-btn" href="#contact"><span class="m-btn__label">Book a class</span></a>
       </article>
-      <article class="pr__pass m-surface-2">
+      <article class="pr__pass m-surface-2" style="--pricing-article-pr-pass-rotate-from: 4deg">
         <h3 class="m-text-3">Ten classes</h3>
         <p class="pr__price m-text-2">£95</p>
         <p class="m-text-3">£9.50 a class</p>
         <p class="m-text">Valid for four months and shareable with a friend, so you can bring someone along.</p>
         <a class="m-btn-2" href="#contact"><span class="m-btn-2__label">Buy ten</span></a>
       </article>
-      <article class="pr__pass m-surface">
+      <article class="pr__pass m-surface" style="--pricing-article-pr-pass-rotate-from: 10deg">
         <h3 class="m-text-3">Unlimited</h3>
         <p class="pr__price m-text-2">£69</p>
         <p class="m-text-3">a month</p>
@@ -951,10 +1055,10 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
   <div class="wrap">
     <div class="fq__grid">
       <div class="fq__side">
-        <h2 id="faq-title" class="fq__title m-text-2">Asked before the <span class="fq__word">first class<svg class="fq__loop m-mark" data-8b-motion="loopDraw" viewBox="0 0 220 90" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M30 22 C80 4 176 8 204 30 C224 48 200 76 132 82 C70 88 12 74 12 50 C12 28 66 12 124 14 C170 16 206 26 212 40"/></svg></span></h2>
+        <h2 id="faq-title" class="fq__title m-text-2">Asked before the <span class="fq__word">first class<svg class="fq__loop m-mark" data-8b-motion="loopDraw" viewBox="0 0 220 90" preserveAspectRatio="none" aria-hidden="true" data-8b-enter="82%"><path pathLength="1" d="M30 22 C80 4 176 8 204 30 C224 48 200 76 132 82 C70 88 12 74 12 50 C12 28 66 12 124 14 C170 16 206 26 212 40"/></svg></span></h2>
         <span class="fq__plus m-plus" data-8b-motion="spinIn" aria-hidden="true"></span>
       </div>
-      <div class="fq__list" data-8b-motion="beatIn">
+      <div class="fq__list" data-8b-items=":scope > details" data-8b-motion="beatIn" data-8b-enter="86%">
         <details><summary><span class="m-text-5">I have never danced. Is that a problem?</span><span class="fq__icon" aria-hidden="true"></span></summary><p class="m-text">That is exactly who the beginners' classes are for. About half of every class started with us in the last six months.</p></details>
         <details><summary><span class="m-text-5">Do I need a partner?</span><span class="fq__icon" aria-hidden="true"></span></summary><p class="m-text">No. In salsa, bachata and swing partners rotate every song, and the other styles are danced solo in a group.</p></details>
         <details><summary><span class="m-text-5">What should I wear?</span><span class="fq__icon" aria-hidden="true"></span></summary><p class="m-text">Clothes you can move in and clean trainers or socks. For heels, bring a pair with a strap or borrow one of ours.</p></details>
@@ -1004,7 +1108,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
 <!-- footer: footer: four columns (Studio, Open, Explore, Say hello), a huge wordmark and the copyright line with the Design: 8B credit -->
 <footer id="footer" data-8b-section="footer">
   <div class="wrap">
-    <div class="ft__cols" data-8b-motion="beatIn">
+    <div class="ft__cols" data-8b-motion="beatIn" data-8b-enter="86%" data-8b-items=".ft__col">
       <div class="ft__col">
         <h2 class="m-text-3">Studio</h2>
         <p class="m-text">Unit 1, Example Mills<br>Leeds LS9</p>
@@ -1033,283 +1137,7 @@ textarea.m-field__input { min-height: 112px; resize: vertical; }
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/MotionPathPlugin.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const nav = document.getElementById('navigation');
-  const lenis = window.lenis = new Lenis({ lerp: 0.085, anchors: { offset: -(nav ? nav.querySelector('.nav__bar').offsetHeight : 0) } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  loopDraw(element, vars = {}) {
-    const paths = element.querySelectorAll('path');
-    return gsap.timeline(vars).fromTo(paths, { strokeDashoffset: 1 }, { strokeDashoffset: 0, autoRound: false, duration: 1.1, ease: 'power2.inOut', stagger: 0.25 });
-  },
-  beatIn(element, vars = {}) {
-    const items = element.children;
-    return gsap.timeline(vars).from(items, { y: 34, rotation: -2.5, duration: 0.55, ease: 'back.out(2.4)', stagger: 0.125 });
-  },
-  spinIn(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { rotation: -150, scale: 0.35 }, { rotation: 0, scale: 1, ease: 'power2.out' });
-  }
-};
-const bindings = {
-  loopDraw: element => ({ trigger: element, start: 'top 82%', once: true }),
-  beatIn: element => ({ trigger: element, start: 'top 86%', once: true }),
-  spinIn: element => ({ trigger: element, start: 'top bottom', end: 'center 55%', scrub: 0.6 })
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  Object.keys(bindings).forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => {
-        const config = bindings[name](element);
-        const animation = effects[name](element, { paused: !config.scrub });
-        ScrollTrigger.create({ id: `${id}:${index}`, ...config, animation });
-      });
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-</script>
 
-<script data-8b-part="scene:styles">
-queueMotion(() => {
-  gsap.matchMedia().add({ desk: '(min-width: 900px) and (prefers-reduced-motion: no-preference)', phone: '(max-width: 899px) and (prefers-reduced-motion: no-preference)' }, context => {
-    const section = document.getElementById('styles');
-    const list = section.querySelector('.st__list');
-    const cast = section.querySelector('.st__cast');
-    const photos = [...cast.querySelectorAll('.st__photo')];
-    const loops = [...section.querySelectorAll('.st__loop path')];
-    const line = context.conditions.phone ? '72%' : '55%';
-    const target = photo => {
-      const cw = cast.offsetWidth, ch = cast.offsetHeight;
-      const w = photo.offsetWidth, h = photo.offsetHeight;
-      const scale = Math.min((cw * (context.conditions.phone ? 0.5 : 0.6)) / w, (ch * 0.62) / h);
-      return { x: cw / 2 - (photo.offsetLeft + w / 2), y: ch / 2 - (photo.offsetTop + h / 2), scale };
-    };
-    const timeline = gsap.timeline({
-      defaults: { ease: 'power2.inOut' },
-      scrollTrigger: { id: 'styles', trigger: list, start: `top ${line}`, end: `bottom ${line}`, scrub: 0.6, invalidateOnRefresh: true }
-    });
-    photos.forEach((photo, i) => {
-      timeline
-        .set(photo, { zIndex: 4 }, i + 0.05)
-        .to(photo, { x: () => target(photo).x, y: () => target(photo).y, scale: () => target(photo).scale, rotation: i % 2 ? 4 : -4, duration: 0.32 }, i + 0.05)
-        .to(photo, { x: 0, y: 0, scale: 1, rotation: 0, duration: 0.3 }, i + 0.66)
-        .set(photo, { zIndex: 1 }, i + 0.97);
-      if (loops[i]) timeline
-        .fromTo(loops[i], { strokeDashoffset: 1 }, { strokeDashoffset: 0, autoRound: false, duration: 0.3, ease: 'power1.out', immediateRender: false }, i + 0.12)
-        .to(loops[i], { strokeDashoffset: 1, autoRound: false, duration: 0.25, ease: 'power1.in' }, i + 0.7);
-    });
-    timeline.set({}, {}, photos.length);
-    return () => gsap.set(photos, { clearProps: 'zIndex' });
-  });
-});
-</script>
-<script data-8b-part="scene:first-class">
-queueMotion(() => {
-  gsap.matchMedia().add({ desk: '(min-width: 900px) and (prefers-reduced-motion: no-preference)', phone: '(max-width: 899px) and (prefers-reduced-motion: no-preference)' }, context => {
-    const section = document.getElementById('first-class');
-    const map = section.querySelector('.fc__map');
-    const walker = section.querySelector('.fc__walker');
-    const steps = [...section.querySelectorAll('.fc__step')];
-    const marks = steps.map(step => step.querySelector('.fc__num'));
-    let reach = [];
-    const mark = progress => steps.forEach((step, i) => step.classList.toggle('is-waiting', progress < (reach[i] ?? 0) - 0.005));
-    const trigger = { trigger: map, start: 'top 70%', end: 'bottom 75%', scrub: 0.5, invalidateOnRefresh: true };
-    if (context.conditions.desk) {
-      const svg = section.querySelector('.fc__path');
-      const path = svg.querySelector('path');
-      const total = path.getTotalLength();
-      const samples = Array.from({ length: 161 }, (_, s) => path.getPointAtLength((total * s) / 160));
-      const measure = () => {
-        const box = svg.getBoundingClientRect();
-        const sx = 1200 / box.width, sy = 860 / box.height;
-        reach = marks.map(m => {
-          const r = m.getBoundingClientRect();
-          const px = (r.left + r.width / 2 - box.left) * sx, py = (r.top + r.height / 2 - box.top) * sy;
-          let best = 0, bestD = Infinity;
-          samples.forEach((p, s) => {
-            const d = (p.x - px) ** 2 + (p.y - py) ** 2;
-            if (d < bestD) { bestD = d; best = s / 160; }
-          });
-          return best;
-        });
-      };
-      measure();
-      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: 'first-class', ...trigger, onRefreshInit: measure, onUpdate: self => mark(self.progress) } });
-      timeline
-        .fromTo(path, { strokeDashoffset: 1 }, { strokeDashoffset: 0, autoRound: false, duration: 1 }, 0)
-        .to(walker, { motionPath: { path, align: path, alignOrigin: [0.5, 0.5], start: 0, end: 1 }, duration: 1, immediateRender: true }, 0);
-      mark(timeline.scrollTrigger.progress);
-    } else {
-      const bar = section.querySelector('.fc__line');
-      const measure = () => {
-        const top = bar.offsetTop, height = bar.offsetHeight, origin = map.getBoundingClientRect().top;
-        reach = marks.map(m => { const r = m.getBoundingClientRect(); return Math.min(1, Math.max(0, (r.top + r.height / 2 - origin - top) / height)); });
-      };
-      measure();
-      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: 'first-class', ...trigger, onRefreshInit: measure, onUpdate: self => mark(self.progress) } });
-      timeline
-        .fromTo(bar, { scaleY: 0 }, { scaleY: 1, duration: 1 }, 0)
-        .fromTo(walker, { y: () => -bar.offsetHeight }, { y: 0, duration: 1 }, 0);
-      mark(timeline.scrollTrigger.progress);
-    }
-    return () => steps.forEach(step => step.classList.remove('is-waiting'));
-  });
-});
-</script>
-<script data-8b-part="scene:teachers">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('teachers');
-    section.querySelectorAll('.te__card').forEach((card, i) => {
-      const block = card.querySelector('.te__block');
-      const photo = card.querySelector('.te__photo');
-      gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: `teachers:card-${i}`, trigger: card, start: 'top 98%', end: 'top 38%', scrub: 0.6 } })
-        .fromTo(block, { rotation: 0 }, { rotation: i % 2 ? -360 : 360, transformOrigin: '50% 50%', ease: 'power1.inOut', duration: 1 }, 0)
-        .fromTo(photo, { y: 70, rotation: i % 2 ? 5 : -5 }, { y: 0, rotation: 0, ease: 'power2.out', duration: 0.8 }, 0);
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:showcase">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('showcase');
-    const pin = section.querySelector('.sh__pin');
-    const track = section.querySelector('.sh__track');
-    const items = [...track.querySelectorAll('.sh__item')];
-    const bars = [...section.querySelectorAll('.sh__bars i')];
-    section.setAttribute('data-sh-live', '');
-    const distance = () => Math.max(0, track.scrollWidth - pin.clientWidth);
-    const beats = 3;
-    const bob = gsap.utils.toArray(items).map(item => gsap.quickSetter(item, 'y', 'px'));
-    const pulse = bars.map(bar => gsap.quickSetter(bar, 'scaleY'));
-    const amp = () => Math.min(40, innerHeight * 0.045);
-    const dance = progress => {
-      const a = amp();
-      items.forEach((item, i) => bob[i](Math.sin(progress * Math.PI * 2 * beats) * a * (i % 2 ? -1 : 1)));
-      bars.forEach((bar, i) => pulse[i](1 - 0.6 * Math.abs(Math.sin(progress * Math.PI * 2 * beats + i * 0.7)) * Math.sin(progress * Math.PI)));
-    };
-    gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        id: 'showcase', trigger: section, start: 'top top', end: () => '+=' + distance(), pin, scrub: 0.4,
-        invalidateOnRefresh: true, onUpdate: self => dance(self.progress), onRefresh: self => dance(self.progress)
-      }
-    }).to(track, { x: () => -distance(), duration: 1 });
-    dance(0);
-    return () => {
-      section.removeAttribute('data-sh-live');
-      gsap.set(items.concat(bars), { clearProps: 'transform' });
-    };
-  });
-});
-</script>
-<script data-8b-part="scene:pricing">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('pricing');
-    const grid = section.querySelector('.pr__passes');
-    const passes = [...grid.querySelectorAll('.pr__pass')];
-    const fan = [-9, -3, 4, 10];
-    const lead = passes[0];
-    gsap.set(passes, { zIndex: i => passes.length - i, position: 'relative' });
-    const timeline = gsap.timeline({ defaults: { ease: 'power2.out' }, scrollTrigger: { id: 'pricing', trigger: grid, start: 'top 92%', end: 'top 30%', scrub: 0.6, invalidateOnRefresh: true } });
-    passes.forEach((pass, i) => {
-      timeline.fromTo(pass,
-        { x: () => lead.offsetLeft - pass.offsetLeft + i * 14, y: () => lead.offsetTop - pass.offsetTop + i * 10, rotation: fan[i % fan.length] },
-        { x: 0, y: 0, rotation: 0, duration: 1 }, i * 0.12);
-    });
-    return () => gsap.set(passes, { clearProps: 'zIndex,position' });
-  });
-});
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const disc = section.querySelector('.ct__disc');
-    const plus = section.querySelector('.ct__plus');
-    const roll = () => { let x = 0, node = disc; while (node && node !== section) { x += node.offsetLeft; node = node.offsetParent; } return section.offsetWidth - x; };
-    gsap.timeline({ defaults: { ease: 'power1.out' }, scrollTrigger: { id: 'contact', trigger: section, start: 'top 85%', end: 'top 15%', scrub: 0.6, invalidateOnRefresh: true } })
-      .fromTo(disc, { x: () => roll(), rotation: () => roll() / (disc.offsetWidth * Math.PI) * 360 }, { x: 0, rotation: 0, duration: 1 }, 0)
-      .fromTo(plus, { y: () => -0.5 * innerHeight, rotation: -270 }, { y: 0, rotation: 0, duration: 0.8 }, 0.2);
-  });
-});
-</script>
 <script data-8b-part="section-script:contact">
 (() => {
   const form = document.querySelector('#contact .ct__form');
@@ -1347,15 +1175,248 @@ queueMotion(() => {
   const setMenu = open => {
     menu.hidden = !open;
     openButton.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); closeButton.focus(); } else { window.lenis?.start(); openButton.focus(); }
+    if (open) { window.motionKit?.wheel?.stop(); closeButton.focus(); } else { window.motionKit?.wheel?.start(); openButton.focus(); }
   };
   openButton.addEventListener('click', () => setMenu(true));
   closeButton.addEventListener('click', () => setMenu(false));
-  menu.addEventListener('click', event => { if (event.target.closest('a')) { menu.hidden = true; openButton.setAttribute('aria-expanded', 'false'); window.lenis?.start(); } });
+  menu.addEventListener('click', event => { if (event.target.closest('a')) { menu.hidden = true; openButton.setAttribute('aria-expanded', 'false'); window.motionKit?.wheel?.start(); } });
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !menu.hidden) setMenu(false); });
   nav.addEventListener('focusin', () => nav.classList.remove('is-hidden'));
 })();
 </script>
 
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:styles">
+motionKit.scene('styles', () => {
+  const cast = document.querySelector('#styles .st__cast');
+  const photos = [...cast.querySelectorAll('.st__photo')];
+  const phone = matchMedia('(max-width: 899px)');
+  motionKit.measure(() => {
+    const cw = cast.offsetWidth, ch = cast.offsetHeight;
+    photos.forEach(photo => {
+      const w = photo.offsetWidth, h = photo.offsetHeight;
+      motionKit.set(photo, {
+        '--styles-x': cw / 2 - (photo.offsetLeft + w / 2) + 'px',
+        '--styles-y': ch / 2 - (photo.offsetTop + h / 2) + 'px',
+        '--styles-scale': Math.min((cw * (phone.matches ? 0.5 : 0.6)) / w, (ch * 0.62) / h)
+      });
+    });
+  });
+});
+</script>
+<script data-8b-part="scene-script:first-class">
+motionKit.scene('first-class', () => {
+  const section = document.getElementById('first-class');
+  const map = section.querySelector('.fc__map');
+  const svg = section.querySelector('.fc__path');
+  const path = svg.querySelector('path');
+  const bar = section.querySelector('.fc__line');
+  const walker = section.querySelector('.fc__walker');
+  const steps = [...section.querySelectorAll('.fc__step')];
+  const marks = steps.map(step => step.querySelector('.fc__num'));
+  const desk = matchMedia('(min-width: 900px)');
+  const total = path.getTotalLength();
+  const end = path.getPointAtLength(total);
+  const samples = Array.from({ length: 161 }, (_, s) => path.getPointAtLength((total * s) / 160));
+  const { width: unitsX, height: unitsY } = svg.viewBox.baseVal;
+  let reach = [], sx = 1, sy = 1, travel = 0;
+  motionKit.measure(() => {
+    if (desk.matches) {
+      const box = svg.getBoundingClientRect();
+      sx = box.width / unitsX;
+      sy = box.height / unitsY;
+      reach = marks.map(mark => {
+        const r = mark.getBoundingClientRect();
+        const px = (r.left + r.width / 2 - box.left) / sx, py = (r.top + r.height / 2 - box.top) / sy;
+        let best = 0, bestD = Infinity;
+        samples.forEach((p, s) => {
+          const d = (p.x - px) ** 2 + (p.y - py) ** 2;
+          if (d < bestD) { bestD = d; best = s / 160; }
+        });
+        return best;
+      });
+    } else {
+      const origin = map.getBoundingClientRect().top;
+      travel = bar.offsetHeight;
+      reach = marks.map(mark => {
+        const r = mark.getBoundingClientRect();
+        return Math.min(1, Math.max(0, (r.top + r.height / 2 - origin - bar.offsetTop) / travel));
+      });
+    }
+  });
+  motionKit.track(map, 'top 70%', 'bottom 75%', progress => {
+    if (desk.matches) {
+      const p = path.getPointAtLength(total * progress);
+      walker.style.translate = (p.x - end.x) * sx + 'px ' + (p.y - end.y) * sy + 'px';
+    } else {
+      walker.style.translate = '0px ' + (progress - 1) * travel + 'px';
+    }
+    steps.forEach((step, i) => step.classList.toggle('is-waiting', progress < (reach[i] ?? 0) - 0.005));
+  });
+});
+</script>
+<script data-8b-part="scene-script:showcase">
+motionKit.scene('showcase', () => {
+  const section = document.getElementById('showcase');
+  const pin = section.querySelector('.sh__pin');
+  const track = section.querySelector('.sh__track');
+  motionKit.measure(() => motionKit.set(section, { '--showcase-distance': Math.max(0, track.scrollWidth - pin.clientWidth) + 'px' }));
+});
+</script>
+<script data-8b-part="scene-script:pricing">
+motionKit.scene('pricing', () => {
+  const passes = [...document.querySelectorAll('#pricing .pr__pass')];
+  motionKit.measure(() => passes.forEach((pass, i) => motionKit.set(pass, {
+    '--pricing-x': passes[0].offsetLeft - pass.offsetLeft + i * 14 + 'px',
+    '--pricing-y': passes[0].offsetTop - pass.offsetTop + i * 10 + 'px'
+  })));
+});
+</script>
+<script data-8b-part="scene-script:contact">
+motionKit.scene('contact', () => {
+  const section = document.getElementById('contact');
+  const disc = section.querySelector('.ct__disc');
+  motionKit.measure(() => {
+    const roll = section.offsetWidth - (motionKit.box(disc).x - motionKit.box(section).x);
+    motionKit.set(disc, { '--contact-roll': roll + 'px', '--contact-turn': (roll / (disc.offsetWidth * Math.PI)) * 360 + 'deg' });
+  });
+});
+</script>
 </body>
 </html>

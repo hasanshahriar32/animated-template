@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/tailor-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -188,11 +189,6 @@ ul, ol { padding: 0; list-style: none; }
 a { color: inherit; text-decoration: none; }
 button, input, select, textarea { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--color-4); outline-offset: 4px; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis [data-lenis-prevent], .lenis [data-lenis-prevent-wheel], .lenis [data-lenis-prevent-touch] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
-.lenis.lenis-autoToggle { transition-property: overflow; transition-duration: 1ms; transition-behavior: allow-discrete; }
 }
 </style>
 <style data-8b-part="system">
@@ -366,6 +362,8 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 #opening .op-facts li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
 #opening .op-facts .m-spark { font-size: 13px; margin-top: 3px; }
 #opening .op-second-link { justify-self: start; }
+#opening .op-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; }
+#opening .op-cta .m-btn { --m-btn-fill: var(--color-1); }
 
 @media (max-width: 860px) {
   #opening { --op-top: 64px; }
@@ -432,14 +430,6 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 }
 }
 </style>
-<style data-8b-part="scene-style:cloth-board">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #cloth[data-board] .cl-stage { height: 210vh; }
-  #cloth[data-board] .cl-board { position: sticky; top: 0; display: grid; align-content: center; height: 100vh; padding: 0; }
-}
-}
-</style>
 <style data-8b-part="section:fittings">
 @layer sections {
 #fittings { position: relative; padding: var(--space-2) 0 0; overflow-x: clip; }
@@ -456,27 +446,6 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 @media (max-width: 760px) {
   #fittings .ft-step { grid-template-columns: minmax(0, 1fr); row-gap: 16px; }
   #fittings .ft-word { font-size: clamp(34px, 11vw, 64px); }
-}
-}
-</style>
-<style data-8b-part="scene-style:fittings-track">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #fittings[data-track] .ft-view { position: sticky; top: 0; display: flex; align-items: center; height: 100vh; padding: 0; overflow: hidden; }
-  #fittings[data-track] .ft-track { display: flex; align-items: center; width: max-content; gap: 0; padding: 0 var(--space-1); }
-  #fittings[data-track] .ft-step { display: flex; align-items: center; gap: clamp(20px, 2.6vw, 40px); padding-right: clamp(20px, 2.6vw, 40px); }
-  #fittings[data-track] .ft-word { font-size: clamp(64px, 16vh, 150px); }
-  #fittings[data-track] .ft-joint { width: clamp(190px, 18vw, 270px); }
-  #fittings[data-track] .ft-photo { width: clamp(240px, 30vw, 460px); aspect-ratio: 1.55; }
-  #fittings[data-track] .ft-progress { display: block; position: absolute; left: var(--space-1); right: var(--space-1); bottom: clamp(44px, 11vh, 104px); background: var(--color-6); }
-  #fittings[data-track] .ft-progress .m-rule__line { background: var(--color-2); }
-  #fittings[data-track] .ft-progress .m-spark { font-size: 18px; color: var(--color-6); transition: color 0.35s ease, rotate 0.45s cubic-bezier(0.6, 0, 0.2, 1); }
-  #fittings[data-track] .ft-progress .m-spark.is-lit { color: var(--color-4); rotate: 90deg; }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
-  #fittings[data-track] .ft-word { font-size: clamp(56px, 10vh, 92px); }
-  #fittings[data-track] .ft-joint { width: 62vw; }
-  #fittings[data-track] .ft-photo { width: 66vw; }
 }
 }
 </style>
@@ -558,14 +527,6 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 }
 }
 </style>
-<style data-8b-part="scene-style:visits-stamp">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #visits[data-roll] .vs-item.is-pending { border-color: color-mix(in srgb, var(--color-2) 38%, transparent); }
-  #visits[data-roll] .vs-item.is-pending .vs-spark { color: var(--color-2); rotate: 45deg; }
-}
-}
-</style>
 <style data-8b-part="section:archive">
 @layer sections {
 #archive { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 88px); align-items: center; padding: var(--space-2) var(--space-1); }
@@ -577,14 +538,6 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 @media (max-width: 760px) {
   #archive { grid-template-columns: minmax(0, 1fr); }
   #archive .ar-photo { aspect-ratio: 1.3; }
-}
-}
-</style>
-<style data-8b-part="scene-style:archive-bands">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #archive .ar-band { position: absolute; inset: 0; pointer-events: none; }
-  #archive .ar-band img { width: 100%; height: 100%; object-fit: cover; }
 }
 }
 </style>
@@ -663,20 +616,176 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .op-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; }
-#opening .op-cta .m-btn { --m-btn-fill: var(--color-1); }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-expo-out: linear(0, 0.1587, 0.2915, 0.403, 0.4969, 0.576, 0.6429, 0.6996, 0.7476, 0.7883, 0.8229, 0.8523, 0.8772, 0.8983, 0.9162, 0.9312, 0.9438, 0.9544, 0.9632, 0.9705, 0.9766, 0.9815, 0.9855, 0.9887, 0.9913, 0.9933, 0.9949, 0.9962, 0.9971, 0.9979, 0.9984, 0.9989, 0.9992, 0.9994, 0.9996, 0.9997, 0.9998, 0.9999, 0.9999, 1, 1); --ease-cb0991: linear(0, 0.1207, 0.2329, 0.3369, 0.433, 0.5215, 0.6026, 0.6767, 0.744, 0.8048, 0.8594, 0.908, 0.951, 0.9886, 1.0211, 1.0488, 1.072, 1.0909, 1.1059, 1.1171, 1.125, 1.1297, 1.1316, 1.131, 1.128, 1.123, 1.1164, 1.1083, 1.099, 1.0889, 1.0781, 1.0671, 1.056, 1.0452, 1.0349, 1.0254, 1.017, 1.01, 1.0046, 1.0012, 1); --ease-8387a2: linear(0, 0.1088, 0.2103, 0.3048, 0.3925, 0.4736, 0.5484, 0.6171, 0.68, 0.7372, 0.7891, 0.8357, 0.8775, 0.9146, 0.9472, 0.9756, 1, 1.0207, 1.0378, 1.0517, 1.0625, 1.0705, 1.0759, 1.079, 1.08, 1.0791, 1.0766, 1.0726, 1.0675, 1.0614, 1.0547, 1.0475, 1.04, 1.0325, 1.0253, 1.0186, 1.0125, 1.0074, 1.0034, 1.0009, 1); }
+[data-8b-live] [data-8b-motion~="rise"] .line__in { animation-name: motion-rise-line-in-translate; animation-duration: 1.05s; animation-delay: calc(0s + 0.09s * var(--i)); animation-timing-function: var(--ease-expo-out); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"].is-in .line__in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"]:not([data-8b-items=".m-spark"]) .m-rule__line { animation-name: motion-rule-single-m-rule-line-scale; animation-duration: 1.3s; animation-delay: 0s; animation-timing-function: linear; animation-fill-mode: both; animation-play-state: paused; transform: none; transform-origin: 0% 50%; }
+[data-8b-live] [data-8b-motion~="rule"]:not([data-8b-items=".m-spark"]).is-in .m-rule__line { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"]:not([data-8b-items=".m-spark"]) .m-spark { animation-name: motion-rule-single-m-spark-rotate, motion-rule-single-m-spark-scale; animation-duration: 0.9s; animation-delay: 0.35s; animation-timing-function: var(--ease-cb0991); animation-fill-mode: both; animation-play-state: paused; transform: none; translate: -50% -50%; }
+[data-8b-live] [data-8b-motion~="rule"]:not([data-8b-items=".m-spark"]).is-in .m-spark { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=".m-spark"] .m-rule__line { animation-name: motion-rule-m-spark-m-rule-line-scale; animation-duration: 1.3s; animation-delay: 0s; animation-timing-function: linear; animation-fill-mode: both; animation-play-state: paused; transform: none; transform-origin: 0% 50%; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=".m-spark"].is-in .m-rule__line { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=".m-spark"] .m-spark { animation-name: motion-rule-single-m-spark-rotate, motion-rule-single-m-spark-scale; animation-duration: 0.9s; animation-delay: calc(0.35s + 0.18s * var(--i)); animation-timing-function: var(--ease-cb0991); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rule"][data-8b-items=".m-spark"].is-in .m-spark { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="pin"] { animation-name: motion-pin-translate, motion-pin-rotate, motion-pin-scale, motion-pin-opacity; animation-duration: 1.05s; animation-delay: 0s; animation-timing-function: var(--ease-8387a2); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="pin"].is-in { animation-play-state: running; }
+@keyframes motion-rise-line-in-translate { 0% { translate: 0px 108%; } 100% { translate: 0px 0px; } }
+@keyframes motion-rule-single-m-rule-line-scale { 0% { scale: 0 1; } 0.0077% { scale: 0 1; } 1.6667% { scale: 0 1; } 3.3333% { scale: 0.0001 1; } 5% { scale: 0.0001 1; } 6.6667% { scale: 0.0002 1; } 8.3333% { scale: 0.0003 1; } 10% { scale: 0.0004 1; } 11.6667% { scale: 0.0006 1; } 13.3333% { scale: 0.001 1; } 15% { scale: 0.0014 1; } 16.6667% { scale: 0.0021 1; } 18.3333% { scale: 0.003 1; } 20% { scale: 0.0044 1; } 21.6667% { scale: 0.0061 1; } 23.3333% { scale: 0.0085 1; } 25% { scale: 0.0117 1; } 26.6667% { scale: 0.0159 1; } 26.9154% { scale: 0.0166 1; } 26.9231% { scale: 0.0166 1; } 26.9308% { scale: 0.0166 1; } 28.3333% { scale: 0.0212 1; } 30% { scale: 0.0281 1; } 31.6667% { scale: 0.0368 1; } 33.3333% { scale: 0.0477 1; } 35% { scale: 0.0614 1; } 36.6667% { scale: 0.0785 1; } 38.3333% { scale: 0.0998 1; } 40% { scale: 0.1262 1; } 41.6667% { scale: 0.1592 1; } 43.3333% { scale: 0.2002 1; } 45% { scale: 0.2516 1; } 46.6667% { scale: 0.316 1; } 48.3333% { scale: 0.3972 1; } 50% { scale: 0.5 1; } 51.6667% { scale: 0.6028 1; } 53.3333% { scale: 0.684 1; } 55% { scale: 0.7484 1; } 56.6667% { scale: 0.7998 1; } 58.3333% { scale: 0.8408 1; } 60% { scale: 0.8738 1; } 61.6667% { scale: 0.9002 1; } 63.3333% { scale: 0.9215 1; } 65% { scale: 0.9386 1; } 66.6667% { scale: 0.9523 1; } 68.3333% { scale: 0.9632 1; } 70% { scale: 0.9719 1; } 71.6667% { scale: 0.9788 1; } 73.3333% { scale: 0.9841 1; } 75% { scale: 0.9883 1; } 76.6667% { scale: 0.9915 1; } 78.3333% { scale: 0.9939 1; } 80% { scale: 0.9956 1; } 81.6667% { scale: 0.997 1; } 83.3333% { scale: 0.9979 1; } 85% { scale: 0.9986 1; } 86.6667% { scale: 0.999 1; } 88.3333% { scale: 0.9994 1; } 90% { scale: 0.9996 1; } 91.6667% { scale: 0.9997 1; } 93.3333% { scale: 0.9998 1; } 95% { scale: 0.9999 1; } 96.1462% { scale: 0.9999 1; } 96.1538% { scale: 0.9999 1; } 96.1615% { scale: 0.9999 1; } 96.6667% { scale: 0.9999 1; } 98.3333% { scale: 1; } 99.9923% { scale: 1; } 100% { scale: 1; } }
+@keyframes motion-rule-single-m-spark-rotate { 0% { rotate: -135deg; } 100% { rotate: 0deg; } }
+@keyframes motion-rule-single-m-spark-scale { 0% { scale: 0; } 100% { scale: 1; } }
+@keyframes motion-rule-m-spark-m-rule-line-scale { 0% { scale: 0 1; } 0.0077% { scale: 0 1; } 1.8333% { scale: 0 1; } 3.6667% { scale: 0.0001 1; } 5.5% { scale: 0.0001 1; } 7.3333% { scale: 0.0002 1; } 9.1667% { scale: 0.0003 1; } 11% { scale: 0.0005 1; } 12.8333% { scale: 0.0008 1; } 14.6667% { scale: 0.0013 1; } 16.5% { scale: 0.002 1; } 18.3333% { scale: 0.003 1; } 20.1667% { scale: 0.0045 1; } 22% { scale: 0.0066 1; } 23.8333% { scale: 0.0094 1; } 25.6667% { scale: 0.0132 1; } 26.9154% { scale: 0.0166 1; } 26.9231% { scale: 0.0166 1; } 26.9308% { scale: 0.0166 1; } 27.5% { scale: 0.0184 1; } 29.3333% { scale: 0.0251 1; } 31.1667% { scale: 0.0339 1; } 33% { scale: 0.0453 1; } 34.8333% { scale: 0.0599 1; } 36.6667% { scale: 0.0785 1; } 38.5% { scale: 0.1021 1; } 40.3333% { scale: 0.1322 1; } 40.7615% { scale: 0.1404 1; } 40.7692% { scale: 0.1405 1; } 40.7769% { scale: 0.1407 1; } 42.1667% { scale: 0.1705 1; } 44% { scale: 0.2194 1; } 45.8333% { scale: 0.282 1; } 47.6667% { scale: 0.3625 1; } 49.5% { scale: 0.4666 1; } 51.3333% { scale: 0.5841 1; } 53.1667% { scale: 0.6767 1; } 55% { scale: 0.7484 1; } 56.8333% { scale: 0.8043 1; } 58.6667% { scale: 0.848 1; } 60.5% { scale: 0.8823 1; } 62.3333% { scale: 0.9093 1; } 64.1667% { scale: 0.9305 1; } 66% { scale: 0.9472 1; } 67.8333% { scale: 0.9602 1; } 69.6667% { scale: 0.9703 1; } 71.5% { scale: 0.9782 1; } 73.3333% { scale: 0.9841 1; } 75.1667% { scale: 0.9886 1; } 77% { scale: 0.992 1; } 78.8333% { scale: 0.9945 1; } 80.6667% { scale: 0.9962 1; } 82.5% { scale: 0.9975 1; } 84.3333% { scale: 0.9983 1; } 86.1667% { scale: 0.9989 1; } 88% { scale: 0.9993 1; } 89.8333% { scale: 0.9996 1; } 91.6667% { scale: 0.9997 1; } 93.5% { scale: 0.9998 1; } 95.3333% { scale: 0.9999 1; } 96.1462% { scale: 0.9999 1; } 96.1538% { scale: 0.9999 1; } 96.1615% { scale: 0.9999 1; } 97.1667% { scale: 1; } 99% { scale: 1; } 99.9923% { scale: 1; } 100% { scale: 1; } }
+@keyframes motion-pin-translate { 0% { translate: 0px 80px; } 100% { translate: 0px 0px; } }
+@keyframes motion-pin-rotate { 0% { rotate: 18deg; } 100% { rotate: var(--pin-rotate-to, -8deg); } }
+@keyframes motion-pin-scale { 0% { scale: 0.88; } 100% { scale: 1; } }
+@keyframes motion-pin-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@media (min-width: 761px) {
+  [data-8b-live] [data-8b-motion~="rule"][data-8b-items=".m-spark"] .m-spark { translate: -50% -50%; }
+}
+@media (max-width: 760px) {
+  [data-8b-live] [data-8b-motion~="rule"][data-8b-items=".m-spark"] .m-spark { translate: -7.5px -7.5px; }
+}
+}
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+[data-8b-live] #opening .op-inline { animation: opening-pill-open .9s .25s cubic-bezier(0.6, 0, 0.2, 1) backwards; }
+[data-8b-live] #opening .op-inline:nth-of-type(2) { animation-delay: .4s; }
+@keyframes opening-pill-open { from { clip-path: inset(0% 46% 0% 46% round 999px); } to { clip-path: inset(0% 0% 0% 0% round 999px); } }
+}
+</style>
+<style data-8b-part="scene:cloth-board">
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #opening .op-inline { animation: op-open .9s .25s cubic-bezier(0.6, 0, 0.2, 1) backwards; }
-  #opening .op-inline:nth-of-type(2) { animation-delay: .4s; }
-}</style>
+  [data-8b-live] #cloth .cl-stage { height: 210vh; }
+  [data-8b-live] #cloth .cl-board { position: sticky; top: 0; display: grid; align-content: center; height: 100vh; padding: 0; }
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #cloth .cl-stage { view-timeline: --cloth-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #cloth .cl-row > .cl-item > .cl-sticker { animation-timeline: --cloth-t1; animation-range: cover 45vh cover calc(80.4469% + 3.9106% * var(--i) - 71.648vh - 5.6704vh * var(--i)); animation-fill-mode: both; transform: none; }
+[data-8b-live] #cloth .cl-row > li:nth-of-type(-n+2) > .cl-sticker { animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1), cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #cloth .cl-row > li:nth-of-type(3) > .cl-sticker { animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #cloth .cl-row > li:is(:nth-of-type(4), :nth-of-type(6)) > .cl-sticker { animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1), cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #cloth .cl-row > .cl-item > .cl-sticker > .m-pill { animation-name: cloth-figure-m-pill-clippath; animation-timeline: --cloth-t1; animation-range: cover calc(40.1914% + 3.3493% * var(--i) - 13.2775vh - 4.8565vh * var(--i)) cover calc(83.2536% + 3.3493% * var(--i) - 75.7177vh - 4.8565vh * var(--i)); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; }
+@keyframes cloth-div-cl-sticker-translate-d { 0% { translate: var(--cloth-div-cl-sticker-translate-from, 7.736vw) var(--cloth-div-cl-sticker-translate-from-2, -16.044vh); } 100% { translate: 0px 0px; } }
+@keyframes cloth-div-cl-sticker-translate-m { 0% { translate: var(--cloth-div-cl-sticker-translate-from-m, 26.332%) var(--cloth-div-cl-sticker-translate-from-2, -16.044vh); } 100% { translate: 0px 0px; } }
+@keyframes cloth-div-cl-sticker-rotate { 0% { rotate: var(--cloth-div-cl-sticker-rotate-from, -4.486deg); } 100% { rotate: 0deg; } }
+@keyframes cloth-div-cl-sticker-scale { 0% { scale: var(--cloth-div-cl-sticker-scale-from, 1.0276); } 100% { scale: 1; } }
+@keyframes cloth-figure-m-pill-clippath { 0% { clip-path: inset(28% 0% round 22px); } 100% { clip-path: inset(0% round 999px); } }
+@media (min-width: 761px) {
+  [data-8b-live] #cloth .cl-row > .cl-item > .cl-sticker { animation-name: cloth-div-cl-sticker-translate-d, cloth-div-cl-sticker-rotate, cloth-div-cl-sticker-scale; }
+  [data-8b-live] #cloth .cl-row > li:nth-of-type(5) > .cl-sticker { animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1), cubic-bezier(0.65, 0, 0.35, 1); }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #cloth .cl-row > .cl-item > .cl-sticker { animation-name: cloth-div-cl-sticker-translate-m, cloth-div-cl-sticker-rotate, cloth-div-cl-sticker-scale; }
+  [data-8b-live] #cloth .cl-row > li:nth-of-type(5) > .cl-sticker { animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+}
+}
+</style>
+<style data-8b-part="scene:fittings-track">
+@layer scenes {
+[data-8b-live] #fittings .ft-stage { height: calc(var(--fittings-travel, 1px) * 0.72 + 100vh); view-timeline: --fittings-stage block; view-timeline-inset: 0; }
+[data-8b-live] #fittings .ft-view { position: sticky; top: 0; display: flex; align-items: center; height: 100vh; padding: 0; overflow: hidden; }
+[data-8b-live] #fittings .ft-track { display: flex; align-items: center; width: max-content; gap: 0; padding: 0 var(--space-1); }
+[data-8b-live] #fittings .ft-step { display: flex; align-items: center; gap: clamp(20px, 2.6vw, 40px); padding-right: clamp(20px, 2.6vw, 40px); }
+[data-8b-live] #fittings .ft-word { font-size: clamp(64px, 16vh, 150px); }
+[data-8b-live] #fittings .ft-joint { width: clamp(190px, 18vw, 270px); }
+[data-8b-live] #fittings .ft-photo { width: clamp(240px, 30vw, 460px); aspect-ratio: 1.55; }
+[data-8b-live] #fittings .ft-progress { display: block; position: absolute; left: var(--space-1); right: var(--space-1); bottom: clamp(44px, 11vh, 104px); background: var(--color-6); }
+[data-8b-live] #fittings .ft-progress .m-rule__line { background: var(--color-2); }
+[data-8b-live] #fittings .ft-progress .m-spark { font-size: 18px; color: var(--color-6); transition: color 0.35s ease, rotate 0.45s cubic-bezier(0.6, 0, 0.2, 1); }
+[data-8b-live] #fittings .ft-progress .m-spark.is-lit { color: var(--color-4); rotate: 90deg; }
+@media (max-width: 760px) {
+  [data-8b-live] #fittings .ft-word { font-size: clamp(56px, 10vh, 92px); }
+  [data-8b-live] #fittings .ft-joint { width: 62vw; }
+  [data-8b-live] #fittings .ft-photo { width: 66vw; }
+}
+[data-8b-live] #fittings .ft-track, [data-8b-live] #fittings .ft-progress .m-rule__line { animation-timeline: --fittings-stage; animation-range: contain 0% contain 100%; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #fittings .ft-track { animation-name: fittings-travel; }
+[data-8b-live] #fittings .ft-progress .m-rule__line { animation-name: fittings-fill; transform-origin: 0% 50%; }
+[data-8b-live] #fittings .ft-dash, [data-8b-live] #fittings .ft-photo { --fittings-x: clamp(0, (var(--fittings-p) - var(--fittings-from, 0)) / (var(--fittings-to, 1) - var(--fittings-from, 0)), 1); }
+[data-8b-live] #fittings .ft-dash { scale: var(--fittings-x) 1; transform-origin: calc(50% - 50% * clamp(0, var(--fittings-x) * 100000, 1)) 50%; }
+[data-8b-live] #fittings .ft-photo { clip-path: inset(0% calc(50% * pow(1 - var(--fittings-x), 3)) round 999px); }
+@keyframes fittings-travel { 0% { --fittings-p: 0; translate: 0px 0px; } 100% { --fittings-p: 1; translate: calc(-1 * var(--fittings-travel, 1px)) 0px; } }
+@keyframes fittings-fill { 0% { scale: 0 1; } 100% { scale: 1 1; } }
+}
+@property --fittings-p { syntax: "<number>"; inherits: true; initial-value: 0; }
+</style>
+<style data-8b-part="scene:cut-ease">
+@layer scenes {
+[data-8b-live] #cut .ct-list > .ct-trait { view-timeline: --cut-item block; view-timeline-inset: 0; }
+[data-8b-live] #cut .ct-body { view-timeline: --cut-t2 block; view-timeline-inset: 0; }
+[data-8b-live] #cut .ct-list > .ct-trait > .m-text-4 { animation-name: cut-h3-m-text-4-scale; transform-origin: 0% 50%; animation-timeline: --cut-item; animation-range: cover 4vh cover 52vh; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; }
+[data-8b-live] #cut .ct-list > .ct-trait > .m-spark { animation-name: cut-span-m-spark-rotate, cut-span-m-spark-scale; animation-timeline: --cut-item; animation-range: cover 4vh cover 52vh; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #cut .m-pill > img { animation-name: cut-figure-m-pill-img-translate; animation-timeline: --cut-t2; animation-range: cover 0% cover 75vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes cut-h3-m-text-4-scale { 0% { scale: var(--cut-tight, 0.6) 1; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0); } 50% { scale: var(--cut-mid, 0.8) 1; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 100% { scale: 1 1; } }
+@keyframes cut-span-m-spark-rotate { 0% { rotate: -180deg; } 100% { rotate: 0deg; } }
+@keyframes cut-span-m-spark-scale { 0% { scale: 0.4; } 100% { scale: 1; } }
+@keyframes cut-figure-m-pill-img-translate { 0% { translate: 0px -10%; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:visits-stamp">
+@layer scenes {
+[data-8b-live] #visits .vs-body { timeline-scope: --visits-list; }
+[data-8b-live] #visits .vs-list { view-timeline: --visits-list block; view-timeline-inset: 0; }
+[data-8b-live] #visits .vs-roller { animation-name: visits-roll; animation-timeline: --visits-list; animation-range: cover 38vh cover calc(100% - 62vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #visits .vs-item.is-pending { border-color: color-mix(in srgb, var(--color-2) 38%, transparent); }
+[data-8b-live] #visits .vs-item.is-pending .vs-spark { color: var(--color-2); rotate: 45deg; }
+@keyframes visits-roll { 0% { translate: 0px calc(-1 * var(--visits-span, 0px)); rotate: var(--visits-turn, 0deg); } 100% { translate: 0px 0px; rotate: 0deg; } }
+}
+</style>
+<style data-8b-part="scene:archive-bands">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #archive .ar-band { position: absolute; inset: 0; pointer-events: none; }
+  [data-8b-live] #archive .ar-band img { width: 100%; height: 100%; object-fit: cover; }
+}
+}
+@layer scenes {
+[data-8b-live] #archive { timeline-scope: --archive-t1; }
+[data-8b-live] #archive .m-pill { view-timeline: --archive-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #archive .m-pill > img:nth-of-type(1), [data-8b-live] #archive .m-pill > span:is(:nth-child(2), :nth-child(3), :nth-child(4), :nth-child(5), :nth-child(6)) { animation-timeline: --archive-t1; animation-fill-mode: both; }
+[data-8b-live] #archive .m-pill > img:nth-of-type(1) { animation-name: archive-figure-m-pill-img-opacity; animation-range: cover 12vh cover calc(50% - 2vh); animation-timing-function: linear; }
+[data-8b-live] #archive .m-pill > span:is(:nth-child(2), :nth-child(3), :nth-child(4), :nth-child(5), :nth-child(6)) { animation-range: cover 12vh cover calc(50% - 2vh), cover calc(50% - 2vh - 1px) cover calc(50% - 2vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1), linear; transform: none; }
+[data-8b-live] #archive .m-pill > span:nth-child(2) { animation-name: archive-figure-m-pill-span-ar-band-translate, archive-figure-m-pill-span-ar-band-opacity; }
+[data-8b-live] #archive .m-pill > span:nth-child(3) { animation-name: archive-figure-m-pill-span-ar-band-translate-2, archive-figure-m-pill-span-ar-band-opacity; }
+[data-8b-live] #archive .m-pill > span:nth-child(4) { animation-name: archive-figure-m-pill-span-ar-band-translate-3, archive-figure-m-pill-span-ar-band-opacity; }
+[data-8b-live] #archive .m-pill > span:nth-child(5) { animation-name: archive-figure-m-pill-span-ar-band-translate-4, archive-figure-m-pill-span-ar-band-opacity; }
+[data-8b-live] #archive .m-pill > span:nth-child(6) { animation-name: archive-figure-m-pill-span-ar-band-translate-5, archive-figure-m-pill-span-ar-band-opacity; }
+@keyframes archive-figure-m-pill-img-opacity { 0% { opacity: 0; } 99.998% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes archive-figure-m-pill-span-ar-band-translate { 0% { translate: -16% 0px; } 100% { translate: 0px 0px; } }
+@keyframes archive-figure-m-pill-span-ar-band-opacity { 0% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes archive-figure-m-pill-span-ar-band-translate-2 { 0% { translate: 22% 0px; } 100% { translate: 0px 0px; } }
+@keyframes archive-figure-m-pill-span-ar-band-translate-3 { 0% { translate: -28% 0px; } 100% { translate: 0px 0px; } }
+@keyframes archive-figure-m-pill-span-ar-band-translate-4 { 0% { translate: 34% 0px; } 100% { translate: 0px 0px; } }
+@keyframes archive-figure-m-pill-span-ar-band-translate-5 { 0% { translate: -40% 0px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:contact-close">
+@layer scenes {
+[data-8b-live] #contact .co-title-row { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact .co-word--a > .co-word__in, [data-8b-live] #contact .co-word--b > .co-word__in, [data-8b-live] #contact .co-dash__bar { animation-timeline: --contact-t1; animation-range: cover 2vh cover 60vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #contact .co-word--a > .co-word__in { animation-name: contact-span-co-word-in-translate; }
+[data-8b-live] #contact .co-word--b > .co-word__in { animation-name: contact-span-co-word-in-translate-2; }
+[data-8b-live] #contact .co-dash__bar { animation-name: contact-span-co-dash-bar-scale; transform-origin: 50% 50%; }
+@keyframes contact-span-co-word-in-translate { 0% { translate: -120% 0px; } 100% { translate: 0px 0px; } }
+@keyframes contact-span-co-word-in-translate-2 { 0% { translate: 260% 0px; } 100% { translate: 0px 0px; } }
+@keyframes contact-span-co-dash-bar-scale { 0% { scale: 2.8 1; } 100% { scale: 1; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: wordmark, three links and a booking button; a Menu button opens a full-screen overlay with six links, the booking button, address and phone -->
 <header id="nav" class="nv" data-8b-section="navigation">
   <div class="nv-bar">
     <a class="nv-mark" href="#opening">Haldane</a>
-    <nav class="nv-links" aria-label="Main">
+    <nav class="nv-links" aria-label="Main" data-8b-items=":scope > a">
       <a class="m-link-2" href="#cloth">The cloth</a>
       <a class="m-link-2" href="#fittings">Fittings</a>
       <a class="m-link-2" href="#visits">Trunk shows</a>
@@ -688,12 +797,12 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
     <button class="m-iconbtn nv-menu" type="button" aria-expanded="false" aria-controls="menu"><span class="u-sr">Open menu</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18M3 16h18"/></svg></button>
     <span class="nv-line" aria-hidden="true"></span>
   </div>
-  <div class="nv-overlay" id="menu" data-lenis-prevent hidden>
+  <div class="nv-overlay" id="menu" hidden>
     <div class="nv-overlay__top">
       <a class="nv-mark" href="#opening">Haldane</a>
       <button class="m-iconbtn nv-close" type="button"><span class="u-sr">Close menu</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
     </div>
-    <nav class="nv-overlay__links" aria-label="Menu">
+    <nav class="nv-overlay__links" aria-label="Menu" data-8b-items=":scope > a">
       <a href="#cloth">The cloth</a>
       <a href="#fittings">Fittings</a>
       <a href="#cutters">Cutters</a>
@@ -709,14 +818,14 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 </header>
 
 <main id="main">
-<!-- opening: one large statement as the h1 with two small photo pills inside it, three facts and two links -->
+<!-- opening: one large statement as the h1 with two small photo pills inside it, three facts and two links (animation: scene:opening) -->
 <section id="opening" class="op" data-8b-section="opening">
   
   
 
   <div class="op-second">
-    <h1 id="opening-title" class="m-text-3 op-statement">Every Haldane suit begins as a brown-paper pattern <span class="m-pill op-inline"><img style="background:#262626" src="https://images.unsplash.com/photo-1738747597354-15b75122e121?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8dHdlZWQlMjBmYWJyaWMlMjB0ZXh0dXJlfGVufDF8MHx8fDE3OTE0MDUwNjl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=140&amp;q=60" alt="" width="3872" height="2592" loading="lazy"></span> drawn for one body, then is basted, fitted three times <span class="m-pill op-inline"><img style="background:#0c2626" src="https://images.unsplash.com/photo-1770910195240-ddec777b77f6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dGFpbG9yJTIwY3V0dGluZyUyMGNsb3RofGVufDF8MHx8fDE3OTE0MDUwNDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=140&amp;q=60" alt="" width="9158" height="6095" loading="lazy"></span> and finished by hand.</h1>
-    <ul class="op-facts">
+    <h1 id="opening-title" class="m-text-3 op-statement">Every Haldane suit begins as a brown-paper pattern <span class="m-pill op-inline"><img fetchpriority="high" srcset="https://images.unsplash.com/photo-1738747597354-15b75122e121?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8dHdlZWQlMjBmYWJyaWMlMjB0ZXh0dXJlfGVufDF8MHx8fDE3OTE0MDUwNjl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60 110w, https://images.unsplash.com/photo-1738747597354-15b75122e121?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8dHdlZWQlMjBmYWJyaWMlMjB0ZXh0dXJlfGVufDF8MHx8fDE3OTE0MDUwNjl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=140&amp;q=60 140w" sizes="(max-width: 767px) 36px, 11vw" src="https://images.unsplash.com/photo-1738747597354-15b75122e121?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8dHdlZWQlMjBmYWJyaWMlMjB0ZXh0dXJlfGVufDF8MHx8fDE3OTE0MDUwNjl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=140&amp;q=60" alt="" width="3872" height="2592"></span> drawn for one body, then is basted, fitted three times <span class="m-pill op-inline"><img srcset="https://images.unsplash.com/photo-1770910195240-ddec777b77f6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dGFpbG9yJTIwY3V0dGluZyUyMGNsb3RofGVufDF8MHx8fDE3OTE0MDUwNDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60 110w, https://images.unsplash.com/photo-1770910195240-ddec777b77f6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dGFpbG9yJTIwY3V0dGluZyUyMGNsb3RofGVufDF8MHx8fDE3OTE0MDUwNDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=140&amp;q=60 140w" sizes="(max-width: 767px) 36px, 11vw" src="https://images.unsplash.com/photo-1770910195240-ddec777b77f6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dGFpbG9yJTIwY3V0dGluZyUyMGNsb3RofGVufDF8MHx8fDE3OTE0MDUwNDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=140&amp;q=60" alt="" width="9158" height="6095"></span> and finished by hand.</h1>
+    <ul class="op-facts" data-8b-items=":scope > li">
       <li><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><span class="m-text-2">Twelve weeks from the first measure to collection</span></li>
       <li><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><span class="m-text-2">Around eighty hours of hand work in every coat</span></li>
       <li><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><span class="m-text-2">Your pattern kept on file for as long as you wear us</span></li>
@@ -727,7 +836,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 <!-- cloth: six cloth swatches arrive scattered like stickers, straighten into a row and open into tall pill bolts (animation: scene:cloth-board) -->
 <section id="cloth" class="cl" data-8b-section="cloth">
   <div class="u-head cl-head">
-    <h2 class="m-text-5" data-8b-motion="rise">Four hundred cloths. One of them is yours.</h2>
+    <h2 class="m-text-5" data-8b-motion="rise" data-8b-enter="90%" data-8b-split="lines">Four hundred cloths. One of them is yours.</h2>
     <div>
       <p class="m-text">The library holds bunches from mills in the Scottish Borders, Huddersfield and Biella: flannels, worsteds, tweeds and the odd bolt bought because it was beautiful. Handle them in the workroom, or have cuttings posted before your first fitting.</p>
       <a class="m-btn" href="#contact"><span class="m-btn__label">Order cuttings by post</span></a>
@@ -735,34 +844,34 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
   </div>
   <div class="cl-stage">
     <div class="cl-board">
-      <ul class="cl-row">
-        <li class="cl-item"><div class="cl-sticker">
-          <figure class="m-pill cl-bolt"><img style="background:#737373" src="https://images.unsplash.com/photo-1699245111017-658557db0abb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8d29vbCUyMHN1aXRpbmclMjBmYWJyaWN8ZW58MXwwfHx8MTc5MTQwNTA3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Close weave of mid-grey flannel" width="6720" height="4480" loading="lazy"></figure>
+      <ul class="cl-row" data-8b-items=":scope > .cl-item" data-8b-fixed="6">
+        <li class="cl-item" style="--cloth-div-cl-sticker-translate-from: 7.736vw; --cloth-div-cl-sticker-translate-from-2: -16.044vh; --cloth-div-cl-sticker-rotate-from: -4.486deg; --cloth-div-cl-sticker-scale-from: 1.0276; --cloth-div-cl-sticker-translate-from-m: 26.332%"><div class="cl-sticker">
+          <figure class="m-pill cl-bolt"><img src="https://images.unsplash.com/photo-1699245111017-658557db0abb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8d29vbCUyMHN1aXRpbmclMjBmYWJyaWN8ZW58MXwwfHx8MTc5MTQwNTA3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=670&amp;q=60" alt="Close weave of mid-grey flannel" width="6720" height="4480" loading="lazy"></figure>
           <p class="m-text-2 cl-name">Grey flannel</p>
           <p class="m-text-7 cl-mill">Yorkshire · 13 oz</p>
         </div></li>
-        <li class="cl-item"><div class="cl-sticker">
-          <figure class="m-pill cl-bolt"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1611331347660-9a4e98549588?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8d29vbCUyMHN1aXRpbmclMjBmYWJyaWN8ZW58MXwwfHx8MTc5MTQwNTA3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Folds of navy worsted with a pinked edge" width="6000" height="4000" loading="lazy"></figure>
+        <li class="cl-item" style="--cloth-div-cl-sticker-translate-from: 14.509%; --cloth-div-cl-sticker-translate-from-2: 9.569vh; --cloth-div-cl-sticker-rotate-from: -11.398deg; --cloth-div-cl-sticker-scale-from: 0.9416; --cloth-div-cl-sticker-translate-from-m: 7.063%"><div class="cl-sticker">
+          <figure class="m-pill cl-bolt"><img src="https://images.unsplash.com/photo-1611331347660-9a4e98549588?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8d29vbCUyMHN1aXRpbmclMjBmYWJyaWN8ZW58MXwwfHx8MTc5MTQwNTA3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Folds of navy worsted with a pinked edge" width="6000" height="4000" loading="lazy"></figure>
           <p class="m-text-2 cl-name">Navy worsted</p>
           <p class="m-text-7 cl-mill">Huddersfield · 9 oz</p>
         </div></li>
-        <li class="cl-item"><div class="cl-sticker">
-          <figure class="m-pill cl-bolt"><img style="background:#264040" src="https://images.unsplash.com/photo-1601307511525-b6c29f24c2e3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGdyZWVuJTIwd29vbCUyMGZhYnJpY3xlbnwxfDB8fHwxNzkxNDA1MDcyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Soft folds of bottle-green twill" width="6000" height="4000" loading="lazy"></figure>
+        <li class="cl-item" style="--cloth-div-cl-sticker-translate-from: -10.195%; --cloth-div-cl-sticker-translate-from-2: -5.592vh; --cloth-div-cl-sticker-rotate-from: 22.584deg; --cloth-div-cl-sticker-scale-from: 0.7903; --cloth-div-cl-sticker-translate-from-m: -4.962%"><div class="cl-sticker">
+          <figure class="m-pill cl-bolt"><img src="https://images.unsplash.com/photo-1601307511525-b6c29f24c2e3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGdyZWVuJTIwd29vbCUyMGZhYnJpY3xlbnwxfDB8fHwxNzkxNDA1MDcyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=540&amp;q=60" alt="Soft folds of bottle-green twill" width="6000" height="4000" loading="lazy"></figure>
           <p class="m-text-2 cl-name">Bottle-green twill</p>
           <p class="m-text-7 cl-mill">Scottish Borders · 11 oz</p>
         </div></li>
-        <li class="cl-item"><div class="cl-sticker">
-          <figure class="m-pill cl-bolt"><img style="background:#262626" src="https://images.unsplash.com/photo-1673173042717-085e70ce2c34?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dHdlZWQlMjBmYWJyaWMlMjB0ZXh0dXJlfGVufDF8MHx8fDE3OTE0MDUwNjl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="Black and white houndstooth check" width="4032" height="3024" loading="lazy"></figure>
+        <li class="cl-item" style="--cloth-div-cl-sticker-translate-from: -7.333vw; --cloth-div-cl-sticker-translate-from-2: 32.631vh; --cloth-div-cl-sticker-rotate-from: 6.594deg; --cloth-div-cl-sticker-scale-from: 0.8121; --cloth-div-cl-sticker-translate-from-m: -24.963%"><div class="cl-sticker">
+          <figure class="m-pill cl-bolt"><img src="https://images.unsplash.com/photo-1673173042717-085e70ce2c34?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dHdlZWQlMjBmYWJyaWMlMjB0ZXh0dXJlfGVufDF8MHx8fDE3OTE0MDUwNjl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="Black and white houndstooth check" width="4032" height="3024" loading="lazy"></figure>
           <p class="m-text-2 cl-name">Houndstooth</p>
           <p class="m-text-7 cl-mill">Scottish Borders · 12 oz</p>
         </div></li>
-        <li class="cl-item"><div class="cl-sticker">
-          <figure class="m-pill cl-bolt"><img style="background:#8c7359" src="https://images.unsplash.com/photo-1748792311943-7b654e3a9c8e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dHdlZWQlMjBmYWJyaWMlMjB0ZXh0dXJlfGVufDF8MHx8fDE3OTE0MDUwNjl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Coarse brown tweed weave" width="6000" height="4000" loading="lazy"></figure>
+        <li class="cl-item" style="--cloth-div-cl-sticker-translate-from: 10.422vw; --cloth-div-cl-sticker-translate-from-2: 2.514vh; --cloth-div-cl-sticker-rotate-from: 22.762deg; --cloth-div-cl-sticker-scale-from: 0.8602; --cloth-div-cl-sticker-translate-from-m: 35.476%"><div class="cl-sticker">
+          <figure class="m-pill cl-bolt"><img src="https://images.unsplash.com/photo-1748792311943-7b654e3a9c8e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dHdlZWQlMjBmYWJyaWMlMjB0ZXh0dXJlfGVufDF8MHx8fDE3OTE0MDUwNjl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="Coarse brown tweed weave" width="6000" height="4000" loading="lazy"></figure>
           <p class="m-text-2 cl-name">Brown island tweed</p>
           <p class="m-text-7 cl-mill">Outer Hebrides · 15 oz</p>
         </div></li>
-        <li class="cl-item"><div class="cl-sticker">
-          <figure class="m-pill cl-bolt"><img style="background:#262626" src="https://images.unsplash.com/photo-1627051895303-eceeb8b3f80f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8d29vbCUyMHN1aXRpbmclMjBmYWJyaWN8ZW58MXwwfHx8MTc5MTQwNTA3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Charcoal cloth with a pale windowpane check" width="6000" height="4000" loading="lazy"></figure>
+        <li class="cl-item" style="--cloth-div-cl-sticker-translate-from: 8.147vw; --cloth-div-cl-sticker-translate-from-2: 17.75vh; --cloth-div-cl-sticker-rotate-from: 10.533deg; --cloth-div-cl-sticker-scale-from: 1.0722; --cloth-div-cl-sticker-translate-from-m: 27.728%"><div class="cl-sticker">
+          <figure class="m-pill cl-bolt"><img src="https://images.unsplash.com/photo-1627051895303-eceeb8b3f80f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8d29vbCUyMHN1aXRpbmclMjBmYWJyaWN8ZW58MXwwfHx8MTc5MTQwNTA3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" alt="Charcoal cloth with a pale windowpane check" width="6000" height="4000" loading="lazy"></figure>
           <p class="m-text-2 cl-name">Windowpane check</p>
           <p class="m-text-7 cl-mill">Biella · 10 oz</p>
         </div></li>
@@ -774,21 +883,21 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 <!-- fittings: four steps as extra-wide words joined by dashes; the track travels sideways while the section is held, photos open as they arrive (animation: scene:fittings-track) -->
 <section id="fittings" class="ft" data-8b-section="fittings">
   <div class="u-head ft-head">
-    <h2 class="m-text-5" data-8b-motion="rise">Three fittings, twelve weeks</h2>
+    <h2 class="m-text-5" data-8b-motion="rise" data-8b-enter="90%" data-8b-split="lines">Three fittings, twelve weeks</h2>
     <div>
       <p class="m-text">No coat leaves the workroom on a first try. Each fitting moves it closer to the way you stand, sit and reach, and each is booked around your diary.</p>
     </div>
   </div>
   <div class="ft-stage">
     <div class="ft-view">
-      <ol class="ft-track">
+      <ol class="ft-track" data-8b-items=":scope > .ft-step">
         <li class="ft-step">
           <h3 class="m-text-4 ft-word">Measure</h3>
           <div class="ft-joint">
             <p class="m-text-2 ft-note"><span class="m-text-6 ft-num">Step 1</span>Twenty-six measures and notes on how you stand; your pattern is drafted by hand that week.</p>
             <span class="ft-dash" aria-hidden="true"></span>
           </div>
-          <figure class="m-pill ft-photo"><img style="background:#59260c" src="https://images.unsplash.com/photo-1637666418115-305af1338928?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8dGFwZSUyMG1lYXN1cmUlMjBzaG91bGRlcnMlMjBqYWNrZXR8ZW58MXwwfHx8MTc5MTQwNTIxMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="Loops of tailor’s tape measure lit gold" width="3071" height="2047" loading="lazy"></figure>
+          <figure class="m-pill ft-photo"><img src="https://images.unsplash.com/photo-1637666418115-305af1338928?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8dGFwZSUyMG1lYXN1cmUlMjBzaG91bGRlcnMlMjBqYWNrZXR8ZW58MXwwfHx8MTc5MTQwNTIxMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=410&amp;q=60" alt="Loops of tailor’s tape measure lit gold" width="3071" height="2047" loading="lazy"></figure>
         </li>
         <li class="ft-step">
           <h3 class="m-text-4 ft-word">Baste</h3>
@@ -796,7 +905,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
             <p class="m-text-2 ft-note"><span class="m-text-6 ft-num">Step 2</span>A coat held together with loose white stitches, opened and chalked again on you.</p>
             <span class="ft-dash" aria-hidden="true"></span>
           </div>
-          <figure class="m-pill ft-photo"><img style="background:#26260c" src="https://images.unsplash.com/photo-1633655442168-c6ef0ed2f984?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c3VpdCUyMG1hbm5lcXVpbiUyMHdvcmtzaG9wfGVufDF8MHx8fDE3OTE0MDUxMzR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A brown jacket on a dress form with a paper pattern piece pinned at the shoulder" width="3091" height="2048" loading="lazy"></figure>
+          <figure class="m-pill ft-photo"><img src="https://images.unsplash.com/photo-1633655442168-c6ef0ed2f984?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c3VpdCUyMG1hbm5lcXVpbiUyMHdvcmtzaG9wfGVufDF8MHx8fDE3OTE0MDUxMzR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=410&amp;q=60" alt="A brown jacket on a dress form with a paper pattern piece pinned at the shoulder" width="3091" height="2048" loading="lazy"></figure>
         </li>
         <li class="ft-step">
           <h3 class="m-text-4 ft-word">Forward</h3>
@@ -804,7 +913,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
             <p class="m-text-2 ft-note"><span class="m-text-6 ft-num">Step 3</span>Pockets, lapels and sleeves in place; the balance and the collar are set.</p>
             <span class="ft-dash" aria-hidden="true"></span>
           </div>
-          <figure class="m-pill ft-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1621533463397-f292bd0745f9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGFpbG9yJTIwZml0dGluZyUyMGphY2tldCUyMGNsaWVudHxlbnwxfDB8fHwxNzkxNDA1MjEyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A tailor adjusting the front of a client’s navy jacket" width="4240" height="2384" loading="lazy"></figure>
+          <figure class="m-pill ft-photo"><img src="https://images.unsplash.com/photo-1621533463397-f292bd0745f9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGFpbG9yJTIwZml0dGluZyUyMGphY2tldCUyMGNsaWVudHxlbnwxfDB8fHwxNzkxNDA1MjEyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="A tailor adjusting the front of a client’s navy jacket" width="4240" height="2384" loading="lazy"></figure>
         </li>
         <li class="ft-step">
           <h3 class="m-text-4 ft-word">Finish</h3>
@@ -812,7 +921,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
             <p class="m-text-2 ft-note"><span class="m-text-6 ft-num">Step 4</span>Hand-sewn buttonholes, a last press, and the suit goes home with you.</p>
             <span class="ft-dash" aria-hidden="true"></span>
           </div>
-          <figure class="m-pill ft-photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1644375857048-f6dc7b47f002?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGJlc3Bva2UlMjBzdWl0JTIwdGFpbG9yfGVufDF8MHx8fDE3OTE0MDUwNTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A man buttoning a finished charcoal suit" width="5228" height="3485" loading="lazy"></figure>
+          <figure class="m-pill ft-photo"><img src="https://images.unsplash.com/photo-1644375857048-f6dc7b47f002?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGJlc3Bva2UlMjBzdWl0JTIwdGFpbG9yfGVufDF8MHx8fDE3OTE0MDUwNTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=410&amp;q=60" alt="A man buttoning a finished charcoal suit" width="5228" height="3485" loading="lazy"></figure>
         </li>
       </ol>
       <div class="m-rule ft-progress" aria-hidden="true"><span class="m-rule__line"></span></div>
@@ -822,24 +931,24 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 
 <!-- cutters: three portrait stickers with name, role and one line each -->
 <section id="cutters" class="cu" data-8b-section="cutters">
-  <div class="m-rule cu-rule" aria-hidden="true" data-8b-motion="rule"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div>
+  <div class="m-rule cu-rule" aria-hidden="true" data-8b-motion="rule" data-8b-enter="92%"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div>
   <div class="u-head cu-head">
-    <h2 class="m-text-5" data-8b-motion="rise">Three pairs of hands in every coat</h2>
+    <h2 class="m-text-5" data-8b-motion="rise" data-8b-enter="90%" data-8b-split="lines">Three pairs of hands in every coat</h2>
     <div>
       <p class="m-text">You meet your cutter at every fitting. The coatmaker and the finisher never see you, but they sign the inside pocket.</p>
     </div>
   </div>
-  <ul class="cu-list">
+  <ul class="cu-list" data-8b-items=":scope > .cu-person">
     <li class="cu-person">
-      <figure class="m-sticker cu-card" data-8b-motion="pin"><span class="m-sticker__img"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1764298493231-59ae059cdc7e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHRhaWxvciUyMGF0JTIwd29ya3xlbnwxfDF8fHwxNzkxNDA1MTA5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Isla Rennie leaning over the cutting table with shears" width="4160" height="6240" loading="lazy"></span><figcaption class="m-sticker__cap">Isla Rennie, head cutter</figcaption></figure>
+      <figure class="m-sticker cu-card" data-8b-motion="pin" style="--pin-rotate-to: -8deg" data-8b-enter="81.5%"><span class="m-sticker__img"><img src="https://images.unsplash.com/photo-1764298493231-59ae059cdc7e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHRhaWxvciUyMGF0JTIwd29ya3xlbnwxfDF8fHwxNzkxNDA1MTA5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="Isla Rennie leaning over the cutting table with shears" width="4160" height="6240" loading="lazy"></span><figcaption class="m-sticker__cap">Isla Rennie, head cutter</figcaption></figure>
       <p class="m-text-7 cu-note">Drafts every pattern by hand and runs all three fittings; twenty-two years at the board.</p>
     </li>
     <li class="cu-person">
-      <figure class="m-sticker cu-card" data-8b-motion="pin"><span class="m-sticker__img"><img style="background:#262626" src="https://images.unsplash.com/photo-1772333388975-6c5b969d7a2b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8dGFpbG9yJTIwYXQlMjB3b3JrfGVufDF8MXx8fDE3OTE0MDUxMDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="Morag Duthie at her sewing machine by the workroom window" width="2557" height="3836" loading="lazy"></span><figcaption class="m-sticker__cap">Morag Duthie, coatmaker</figcaption></figure>
+      <figure class="m-sticker cu-card" data-8b-motion="pin" style="--pin-rotate-to: 6deg" data-8b-enter="81.5%"><span class="m-sticker__img"><img src="https://images.unsplash.com/photo-1772333388975-6c5b969d7a2b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8dGFpbG9yJTIwYXQlMjB3b3JrfGVufDF8MXx8fDE3OTE0MDUxMDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="Morag Duthie at her sewing machine by the workroom window" width="2557" height="3836" loading="lazy"></span><figcaption class="m-sticker__cap">Morag Duthie, coatmaker</figcaption></figure>
       <p class="m-text-7 cu-note">Builds the canvas and shapes the chest of each coat, mostly by hand.</p>
     </li>
     <li class="cu-person">
-      <figure class="m-sticker cu-card" data-8b-motion="pin"><span class="m-sticker__img"><img style="background:#73400c" src="https://images.unsplash.com/photo-1788033955883-e7e938162658?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c2VhbXN0cmVzcyUyMHBvcnRyYWl0JTIwd29ya3Nob3B8ZW58MXwxfHx8MTc5MTQwNTEzNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=410&amp;q=60" alt="Anh Tran hand-sewing at her bench" width="2268" height="4032" loading="lazy"></span><figcaption class="m-sticker__cap">Anh Tran, finisher</figcaption></figure>
+      <figure class="m-sticker cu-card" data-8b-motion="pin" style="--pin-rotate-to: -3deg" data-8b-enter="81.5%"><span class="m-sticker__img"><img src="https://images.unsplash.com/photo-1788033955883-e7e938162658?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c2VhbXN0cmVzcyUyMHBvcnRyYWl0JTIwd29ya3Nob3B8ZW58MXwxfHx8MTc5MTQwNTEzNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=430&amp;q=60" alt="Anh Tran hand-sewing at her bench" width="2268" height="4032" loading="lazy"></span><figcaption class="m-sticker__cap">Anh Tran, finisher</figcaption></figure>
       <p class="m-text-7 cu-note">Sews the buttonholes, the pick stitching and the linings, one coat at a time.</p>
     </li>
   </ul>
@@ -848,36 +957,36 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 <!-- cut: four traits of the house cut in extra-wide type that stretches as it rises, beside one portrait (animation: scene:cut-ease) -->
 <section id="cut" class="ct" data-8b-section="cut">
   <div class="u-head ct-head">
-    <h2 class="m-text-5" data-8b-motion="rise">The Haldane cut</h2>
+    <h2 class="m-text-5" data-8b-motion="rise" data-8b-enter="90%" data-8b-split="lines">The Haldane cut</h2>
     <div>
       <p class="m-text">Our house style is close and soft: room where you move, none where you don’t. Four things you will feel before anyone sees them.</p>
     </div>
   </div>
   <div class="ct-body">
-    <ol class="ct-list">
+    <ol class="ct-list" data-8b-items=":scope > .ct-trait">
       <li class="ct-trait"><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><h3 class="m-text-4 ct-word" style="--len:13">Soft shoulder</h3><p class="m-text ct-note">A natural line with light padding, so the coat follows your shoulder instead of building a new one.</p></li>
       <li class="ct-trait"><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><h3 class="m-text-4 ct-word" style="--len:12">High armhole</h3><p class="m-text ct-note">Cut close under the arm, so you can reach for a glass without the collar leaving your neck.</p></li>
       <li class="ct-trait"><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><h3 class="m-text-4 ct-word" style="--len:9">Long roll</h3><p class="m-text ct-note">A lapel that rolls down to the button rather than being pressed flat.</p></li>
       <li class="ct-trait"><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><h3 class="m-text-4 ct-word" style="--len:10">Clean back</h3><p class="m-text ct-note">No drag and no ripple across the shoulders: the balance is set at the second fitting.</p></li>
     </ol>
-    <figure class="m-pill ct-photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1594760136382-0c07cc163715?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTh8fG1hbiUyMGluJTIwdGFpbG9yZWQlMjBzdWl0JTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTQwNTExMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=510&amp;q=60" alt="A man in a pale three-piece suit leaning on a chair" width="3563" height="5062" loading="lazy"></figure>
+    <figure class="m-pill ct-photo"><img src="https://images.unsplash.com/photo-1594760136382-0c07cc163715?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTh8fG1hbiUyMGluJTIwdGFpbG9yZWQlMjBzdWl0JTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTQwNTExMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=510&amp;q=60" alt="A man in a pale three-piece suit leaning on a chair" width="3563" height="5062" loading="lazy"></figure>
   </div>
 </section>
 
 <!-- commissions: price list of five garments in hairline rows, with weeks and fittings -->
 <section id="commissions" class="cm" data-8b-section="commissions">
   <div class="u-head cm-head">
-    <h2 class="m-text-5" data-8b-motion="rise">Commissions</h2>
+    <h2 class="m-text-5" data-8b-motion="rise" data-8b-enter="90%" data-8b-split="lines">Commissions</h2>
     <div>
       <p class="m-text">Prices include cloth from the house bunches, every fitting and a year of free alterations. Rarer cloths are quoted at the first fitting.</p>
     </div>
   </div>
-  <ul class="cm-rows">
-    <li class="cm-row"><div class="m-rule" aria-hidden="true" data-8b-motion="rule"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div><h3 class="m-text-5 cm-name">Two-piece suit</h3><p class="m-text-7 cm-terms">Twelve weeks · three fittings</p><p class="cm-price">from £3,400</p></li>
-    <li class="cm-row"><div class="m-rule" aria-hidden="true" data-8b-motion="rule"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div><h3 class="m-text-5 cm-name">Three-piece suit</h3><p class="m-text-7 cm-terms">Twelve weeks · three fittings</p><p class="cm-price">from £3,950</p></li>
-    <li class="cm-row"><div class="m-rule" aria-hidden="true" data-8b-motion="rule"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div><h3 class="m-text-5 cm-name">Sports coat</h3><p class="m-text-7 cm-terms">Ten weeks · two or three fittings</p><p class="cm-price">from £2,450</p></li>
-    <li class="cm-row"><div class="m-rule" aria-hidden="true" data-8b-motion="rule"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div><h3 class="m-text-5 cm-name">Overcoat</h3><p class="m-text-7 cm-terms">Fourteen weeks · three fittings</p><p class="cm-price">from £3,800</p></li>
-    <li class="cm-row"><div class="m-rule" aria-hidden="true" data-8b-motion="rule"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div><h3 class="m-text-5 cm-name">Trousers</h3><p class="m-text-7 cm-terms">Six weeks · two fittings</p><p class="cm-price">from £980</p></li>
+  <ul class="cm-rows" data-8b-items=":scope > .cm-row">
+    <li class="cm-row"><div class="m-rule" aria-hidden="true" data-8b-motion="rule" data-8b-enter="92%"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div><h3 class="m-text-5 cm-name">Two-piece suit</h3><p class="m-text-7 cm-terms">Twelve weeks · three fittings</p><p class="cm-price">from £3,400</p></li>
+    <li class="cm-row"><div class="m-rule" aria-hidden="true" data-8b-motion="rule" data-8b-enter="92%"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div><h3 class="m-text-5 cm-name">Three-piece suit</h3><p class="m-text-7 cm-terms">Twelve weeks · three fittings</p><p class="cm-price">from £3,950</p></li>
+    <li class="cm-row"><div class="m-rule" aria-hidden="true" data-8b-motion="rule" data-8b-enter="92%"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div><h3 class="m-text-5 cm-name">Sports coat</h3><p class="m-text-7 cm-terms">Ten weeks · two or three fittings</p><p class="cm-price">from £2,450</p></li>
+    <li class="cm-row"><div class="m-rule" aria-hidden="true" data-8b-motion="rule" data-8b-enter="92%"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div><h3 class="m-text-5 cm-name">Overcoat</h3><p class="m-text-7 cm-terms">Fourteen weeks · three fittings</p><p class="cm-price">from £3,800</p></li>
+    <li class="cm-row"><div class="m-rule" aria-hidden="true" data-8b-motion="rule" data-8b-enter="92%"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div><h3 class="m-text-5 cm-name">Trousers</h3><p class="m-text-7 cm-terms">Six weeks · two fittings</p><p class="cm-price">from £980</p></li>
   </ul>
   <div class="cm-foot">
     <p class="m-text-7">A deposit of half secures your place in the cutting book.</p>
@@ -888,13 +997,13 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 <!-- visits: five trunk-show cities with dates; a gold stamp rolls down beside the list and stamps each city (animation: scene:visits-stamp) -->
 <section id="visits" class="vs" data-8b-section="visits">
   <div class="u-head vs-head">
-    <h2 class="m-text-5" data-8b-motion="rise">We travel with the cloth</h2>
+    <h2 class="m-text-5" data-8b-motion="rise" data-8b-enter="90%" data-8b-split="lines">We travel with the cloth</h2>
     <div>
       <p class="m-text">Twice a year we pack the bunches and bring the fittings to you. Book an hour: the first measure happens on the spot, and later fittings follow on our next visit or in Edinburgh.</p>
     </div>
   </div>
   <div class="vs-body">
-    <ol class="vs-list">
+    <ol class="vs-list" data-8b-items=":scope > .vs-item">
       <li class="vs-item"><span class="m-spark vs-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><h3 class="m-text-5 vs-city">London</h3><p class="m-text-7 vs-when">Mayfair · 4–6 November</p><a class="m-link vs-book" href="#contact">Book a slot<span class="u-sr"> in London</span></a></li>
       <li class="vs-item"><span class="m-spark vs-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><h3 class="m-text-5 vs-city">Manchester</h3><p class="m-text-7 vs-when">Spinningfields · 13–14 November</p><a class="m-link vs-book" href="#contact">Book a slot<span class="u-sr"> in Manchester</span></a></li>
       <li class="vs-item"><span class="m-spark vs-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><h3 class="m-text-5 vs-city">Copenhagen</h3><p class="m-text-7 vs-when">Indre By · 21–22 November</p><a class="m-link vs-book" href="#contact">Book a slot<span class="u-sr"> in Copenhagen</span></a></li>
@@ -907,11 +1016,11 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 
 <!-- archive: a photo cut into five bands that slide into register, with a paragraph and three terms (animation: scene:archive-bands) -->
 <section id="archive" class="ar" data-8b-section="archive">
-  <figure class="m-pill ar-photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1721664195489-7448042bf305?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGFwZXIlMjBzZXdpbmclMjBwYXR0ZXJufGVufDF8MHx8fDE3OTE0MDUwOTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=660&amp;q=60" alt="A cutter tracing the curve of a pattern on dotted paper, shears beside it" width="3936" height="2624" loading="lazy"></figure>
+  <figure class="m-pill ar-photo"><img src="https://images.unsplash.com/photo-1721664195489-7448042bf305?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGFwZXIlMjBzZXdpbmclMjBwYXR0ZXJufGVufDF8MHx8fDE3OTE0MDUwOTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=660&amp;q=60" alt="A cutter tracing the curve of a pattern on dotted paper, shears beside it" width="3936" height="2624" loading="lazy"></figure>
   <div class="ar-text">
-    <h2 class="m-text-5" data-8b-motion="rise">Your pattern stays with us</h2>
+    <h2 class="m-text-5" data-8b-motion="rise" data-8b-enter="90%" data-8b-split="lines">Your pattern stays with us</h2>
     <p class="m-text">The brown-paper pattern cut for your first suit hangs in our archive for as long as you wear Haldane. Reorder by letter, have it adjusted after a change of shape, or hand it down.</p>
-    <ul class="ar-terms">
+    <ul class="ar-terms" data-8b-items=":scope > li">
       <li><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><span class="m-text-2">Reorders with a single fitting</span></li>
       <li><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><span class="m-text-2">Free alterations for the first year</span></li>
       <li><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><span class="m-text-2">Repairs and repressing at cost, for life</span></li>
@@ -922,13 +1031,13 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 <!-- faq: five questions and answers (native <details>) with an email link -->
 <section id="faq" class="fq" data-8b-section="faq">
   <div class="fq-head">
-    <h2 class="m-text-5" data-8b-motion="rise">Questions before a first fitting</h2>
+    <h2 class="m-text-5" data-8b-motion="rise" data-8b-enter="90%" data-8b-split="lines">Questions before a first fitting</h2>
     <p class="m-text">Anything else, ask us at the workroom or by email; a cutter answers.</p>
     <a data-8b-placeholder="email" class="m-link" href="mailto:fittings@haldane.example">fittings@haldane.example</a>
   </div>
   <div class="fq-list">
-    <div class="m-rule fq-rule" aria-hidden="true" data-8b-motion="rule"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div>
-    <div class="fq-items">
+    <div class="m-rule fq-rule" aria-hidden="true" data-8b-motion="rule" data-8b-enter="92%"><span class="m-rule__line"></span><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div>
+    <div class="fq-items" data-8b-items=":scope > details">
       <details class="fq-item">
         <summary class="fq-q"><span class="m-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><span class="fq-qtext">How long does a suit take?</span><span class="fq-sign" aria-hidden="true"></span></summary>
         <div class="fq-a"><p class="m-text">About twelve weeks from the first measure, with three fittings three to four weeks apart. A second suit from the same pattern takes around eight.</p></div>
@@ -965,7 +1074,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
       <div class="co-block"><p class="m-text-6">Hours</p><p class="m-text-2">Tuesday to Saturday, 10:00–18:00<br>Evenings by appointment</p></div>
       <div class="co-block"><p class="m-text-6">Call</p><a data-8b-placeholder="phone" class="m-link" href="tel:+441310000000">+44 131 000 0000</a></div>
       <div class="co-block"><p class="m-text-6">Write</p><a data-8b-placeholder="email" class="m-link" href="mailto:fittings@haldane.example">fittings@haldane.example</a></div>
-      <figure class="m-pill co-photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1768645116245-2dd044c7cdba?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGFpbG9yJTIwY3V0dGluZyUyMGNsb3RofGVufDF8MHx8fDE3OTE0MDUwNDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="The workroom: a long cutting table under a window and shelves of cloth" width="6603" height="4393" loading="lazy"></figure>
+      <figure class="m-pill co-photo"><img src="https://images.unsplash.com/photo-1768645116245-2dd044c7cdba?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8dGFpbG9yJTIwY3V0dGluZyUyMGNsb3RofGVufDF8MHx8fDE3OTE0MDUwNDl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="The workroom: a long cutting table under a window and shelves of cloth" width="6603" height="4393" loading="lazy"></figure>
     </div>
     <form data-8b-placeholder="form" class="co-form" action="#contact" method="post">
       <label class="m-field"><span class="m-field__label">Your name</span><input class="m-field__input" name="name" type="text" autocomplete="name" required></label>
@@ -985,7 +1094,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
 
 <!-- footer: hairline with sparkles, workroom, page links, contact links, the wordmark across the width, copyright and the Design: 8B credit -->
 <footer id="footer" class="ff" data-8b-section="footer">
-  <div class="m-rule ff-rule" aria-hidden="true" data-8b-motion="rule"><span class="m-rule__line"></span><span class="m-spark"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><span class="m-spark"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div>
+  <div class="m-rule ff-rule" aria-hidden="true" data-8b-motion="rule" data-8b-enter="92%" data-8b-items=".m-spark"><span class="m-rule__line"></span><span class="m-spark"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span><span class="m-spark"><svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg></span></div>
   <div class="ff-grid">
     <div class="ff-col">
       <p class="m-text-6">Workroom</p>
@@ -994,7 +1103,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
     </div>
     <div class="ff-col">
       <p class="m-text-6">Pages</p>
-      <nav class="ff-links" aria-label="Footer">
+      <nav class="ff-links" aria-label="Footer" data-8b-items=":scope > a">
         <a class="m-link-2" href="#cloth">The cloth</a>
         <a class="m-link-2" href="#fittings">Fittings</a>
         <a class="m-link-2" href="#commissions">Commissions</a>
@@ -1003,7 +1112,7 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
     </div>
     <div class="ff-col">
       <p class="m-text-6">Contact</p>
-      <div class="ff-links">
+      <div class="ff-links" data-8b-items=":scope > a">
         <a data-8b-placeholder="phone" class="m-link-2" href="tel:+441310000000">+44 131 000 0000</a>
         <a data-8b-placeholder="email" class="m-link-2" href="mailto:fittings@haldane.example">fittings@haldane.example</a>
         <a data-8b-placeholder="social" class="m-link-2" href="https://www.instagram.com/">Instagram</a>
@@ -1013,137 +1122,10 @@ select.m-field__input option { background: var(--color-7); color: var(--color-2)
   <p class="m-text-4 ff-mark" aria-hidden="true" style="--len:7">Haldane</p>
   <div class="ff-legal">
     <p class="m-text-7">© 2026 Haldane Bespoke Tailors Ltd · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></p>
-    <div class="ff-legal__links"><a class="m-link-2" href="#privacy">Privacy</a><a class="m-link-2" href="#terms">Terms</a></div>
+    <div class="ff-legal__links" data-8b-items=":scope > a"><a class="m-link-2" href="#privacy">Privacy</a><a class="m-link-2" href="#terms">Terms</a></div>
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function navHeight() {
-  const bar = document.querySelector('#nav .nv-bar');
-  return bar ? bar.offsetHeight : 0;
-}
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95, anchors: { offset: -navHeight() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  rule(element, vars = {}) {
-    const line = element.querySelector('.m-rule__line');
-    const sparks = element.querySelectorAll('.m-spark');
-    const timeline = gsap.timeline(vars);
-    if (line) timeline.from(line, { scaleX: 0, transformOrigin: '0% 50%', duration: 1.3, ease: 'expo.inOut' }, 0);
-    sparks.forEach((spark, index) => timeline.from(spark, { rotation: -135, scale: 0, duration: 0.9, ease: 'back.out(2)' }, 0.35 + index * 0.18));
-    return timeline;
-  },
-  pin(element, vars = {}) {
-    return gsap.timeline(vars).from(element, { y: 80, rotation: 18, scale: 0.88, opacity: 0, duration: 1.05, ease: 'back.out(1.5)' });
-  },
-  rise(lines, vars = {}) {
-    return gsap.timeline(vars).from(lines, { yPercent: 108, duration: 1.05, ease: 'expo.out', stagger: 0.09 });
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  const marked = name => [...section.querySelectorAll('[data-8b-motion]')].filter(element => element.getAttribute('data-8b-motion').split(/\s+/).includes(name));
-  const first = () => section.getBoundingClientRect().top < innerHeight;
-  const rules = marked('rule');
-  if (rules.length) {
-    const id = `effect:rule:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      rules.forEach((element, index) => ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top 92%', once: true, animation: effects.rule(element) }));
-    }), { first: first(), id });
-  }
-  const pins = marked('pin');
-  if (pins.length) {
-    const id = `effect:pin:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      pins.forEach((element, index) => ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top 90%', once: true, animation: effects.pin(element) }));
-    }), { first: first(), id });
-  }
-  const rises = marked('rise');
-  if (rises.length) {
-    const id = `effect:rise:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      const splits = rises.map((element, index) => {
-        const split = SplitText.create(element, { type: 'lines', mask: 'lines' });
-        const timeline = effects.rise(split.lines, { paused: true, onComplete: () => split.revert() });
-        ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top 90%', once: true, onEnter: () => timeline.play() });
-        return split;
-      });
-      return () => splits.forEach(split => split.revert());
-    }), { first: first(), id });
-  }
-});
-</script>
 <script data-8b-part="section-script:nav">
 (() => {
   const nav = document.getElementById('nav');
@@ -1153,13 +1135,13 @@ document.querySelectorAll('[data-8b-section]').forEach(section => {
   const openMenu = () => {
     overlay.hidden = false;
     toggle.setAttribute('aria-expanded', 'true');
-    window.lenis?.stop();
+    window.motionKit?.wheel?.stop();
     close.focus();
   };
   const closeMenu = (restore = true) => {
     overlay.hidden = true;
     toggle.setAttribute('aria-expanded', 'false');
-    window.lenis?.start();
+    window.motionKit?.wheel?.start();
     if (restore) toggle.focus();
   };
   toggle.addEventListener('click', openMenu);
@@ -1201,167 +1183,294 @@ document.querySelectorAll('[data-8b-section]').forEach(section => {
   });
 })();
 </script>
-<script data-8b-part="scene:cloth-board">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('cloth');
-    const stage = section.querySelector('.cl-stage');
-    const board = section.querySelector('.cl-board');
-    const stickers = [...section.querySelectorAll('.cl-sticker')];
-    const noise = (index, salt) => { const value = Math.sin((index + 1) * 12.9898 + salt * 78.233) * 43758.5453; return value - Math.floor(value); };
-    section.setAttribute('data-board', '');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'power2.inOut' },
-      scrollTrigger: { id: 'cloth-board', trigger: stage, start: 'top 55%', end: 'bottom bottom', scrub: 0.8, invalidateOnRefresh: true }
-    });
-    const bolts = gsap.timeline({
-      defaults: { ease: 'power2.inOut' },
-      scrollTrigger: { id: 'cloth-board:bolts', trigger: stage, start: 'top 55%', end: 'bottom bottom', scrub: 0.8 }
-    });
-    stickers.forEach((sticker, index) => {
-      const bolt = sticker.querySelector('.cl-bolt');
-      timeline.fromTo(sticker, {
-        x: () => (noise(index, 1) - 0.5) * board.offsetWidth * 0.34,
-        y: () => (noise(index, 2) - 0.3) * innerHeight * 0.4 + (index % 2 ? 1 : -1) * innerHeight * 0.07,
-        rotation: () => (noise(index, 3) - 0.5) * 56,
-        scale: () => 0.78 + noise(index, 4) * 0.3
-      }, { x: 0, y: 0, rotation: 0, scale: 1, duration: 0.72 + index * 0.035 }, 0);
-      if (bolt) bolts.fromTo(bolt, { clipPath: 'inset(28% 0% 28% 0% round 22px)' }, { clipPath: 'inset(0% 0% 0% 0% round 999px)', duration: 0.45 }, 0.42 + index * 0.035);
-    });
-    return () => section.removeAttribute('data-board');
-  });
-}, { id: 'scene:cloth-board' });
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); });
+};
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-split=lines]>.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}[data-8b-split=lines]>.line:not(:last-child){margin-bottom:0}[data-8b-split=lines]>.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment);
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split'), again = sources.has(element);
+if (again) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+if (again) element.getAnimations({ subtree: true }).forEach(animation => { if (animation.timeline === document.timeline) try { animation.finish(); } catch {} });
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px' });
+document.fonts.ready.then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
 </script>
-<script data-8b-part="scene:fittings-track">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('fittings');
-    const stage = section.querySelector('.ft-stage');
-    const view = section.querySelector('.ft-view');
-    const track = section.querySelector('.ft-track');
-    section.setAttribute('data-track', '');
-    const distance = () => Math.max(0, track.scrollWidth - view.clientWidth);
-    const size = () => { stage.style.height = `${distance() * 0.72 + window.innerHeight}px`; };
-    size();
-    ScrollTrigger.addEventListener('refreshInit', size);
-    const travel = gsap.to(track, {
-      x: () => -distance(),
-      ease: 'none',
-      scrollTrigger: { id: 'fittings-track', trigger: stage, start: 'top top', end: 'bottom bottom', scrub: 0.5, invalidateOnRefresh: true }
-    });
-    section.querySelectorAll('.ft-dash').forEach((dash, index) => gsap.fromTo(dash, { scaleX: 0 }, {
-      scaleX: 1, transformOrigin: '0% 50%', ease: 'none',
-      scrollTrigger: { id: `fittings-track:dash-${index + 1}`, trigger: dash, containerAnimation: travel, start: 'left 100%', end: 'right 75%', scrub: true }
-    }));
-    const progress = section.querySelector('.ft-progress');
-    const steps = [...section.querySelectorAll('.ft-step')];
-    const marks = steps.map((step, index) => {
-      const mark = document.createElement('span');
-      mark.className = 'm-spark';
-      mark.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg>';
-      mark.style.left = `${steps.length > 1 ? (index / (steps.length - 1)) * 100 : 0}%`;
-      progress.append(mark);
-      return mark;
-    });
-    gsap.fromTo(progress.querySelector('.m-rule__line'), { scaleX: 0 }, {
-      scaleX: 1, transformOrigin: '0% 50%', ease: 'none',
-      scrollTrigger: {
-        id: 'fittings-track:progress', trigger: stage, start: 'top top', end: 'bottom bottom', scrub: 0.5,
-        onUpdate: self => marks.forEach((mark, index) => mark.classList.toggle('is-lit', self.progress >= index / Math.max(1, marks.length - 1) - 0.002))
-      }
-    });
-    section.querySelectorAll('.ft-photo').forEach((photo, index) => gsap.fromTo(photo, { clipPath: 'inset(0% 50% 0% 50% round 999px)' }, {
-      clipPath: 'inset(0% 0% 0% 0% round 999px)', ease: 'power2.out',
-      scrollTrigger: { id: `fittings-track:photo-${index + 1}`, trigger: photo, containerAnimation: travel, start: 'left 100%', end: 'right 96%', scrub: true }
-    }));
-    return () => { ScrollTrigger.removeEventListener('refreshInit', size); marks.forEach(mark => mark.remove()); stage.style.height = ''; section.removeAttribute('data-track'); };
+<script data-8b-part="scene-script:fittings-track">
+motionKit.scene("fittings-track", () => {
+  const section = document.getElementById('fittings');
+  const stage = section.querySelector('.ft-stage');
+  const view = section.querySelector('.ft-view');
+  const track = section.querySelector('.ft-track');
+  const progress = section.querySelector('.ft-progress');
+  const steps = [...section.querySelectorAll('.ft-step')];
+  const marks = steps.map((step, index) => {
+    const mark = document.createElement('span');
+    mark.className = 'm-spark';
+    mark.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 0C12.7 7.3 16.7 11.3 24 12 16.7 12.7 12.7 16.7 12 24 11.3 16.7 7.3 12.7 0 12 7.3 11.3 11.3 7.3 12 0Z"/></svg>';
+    mark.style.left = `${steps.length > 1 ? (index / (steps.length - 1)) * 100 : 0}%`;
+    progress.append(mark);
+    return mark;
   });
-}, { id: 'scene:fittings-track' });
+  motionKit.measure(() => {
+    const width = view.clientWidth, left = motionKit.box(view).x;
+    const distance = Math.max(1, track.scrollWidth - width);
+    motionKit.set(section, { '--fittings-travel': `${distance}px` });
+    const shares = (element, from, to) => motionKit.set(element, { '--fittings-from': from / distance, '--fittings-to': to / distance });
+    section.querySelectorAll('.ft-photo').forEach(photo => {
+      const box = motionKit.box(photo), x = box.x - left;
+      shares(photo, x - width, x + box.w - width * 0.96);
+    });
+    section.querySelectorAll('.ft-dash').forEach(dash => {
+      const box = motionKit.box(dash), x = box.x - left, centre = x + box.w / 2;
+      if (centre >= width) return shares(dash, centre - width, centre - width * 0.75);
+      const quarter = width / 4, drawn = Math.min(1, (Math.sqrt(quarter * quarter + 4 * box.w * (width - x)) - quarter) / (2 * box.w));
+      shares(dash, x - width, x + box.w * drawn - width * 0.75);
+    });
+  });
+  let moved = false;
+  motionKit.track(stage, 'top top', 'bottom bottom', value => {
+    moved ||= value > 0;
+    if (moved) marks.forEach((mark, index) => mark.classList.toggle('is-lit', value >= index / Math.max(1, marks.length - 1) - 0.002));
+  });
+});
 </script>
-<script data-8b-part="scene:cut-ease">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('cut');
-    section.querySelectorAll('.ct-trait').forEach((trait, index) => {
-      const word = trait.querySelector('.ct-word');
-      const spark = trait.querySelector('.m-spark');
-      const timeline = gsap.timeline({ scrollTrigger: { id: `cut-ease:trait-${index + 1}`, trigger: trait, start: 'top 96%', end: 'top 48%', scrub: 0.6 } });
-      if (word) timeline.fromTo(word, { fontStretch: '75%' }, { fontStretch: '150%', ease: 'power2.inOut' }, 0);
-      if (spark) timeline.fromTo(spark, { rotation: -180, scale: 0.4 }, { rotation: 0, scale: 1, ease: 'power1.out' }, 0);
-    });
-    const photo = section.querySelector('.ct-photo img');
-    if (photo) gsap.fromTo(photo, { yPercent: -10 }, { yPercent: 0, ease: 'none', scrollTrigger: { id: 'cut-ease:photo', trigger: section.querySelector('.ct-body'), start: 'top bottom', end: 'top 25%', scrub: true } });
-  });
-}, { id: 'scene:cut-ease' });
+<script data-8b-part="scene-script:cut-ease">
+motionKit.scene("cut-ease", () => {
+  const words = [...document.querySelectorAll('#cut .ct-word')];
+  const width = word => { const range = document.createRange(); range.selectNodeContents(word); return range.getBoundingClientRect().width; };
+  motionKit.measure(() => words.forEach(word => {
+    word.style.animation = 'none';
+    const full = width(word);
+    const at = face => { word.style.fontStretch = face; return (width(word) / full).toFixed(4); };
+    if (full) motionKit.set(word, { '--cut-tight': at('75%'), '--cut-mid': at('112.5%') });
+    word.style.fontStretch = word.style.animation = '';
+  }));
+});
 </script>
-<script data-8b-part="scene:visits-stamp">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('visits');
-    const list = section.querySelector('.vs-list');
-    const roller = section.querySelector('.vs-roller');
-    const items = [...section.querySelectorAll('.vs-item')];
-    if (items.length < 2 || !roller) return;
-    const centre = item => item.offsetTop + item.offsetHeight / 2;
-    const span = () => centre(items[items.length - 1]) - centre(items[0]);
-    const turn = () => -(span() / (roller.offsetWidth / 2)) * (180 / Math.PI);
-    const mark = progress => {
-      const reached = centre(items[0]) + progress * span() + 2;
-      items.forEach(item => item.classList.toggle('is-pending', centre(item) > reached));
-    };
-    section.setAttribute('data-roll', '');
-    const timeline = gsap.timeline({
-      onUpdate() { mark(this.progress()); },
-      scrollTrigger: { id: 'visits-stamp', trigger: list, start: 'top 62%', end: 'bottom 62%', scrub: 0.6, invalidateOnRefresh: true }
-    });
-    timeline.fromTo(roller, { y: () => -span(), rotation: turn }, { y: 0, rotation: 0, ease: 'none' });
-    mark(0);
-    return () => { items.forEach(item => item.classList.remove('is-pending')); section.removeAttribute('data-roll'); };
+<script data-8b-part="scene-script:visits-stamp">
+motionKit.scene("visits-stamp", () => {
+  const section = document.getElementById('visits');
+  const list = section.querySelector('.vs-list');
+  const roller = section.querySelector('.vs-roller');
+  const items = [...section.querySelectorAll('.vs-item')];
+  if (items.length < 2 || !roller) return;
+  let centres = [], at = 0;
+  const mark = () => {
+    const reached = centres[0] + at * (centres[centres.length - 1] - centres[0]) + 2;
+    items.forEach((item, index) => item.classList.toggle('is-pending', centres[index] > reached));
+  };
+  motionKit.measure(() => {
+    centres = items.map(item => item.offsetTop + item.offsetHeight / 2);
+    const span = centres[centres.length - 1] - centres[0];
+    motionKit.set(roller, { '--visits-span': `${span}px`, '--visits-turn': `${-(span / (roller.offsetWidth / 2)) * (180 / Math.PI)}deg` });
+    mark();
   });
-}, { id: 'scene:visits-stamp' });
+  motionKit.track(list, 'top 62%', 'bottom 62%', value => { at = value; mark(); });
+});
 </script>
-<script data-8b-part="scene:archive-bands">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('archive');
-    const figure = section.querySelector('.ar-photo');
-    const image = figure.querySelector('img');
-    const count = 5;
-    const bands = Array.from({ length: count }, (_, index) => {
-      const band = document.createElement('span');
-      band.className = 'ar-band';
-      band.setAttribute('aria-hidden', 'true');
-      band.style.clipPath = `inset(${(index * 100) / count}% 0% ${100 - ((index + 1) * 100) / count}% 0%)`;
-      const copy = image.cloneNode();
-      copy.alt = '';
-      copy.removeAttribute('fetchpriority');
-      copy.loading = 'eager';
-      band.append(copy);
-      figure.append(band);
-      return band;
-    });
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'archive-bands', trigger: figure, start: 'top 88%', end: 'center 52%', scrub: 0.6 } });
-    timeline.set(image, { opacity: 0 }, 0);
-    bands.forEach((band, index) => timeline.fromTo(band, { xPercent: (index % 2 ? 1 : -1) * (16 + index * 6) }, { xPercent: 0, ease: 'power2.out', duration: 1 }, 0));
-    timeline.set(image, { opacity: 1 }, 1).set(bands, { opacity: 0 }, 1);
-    return () => bands.forEach(band => band.remove());
-  });
-}, { near: document.querySelector('#archive .ar-photo'), id: 'scene:archive-bands' });
-</script>
-<script data-8b-part="scene:contact-close">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const row = section.querySelector('.co-title-row');
-    gsap.timeline({
-      defaults: { ease: 'power2.out' },
-      scrollTrigger: { id: 'contact-close', trigger: row, start: 'top 98%', end: 'top 40%', scrub: 0.6 }
-    })
-      .fromTo(row.querySelector('.co-word--a .co-word__in'), { xPercent: -120 }, { xPercent: 0 }, 0)
-      .fromTo(row.querySelector('.co-word--b .co-word__in'), { xPercent: 260 }, { xPercent: 0 }, 0)
-      .fromTo(row.querySelector('.co-dash__bar'), { scaleX: 2.8 }, { scaleX: 1, transformOrigin: '50% 50%' }, 0);
-  });
-}, { id: 'scene:contact-close' });
+<script data-8b-part="scene-script:archive-bands">
+motionKit.scene("archive-bands", () => {
+  const make = (tag, attrs, ...children) => { const el = tag.startsWith('svg:') ? document.createElementNS('http://www.w3.org/2000/svg', tag.slice(4)) : document.createElement(tag); for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v); el.append(...children); return el; };
+  const copy = (element, deep, attrs = {}) => { const el = element.cloneNode(deep); for (const [k, v] of Object.entries(attrs)) v == null ? el.removeAttribute(k) : el.setAttribute(k, v); return el; };
+  { const parent = document.querySelector("#archive .m-pill"); parent.append(...Array.from({ length: 5 }, (_, i) => make("span", { class: "ar-band", "aria-hidden": "true", style: `clip-path: inset(${["0% 0% 8","20% 0% 6","40% ","60% 0% 2","80% 0% "][i]}0%)` }, copy(parent.querySelector(":scope > img:nth-of-type(1)"), false, { "alt": "" })))); }
+});
 </script>
 </body>
 </html>

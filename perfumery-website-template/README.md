@@ -1,8 +1,8 @@
-# Free HTML perfumery website template with GSAP scroll animations
+# Free HTML perfumery website template with scroll animations and no libraries
 
-This perfumery website template is one free HTML file for an independent perfumer who sells by appointment and by post. It has a blind-tasting opening, six harvest origins, four signature extraits with notes and prices, a six-vial sample set and a booking form, on a near-black ground with cream type. AGENTS.md lets an AI agent adapt it.
+This perfumery website template is one free HTML file for an independent perfumer who sells by appointment and by post. It has a blind-tasting opening, six harvest origins, four signature extraits with notes and prices, a six-vial sample set and a booking form, on a near-black ground with cream type. Its scroll motion runs on CSS, with no libraries.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/perfumery-website-template/)** · **[Use this template](https://github.com/new?template_name=perfumery-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/perfumery-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/resin-cabinet/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/perfumery-website-template/mai
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my perfumery: name, address, how I sell (appointment, post), my signature scents with notes, sizes and prices, where each material is grown, who chooses the scents, session price, sample set price, shipping and returns, opening hours>. Replace first the name, the six origins, the four extrait cards and the three people. Keep the section ids, the classes AGENTS.md lists, six origin tiles, four cabinet cards and six vials. Ask for missing facts; never invent prices, hours, addresses or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my perfumery: name, address, how I sell, my signature scents with notes, sizes and prices, where each material is grown, who chooses the scents, session and sample set prices, shipping and returns, opening hours>. Replace first the name, the six origins, the four extrait cards and the three people. Keep the section ids, the classes AGENTS.md lists, the head's gate script, six origin tiles, four cabinet cards and six vials; add no animation library. Never invent prices or contacts.
 ```
 
 A perfumery website template for Claude Code, Cursor or Codex needs you to hand the agent the facts only the perfumer has: extrait names, notes, sizes and prices, origins and seasons, session terms, batch status, shipping and returns. The demo invents all of them, along with the three people and the address. Update the Noses heading's --len whenever its text changes. Keep the section ids and the six, four and six counts of tiles, cards and vials.
@@ -34,10 +34,10 @@ No agent? Click **[Use this template](https://github.com/new?template_name=perfu
 ## Sections and motion
 
 - **Navigation**: the name at the left, Origins, Cabinet and Book a session links and a menu button; a full-screen menu with five links, address and hours.
-- **Nose Before Name**: a dark first screen with a split three-line heading, two floating photo cards, an arch window and a button; then a dome of ink rises over it with four numbered strips. On load the heading lines rise and the arch and two cards slide in, then the cards float and the arch photo pans slowly; on scroll the first screen stays pinned for about one screen while the heading parts, the cards fly up, an ink dome rises over it and four strips slide in from the centre.
-- **Origins Before the Bottle**: six harvest photos in a grid; the stage opens on one filling the screen, which shrinks into its slot while the others fly in. Pinned for about 1.4 screens: the rose photo fills the stage, then shrinks into the middle slot while the other five tiles fly in from the edges of the stage, turning as they land.
+- **Nose Before Name**: a dark first screen with a split three-line heading, two floating photo cards, an arch window and a button; then a dome of ink rises over it with four numbered strips. On load the heading lines rise and the arch and two cards slide in, then the cards float and the arch photo pans slowly; on scroll the first screen stays held for about one screen while the heading parts, the cards fly up, an ink dome rises over it and four strips slide in from the centre.
+- **Origins Before the Bottle**: six harvest photos in a grid; the stage opens on one filling the screen, which shrinks into its slot while the others fly in. Held for about 1.4 screens: the rose photo fills the stage, then shrinks into the middle slot while the other five tiles fly in from the edges of the stage, turning as they land.
 - **No Window, No Sign**: a text about a room with no window or sign, a booking button and a photo of a curved bench of bottles. The heading lines rise from a mask and the tag lines settle in from the left on scroll; the amber thread line draws as the section passes.
-- **The Cabinet**: four extraits dealt one by one out of a stack while the two title words part to the edges. Pinned for about 2.3 screens: the two title words start together and part to the edges while the four extrait cards are dealt one by one out of a stack, each turning flat as it lands.
+- **The Cabinet**: four extraits dealt one by one out of a stack while the two title words part to the edges. Held for about 2.3 screens: the two title words start together and part to the edges while the four extrait cards are dealt one by one out of a stack, each turning flat as it lands.
 - **The Accord**: one photo of resin on bark that splits down the middle and slides apart to frame a finished bottle. As the frame scrolls in, the resin photo splits down the middle and its two halves slide apart to frame the bottle photo, which settles from a zoomed-in size.
 - **Now Resting**: three batches aging in the dark with their status and a thread line. The heading rises on scroll and a thread line draws behind the three batch rows.
 - **Noses**: a giant word Noses, a lead and three portraits in arched windows. The huge word slides in from the right as you scroll, and each of the three portraits opens from a narrow arch to its full window while its photo zooms out.
@@ -72,7 +72,7 @@ Yes, in a different way. [8B's AI website builder](https://8b.com/) designs a ne
 
 ## Is it the right base?
 
-This is a good base for a small shop with a few signature products and a dark, quiet page that tells a story. A jeweller or other maker working to commission may prefer the [goldsmith](https://8b.com/templates/oriel/) template. Two limits matter: the Order the Blind Set button only opens an email, so it is not a perfume store website template with a cart, and the form sends nothing until you connect a service. Without code, 8B's builder is an alternative.
+It suits a small shop with a few signature products and a dark, quiet page. A jeweller working to commission may prefer the [goldsmith](https://8b.com/templates/oriel/) template. This build keeps the look and scroll scenes with no animation library: 28 KB of code gzipped, against 76 KB for the GSAP version. Two limits matter: Order the Blind Set only opens an email, so it is not a perfume store website template with a cart, and the form sends nothing until you connect a service.
 
 ## Before you publish
 
@@ -81,7 +81,9 @@ This is a good base for a small shop with a few signature products and a dark, q
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 100 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 115 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr, 100 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

@@ -1,8 +1,8 @@
-# Free HTML swimming pool website template with GSAP scroll animations
+# Free HTML swimming pool website template with scroll animations and no libraries
 
-Swimming pool website template: one free HTML file for an outdoor pool, lido or swim club with timed sessions, swim lessons, a kiosk menu and ticket prices. Saturated rounded tiles sit on a pale grey ground, with round photo windows and tilted price stickers. It is a single file that Claude Code, Cursor or Codex can adapt.
+Swimming pool website template: one free HTML file for an outdoor pool, lido or swim club with timed sessions, swim lessons, a kiosk menu and ticket prices. Saturated rounded tiles sit on a pale grey ground, with round photo windows and tilted price stickers. The scroll motion is CSS, with no JavaScript libraries, ready for Claude Code or Cursor.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/swimming-pool-website-template/)** · **[Use this template](https://github.com/new?template_name=swimming-pool-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/swimming-pool-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/splosh/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/swimming-pool-website-template
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my pool: name, address, session times and prices, lesson levels with fees, ticket and pass prices, kiosk menu, event dates, opening hours, charity number>. Replace first the pool name, demo history, prices and photos. Keep the section ids, the classes AGENTS.md lists and the four photos in the kiosk chain; set --len on the big word and footer wordmark to the new character count. Ask for any missing fact; never invent prices, hours, dates, safety rules or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my pool: name, address, session times and prices, lesson levels with fees, ticket and pass prices, kiosk menu, event dates, opening hours, charity number>. Replace first the pool name, demo history, prices and photos. Motion is CSS scroll-driven animation plus the inline motion kit: keep the gate script, section ids, data-8b attributes and listed classes; add no library. Set --len on the big word and footer wordmark. Never invent prices, hours, dates, safety rules or contacts.
 ```
 
 Give Claude Code, Cursor or Codex the facts only the pool has: the session timetable, ticket and pass prices, lesson ages and fees, kiosk menu, event dates, opening hours and the charity or company number. The demo invents all of them, including the history. Replace the name, then update --len on the big word and the footer wordmark. The deck section's real heading sits in a hidden span, so change both. The agent should ask about safety rules and leave [the scroll-driven motion](https://8b.com/templates/animated/) as built.
@@ -34,11 +34,11 @@ No agent? Click **[Use this template](https://github.com/new?template_name=swimm
 ## Sections and motion
 
 - **Navigation**: fixed bar: logo tile, white pill with six links, Book a swim button; hides on scroll down; phone menu overlay. The fixed bar hides when you scroll down and returns when you scroll up; on phones a menu button opens a full-screen overlay.
-- **Fifty metres of open sky**: one blue screen: headline "Fifty metres of open sky", a paragraph, two buttons, four facts and an aerial photo with a 24 degree sticker. On load the heading lines, text, buttons, list and photo pop up in a short stagger, and the heated sticker lands like a stamp.
-- **A day in the water**: "A day in the water": five lanes, one per session, each with time, name, line and price, and a round swimmer photo on its lane. On screens at least 1000 by 680 px the section pins for about one and a tenth screens while each lane's round photo swims across it and a colour fill follows; smaller screens run each lane as it passes.
+- **Fifty metres of open sky**: one blue screen: headline "Fifty metres of open sky", a paragraph, two buttons, four facts and an aerial photo with a 24 degree sticker. On load the heading lines, text, buttons, list and photo pop up in a short CSS stagger, and the heated sticker lands like a stamp as it comes into view.
+- **A day in the water**: "A day in the water": five lanes, one per session, each with time, name, line and price, and a round swimmer photo on its lane. On screens at least 1000 by 680 px the section holds for about one and a tenth screens while each lane's round photo swims across it and a colour fill follows, each lane at its own pace; smaller screens run each lane as it passes.
 - **Swim club**: "Swim club": four level tiles of rising height with a round photo each, a handwritten note with an arrow and a trial lesson button. As you scroll, the four steps rise from below one after another, each round photo hops in an arc to its step and the handwritten arrow draws itself.
 - **The water doesn't close for winter**: "The water doesn't close for winter": green ground, a swimmer photo, a sauna photo, a short list of seasons and prices and a join button. The heading and paragraph rise, the sticker stamps in and a small spark draws its three strokes.
-- **Lounge on the lawn**: "Lounge on the lawn": the giant word LOUNGE with a round deckchair photo, then three tiles with photos. The section pins for one screen while a round photo travels through the word Lounge, lifting and tilting the letters it passes, and comes to rest after the last letter.
+- **Lounge on the lawn**: "Lounge on the lawn": the giant word LOUNGE with a round deckchair photo, then three tiles with photos. The section holds for one screen while a round photo travels through the word Lounge, lifting and tilting the letters it passes, and comes to rest after the last letter.
 - **The kiosk**: "The kiosk": a hot chocolate feature tile with a price sticker, a chain of four round photos and a six-line price list. Four round photos start piled on the hot chocolate photo and roll out into an overlapping chain; the price sticker stamps in and a spark draws beside the photo.
 - **Since 1936**: "( Since 1936 )": a short history in a paragraph and four dated lines beside two archive photos. The heading, first line and both archive photos rise, and a spark draws beside the photos.
 - **The lights go on underwater**: "The lights go on underwater": dusk ground, a glowing pool photo and three dated event tiles. The section ground runs from pool blue through deep green to night ink as it arrives, the type turns white and the photo brightens from near dark.
@@ -63,7 +63,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=swimm
 ## Questions
 
 **Is this a free swimming pool website template I can use for a club?**  
-Yes. It is one index.html under the MIT license, so a lido, a swim club or a freelancer can use it at no cost. GSAP, ScrollTrigger and Lenis load from jsDelivr, there is no build step, photos are Unsplash images and the fonts are under the Open Font License. CREDITS.md lists them.
+Yes. It is one index.html under the MIT license, so a lido, a swim club or a freelancer can use it at no cost. There are no JavaScript libraries, no script from a CDN and no build step; photos are Unsplash images and the fonts are under the Open Font License. CREDITS.md lists them.
 
 **Do the Book a swim buttons and the message form work?**  
 Not yet. Book a swim only scrolls to the prices or visit section, and the form checks its fields, shows a thank-you line and sends nothing. Point the buttons at your booking page and connect Formspree or Netlify Forms, or delete the form. Also edit the thank-you line, which promises an answer within two days.
@@ -73,7 +73,7 @@ Yes, in a different way. [8B's AI website builder](https://8b.com/) designs a ne
 
 ## Is it the right base?
 
-This is the right base for one venue that sells time slots and a few tickets at its own gate. A [training club](https://8b.com/templates/arcline/) with coaches and membership plans suits a template built around a weekly schedule. The weak spots: Book a swim buttons only jump to another section of the page, there is no live availability, and the site is one long scroll. Without code, 8B's builder is the other route.
+This is the right base for one venue that sells time slots and a few tickets at its own gate. A [training club](https://8b.com/templates/arcline/) with coaches and membership plans suits a template built around a weekly schedule. The motion needs no animation library: about 33 KB of code gzipped against 76 KB and three requests for the GSAP version. The weak spots: Book a swim buttons only jump to another section, there is no live availability, and the site is one long scroll.
 
 ## Before you publish
 
@@ -82,7 +82,9 @@ This is the right base for one venue that sells time slots and a few tickets at 
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 116 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), container query units, cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 125 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), container query units, cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 116 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

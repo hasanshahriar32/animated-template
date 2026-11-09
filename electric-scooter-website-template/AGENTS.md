@@ -1,6 +1,6 @@
 # AGENTS.md: electric scooter website template
 
-One-page website for an electric moped or scooter maker, with models, colours, ownership plans, home servicing and test rides. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for an electric moped or scooter maker, with models, colours, ownership plans, home servicing and test rides. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,22 +14,18 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:nav`: `.nav__menu` `.menu__close`
   - `section-script:battery`: `.bt-note`
   - `section-script:contact`: `.cn-form` `.cn-status` `data-ok` `data-error`
-  - `scene:lineup`: `.ln-frame` `.ln-shot` `.ln-card`
-  - `scene:paint`: `.pt-track` `.pt-field` `.pt-frame` `.pt-name`
-  - `scene:details`: `.dt-mosaic` `.dt-tile` `.dt-tile--text`
-  - `scene:city`: `.ct-lane` `.ct-line`
-  - `scene:service`: `.sv-photo` `.sv-step` `.sv-step__no`
-  - `scene:reviews`: `.rv-wall` `.rv-card`
-  - `scene:contact`: `.cn-panel`
+  - `scene-script:details`: `.dt-mosaic` `.dt-tile` `.dt-tile--text`
+  - `scene-script:reviews`: `.rv-wall` `.rv-card`
 - `style="--len:N"` = characters in that display line, spaces included: `Lido` is 4, `Harbour` is 7, `Mustard` is 7, `Postbox` is 7, `Hush.` is 5.
 - The wordmarks and the giant colour names are sized from style="--len:N" (the number of characters): the footer word has --len:5 and each paint name its own length, so update them when you rename.
-- The model picker moves a notch by card index and each card has a fixed height, so it is built for exactly three models; the paint and service scenes read their item counts from the markup.
+- The counts the CSS motion fixes are marked with data-8b-fixed: three model cards and three frame photos, four paint fields, three service steps, six details tiles, two plan cards and six reviews. The model notch steps by card height and the paint track slides by quarters, so another count needs those scenes rewritten.
 - The notched panels are CSS clip-path shapes driven by custom properties (--n and --nd): change the sizes there, not with extra wrappers.
-- Each model photo appears twice in the lineup, in its card and in the frame; change both. The details mosaic is a grid of six tiles.
+- Each model photo appears twice in the lineup, in its card and in the frame; change both.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #e7e8ea (page background, form field fill and the nav bar once scrolled), `--color-2` #121315 (text, the opening's black field, round and pill buttons, the monthly plan card, the menu overlay and the footer), `--color-3` #cdd0d4 (hairlines in steps and plan lists, form field borders, the FAQ rules, and the greyed model cards and service step numbers before they light up), `--color-4` #ffffff (cards and surfaces, the Own it plan card, light buttons, text on dark panels and captions on photos), `--color-5` #d23624 (the accent: the logo mark, button hover fill, the charging figure, list dots, the footer wordmark's full stop and the Postbox red paint field), `--color-6` #4d5158 (secondary text, labels, specs and descriptions on light grounds), `--color-8` #a2a7ae (secondary text on dark grounds: the menu footer, the footer columns, the plan card and the middle fact card in the opening), `--color-9` #23746c (the Lido green paint field), `--color-10` #22477f (the Harbour blue paint field), `--color-11` #e2ac2a (the Mustard paint field, whose text switches to the near-black); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -63,9 +59,9 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the menu button cannot open the overlay; above 900 px the top bar keeps four links, on phones only the footer links remain.
 - The test-ride form only checks name and email and shows a message; it sends nothing until you connect a form service or remove it.
-- The model, paint and service sections pin the screen for two, three and about 1.6 screens of scrolling, phones included; on short screens this can feel long.
+- The model, paint and service sections hold the screen for two, three and about 1.6 screens of scrolling, phones included; on short screens this can feel long.
 - The notched panels use the CSS shape() function in clip-path, which older browsers do not support: the black field behind the opening then shows as a plain rectangle.
-- With reduced motion or without JavaScript the model frame shows only the first model's photo; the other two models appear only as small card thumbnails.
+- Without CSS scroll-driven animation support (Firefox today), with reduced motion on or without JavaScript, nothing moves on scroll or on load and the wheel scrolls natively: nothing holds the screen, the paint fields stack and the model frame shows only the first model's photo, so the other two models appear only as card thumbnails. The top bar still hides on scroll and buttons still fill on hover.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Hush left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Hush left only in class names.

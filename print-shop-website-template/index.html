@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/print-shop-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,7 +20,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%23171513'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23ffc21f'%3ES%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/redditsans/v6/EYq3maFOxq1T_-ETdN7EKQNre5Y.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* vietnamese */
 @font-face {
@@ -76,10 +76,6 @@
 @font-face { font-family: "Reddit Sans Fallback"; src: local("Arial"), local("ArialMT"), local("Helvetica"); font-weight: 100 549; size-adjust: 99.2%; ascent-override: 101.8%; descent-override: 29.2%; line-gap-override: 0%; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis-stopped { overflow: clip; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body {
   margin: 0;
   padding-left: 44px;
@@ -312,6 +308,17 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
   0% { transform: scaleX(0.04); }
   70%, 88% { transform: scaleX(1); }
   100% { transform: scaleX(0.04); }
+}
+#opening .op-s2 { border-top: 0; min-height: calc(100svh - 92px); grid-template-rows: 1fr; }
+#opening .op-body { align-items: center; }
+#opening .op-job .op-tabs { border: 1.5px solid var(--color-2); border-bottom: 0; }
+#opening .op-job .op-tab { min-height: 54px; font-size: clamp(17px, 1.5vw, 22px); }
+#opening .op-cta { padding-left: 1.2em; margin-top: 6px; }
+@media (max-width: 760px) {
+  #opening .op-s2 { min-height: 0; }
+  #opening .op-cta { padding-left: 0; margin-top: 0; }
+  #opening .op-cta .m-btn { width: 100%; }
+  #opening .op-job .op-tab { min-height: 48px; font-size: 16px; }
 }
 }
 </style>
@@ -555,33 +562,6 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="scene-style:posters">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #posters.is-run { height: 300svh; }
-  #posters.is-run .ps-stage { position: sticky; top: 0; }
-}
-}
-</style>
-<style data-8b-part="scene-style:finishing">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #finishing.is-run .fn-strip { perspective: 1600px; }
-}
-@media (prefers-reduced-motion: no-preference) and (min-width: 901px) {
-  #finishing.is-run { height: 240svh; }
-  #finishing.is-run .fn-stage { position: sticky; top: 0; height: 100svh; }
-}
-}
-</style>
-<style data-8b-part="scene-style:preflight">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) and (min-width: 901px) {
-  #preflight.is-run { height: 230svh; }
-  #preflight.is-run .pf-stage { position: sticky; top: 0; height: 100svh; }
-}
-}
-</style>
 <style data-8b-part="section:footer">
 @layer sections {
 #footer { background: var(--color-2); color: var(--color-1); padding: clamp(56px, 8vw, 96px) var(--space-1) 28px; }
@@ -597,29 +577,204 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
 @media (max-width: 760px) { #footer .ft-top { grid-template-columns: minmax(0, 1fr); } }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .op-s2 { border-top: 0; min-height: calc(100svh - 92px); grid-template-rows: 1fr; }
-#opening .op-body { align-items: center; }
-#opening .op-job .op-tabs { border: 1.5px solid var(--color-2); border-bottom: 0; }
-#opening .op-job .op-tab { min-height: 54px; font-size: clamp(17px, 1.5vw, 22px); }
-#opening .op-cta { padding-left: 1.2em; margin-top: 6px; }
-@media (max-width: 760px) {
-  #opening .op-s2 { min-height: 0; }
-  #opening .op-cta { padding-left: 0; margin-top: 0; }
-  #opening .op-cta .m-btn { width: 100%; }
-  #opening .op-job .op-tab { min-height: 48px; font-size: 16px; }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-6a9d03: linear(0, 0.1254, 0.2419, 0.3497, 0.4492, 0.5406, 0.6243, 0.7005, 0.7696, 0.8318, 0.8875, 0.9369, 0.9804, 1.0182, 1.0507, 1.0781, 1.1008, 1.119, 1.1331, 1.1433, 1.15, 1.1534, 1.1539, 1.1517, 1.1472, 1.1406, 1.1323, 1.1225, 1.1116, 1.0998, 1.0875, 1.0749, 1.0624, 1.0502, 1.0387, 1.0281, 1.0188, 1.011, 1.0051, 1.0013, 1); }
+[data-8b-live] { --ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.002, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0458, 0.0648, 0.0893, 0.12, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9542, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9997, 1, 1, 1); --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] [data-8b-motion~="crop"] { animation-name: motion-crop-clip; animation-duration: 1.05s; animation-timing-function: var(--ease-power3-inout); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="crop"] img { animation-name: motion-crop-img; animation-duration: 1.2s; animation-timing-function: var(--ease-power3-out); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="crop"].is-in, [data-8b-live] [data-8b-motion~="crop"].is-in img { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="select"] { animation-name: motion-select-backgroundsize, motion-select-backgroundposition; animation-duration: 1.1s, 0.45s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1), linear; animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="select"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="stamp"] { animation-name: motion-stamp-scale, motion-stamp-rotate, motion-stamp-opacity, motion-stamp-visibility; animation-duration: 0.42s; animation-delay: calc(0s + var(--stamp-delay, 0s)); animation-timing-function: var(--ease-6a9d03), var(--ease-6a9d03), var(--ease-6a9d03), linear; animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="stamp"].is-in { animation-play-state: running; }
+@keyframes motion-crop-clip { 0% { clip-path: inset(12%); } 99.99% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes motion-crop-img { 0% { scale: 1.18; } 100% { scale: 1; } }
+@keyframes motion-select-backgroundsize { 0% { background-size: 0% 100%; } 40.9091% { background-size: 100% 100%; } 59.0909% { background-size: 100% 100%; } 100% { background-size: 0% 100%; } }
+@keyframes motion-select-backgroundposition { 0% { background-position: 0% 0%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 99.998% { background-position: 0% 0%; } 100% { background-position: 100% 0%; } }
+@keyframes motion-stamp-scale { 0% { scale: 1.25; } 100% { scale: 1; } }
+@keyframes motion-stamp-rotate { 0% { rotate: -6deg; } 100% { rotate: 0deg; } }
+@keyframes motion-stamp-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes motion-stamp-visibility { 0% { visibility: hidden; } 0.002% { visibility: visible; animation-timing-function: linear(0, 0.1254, 0.2419, 0.3497, 0.4492, 0.5406, 0.6243, 0.7005, 0.7696, 0.8318, 0.8875, 0.9369, 0.9804, 1.0182, 1.0507, 1.0781, 1.1008, 1.119, 1.1331, 1.1433, 1.15, 1.1534, 1.1539, 1.1517, 1.1472, 1.1406, 1.1323, 1.1225, 1.1116, 1.0998, 1.0875, 1.0749, 1.0624, 1.0502, 1.0387, 1.0281, 1.0188, 1.011, 1.0051, 1.0013, 1); } 100% { visibility: visible; } }
 }
-@media (prefers-reduced-motion: no-preference) {
-  #opening .op-head > * { animation: op-up .7s cubic-bezier(.2,.7,.2,1) backwards; }
-  #opening .op-head > :nth-child(2) { animation-delay: .1s; }
-  #opening .op-head > :nth-child(3) { animation-delay: .2s; }
-  #opening .op-proof__paper { animation: rw-paper .7s .3s linear backwards; }
-  #opening .op-proof__ink { animation: rw-ink .7s .3s linear backwards; }
-  #opening .op-proof__ink--2 { animation-delay: .6s; }
-  #opening .op-proof__ink--3 { animation-delay: .9s; }
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+[data-8b-live] #opening .op-head > * { animation: opening-up .7s cubic-bezier(.2,.7,.2,1) backwards; }
+[data-8b-live] #opening .op-head > :nth-child(2) { animation-delay: .1s; }
+[data-8b-live] #opening .op-head > :nth-child(3) { animation-delay: .2s; }
+[data-8b-live] #opening .op-proof__paper { animation: opening-paper .7s .3s linear backwards; }
+[data-8b-live] #opening .op-proof__ink { animation: opening-ink .7s .3s linear backwards; }
+[data-8b-live] #opening .op-proof__ink--2 { animation-delay: .6s; }
+[data-8b-live] #opening .op-proof__ink--3 { animation-delay: .9s; }
+@keyframes opening-up { from { transform: translateY(18px); } }
+@keyframes opening-paper { from { clip-path: inset(0 0 0 0); } 66.7%, to { clip-path: inset(100% 0 0 0); } }
+@keyframes opening-ink { from { clip-path: inset(0 0 100% 0); } 33.3% { clip-path: inset(0 0 50% 0); } 66.7% { clip-path: inset(50% 0 0 0); } to { clip-path: inset(100% 0 0 0); } }
 }
-@keyframes rw-paper { from { clip-path: inset(0 0 0 0); } 66.7%, to { clip-path: inset(100% 0 0 0); } }
-@keyframes rw-ink { from { clip-path: inset(0 0 100% 0); } 33.3% { clip-path: inset(0 0 50% 0); } 66.7% { clip-path: inset(50% 0 0 0); } to { clip-path: inset(100% 0 0 0); } }</style>
+</style>
+<style data-8b-part="scene:counter">
+@layer scenes {
+[data-8b-live] { --ease-power1-inout: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); --ease-a21692: linear(0, 0.1302, 0.2509, 0.3626, 0.4654, 0.5598, 0.646, 0.7243, 0.7952, 0.8589, 0.9156, 0.9658, 1.0098, 1.0478, 1.0803, 1.1074, 1.1296, 1.1471, 1.1603, 1.1695, 1.175, 1.1771, 1.1762, 1.1725, 1.1664, 1.1582, 1.1482, 1.1368, 1.1242, 1.1108, 1.0969, 1.0828, 1.0688, 1.0553, 1.0425, 1.0309, 1.0206, 1.0121, 1.0056, 1.0014, 1); }
+[data-8b-live] #counter .ct-queue { view-timeline: --counter-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #counter .ct-list > li > .ct-state > .ct-bar > i { animation-name: counter-span-ct-bar-i-scale; animation-timeline: --counter-t1; animation-range: cover calc(20vh - 10.8696vh * var(--i) + 14.4928% * var(--i)) cover calc(24.1546% + 14.4927% * var(--i) + 1.8841vh - 10.8696vh * var(--i)); animation-timing-function: var(--ease-power1-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #counter .ct-list > li > .ct-state > .m-badge { animation-name: counter-span-m-badge-opacity, counter-span-m-badge-visibility, counter-span-m-badge-scale, counter-span-m-badge-rotate; animation-timeline: --counter-t1; animation-range: cover calc(22.2222% + 14.4928% * var(--i) + 3.3333vh - 10.8695vh * var(--i)) cover calc(27.5362% + 14.4928% * var(--i) - 0.6522vh - 10.8695vh * var(--i)); animation-timing-function: var(--ease-a21692), linear, var(--ease-a21692), var(--ease-a21692); animation-fill-mode: both; transform: none; }
+@keyframes counter-span-ct-bar-i-scale { 0% { scale: 0 1; } 100% { scale: 1; } }
+@keyframes counter-span-m-badge-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes counter-span-m-badge-visibility { 0% { visibility: hidden; } 0.002% { visibility: visible; animation-timing-function: linear(0, 0.1302, 0.2509, 0.3626, 0.4654, 0.5598, 0.646, 0.7243, 0.7952, 0.8589, 0.9156, 0.9658, 1.0098, 1.0478, 1.0803, 1.1074, 1.1296, 1.1471, 1.1603, 1.1695, 1.175, 1.1771, 1.1762, 1.1725, 1.1664, 1.1582, 1.1482, 1.1368, 1.1242, 1.1108, 1.0969, 1.0828, 1.0688, 1.0553, 1.0425, 1.0309, 1.0206, 1.0121, 1.0056, 1.0014, 1); } 100% { visibility: visible; } }
+@keyframes counter-span-m-badge-scale { 0% { scale: 1.6; } 100% { scale: 1; } }
+@keyframes counter-span-m-badge-rotate { 0% { rotate: -12deg; } 100% { rotate: 0deg; } }
+}
+</style>
+<style data-8b-part="scene:posters">
+@layer scenes {
+@property --posters-s { syntax: '<number>'; inherits: true; initial-value: 1; }
+[data-8b-live] { --ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.002, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0458, 0.0648, 0.0893, 0.12, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9542, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9997, 1, 1, 1); }
+[data-8b-live] #posters { height: 300svh; view-timeline: --posters-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #posters .ps-stage { position: sticky; top: 0; animation-name: posters-size; animation-timeline: --posters-t1; animation-range: contain 0% contain 100%; animation-timing-function: var(--ease-power3-inout); animation-fill-mode: both; }
+[data-8b-live] #posters .ps-frame { transform-origin: 70% 56%; scale: var(--posters-s); }
+[data-8b-live] #posters .ps-mark { animation-name: posters-mark; animation-timeline: --posters-t1; animation-range: contain 0% contain 100%; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; }
+[data-8b-live] #posters .ps-sel { container-type: size; --posters-l: calc(70cqw * (1 - var(--posters-s))); --posters-r: calc(-30cqw * (1 - var(--posters-s))); --posters-t: calc(56cqh * (1 - var(--posters-s))); --posters-b: calc(-44cqh * (1 - var(--posters-s))); }
+[data-8b-live] #posters .m-sel__e--t { translate: var(--posters-l) var(--posters-t); scale: var(--posters-s) 1; }
+[data-8b-live] #posters .m-sel__e--b { translate: var(--posters-l) var(--posters-b); scale: var(--posters-s) 1; }
+[data-8b-live] #posters .m-sel__e--l { translate: var(--posters-l) var(--posters-t); scale: 1 var(--posters-s); }
+[data-8b-live] #posters .m-sel__e--r { translate: var(--posters-r) var(--posters-t); scale: 1 var(--posters-s); }
+[data-8b-live] #posters .m-sel__h--tl { translate: var(--posters-l) var(--posters-t); }
+[data-8b-live] #posters .m-sel__h--tr { translate: var(--posters-r) var(--posters-t); }
+[data-8b-live] #posters .m-sel__h--br { translate: var(--posters-r) var(--posters-b); }
+[data-8b-live] #posters .m-sel__h--bl { translate: var(--posters-l) var(--posters-b); }
+@keyframes posters-size { 0% { --posters-s: 0.16; } 13.3333% { --posters-s: 0.21; } 26.6667% { --posters-s: 0.28; } 40% { --posters-s: 0.38; } 53.3333% { --posters-s: 0.52; } 66.6667% { --posters-s: 0.72; } 80%, 100% { --posters-s: 1; } }
+@keyframes posters-mark { 0% { translate: -600% 0; } 6% { translate: -600% 0; } 10.6667% { translate: -500% 0; } 19.3333% { translate: -500% 0; } 24% { translate: -400% 0; } 32.6667% { translate: -400% 0; } 37.3333% { translate: -300% 0; } 46% { translate: -300% 0; } 50.6667% { translate: -200% 0; } 59.3333% { translate: -200% 0; } 64% { translate: -100% 0; } 72.6667% { translate: -100% 0; } 77.3333% { translate: 0% 0; } 100% { translate: 0% 0; } }
+}
+</style>
+<style data-8b-part="scene:finishing">
+@layer scenes {
+[data-8b-live] #finishing .fn-strip { perspective: 1600px; }
+@media (min-width: 901px) {
+  [data-8b-live] #finishing { height: 240svh; }
+  [data-8b-live] #finishing .fn-stage { position: sticky; top: 0; height: 100svh; }
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #finishing .fn-strip > li { animation-timeline: --finishing-t1; animation-fill-mode: both; transform: none; }
+@keyframes finishing-li-fn-panel-rotatey { 0% { rotate: y 72deg; } 100% { rotate: y 0deg; } }
+@keyframes finishing-li-fn-panel-translate-d { 0% { translate: var(--finishing-li-fn-panel-translate-from, 103.821%) 0px; } 100% { translate: 0px 0px; } }
+@keyframes finishing-li-fn-panel-translate-m { 0% { translate: 0px var(--finishing-li-fn-panel-translate-from-2, 79.579%); } 100% { translate: 0px 0px; } }
+@keyframes finishing-li-fn-panel-filter { 0% { filter: brightness(1); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 100% { filter: brightness(1); } }
+@keyframes finishing-li-fn-panel-rotatey-2 { 0% { rotate: y -72deg; } 100% { rotate: y 0deg; } }
+@keyframes finishing-li-fn-panel-filter-2 { 0% { filter: brightness(0.72); } 100% { filter: brightness(1); } }
+@keyframes finishing-li-fn-panel-rotatex { 0% { rotate: x 62deg; } 100% { rotate: x 0deg; } }
+@keyframes finishing-li-fn-panel-rotatex-2 { 0% { rotate: x -62deg; } 100% { rotate: x 0deg; } }
+@media (min-width: 901px) {
+  [data-8b-live] #finishing { view-timeline: --finishing-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #finishing .fn-strip > li { animation-range: cover calc(10.7143% + 78.5714vh) cover calc(82.1429% - 64.2857vh); }
+  [data-8b-live] #finishing .fn-strip > li:nth-of-type(2n+1) { animation-name: finishing-li-fn-panel-rotatey, finishing-li-fn-panel-translate-d, finishing-li-fn-panel-filter; animation-timing-function: var(--ease-power2-inout), var(--ease-power2-inout), linear; }
+  [data-8b-live] #finishing .fn-strip > li:nth-of-type(2n+2) { animation-name: finishing-li-fn-panel-rotatey-2, finishing-li-fn-panel-translate-d, finishing-li-fn-panel-filter-2; animation-timing-function: var(--ease-power2-inout), var(--ease-power2-inout), var(--ease-power2-inout); }
+}
+@media (max-width: 900px) {
+  [data-8b-live] #finishing .fn-strip > li { animation-range: cover 12vh cover calc(40% + 6.4vh); }
+  [data-8b-live] #finishing .fn-strip > li:nth-of-type(2n+1) { animation-name: finishing-li-fn-panel-rotatex, finishing-li-fn-panel-translate-m, finishing-li-fn-panel-filter; }
+  [data-8b-live] #finishing .fn-strip > li:nth-of-type(2n+2) { animation-name: finishing-li-fn-panel-rotatex-2, finishing-li-fn-panel-translate-m, finishing-li-fn-panel-filter-2; }
+  [data-8b-live] #finishing .fn-strip { view-timeline: --finishing-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #finishing .fn-strip > li:nth-of-type(1) { animation-timing-function: var(--ease-power2-inout), var(--ease-power2-inout), linear; }
+  [data-8b-live] #finishing .fn-strip > li:nth-of-type(2) { animation-timing-function: var(--ease-power2-inout), var(--ease-power2-inout), var(--ease-power2-inout); }
+  [data-8b-live] #finishing .fn-strip > li:nth-of-type(3) { animation-timing-function: var(--ease-power2-inout), var(--ease-power2-inout), linear; }
+  [data-8b-live] #finishing .fn-strip > li:nth-of-type(4) { animation-timing-function: var(--ease-power2-inout), var(--ease-power2-inout), var(--ease-power2-inout); }
+}
+}
+</style>
+<style data-8b-part="scene:preflight">
+@layer scenes {
+@media (min-width: 901px) {
+  [data-8b-live] #preflight { height: 230svh; }
+  [data-8b-live] #preflight .pf-stage { position: sticky; top: 0; height: 100svh; }
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-cb0991: linear(0, 0.1207, 0.2329, 0.3369, 0.433, 0.5215, 0.6026, 0.6767, 0.744, 0.8048, 0.8594, 0.908, 0.951, 0.9886, 1.0211, 1.0488, 1.072, 1.0909, 1.1059, 1.1171, 1.125, 1.1297, 1.1316, 1.131, 1.128, 1.123, 1.1164, 1.1083, 1.099, 1.0889, 1.0781, 1.0671, 1.056, 1.0452, 1.0349, 1.0254, 1.017, 1.01, 1.0046, 1.0012, 1); }
+[data-8b-live] #preflight .pf-checks > li > .pf-box > svg > path { animation-name: preflight-span-pf-box-path-strokedashoffset, preflight-span-pf-box-path-strokedasharray; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1), linear; animation-fill-mode: both; }
+[data-8b-live] #preflight .pf-checks > li > .pf-box { animation-name: preflight-span-pf-box-backgroundcolor; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #preflight .pf-bleed, [data-8b-live] #preflight .pf-trim--tl, [data-8b-live] #preflight .pf-trim--tr, [data-8b-live] #preflight .pf-trim--br, [data-8b-live] #preflight .pf-trim--bl { animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1), cubic-bezier(0.3333, 1, 0.6667, 1), linear; }
+[data-8b-live] #preflight .pf-bleed { animation-name: preflight-i-pf-bleed-scale, preflight-i-pf-bleed-opacity, preflight-i-pf-bleed-visibility; animation-timeline: --preflight-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #preflight .pf-trim--tl { animation-name: preflight-i-pf-trim-translate, preflight-i-pf-bleed-opacity, preflight-i-pf-bleed-visibility; animation-timeline: --preflight-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #preflight .pf-trim--tr { animation-name: preflight-i-pf-trim-translate-2, preflight-i-pf-bleed-opacity, preflight-i-pf-bleed-visibility; animation-timeline: --preflight-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #preflight .pf-trim--br { animation-name: preflight-i-pf-trim-translate-3, preflight-i-pf-bleed-opacity, preflight-i-pf-bleed-visibility; animation-timeline: --preflight-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #preflight .pf-trim--bl { animation-name: preflight-i-pf-trim-translate-4, preflight-i-pf-bleed-opacity, preflight-i-pf-bleed-visibility; animation-timeline: --preflight-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #preflight .pf-bar > i:nth-of-type(-n+5) { animation-name: preflight-div-pf-bar-i-scale; animation-timeline: --preflight-t1; animation-timing-function: var(--ease-cb0991); animation-fill-mode: both; transform: none; }
+[data-8b-live] #preflight .pf-safe { animation-timeline: --preflight-t1; animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes preflight-span-pf-box-path-strokedashoffset { 0% { stroke-dashoffset: 20px; } 100% { stroke-dashoffset: 0px; } }
+@keyframes preflight-span-pf-box-path-strokedasharray { 0% { stroke-dasharray: 19.799px; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 100% { stroke-dasharray: 19.799px; } }
+@keyframes preflight-span-pf-box-backgroundcolor { 0% { background-color: var(--color-6); } 100% { background-color: var(--color-3); } }
+@keyframes preflight-i-pf-bleed-scale { 0% { scale: 0.9; } 100% { scale: 1; } }
+@keyframes preflight-i-pf-bleed-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes preflight-i-pf-bleed-visibility { 0% { visibility: hidden; } 0.002% { visibility: visible; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 100% { visibility: visible; } }
+@keyframes preflight-i-pf-trim-translate { 0% { translate: -22px -22px; } 100% { translate: 0px 0px; } }
+@keyframes preflight-i-pf-trim-translate-2 { 0% { translate: 22px -22px; } 100% { translate: 0px 0px; } }
+@keyframes preflight-i-pf-trim-translate-3 { 0% { translate: 22px 22px; } 100% { translate: 0px 0px; } }
+@keyframes preflight-i-pf-trim-translate-4 { 0% { translate: -22px 22px; } 100% { translate: 0px 0px; } }
+@keyframes preflight-div-pf-bar-i-scale { 0% { scale: 1 0; } 0.002% { scale: 1 0.002; } 100% { scale: 1; } }
+@keyframes preflight-i-pf-safe-clip-path-d { 0% { clip-path: inset(50%); } 42.5% { clip-path: inset(49.951%); } 43.3333% { clip-path: inset(49.464%); } 44.1667% { clip-path: inset(48.005%); } 45% { clip-path: inset(45.038%); } 45.8333% { clip-path: inset(40.029%); } 46.6667% { clip-path: inset(32.441%); } 47.5% { clip-path: inset(22.003%); } 48.3333% { clip-path: inset(13.069%); } 49.1667% { clip-path: inset(6.954%); } 50% { clip-path: inset(3.125%); } 50.8333% { clip-path: inset(1.047%); } 51.6667% { clip-path: inset(0.184%); } 52.5% { clip-path: inset(0.002%); } 52.9156% { clip-path: inset(0.002%); } 52.9166% { clip-path: none; } 53.3333% { clip-path: none; } 100% { clip-path: none; } }
+@keyframes preflight-i-pf-safe-clip-path-m { 0% { clip-path: inset(50%); } 45.8333% { clip-path: inset(49.951%); } 46.6667% { clip-path: inset(49.526%); } 47.5% { clip-path: inset(48.298%); } 48.3333% { clip-path: inset(45.841%); } 49.1667% { clip-path: inset(41.727%); } 50% { clip-path: inset(35.532%); } 50.8333% { clip-path: inset(26.829%); } 51.6667% { clip-path: inset(17.231%); } 52.5% { clip-path: inset(10.199%); } 53.3333% { clip-path: inset(5.4%); } 54.1667% { clip-path: inset(2.407%); } 55% { clip-path: inset(0.794%); } 55.8333% { clip-path: inset(0.134%); } 56.6667% { clip-path: inset(0.001%); } 57.0824% { clip-path: inset(0.001%); } 57.0833% { clip-path: none; } 57.5% { clip-path: none; } 100% { clip-path: none; } }
+@media (min-width: 901px) {
+  [data-8b-live] #preflight { view-timeline: --preflight-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #preflight .pf-checks > li > .pf-box > svg > path { animation-timeline: --preflight-t1; animation-range: cover calc(1.8182% + 18.1818% * var(--i) + 96.3636vh - 36.3636vh * var(--i)) cover calc(9.0909% + 18.1818% * var(--i) + 81.8182vh - 36.3637vh * var(--i)); }
+  [data-8b-live] #preflight .pf-checks > li > .pf-box { animation-timeline: --preflight-t1; animation-range: cover calc(1.8182% + 18.1818% * var(--i) + 96.3636vh - 36.3636vh * var(--i)) cover calc(5.4545% + 18.1819% * var(--i) + 89.0909vh - 36.3636vh * var(--i)); }
+  [data-8b-live] #preflight .pf-bleed { animation-range: cover calc(5.4545% + 89.0909vh) cover calc(16.3636% + 67.2727vh); }
+  [data-8b-live] #preflight .pf-trim--tl { animation-range: cover calc(23.6364% + 52.7273vh) cover calc(32.7273% + 34.5455vh); }
+  [data-8b-live] #preflight .pf-trim--tr { animation-range: cover calc(24.7273% + 50.5455vh) cover calc(33.8182% + 32.3636vh); }
+  [data-8b-live] #preflight .pf-trim--br { animation-range: cover calc(25.8182% + 48.3636vh) cover calc(34.9091% + 30.1818vh); }
+  [data-8b-live] #preflight .pf-trim--bl { animation-range: cover calc(26.9091% + 46.1818vh) cover calc(36% + 28vh); }
+  [data-8b-live] #preflight .pf-bar > i:nth-of-type(1) { animation-range: cover calc(60% - 20vh) cover calc(64.5455% - 29.0909vh); }
+  [data-8b-live] #preflight .pf-bar > i:nth-of-type(2) { animation-range: cover calc(61.4545% - 22.9091vh) cover calc(66% - 32vh); }
+  [data-8b-live] #preflight .pf-bar > i:nth-of-type(3) { animation-range: cover calc(62.9091% - 25.8182vh) cover calc(67.4545% - 34.9091vh); }
+  [data-8b-live] #preflight .pf-bar > i:nth-of-type(4) { animation-range: cover calc(64.3636% - 28.7273vh) cover calc(68.9091% - 37.8182vh); }
+  [data-8b-live] #preflight .pf-bar > i:nth-of-type(5) { animation-range: cover calc(65.8182% - 31.6364vh) cover calc(70.3636% - 40.7273vh); }
+  [data-8b-live] #preflight .pf-safe { animation-name: preflight-i-pf-safe-clip-path-d; animation-range: cover 100vh cover calc(100% - 100vh); }
+}
+@media (max-width: 900px) {
+  [data-8b-live] #preflight { timeline-scope: --preflight-t1; }
+  [data-8b-live] #preflight .pf-checks > li > .pf-box > svg > path { animation-timeline: --preflight-t2; animation-range: cover calc(2.439% + 24.3903% * var(--i) + 13.1707vh - 18.2927vh * var(--i)) cover calc(12.1951% + 24.3903% * var(--i) + 5.8537vh - 18.2927vh * var(--i)); }
+  [data-8b-live] #preflight .pf-checks > li > .pf-box { animation-timeline: --preflight-t2; animation-range: cover calc(2.439% + 24.3903% * var(--i) + 13.1707vh - 18.2927vh * var(--i)) cover calc(7.3171% + 24.3902% * var(--i) + 9.5122vh - 18.2927vh * var(--i)); }
+  [data-8b-live] #preflight .pf-bleed { animation-range: cover calc(5.8824% + 10.8824vh) cover calc(17.6471% + 2.6471vh); }
+  [data-8b-live] #preflight .pf-trim--tl { animation-range: cover calc(25.4902% - 2.8431vh) cover calc(35.2941% - 9.7059vh); }
+  [data-8b-live] #preflight .pf-trim--tr { animation-range: cover calc(26.6667% - 3.6667vh) cover calc(36.4706% - 10.5294vh); }
+  [data-8b-live] #preflight .pf-trim--br { animation-range: cover calc(27.8431% - 4.4902vh) cover calc(37.6471% - 11.3529vh); }
+  [data-8b-live] #preflight .pf-trim--bl { animation-range: cover calc(29.0196% - 5.3137vh) cover calc(38.8235% - 12.1765vh); }
+  [data-8b-live] #preflight .pf-bar > i:nth-of-type(1) { animation-range: cover calc(64.7059% - 30.2941vh) cover calc(69.6078% - 33.7255vh); }
+  [data-8b-live] #preflight .pf-bar > i:nth-of-type(2) { animation-range: cover calc(66.2745% - 31.3922vh) cover calc(71.1765% - 34.8235vh); }
+  [data-8b-live] #preflight .pf-bar > i:nth-of-type(3) { animation-range: cover calc(67.8431% - 32.4902vh) cover calc(72.7451% - 35.9216vh); }
+  [data-8b-live] #preflight .pf-bar > i:nth-of-type(4) { animation-range: cover calc(69.4118% - 33.5882vh) cover calc(74.3137% - 37.0196vh); }
+  [data-8b-live] #preflight .pf-bar > i:nth-of-type(5) { animation-range: cover calc(70.9804% - 34.6863vh) cover calc(75.8824% - 38.1176vh); }
+  [data-8b-live] #preflight .pf-safe { animation-name: preflight-i-pf-safe-clip-path-m; animation-range: cover 15vh cover calc(100% - 55vh); }
+  [data-8b-live] #preflight .pf-sheet { view-timeline: --preflight-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #preflight .pf-checks { view-timeline: --preflight-t2 block; view-timeline-inset: 0; }
+}
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #contact .cn-photo { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact .cn-clip > img { animation-name: contact-div-cn-clip-img-scale; animation-timeline: --contact-t1; animation-range: cover 12vh cover calc(100% - 62vh); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #contact .m-sel__e--t, [data-8b-live] #contact .m-sel__e--b, [data-8b-live] #contact .m-sel__e--l, [data-8b-live] #contact .m-sel__e--r, [data-8b-live] #contact .m-sel__h--tl, [data-8b-live] #contact .m-sel__h--tr, [data-8b-live] #contact .m-sel__h--br, [data-8b-live] #contact .m-sel__h--bl { animation-name: contact-sel; animation-timeline: --contact-t1; animation-range: cover 12vh cover calc(100% - 62vh); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #contact .cn-clip { animation-name: contact-div-cn-clip-clip-path; animation-timeline: --contact-t1; animation-range: cover 12vh cover calc(100% - 62vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #contact .m-sel { container-type: size; }
+[data-8b-live] #contact .m-sel__e--t { --contact-x: 28cqw; --contact-y: 24cqh; --contact-sx: 0.44; --contact-sy: 1; }
+[data-8b-live] #contact .m-sel__e--b { --contact-x: 28cqw; --contact-y: -22cqh; --contact-sx: 0.44; --contact-sy: 1; }
+[data-8b-live] #contact .m-sel__e--l { --contact-x: 28cqw; --contact-y: 24cqh; --contact-sx: 1; --contact-sy: 0.54; }
+[data-8b-live] #contact .m-sel__e--r { --contact-x: -28cqw; --contact-y: 24cqh; --contact-sx: 1; --contact-sy: 0.54; }
+[data-8b-live] #contact .m-sel__h--tl { --contact-x: 28cqw; --contact-y: 24cqh; }
+[data-8b-live] #contact .m-sel__h--tr { --contact-x: -28cqw; --contact-y: 24cqh; }
+[data-8b-live] #contact .m-sel__h--br { --contact-x: -28cqw; --contact-y: -22cqh; }
+[data-8b-live] #contact .m-sel__h--bl { --contact-x: 28cqw; --contact-y: -22cqh; }
+@keyframes contact-sel { 0% { translate: var(--contact-x) var(--contact-y); scale: var(--contact-sx, 1) var(--contact-sy, 1); } 100% { translate: 0 0; scale: 1; } }
+@keyframes contact-div-cn-clip-img-scale { 0% { scale: 1.45; } 100% { scale: 1; } }
+@keyframes contact-div-cn-clip-clip-path { 0% { clip-path: inset(24% 28% 22%); } 12.5% { clip-path: inset(23.812% 27.781% 21.828%); } 20.8333% { clip-path: inset(23.132% 26.987% 21.204%); } 27.5% { clip-path: inset(22.003% 25.671% 20.17%); } 33.3333% { clip-path: inset(20.444% 23.852% 18.741%); } 38.3333% { clip-path: inset(18.592% 21.691% 17.043%); } 43.3333% { clip-path: inset(16.188% 18.887% 14.839%); } 48.3333% { clip-path: inset(13.16% 15.354% 12.064%); } 54.1667% { clip-path: inset(9.243% 10.784% 8.473%); } 59.1667% { clip-path: inset(6.536% 7.625% 5.991%); } 64.1667% { clip-path: inset(4.417% 5.153% 4.049%); } 70% { clip-path: inset(2.592% 3.024% 2.376%); } 76.6667% { clip-path: inset(1.22% 1.423% 1.118%); } 84.1667% { clip-path: inset(0.381% 0.445% 0.349%); } 94.1667% { clip-path: inset(0.019% 0.022% 0.017%); } 96.6667% { clip-path: inset(0.004% 0.004% 0.003%); } 97.0824% { clip-path: inset(0.004% 0.004% 0.003%); } 97.0833% { clip-path: inset(0.001% 0.002%); } 97.5% { clip-path: inset(0.001% 0.002%); } 98.3333% { clip-path: inset(0% 0.001%); } 98.749% { clip-path: inset(0% 0.001%); } 98.75% { clip-path: inset(0%); } 99.1667% { clip-path: inset(0%); } 99.5824% { clip-path: inset(0%); } 99.5834% { clip-path: none; } 100% { clip-path: none; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: a vertical Same-day print! label, a strip with address and status, the wordmark, five square button links and a send-files icon -->
@@ -632,8 +787,8 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
   <div class="nav__bar">
     <a class="nav__logo m-text-3" href="#opening">Shortrun</a>
     <button class="m-btn-2 nav__menu" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
-    <nav class="nav__links" id="nav-links" aria-label="Main" data-lenis-prevent>
-      <ul class="nav__list">
+    <nav class="nav__links" id="nav-links" aria-label="Main">
+      <ul class="nav__list" data-8b-items=":scope > li">
         <li><a class="m-btn-2" href="#counter">Copy &amp; print</a></li>
         <li><a class="m-btn-2" href="#paper">Paper</a></li>
         <li><a class="m-btn-2" href="#posters">Posters</a></li>
@@ -645,7 +800,7 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
   </div>
 </header>
 <main>
-<!-- opening: first screen: the h1 Proof first. with a lead and button, and four job tabs that swap a photo and a spec list -->
+<!-- opening: first screen: the h1 Proof first. with a lead and button, and four job tabs that swap a photo and a spec list (animation: scene:opening) -->
 <section id="opening" data-8b-section="opening" aria-labelledby="opening-title">
   <div class="op-s2">
     
@@ -656,7 +811,7 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
         <div class="op-cta"><a class="m-btn" href="#contact"><span class="m-btn__label">Start a job</span><span class="m-btn__icon" aria-hidden="true"></span></a></div>
       </div>
       <div class="op-job">
-        <div class="op-tabs" role="tablist" aria-label="What are you printing?">
+        <div class="op-tabs" role="tablist" aria-label="What are you printing?" data-8b-items=":scope > .op-tab:not(.op-tab--label)">
       <div class="op-tab op-tab--label m-text-6"><i class="op-tab__ink"></i><span>Jobs</span></div>
       <button class="op-tab m-text-6" type="button" role="tab" id="tab-posters" aria-controls="job-posters" aria-selected="true" data-img="posters"><i class="op-tab__ink"></i><span>Posters</span></button>
       <button class="op-tab m-text-6" type="button" role="tab" id="tab-flyers" aria-controls="job-flyers" aria-selected="false" tabindex="-1" data-img="flyers"><i class="op-tab__ink"></i><span>Flyers</span></button>
@@ -665,10 +820,10 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
     </div>
         <div class="op-proof">
           <div class="op-proof__clip">
-            <img style="background:#594040" data-img="posters" loading="lazy" src="https://images.unsplash.com/photo-1754681920848-d20733e4ef23?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGZseWVyc3xlbnwxfDB8fHwxNzkxNTY3NjYxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="A row of bright printed posters pinned along a board" width="1600" height="1067">
-            <img style="background:#0c59c0" data-img="flyers" hidden loading="lazy" src="https://images.unsplash.com/photo-1712736051179-1d77e1180eef?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8cHJpbnRlZCUyMHBvc3RlcnN8ZW58MXwwfHx8MTc5MTU2NzcyNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="Pink and blue printed flyers fanned out on a table" width="1600" height="1067">
-            <img style="background:#40260c" data-img="zines" hidden loading="lazy" src="https://images.unsplash.com/photo-1694022861804-840f61d1c452?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8emluZXxlbnwxfDB8fHwxNzkxNTY3NjYwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="Hands holding a small photo zine open on a wooden table" width="1600" height="1067">
-            <img style="background:#404026" data-img="cards" hidden loading="lazy" src="https://images.unsplash.com/photo-1694476114840-e84670cabafb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGJ1c2luZXNzJTIwY2FyZHN8ZW58MXwwfHx8MTc5MTU2NzY2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A hand holds up a bright yellow card against a green garden" width="1600" height="1067">
+            <img fetchpriority="high" data-img="posters" src="https://images.unsplash.com/photo-1754681920848-d20733e4ef23?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGZseWVyc3xlbnwxfDB8fHwxNzkxNTY3NjYxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="A row of bright printed posters pinned along a board" width="1600" height="1067">
+            <img data-img="flyers" hidden loading="lazy" src="https://images.unsplash.com/photo-1712736051179-1d77e1180eef?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8cHJpbnRlZCUyMHBvc3RlcnN8ZW58MXwwfHx8MTc5MTU2NzcyNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="Pink and blue printed flyers fanned out on a table" width="1600" height="1067">
+            <img data-img="zines" hidden loading="lazy" src="https://images.unsplash.com/photo-1694022861804-840f61d1c452?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8emluZXxlbnwxfDB8fHwxNzkxNTY3NjYwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="Hands holding a small photo zine open on a wooden table" width="1600" height="1067">
+            <img data-img="cards" hidden loading="lazy" src="https://images.unsplash.com/photo-1694476114840-e84670cabafb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fGJ1c2luZXNzJTIwY2FyZHN8ZW58MXwwfHx8MTc5MTU2NzY2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A hand holds up a bright yellow card against a green garden" width="1600" height="1067">
           </div>
           <i class="op-proof__paper" aria-hidden="true"></i>
           <i class="op-proof__ink op-proof__ink--1" aria-hidden="true"></i>
@@ -719,7 +874,7 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
   </div>
   <div class="ct-queue m-surface">
     <div class="ct-cols m-text-4" aria-hidden="true"><span>Job</span><span>Turnaround</span><span>From</span><span>Queue</span></div>
-    <ol class="ct-list">
+    <ol class="ct-list" data-8b-items=":scope > li">
       <li class="ct-row">
         <span class="ct-ico ct-ico--1" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3h10v4h3v10h-3v4H7v-4H4V7h3V3Zm2 2v2h6V5H9Zm-3 4v6h1v-3h10v3h1V9H6Zm3 5v5h6v-5H9Z"/></svg></span>
         <div class="ct-what"><h3 class="m-text-6">Copies</h3><p class="m-text">Black and white or colour, A4 and A3, single or double-sided.</p></div>
@@ -768,19 +923,19 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
 <!-- paper: photo of coloured card edges beside a table of six paper stocks with weight badges -->
 <section id="paper" data-8b-section="paper" aria-labelledby="paper-title">
   <div class="pp-grid">
-    <figure class="pp-photo" data-8b-motion="crop"><img style="background:#f3d98c" src="https://images.unsplash.com/photo-1632047094596-851f985c6c85?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGFwZXIlMjBzdGFjayUyMGNvbG9yZnVsfGVufDF8MHx8fDE3OTE1Njc2NjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=750&amp;q=60" alt="The edges of stacked card in many colours" width="1600" height="1067" loading="lazy"></figure>
+    <figure class="pp-photo" data-8b-motion="crop"><img src="https://images.unsplash.com/photo-1632047094596-851f985c6c85?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGFwZXIlMjBzdGFjayUyMGNvbG9yZnVsfGVufDF8MHx8fDE3OTE1Njc2NjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=890&amp;q=60" alt="The edges of stacked card in many colours" width="1600" height="1067" loading="lazy"></figure>
     <div class="pp-main">
       <h2 class="m-text-3" id="paper-title"><span class="pp-sel" data-8b-motion="select">Pick your paper.</span></h2>
       <p class="m-text-5">Hold it before you choose it: every stock below sits in the swatch drawer by the counter.</p>
       <table class="pp-table m-surface">
         <thead class="m-text-4"><tr><th scope="col">Stock</th><th scope="col">Weight</th><th scope="col">Feel</th><th scope="col">Good for</th></tr></thead>
-        <tbody>
-          <tr><th scope="row" class="m-text-6">Bond</th><td><span class="m-badge pp-w pp-w--1" data-8b-motion="stamp"><span class="m-badge__label">100 gsm</span></span></td><td class="m-text">Smooth, uncoated</td><td class="m-text">Letters, zine pages</td></tr>
-          <tr><th scope="row" class="m-text-6">Silk</th><td><span class="m-badge pp-w pp-w--2" data-8b-motion="stamp"><span class="m-badge__label">170 gsm</span></span></td><td class="m-text">Soft sheen</td><td class="m-text">Posters, flyers</td></tr>
-          <tr><th scope="row" class="m-text-6">Recycled</th><td><span class="m-badge pp-w pp-w--3" data-8b-motion="stamp"><span class="m-badge__label">120 gsm</span></span></td><td class="m-text">Flecked, uncoated</td><td class="m-text">Reports, menus</td></tr>
-          <tr><th scope="row" class="m-text-6">Matt board</th><td><span class="m-badge pp-w pp-w--4" data-8b-motion="stamp"><span class="m-badge__label">350 gsm</span></span></td><td class="m-text">Chalky and stiff</td><td class="m-text">Postcards, covers</td></tr>
-          <tr><th scope="row" class="m-text-6">Kraft</th><td><span class="m-badge pp-w pp-w--5" data-8b-motion="stamp"><span class="m-badge__label">300 gsm</span></span></td><td class="m-text">Brown and rough</td><td class="m-text">Tags, invitations</td></tr>
-          <tr><th scope="row" class="m-text-6">Colour card</th><td><span class="m-badge pp-w pp-w--6" data-8b-motion="stamp"><span class="m-badge__label">240 gsm</span></span></td><td class="m-text">Eighteen colours</td><td class="m-text">Signs, school projects</td></tr>
+        <tbody data-8b-items=":scope > tr">
+          <tr><th scope="row" class="m-text-6">Bond</th><td><span class="m-badge pp-w pp-w--1" data-8b-motion="stamp" style="--stamp-delay: 0s"><span class="m-badge__label">100 gsm</span></span></td><td class="m-text">Smooth, uncoated</td><td class="m-text">Letters, zine pages</td></tr>
+          <tr><th scope="row" class="m-text-6">Silk</th><td><span class="m-badge pp-w pp-w--2" data-8b-motion="stamp" style="--stamp-delay: 0.07s"><span class="m-badge__label">170 gsm</span></span></td><td class="m-text">Soft sheen</td><td class="m-text">Posters, flyers</td></tr>
+          <tr><th scope="row" class="m-text-6">Recycled</th><td><span class="m-badge pp-w pp-w--3" data-8b-motion="stamp" style="--stamp-delay: 0.14s"><span class="m-badge__label">120 gsm</span></span></td><td class="m-text">Flecked, uncoated</td><td class="m-text">Reports, menus</td></tr>
+          <tr><th scope="row" class="m-text-6">Matt board</th><td><span class="m-badge pp-w pp-w--4" data-8b-motion="stamp" style="--stamp-delay: 0.21s"><span class="m-badge__label">350 gsm</span></span></td><td class="m-text">Chalky and stiff</td><td class="m-text">Postcards, covers</td></tr>
+          <tr><th scope="row" class="m-text-6">Kraft</th><td><span class="m-badge pp-w pp-w--5" data-8b-motion="stamp" style="--stamp-delay: 0.28s"><span class="m-badge__label">300 gsm</span></span></td><td class="m-text">Brown and rough</td><td class="m-text">Tags, invitations</td></tr>
+          <tr><th scope="row" class="m-text-6">Colour card</th><td><span class="m-badge pp-w pp-w--6" data-8b-motion="stamp" style="--stamp-delay: 0.35s"><span class="m-badge__label">240 gsm</span></span></td><td class="m-text">Eighteen colours</td><td class="m-text">Signs, school projects</td></tr>
         </tbody>
       </table>
     </div>
@@ -789,7 +944,7 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
 <!-- posters: a held stage where a poster wall is dragged out by selection handles from A6 to A0 while a marker steps along the size row (animation: scene:posters) -->
 <section id="posters" data-8b-section="posters" aria-labelledby="posters-title">
   <div class="ps-stage">
-    <figure class="ps-frame"><img style="background:#404059" src="https://images.unsplash.com/photo-1491252645376-253f0f174d78?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cHJpbnRlZCUyMHBvc3RlcnN8ZW58MXwwfHx8MTc5MTU2NzcyNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A wall pasted edge to edge with colourful gig and event posters" width="1600" height="1037" loading="lazy"></figure>
+    <figure class="ps-frame"><img src="https://images.unsplash.com/photo-1491252645376-253f0f174d78?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cHJpbnRlZCUyMHBvc3RlcnN8ZW58MXwwfHx8MTc5MTU2NzcyNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=60" alt="A wall pasted edge to edge with colourful gig and event posters" width="1600" height="1037" loading="lazy"></figure>
     <span class="m-sel ps-sel" aria-hidden="true"><i class="m-sel__e m-sel__e--t"></i><i class="m-sel__e m-sel__e--r"></i><i class="m-sel__e m-sel__e--b"></i><i class="m-sel__e m-sel__e--l"></i><i class="m-sel__h m-sel__h--tl"></i><i class="m-sel__h m-sel__h--tr"></i><i class="m-sel__h m-sel__h--br"></i><i class="m-sel__h m-sel__h--bl"></i></span>
     <div class="ps-card m-surface">
       <h2 class="m-text-3" id="posters-title">Big is our small size.</h2>
@@ -798,7 +953,7 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
     </div>
     <div class="ps-sizes m-surface">
       <i class="ps-mark" aria-hidden="true"></i>
-      <ol class="ps-list m-text-6" aria-label="Sizes we print"><li>A6</li><li>A5</li><li>A4</li><li>A3</li><li>A2</li><li>A1</li><li>A0</li></ol>
+      <ol class="ps-list m-text-6" aria-label="Sizes we print" data-8b-items=":scope > li"><li>A6</li><li>A5</li><li>A4</li><li>A3</li><li>A2</li><li>A1</li><li>A0</li></ol>
     </div>
   </div>
 </section>
@@ -808,48 +963,48 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
     <h2 class="m-text-3" id="jobs-title"><span class="jb-sel" data-8b-motion="select">Off the press this week.</span></h2>
     <p class="m-text-5">A few of the jobs that went over the counter, as they were written on the docket.</p>
   </div>
-  <ol class="jb-list">
+  <ol class="jb-list" data-8b-items=":scope > li">
     <li class="jb-row">
-      <figure class="jb-thumb" data-8b-motion="crop"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1558707538-c56435bdcdf3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHByaW50ZWQlMjBwb3N0ZXJzfGVufDF8MHx8fDE3OTE1Njc3MjV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=190&amp;q=60" alt="Black and white exhibition posters with bold patterns on a wall" width="600" height="400" loading="lazy"></figure>
+      <figure class="jb-thumb" data-8b-motion="crop"><img src="https://images.unsplash.com/photo-1558707538-c56435bdcdf3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHByaW50ZWQlMjBwb3N0ZXJzfGVufDF8MHx8fDE3OTE1Njc3MjV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="Black and white exhibition posters with bold patterns on a wall" width="600" height="400" loading="lazy"></figure>
       <h3 class="jb-job m-text-6">Exhibition posters</h3>
       <p class="jb-spec m-text">40 × A2 on 170 gsm silk</p>
       <p class="jb-when m-text-4">Thursday, 3 pm</p>
-      <span class="m-badge jb-badge jb-badge--1" data-8b-motion="stamp"><span class="m-badge__label">Collected</span></span>
+      <span class="m-badge jb-badge jb-badge--1" data-8b-motion="stamp" style="--stamp-delay: 0s"><span class="m-badge__label">Collected</span></span>
     </li>
     <li class="jb-row">
-      <figure class="jb-thumb" data-8b-motion="crop"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1669720974831-47816c252ff1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fHN0aWNrZXJzfGVufDF8MHx8fDE3OTE1Njc2NjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="A sheet of holographic die-cut stickers on a table" width="600" height="337" loading="lazy"></figure>
+      <figure class="jb-thumb" data-8b-motion="crop"><img src="https://images.unsplash.com/photo-1669720974831-47816c252ff1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTR8fHN0aWNrZXJzfGVufDF8MHx8fDE3OTE1Njc2NjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=260&amp;q=60" alt="A sheet of holographic die-cut stickers on a table" width="600" height="337" loading="lazy"></figure>
       <h3 class="jb-job m-text-6">Holographic sticker sheets</h3>
       <p class="jb-spec m-text">300 × A6, kiss-cut</p>
       <p class="jb-when m-text-4">Friday, 11 am</p>
-      <span class="m-badge jb-badge jb-badge--2" data-8b-motion="stamp"><span class="m-badge__label">Posted</span></span>
+      <span class="m-badge jb-badge jb-badge--2" data-8b-motion="stamp" style="--stamp-delay: 0.07s"><span class="m-badge__label">Posted</span></span>
     </li>
     <li class="jb-row">
-      <figure class="jb-thumb" data-8b-motion="crop"><img style="background:#f3c040" src="https://images.unsplash.com/photo-1744057847940-85b1a5c09229?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y29sb3JmdWwlMjBwb3N0ZXIlMjBkZXNpZ258ZW58MXwxfHx8MTc5MTU2NzcyNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=190&amp;q=60" alt="A festival poster with a red patterned rooster on yellow" width="600" height="932" loading="lazy"></figure>
+      <figure class="jb-thumb" data-8b-motion="crop"><img src="https://images.unsplash.com/photo-1744057847940-85b1a5c09229?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y29sb3JmdWwlMjBwb3N0ZXIlMjBkZXNpZ258ZW58MXwxfHx8MTc5MTU2NzcyNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="A festival poster with a red patterned rooster on yellow" width="600" height="932" loading="lazy"></figure>
       <h3 class="jb-job m-text-6">Festival poster run</h3>
       <p class="jb-spec m-text">250 × A3 on 170 gsm matt</p>
       <p class="jb-when m-text-4">Monday, noon</p>
-      <span class="m-badge jb-badge jb-badge--3" data-8b-motion="stamp"><span class="m-badge__label">On the shelf</span></span>
+      <span class="m-badge jb-badge jb-badge--3" data-8b-motion="stamp" style="--stamp-delay: 0.14s"><span class="m-badge__label">On the shelf</span></span>
     </li>
     <li class="jb-row">
-      <figure class="jb-thumb" data-8b-motion="crop"><img style="background:#262626" src="https://images.unsplash.com/photo-1618410321132-9f4cebb2f7f5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cHJpbnRlZCUyMHBvc3RlcnN8ZW58MXwwfHx8MTc5MTU2NzcyNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=190&amp;q=60" alt="Black and white photo prints laid out on a chequered cloth" width="600" height="450" loading="lazy"></figure>
+      <figure class="jb-thumb" data-8b-motion="crop"><img src="https://images.unsplash.com/photo-1618410321132-9f4cebb2f7f5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cHJpbnRlZCUyMHBvc3RlcnN8ZW58MXwwfHx8MTc5MTU2NzcyNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="Black and white photo prints laid out on a chequered cloth" width="600" height="450" loading="lazy"></figure>
       <h3 class="jb-job m-text-6">Photo zine, 32 pages</h3>
       <p class="jb-spec m-text">60 copies, stapled</p>
       <p class="jb-when m-text-4">Tuesday, 5 pm</p>
-      <span class="m-badge jb-badge jb-badge--1" data-8b-motion="stamp"><span class="m-badge__label">Collected</span></span>
+      <span class="m-badge jb-badge jb-badge--1" data-8b-motion="stamp" style="--stamp-delay: 0.21s"><span class="m-badge__label">Collected</span></span>
     </li>
     <li class="jb-row">
-      <figure class="jb-thumb" data-8b-motion="crop"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1595142545813-06fee27f3dcb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cG9zdGVyJTIwcHJpbnRpbmd8ZW58MXwxfHx8MTc5MTU2NzY2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=190&amp;q=60" alt="A pink and white typographic workshop poster" width="600" height="818" loading="lazy"></figure>
+      <figure class="jb-thumb" data-8b-motion="crop"><img src="https://images.unsplash.com/photo-1595142545813-06fee27f3dcb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cG9zdGVyJTIwcHJpbnRpbmd8ZW58MXwxfHx8MTc5MTU2NzY2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="A pink and white typographic workshop poster" width="600" height="818" loading="lazy"></figure>
       <h3 class="jb-job m-text-6">Workshop posters</h3>
       <p class="jb-spec m-text">30 × A1 on recycled 120 gsm</p>
       <p class="jb-when m-text-4">Wednesday, 10 am</p>
-      <span class="m-badge jb-badge jb-badge--2" data-8b-motion="stamp"><span class="m-badge__label">Posted</span></span>
+      <span class="m-badge jb-badge jb-badge--2" data-8b-motion="stamp" style="--stamp-delay: 0.28s"><span class="m-badge__label">Posted</span></span>
     </li>
     <li class="jb-row">
-      <figure class="jb-thumb" data-8b-motion="crop"><img style="background:#d9c0a6" src="https://images.unsplash.com/photo-1756234814579-d0474aeae2cf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cHJpbnRlZCUyMHBvc3RlcnN8ZW58MXwwfHx8MTc5MTU2NzcyNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=190&amp;q=60" alt="Close-up of newspaper-style menus with large headlines" width="600" height="400" loading="lazy"></figure>
+      <figure class="jb-thumb" data-8b-motion="crop"><img src="https://images.unsplash.com/photo-1756234814579-d0474aeae2cf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8cHJpbnRlZCUyMHBvc3RlcnN8ZW58MXwwfHx8MTc5MTU2NzcyNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="Close-up of newspaper-style menus with large headlines" width="600" height="400" loading="lazy"></figure>
       <h3 class="jb-job m-text-6">Newspaper-style menus</h3>
       <p class="jb-spec m-text">500 × A3 on 100 gsm bond</p>
       <p class="jb-when m-text-4">Wednesday, 4 pm</p>
-      <span class="m-badge jb-badge jb-badge--3" data-8b-motion="stamp"><span class="m-badge__label">On the shelf</span></span>
+      <span class="m-badge jb-badge jb-badge--3" data-8b-motion="stamp" style="--stamp-delay: 0.35s"><span class="m-badge__label">On the shelf</span></span>
     </li>
   </ol>
 </section>
@@ -860,11 +1015,11 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
       <h2 class="m-text-3" id="finishing-title">Fold it, stitch it, bind it, trim it.</h2>
       <p class="m-text-5">Finishing happens on the back bench, by hand and by machine, while you wait for most jobs.</p>
     </div>
-    <ol class="fn-strip">
-      <li class="fn-panel"><figure class="fn-photo"><img style="background:#8c8c8c" src="https://images.unsplash.com/photo-1695634365580-cae400a4360b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8c3RhcGxlZCUyMGJvb2tsZXR8ZW58MXwwfHx8MTc5MTU2NzcyNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=350&amp;q=60" alt="Concertina-folded leaflets standing on a tiled floor" width="800" height="534" loading="lazy"></figure><div class="fn-cap"><h3 class="m-text-6">Fold</h3><p class="m-text">Half, letter, Z and concertina folds, creased first so card never cracks.</p></div></li>
-      <li class="fn-panel"><figure class="fn-photo"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1630448925000-f014372affc7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Ym9va2JpbmRpbmd8ZW58MXwwfHx8MTc5MTQ2NjkxM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=350&amp;q=60" alt="A hand-stitched booklet with a black cover standing open" width="800" height="534" loading="lazy"></figure><div class="fn-cap"><h3 class="m-text-6">Stitch</h3><p class="m-text">Saddle stitching for zines and programmes up to 64 pages.</p></div></li>
-      <li class="fn-panel"><figure class="fn-photo"><img style="background:#737373" src="https://images.unsplash.com/photo-1590410684548-807410022ef6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fGJvb2tiaW5kaW5nfGVufDF8MHx8fDE3OTE0NjY5MTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=310&amp;q=60" alt="A stack of wire-bound notebooks seen from the spine" width="800" height="600" loading="lazy"></figure><div class="fn-cap"><h3 class="m-text-6">Bind</h3><p class="m-text">Wire and comb binding that lies flat on a desk or a music stand.</p></div></li>
-      <li class="fn-panel"><figure class="fn-photo"><img style="background:#f30c0c" src="https://images.unsplash.com/photo-1693658353360-10f7326e7113?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFwZXIlMjBjdXR0ZXJ8ZW58MXwwfHx8MTc5MTU2NzcyNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=350&amp;q=60" alt="A paper trimmer cutting a sheet of red card on a green mat" width="800" height="532" loading="lazy"></figure><div class="fn-cap"><h3 class="m-text-6">Trim</h3><p class="m-text">Guillotined to the line with bleed, corners rounded on request.</p></div></li>
+    <ol class="fn-strip" data-8b-items=":scope > li" data-8b-fixed="4">
+      <li class="fn-panel" style="--finishing-li-fn-panel-translate-from: 103.821%; --finishing-li-fn-panel-translate-from-2: 79.579%"><figure class="fn-photo"><img src="https://images.unsplash.com/photo-1769893715447-8f12c382e49c?ixid=M3w0Mzc5fDB8MXxhbGx8fHx8fHx8fHwxNzk0MTU5NjkwfA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="Folded leaflets standing on a dark table, with brochures stacked below" width="800" height="534" loading="lazy"></figure><div class="fn-cap"><h3 class="m-text-6">Fold</h3><p class="m-text">Half, letter, Z and concertina folds, creased first so card never cracks.</p></div></li>
+      <li class="fn-panel" style="--finishing-li-fn-panel-translate-from: 34.605%; --finishing-li-fn-panel-translate-from-2: 26.526%"><figure class="fn-photo"><img src="https://images.unsplash.com/photo-1630448925000-f014372affc7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Ym9va2JpbmRpbmd8ZW58MXwwfHx8MTc5MTQ2NjkxM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="A hand-stitched booklet with a black cover standing open" width="800" height="534" loading="lazy"></figure><div class="fn-cap"><h3 class="m-text-6">Stitch</h3><p class="m-text">Saddle stitching for zines and programmes up to 64 pages.</p></div></li>
+      <li class="fn-panel" style="--finishing-li-fn-panel-translate-from: -34.607%; --finishing-li-fn-panel-translate-from-2: -26.526%"><figure class="fn-photo"><img src="https://images.unsplash.com/photo-1590410684548-807410022ef6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fGJvb2tiaW5kaW5nfGVufDF8MHx8fDE3OTE0NjY5MTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=60" alt="A stack of wire-bound notebooks seen from the spine" width="800" height="600" loading="lazy"></figure><div class="fn-cap"><h3 class="m-text-6">Bind</h3><p class="m-text">Wire and comb binding that lies flat on a desk or a music stand.</p></div></li>
+      <li class="fn-panel" style="--finishing-li-fn-panel-translate-from: -103.816%; --finishing-li-fn-panel-translate-from-2: -79.579%"><figure class="fn-photo"><img src="https://images.unsplash.com/photo-1693658353360-10f7326e7113?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGFwZXIlMjBjdXR0ZXJ8ZW58MXwwfHx8MTc5MTU2NzcyNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=380&amp;q=60" alt="A paper trimmer cutting a sheet of red card on a green mat" width="800" height="532" loading="lazy"></figure><div class="fn-cap"><h3 class="m-text-6">Trim</h3><p class="m-text">Guillotined to the line with bleed, corners rounded on request.</p></div></li>
     </ol>
   </div>
 </section>
@@ -874,13 +1029,13 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
     <div class="rc-text">
       <h2 class="m-text-3" id="recycled-title"><span class="rc-sel" data-8b-motion="select">Paper with a past.</span></h2>
       <p class="m-text-5">Most of what we sell is recycled or FSC-certified. Toner cartridges go back to the maker, misprints come back as free notepads at the till, and offcuts go to the primary school round the corner.</p>
-      <ul class="rc-facts">
-        <li class="m-surface" data-8b-motion="stamp"><strong class="m-text-6">Recycled by default</strong><span class="m-text">House stock is recycled unless you ask for something else.</span></li>
-        <li class="m-surface" data-8b-motion="stamp"><strong class="m-text-6">Notepads from misprints</strong><span class="m-text">Glued in pads of fifty, free with any order.</span></li>
-        <li class="m-surface" data-8b-motion="stamp"><strong class="m-text-6">Offcuts to the art room</strong><span class="m-text">Collected every Friday by the school next door.</span></li>
+      <ul class="rc-facts" data-8b-items=":scope > li">
+        <li class="m-surface" data-8b-motion="stamp" style="--stamp-delay: 0s"><strong class="m-text-6">Recycled by default</strong><span class="m-text">House stock is recycled unless you ask for something else.</span></li>
+        <li class="m-surface" data-8b-motion="stamp" style="--stamp-delay: 0.07s"><strong class="m-text-6">Notepads from misprints</strong><span class="m-text">Glued in pads of fifty, free with any order.</span></li>
+        <li class="m-surface" data-8b-motion="stamp" style="--stamp-delay: 0.14s"><strong class="m-text-6">Offcuts to the art room</strong><span class="m-text">Collected every Friday by the school next door.</span></li>
       </ul>
     </div>
-    <figure class="rc-photo" data-8b-motion="crop"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1526314339866-9c8fead21545?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGFwZXIlMjBzdGFjayUyMGNvbG9yZnVsfGVufDF8MHx8fDE3OTE1Njc2NjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=850&amp;q=60" alt="Sheets of yellow and green paper fanned out in soft focus" width="1200" height="800" loading="lazy"></figure>
+    <figure class="rc-photo" data-8b-motion="crop"><img src="https://images.unsplash.com/photo-1526314339866-9c8fead21545?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGFwZXIlMjBzdGFjayUyMGNvbG9yZnVsfGVufDF8MHx8fDE3OTE1Njc2NjB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1010&amp;q=60" alt="Sheets of yellow and green paper fanned out in soft focus" width="1200" height="800" loading="lazy"></figure>
   </div>
 </section>
 <!-- preflight: a four-point file checklist beside a sample sheet that gets its bleed, trim marks, safe area and colour bar as the checks tick (animation: scene:preflight) -->
@@ -889,7 +1044,7 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
     <div class="pf-list">
       <h2 class="m-text-3" id="preflight-title">Send it right, get it right.</h2>
       <p class="m-text-5">Four things we check on every file. Get them right and your job skips the fix-up queue.</p>
-      <ol class="pf-checks">
+      <ol class="pf-checks" data-8b-items=":scope > li">
         <li class="pf-check"><span class="pf-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 9.5 17 19 7.5"/></svg></span><div><h3 class="m-text-6">3 mm bleed on every edge</h3><p class="m-text">Let colour run past the trim, so no white hairline shows after the cut.</p></div></li>
         <li class="pf-check"><span class="pf-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 9.5 17 19 7.5"/></svg></span><div><h3 class="m-text-6">Crop marks, or none at all</h3><p class="m-text">Put them outside the bleed, or leave them off and we add our own.</p></div></li>
         <li class="pf-check"><span class="pf-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 9.5 17 19 7.5"/></svg></span><div><h3 class="m-text-6">Words 5 mm inside the trim</h3><p class="m-text">Keep text and logos clear of the blade.</p></div></li>
@@ -900,7 +1055,7 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
     <figure class="pf-art">
       <div class="pf-sheet">
         <i class="pf-bleed" aria-hidden="true"></i>
-        <div class="pf-clip"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1715154470884-1c2be0b0129f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHBvc3RlciUyMHByaW50aW5nfGVufDF8MXx8fDE3OTE1Njc2NjF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="A linen tester resting on a colour calibration chart" width="1000" height="1504" loading="lazy"></div>
+        <div class="pf-clip"><img src="https://images.unsplash.com/photo-1715154470884-1c2be0b0129f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHBvc3RlciUyMHByaW50aW5nfGVufDF8MXx8fDE3OTE1Njc2NjF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="A linen tester resting on a colour calibration chart" width="1000" height="1504" loading="lazy"></div>
         <i class="pf-safe" aria-hidden="true"></i>
         <i class="pf-trim pf-trim--tl" aria-hidden="true"></i><i class="pf-trim pf-trim--tr" aria-hidden="true"></i><i class="pf-trim pf-trim--br" aria-hidden="true"></i><i class="pf-trim pf-trim--bl" aria-hidden="true"></i>
       </div>
@@ -916,7 +1071,7 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
       <h2 class="m-text-3" id="faq-title"><span class="fq-sel" data-8b-motion="select">Asked at the counter.</span></h2>
       <p class="m-text-5">The questions we hear most, answered the way we would answer them across the desk.</p>
     </div>
-    <div class="fq-list m-surface">
+    <div class="fq-list m-surface" data-8b-items=":scope > details">
       <details><summary><span class="m-text-6">Do I need an appointment?</span></summary><p class="m-text">No. Walk in any time we are open. For runs over a thousand sheets, ring ahead so the machine is free.</p></details>
       <details><summary><span class="m-text-6">Which files do you take?</span></summary><p class="m-text">A print-ready PDF is best. We also open Word, PowerPoint, JPG, PNG and packaged InDesign files, and we will tell you if anything looks off.</p></details>
       <details><summary><span class="m-text-6">How fast is same day?</span></summary><p class="m-text">Files in by 2 pm are printed, finished and on the shelf by close. Copies and prints from a stick are done while you wait.</p></details>
@@ -932,7 +1087,7 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
     <div class="cn-info">
       <h2 class="m-text-3" id="contact-title">Come in, or send it over.</h2>
       <figure class="cn-photo">
-        <div class="cn-clip"><img style="background:#c08c40" src="https://images.unsplash.com/photo-1613549276959-dfbb5199ff5d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c21hbGwlMjBzaG9wJTIwc3RvcmVmcm9udHxlbnwxfDF8fHwxNzkxNTY3NzI1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=410&amp;q=60" alt="A small shop front with a bright yellow wall and blue barrels by the door" width="1200" height="1722" loading="lazy"></div>
+        <div class="cn-clip"><img src="https://images.unsplash.com/photo-1613549276959-dfbb5199ff5d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c21hbGwlMjBzaG9wJTIwc3RvcmVmcm9udHxlbnwxfDF8fHwxNzkxNTY3NzI1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=60" alt="A small shop front with a bright yellow wall and blue barrels by the door" width="1200" height="1722" loading="lazy"></div>
         <span class="m-sel" aria-hidden="true"><i class="m-sel__e m-sel__e--t"></i><i class="m-sel__e m-sel__e--r"></i><i class="m-sel__e m-sel__e--b"></i><i class="m-sel__e m-sel__e--l"></i><i class="m-sel__h m-sel__h--tl"></i><i class="m-sel__h m-sel__h--tr"></i><i class="m-sel__h m-sel__h--br"></i><i class="m-sel__h m-sel__h--bl"></i></span>
       </figure>
       <dl class="cn-dl">
@@ -975,7 +1130,7 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
     </div>
     <div>
       <h2 class="m-text-4">Pages</h2>
-      <ul class="m-text"><li><a class="m-link" href="#counter">Copy and print</a></li><li><a class="m-link" href="#paper">Paper</a></li><li><a class="m-link" href="#posters">Posters</a></li><li><a class="m-link" href="#jobs">Recent jobs</a></li><li><a class="m-link" href="#faq">Questions</a></li><li><a class="m-link" href="#contact">Contact</a></li></ul>
+      <ul class="m-text" data-8b-items=":scope > li"><li><a class="m-link" href="#counter">Copy and print</a></li><li><a class="m-link" href="#paper">Paper</a></li><li><a class="m-link" href="#posters">Posters</a></li><li><a class="m-link" href="#jobs">Recent jobs</a></li><li><a class="m-link" href="#faq">Questions</a></li><li><a class="m-link" href="#contact">Contact</a></li></ul>
     </div>
   </div>
   <div class="ft-base m-text-4"><p>© 2026 Shortrun Print &amp; Copy Ltd. Prices include VAT. · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></p><p>Recycled stock is the house default.</p></div>
@@ -986,14 +1141,14 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
   const menu = header.querySelector('.nav__menu');
   const links = header.querySelector('.nav__links');
   let last = window.scrollY;
-  const held = () => [...document.querySelectorAll('main > section.is-run')].some(section => {
+  const held = () => [...document.querySelectorAll('main > section')].some(section => {
     const box = section.getBoundingClientRect();
-    return box.top <= 1 && box.bottom >= innerHeight - 1;
+    return box.top <= 1 && box.bottom >= innerHeight - 1 && section.firstElementChild && getComputedStyle(section.firstElementChild).position === 'sticky';
   });
   const setOpen = open => {
     header.classList.toggle('is-open', open);
     menu.setAttribute('aria-expanded', String(open));
-    if (open) { header.classList.remove('is-tucked'); window.lenis?.stop(); } else { window.lenis?.start(); }
+    if (open) { header.classList.remove('is-tucked'); window.motionKit?.wheel?.stop(); } else { window.motionKit?.wheel?.start(); }
   };
   menu.addEventListener('click', () => setOpen(!header.classList.contains('is-open')));
   links.addEventListener('click', event => { if (event.target.closest('a')) setOpen(false); });
@@ -1036,317 +1191,120 @@ textarea.m-field__control { min-height: 120px; resize: vertical; }
   });
   })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function navHeight() {
-  const header = document.getElementById('navigation');
-  return header ? header.offsetHeight : 0;
-}
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.11, anchors: { offset: -navHeight() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-function clipTween(element, shape, vars = {}) {
-  const { clear = true, ...rest } = vars;
-  const box = { k: 0 };
-  const write = () => {
-    if (clear && box.k >= 1) { element.style.clipPath = ''; return; }
-    element.style.clipPath = `inset(${shape(box.k).map(value => `${Math.max(0, value).toFixed(3)}%`).join(' ')})`;
-  };
-  write();
-  return gsap.to(box, { k: 1, ease: 'none', ...rest, onUpdate: write, onStart: write });
-}
-function rectIn(sel, target) {
-  const a = sel.getBoundingClientRect(), b = target.getBoundingClientRect();
-  return { x: b.left - a.left, y: b.top - a.top, w: b.width, h: b.height };
-}
-function selParts(r, w, h) {
-  return {
-    'e--t': { x: r.x, y: r.y, scaleX: r.w / w, scaleY: 1 },
-    'e--b': { x: r.x, y: r.y + r.h - h, scaleX: r.w / w, scaleY: 1 },
-    'e--l': { x: r.x, y: r.y, scaleX: 1, scaleY: r.h / h },
-    'e--r': { x: r.x + r.w - w, y: r.y, scaleX: 1, scaleY: r.h / h },
-    'h--tl': { x: r.x, y: r.y },
-    'h--tr': { x: r.x + r.w - w, y: r.y },
-    'h--br': { x: r.x + r.w - w, y: r.y + r.h - h },
-    'h--bl': { x: r.x, y: r.y + r.h - h }
-  };
-}
-function selFromTo(sel, from, to, vars = {}) {
-  const tl = gsap.timeline(vars);
-  const rest = () => ({ x: 0, y: 0, w: sel.offsetWidth, h: sel.offsetHeight });
-  const read = (rect, name, prop) => () => selParts((rect || rest)(), sel.offsetWidth, sel.offsetHeight)[name][prop];
-  Object.entries(selParts(rest(), 1, 1)).forEach(([name, props]) => {
-    const fromVars = {}, toVars = {};
-    Object.keys(props).forEach(prop => { fromVars[prop] = read(from, name, prop); toVars[prop] = read(to, name, prop); });
-    tl.fromTo(sel.querySelector(`.m-sel__${name}`), fromVars, toVars, 0);
-  });
-  return tl;
-}
-const effects = {
-  crop(element, vars = {}) {
-    const img = element.querySelector('img');
-    const tl = gsap.timeline(vars)
-      .add(clipTween(element, k => [12, 12, 12, 12].map(v => v * (1 - k)), { duration: 1.05, ease: 'power3.inOut' }), 0);
-    if (img) tl.fromTo(img, { scale: 1.18 }, { scale: 1, duration: 1.2, ease: 'power3.out' }, 0);
-    return tl;
-  },
-  select(element, vars = {}) {
-    return gsap.timeline(vars)
-      .fromTo(element, { backgroundSize: '0% 100%', backgroundPosition: '0% 0%' }, { backgroundSize: '100% 100%', duration: 0.45, ease: 'power2.inOut' })
-      .set(element, { backgroundPosition: '100% 0%' })
-      .to(element, { backgroundSize: '0% 100%', duration: 0.45, ease: 'power2.inOut' }, '+=0.2');
-  },
-  stamp(element, vars = {}) {
-    return gsap.timeline(vars)
-      .fromTo(element, { scale: 1.25, rotation: -6, autoAlpha: 0 }, { scale: 1, rotation: 0, autoAlpha: 1, duration: 0.42, ease: 'back.out(2.2)' });
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  Object.keys(effects).forEach(name => {
-    const elements = [...section.querySelectorAll(`[data-8b-motion~="${name}"]`)];
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, i) => {
-        const tl = effects[name](element, { paused: true, delay: name === 'stamp' ? (i % 6) * 0.07 : 0 });
-        ScrollTrigger.create({ id: `${id}:${i}`, trigger: element, start: 'top 88%', once: true, onEnter: () => tl.play() });
-      });
-      return () => elements.forEach(element => { element.style.clipPath = ''; });
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-</script>
 
-<script data-8b-part="scene:counter">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('counter');
-    const rows = [...section.querySelectorAll('.ct-row')];
-    const tl = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'counter', trigger: section.querySelector('.ct-queue'), start: 'top 80%', end: 'bottom 55%', scrub: 0.5 }
-    });
-    rows.forEach((row, i) => {
-      tl.fromTo(row.querySelector('.ct-bar i'), { scaleX: 0 }, { scaleX: 1, duration: 1, ease: 'power1.inOut' }, i * 0.6)
-        .fromTo(row.querySelector('.ct-badge'), { autoAlpha: 0, scale: 1.6, rotation: -12 }, { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.22, ease: 'back.out(2.4)' }, i * 0.6 + 0.92);
-    });
-  });
-}, { id: 'scene:counter' });
-</script>
-<script data-8b-part="scene:posters">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('posters');
-    const frame = section.querySelector('.ps-frame');
-    const sel = section.querySelector('.ps-sel');
-    const mark = section.querySelector('.ps-mark');
-    const cells = [...section.querySelectorAll('.ps-list li')];
-    const sizes = [0.16, 0.21, 0.28, 0.38, 0.52, 0.72, 1];
-    const ox = 0.7, oy = 0.56;
-    const state = { s: sizes[0] };
-    const parts = [...sel.children];
-    const apply = () => {
-      const w = sel.offsetWidth, h = sel.offsetHeight, s = state.s;
-      gsap.set(frame, { scale: s, transformOrigin: `${ox * 100}% ${oy * 100}%` });
-      const values = selParts({ x: ox * w * (1 - s), y: oy * h * (1 - s), w: w * s, h: h * s }, w, h);
-      parts.forEach(part => gsap.set(part, values[part.className.match(/m-sel__([eh]--[a-z]+)/)[1]]));
-    };
-    section.classList.add('is-run');
-    const cellX = i => () => cells[i].offsetLeft - cells[cells.length - 1].offsetLeft;
-    const tl = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'posters', trigger: section, start: 'top top', end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true, onRefresh: apply }
-    });
-    tl.fromTo(mark, { x: cellX(0) }, { x: cellX(0), duration: 0.01 }, 0);
-    sizes.slice(1).forEach((s, k) => {
-      tl.to(state, { s, duration: 1, ease: 'power3.inOut', onUpdate: apply }, k)
-        .to(mark, { x: cellX(k + 1), duration: 0.35, ease: 'power2.out' }, k + 0.45);
-    });
-    tl.to({}, { duration: 1.5 }, sizes.length - 1);
-    apply();
-    return () => {
-      section.classList.remove('is-run');
-      gsap.set([frame, mark, ...parts], { clearProps: 'transform' });
-    };
-  });
-}, { id: 'scene:posters' });
-</script>
-<script data-8b-part="scene:finishing">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(prefers-reduced-motion: no-preference) and (min-width: 901px)',
-    narrow: '(prefers-reduced-motion: no-preference) and (max-width: 900px)'
-  }, context => {
-    const wide = context.conditions.wide;
-    const section = document.getElementById('finishing');
-    const strip = section.querySelector('.fn-strip');
-    const panels = [...strip.querySelectorAll('.fn-panel')];
-    const angle = wide ? 72 : 62;
-    const fold = 1 - Math.cos(angle * Math.PI / 180);
-    section.classList.add('is-run');
-    const tl = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: wide
-        ? { id: 'finishing', trigger: section, start: 'top top', end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true }
-        : { id: 'finishing', trigger: strip, start: 'top 88%', end: 'center 45%', scrub: 0.6, invalidateOnRefresh: true }
-    });
-    panels.forEach((panel, i) => {
-      const sign = i % 2 ? -1 : 1;
-      const offset = i - (panels.length - 1) / 2;
-      const shade = i % 2 ? 0.72 : 1;
-      const from = wide
-        ? { rotationY: sign * angle, x: () => -offset * panel.offsetWidth * fold, filter: `brightness(${shade})` }
-        : { rotationX: sign * angle, y: () => -offset * panel.offsetHeight * fold, filter: `brightness(${shade})` };
-      const to = wide
-        ? { rotationY: 0, x: 0, filter: 'brightness(1)', duration: 1, ease: 'power2.inOut' }
-        : { rotationX: 0, y: 0, filter: 'brightness(1)', duration: 1, ease: 'power2.inOut' };
-      tl.fromTo(panel, from, to, wide ? 0.15 : 0);
-    });
-    tl.to({}, { duration: 0.25 }, wide ? 1.15 : 1);
-    return () => section.classList.remove('is-run');
-  });
-}, { id: 'scene:finishing' });
-</script>
-<script data-8b-part="scene:preflight">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(prefers-reduced-motion: no-preference) and (min-width: 901px)',
-    narrow: '(prefers-reduced-motion: no-preference) and (max-width: 900px)'
-  }, context => {
-    const wide = context.conditions.wide;
-    const section = document.getElementById('preflight');
-    const checks = [...section.querySelectorAll('.pf-check')];
-    const bleed = section.querySelector('.pf-bleed');
-    const safe = section.querySelector('.pf-safe');
-    const trims = [...section.querySelectorAll('.pf-trim')];
-    const squares = [...section.querySelectorAll('.pf-bar i')];
-    const addTicks = (tl, at) => checks.forEach((check, i) => {
-      const tick = check.querySelector('.pf-box path');
-      const box = check.querySelector('.pf-box');
-      const length = tick.getTotalLength();
-      tl.fromTo(tick, { strokeDasharray: length, strokeDashoffset: length }, { strokeDashoffset: 0, duration: 0.4, ease: 'power2.out' }, at + i + 0.1)
-        .fromTo(box, { backgroundColor: getComputedStyle(section).backgroundColor }, { backgroundColor: getComputedStyle(box).backgroundColor, duration: 0.2 }, at + i + 0.1);
-    });
-    const addMarks = (tl, at) => {
-      tl.fromTo(bleed, { scale: 0.9, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.6, ease: 'power2.out' }, at + 0.3);
-      trims.forEach((trim, k) => {
-        tl.fromTo(trim, { x: [-1, 1, 1, -1][k] * 22, y: [-1, -1, 1, 1][k] * 22, autoAlpha: 0 }, { x: 0, y: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out' }, at + 1.3 + k * 0.06);
-      });
-      tl.add(clipTween(safe, k => [50, 50, 50, 50].map(v => v * (1 - k)), { duration: 0.6, ease: 'power2.inOut' }), at + 2.3);
-      squares.forEach((square, k) => {
-        tl.fromTo(square, { scaleY: 0 }, { scaleY: 1, duration: 0.25, ease: 'back.out(2)' }, at + 3.3 + k * 0.08);
-      });
-    };
-    if (wide) {
-      section.classList.add('is-run');
-      const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: 'preflight', trigger: section, start: 'top top', end: 'bottom bottom', scrub: 0.6 } });
-      addTicks(tl, 0);
-      addMarks(tl, 0);
-      tl.to({}, { duration: 1.6 }, 3.9);
-    } else {
-      const sheet = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: 'preflight:sheet', trigger: section.querySelector('.pf-sheet'), start: 'top 85%', end: 'bottom 55%', scrub: 0.6 } });
-      addMarks(sheet, 0);
-      sheet.to({}, { duration: 1.2 }, 3.9);
-      const list = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: 'preflight:list', trigger: section.querySelector('.pf-checks'), start: 'top 85%', end: 'bottom 60%', scrub: 0.6 } });
-      addTicks(list, 0);
-      list.to({}, { duration: 0.6 }, 3.5);
-    }
-    return () => { section.classList.remove('is-run'); safe.style.clipPath = ''; };
-  });
-}, { id: 'scene:preflight' });
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const photo = section.querySelector('.cn-photo');
-    const clip = photo.querySelector('.cn-clip');
-    const img = clip.querySelector('img');
-    const sel = photo.querySelector('.m-sel');
-    const crop = [24, 28, 22, 28];
-    const small = () => {
-      const w = sel.offsetWidth, h = sel.offsetHeight;
-      return { x: w * crop[3] / 100, y: h * crop[0] / 100, w: w * (1 - (crop[1] + crop[3]) / 100), h: h * (1 - (crop[0] + crop[2]) / 100) };
-    };
-    const tl = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'contact', trigger: photo, start: 'top 88%', end: 'bottom 62%', scrub: 0.6, invalidateOnRefresh: true }
-    });
-    tl.add(clipTween(clip, k => crop.map(v => v * (1 - k)), { duration: 1, ease: 'power2.inOut' }), 0)
-      .fromTo(img, { scale: 1.45 }, { scale: 1, duration: 1, ease: 'power2.inOut' }, 0)
-      .add(selFromTo(sel, small, null, { defaults: { duration: 1, ease: 'power2.inOut' } }), 0);
-    return () => { clip.style.clipPath = ''; };
-  });
-}, { id: 'scene:contact' });
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); });
+};
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
 </script>
 </body>
 </html>

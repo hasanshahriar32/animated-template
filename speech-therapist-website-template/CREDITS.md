@@ -32,10 +32,12 @@ Loaded from images.unsplash.com. Free to use under the [Unsplash License](https:
 
 ## Fonts (SIL Open Font License 1.1)
 
-- Miranda Sans — Google Fonts: https://fonts.google.com/specimen/Miranda+Sans
-- Platypi — Google Fonts: https://fonts.google.com/specimen/Platypi
+- Miranda Sans, Google Fonts: https://fonts.google.com/specimen/Miranda+Sans
+- Platypi, Google Fonts: https://fonts.google.com/specimen/Platypi
 
 ## Libraries
 
-- GSAP 3.13.0, GreenSock — standard "no charge" license: https://gsap.com/standard-license
-- Lenis 1.3.4, darkroom.engineering — MIT: https://github.com/darkroomengineering/lenis
+`index.html` uses none. `index.gsap.html` uses:
+
+- GSAP 3.13.0, GreenSock, standard "no charge" license: https://gsap.com/standard-license
+- Lenis 1.3.4, darkroom.engineering, MIT: https://github.com/darkroomengineering/lenis

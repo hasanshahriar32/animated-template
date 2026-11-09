@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/electric-scooter-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -28,7 +29,7 @@
   font-weight: 400 600;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/hostgrotesk/v5/co3BmWBnlCJ3U42vbbfdwMjZqljm0U0.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -69,10 +70,6 @@
 @font-face { font-family: "Host Grotesk Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Bold"); font-weight: 550 799; size-adjust: 89.1%; ascent-override: 114.5%; descent-override: 35.9%; line-gap-override: 0%; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: clip; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body { margin: 0; background: var(--color-1); color: var(--color-2); font-family: var(--font-1); font-size: 16px; line-height: 1.55; overflow-x: clip; }
 img { display: block; max-width: 100%; }
 a { color: inherit; }
@@ -358,6 +355,13 @@ main > section, body > footer { overflow-x: clip; }
 @keyframes op-dock-r { from { transform: translateX(30px); opacity: 0; } }
 @keyframes op-drift { from { transform: translateX(-3.2%); } to { transform: translateX(3.2%); } }
 @keyframes op-turn { to { transform: rotate(1turn); } }
+#opening .op-second__cta { display: flex; flex-wrap: wrap; gap: 10px; }
+#opening .op-second { min-height: 0; }
+@media (max-width: 760px) { #opening .op-second { --op-nd0: 220px; } }
+@media (min-width: 761px) {
+  #opening { padding-top: 84px; }
+  #opening .op-second { --op-nd0: 190px; grid-template-rows: var(--op-nd0) clamp(56px, 9svh, 110px) auto; }
+}
 }
 </style>
 
@@ -421,18 +425,6 @@ main > section, body > footer { overflow-x: clip; }
   #lineup .ln-card__desc { display: none; }
   #lineup .ln-card__top .m-text-7 { font-size: 26px; }
   #lineup .ln-specs { gap: 12px; }
-}
-}
-</style>
-<style data-8b-part="scene-style:lineup">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #lineup.is-staged { height: 300svh; }
-  #lineup.is-staged .ln-stage { position: sticky; top: 0; }
-  @media (max-width: 900px) {
-    #lineup.is-staged .ln-stage { height: 100svh; min-height: 0; grid-template-rows: auto 1fr auto; }
-    #lineup.is-staged .ln-frame { height: auto; min-height: 0; }
-  }
 }
 }
 </style>
@@ -517,16 +509,6 @@ main > section, body > footer { overflow-x: clip; }
 }
 }
 </style>
-<style data-8b-part="scene-style:paint">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #paint.is-tracking { height: calc(var(--pt-count, 4) * 100svh); }
-  #paint.is-tracking .pt-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
-  #paint.is-tracking .pt-track { display: flex; width: max-content; height: 100%; }
-  #paint.is-tracking .pt-field { width: 100vw; height: 100svh; flex: none; }
-}
-}
-</style>
 <style data-8b-part="section:details">
 @layer sections {
 #details .dt-mosaic { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, minmax(260px, 38svh)); gap: 10px; }
@@ -606,19 +588,6 @@ main > section, body > footer { overflow-x: clip; }
   #service .sv-head, #service .sv-steps { grid-column: 1; }
   #service .sv-photo { grid-column: 1; grid-row: 2; min-height: 300px; }
   #service .sv-steps { grid-row: 3; }
-}
-}
-</style>
-<style data-8b-part="scene-style:service">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #service.is-staged { height: 260svh; }
-  #service.is-staged .sv-stage { position: sticky; top: 0; height: 100svh; min-height: 0; }
-  @media (max-width: 860px) {
-    #service.is-staged .sv-stage { grid-template-rows: auto 1fr auto; gap: 12px; }
-    #service.is-staged .sv-photo { min-height: 0; }
-    #service.is-staged .sv-head .m-text { display: none; }
-  }
 }
 }
 </style>
@@ -720,24 +689,204 @@ main > section, body > footer { overflow-x: clip; }
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-@property --op-k { syntax: '<number>'; inherits: true; initial-value: 1; }
-#opening .op-second__cta { display: flex; flex-wrap: wrap; gap: 10px; }
-#opening .op-second { min-height: 0; }
-@media (max-width: 760px) { #opening .op-second { --op-nd0: 220px; } }
-@media (min-width: 761px) {
-  #opening { padding-top: 84px; }
-  #opening .op-second { --op-nd0: 190px; grid-template-rows: var(--op-nd0) clamp(56px, 9svh, 110px) auto; }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] [data-8b-motion~="notch"] { animation-name: motion-notch---n; animation-duration: 1.2s; animation-delay: 0s; animation-timing-function: var(--ease-power3-inout); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="notch"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="lines"] .line__in { animation-name: motion-lines-line-in-translate; animation-duration: 0.95s; animation-delay: calc(0s + 0.09s * var(--i)); animation-timing-function: var(--ease-power3-out); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="lines"].is-in .line__in { animation-play-state: running; }
+@keyframes motion-notch---n { 0% { --n: 0.35; } 100% { --n: 1; } }
+@keyframes motion-lines-line-in-translate { 0% { translate: 0px calc(108% + 0.1296em); } 100% { translate: 0px 0px; } }
+[data-8b-live] [data-8b-motion~="dock"] { --motion-dock-x: 0%; --motion-dock-y: 70px; --motion-dock-r: 0deg; animation-name: motion-dock; animation-duration: 1s; animation-timing-function: linear(0, 0.1064, 0.2058, 0.2984, 0.3844, 0.4641, 0.5376, 0.6052, 0.6672, 0.7237, 0.775, 0.8213, 0.8628, 0.8998, 0.9324, 0.9609, 0.9856, 1.0066, 1.0242, 1.0386, 1.05, 1.0587, 1.0648, 1.0686, 1.0704, 1.0703, 1.0686, 1.0655, 1.0612, 1.056, 1.05, 1.0435, 1.0368, 1.03, 1.0234, 1.0172, 1.0116, 1.0069, 1.0032, 1.0008, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="dock"][data-dock="left"] { --motion-dock-x: -18%; --motion-dock-y: 0px; --motion-dock-r: -2deg; }
+[data-8b-live] [data-8b-motion~="dock"][data-dock="right"] { --motion-dock-x: 18%; --motion-dock-y: 0px; --motion-dock-r: 2deg; }
+[data-8b-live] [data-8b-motion~="dock"].is-in { animation-play-state: running; }
+@keyframes motion-dock { from { translate: var(--motion-dock-x) var(--motion-dock-y); rotate: var(--motion-dock-r); opacity: 0; visibility: hidden; } to { translate: 0px 0px; rotate: 0deg; } }
 }
+</style>
+<style data-8b-part="scene:opening">
+@property --opening-k { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+[data-8b-live] #opening .op-second { --op-k: var(--opening-k); animation: opening-field 1.1s cubic-bezier(.2, .75, .2, 1) backwards; }
+[data-8b-live] #opening .op-fact, [data-8b-live] #opening .op-second__title, [data-8b-live] #opening .op-second__aside { animation: op-dock .9s cubic-bezier(.2, .75, .2, 1) backwards; }
+[data-8b-live] #opening .op-fact--1 { animation-delay: .2s; }
+[data-8b-live] #opening .op-fact--3 { animation-delay: .28s; }
+[data-8b-live] #opening .op-fact--2 { animation-delay: .36s; }
+[data-8b-live] #opening .op-second__aside { animation-delay: .14s; }
+@keyframes opening-field { from { --opening-k: 2.1; } }
+}
+</style>
+<style data-8b-part="scene:lineup">
+@property --lineup-ln-in { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --lineup-b { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --lineup-t { syntax: '<number>'; inherits: true; initial-value: 102; }
+@property --lineup-ln-i { syntax: '<number>'; inherits: true; initial-value: 2; }
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #opening .op-second { animation: rw-field 1.1s cubic-bezier(.2, .75, .2, 1) backwards; }
-  #opening .op-fact, #opening .op-second__title, #opening .op-second__aside { animation: op-dock .9s cubic-bezier(.2, .75, .2, 1) backwards; }
-  #opening .op-fact--1 { animation-delay: .2s; }
-  #opening .op-fact--3 { animation-delay: .28s; }
-  #opening .op-fact--2 { animation-delay: .36s; }
-  #opening .op-second__aside { animation-delay: .14s; }
+  [data-8b-live] #lineup { height: 300svh; }
+  [data-8b-live] #lineup .ln-stage { position: sticky; top: 0; }
+  @media (max-width: 900px) {
+    [data-8b-live] #lineup .ln-stage { height: 100svh; min-height: 0; grid-template-rows: auto 1fr auto; }
+    [data-8b-live] #lineup .ln-frame { height: auto; min-height: 0; }
+  }
 }
-@keyframes rw-field { from { --op-k: 2.1; } }</style>
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #lineup { view-timeline: --lineup-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #lineup .ln-deck > li:nth-of-type(2) { animation-name: lineup-li-ln-card-backgroundcolor, lineup-li-ln-card---ln-in; animation-range: cover 100vh cover calc(61.6667% - 23.3333vh), cover calc(35% + 30vh) cover calc(61.6667% - 23.3333vh); }
+[data-8b-live] #lineup .ln-deck > li:nth-of-type(3) { animation-name: lineup-li-ln-card-backgroundcolor-2, lineup-li-ln-card---ln-in-2; animation-range: cover 100vh cover calc(90% - 80vh), cover calc(78.3333% - 56.6667vh) cover calc(90% - 80vh); }
+[data-8b-live] #lineup .ln-deck > .ln-card, [data-8b-live] #lineup .ln-frame > .ln-shot, [data-8b-live] #lineup .ln-frame > figure:is(:nth-of-type(2), :nth-of-type(3)) > img, [data-8b-live] #lineup .ln-frame { animation-timeline: --lineup-t1; animation-fill-mode: both; }
+[data-8b-live] #lineup .ln-deck > .ln-card { animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1), var(--ease-power2-inout); --ln-in: var(--lineup-ln-in); }
+[data-8b-live] #lineup .ln-deck > li:first-of-type { animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #lineup .ln-deck > li:nth-of-type(1) { animation-name: lineup-li-ln-card---ln-in-3, lineup-li-ln-card-backgroundcolor-3; animation-range: cover calc(6.6667% + 86.6667vh) cover calc(18.3333% + 63.3333vh); }
+[data-8b-live] #lineup .ln-frame > figure:nth-of-type(2) { animation-name: lineup-figure-ln-shot---b, lineup-figure-ln-shot---t; animation-range: cover calc(10% + 80vh) cover calc(36.6667% + 26.6667vh), cover calc(53.3333% - 6.6667vh) cover calc(80% - 60vh); --t: var(--lineup-t); --b: var(--lineup-b); }
+[data-8b-live] #lineup .ln-frame > .ln-shot { animation-timing-function: var(--ease-power2-inout); }
+[data-8b-live] #lineup .ln-frame > figure:nth-of-type(1) { animation-name: lineup-figure-ln-shot---t; animation-range: cover calc(10% + 80vh) cover calc(36.6667% + 26.6667vh); --t: var(--lineup-t); }
+[data-8b-live] #lineup .ln-frame > figure:nth-of-type(2) > img { animation-name: lineup-figure-ln-shot-img-scale; animation-range: cover calc(10% + 80vh) cover calc(36.6667% + 26.6667vh); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); transform: none; }
+[data-8b-live] #lineup .ln-frame { animation-name: lineup-div-ln-frame---ln-i; animation-range: cover calc(18.3333% + 63.3333vh) cover calc(78.3333% - 56.6667vh); animation-timing-function: var(--ease-power2-inout); --ln-i: var(--lineup-ln-i); }
+[data-8b-live] #lineup .ln-frame > figure:nth-of-type(3) { animation-name: lineup-figure-ln-shot---b; animation-range: cover calc(53.3333% - 6.6667vh) cover calc(80% - 60vh); --b: var(--lineup-b); }
+[data-8b-live] #lineup .ln-frame > figure:nth-of-type(3) > img { animation-name: lineup-figure-ln-shot-img-scale; animation-range: cover calc(53.3333% - 6.6667vh) cover calc(80% - 60vh); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); transform: none; }
+@keyframes lineup-li-ln-card-backgroundcolor { 0% { background-color: var(--color-3); } 0.5405% { background-color: var(--color-3); } 56.7568% { background-color: var(--color-3); } 75.6757% { background-color: var(--color-4); } 81.0811% { background-color: var(--color-4); } 100% { background-color: var(--color-3); } }
+@keyframes lineup-li-ln-card---ln-in { 0% { --lineup-ln-in: 0; } 43.75% { --lineup-ln-in: 1; } 56.25% { --lineup-ln-in: 1; } 100% { --lineup-ln-in: 0; } }
+@keyframes lineup-li-ln-card-backgroundcolor-2 { 0% { background-color: var(--color-3); } 0.3704% { background-color: var(--color-3); } 87.037% { background-color: var(--color-3); } 100% { background-color: var(--color-4); } }
+@keyframes lineup-li-ln-card---ln-in-2 { 0% { --lineup-ln-in: 0; } 100% { --lineup-ln-in: 1; } }
+@keyframes lineup-li-ln-card---ln-in-3 { 0% { --lineup-ln-in: 1; } 100% { --lineup-ln-in: 0; } }
+@keyframes lineup-li-ln-card-backgroundcolor-3 { 0% { background-color: var(--color-4); } 100% { background-color: var(--color-3); } }
+@keyframes lineup-figure-ln-shot---b { 0% { --lineup-b: 100; } 100% { --lineup-b: 0; } }
+@keyframes lineup-figure-ln-shot---t { 0% { --lineup-t: 0; } 99.998% { --lineup-t: 100; } 100% { --lineup-t: 102; } }
+@keyframes lineup-figure-ln-shot-img-scale { 0% { scale: 1.16; } 100% { scale: 1; } }
+@keyframes lineup-div-ln-frame---ln-i { 0% { --lineup-ln-i: 0; } 27.7778% { --lineup-ln-i: 1; } 72.2222% { --lineup-ln-i: 1; } 100% { --lineup-ln-i: 2; } }
+}
+</style>
+<style data-8b-part="scene:paint">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #paint { height: calc(var(--pt-count, 4) * 100svh); }
+  [data-8b-live] #paint .pt-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+  [data-8b-live] #paint .pt-track { display: flex; width: max-content; height: 100%; }
+  [data-8b-live] #paint .pt-field { width: 100vw; height: 100svh; flex: none; }
+}
+}
+@layer scenes {
+[data-8b-live] #paint { --pt-count: 4; }
+[data-8b-live] #paint { view-timeline: --paint-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #paint .pt-track { animation-timeline: --paint-t1; animation-range: cover 100vh cover calc(100% - 100vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #paint .pt-track > .pt-field > .pt-media > .pt-frame > img, [data-8b-live] #paint .pt-track > .pt-field > .pt-name { animation-timeline: --paint-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #paint .pt-field--1 > .pt-media > .pt-frame > img { animation-name: paint-figure-pt-frame-img-translate; animation-range: cover 100vh cover calc(33.3333% + 33.3334vh); }
+[data-8b-live] #paint .pt-field--1 > .pt-name { animation-name: paint-p-pt-name-translate; animation-range: cover 100vh cover calc(33.3333% + 33.3334vh); }
+[data-8b-live] #paint .pt-field--2 > .pt-media > .pt-frame > img { animation-name: paint-figure-pt-frame-img-translate-2; animation-range: cover 100vh cover calc(66.6667% - 33.3334vh); }
+[data-8b-live] #paint .pt-field--2 > .pt-name { animation-name: paint-p-pt-name-translate-2; animation-range: cover 100vh cover calc(66.6667% - 33.3334vh); }
+[data-8b-live] #paint .pt-field--3 > .pt-media > .pt-frame > img { animation-name: paint-figure-pt-frame-img-translate-3; animation-range: cover calc(33.3333% + 33.3334vh) cover calc(100% - 100vh); }
+[data-8b-live] #paint .pt-field--3 > .pt-name { animation-name: paint-p-pt-name-translate-3; animation-range: cover calc(33.3333% + 33.3334vh) cover calc(100% - 100vh); }
+[data-8b-live] #paint .pt-field--4 > .pt-media > .pt-frame > img { animation-name: paint-figure-pt-frame-img-translate-4; animation-range: cover calc(66.6667% - 33.3334vh) cover calc(100% - 100vh); }
+[data-8b-live] #paint .pt-field--4 > .pt-name { animation-name: paint-p-pt-name-translate-4; animation-range: cover calc(66.6667% - 33.3334vh) cover calc(100% - 100vh); }
+@keyframes paint-ol-pt-track-translate-d { 0% { translate: 0px 0px; } 0.002% { translate: -0.008% 0px; } 100% { translate: -75% 0px; } }
+@keyframes paint-ol-pt-track-translate-m { 0% { translate: 0px 0px; } 100% { translate: -75% 0px; } }
+@keyframes paint-figure-pt-frame-img-translate { 0% { translate: 0px 0px; } 100% { translate: -6% 0px; } }
+@keyframes paint-p-pt-name-translate { 0% { translate: 0px 0px; } 100% { translate: -18% 0px; } }
+@keyframes paint-figure-pt-frame-img-translate-2 { 0% { translate: 6% 0px; } 49.9999% { translate: 0px 0px; } 100% { translate: -6% 0px; } }
+@keyframes paint-p-pt-name-translate-2 { 0% { translate: 18% 0px; } 49.9999% { translate: 0px 0px; } 100% { translate: -18% 0px; } }
+@keyframes paint-figure-pt-frame-img-translate-3 { 0% { translate: 6% 0px; } 50.0001% { translate: 0px 0px; } 100% { translate: -6% 0px; } }
+@keyframes paint-p-pt-name-translate-3 { 0% { translate: 18% 0px; } 50.0001% { translate: 0px 0px; } 100% { translate: -18% 0px; } }
+@keyframes paint-figure-pt-frame-img-translate-4 { 0% { translate: 6% 0px; } 100% { translate: 0px 0px; } }
+@keyframes paint-p-pt-name-translate-4 { 0% { translate: 18% 0px; } 100% { translate: 0px 0px; } }
+@media (min-width: 761px) {
+  [data-8b-live] #paint .pt-track { animation-name: paint-ol-pt-track-translate-d; }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #paint .pt-track { animation-name: paint-ol-pt-track-translate-m; }
+}
+}
+</style>
+<style data-8b-part="scene:details">
+@layer scenes {
+[data-8b-live] #details .dt-mosaic { view-timeline: --details-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #details .dt-tile:not(.dt-tile--text) { --details-step: calc((var(--i) - 1) * (2.0833% - .4167vh)); animation-name: details-tile-translate, details-tile-rotate, details-tile-scale; animation-timeline: --details-t1; animation-range: cover calc(8vh + var(--details-step)) cover calc(41.6667% - .3333vh + var(--details-step)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; }
+@keyframes details-tile-translate { 0% { translate: var(--details-x, 0px) var(--details-y, 40px); } 100% { translate: 0px 0px; } }
+@keyframes details-tile-rotate { 0% { rotate: var(--details-r, 0deg); } 100% { rotate: 0deg; } }
+@keyframes details-tile-scale { 0% { scale: 0.84; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:city">
+@layer scenes {
+[data-8b-live] #city { view-timeline: --city-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #city .ct-lane, [data-8b-live] #city .ct-line { animation-timeline: --city-t1; animation-fill-mode: both; }
+[data-8b-live] #city .ct-lane { --city-reach: max(60px, calc(50% - 50vw + 40px)); animation-range: cover 0% cover 100%; animation-timing-function: linear; }
+[data-8b-live] #city .ct-lane--1 { animation-name: city-lane-1; }
+[data-8b-live] #city .ct-lane--2 { animation-name: city-lane-2; }
+[data-8b-live] #city .ct-line { animation-range: cover 0% cover 45%; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] #city .ct-line--1 { animation-name: city-line-1; }
+[data-8b-live] #city .ct-line--2 { animation-name: city-line-2; }
+@keyframes city-lane-1 { 0% { translate: var(--city-reach) 0px; } 100% { translate: calc(-1 * var(--city-reach)) 0px; } }
+@keyframes city-lane-2 { 0% { translate: calc(-1 * var(--city-reach)) 0px; } 100% { translate: var(--city-reach) 0px; } }
+@keyframes city-line-1 { 0% { translate: 8vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes city-line-2 { 0% { translate: -8vw 0px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:service">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #service { height: 260svh; }
+  [data-8b-live] #service .sv-stage { position: sticky; top: 0; height: 100svh; min-height: 0; }
+  @media (max-width: 860px) {
+    [data-8b-live] #service .sv-stage { grid-template-rows: auto 1fr auto; gap: 12px; }
+    [data-8b-live] #service .sv-photo { min-height: 0; }
+    [data-8b-live] #service .sv-head .m-text { display: none; }
+  }
+}
+}
+@layer scenes {
+[data-8b-live] #service { view-timeline: --service-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #service .sv-photo, [data-8b-live] #service .sv-steps > li:is(:nth-of-type(2), :nth-of-type(3)), [data-8b-live] #service .sv-steps > li:is(:nth-of-type(2), :nth-of-type(3)) > .m-text-4 { animation-timeline: --service-t1; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; }
+[data-8b-live] #service .sv-photo { animation-name: service-div-sv-photo-clippath; animation-range: cover 100vh cover calc(86.9565% - 73.913vh); }
+[data-8b-live] #service .sv-steps > li:nth-of-type(2) { animation-name: service-li-sv-step-translate, service-li-sv-step-color; animation-range: cover calc(17.3913% + 65.2174vh) cover calc(43.4783% + 13.0435vh); transform: none; }
+[data-8b-live] #service .sv-steps > li:nth-of-type(2) > .m-text-4 { animation-name: service-span-m-text-4-backgroundcolor, service-span-m-text-4-color; animation-range: cover calc(21.7391% + 56.5217vh) cover calc(39.1304% + 21.7391vh); }
+[data-8b-live] #service .sv-steps > li:nth-of-type(3) { animation-name: service-li-sv-step-translate, service-li-sv-step-color; animation-range: cover calc(60.8696% - 21.7391vh) cover calc(86.9565% - 73.913vh); transform: none; }
+[data-8b-live] #service .sv-steps > li:nth-of-type(3) > .m-text-4 { animation-name: service-span-m-text-4-backgroundcolor, service-span-m-text-4-color; animation-range: cover calc(65.2174% - 30.4348vh) cover calc(82.6087% - 65.2174vh); }
+@keyframes service-div-sv-photo-clippath { 0% { clip-path: inset(0% 66.67% 0% 0% round 28px); } 0.5% { clip-path: inset(0% 66.67% 0% 0% round 28px); } 10% { clip-path: inset(0% 66.67% 0% 0% round 28px); } 50% { clip-path: inset(0% 33.33% 0% 0% round 28px); } 60% { clip-path: inset(0% 33.33% 0% 0% round 28px); } 100% { clip-path: inset(0% round 28px); } }
+@keyframes service-li-sv-step-translate { 0% { translate: 36px 0px; } 100% { translate: 0px 0px; } }
+@keyframes service-li-sv-step-color { 0% { color: var(--color-6); } 100% { color: var(--color-2); } }
+@keyframes service-span-m-text-4-backgroundcolor { 0% { background-color: var(--color-3); } 100% { background-color: var(--color-2); } }
+@keyframes service-span-m-text-4-color { 0% { color: var(--color-2); } 100% { color: var(--color-4); } }
+}
+</style>
+<style data-8b-part="scene:reviews">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] #reviews .rv-wall > .rv-card { animation-fill-mode: both; transform: none; }
+@keyframes reviews-li-rv-card-translate-d { 0% { translate: var(--reviews-x, 0px) var(--reviews-y, 30px); } 100% { translate: 0px 0px; } }
+@keyframes reviews-li-rv-card-translate-m { 0% { translate: -70% 0px; } 100% { translate: 0px 0px; } }
+@keyframes reviews-li-rv-card-rotate-d { 0% { rotate: calc((var(--i) - (var(--n) - 1) / 2) * 3.2deg); } 100% { rotate: 0deg; } }
+@keyframes reviews-li-rv-card-rotate-m { 0% { rotate: -6deg; } 100% { rotate: 0deg; } }
+@keyframes reviews-li-rv-card-translate-2 { 0% { translate: 70% 0px; } 100% { translate: 0px 0px; } }
+@keyframes reviews-li-rv-card-rotate-2 { 0% { rotate: 6deg; } 100% { rotate: 0deg; } }
+@media (min-width: 861px) {
+  [data-8b-live] #reviews .rv-wall { view-timeline: --reviews-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #reviews .rv-wall > .rv-card { animation-name: reviews-li-rv-card-translate-d, reviews-li-rv-card-rotate-d; animation-timeline: --reviews-t1; animation-timing-function: var(--ease-power3-out); animation-range: cover calc(8vh - 0.4148vh * var(--i) + 2.5926% * var(--i)) cover calc(37.037% + 2.5926% * var(--i) + 2.0741vh - 0.4148vh * var(--i)); }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #reviews .rv-wall > .rv-card { view-timeline: --reviews-item block; view-timeline-inset: 0; animation-timeline: --reviews-item; animation-range: cover 0% cover 38vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+  [data-8b-live] #reviews .rv-wall > li:nth-of-type(2n+1) { animation-name: reviews-li-rv-card-translate-m, reviews-li-rv-card-rotate-m; }
+  [data-8b-live] #reviews .rv-wall > li:nth-of-type(2n+2) { animation-name: reviews-li-rv-card-translate-2, reviews-li-rv-card-rotate-2; }
+}
+}
+</style>
+<style data-8b-part="scene:contact">
+@property --contact-n { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+[data-8b-live] #contact .cn-panel, [data-8b-live] #contact .cn-panel > img { animation-timeline: --contact-t1; animation-range: cover 0% cover 70vh; animation-fill-mode: both; }
+[data-8b-live] #contact .cn-panel { view-timeline: --contact-t1 block; view-timeline-inset: 0; animation-name: contact-div-cn-panel---n; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); --n: var(--contact-n); }
+[data-8b-live] #contact .cn-panel > img { animation-name: contact-div-cn-panel-img-scale, contact-div-cn-panel-img-translate; animation-timing-function: linear; transform: none; }
+@keyframes contact-div-cn-panel---n { 0% { --contact-n: 0.42; } 100% { --contact-n: 1; } }
+@keyframes contact-div-cn-panel-img-scale { 0% { scale: 1.2; } 100% { scale: 1; } }
+@keyframes contact-div-cn-panel-img-translate { 0% { translate: -6% 0px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -760,7 +909,7 @@ main > section, body > footer { overflow-x: clip; }
       <a class="m-btn-2 nav__order" href="#ownership"><span class="m-btn-2__label">Order</span><span class="m-btn-2__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span></a>
     </div>
   </div>
-  <div class="menu" id="menu" data-lenis-prevent hidden>
+  <div class="menu" id="menu" hidden>
     <div class="menu__top">
       <span class="nav__word">Hush.</span>
       <button class="m-icon-btn menu__close" type="button" aria-label="Close menu"><span class="m-icon-btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span><span class="m-icon-btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></span></button>
@@ -782,7 +931,7 @@ main > section, body > footer { overflow-x: clip; }
   </div>
 </header>
 <main id="main">
-<!-- opening: short opening on a black panel with a notch cut from the top: the heading "Nothing to hear but the tyres.", three fact cards, an intro and two buttons -->
+<!-- opening: short opening on a black panel with a notch cut from the top: the heading "Nothing to hear but the tyres.", three fact cards, an intro and two buttons (animation: scene:opening) -->
 <section id="opening" data-8b-section="opening" aria-labelledby="op-title">
   <div class="op-second">
     <div class="op-field" aria-hidden="true"></div>
@@ -813,9 +962,9 @@ main > section, body > footer { overflow-x: clip; }
       <h2 class="m-text-3" id="ln-title">Three ways to go quiet</h2>
       <p class="m-text-6 ln-lead">The same hub motor and the same carry-in battery under every one. Choose the seat, the box and the attitude.</p>
     </header>
-    <ol class="ln-deck">
+    <ol class="ln-deck" data-8b-items=":scope > .ln-card" data-8b-fixed="3">
       <li class="ln-card m-surface">
-        <img srcset="https://images.unsplash.com/photo-1739964552376-0464e0162725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=730&amp;q=60 730w, https://images.unsplash.com/photo-1739964552376-0464e0162725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60 1020w" sizes="(max-width: 767px) 243px, 80vw" style="background:#262626" class="ln-card__thumb" src="https://images.unsplash.com/photo-1739964552376-0464e0162725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60" alt="" width="224" height="300">
+        <img srcset="https://images.unsplash.com/photo-1739964552376-0464e0162725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=730&amp;q=60 730w, https://images.unsplash.com/photo-1739964552376-0464e0162725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60 1020w" sizes="(max-width: 767px) 243px, 80vw" class="ln-card__thumb" src="https://images.unsplash.com/photo-1739964552376-0464e0162725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60" alt="" width="224" height="300" loading="lazy">
         <div class="ln-card__body">
           <div class="ln-card__top"><p class="m-text-7">H1</p><h3 class="m-text-5">Classic</h3></div>
           <p class="m-text-6 ln-card__desc">Chalk white, a long bench for two and chrome mirrors.</p>
@@ -823,7 +972,7 @@ main > section, body > footer { overflow-x: clip; }
         </div>
       </li>
       <li class="ln-card m-surface">
-        <img srcset="https://images.unsplash.com/photo-1638730177894-d4da3051261d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=730&amp;q=60 730w, https://images.unsplash.com/photo-1638730177894-d4da3051261d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60 1020w" sizes="(max-width: 767px) 243px, 80vw" style="background:#0c260c" class="ln-card__thumb" src="https://images.unsplash.com/photo-1638730177894-d4da3051261d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60" alt="" width="224" height="300" loading="lazy">
+        <img fetchpriority="high" srcset="https://images.unsplash.com/photo-1638730177894-d4da3051261d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=840&amp;q=60 840w, https://images.unsplash.com/photo-1638730177894-d4da3051261d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1190&amp;q=60 1190w" sizes="(max-width: 767px) 280px, 93vw" class="ln-card__thumb" src="https://images.unsplash.com/photo-1638730177894-d4da3051261d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1190&amp;q=60" alt="" width="224" height="300" loading="lazy">
         <div class="ln-card__body">
           <div class="ln-card__top"><p class="m-text-7">H2</p><h3 class="m-text-5">Panther</h3></div>
           <p class="m-text-6 ln-card__desc">Night black, a low seat and a quicker throttle for the commute.</p>
@@ -831,7 +980,7 @@ main > section, body > footer { overflow-x: clip; }
         </div>
       </li>
       <li class="ln-card m-surface">
-        <img srcset="https://images.unsplash.com/photo-1714749611070-5297a9d640cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=840&amp;q=60 840w, https://images.unsplash.com/photo-1714749611070-5297a9d640cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1180&amp;q=60 1180w" sizes="(max-width: 767px) 280px, 92vw" style="background:#262626" class="ln-card__thumb" src="https://images.unsplash.com/photo-1714749611070-5297a9d640cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1180&amp;q=60" alt="" width="224" height="300" loading="lazy">
+        <img srcset="https://images.unsplash.com/photo-1714749611070-5297a9d640cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=970&amp;q=60 970w, https://images.unsplash.com/photo-1714749611070-5297a9d640cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1370&amp;q=60 1370w" sizes="(max-width: 767px) 323px, 107vw" class="ln-card__thumb" src="https://images.unsplash.com/photo-1714749611070-5297a9d640cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1370&amp;q=60" alt="" width="224" height="300" loading="lazy">
         <div class="ln-card__body">
           <div class="ln-card__top"><p class="m-text-7">H3</p><h3 class="m-text-5">Courier</h3></div>
           <p class="m-text-6 ln-card__desc">Signal red, a lockable top box and a second battery bay.</p>
@@ -839,18 +988,18 @@ main > section, body > footer { overflow-x: clip; }
         </div>
       </li>
     </ol>
-    <div class="ln-frame">
-      <figure class="ln-shot"><img srcset="https://images.unsplash.com/photo-1739964552376-0464e0162725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=730&amp;q=60 730w, https://images.unsplash.com/photo-1739964552376-0464e0162725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60 1020w" sizes="(max-width: 767px) 243px, 80vw" style="background:#262626" src="https://images.unsplash.com/photo-1739964552376-0464e0162725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60" alt="The H1 Classic in chalk white, front lamp and chrome mirrors against a dark wall" width="1600" height="1067"></figure>
-      <figure class="ln-shot"><img srcset="https://images.unsplash.com/photo-1638730177894-d4da3051261d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=730&amp;q=60 730w, https://images.unsplash.com/photo-1638730177894-d4da3051261d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60 1020w" sizes="(max-width: 767px) 243px, 80vw" style="background:#0c260c" src="https://images.unsplash.com/photo-1638730177894-d4da3051261d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60" alt="The H2 Panther in night black parked by a garden wall" width="1600" height="1067" loading="lazy"></figure>
-      <figure class="ln-shot"><img srcset="https://images.unsplash.com/photo-1714749611070-5297a9d640cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=840&amp;q=60 840w, https://images.unsplash.com/photo-1714749611070-5297a9d640cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1180&amp;q=60 1180w" sizes="(max-width: 767px) 280px, 92vw" style="background:#262626" src="https://images.unsplash.com/photo-1714749611070-5297a9d640cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1180&amp;q=60" alt="The H3 Courier in signal red with its black top box" width="1600" height="923" loading="lazy"></figure>
+    <div class="ln-frame" data-8b-items=":scope > .ln-shot" data-8b-fixed="3">
+      <figure class="ln-shot"><img srcset="https://images.unsplash.com/photo-1739964552376-0464e0162725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=730&amp;q=60 730w, https://images.unsplash.com/photo-1739964552376-0464e0162725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60 1020w" sizes="(max-width: 767px) 243px, 80vw" src="https://images.unsplash.com/photo-1739964552376-0464e0162725?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60" alt="The H1 Classic in chalk white, front lamp and chrome mirrors against a dark wall" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="ln-shot"><img srcset="https://images.unsplash.com/photo-1638730177894-d4da3051261d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=840&amp;q=60 840w, https://images.unsplash.com/photo-1638730177894-d4da3051261d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1190&amp;q=60 1190w" sizes="(max-width: 767px) 280px, 93vw" src="https://images.unsplash.com/photo-1638730177894-d4da3051261d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1190&amp;q=60" alt="The H2 Panther in night black parked by a garden wall" width="1600" height="1067" loading="lazy"></figure>
+      <figure class="ln-shot"><img srcset="https://images.unsplash.com/photo-1714749611070-5297a9d640cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=970&amp;q=60 970w, https://images.unsplash.com/photo-1714749611070-5297a9d640cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1370&amp;q=60 1370w" sizes="(max-width: 767px) 323px, 107vw" src="https://images.unsplash.com/photo-1714749611070-5297a9d640cb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1370&amp;q=60" alt="The H3 Courier in signal red with its black top box" width="1600" height="923" loading="lazy"></figure>
     </div>
   </div>
 </section>
 <!-- battery: charging explainer: photo with a notch and a "3 hours" note, heading, paragraph and three steps (Lift, Plug, Ride) -->
 <section id="battery" class="wrap sec" data-8b-section="battery" aria-labelledby="bt-title">
-  <div class="bt-media" data-8b-motion="notch">
+  <div class="bt-media" data-8b-motion="notch" data-8b-enter="80%">
     <div class="bt-panel">
-      <img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1672149165647-1a53f84cbefb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2hhcmdpbmclMjBjYWJsZSUyMHBsdWd8ZW58MXwwfHx8MTc5MTQ0NjE0NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="A hand pushing a charging plug into its socket" width="1600" height="1067" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1672149165647-1a53f84cbefb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2hhcmdpbmclMjBjYWJsZSUyMHBsdWd8ZW58MXwwfHx8MTc5MTQ0NjE0NXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="A hand pushing a charging plug into its socket" width="1600" height="1067" loading="lazy">
     </div>
     <div class="bt-note">
       <p class="m-text-7">3 hours</p>
@@ -858,9 +1007,9 @@ main > section, body > footer { overflow-x: clip; }
     </div>
   </div>
   <div class="bt-copy">
-    <h2 class="m-text-3" id="bt-title" data-8b-motion="lines">Charge it at your desk, not at a pump.</h2>
+    <h2 class="m-text-3" id="bt-title" data-8b-motion="lines" data-8b-split="lines">Charge it at your desk, not at a pump.</h2>
     <p class="m-text">The battery sits under the seat with a handle on top. Lift it out, carry it up to the flat or the office and plug it into the wall like a laptop.</p>
-    <ol class="bt-steps">
+    <ol class="bt-steps" data-8b-items=":scope > li">
       <li><span class="m-text-4">1</span><h3 class="m-text-5">Lift</h3><p class="m-text-6">Unlock the seat with the key fob and pull the battery out by its handle.</p></li>
       <li><span class="m-text-4">2</span><h3 class="m-text-5">Plug</h3><p class="m-text-6">Any three-pin socket. The charger lives in the battery, not in a box.</p></li>
       <li><span class="m-text-4">3</span><h3 class="m-text-5">Ride</h3><p class="m-text-6">Drop it back in, hear nothing, go. A ring of light on the dial shows the charge.</p></li>
@@ -870,25 +1019,25 @@ main > section, body > footer { overflow-x: clip; }
 <!-- paint: four paint colours as full-screen fields, each with a photo, a huge name, a colour description and an Order button, sliding sideways as you scroll (animation: scene:paint) -->
 <section id="paint" data-8b-section="paint" aria-labelledby="pt-title">
   <div class="pt-stage">
-    <ol class="pt-track">
+    <ol class="pt-track" data-8b-items=":scope > .pt-field" data-8b-fixed="4">
       <li class="pt-field pt-field--1">
         <p class="pt-name" aria-hidden="true" style="--len:4">Lido</p>
-        <div class="pt-media"><figure class="pt-frame"><img src="https://images.unsplash.com/photo-1495031178007-13cac321fbcf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=940&amp;q=60" alt="A pale sea-green scooter parked at the edge of a city road" width="1600" height="1067" loading="lazy" style="background:#595959;object-position: 92% 70%"></figure><a class="m-btn-2 pt-order" href="#contact"><span class="m-btn-2__label">Order in Lido</span></a></div>
+        <div class="pt-media"><figure class="pt-frame"><img src="https://images.unsplash.com/photo-1495031178007-13cac321fbcf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=940&amp;q=60" alt="A pale sea-green scooter parked at the edge of a city road" width="1600" height="1067" loading="lazy" style="object-position: 92% 70%"></figure><a class="m-btn-2 pt-order" href="#contact"><span class="m-btn-2__label">Order in Lido</span></a></div>
         <div class="pt-copy"><h2 class="m-text-3 pt-title" id="pt-title">Four paints, mixed in Hackney</h2><h3 class="m-text-5 pt-swatch">Lido green</h3><p class="m-text">The colour of the outdoor pool at London Fields in August, in a deep gloss that shrugs off rain.</p></div>
       </li>
       <li class="pt-field pt-field--2">
         <p class="pt-name" aria-hidden="true" style="--len:7">Harbour</p>
-        <div class="pt-media"><figure class="pt-frame"><img src="https://images.unsplash.com/photo-1650297576123-93031832ccef?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDU5OTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1370&amp;q=60" alt="A blue scooter leaning on its stand by a whitewashed wall" width="1600" height="1067" loading="lazy" style="background:#a6a6a6;object-position: 40% 50%"></figure><a class="m-btn-2 pt-order" href="#contact"><span class="m-btn-2__label">Order in Harbour</span></a></div>
+        <div class="pt-media"><figure class="pt-frame"><img src="https://images.unsplash.com/photo-1650297576123-93031832ccef?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2Nvb3RlciUyMGlzb2xhdGVkJTIwd2hpdGUlMjBiYWNrZ3JvdW5kfGVufDF8MHx8fDE3OTE0NDU5OTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1370&amp;q=60" alt="A blue scooter leaning on its stand by a whitewashed wall" width="1600" height="1067" loading="lazy" style="object-position: 40% 50%"></figure><a class="m-btn-2 pt-order" href="#contact"><span class="m-btn-2__label">Order in Harbour</span></a></div>
         <div class="pt-copy"><h3 class="m-text-5 pt-swatch">Harbour blue</h3><p class="m-text">Deep enough to hide a winter of road salt, bright enough to find in a full bike bay.</p></div>
       </li>
       <li class="pt-field pt-field--3">
         <p class="pt-name" aria-hidden="true" style="--len:7">Mustard</p>
-        <div class="pt-media"><figure class="pt-frame"><img src="https://images.unsplash.com/photo-1757920337577-03cc405044b7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHdoaXRlJTIwdmVzcGElMjBzY29vdGVyfGVufDF8MHx8fDE3OTE0NDU5OTZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1370&amp;q=60" alt="A mustard yellow scooter parked on a sunny street between cars" width="1600" height="1067" loading="lazy" style="background:#262626;object-position: 55% 60%"></figure><a class="m-btn-2 pt-order" href="#contact"><span class="m-btn-2__label">Order in Mustard</span></a></div>
+        <div class="pt-media"><figure class="pt-frame"><img src="https://images.unsplash.com/photo-1757920337577-03cc405044b7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHdoaXRlJTIwdmVzcGElMjBzY29vdGVyfGVufDF8MHx8fDE3OTE0NDU5OTZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1370&amp;q=60" alt="A mustard yellow scooter parked on a sunny street between cars" width="1600" height="1067" loading="lazy" style="object-position: 55% 60%"></figure><a class="m-btn-2 pt-order" href="#contact"><span class="m-btn-2__label">Order in Mustard</span></a></div>
         <div class="pt-copy"><h3 class="m-text-5 pt-swatch">Mustard</h3><p class="m-text">For riders who would like to be seen from the other end of the high street.</p></div>
       </li>
       <li class="pt-field pt-field--4">
         <p class="pt-name" aria-hidden="true" style="--len:7">Postbox</p>
-        <div class="pt-media"><figure class="pt-frame"><img src="https://images.unsplash.com/photo-1780843323509-0d5240c28cbc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8c2Nvb3RlciUyMG1pcnJvcnxlbnwxfDB8fHwxNzkxNDQ2MTQxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1370&amp;q=60" alt="The front of a red scooter with a round chrome lamp and a brown seat" width="1600" height="1067" loading="lazy" style="background:#f3f3f3;object-position: 45% 50%"></figure><a class="m-btn-2 pt-order" href="#contact"><span class="m-btn-2__label">Order in Postbox</span></a></div>
+        <div class="pt-media"><figure class="pt-frame"><img src="https://images.unsplash.com/photo-1780843323509-0d5240c28cbc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8c2Nvb3RlciUyMG1pcnJvcnxlbnwxfDB8fHwxNzkxNDQ2MTQxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1370&amp;q=60" alt="The front of a red scooter with a round chrome lamp and a brown seat" width="1600" height="1067" loading="lazy" style="object-position: 45% 50%"></figure><a class="m-btn-2 pt-order" href="#contact"><span class="m-btn-2__label">Order in Postbox</span></a></div>
         <div class="pt-copy"><h3 class="m-text-5 pt-swatch">Postbox red</h3><p class="m-text">The red you already trust with your letters, on two silent wheels.</p></div>
       </li>
     </ol>
@@ -896,33 +1045,33 @@ main > section, body > footer { overflow-x: clip; }
 </section>
 <!-- details: mosaic of a text tile and five close-up photos with captions (animation: scene:details) -->
 <section id="details" class="wrap sec" data-8b-section="details" aria-labelledby="dt-title">
-  <div class="dt-mosaic">
+  <div class="dt-mosaic" data-8b-items=":scope > .dt-tile" data-8b-fixed="6">
     <div class="dt-tile dt-tile--text">
-      <h2 class="m-text-3" id="dt-title" data-8b-motion="lines">Made for hands, not only for looks</h2>
+      <h2 class="m-text-3" id="dt-title" data-8b-motion="lines" data-8b-split="lines">Made for hands, not only for looks</h2>
       <p class="m-text">Everything you touch on a Hush is metal, leather or glass. The plastic stays underneath, where the battery and the motor do their quiet work.</p>
     </div>
-    <figure class="dt-tile dt-tile--tall"><img src="https://images.unsplash.com/photo-1788528477479-224e2d74fc75?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c2Nvb3RlciUyMG1pcnJvcnxlbnwxfDB8fHwxNzkxNDQ2MTQxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1060&amp;q=60" alt="A white handlebar with a round chrome mirror against a green hedge" width="1600" height="1067" loading="lazy" style="background:#0c260c;object-position: 45% 50%"><figcaption class="m-text-6 dt-cap">Mirrors fold flat for the hallway.</figcaption></figure>
-    <figure class="dt-tile"><img style="background:#8c8c8c" src="https://images.unsplash.com/photo-1562687586-359596762d7e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2Nvb3RlciUyMHNlYXQlMjBsZWF0aGVyfGVufDF8MHx8fDE3OTE0NDYxNDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="A sprung leather saddle on coiled springs" width="1600" height="1067" loading="lazy"><figcaption class="m-text-6 dt-cap">A sprung saddle, stitched in Walthamstow.</figcaption></figure>
-    <figure class="dt-tile"><img style="background:#26260c" src="https://images.unsplash.com/photo-1742745060201-85107da428d0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8c2Nvb3RlciUyMHNlYXQlMjBsZWF0aGVyfGVufDF8MHx8fDE3OTE0NDYxNDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="A spare wheel mounted behind the seat of a scooter" width="1600" height="1200" loading="lazy"><figcaption class="m-text-6 dt-cap">The spare-wheel bracket doubles as a rack.</figcaption></figure>
-    <figure class="dt-tile"><img style="background:#404059" src="https://images.unsplash.com/photo-1773536291665-da7c64c99118?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHNjb290ZXIlMjBtaXJyb3J8ZW58MXwwfHx8MTc5MTQ0NjE0MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="A round speed dial between dark handlebars" width="1600" height="1067" loading="lazy"><figcaption class="m-text-6 dt-cap">One round dial: speed and charge.</figcaption></figure>
-    <figure class="dt-tile"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1773609689033-5a24412b7e2f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="A round headlamp in a chrome ring on a sea-green body" width="1600" height="1067"><figcaption class="m-text-6 dt-cap">An LED lamp in a classic chrome ring.</figcaption></figure>
+    <figure class="dt-tile dt-tile--tall"><img src="https://images.unsplash.com/photo-1788528477479-224e2d74fc75?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c2Nvb3RlciUyMG1pcnJvcnxlbnwxfDB8fHwxNzkxNDQ2MTQxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="A white handlebar with a round chrome mirror against a green hedge" width="1600" height="1067" loading="lazy" style="object-position: 45% 50%"><figcaption class="m-text-6 dt-cap">Mirrors fold flat for the hallway.</figcaption></figure>
+    <figure class="dt-tile"><img src="https://images.unsplash.com/photo-1562687586-359596762d7e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2Nvb3RlciUyMHNlYXQlMjBsZWF0aGVyfGVufDF8MHx8fDE3OTE0NDYxNDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=60" alt="A sprung leather saddle on coiled springs" width="1600" height="1067" loading="lazy"><figcaption class="m-text-6 dt-cap">A sprung saddle, stitched in Walthamstow.</figcaption></figure>
+    <figure class="dt-tile"><img src="https://images.unsplash.com/photo-1742745060201-85107da428d0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8c2Nvb3RlciUyMHNlYXQlMjBsZWF0aGVyfGVufDF8MHx8fDE3OTE0NDYxNDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=420&amp;q=60" alt="A spare wheel mounted behind the seat of a scooter" width="1600" height="1200" loading="lazy"><figcaption class="m-text-6 dt-cap">The spare-wheel bracket doubles as a rack.</figcaption></figure>
+    <figure class="dt-tile"><img src="https://images.unsplash.com/photo-1773536291665-da7c64c99118?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHNjb290ZXIlMjBtaXJyb3J8ZW58MXwwfHx8MTc5MTQ0NjE0MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="A round speed dial between dark handlebars" width="1600" height="1067" loading="lazy"><figcaption class="m-text-6 dt-cap">One round dial: speed and charge.</figcaption></figure>
+    <figure class="dt-tile"><img src="https://images.unsplash.com/photo-1773609689033-5a24412b7e2f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8c2Nvb3RlciUyMGhlYWRsaWdodCUyMGNsb3NlJTIwdXB8ZW58MXwwfHx8MTc5MTQ0NjEzOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="A round headlamp in a chrome ring on a sea-green body" width="1600" height="1067" loading="lazy"><figcaption class="m-text-6 dt-cap">An LED lamp in a classic chrome ring.</figcaption></figure>
   </div>
 </section>
 <!-- city: two rows of street photos sliding in opposite directions under a two-line heading, and a paragraph on licence and parking (animation: scene:city) -->
 <section id="city" class="sec" data-8b-section="city" aria-labelledby="ct-title">
   <h2 class="m-text-3 ct-title" id="ct-title"><span class="ct-line ct-line--1">Parks where a car can't.</span> <span class="ct-line ct-line--2">Leaves before the bus does.</span></h2>
   <div class="ct-lanes">
-    <ul class="ct-lane ct-lane--1">
-      <li><img style="background:#404040" src="https://images.unsplash.com/photo-1713754982550-6eab59dd347c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8d2hpdGUlMjB2ZXNwYSUyMHNjb290ZXJ8ZW58MXwwfHx8MTc5MTQ0NTk5Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="A white scooter parked on a quiet road under autumn trees" width="1600" height="1067" loading="lazy"></li>
-      <li><img style="background:#c0a68c" src="https://images.unsplash.com/photo-1780127263387-63db85c455b3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d2hpdGUlMjB2ZXNwYSUyMHNjb290ZXJ8ZW58MXwwfHx8MTc5MTQ0NTk5Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="A white scooter by a pole next to railway tracks" width="1600" height="1067" loading="lazy"></li>
-      <li><img style="background:#0c2626" src="https://images.unsplash.com/photo-1778085768597-96f3389ad0e2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8d2hpdGUlMjBzY29vdGVyJTIwd2FsbHxlbnwxfDB8fHwxNzkxNDQ2MDAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="A small white scooter outside a dark green building" width="1600" height="900" loading="lazy"></li>
-      <li><img style="background:#c0a68c" src="https://images.unsplash.com/photo-1669242884046-9ff9db8e8c22?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="A cream scooter by a stone stairway lined with flower pots" width="1600" height="1067" loading="lazy"></li>
+    <ul class="ct-lane ct-lane--1" data-8b-items=":scope > li">
+      <li><img src="https://images.unsplash.com/photo-1713754982550-6eab59dd347c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8d2hpdGUlMjB2ZXNwYSUyMHNjb290ZXJ8ZW58MXwwfHx8MTc5MTQ0NTk5Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="A white scooter parked on a quiet road under autumn trees" width="1600" height="1067" loading="lazy"></li>
+      <li><img src="https://images.unsplash.com/photo-1780127263387-63db85c455b3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d2hpdGUlMjB2ZXNwYSUyMHNjb290ZXJ8ZW58MXwwfHx8MTc5MTQ0NTk5Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="A white scooter by a pole next to railway tracks" width="1600" height="1067" loading="lazy"></li>
+      <li><img src="https://images.unsplash.com/photo-1778085768597-96f3389ad0e2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8d2hpdGUlMjBzY29vdGVyJTIwd2FsbHxlbnwxfDB8fHwxNzkxNDQ2MDAxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=60" alt="A small white scooter outside a dark green building" width="1600" height="900" loading="lazy"></li>
+      <li><img src="https://images.unsplash.com/photo-1669242884046-9ff9db8e8c22?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YmxhY2slMjB2ZXNwYXxlbnwxfDB8fHwxNzkxNDQ2MDAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="A cream scooter by a stone stairway lined with flower pots" width="1600" height="1067" loading="lazy"></li>
     </ul>
-    <ul class="ct-lane ct-lane--2">
-      <li><img style="background:#404040" src="https://images.unsplash.com/photo-1769164092647-c4406a85eb65?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHdoaXRlJTIwdmVzcGElMjBzY29vdGVyfGVufDF8MHx8fDE3OTE0NDU5OTZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=60" alt="A scooter in a narrow cobbled alley, in black and white" width="1600" height="1060" loading="lazy"></li>
-      <li><img style="background:#262626" src="https://images.unsplash.com/photo-1776603729771-3b537d63100f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHNjb290ZXIlMjBtaXJyb3J8ZW58MXwwfHx8MTc5MTQ0NjE0MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=60" alt="A row of parked scooters in front of pastel houses" width="1600" height="1067" loading="lazy"></li>
-      <li><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1787053364592-27330d56c03c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2Nvb3RlciUyMG1pcnJvcnxlbnwxfDB8fHwxNzkxNDQ2MTQxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=60" alt="A red and a pale blue scooter parked on a cobbled square" width="1600" height="1067" loading="lazy"></li>
-      <li><img style="background:#0c2626" src="https://images.unsplash.com/photo-1623079397242-c2e809a6ef1d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHJpZGluZyUyMHNjb290ZXIlMjBjaXR5fGVufDF8MHx8fDE3OTE0NDYxNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="A rider on a black scooter passing concrete pillars" width="1600" height="681" loading="lazy"></li>
+    <ul class="ct-lane ct-lane--2" data-8b-items=":scope > li">
+      <li><img src="https://images.unsplash.com/photo-1769164092647-c4406a85eb65?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHdoaXRlJTIwdmVzcGElMjBzY29vdGVyfGVufDF8MHx8fDE3OTE0NDU5OTZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=60" alt="A scooter in a narrow cobbled alley, in black and white" width="1600" height="1060" loading="lazy"></li>
+      <li><img src="https://images.unsplash.com/photo-1776603729771-3b537d63100f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHNjb290ZXIlMjBtaXJyb3J8ZW58MXwwfHx8MTc5MTQ0NjE0MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=60" alt="A row of parked scooters in front of pastel houses" width="1600" height="1067" loading="lazy"></li>
+      <li><img src="https://images.unsplash.com/photo-1787053364592-27330d56c03c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2Nvb3RlciUyMG1pcnJvcnxlbnwxfDB8fHwxNzkxNDQ2MTQxfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=330&amp;q=60" alt="A red and a pale blue scooter parked on a cobbled square" width="1600" height="1067" loading="lazy"></li>
+      <li><img src="https://images.unsplash.com/photo-1623079397242-c2e809a6ef1d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fHJpZGluZyUyMHNjb290ZXIlMjBjaXR5fGVufDF8MHx8fDE3OTE0NDYxNDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="A rider on a black scooter passing concrete pillars" width="1600" height="681" loading="lazy"></li>
     </ul>
   </div>
   <p class="m-text ct-note">A Hush counts as a moped, so a one-day CBT puts you on the road at sixteen. It fits a bike bay, a front garden or the space beside the bins, and it turns the trip across town into fifteen minutes nobody hears.</p>
@@ -930,14 +1079,14 @@ main > section, body > footer { overflow-x: clip; }
 <!-- ownership: two plans side by side: Own it (£3,190, four points) and Ride it monthly (£79 a month, four points) -->
 <section id="ownership" class="wrap sec" data-8b-section="ownership" aria-labelledby="ow-title">
   <div class="ow-head">
-    <h2 class="m-text-3" id="ow-title" data-8b-motion="lines">Own it outright, or ride it by the month.</h2>
+    <h2 class="m-text-3" id="ow-title" data-8b-motion="lines" data-8b-split="lines">Own it outright, or ride it by the month.</h2>
     <p class="m-text">Both paths come with the same moped, the same battery and the same mechanic at your door.</p>
   </div>
-  <div class="ow-split">
+  <div class="ow-split" data-8b-items=":scope > .ow-path" data-8b-fixed="2">
     <article class="ow-path ow-path--own" data-8b-motion="dock" data-dock="left">
       <h3 class="m-text-5">Own it</h3>
       <p class="ow-price">£3,190<small>from</small></p>
-      <ul class="ow-list m-text">
+      <ul class="ow-list m-text" data-8b-items=":scope > li">
         <li>Pay once, or spread it over 36 months at 0%</li>
         <li>Two-year warranty on every part</li>
         <li>Five years on the battery cells</li>
@@ -948,7 +1097,7 @@ main > section, body > footer { overflow-x: clip; }
     <article class="ow-path ow-path--month" data-8b-motion="dock" data-dock="right">
       <h3 class="m-text-5">Ride it monthly</h3>
       <p class="ow-price">£79<small>a month</small></p>
-      <ul class="ow-list m-text">
+      <ul class="ow-list m-text" data-8b-items=":scope > li">
         <li>Insurance, servicing and theft cover included</li>
         <li>A spare battery for long days</li>
         <li>Swap models when the seasons change</li>
@@ -965,8 +1114,8 @@ main > section, body > footer { overflow-x: clip; }
       <h2 class="m-text-3" id="sv-title">We come to you. Your Hush never sees a garage.</h2>
       <p class="m-text">Servicing happens where the moped lives: your street, your office car park or your drive.</p>
     </div>
-    <div class="sv-photo"><img style="background:#0c2626" src="https://images.unsplash.com/photo-1636761358954-cebc0e5dfebb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bW90b3JjeWNsZSUyMG1lY2hhbmljJTIwd29ya3Nob3B8ZW58MXwwfHx8MTc5MTQ0NjE0M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60" alt="A mechanic's hands working on a motorbike with a spanner" width="1600" height="1067" loading="lazy"></div>
-    <ol class="sv-steps">
+    <div class="sv-photo"><img src="https://images.unsplash.com/photo-1636761358954-cebc0e5dfebb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bW90b3JjeWNsZSUyMG1lY2hhbmljJTIwd29ya3Nob3B8ZW58MXwwfHx8MTc5MTQ0NjE0M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1020&amp;q=60" alt="A mechanic's hands working on a motorbike with a spanner" width="1600" height="1067" loading="lazy"></div>
+    <ol class="sv-steps" data-8b-items=":scope > .sv-step" data-8b-fixed="3">
       <li class="sv-step"><span class="m-text-4 sv-step__no">1</span><h3 class="m-text-5">Book a slot</h3><p class="m-text-6">Pick a morning or an evening online. We text the day before.</p></li>
       <li class="sv-step"><span class="m-text-4 sv-step__no">2</span><h3 class="m-text-5">We ride over</h3><p class="m-text-6">A Hush mechanic arrives on an H3 Courier with the tools in its box.</p></li>
       <li class="sv-step"><span class="m-text-4 sv-step__no">3</span><h3 class="m-text-5">Done on the kerb</h3><p class="m-text-6">Forty-five minutes, a battery health report by email and no queue.</p></li>
@@ -979,22 +1128,22 @@ main > section, body > footer { overflow-x: clip; }
     <h2 class="m-text-3" id="rv-title">What riders hear instead</h2>
     <p class="m-text-6">Twelve thousand riders across London. Six of them, in their own words.</p>
   </div>
-  <ul class="rv-wall">
-    <li class="rv-card m-surface"><blockquote>“I used to arrive at work smelling of the bus. Now I just arrive early.”</blockquote><p class="rv-who"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1749700332031-cf99864959ea?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fGhlYWRzaG90JTIwc21pbGluZyUyMHdvbWFufGVufDF8MXx8fDE3OTE0NDYzMTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=80&amp;q=60" alt="Priya" width="92" height="92"><span><span class="m-text-4">Priya</span><br><span class="m-text-6">H1 Classic, Hackney</span></span></p></li>
-    <li class="rv-card m-surface"><blockquote>“My neighbours didn't notice I'd bought it for a month. That is the whole point.”</blockquote><p class="rv-who"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1770058428154-9eee8a6a1fbb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjZ8fGhlYWRzaG90JTIwc21pbGluZyUyMHdvbWFufGVufDF8MXx8fDE3OTE0NDYzMTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=80&amp;q=60" alt="Helen" width="92" height="92"><span><span class="m-text-4">Helen</span><br><span class="m-text-6">H2 Panther, Walthamstow</span></span></p></li>
-    <li class="rv-card m-surface"><blockquote>“Carrying the battery up three floors is easier than finding a parking space.”</blockquote><p class="rv-who"><img style="background:#404040" src="https://images.unsplash.com/photo-1777827839146-d634aee2c991?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG9ydHJhaXQlMjBzbWlsaW5nJTIwbWFuJTIwb3V0ZG9vcnxlbnwxfDJ8fHwxNzkxNDQ2MzA5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=80&amp;q=60" alt="Arjun" width="92" height="92"><span><span class="m-text-4">Arjun</span><br><span class="m-text-6">H1 Classic, Peckham</span></span></p></li>
-    <li class="rv-card m-surface"><blockquote>“The mechanic came to the office car park. I didn't even miss a meeting.”</blockquote><p class="rv-who"><img style="background:#262626" src="https://images.unsplash.com/photo-1668752741330-8adc5cef7485?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjJ8fGhlYWRzaG90JTIwc21pbGluZyUyMHdvbWFufGVufDF8MXx8fDE3OTE0NDYzMTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=80&amp;q=60" alt="Ama" width="92" height="92" loading="lazy"><span><span class="m-text-4">Ama</span><br><span class="m-text-6">H3 Courier, Brixton</span></span></p></li>
-    <li class="rv-card m-surface"><blockquote>“Mustard. Everybody asks about it, and nobody hears me coming.”</blockquote><p class="rv-who"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1637364696052-d75a6cb8f766?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fHNtaWxpbmclMjBwZXJzb24lMjBwb3J0cmFpdCUyMG5hdHVyYWwlMjBsaWdodHxlbnwxfDF8fHwxNzkxNDQ2MzIzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=80&amp;q=60" alt="Tom" width="92" height="92" loading="lazy"><span><span class="m-text-4">Tom</span><br><span class="m-text-6">H1 Classic, Islington</span></span></p></li>
-    <li class="rv-card m-surface"><blockquote>“Two years, two services at my door and not one petrol station.”</blockquote><p class="rv-who"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1761963108315-739eb365d446?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cG9ydHJhaXQlMjB5b3VuZyUyMG1hbiUyMGdsYXNzZXN8ZW58MXwyfHx8MTc5MTQ0NjMxMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=80&amp;q=60" alt="Wei" width="92" height="92" loading="lazy"><span><span class="m-text-4">Wei</span><br><span class="m-text-6">H2 Panther, Stratford</span></span></p></li>
+  <ul class="rv-wall" data-8b-items=":scope > .rv-card" data-8b-fixed="6">
+    <li class="rv-card m-surface"><blockquote>“I used to arrive at work smelling of the bus. Now I just arrive early.”</blockquote><p class="rv-who"><img src="https://images.unsplash.com/photo-1749700332031-cf99864959ea?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTd8fGhlYWRzaG90JTIwc21pbGluZyUyMHdvbWFufGVufDF8MXx8fDE3OTE0NDYzMTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Priya" width="92" height="92" loading="lazy"><span><span class="m-text-4">Priya</span><br><span class="m-text-6">H1 Classic, Hackney</span></span></p></li>
+    <li class="rv-card m-surface"><blockquote>“My neighbours didn't notice I'd bought it for a month. That is the whole point.”</blockquote><p class="rv-who"><img src="https://images.unsplash.com/photo-1770058428154-9eee8a6a1fbb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjZ8fGhlYWRzaG90JTIwc21pbGluZyUyMHdvbWFufGVufDF8MXx8fDE3OTE0NDYzMTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Helen" width="92" height="92" loading="lazy"><span><span class="m-text-4">Helen</span><br><span class="m-text-6">H2 Panther, Walthamstow</span></span></p></li>
+    <li class="rv-card m-surface"><blockquote>“Carrying the battery up three floors is easier than finding a parking space.”</blockquote><p class="rv-who"><img src="https://images.unsplash.com/photo-1777827839146-d634aee2c991?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG9ydHJhaXQlMjBzbWlsaW5nJTIwbWFuJTIwb3V0ZG9vcnxlbnwxfDJ8fHwxNzkxNDQ2MzA5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Arjun" width="92" height="92" loading="lazy"><span><span class="m-text-4">Arjun</span><br><span class="m-text-6">H1 Classic, Peckham</span></span></p></li>
+    <li class="rv-card m-surface"><blockquote>“The mechanic came to the office car park. I didn't even miss a meeting.”</blockquote><p class="rv-who"><img src="https://images.unsplash.com/photo-1668752741330-8adc5cef7485?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjJ8fGhlYWRzaG90JTIwc21pbGluZyUyMHdvbWFufGVufDF8MXx8fDE3OTE0NDYzMTl8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Ama" width="92" height="92" loading="lazy"><span><span class="m-text-4">Ama</span><br><span class="m-text-6">H3 Courier, Brixton</span></span></p></li>
+    <li class="rv-card m-surface"><blockquote>“Mustard. Everybody asks about it, and nobody hears me coming.”</blockquote><p class="rv-who"><img src="https://images.unsplash.com/photo-1637364696052-d75a6cb8f766?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fHNtaWxpbmclMjBwZXJzb24lMjBwb3J0cmFpdCUyMG5hdHVyYWwlMjBsaWdodHxlbnwxfDF8fHwxNzkxNDQ2MzIzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Tom" width="92" height="92" loading="lazy"><span><span class="m-text-4">Tom</span><br><span class="m-text-6">H1 Classic, Islington</span></span></p></li>
+    <li class="rv-card m-surface"><blockquote>“Two years, two services at my door and not one petrol station.”</blockquote><p class="rv-who"><img src="https://images.unsplash.com/photo-1761963108315-739eb365d446?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8cG9ydHJhaXQlMjB5b3VuZyUyMG1hbiUyMGdsYXNzZXN8ZW58MXwyfHx8MTc5MTQ0NjMxMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=90&amp;q=60" alt="Wei" width="92" height="92" loading="lazy"><span><span class="m-text-4">Wei</span><br><span class="m-text-6">H2 Panther, Stratford</span></span></p></li>
   </ul>
 </section>
 <!-- faq: six questions and answers in native <details> elements with a phone link -->
 <section id="faq" class="wrap sec" data-8b-section="faq" aria-labelledby="fq-title">
   <div class="fq-head">
-    <h2 class="m-text-3" id="fq-title" data-8b-motion="lines">Before you ride</h2>
+    <h2 class="m-text-3" id="fq-title" data-8b-motion="lines" data-8b-split="lines">Before you ride</h2>
     <p class="m-text">Still wondering? Call the showroom on <a data-8b-placeholder="phone" class="m-link" href="tel:+442000000000">020 0000 0000</a>.</p>
   </div>
-  <div class="fq-list">
+  <div class="fq-list" data-8b-items=":scope > details">
     <details><summary class="m-text-5">Do I need a licence?</summary><p class="m-text">A Hush is a moped: it tops out at 45 km/h. With a car licence issued before 2001 you can ride straight away; otherwise a one-day CBT is enough.</p></details>
     <details><summary class="m-text-5">How far does one battery go?</summary><p class="m-text">About 80 km of town riding on the H1 and H2, and 160 km on the H3 with both bays filled. Cold mornings take a little off.</p></details>
     <details><summary class="m-text-5">Where do I charge it?</summary><p class="m-text">From any ordinary three-pin socket. The battery lifts out by its handle, so it can charge at your desk or by the sofa.</p></details>
@@ -1009,7 +1158,7 @@ main > section, body > footer { overflow-x: clip; }
     <h2 class="m-text-3" id="cn-title">Ride one for an hour, free.</h2>
     <p class="cn-visit m-text-6"><strong>Hush showroom, 1 Example Street, London E8 0AA</strong><span>Tuesday to Sunday, 10:00 to 19:00</span><span><a data-8b-placeholder="phone" class="m-link" href="tel:+442000000000">020 0000 0000</a> · <a data-8b-placeholder="email" class="m-link" href="mailto:ride@hush.example">ride@hush.example</a></span></p>
   </div>
-  <div class="cn-panel"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1561019509-1314f0b1d275?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8c2Nvb3RlciUyMHNob3AlMjBzaG93cm9vbXxlbnwxfDB8fHwxNzkxNDQ2MTQ3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1240&amp;q=60" alt="The bright Hush showroom with a sea-green scooter by the window" width="1600" height="1067" loading="lazy"></div>
+  <div class="cn-panel"><img src="https://images.unsplash.com/photo-1561019509-1314f0b1d275?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8c2Nvb3RlciUyMHNob3AlMjBzaG93cm9vbXxlbnwxfDB8fHwxNzkxNDQ2MTQ3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=60" alt="The bright Hush showroom with a sea-green scooter by the window" width="1600" height="1067" loading="lazy"></div>
   <form data-8b-placeholder="form" class="cn-form m-surface" action="#" method="post" novalidate>
     <h3 class="m-text-5">Book a test ride</h3>
     <div class="cn-row">
@@ -1060,10 +1209,6 @@ main > section, body > footer { overflow-x: clip; }
     <p>Prices include VAT. Range figures are measured in town riding.</p>
   </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
 <script data-8b-part="section-script:nav">
 (() => {
   const nav = document.getElementById('nav');
@@ -1089,13 +1234,13 @@ main > section, body > footer { overflow-x: clip; }
   const open = () => {
     menu.hidden = false;
     openBtn.setAttribute('aria-expanded', 'true');
-    window.lenis?.stop();
+    window.motionKit?.wheel?.stop();
     closeBtn.focus();
   };
   const shut = (focusBack = true) => {
     menu.hidden = true;
     openBtn.setAttribute('aria-expanded', 'false');
-    window.lenis?.start();
+    window.motionKit?.wheel?.start();
     if (focusBack) openBtn.focus();
   };
   openBtn.addEventListener('click', open);
@@ -1107,8 +1252,7 @@ main > section, body > footer { overflow-x: clip; }
     if (!target) return;
     event.preventDefault();
     shut(false);
-    if (window.lenis) window.lenis.scrollTo(target, { offset: 0 });
-    else target.scrollIntoView();
+    target.scrollIntoView();
   });
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !menu.hidden) shut(); });
 })();
@@ -1120,61 +1264,6 @@ main > section, body > footer { overflow-x: clip; }
   const note = section && section.querySelector('.bt-note');
   if (!note || !('ResizeObserver' in window)) return;
   new ResizeObserver(() => section.style.setProperty('--bt-nh', `${Math.ceil(note.offsetHeight + 14)}px`)).observe(note);
-})();
-</script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
 })();
 </script>
 <script data-8b-part="section-script:contact">
@@ -1195,235 +1284,221 @@ main > section, body > footer { overflow-x: clip; }
   });
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: .085, wheelMultiplier: 1, anchors: { offset: 0 } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  dock(element, vars = {}) {
-    const side = element.dataset.dock || 'up';
-    const from = side === 'left' ? { xPercent: -18, rotate: -2 } : side === 'right' ? { xPercent: 18, rotate: 2 } : { y: 70 };
-    return gsap.timeline(vars).from(element, { ...from, autoAlpha: 0, duration: 1, ease: 'back.out(1.4)' });
-  },
-  notch(panel, vars = {}) {
-    return gsap.timeline(vars).fromTo(panel, { '--n': .35 }, { '--n': 1, duration: 1.2, ease: 'power3.inOut' });
-  },
-  lines(element, vars = {}) {
-    const split = SplitText.create(element, { type: 'lines', mask: 'lines' });
-    const timeline = gsap.timeline({ ...vars, onComplete: () => split.revert() });
-    timeline.from(split.lines, { yPercent: 108, duration: .95, ease: 'power3.out', stagger: .09 });
-    timeline.eventCallback('onInterrupt', () => split.revert());
-    return timeline;
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  ['dock', 'notch', 'lines'].forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => {
-        const animation = effects[name](element, { paused: true });
-        ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: name === 'notch' ? 'top 80%' : 'top 88%', once: true, animation });
-      });
-    }), section.getBoundingClientRect().top < window.innerHeight ? { first: true, id } : { near: section, id });
-  });
-});
-</script>
 
-<script data-8b-part="scene:lineup">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('lineup');
-    const frame = section.querySelector('.ln-frame');
-    const shots = [...section.querySelectorAll('.ln-shot')];
-    const cards = [...section.querySelectorAll('.ln-card')];
-    const tokens = getComputedStyle(document.documentElement);
-    const ghost = tokens.getPropertyValue('--color-3').trim();
-    const lit = tokens.getPropertyValue('--color-4').trim();
-    section.classList.add('is-staged');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'power2.inOut' },
-      scrollTrigger: { id: 'lineup', trigger: section, start: 'top top', end: 'bottom bottom', scrub: .6 }
-    });
-    cards.forEach((card, index) => { if (index) timeline.fromTo(card, { backgroundColor: ghost }, { backgroundColor: ghost, duration: .01, immediateRender: true }, 0); });
-    shots.forEach((shot, index) => {
-      if (!index) return;
-      const at = (index - 1) * 1.3 + .2;
-      timeline
-        .fromTo(cards[index - 1], { '--ln-in': 1, backgroundColor: lit }, { '--ln-in': 0, backgroundColor: ghost, duration: .35, immediateRender: false }, at)
-        .fromTo(frame, { '--ln-i': index - 1 }, { '--ln-i': index, duration: .5, immediateRender: false }, at + .35)
-        .fromTo(shot, { '--b': 100 }, { '--b': 0, duration: .8, immediateRender: true }, at + .1)
-        .fromTo(shots[index - 1], { '--t': 0 }, { '--t': 100, duration: .8, immediateRender: false }, at + .1)
-        .set(shots[index - 1], { '--t': 102 }, at + .9)
-        .fromTo(shot.querySelector('img'), { scale: 1.16 }, { scale: 1, duration: .8, immediateRender: true }, at + .1)
-        .fromTo(cards[index], { '--ln-in': 0, backgroundColor: ghost }, { '--ln-in': 1, backgroundColor: lit, duration: .35, immediateRender: false }, at + .85);
-    });
-    timeline.to({}, { duration: .3 });
-    return () => section.classList.remove('is-staged');
-  });
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-split=lines]>.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}[data-8b-split=lines]>.line:not(:last-child){margin-bottom:0}[data-8b-split=lines]>.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment);
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split'), again = sources.has(element);
+if (again) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+if (again) element.getAnimations({ subtree: true }).forEach(animation => { if (animation.timeline === document.timeline) try { animation.finish(); } catch {} });
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px' });
+document.fonts.ready.then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+</script>
+<script data-8b-part="scene-script:details">
+motionKit.scene('details', () => {
+  const mosaic = document.querySelector('#details .dt-mosaic');
+  const tiles = [...mosaic.querySelectorAll('.dt-tile:not(.dt-tile--text)')];
+  motionKit.measure(() => tiles.forEach((tile, index) => motionKit.set(tile, {
+    '--details-x': `${(tile.offsetLeft + tile.offsetWidth / 2 - mosaic.offsetWidth / 2) * .32}px`,
+    '--details-y': `${(tile.offsetTop + tile.offsetHeight / 2 - mosaic.offsetHeight / 2) * .45 + 40}px`,
+    '--details-r': `${(index % 2 ? 1 : -1) * (3 + index)}deg`
+  })));
 });
 </script>
-<script data-8b-part="scene:paint">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('paint');
-    const track = section.querySelector('.pt-track');
-    const fields = [...section.querySelectorAll('.pt-field')];
-    section.style.setProperty('--pt-count', fields.length);
-    section.classList.add('is-tracking');
-    const span = 1 / Math.max(1, fields.length - 1);
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'paint', trigger: section, start: 'top top', end: 'bottom bottom', scrub: .5, invalidateOnRefresh: true }
-    });
-    timeline.fromTo(track, { x: 0 }, { x: () => -(track.scrollWidth - window.innerWidth), duration: 1 }, 0);
-    fields.forEach((field, index) => {
-      const img = field.querySelector('.pt-frame img');
-      const name = field.querySelector('.pt-name');
-      const centre = index * span;
-      if (index > 0) {
-        timeline.fromTo(img, { xPercent: 6 }, { xPercent: 0, duration: span, immediateRender: true }, centre - span);
-        timeline.fromTo(name, { xPercent: 18 }, { xPercent: 0, duration: span, immediateRender: true }, centre - span);
-      }
-      if (index < fields.length - 1) {
-        timeline.fromTo(img, { xPercent: 0 }, { xPercent: -6, duration: span, immediateRender: false }, centre);
-        timeline.fromTo(name, { xPercent: 0 }, { xPercent: -18, duration: span, immediateRender: false }, centre);
-      }
-    });
-    return () => { section.classList.remove('is-tracking'); section.style.removeProperty('--pt-count'); };
-  });
-});
-</script>
-<script data-8b-part="scene:details">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('details');
-    const mosaic = section.querySelector('.dt-mosaic');
-    const tiles = [...mosaic.querySelectorAll('.dt-tile:not(.dt-tile--text)')];
-    const timeline = gsap.timeline({
-      scrollTrigger: { id: 'details', trigger: mosaic, start: 'top 92%', end: 'center 52%', scrub: .6, invalidateOnRefresh: true }
-    });
-    tiles.forEach((tile, index) => {
-      const dx = () => (tile.offsetLeft + tile.offsetWidth / 2 - mosaic.offsetWidth / 2) * .32;
-      const dy = () => (tile.offsetTop + tile.offsetHeight / 2 - mosaic.offsetHeight / 2) * .45 + 40;
-      timeline.fromTo(tile,
-        { x: dx, y: dy, rotate: (index % 2 ? 1 : -1) * (3 + index), scale: .84 },
-        { x: 0, y: 0, rotate: 0, scale: 1, ease: 'power2.out', duration: 1, immediateRender: true }, index * .05);
-    });
-  });
-}, { near: document.getElementById('details') });
-</script>
-<script data-8b-part="scene:city">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('city');
-    const [laneOne, laneTwo] = section.querySelectorAll('.ct-lane');
-    const [lineOne, lineTwo] = section.querySelectorAll('.ct-line');
-    const reach = lane => () => Math.max(60, (lane.scrollWidth - window.innerWidth) / 2 + 40);
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none', duration: 1 },
-      scrollTrigger: { id: 'city', trigger: section, start: 'top bottom', end: 'bottom top', scrub: .4, invalidateOnRefresh: true }
-    });
-    timeline
-      .fromTo(laneOne, { x: reach(laneOne) }, { x: () => -reach(laneOne)() }, 0)
-      .fromTo(laneTwo, { x: () => -reach(laneTwo)() }, { x: reach(laneTwo) }, 0)
-      .fromTo(lineOne, { x: () => window.innerWidth * .08 }, { x: 0, duration: .45, ease: 'power2.out' }, 0)
-      .fromTo(lineTwo, { x: () => -window.innerWidth * .08 }, { x: 0, duration: .45, ease: 'power2.out' }, 0);
-  });
-}, { near: document.getElementById('city') });
-</script>
-<script data-8b-part="scene:service">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('service');
-    const photo = section.querySelector('.sv-photo');
-    const steps = [...section.querySelectorAll('.sv-step')];
-    const tokens = getComputedStyle(document.documentElement);
-    const ink = tokens.getPropertyValue('--color-2').trim();
-    const grey = tokens.getPropertyValue('--color-3').trim();
-    const muted = tokens.getPropertyValue('--color-6').trim();
-    const white = tokens.getPropertyValue('--color-4').trim();
-    const radius = tokens.getPropertyValue('--radius-1').trim();
-    const count = steps.length;
-    const windowAt = index => `inset(0% ${(100 - 100 * (index + 1) / count).toFixed(2)}% 0% 0% round ${radius})`;
-    section.classList.add('is-staged');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'power2.inOut' },
-      scrollTrigger: { id: 'service', trigger: section, start: 'top top', end: 'bottom bottom', scrub: .6 }
-    });
-    timeline.fromTo(photo, { clipPath: windowAt(0) }, { clipPath: windowAt(0), duration: .01, immediateRender: true }, 0);
-    steps.forEach((step, index) => {
-      if (!index) return;
-      const disc = step.querySelector('.sv-step__no');
-      const at = index - 1 + .2;
-      timeline
-        .fromTo(photo, { clipPath: windowAt(index - 1) }, { clipPath: windowAt(index), duration: .8, immediateRender: false }, at)
-        .fromTo(step, { x: 36, color: muted }, { x: 0, color: ink, duration: .6, immediateRender: true }, at + .2)
-        .fromTo(disc, { backgroundColor: grey, color: ink }, { backgroundColor: ink, color: white, duration: .4, immediateRender: true }, at + .3);
-    });
-    timeline.to({}, { duration: .3 });
-    return () => section.classList.remove('is-staged');
-  });
-});
-</script>
-<script data-8b-part="scene:reviews">
-queueMotion(() => {
-  const section = document.getElementById('reviews');
-  const wall = section.querySelector('.rv-wall');
+<script data-8b-part="scene-script:reviews">
+motionKit.scene('reviews', () => {
+  const wall = document.querySelector('#reviews .rv-wall');
   const cards = [...wall.querySelectorAll('.rv-card')];
-  gsap.matchMedia().add({
-    wide: '(prefers-reduced-motion: no-preference) and (min-width: 861px)',
-    narrow: '(prefers-reduced-motion: no-preference) and (max-width: 860px)'
-  }, context => {
-    if (context.conditions.wide) {
-      const timeline = gsap.timeline({
-        scrollTrigger: { id: 'reviews', trigger: wall, start: 'top 92%', end: 'center 50%', scrub: .6, invalidateOnRefresh: true }
-      });
-      cards.forEach((card, index) => {
-        const dx = () => wall.offsetWidth / 2 - (card.offsetLeft + card.offsetWidth / 2);
-        const dy = () => -card.offsetTop + 30;
-        timeline.fromTo(card,
-          { x: dx, y: dy, rotate: (index - (cards.length - 1) / 2) * 3.2 },
-          { x: 0, y: 0, rotate: 0, ease: 'power3.out', duration: 1, immediateRender: true }, index * .07);
-      });
-    } else {
-      cards.forEach((card, index) => {
-        gsap.fromTo(card,
-          { xPercent: index % 2 ? 70 : -70, rotate: index % 2 ? 6 : -6 },
-          { xPercent: 0, rotate: 0, ease: 'power2.out', immediateRender: true,
-            scrollTrigger: { id: `reviews:card-${index + 1}`, trigger: card, start: 'top 100%', end: 'top 62%', scrub: .5 } });
-      });
-    }
-  });
-}, { near: document.getElementById('reviews') });
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const panel = section.querySelector('.cn-panel');
-    const photo = panel.querySelector('img');
-    gsap.timeline({
-      defaults: { ease: 'power2.out', duration: 1 },
-      scrollTrigger: { id: 'contact', trigger: panel, start: 'top bottom', end: 'top 30%', scrub: .6 }
-    })
-      .fromTo(panel, { '--n': .42 }, { '--n': 1, immediateRender: true }, 0)
-      .fromTo(photo, { scale: 1.2, xPercent: -6 }, { scale: 1, xPercent: 0, ease: 'none', immediateRender: true }, 0);
-  });
-}, { near: document.getElementById('contact') });
+  motionKit.measure(() => cards.forEach(card => motionKit.set(card, {
+    '--reviews-x': `${wall.offsetWidth / 2 - (card.offsetLeft + card.offsetWidth / 2)}px`,
+    '--reviews-y': `${30 - card.offsetTop}px`
+  })));
+});
 </script>
 </body>
 </html>

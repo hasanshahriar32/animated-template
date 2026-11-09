@@ -1,8 +1,8 @@
-# Free HTML nonprofit website template with GSAP scroll animations
+# Free HTML nonprofit website template with scroll animations and no libraries
 
-Nonprofit website template: one free HTML file for a volunteering network, charity or community group that lists open volunteer hours, takes sign-ups and asks for donations. Six colour-coded folders hold the open hours, a donation picker follows, and AGENTS.md lets Claude Code, Cursor or Codex adapt the whole page.
+Nonprofit website template: one free HTML file for a volunteering network, charity or community group that lists open volunteer hours, takes sign-ups and asks for donations. Six colour-coded folders hold the open hours and a donation picker follows. The scroll motion is CSS with no JavaScript libraries, and AGENTS.md guides Claude Code, Cursor or Codex.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/nonprofit-website-template/)** · **[Use this template](https://github.com/new?template_name=nonprofit-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/nonprofit-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/spare-hour/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/nonprofit-website-template/mai
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my organisation: name, city, registered charity number, causes, real opportunities with day, time, length and places left, age and background check rules, donation amounts, budget, contacts>. Replace first the demo name, Glasgow places and Scottish terms, the six open hours, the quotes and the money figures. Keep the ids and the classes AGENTS.md lists, and set the footer wordmark's len to the new name's length. Ask me for missing facts and never invent figures, quotes, charity numbers or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my organisation: name, city, registered charity number, causes, real opportunities with day, time, length and places left, age and background check rules, donation amounts, budget, contacts>. Replace first the demo name, Glasgow places and Scottish terms, the six open hours, the quotes and the money figures. Motion is CSS scroll-driven animation plus the inline motion kit: keep the gate script, ids, data-8b attributes and listed classes; add no library. Never invent figures, quotes, charity numbers or contacts.
 ```
 
 Using a nonprofit website template for Claude Code, Cursor or Codex goes fastest when the agent gets the facts only the organisation has: name, charity number, causes, real opportunities with day, time and places, age and background check rules, gift amounts. The demo invents all of these, with the quotes and money figures. Replace them first, then the Glasgow names and Scottish terms such as the PVG check. The whole site is [one long volunteering page](https://8b.com/templates/one-page/), so the agent reads it in one pass.
@@ -34,10 +34,10 @@ No agent? Click **[Use this template](https://github.com/new?template_name=nonpr
 ## Sections and motion
 
 - **Navigation**: fixed bar: wordmark, five links, two icon buttons, Sign up button; phone menu overlay with phone and email. The bar is clear at the top, gains a white ground and hairline after a few pixels of scroll, slides away on scrolling down past 120px and returns on scrolling up.
-- **An hour is the whole ask.**: yellow screen: "An hour is the whole ask.", a paragraph, a button and three numbered step cards. Smooth scrolling runs page-wide; on load the heading, lead and button slide up and the three step cards rise from below with a short stagger.
+- **An hour is the whole ask.**: yellow screen: "An hour is the whole ask.", a paragraph, a button and three numbered step cards. On load the heading, lead and button slide up and the three step cards rise from below with a short stagger, where scroll-driven animation is supported.
 - **This week's open hours**: "This week's open hours": six folder cards in a drawer, each with neighbourhood tab, cause, title, day and time, length, places left and a Book link. The six folders stack as a drawer that stays in place for about three screens of scrolling, and each step lifts the front folder, tilts it slightly and slips it to the back.
 - **Six ways to spend an hour**: "Six ways to spend an hour": six tall cause cards in a stepped skyline, each with a photo, name and line. When the row reaches the lower part of the screen the six cards rise once, the outer ones first and the middle pair last.
-- **One Saturday at the Govan larder**: "One Saturday at the Govan larder": a horizontal strip of six timed photo frames with captions. The six timed frames slide sideways while the page scrolls down, and the notch in each photo's top edge leans with the scroll speed.
+- **One Saturday at the Govan larder**: "One Saturday at the Govan larder": a horizontal strip of six timed photo frames with captions. The screen holds while the heading and six timed frames slide sideways as the page scrolls down, and the notch in each photo's top edge leans with the scroll speed.
 - **Why they keep coming back**: "Why they keep coming back": one large quote and two smaller ones, portraits in tab frames and handwritten names over a yellow stroke. Each portrait rises with a slight zoom out as it enters, and the yellow stroke draws across each handwritten name.
 - **Thirty neighbourhoods, one network**: "Thirty neighbourhoods, one network": a wrapping block of thirty Glasgow names on teal, each with its open hours, lighting up in cause colours. The thirty names start faded and light up in their cause colours as they pass the lower part of the screen, row by row, and fade again on scrolling back.
 - **Run a community group? Post an hour in five minutes.**: "Run a community group? Post an hour in five minutes.": a photo of a circle of chairs, a pitch, three points and a button. The photo rises as it enters and the yellow stroke draws behind the words Post an hour.
@@ -64,7 +64,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=nonpr
 ## Questions
 
 **Is this a free non-profit website template?**  
-Yes. The code is MIT licensed and sits in one index.html with inline CSS and scripts. GSAP and Lenis load from jsDelivr, the fonts from Google Fonts, and the 24 photos stay on Unsplash's servers and are listed in CREDITS.md. On Replit, [the volunteer network card](https://8b.com/templates/for-replit/) opens Agent with this design's prompt.
+Yes. The code is MIT licensed and sits in one index.html with inline CSS and scripts, no JavaScript libraries and no script from a CDN. The fonts come from Google Fonts, and the 24 photos stay on Unsplash's servers and are listed in CREDITS.md. On Replit, [the volunteer network card](https://8b.com/templates/for-replit/) opens Agent with this design's prompt.
 
 **Do the donation and sign-up forms work?**  
 No, neither sends anything. The donation form only shows a preview message and the sign-up form checks the name and email, then shows a thank-you line. Connect sign-up with Formspree or Netlify Forms, and point Give now at your own donation page or payment link.
@@ -74,7 +74,7 @@ Yes, with [8B's AI website builder](https://8b.com/). Describe the site in a sen
 
 ## Is it the right base?
 
-As an ngo website template it suits a network that lists dated slots near the visitor and asks for small gifts. The folder drawer and the neighbourhood block fit a city with many local groups; a single-site charity can cut both. A [members' workspace](https://8b.com/templates/isoline/) with day passes needs a different page. The weak spot is function: Book links, See all hours and Sign up all jump to the form, and a plain sentence on 8B's builder covers the no-code route.
+As an ngo website template it suits a network that lists dated slots near the visitor and asks for small gifts. The folder drawer and the neighbourhood block fit a city with many local groups; a single-site charity can cut both. A [members' workspace](https://8b.com/templates/isoline/) needs a different page. The motion needs no animation library: about 27 KB of code gzipped against 73 KB and three requests for the GSAP version. The weak spot: Book, See all hours and Sign up all jump to the form.
 
 ## Before you publish
 
@@ -83,7 +83,9 @@ As an ngo website template it suits a network that lists dated slots near the vi
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 105 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 112 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 106 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/boat-tour-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -98,10 +99,6 @@
     position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
     clip: rect(0 0 0 0); white-space: nowrap; border: 0;
   }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-  .lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-smooth iframe { pointer-events: none; }
 }
 </style>
 <style data-8b-part="system">
@@ -379,14 +376,25 @@
     #opening .op__actions { animation: op-up .8s .3s cubic-bezier(.2,.7,.2,1) backwards; }
     #opening .op__ring { animation: op-up .9s .2s cubic-bezier(.2,.7,.2,1) backwards; }
     #opening .ring__spin { animation: ring-spin 64s linear infinite; }
-    #opening .op__drift { animation: op-drift 9s ease-in-out infinite alternate; }
-    #opening.is-away .ring__spin, #opening.is-away .op__drift { animation-play-state: paused; }
+    #opening.is-away .ring__spin { animation-play-state: paused; }
   }
   @keyframes op-settle { from { transform: scale(1.07); } }
   @keyframes op-rise { from { transform: translateY(104%); } }
   @keyframes op-up { from { transform: translateY(36px); opacity: 0; } }
   @keyframes ring-spin { to { transform: rotateY(-360deg); } }
-  @keyframes op-drift { from { transform: translateX(-3.2%); } to { transform: translateX(3.2%); } }
+  #opening .op__zoom { transform: none; }
+  #opening .op__deep { opacity: .3; }
+  #opening .op__second .op__actions { justify-content: flex-start; margin-top: clamp(28px, 4svh, 40px); }
+  #opening .op__second .op__facts { margin-top: clamp(32px, 6svh, 64px); }
+  @media (prefers-reduced-motion: no-preference) {
+    #opening .op__statement { animation: op-up .9s .1s cubic-bezier(.2, .7, .2, 1) backwards; }
+    #opening .op__chip { animation: rw-chip .7s cubic-bezier(.3, .7, .2, 1) backwards; }
+    #opening .op__chip:nth-of-type(1) { animation-delay: .7s; }
+    #opening .op__chip:nth-of-type(2) { animation-delay: .8s; }
+    #opening .op__chip:nth-of-type(3) { animation-delay: .9s; }
+    #opening .op__facts { animation: op-up .8s .4s cubic-bezier(.2, .7, .2, 1) backwards; }
+  }
+  @keyframes rw-chip { from { clip-path: inset(0% 50% 0% 50% round 999px); } }
 }
 </style>
 <style data-8b-part="layout">
@@ -456,20 +464,6 @@
   }
   @media (max-width: 560px) {
     #route .route__track { grid-template-columns: 1fr; }
-  }
-}
-</style>
-<style data-8b-part="scene-style:route">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #route.is-track { padding-top: clamp(64px, 9svh, 96px); padding-bottom: clamp(40px, 6svh, 72px); }
-    #route.is-track .route__track {
-      display: flex; width: max-content; gap: clamp(16px, 2.2vw, 32px); padding: 3svh clamp(20px, 6vw, 96px);
-    }
-    #route.is-track .place { flex: none; width: clamp(240px, min(30vw, 44svh), 400px); }
-  }
-  @media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
-    #route.is-track .place { width: min(74vw, 44svh); }
   }
 }
 </style>
@@ -584,18 +578,6 @@
   }
 }
 </style>
-<style data-8b-part="scene-style:reviews">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #reviews.is-deck .reviews__deck { grid-template-columns: minmax(0, 1fr); max-width: 860px; margin: 0 auto; }
-    #reviews.is-deck .quote { grid-area: 1 / 1; min-height: clamp(300px, 46svh, 420px); }
-    #reviews.is-deck .quote:nth-child(1) { z-index: 4; }
-    #reviews.is-deck .quote:nth-child(2) { z-index: 3; }
-    #reviews.is-deck .quote:nth-child(3) { z-index: 2; }
-    #reviews.is-deck .quote:nth-child(4) { z-index: 1; }
-  }
-}
-</style>
 <style data-8b-part="section:faq">
 @layer sections {
   #faq { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 40px clamp(32px, 6vw, 96px); align-items: start; padding: clamp(96px, 11vw, 160px) clamp(20px, 5vw, 72px); }
@@ -688,27 +670,141 @@
   }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .op__zoom { transform: none; }
-#opening .op__deep { opacity: .3; }
-#opening .op__second .op__actions { justify-content: flex-start; margin-top: clamp(28px, 4svh, 40px); }
-#opening .op__second .op__facts { margin-top: clamp(32px, 6svh, 64px); }
-@media (prefers-reduced-motion: no-preference) {
-  #opening .op__statement { animation: op-up .9s .1s cubic-bezier(.2, .7, .2, 1) backwards; }
-  #opening .op__chip { animation: rw-chip .7s cubic-bezier(.3, .7, .2, 1) backwards; }
-  #opening .op__chip:nth-of-type(1) { animation-delay: .7s; }
-  #opening .op__chip:nth-of-type(2) { animation-delay: .8s; }
-  #opening .op__chip:nth-of-type(3) { animation-delay: .9s; }
-  #opening .op__facts { animation: op-up .8s .4s cubic-bezier(.2, .7, .2, 1) backwards; }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] [data-8b-motion~="lines"] .line__in { animation-name: motion-lines-line-in-translate; animation-duration: 1.05s; animation-delay: calc(0s + 0.09s * var(--i)); animation-timing-function: var(--ease-power3-out); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="lines"].is-in .line__in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="reveal"] { animation-name: motion-reveal-clippath; animation-duration: 1.1s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="reveal"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="reveal"] img { animation-name: motion-reveal-img-scale; animation-duration: 1.5s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="reveal"].is-in img { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="drift"] { view-timeline: --motion-drift block; view-timeline-inset: 0; }
+[data-8b-live] [data-8b-motion~="drift"] img { animation-name: motion-drift-img-translate; animation-timeline: --motion-drift; animation-range: cover 0% cover 50%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes motion-lines-line-in-translate { 0% { translate: 0px 110%; } 100% { translate: 0px 0px; } }
+@keyframes motion-reveal-clippath { 0% { clip-path: inset(100% 0% 0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes motion-reveal-img-scale { 0% { scale: 1.16; } 100% { scale: 1; } }
+@keyframes motion-drift-img-translate { 0% { translate: 0px -10%; } 100% { translate: 0px 0px; } }
 }
-@keyframes rw-chip { from { clip-path: inset(0% 50% 0% 50% round 999px); } }</style>
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+[data-8b-live] #opening .op__drift { animation: opening-drift 9s ease-in-out infinite alternate; }
+[data-8b-live] #opening.is-away .op__drift { animation-play-state: paused; }
+@keyframes opening-drift { from { transform: translateX(-3.2%); } to { transform: translateX(3.2%); } }
+}
+</style>
+<style data-8b-part="scene:trips">
+@layer scenes {
+[data-8b-live] #trips .trips__rows > .trip { view-timeline: --trips-item block; view-timeline-inset: 0; }
+[data-8b-live] #trips .trips__rows > .trip > .trip__card, [data-8b-live] #trips .trips__rows > .trip > figure:nth-of-type(-n+2), [data-8b-live] #trips .trips__rows > .trip > figure:nth-of-type(-n+2) > img { animation-timeline: --trips-item; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #trips .trips__rows > article:nth-of-type(1) > figure:nth-of-type(-n+2) > img { animation-name: trips-figure-trip-photo-img-translate; }
+[data-8b-live] #trips .trip--flip > figure:nth-of-type(-n+2) > img { animation-name: trips-figure-trip-photo-img-translate-3; }
+[data-8b-live] #trips .trips__rows > article:nth-of-type(3) > figure:nth-of-type(-n+2) > img { animation-name: trips-figure-trip-photo-img-translate; }
+@keyframes trips-div-trip-card-translate-d { 0% { translate: var(--trips-div-trip-card-translate-from, -94%) 0px; } 100% { translate: 0px 0px; } }
+@keyframes trips-div-trip-card-translate-m { 0% { translate: var(--trips-div-trip-card-translate-from-m, -52%) 0px; } 100% { translate: 0px 0px; } }
+@keyframes trips-figure-trip-photo-translate-d { 0% { translate: var(--trips-figure-trip-photo-translate-from, -67%) 0px; } 100% { translate: 0px 0px; } }
+@keyframes trips-figure-trip-photo-translate-m { 0% { translate: var(--trips-figure-trip-photo-translate-from-m, -38%) 0px; } 100% { translate: 0px 0px; } }
+@keyframes trips-figure-trip-photo-img-translate { 0% { translate: 6% 0px; } 100% { translate: 0px 0px; } }
+@keyframes trips-figure-trip-photo-translate-2-d { 0% { translate: var(--trips-figure-trip-photo-translate-2-from, -40%) 0px; } 100% { translate: 0px 0px; } }
+@keyframes trips-figure-trip-photo-translate-2-m { 0% { translate: var(--trips-figure-trip-photo-translate-2-from-m, -24%) 0px; } 100% { translate: 0px 0px; } }
+@keyframes trips-figure-trip-photo-img-translate-3 { 0% { translate: -6% 0px; } 100% { translate: 0px 0px; } }
+@media (min-width: 761px) {
+  [data-8b-live] #trips .trips__rows > .trip > .trip__card { animation-name: trips-div-trip-card-translate-d; animation-range: cover 0% cover calc(50% - 5vh); }
+  [data-8b-live] #trips .trips__rows > .trip > figure:nth-of-type(1) { animation-name: trips-figure-trip-photo-translate-d; animation-range: cover 0% cover calc(50% - 5vh); }
+  [data-8b-live] #trips .trips__rows > .trip > figure:nth-of-type(1) > img { animation-range: cover 0% cover calc(50% - 5vh); }
+  [data-8b-live] #trips .trips__rows > .trip > figure:nth-of-type(2) { animation-name: trips-figure-trip-photo-translate-2-d; animation-range: cover 0% cover calc(50% - 5vh); }
+  [data-8b-live] #trips .trips__rows > .trip > figure:nth-of-type(2) > img { animation-range: cover 0% cover calc(50% - 5vh); }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #trips .trips__rows > .trip > .trip__card { animation-name: trips-div-trip-card-translate-m; animation-range: cover 0% cover 70vh; }
+  [data-8b-live] #trips .trips__rows > .trip > figure:nth-of-type(1) { animation-name: trips-figure-trip-photo-translate-m; animation-range: cover 0% cover 70vh; }
+  [data-8b-live] #trips .trips__rows > .trip > figure:nth-of-type(1) > img { animation-range: cover 0% cover 70vh; }
+  [data-8b-live] #trips .trips__rows > .trip > figure:nth-of-type(2) { animation-name: trips-figure-trip-photo-translate-2-m; animation-range: cover 0% cover 70vh; }
+  [data-8b-live] #trips .trips__rows > .trip > figure:nth-of-type(2) > img { animation-range: cover 0% cover 70vh; }
+}
+}
+</style>
+<style data-8b-part="scene:route">
+@layer scenes {
+[data-8b-live] #route { padding: 0; view-timeline: --route-room block; view-timeline-inset: 0; }
+[data-8b-live] #route::after { content: ''; display: block; height: calc(1.15 * var(--route-distance, 0px)); }
+[data-8b-live] #route .route__hold { position: sticky; top: 0; overflow: clip; padding-top: clamp(64px, 9svh, 96px); padding-bottom: clamp(40px, 6svh, 72px); }
+[data-8b-live] #route .route__track { display: flex; width: max-content; gap: clamp(16px, 2.2vw, 32px); padding: 3svh clamp(20px, 6vw, 96px); animation-name: route-track-travel; animation-timeline: --route-room; animation-range: cover 100vh cover calc(100vh + max(1px, 1.15 * var(--route-distance, 0px))); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #route .place { flex: none; width: clamp(240px, min(30vw, 44svh), 400px); }
+@media (max-width: 760px) {
+  [data-8b-live] #route .place { width: min(74vw, 44svh); }
+}
+@keyframes route-track-travel { 0% { translate: 0px 0px; } 100% { translate: calc(-1 * var(--route-distance, 0px)) 0px; } }
+}
+</style>
+<style data-8b-part="scene:onboard">
+@layer scenes {
+[data-8b-live] #onboard .onboard__room { view-timeline: --onboard-room block; view-timeline-inset: 0; }
+[data-8b-live] #onboard .onboard__room::after { content: ''; display: block; height: 95vh; }
+[data-8b-live] #onboard .onboard__stage { position: sticky; top: calc(50vh - var(--onboard-stage-h, 0px) / 2); }
+[data-8b-live] #onboard .onboard__window, [data-8b-live] #onboard .onboard__window img, [data-8b-live] #onboard .onboard__line { animation-timeline: --onboard-room; animation-range: cover calc(50vh + var(--onboard-stage-h, 0px) / 2) cover calc(145vh + var(--onboard-stage-h, 0px) / 2); animation-timing-function: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); animation-fill-mode: both; }
+[data-8b-live] #onboard .onboard__window { animation-name: onboard-window-open; }
+[data-8b-live] #onboard .onboard__window img { animation-name: onboard-picture-settle; animation-timing-function: linear(0, 0.0494, 0.0975, 0.1444, 0.19, 0.2344, 0.2775, 0.3194, 0.36, 0.3994, 0.4375, 0.4744, 0.51, 0.5444, 0.5775, 0.6094, 0.64, 0.6694, 0.6975, 0.7244, 0.75, 0.7744, 0.7975, 0.8194, 0.84, 0.8594, 0.8775, 0.8944, 0.91, 0.9244, 0.9375, 0.9494, 0.96, 0.9694, 0.9775, 0.9844, 0.99, 0.9944, 0.9975, 0.9994, 1); }
+[data-8b-live] #onboard .onboard__line--a { animation-name: onboard-line-a; }
+[data-8b-live] #onboard .onboard__line--b { animation-name: onboard-line-b; }
+@keyframes onboard-window-open { 0% { clip-path: inset(var(--onboard-chip-y, 0px) var(--onboard-chip-x, 0px) var(--onboard-chip-y, 0px) var(--onboard-chip-x, 0px) round 999px); } 100% { clip-path: inset(0px 0px 0px 0px round 14px); } }
+@keyframes onboard-picture-settle { 0% { scale: 1.6; } 100% { scale: 1; } }
+@keyframes onboard-line-a { 0% { translate: var(--onboard-a-x, 0px) var(--onboard-chip-y, 0px); } 100% { translate: 0px 0px; } }
+@keyframes onboard-line-b { 0% { translate: var(--onboard-b-x, 0px) calc(-1 * var(--onboard-chip-y, 0px)); } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:charter">
+@layer scenes {
+[data-8b-live] #charter .charter__frame { top: 88px; }
+[data-8b-live] #charter { timeline-scope: --charter-t1, --charter-t2, --charter-t3; }
+[data-8b-live] #charter .charter__list > li:nth-of-type(2) { view-timeline: --charter-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #charter .charter__list > li:nth-of-type(3) { view-timeline: --charter-t2 block; view-timeline-inset: 0; }
+[data-8b-live] #charter .charter__list > li:nth-of-type(4) { view-timeline: --charter-t3 block; view-timeline-inset: 0; }
+[data-8b-live] #charter .charter__photos > img:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4)) { animation-name: charter-div-charter-photos-img-clippath; animation-range: cover 18vh cover 50vh; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #charter .charter__photos > img:nth-of-type(2) { animation-timeline: --charter-t1; }
+[data-8b-live] #charter .charter__photos > img:nth-of-type(3) { animation-timeline: --charter-t2; }
+[data-8b-live] #charter .charter__photos > img:nth-of-type(4) { animation-timeline: --charter-t3; }
+[data-8b-live] #charter .occasion:first-child { animation-name: charter-occasion-out; animation-timeline: view(block 0px); animation-range: cover calc(100% - 46vh) cover calc(100% - 16vh); animation-timing-function: linear; animation-fill-mode: forwards; }
+[data-8b-live] #charter .occasion:not(:first-child, :last-child) { animation-name: charter-occasion-in, charter-occasion-out; animation-timeline: view(block 0px), view(block 0px); animation-range: cover 18vh cover 50vh, cover calc(100% - 46vh) cover calc(100% - 16vh); animation-timing-function: linear; animation-fill-mode: both, forwards; }
+[data-8b-live] #charter .occasion:last-child { animation-name: charter-occasion-in; animation-timeline: view(block 0px); animation-range: cover 18vh cover 50vh; animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes charter-occasion-in { 0% { opacity: 0.28; } 100% { opacity: 1; } }
+@keyframes charter-occasion-out { 0% { opacity: 1; } 100% { opacity: 0.28; } }
+@keyframes charter-div-charter-photos-img-clippath { 0% { clip-path: inset(100% 0% 0%); } 99.998% { clip-path: inset(0.02% 0% 0%); } 100% { clip-path: inset(0%); } }
+}
+</style>
+<style data-8b-part="scene:reviews">
+@layer scenes {
+[data-8b-live] #reviews { padding: 0; }
+[data-8b-live] #reviews::after { content: ''; display: block; height: var(--reviews-travel, 0px); }
+[data-8b-live] #reviews .reviews__hold { position: sticky; top: calc(50vh - var(--reviews-hold-h, 0px) / 2); padding: var(--space-1) 0; }
+[data-8b-live] #reviews .reviews__deck { grid-template-columns: minmax(0, 1fr); max-width: 860px; margin: 0 auto; }
+[data-8b-live] #reviews .quote { grid-area: 1 / 1; min-height: clamp(300px, 46svh, 420px); z-index: calc(var(--n) - var(--i)); }
+[data-8b-live] #reviews .quote:not(:first-child) { transform-origin: 50% 100%; }
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] #contact { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact .contact__swing--a, [data-8b-live] #contact .contact__swing--b { animation-timeline: --contact-t1; animation-range: cover 0% cover 70vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes contact-div-contact-swing-translate { 0% { translate: calc(-1 * min(120px, 8vw)) 120px; } 100% { translate: 0px 0px; } }
+@keyframes contact-div-contact-swing-rotate { 0% { rotate: -22deg; } 100% { rotate: 0deg; } }
+@keyframes contact-div-contact-swing-translate-2 { 0% { translate: min(120px, 8vw) 220px; } 100% { translate: 0px 0px; } }
+@keyframes contact-div-contact-swing-rotate-2 { 0% { rotate: 24deg; } 100% { rotate: 0deg; } }
+[data-8b-live] #contact .contact__swing--a { animation-name: contact-div-contact-swing-translate, contact-div-contact-swing-rotate; }
+[data-8b-live] #contact .contact__swing--b { animation-name: contact-div-contact-swing-translate-2, contact-div-contact-swing-rotate-2; }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: wordmark in a tab between two link lists on desktop; on phones a Menu button opens a full-screen overlay with seven section links and a Book a seat link -->
 <header id="navigation" class="nav" data-8b-section="navigation">
   <nav class="nav__bar" aria-label="Main">
     <a class="nav__logo m-text-8" href="#opening" aria-label="Pierhead, back to the top">Pierhead</a>
-    <div class="nav__menu" id="menu" data-lenis-prevent>
+    <div class="nav__menu" id="menu">
       <ul class="nav__list nav__list--a">
         <li><a class="nav__link" href="#trips">Trips</a></li>
         <li><a class="nav__link" href="#route">Route</a></li>
@@ -727,13 +823,13 @@
 </header>
 
 <main>
-<!-- opening: a full-bleed harbour photo behind one large statement with three small photo chips, a Book a seat button, a rating line and a link to the skippers -->
+<!-- opening: a full-bleed harbour photo behind one large statement with three small photo chips, a Book a seat button, a rating line and a link to the skippers (animation: scene:opening) -->
 <section id="opening" class="op" data-8b-section="opening">
   <div class="op__frame">
     <div class="op__stage">
       <div class="op__photo">
         <div class="op__intro"><div class="op__zoom"><div class="op__drift">
-          <img style="background:#0c4073" src="https://images.unsplash.com/photo-1786748947427-696995c74157?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Ym9hdCUyMGxlYXZpbmclMjBoYXJib3VyJTIwZXZlbmluZ3xlbnwxfDB8fHwxNzkxNDYyNjQ0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=2000&amp;q=60" alt="The harbour at dusk: two boats moored inside the breakwater, its red light lit at the end" width="2000" height="1125" fetchpriority="high">
+          <img src="https://images.unsplash.com/photo-1786748947427-696995c74157?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Ym9hdCUyMGxlYXZpbmclMjBoYXJib3VyJTIwZXZlbmluZ3xlbnwxfDB8fHwxNzkxNDYyNjQ0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=2000&amp;q=60" alt="The harbour at dusk: two boats moored inside the breakwater, its red light lit at the end" width="2000" height="1125" fetchpriority="high">
         </div></div></div>
         <div class="op__shade"></div>
         <div class="op__deep"></div>
@@ -741,7 +837,7 @@
     </div>
 
     <div class="op__second">
-      <h1 class="m-text-6 op__statement">We leave the quay <span class="op__chip"><img loading="lazy" style="background:#405940" src="https://images.unsplash.com/photo-1565105155105-c0ad37142d8e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d29vZGVuJTIwbW90b3IlMjBsYXVuY2glMjBib2F0JTIwY2xhc3NpY3xlbnwxfDB8fHwxNzkxNDYyNzAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="360" height="144"></span> on the turn of the tide, round the light at Gull Point <span class="op__chip"><img loading="lazy" style="background:#738cc0" src="https://images.unsplash.com/photo-1723471729529-d26411c7a2f6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bGlnaHRob3VzZSUyMHRhbGwlMjB3aGl0ZXxlbnwxfDF8fHwxNzkxNDYyNzM3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="360" height="144"></span> and bring you home <span class="op__chip"><img loading="lazy" style="background:#0c2626" src="https://images.unsplash.com/photo-1693849480741-ba208e584742?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Ym9hdCUyMHdha2UlMjBhZXJpYWwlMjBzZWF8ZW58MXwxfHx8MTc5MTQ2MjY2OXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="360" height="144"></span> with salt on your sleeves.</h1>
+      <h1 class="m-text-6 op__statement">We leave the quay <span class="op__chip"><img src="https://images.unsplash.com/photo-1565105155105-c0ad37142d8e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d29vZGVuJTIwbW90b3IlMjBsYXVuY2glMjBib2F0JTIwY2xhc3NpY3xlbnwxfDB8fHwxNzkxNDYyNzAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="360" height="144"></span> on the turn of the tide, round the light at Gull Point <span class="op__chip"><img src="https://images.unsplash.com/photo-1723471729529-d26411c7a2f6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bGlnaHRob3VzZSUyMHRhbGwlMjB3aGl0ZXxlbnwxfDF8fHwxNzkxNDYyNzM3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="360" height="144"></span> and bring you home <span class="op__chip"><img src="https://images.unsplash.com/photo-1693849480741-ba208e584742?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Ym9hdCUyMHdha2UlMjBhZXJpYWwlMjBzZWF8ZW58MXwxfHx8MTc5MTQ2MjY2OXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="" width="360" height="144"></span> with salt on your sleeves.</h1>
       <div class="op__actions">
         <a class="m-btn" href="#trips"><span class="m-btn__label">Book a seat</span><span class="m-btn__icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M6 14 14 6M7 6h7v7"/></svg></span></a>
       </div>
@@ -761,14 +857,14 @@
 <section id="trips" class="trips" data-8b-section="trips">
   <div class="trips__panel u-panel">
     <div class="trips__head">
-      <h2 class="m-text-3 trips__title" data-8b-motion="lines">Three ways out of the harbour</h2>
+      <h2 class="m-text-3 trips__title" data-8b-motion="lines" data-8b-split="lines">Three ways out of the harbour</h2>
       <div class="trips__aside">
         <p class="m-text">Every trip leaves from Pier 3 on North Quay. Tickets online or at the kiosk on the day; children under four sail free on a lap.</p>
         <a class="m-btn" href="#contact"><span class="m-btn__label">Plan your trip</span><span class="m-btn__icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M6 14 14 6M7 6h7v7"/></svg></span></a>
       </div>
     </div>
-    <div class="trips__rows">
-      <article class="trip">
+    <div class="trips__rows" data-8b-items=":scope > .trip" data-8b-fixed="3">
+      <article class="trip" style="--trips-div-trip-card-translate-from: -94%; --trips-figure-trip-photo-translate-from: -67%; --trips-figure-trip-photo-translate-2-from: -40%; --trips-div-trip-card-translate-from-m: -52%; --trips-figure-trip-photo-translate-from-m: -38%; --trips-figure-trip-photo-translate-2-from-m: -24%">
         <div class="trip__card m-surface">
           <h3 class="m-text-4">Harbour Loop</h3>
           <p class="m-text-7 trip__line">Fifty minutes round the moorings, under the swing bridge and along the fish quay, with the skipper naming every hull you pass.</p>
@@ -781,10 +877,10 @@
             <a class="m-link" href="#contact">Book the Loop<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 14 6M7 6h7v7"/></svg></a>
           </div>
         </div>
-        <figure class="trip__photo m-photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1588346540031-bb06f709ddb9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZmlzaCUyMG1hcmtldCUyMHF1YXklMjBib2F0c3xlbnwxfDB8fHwxNzkxNDYyNjk3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=580&amp;q=60" alt="Masts and flags of the fishing fleet crowded along the quay" width="900" height="900" loading="lazy"></figure>
-        <figure class="trip__photo m-photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1790875341884-eaf1cddaa836?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Y29sb3VyZnVsJTIwZmlzaGluZyUyMGJvYXRzJTIwbW9vcmVkJTIwaGFyYm91cnxlbnwxfDF8fHwxNzkxNDYyNjY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Small fishing boats resting on the harbour floor at low tide" width="900" height="900" loading="lazy"></figure>
+        <figure class="trip__photo m-photo"><img src="https://images.unsplash.com/photo-1588346540031-bb06f709ddb9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZmlzaCUyMG1hcmtldCUyMHF1YXklMjBib2F0c3xlbnwxfDB8fHwxNzkxNDYyNjk3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=580&amp;q=60" alt="Masts and flags of the fishing fleet crowded along the quay" width="900" height="900" loading="lazy"></figure>
+        <figure class="trip__photo m-photo"><img src="https://images.unsplash.com/photo-1790875341884-eaf1cddaa836?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8Y29sb3VyZnVsJTIwZmlzaGluZyUyMGJvYXRzJTIwbW9vcmVkJTIwaGFyYm91cnxlbnwxfDF8fHwxNzkxNDYyNjY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Small fishing boats resting on the harbour floor at low tide" width="900" height="900" loading="lazy"></figure>
       </article>
-      <article class="trip trip--flip">
+      <article class="trip trip--flip" style="--trips-div-trip-card-translate-from: 94%; --trips-figure-trip-photo-translate-from: 40%; --trips-figure-trip-photo-translate-2-from: 67%; --trips-div-trip-card-translate-from-m: 24%; --trips-figure-trip-photo-translate-from-m: 38%; --trips-figure-trip-photo-translate-2-from-m: 52%">
         <div class="trip__card m-surface">
           <h3 class="m-text-4">Lighthouse &amp; Seals</h3>
           <p class="m-text-7 trip__line">Two hours out past the breakwater to Gull Point Light and the ledges where grey seals haul out. Binoculars on every bench.</p>
@@ -797,10 +893,10 @@
             <a class="m-link" href="#contact">Book the Light<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 14 6M7 6h7v7"/></svg></a>
           </div>
         </div>
-        <figure class="trip__photo m-photo"><img style="background:#d9f3f3" src="https://images.unsplash.com/photo-1745357796003-66cf3de702b6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bGlnaHRob3VzZSUyMHJvY2t5JTIwcG9pbnQlMjBzZWF8ZW58MXwwfHx8MTc5MTQ2MjY5M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="A red and white lighthouse on a cliff above calm blue sea" width="900" height="900" loading="lazy"></figure>
-        <figure class="trip__photo m-photo"><img style="background:#8c7359" src="https://images.unsplash.com/photo-1711216809575-1eeb5d69cbe5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2VhbHMlMjBseWluZyUyMG9uJTIwcm9ja3N8ZW58MXwwfHx8MTc5MTQ2MjY5NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Seals lying on weed-covered rocks at low water" width="900" height="900" loading="lazy"></figure>
+        <figure class="trip__photo m-photo"><img src="https://images.unsplash.com/photo-1745357796003-66cf3de702b6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bGlnaHRob3VzZSUyMHJvY2t5JTIwcG9pbnQlMjBzZWF8ZW58MXwwfHx8MTc5MTQ2MjY5M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=580&amp;q=60" alt="A red and white lighthouse on a cliff above calm blue sea" width="900" height="900" loading="lazy"></figure>
+        <figure class="trip__photo m-photo"><img src="https://images.unsplash.com/photo-1711216809575-1eeb5d69cbe5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2VhbHMlMjBseWluZyUyMG9uJTIwcm9ja3N8ZW58MXwwfHx8MTc5MTQ2MjY5NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="Seals lying on weed-covered rocks at low water" width="900" height="900" loading="lazy"></figure>
       </article>
-      <article class="trip">
+      <article class="trip" style="--trips-div-trip-card-translate-from: -94%; --trips-figure-trip-photo-translate-from: -67%; --trips-figure-trip-photo-translate-2-from: -40%; --trips-div-trip-card-translate-from-m: -52%; --trips-figure-trip-photo-translate-from-m: -38%; --trips-figure-trip-photo-translate-2-from-m: -24%">
         <div class="trip__card m-surface">
           <h3 class="m-text-4">Sundown Sail</h3>
           <p class="m-text-7 trip__line">Ninety minutes under tan sails on the ketch Hesper, timed so the sun drops behind the town while you are out. One drink from the bar included.</p>
@@ -813,8 +909,8 @@
             <a class="m-link" href="#contact">Book the Sail<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 14 6M7 6h7v7"/></svg></a>
           </div>
         </div>
-        <figure class="trip__photo m-photo"><img style="background:#c0d9f3" src="https://images.unsplash.com/photo-1660681371349-4a39fea59f4c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8Z2FmZiUyMHJpZ2dlZCUyMHNhaWxpbmclMjBib2F0fGVufDF8MHx8fDE3OTE0NjI3MDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="A ketch with red sails on a flat evening sea" width="900" height="900" loading="lazy"></figure>
-        <figure class="trip__photo m-photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1763815271717-e8d2db8e47f0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZnJpZW5kcyUyMGRyaW5raW5nJTIwb24lMjBib2F0JTIwc3Vuc2V0fGVufDF8MHx8fDE3OTE0NjI3MDN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Passengers on deck watching the sun go down over the islands" width="900" height="900" loading="lazy"></figure>
+        <figure class="trip__photo m-photo"><img src="https://images.unsplash.com/photo-1660681371349-4a39fea59f4c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8Z2FmZiUyMHJpZ2dlZCUyMHNhaWxpbmclMjBib2F0fGVufDF8MHx8fDE3OTE0NjI3MDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="A ketch with red sails on a flat evening sea" width="900" height="900" loading="lazy"></figure>
+        <figure class="trip__photo m-photo"><img src="https://images.unsplash.com/photo-1763815271717-e8d2db8e47f0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZnJpZW5kcyUyMGRyaW5raW5nJTIwb24lMjBib2F0JTIwc3Vuc2V0fGVufDF8MHx8fDE3OTE0NjI3MDN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=580&amp;q=60" alt="Passengers on deck watching the sun go down over the islands" width="900" height="900" loading="lazy"></figure>
       </article>
     </div>
   </div>
@@ -822,48 +918,50 @@
 
 <!-- route: five place cards in a row that travels sideways while the section is held, with a wave running through the cards (animation: scene:route) -->
 <section id="route" class="route" data-8b-section="route">
+<div class="route__hold">
   <div class="route__head">
-    <h2 class="m-text-3" data-8b-motion="lines">The water we cover</h2>
+    <h2 class="m-text-3" data-8b-motion="lines" data-8b-split="lines">The water we cover</h2>
     <p class="m-text">Five places you will pass, depending on the trip. Every skipper has a favourite; ask on the way out.</p>
   </div>
-  <div class="route__track">
+  <div class="route__track" data-8b-items=":scope > .place">
     <article class="place"><div class="place__lift">
-      <figure class="place__photo m-photo"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1780397255043-dba5ee2fee00?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29sb3VyZnVsJTIwZmlzaGluZyUyMGJvYXRzJTIwbW9vcmVkJTIwaGFyYm91cnxlbnwxfDF8fHwxNzkxNDYyNjY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A blue fishing boat settled on the mud beside the quay at low tide" width="760" height="950" loading="lazy">
+      <figure class="place__photo m-photo"><img src="https://images.unsplash.com/photo-1780397255043-dba5ee2fee00?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29sb3VyZnVsJTIwZmlzaGluZyUyMGJvYXRzJTIwbW9vcmVkJTIwaGFyYm91cnxlbnwxfDF8fHwxNzkxNDYyNjY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=60" alt="A blue fishing boat settled on the mud beside the quay at low tide" width="760" height="950" loading="lazy">
         <figcaption class="place__over"><span class="m-badge">Loop</span><h3 class="m-text-4">Fish Quay</h3></figcaption></figure>
       <p class="m-text-7 place__text">The trawlers settle on the mud at low water; at high tide the morning's catch comes ashore right beside you.</p>
     </div></article>
     <article class="place"><div class="place__lift">
-      <figure class="place__photo m-photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1672729524875-5c9d8c5c732d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZmlzaCUyMG1hcmtldCUyMHF1YXklMjBib2F0c3xlbnwxfDB8fHwxNzkxNDYyNjk3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="Market stalls under umbrellas above boats moored at the steps" width="760" height="950" loading="lazy">
+      <figure class="place__photo m-photo"><img src="https://images.unsplash.com/photo-1672729524875-5c9d8c5c732d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZmlzaCUyMG1hcmtldCUyMHF1YXklMjBib2F0c3xlbnwxfDB8fHwxNzkxNDYyNjk3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=60" alt="Market stalls under umbrellas above boats moored at the steps" width="760" height="950" loading="lazy">
         <figcaption class="place__over"><span class="m-badge">Loop, Saturdays</span><h3 class="m-text-4">Market Steps</h3></figcaption></figure>
       <p class="m-text-7 place__text">Stalls run down to the water at the weekend. Wave to the oyster sellers; they always wave back.</p>
     </div></article>
     <article class="place"><div class="place__lift">
-      <figure class="place__photo m-photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1786392413422-f8a1064f068b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bGlnaHRob3VzZSUyMHRhbGwlMjB3aGl0ZXxlbnwxfDF8fHwxNzkxNDYyNzM3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A tall white lighthouse rising above sand dunes and dry grass" width="760" height="950" loading="lazy">
+      <figure class="place__photo m-photo"><img src="https://images.unsplash.com/photo-1786392413422-f8a1064f068b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bGlnaHRob3VzZSUyMHRhbGwlMjB3aGl0ZXxlbnwxfDF8fHwxNzkxNDYyNzM3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=60" alt="A tall white lighthouse rising above sand dunes and dry grass" width="760" height="950" loading="lazy">
         <figcaption class="place__over"><span class="m-badge">Light</span><h3 class="m-text-4">Gull Point Light</h3></figcaption></figure>
       <p class="m-text-7 place__text">Lit since 1871 and still working. We hold off the rocks long enough for every camera on board.</p>
     </div></article>
     <article class="place"><div class="place__lift">
-      <figure class="place__photo m-photo"><img style="background:#c0d9f3" src="https://images.unsplash.com/photo-1625632449423-0a70da3f9616?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2VhbHMlMjBseWluZyUyMG9uJTIwcm9ja3N8ZW58MXwwfHx8MTc5MTQ2MjY5NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A seal asleep on pale rocks in the sun" width="760" height="950" loading="lazy">
+      <figure class="place__photo m-photo"><img src="https://images.unsplash.com/photo-1625632449423-0a70da3f9616?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2VhbHMlMjBseWluZyUyMG9uJTIwcm9ja3N8ZW58MXwwfHx8MTc5MTQ2MjY5NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=60" alt="A seal asleep on pale rocks in the sun" width="760" height="950" loading="lazy">
         <figcaption class="place__over"><span class="m-badge">Light, low tide</span><h3 class="m-text-4">The Seal Ledges</h3></figcaption></figure>
       <p class="m-text-7 place__text">Grey seals haul out here when the water drops. We cut the engine and drift; they rarely mind.</p>
     </div></article>
     <article class="place"><div class="place__lift">
-      <figure class="place__photo m-photo"><img style="background:#404040" src="https://images.unsplash.com/photo-1731074699126-9555a4e22d34?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c21hbGwlMjBpc2xhbmQlMjBiZWFjaCUyMGNvdmUlMjBib2F0fGVufDF8MHx8fDE3OTE0NjI2OTh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A small white boat at anchor in a clear cove under a rock wall" width="760" height="950" loading="lazy">
+      <figure class="place__photo m-photo"><img src="https://images.unsplash.com/photo-1731074699126-9555a4e22d34?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c21hbGwlMjBpc2xhbmQlMjBiZWFjaCUyMGNvdmUlMjBib2F0fGVufDF8MHx8fDE3OTE0NjI2OTh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=60" alt="A small white boat at anchor in a clear cove under a rock wall" width="760" height="950" loading="lazy">
         <figcaption class="place__over"><span class="m-badge">Sundown</span><h3 class="m-text-4">Tern Cove</h3></figcaption></figure>
       <p class="m-text-7 place__text">A sheltered bay where Hesper drops anchor while the sun goes down behind the town.</p>
     </div></article>
   </div>
+</div>
 </section>
 
 <!-- fleet: three boats, each with a wide photo, a short description and four facts -->
 <section id="fleet" class="fleet" data-8b-section="fleet">
   <div class="fleet__head">
-    <h2 class="m-text-3" data-8b-motion="lines">Three boats, all older than their skippers</h2>
+    <h2 class="m-text-3" data-8b-motion="lines" data-8b-split="lines">Three boats, all older than their skippers</h2>
     <p class="m-text">We keep them on the slip every winter and paint them every spring. Each one does the trip it was built for.</p>
   </div>
-  <div class="fleet__list">
+  <div class="fleet__list" data-8b-items=":scope > .boat">
     <article class="boat">
-      <figure class="boat__photo m-photo u-drift" data-8b-motion="reveal drift"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1575328514791-2e51500c5779?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8aGFyYm91ciUyMHRvdXIlMjBib2F0JTIwcGFzc2VuZ2Vyc3xlbnwxfDB8fHwxNzkxNDYyNzI5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" alt="Marigold, a wooden launch with a white canopy, full of passengers" width="1200" height="750" loading="lazy"></figure>
+      <figure class="boat__photo m-photo u-drift" data-8b-motion="reveal drift" data-8b-enter="92%"><img src="https://images.unsplash.com/photo-1575328514791-2e51500c5779?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8aGFyYm91ciUyMHRvdXIlMjBib2F0JTIwcGFzc2VuZ2Vyc3xlbnwxfDB8fHwxNzkxNDYyNzI5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" alt="Marigold, a wooden launch with a white canopy, full of passengers" width="1200" height="750" loading="lazy"></figure>
       <div class="boat__text">
         <h3 class="m-text-2 boat__name">Marigold</h3>
         <p class="m-text">A wooden launch with an open deck and a brass bell. She runs the Loop all day and knows every mooring by name.</p>
@@ -876,7 +974,7 @@
       </div>
     </article>
     <article class="boat">
-      <figure class="boat__photo m-photo u-drift" data-8b-motion="reveal drift"><img style="background:#262626" src="https://images.unsplash.com/photo-1783809338564-675bb3fd277b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8aGFyYm91ciUyMHRvdXIlMjBib2F0JTIwcGFzc2VuZ2Vyc3xlbnwxfDB8fHwxNzkxNDYyNzI5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="Kittiwake, a white excursion boat with a covered saloon, at her berth" width="1200" height="750" loading="lazy"></figure>
+      <figure class="boat__photo m-photo u-drift" data-8b-motion="reveal drift" data-8b-enter="92%"><img src="https://images.unsplash.com/photo-1783809338564-675bb3fd277b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8aGFyYm91ciUyMHRvdXIlMjBib2F0JTIwcGFzc2VuZ2Vyc3xlbnwxfDB8fHwxNzkxNDYyNzI5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="Kittiwake, a white excursion boat with a covered saloon, at her berth" width="1200" height="750" loading="lazy"></figure>
       <div class="boat__text">
         <h3 class="m-text-2 boat__name">Kittiwake</h3>
         <p class="m-text">A covered cruiser with a heated saloon, big windows and a top deck for the brave. She takes the Light run twice a day.</p>
@@ -889,7 +987,7 @@
       </div>
     </article>
     <article class="boat">
-      <figure class="boat__photo m-photo u-drift" data-8b-motion="reveal drift"><img style="background:#8c8c8c" src="https://images.unsplash.com/photo-1670711226713-599750185024?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Z2FmZiUyMHJpZ2dlZCUyMHNhaWxpbmclMjBib2F0fGVufDF8MHx8fDE3OTE0NjI3MDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" alt="Hesper, a varnished wooden ketch, tied up along a pontoon" width="1200" height="750" loading="lazy"></figure>
+      <figure class="boat__photo m-photo u-drift" data-8b-motion="reveal drift" data-8b-enter="92%"><img src="https://images.unsplash.com/photo-1670711226713-599750185024?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Z2FmZiUyMHJpZ2dlZCUyMHNhaWxpbmclMjBib2F0fGVufDF8MHx8fDE3OTE0NjI3MDF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" alt="Hesper, a varnished wooden ketch, tied up along a pontoon" width="1200" height="750" loading="lazy"></figure>
       <div class="boat__text">
         <h3 class="m-text-2 boat__name">Hesper</h3>
         <p class="m-text">A gaff-rigged ketch that sails twelve guests at a time into the evening. Ask the skipper and you can take the helm.</p>
@@ -907,14 +1005,14 @@
 <!-- onboard: a heading split around a photo chip that grows into a picture filling the panel, then four notes about comfort (animation: scene:onboard) -->
 <section id="onboard" class="onboard" data-8b-section="onboard">
   <div class="onboard__panel u-panel">
-    <div class="onboard__stage">
+    <div class="onboard__room"><div class="onboard__stage">
       <h2 class="m-text-2 onboard__title">
         <span class="onboard__line onboard__line--a">Everything you need</span>
-        <span class="onboard__window m-photo" aria-hidden="true"><img style="background:#595940" src="https://images.unsplash.com/photo-1575328517132-d7f6d028ee4a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8aGFyYm91ciUyMHRvdXIlMjBib2F0JTIwcGFzc2VuZ2Vyc3xlbnwxfDB8fHwxNzkxNDYyNzI5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1160&amp;q=60" alt="" width="1800" height="1200" loading="lazy"></span>
+        <span class="onboard__window m-photo" aria-hidden="true"><img src="https://images.unsplash.com/photo-1575328517132-d7f6d028ee4a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8aGFyYm91ciUyMHRvdXIlMjBib2F0JTIwcGFzc2VuZ2Vyc3xlbnwxfDB8fHwxNzkxNDYyNzI5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1800&amp;q=60" alt="" width="1800" height="1200" loading="lazy"></span>
         <span class="onboard__line onboard__line--b">is already on board</span>
       </h2>
-    </div>
-    <ul class="onboard__notes">
+    </div></div>
+    <ul class="onboard__notes" data-8b-items=":scope > li">
       <li><h3 class="m-text-4">Blankets under every bench</h3><p class="m-text-7">Wool, and washed after every trip. The wind is always colder once you are out past the light.</p></li>
       <li><h3 class="m-text-4">Tea, coffee and a small bar</h3><p class="m-text-7">Hot drinks on every boat; local beer, wine and cider on Kittiwake and Hesper.</p></li>
       <li><h3 class="m-text-4">A warm saloon</h3><p class="m-text-7">When the weather turns, Kittiwake seats thirty inside behind wide windows.</p></li>
@@ -925,10 +1023,10 @@
 
 <!-- crew: three skippers with a portrait, name, boat, a quote and their favourite stretch -->
 <section id="crew" class="crew" data-8b-section="crew">
-  <h2 class="m-text-3 crew__title" data-8b-motion="lines">Three skippers, one rule: home before the tide turns</h2>
-  <ol class="crew__list">
+  <h2 class="m-text-3 crew__title" data-8b-motion="lines" data-8b-split="lines">Three skippers, one rule: home before the tide turns</h2>
+  <ol class="crew__list" data-8b-items=":scope > .mate">
     <li class="mate">
-      <figure class="mate__photo m-photo u-drift" data-8b-motion="reveal drift"><img style="background:#a6d9d9" src="https://images.unsplash.com/photo-1667249789780-59108690712e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d29tYW4lMjBzYWlsb3IlMjBwb3J0cmFpdCUyMGJvYXR8ZW58MXwxfHx8MTc5MTQ2MjczMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="Ros Pennick sitting on the bow of a blue boat by the sea" width="480" height="600" loading="lazy"></figure>
+      <figure class="mate__photo m-photo u-drift" data-8b-motion="reveal drift" data-8b-enter="92%"><img src="https://images.unsplash.com/photo-1667249789780-59108690712e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d29tYW4lMjBzYWlsb3IlMjBwb3J0cmFpdCUyMGJvYXR8ZW58MXwxfHx8MTc5MTQ2MjczMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="Ros Pennick sitting on the bow of a blue boat by the sea" width="480" height="600" loading="lazy"></figure>
       <div class="mate__name"><h3 class="m-text-4">Ros Pennick</h3><p class="m-text-5">Skipper of Marigold since 1996</p></div>
       <div class="mate__words">
         <p class="m-text">“I learned to row in this harbour before I could ride a bike. The Loop still surprises me most mornings.”</p>
@@ -936,7 +1034,7 @@
       </div>
     </li>
     <li class="mate">
-      <figure class="mate__photo m-photo u-drift" data-8b-motion="reveal drift"><img style="background:#a6c0c0" src="https://images.unsplash.com/photo-1606991641918-ba6afbb9e0df?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8d29tYW4lMjBzYWlsb3IlMjBwb3J0cmFpdCUyMGJvYXR8ZW58MXwxfHx8MTc5MTQ2MjczMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="Jonah Reyes leaning out of a window on the side of a boat" width="480" height="600" loading="lazy"></figure>
+      <figure class="mate__photo m-photo u-drift" data-8b-motion="reveal drift" data-8b-enter="92%"><img src="https://images.unsplash.com/photo-1606991641918-ba6afbb9e0df?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8d29tYW4lMjBzYWlsb3IlMjBwb3J0cmFpdCUyMGJvYXR8ZW58MXwxfHx8MTc5MTQ2MjczMnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="Jonah Reyes leaning out of a window on the side of a boat" width="480" height="600" loading="lazy"></figure>
       <div class="mate__name"><h3 class="m-text-4">Jonah Reyes</h3><p class="m-text-5">Skipper of Kittiwake since 2017</p></div>
       <div class="mate__words">
         <p class="m-text">“The seals know the sound of our engine. Cut it at the right moment and they come up to look at you.”</p>
@@ -944,7 +1042,7 @@
       </div>
     </li>
     <li class="mate">
-      <figure class="mate__photo m-photo u-drift" data-8b-motion="reveal drift"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1713019239099-912e56d7f9cc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZmlzaGVybWFuJTIwcG9ydHJhaXQlMjB3ZWF0aGVyZWR8ZW58MXwxfHx8MTc5MTQ2MjczMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="Tomas Kerrow sitting by the water in a white shirt and waistcoat" width="480" height="600" loading="lazy"></figure>
+      <figure class="mate__photo m-photo u-drift" data-8b-motion="reveal drift" data-8b-enter="92%"><img src="https://images.unsplash.com/photo-1713019239099-912e56d7f9cc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZmlzaGVybWFuJTIwcG9ydHJhaXQlMjB3ZWF0aGVyZWR8ZW58MXwxfHx8MTc5MTQ2MjczMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="Tomas Kerrow sitting by the water in a white shirt and waistcoat" width="480" height="600" loading="lazy"></figure>
       <div class="mate__name"><h3 class="m-text-4">Tomas Kerrow</h3><p class="m-text-5">Skipper of Hesper since 1981</p></div>
       <div class="mate__words">
         <p class="m-text">“Hesper is older than me and better behaved. Give her a breath of wind and she does the rest.”</p>
@@ -957,19 +1055,19 @@
 <!-- charter: private hire: a held photo frame that changes picture beside four occasions with prices (animation: scene:charter) -->
 <section id="charter" class="charter" data-8b-section="charter">
   <div class="charter__head">
-    <h2 class="m-text-3" data-8b-motion="lines">Take the whole boat</h2>
+    <h2 class="m-text-3" data-8b-motion="lines" data-8b-split="lines">Take the whole boat</h2>
     <p class="m-text">Private hire for up to sixty, with your own skipper and your own route. Prices are for the boat, not per head.</p>
   </div>
   <div class="charter__body">
-    <div class="charter__frame" data-8b-sticky-under-nav>
+    <div class="charter__frame">
       <div class="charter__photos m-photo">
-        <img style="background:#260c0c" src="https://images.unsplash.com/photo-1634919688593-59a1fcaec50e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8ZnJpZW5kcyUyMGRyaW5raW5nJTIwb24lMjBib2F0JTIwc3Vuc2V0fGVufDF8MHx8fDE3OTE0NjI3MDN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="Friends gathered under a boat's canopy against the evening sun" width="1000" height="1250" loading="lazy">
-        <img style="background:#737373" src="https://images.unsplash.com/photo-1785754139598-da065f6258c4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZmFtaWx5JTIwb24lMjBib2F0JTIwdHJpcCUyMHNlYXxlbnwxfDB8fHwxNzkxNDYyNzMzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="Colleagues on the open deck and stairs of a passenger boat" width="1000" height="1250" loading="lazy">
-        <img style="background:#260c0c" src="https://images.unsplash.com/photo-1475488805518-f2efa1097a8f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZnJpZW5kcyUyMGRyaW5raW5nJTIwb24lMjBib2F0JTIwc3Vuc2V0fGVufDF8MHx8fDE3OTE0NjI3MDN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="Two people at the rail as the sun sets over the water" width="1000" height="1250" loading="lazy">
-        <img style="background:#8c7373" src="https://images.unsplash.com/photo-1751568928805-c8b7b439020b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZnJpZW5kcyUyMGRyaW5raW5nJTIwb24lMjBib2F0JTIwc3Vuc2V0fGVufDF8MHx8fDE3OTE0NjI3MDN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A group in life vests at the bow of a boat at dusk" width="1000" height="1250" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1634919688593-59a1fcaec50e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8ZnJpZW5kcyUyMGRyaW5raW5nJTIwb24lMjBib2F0JTIwc3Vuc2V0fGVufDF8MHx8fDE3OTE0NjI3MDN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="Friends gathered under a boat's canopy against the evening sun" width="1000" height="1250" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1785754139598-da065f6258c4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZmFtaWx5JTIwb24lMjBib2F0JTIwdHJpcCUyMHNlYXxlbnwxfDB8fHwxNzkxNDYyNzMzfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="Colleagues on the open deck and stairs of a passenger boat" width="1000" height="1250" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1475488805518-f2efa1097a8f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZnJpZW5kcyUyMGRyaW5raW5nJTIwb24lMjBib2F0JTIwc3Vuc2V0fGVufDF8MHx8fDE3OTE0NjI3MDN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="Two people at the rail as the sun sets over the water" width="1000" height="1250" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1751568928805-c8b7b439020b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZnJpZW5kcyUyMGRyaW5raW5nJTIwb24lMjBib2F0JTIwc3Vuc2V0fGVufDF8MHx8fDE3OTE0NjI3MDN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A group in life vests at the bow of a boat at dusk" width="1000" height="1250" loading="lazy">
       </div>
     </div>
-    <ol class="charter__list">
+    <ol class="charter__list" data-8b-items=":scope > .occasion" data-8b-fixed="4">
       <li class="occasion">
         <h3 class="m-text-4">Birthdays and anniversaries</h3>
         <p class="m-text">Bring a cake and we bring the plates. Marigold is the one for a party that wants to see the whole harbour.</p>
@@ -997,12 +1095,13 @@
 
 <!-- reviews: four comment cards stacked like a deck; each scroll step flings the top card away (animation: scene:reviews) -->
 <section id="reviews" class="reviews" data-8b-section="reviews">
+<div class="reviews__hold">
   <div class="reviews__panel u-panel">
     <div class="reviews__head">
-      <h2 class="m-text-3" data-8b-motion="lines">Heard on the way back in</h2>
+      <h2 class="m-text-3" data-8b-motion="lines" data-8b-split="lines">Heard on the way back in</h2>
       <p class="m-text">From the comment cards we hand out at the gangway, copied out as they were written.</p>
     </div>
-    <div class="reviews__deck">
+    <div class="reviews__deck" data-8b-items=":scope > .quote">
       <figure class="quote m-surface">
         <blockquote class="m-text-6 quote__text"><p>“We went for the seals and came back talking about the skipper. Jonah knew every buoy and half the people waving from the quay.”</p></blockquote>
         <figcaption class="quote__by"><span class="m-text-4">Hannah Lowe</span><span class="m-text-5">Lighthouse and seals, in August</span></figcaption>
@@ -1021,14 +1120,15 @@
       </figure>
     </div>
   </div>
+</div>
 </section>
 
 <!-- faq: a held photo with a phone card beside six questions (native details) -->
 <section id="faq" class="faq" data-8b-section="faq">
-  <div class="faq__side" data-8b-sticky-under-nav>
-    <h2 class="m-text-3" data-8b-motion="lines">Before you come aboard</h2>
+  <div class="faq__side">
+    <h2 class="m-text-3" data-8b-motion="lines" data-8b-split="lines">Before you come aboard</h2>
     <div class="faq__photo m-photo u-drift" data-8b-motion="drift">
-      <img style="background:#0c2626" src="https://images.unsplash.com/photo-1777222524319-88fd14485430?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c2VhbCUyMHJlc3RpbmclMjBvbiUyMHJvY2tzJTIwc2VhfGVufDF8MXx8fDE3OTE0NjI2Njh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="Dark rocks running out into a calm sea at dusk" width="900" height="1125" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1777222524319-88fd14485430?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8c2VhbCUyMHJlc3RpbmclMjBvbiUyMHJvY2tzJTIwc2VhfGVufDF8MXx8fDE3OTE0NjI2Njh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="Dark rocks running out into a calm sea at dusk" width="900" height="1125" loading="lazy">
       <div class="faq__ask m-surface-2">
         <h3 class="m-text-4">Ask the kiosk</h3>
         <p class="m-text-7">Whoever is on the kiosk at Pier 3 picks up from half past eight until the last boat is in.</p>
@@ -1068,7 +1168,7 @@
 <section id="contact" class="contact" data-8b-section="contact">
   <div class="contact__panel u-panel">
     <div class="contact__lead">
-      <h2 class="m-text-2 contact__title" data-8b-motion="lines">Your seat is waiting at Pier 3</h2>
+      <h2 class="m-text-2 contact__title" data-8b-motion="lines" data-8b-split="lines">Your seat is waiting at Pier 3</h2>
       <form data-8b-placeholder="form" class="m-field contact__form" action="#" method="post">
         <label class="m-field__label m-text-5" for="contact-email">First sailings of the season, by email</label>
         <span class="m-field__row">
@@ -1078,8 +1178,8 @@
       </form>
     </div>
     <div class="contact__cards" aria-hidden="true">
-      <div class="contact__swing contact__swing--a"><figure class="contact__card m-photo"><img style="background:#737373" src="https://images.unsplash.com/photo-1775772057212-154611eac243?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c21hbGwlMjBpc2xhbmQlMjBiZWFjaCUyMGNvdmUlMjBib2F0fGVufDF8MHx8fDE3OTE0NjI2OTh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=460&amp;q=60" alt="" width="600" height="750" loading="lazy"></figure></div>
-      <div class="contact__swing contact__swing--b"><figure class="contact__card m-photo"><img style="background:#8cc0f3" src="https://images.unsplash.com/photo-1588933333019-877118c1c9dc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c21hbGwlMjBpc2xhbmQlMjBiZWFjaCUyMGNvdmUlMjBib2F0fGVufDF8MHx8fDE3OTE0NjI2OTh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="" width="600" height="750" loading="lazy"></figure></div>
+      <div class="contact__swing contact__swing--a"><figure class="contact__card m-photo"><img src="https://images.unsplash.com/photo-1775772057212-154611eac243?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c21hbGwlMjBpc2xhbmQlMjBiZWFjaCUyMGNvdmUlMjBib2F0fGVufDF8MHx8fDE3OTE0NjI2OTh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=60" alt="" width="600" height="750" loading="lazy"></figure></div>
+      <div class="contact__swing contact__swing--b"><figure class="contact__card m-photo"><img src="https://images.unsplash.com/photo-1588933333019-877118c1c9dc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8c21hbGwlMjBpc2xhbmQlMjBiZWFjaCUyMGNvdmUlMjBib2F0fGVufDF8MHx8fDE3OTE0NjI2OTh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=60" alt="" width="600" height="750" loading="lazy"></figure></div>
     </div>
     <dl class="contact__details">
       <div><dt class="m-text-5">Ticket kiosk</dt><dd class="m-text">Pier 3, North Quay, Kelmouth</dd></div>
@@ -1112,278 +1212,12 @@
         <li><a data-8b-placeholder="social" class="m-link" href="https://www.youtube.com/">YouTube</a></li>
       </ul></div>
     </div>
-    <p class="m-text-8 footer__mark" style="--len:8" data-8b-motion="lines">Pierhead</p>
+    <p class="m-text-8 footer__mark" style="--len:8" data-8b-motion="lines" data-8b-split="lines">Pierhead</p>
     <div class="footer__legal"><p class="m-text-5">© 2026 Pierhead Boat Trips Ltd, Kelmouth · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></p><a class="m-link" href="#footer">Privacy and terms of carriage</a></div>
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-function navHeight() {
-  const bar = document.querySelector('#navigation .nav__bar');
-  return bar ? bar.offsetHeight : 0;
-}
-function refreshScroll() {
-  const offset = navHeight() + 24;
-  document.querySelectorAll('[data-8b-sticky-under-nav]').forEach(element => { element.style.top = `${offset}px`; });
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.075, anchors: { offset: -navHeight() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  lines(element, vars = {}) {
-    const split = SplitText.create(element, { type: 'lines', mask: 'lines' });
-    return gsap.timeline({ ...vars, onComplete() { split.revert(); } })
-      .from(split.lines, { yPercent: 110, duration: 1.05, ease: 'power3.out', stagger: 0.09 });
-  },
-  reveal(frame, vars = {}) {
-    const picture = frame.querySelector('img');
-    return gsap.timeline(vars)
-      .fromTo(frame, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.1, ease: 'power3.inOut', clearProps: 'clipPath' }, 0)
-      .fromTo(picture, { scale: 1.16 }, { scale: 1, duration: 1.5, ease: 'power3.out' }, 0);
-  },
-  drift(frame, vars = {}) {
-    const picture = frame.querySelector('img');
-    return gsap.timeline(vars).fromTo(picture, { yPercent: -10 }, { yPercent: 0, duration: 1, ease: 'none' });
-  }
-};
-const effectBindings = {
-  lines: element => ({ start: 'top 88%', once: true, animation: effects.lines(element) }),
-  reveal: element => ({ start: 'top 92%', once: true, animation: effects.reveal(element) }),
-  drift: element => ({ start: 'top bottom', end: 'center center', scrub: 0.5, animation: effects.drift(element) })
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  const elements = [...section.querySelectorAll('[data-8b-motion]')];
-  if (!elements.length) return;
-  queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    elements.forEach((element, index) => {
-      element.getAttribute('data-8b-motion').split(/\s+/).filter(Boolean).forEach(name => {
-        ScrollTrigger.create({ id: `effect:${name}:${section.id}:${index + 1}`, trigger: element, ...effectBindings[name](element) });
-      });
-    });
-  }), section.getBoundingClientRect().top < innerHeight ? { first: true, id: `effects:${section.id}` } : { near: section, id: `effects:${section.id}` });
-});
-</script>
 
-<script data-8b-part="scene:trips">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 761px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 760px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const { wide } = context.conditions;
-    const section = document.getElementById('trips');
-    section.querySelectorAll('.trip').forEach((row, index) => {
-      const side = index % 2 ? 1 : -1;
-      const cells = [...row.children];
-      const ranked = cells.map(cell => ({ cell, box: cell.getBoundingClientRect() }))
-        .sort((p, q) => (Math.round(p.box.top) - Math.round(q.box.top)) || (p.box.left - q.box.left)).map(entry => entry.cell);
-      const timeline = gsap.timeline({
-        defaults: { ease: 'none' },
-        scrollTrigger: { id: `trips:row-${index + 1}`, trigger: row, start: 'top bottom', end: wide ? 'center 55%' : 'top 30%', scrub: 0.6 }
-      });
-      cells.forEach(cell => {
-        const rank = ranked.indexOf(cell);
-        const step = side < 0 ? cells.length - 1 - rank : rank;
-        timeline.fromTo(cell, { xPercent: side * (wide ? 40 + step * 27 : 24 + step * 14) }, { xPercent: 0, duration: 1 }, 0);
-        const picture = cell.querySelector('img');
-        if (picture) timeline.fromTo(picture, { xPercent: -side * 6 }, { xPercent: 0, duration: 1 }, 0);
-      });
-    });
-  });
-}, { near: document.getElementById('trips') });
-</script>
-<script data-8b-part="scene:route">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', context => {
-    const section = document.getElementById('route');
-    const track = section.querySelector('.route__track');
-    const lifts = [...section.querySelectorAll('.place__lift')];
-    section.classList.add('is-track');
-    const setY = lifts.map(lift => gsap.quickSetter(lift, 'y', 'px'));
-    const setTurn = lifts.map(lift => gsap.quickSetter(lift, 'rotation', 'deg'));
-    let centres = [];
-    const distance = () => Math.max(0, track.scrollWidth - document.documentElement.clientWidth);
-    const measure = () => { centres = lifts.map(lift => lift.offsetLeft + lift.offsetWidth / 2); };
-    const swell = progress => {
-      const shift = -distance() * progress;
-      const height = Math.min(54, innerHeight * 0.06);
-      const envelope = Math.sin(Math.PI * progress);
-      lifts.forEach((lift, i) => {
-        const offset = centres[i] + shift - innerWidth / 2;
-        const calm = Math.min(1, Math.max(0, (Math.abs(offset) - innerWidth * 0.1) / (innerWidth * 0.25)));
-        const phase = (offset / innerWidth) * Math.PI * 2.2 - progress * Math.PI * 1.5;
-        setY[i](Math.sin(phase) * height * envelope * calm);
-        setTurn[i](Math.cos(phase) * 2.4 * envelope * calm);
-      });
-    };
-    measure();
-    gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        id: 'route', trigger: section, start: 'top top', end: () => `+=${distance() * 1.15}`, pin: true, scrub: 0.8,
-        invalidateOnRefresh: true, onRefresh: self => { measure(); swell(self.progress); }, onUpdate: self => swell(self.progress)
-      }
-    }).fromTo(track, { x: 0 }, { x: () => -distance(), duration: 1 });
-    return () => { section.classList.remove('is-track'); gsap.set(lifts, { clearProps: 'transform' }); };
-  });
-});
-</script>
-<script data-8b-part="scene:onboard">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('onboard');
-    const stage = section.querySelector('.onboard__stage');
-    const windowFrame = section.querySelector('.onboard__window');
-    const picture = windowFrame.querySelector('img');
-    const [lineA, lineB] = section.querySelectorAll('.onboard__line');
-    const chip = () => {
-      const size = parseFloat(getComputedStyle(lineA).fontSize);
-      const width = windowFrame.offsetWidth, height = windowFrame.offsetHeight;
-      const chipW = Math.min(width * 0.8, size * 2.6), chipH = Math.min(height * 0.8, size * 1.04);
-      return { x: (width - chipW) / 2, y: (height - chipH) / 2 };
-    };
-    const centreShift = line => windowFrame.offsetLeft + windowFrame.offsetWidth / 2 - (line.offsetLeft + line.offsetWidth / 2);
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'onboard', trigger: stage, start: 'center center', end: () => `+=${innerHeight * 0.95}`, pin: true, scrub: 0.7, invalidateOnRefresh: true }
-    });
-    timeline
-      .fromTo(windowFrame, { clipPath: () => `inset(${chip().y}px ${chip().x}px ${chip().y}px ${chip().x}px round 999px)` },
-        { clipPath: 'inset(0px 0px 0px 0px round 14px)', duration: 1, ease: 'power2.inOut' }, 0)
-      .fromTo(picture, { scale: 1.6 }, { scale: 1, duration: 1, ease: 'power1.out' }, 0)
-      .fromTo(lineA, { x: () => centreShift(lineA), y: () => chip().y }, { x: 0, y: 0, duration: 1, ease: 'power2.inOut' }, 0)
-      .fromTo(lineB, { x: () => centreShift(lineB), y: () => -chip().y }, { x: 0, y: 0, duration: 1, ease: 'power2.inOut' }, 0);
-  });
-});
-</script>
-<script data-8b-part="scene:charter">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('charter');
-    const items = [...section.querySelectorAll('.occasion')];
-    const pictures = [...section.querySelectorAll('.charter__photos img')];
-    const clamp = gsap.utils.clamp(0, 1);
-    items.forEach((item, index) => {
-      const setInk = gsap.quickSetter(item, 'opacity');
-      const ink = () => {
-        const box = item.getBoundingClientRect();
-        const enter = index === 0 ? 1 : clamp((innerHeight * 0.82 - box.top) / (innerHeight * 0.32));
-        const leave = index === items.length - 1 ? 1 : clamp((box.bottom - innerHeight * 0.16) / (innerHeight * 0.3));
-        setInk(0.28 + 0.72 * Math.min(enter, leave));
-      };
-      ScrollTrigger.create({ id: `charter:ink-${index + 1}`, trigger: item, start: 'top bottom', end: 'bottom top', onUpdate: ink, onRefresh: ink });
-      if (index > 0 && pictures[index]) {
-        gsap.fromTo(pictures[index], { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none',
-          scrollTrigger: { id: `charter:in-${index + 1}`, trigger: item, start: 'top 82%', end: 'top 50%', scrub: 0.5 } });
-      }
-    });
-    return () => gsap.set(items, { clearProps: 'opacity' });
-  });
-}, { near: document.getElementById('charter') });
-</script>
-<script data-8b-part="scene:reviews">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('reviews');
-    const cards = [...section.querySelectorAll('.quote')];
-    section.classList.add('is-deck');
-    cards.forEach((card, i) => { if (i) gsap.set(card, { y: i * 16, scale: 1 - i * 0.035, transformOrigin: '50% 100%' }); });
-    const timeline = gsap.timeline({
-      defaults: { ease: 'power1.inOut' },
-      scrollTrigger: { id: 'reviews', trigger: section, start: 'center center', end: () => `+=${innerHeight * 0.55 * (cards.length - 1)}`, pin: true, scrub: 0.6, invalidateOnRefresh: true }
-    });
-    cards.slice(0, -1).forEach((card, i) => {
-      timeline.to(card, { xPercent: i % 2 ? 115 : -115, y: -40, rotation: i % 2 ? 9 : -9, duration: 1 }, i)
-        .to(card, { opacity: 0, duration: 0.45, ease: 'none' }, i + 0.4);
-      cards.slice(i + 1).forEach((next, j) => timeline.to(next, { y: j * 16, scale: 1 - j * 0.035, duration: 1 }, i));
-    });
-    return () => { section.classList.remove('is-deck'); gsap.set(cards, { clearProps: 'transform,opacity' }); };
-  });
-});
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const [first, second] = section.querySelectorAll('.contact__swing');
-    gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'contact', trigger: section, start: 'top bottom', end: 'top 30%', scrub: 0.7, invalidateOnRefresh: true }
-    })
-      .fromTo(first, { x: () => -Math.min(120, innerWidth * 0.08), y: 120, rotation: -22 }, { x: 0, y: 0, rotation: 0, duration: 1 }, 0)
-      .fromTo(second, { x: () => Math.min(120, innerWidth * 0.08), y: 220, rotation: 24 }, { x: 0, y: 0, rotation: 0, duration: 1 }, 0);
-  });
-}, { near: document.getElementById('contact') });
-</script>
 <script data-8b-part="section-script:navigation">
 (() => {
   const nav = document.getElementById('navigation');
@@ -1409,7 +1243,7 @@ queueMotion(() => {
     nav.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
     label.textContent = open ? label.dataset.close : openText;
-    if (open) window.lenis?.stop(); else window.lenis?.start();
+    if (open) window.motionKit?.wheel?.stop(); else window.motionKit?.wheel?.start();
   };
   toggle.addEventListener('click', () => setOpen(!nav.classList.contains('is-open')));
   nav.querySelectorAll('.nav__menu a').forEach(link => link.addEventListener('click', () => setOpen(false)));
@@ -1432,6 +1266,292 @@ document.querySelectorAll('.m-btn__label').forEach(label => {
   next.classList.add('m-btn__face--next');
   next.setAttribute('aria-hidden', 'true');
   label.replaceChildren(face, next);
+});
+</script>
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); });
+};
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-split=lines]>.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}[data-8b-split=lines]>.line:not(:last-child){margin-bottom:0}[data-8b-split=lines]>.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment);
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split'), again = sources.has(element);
+if (again) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+if (again) element.getAnimations({ subtree: true }).forEach(animation => { if (animation.timeline === document.timeline) try { animation.finish(); } catch {} });
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px' });
+document.fonts.ready.then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:route">
+motionKit.scene('route', () => {
+  const section = document.getElementById('route');
+  const track = section.querySelector('.route__track');
+  const lifts = [...section.querySelectorAll('.place__lift')];
+  let distance = 0;
+  let centres = [];
+  motionKit.measure(() => {
+    distance = Math.max(0, track.scrollWidth - document.documentElement.clientWidth);
+    centres = lifts.map(lift => lift.offsetLeft + lift.offsetWidth / 2);
+    motionKit.set(section, { '--route-distance': distance + 'px' });
+  });
+  motionKit.track(section, 'top 0%', 'bottom 100%', () => {
+    const length = Math.max(1, distance * 1.15);
+    const progress = Math.min(1, Math.max(0, -section.getBoundingClientRect().top / length));
+    const shift = -distance * progress;
+    const height = Math.min(54, innerHeight * 0.06);
+    const envelope = Math.sin(Math.PI * progress);
+    lifts.forEach((lift, i) => {
+      const offset = centres[i] + shift - innerWidth / 2;
+      const calm = Math.min(1, Math.max(0, (Math.abs(offset) - innerWidth * 0.1) / (innerWidth * 0.25)));
+      const phase = (offset / innerWidth) * Math.PI * 2.2 - progress * Math.PI * 1.5;
+      lift.style.transform = `translateY(${Math.sin(phase) * height * envelope * calm}px) rotate(${Math.cos(phase) * 2.4 * envelope * calm}deg)`;
+    });
+  });
+});
+</script>
+<script data-8b-part="scene-script:onboard">
+motionKit.scene('onboard', () => {
+  const section = document.getElementById('onboard');
+  const stage = section.querySelector('.onboard__stage');
+  const frame = section.querySelector('.onboard__window');
+  const [lineA, lineB] = section.querySelectorAll('.onboard__line');
+  const centreShift = line => frame.offsetLeft + frame.offsetWidth / 2 - (line.offsetLeft + line.offsetWidth / 2);
+  motionKit.measure(() => {
+    const size = parseFloat(getComputedStyle(lineA).fontSize);
+    const width = frame.offsetWidth, height = frame.offsetHeight;
+    const chipW = Math.min(width * 0.8, size * 2.6), chipH = Math.min(height * 0.8, size * 1.04);
+    motionKit.set(section, {
+      '--onboard-stage-h': stage.offsetHeight + 'px',
+      '--onboard-chip-x': (width - chipW) / 2 + 'px',
+      '--onboard-chip-y': (height - chipH) / 2 + 'px',
+      '--onboard-a-x': centreShift(lineA) + 'px',
+      '--onboard-b-x': centreShift(lineB) + 'px'
+    });
+  });
+});
+</script>
+<script data-8b-part="scene-script:reviews">
+motionKit.scene('reviews', () => {
+  const section = document.getElementById('reviews');
+  const hold = section.querySelector('.reviews__hold');
+  const cards = [...section.querySelectorAll('.quote')];
+  const last = cards.length - 1;
+  const ease = t => t < 0.5 ? 2 * t * t : 1 - 2 * (1 - t) * (1 - t);
+  const clamp = value => Math.min(1, Math.max(0, value));
+  let height = 0;
+  let travel = 0;
+  motionKit.measure(() => {
+    height = hold.offsetHeight;
+    travel = innerHeight * 0.55 * last;
+    motionKit.set(section, { '--reviews-hold-h': height + 'px', '--reviews-travel': travel + 'px' });
+  });
+  motionKit.track(section, 'top 0%', 'bottom 100%', () => {
+    const time = clamp(((innerHeight - height) / 2 - section.getBoundingClientRect().top) / Math.max(1, travel)) * last;
+    const step = Math.min(last, Math.floor(time));
+    const eased = step + ease(time - step);
+    cards.forEach((card, i) => {
+      const away = i < last ? ease(clamp(time - i)) : 0;
+      const place = Math.max(0, i - eased);
+      const side = i % 2 ? 1 : -1;
+      card.style.transform = `translate(${side * 115 * away}%, ${place * 16 - 40 * away}px) rotate(${side * 9 * away}deg) scale(${1 - place * 0.035})`;
+      if (i < last) card.style.opacity = 1 - clamp((time - i - 0.4) / 0.45);
+    });
+  });
 });
 </script>
 </body>

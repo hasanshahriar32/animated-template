@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/arcade-bar-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -20,7 +21,6 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%23211e1c'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23f5a8c6'%3EQ%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/climatecrisis/v15/wEOpEB3AntNeKCPBVW9XOKlmp3AUgWFN1DvIvcM0gFpKiq8q.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/robotoserif/v17/R707jywflP6FLr3gZx7K8UyuXDs9zVwDmXCb8lxYgmuii32UGoVldX7kg9LHywA.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/savate/v5/QdVXSTgjKAqpnvJnM7Lh.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* cyrillic-ext */
@@ -161,11 +161,6 @@
 /* end font fallbacks */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
-.lenis.lenis-autoToggle { transition-property: overflow; transition-duration: 1ms; transition-behavior: allow-discrete; }
 body { margin: 0; background: var(--color-1); color: var(--color-2); font-family: var(--font-2); font-size: 17px; line-height: 1.5; font-weight: 400; overflow-x: clip; }
 h1, h2, h3, p, ul, ol, figure, blockquote, dl, dd { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
@@ -288,6 +283,12 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
   #nav .nav__cta { gap: 6px; padding: 0 12px; font-size: 14px; }
   #nav .nav__menu-btn { width: 44px; height: 44px; }
 }
+/* the header's own compact step starts at 389px; at 390-440 its menu button ran off the right edge */
+@media (min-width: 390px) and (max-width: 440px) {
+  #nav .nav__bar { gap: 10px; }
+  #nav .nav__logo { font-size: 18px; }
+  #nav .nav__cta { padding: 0 16px; }
+}
 }
 </style>
 
@@ -317,6 +318,19 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
   #floor .floor__card { aspect-ratio: 4 / 5; max-height: 70svh; }
   #floor .floor__band { height: 8svh; }
 }
+#floor { padding-top: 0; }
+#floor .floor__panel { padding-top: clamp(48px, 6vw, 88px); }
+#floor .floor__cta { grid-column: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; }
+@media (max-width: 767.98px) {
+  #floor .floor__panel { padding-top: 40px; }
+  #floor .floor__cta { grid-column: 1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #floor .floor__head > * { animation: floor-rise .9s cubic-bezier(.2, .7, .2, 1) backwards; }
+  #floor .floor__head > :nth-child(2) { animation-delay: .1s; }
+  #floor .floor__head > :nth-child(3) { animation-delay: .2s; }
+}
+@keyframes floor-rise { from { transform: translateY(26px); opacity: 0; } }
 }
 </style>
 <style data-8b-part="section:week">
@@ -403,14 +417,6 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="scene-style:league-sort">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #league .league__board[data-sorting] .league__row:first-child { z-index: 2; box-shadow: var(--shadow-1); }
-  #league .league__board[data-sorting] .league__row:first-child:not(.is-top) { background: var(--color-8); }
-}
-}
-</style>
 <style data-8b-part="section:rules">
 @layer sections {
 #rules { padding: clamp(40px, 6vh, 80px) var(--space-1); overflow-x: clip; }
@@ -486,15 +492,6 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="scene-style:menu-track">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #menu[data-track] { padding: 0; }
-  #menu[data-track] .menu__stage { position: sticky; top: 0; height: 100svh; align-content: center; overflow: clip; }
-  #menu[data-track] .menu__viewport { overflow: visible; padding-bottom: 0; }
-}
-}
-</style>
 <style data-8b-part="section:reviews">
 @layer sections {
 #reviews { padding: clamp(80px, 14vh, 160px) var(--space-1); overflow-x: clip; }
@@ -564,26 +561,116 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#floor { padding-top: 0; }
-#floor .floor__panel { padding-top: clamp(48px, 6vw, 88px); }
-#floor .floor__cta { grid-column: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; }
-@media (max-width: 767.98px) {
-  #floor .floor__panel { padding-top: 40px; }
-  #floor .floor__cta { grid-column: 1; }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); }
+[data-8b-live] [data-8b-motion~="tabdrop"] { animation-name: motion-tabdrop-translate, motion-tabdrop-clippath; animation-duration: 0.8s; animation-delay: 0s; animation-timing-function: var(--ease-power3-out), cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="tabdrop"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rowslide"] { animation-name: motion-rowslide; animation-duration: 0.9s; animation-delay: 0s; animation-timing-function: var(--ease-power3-out); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="rowslide"].is-in { animation-play-state: running; }
+@keyframes motion-rowslide { 0% { translate: calc(var(--motion-side, -1) * min(90px, 8vw)) 0px; opacity: 0; } 100% { translate: 0px 0px; opacity: 1; } }
+@keyframes motion-tabdrop-translate { 0% { translate: 0px -70%; } 100% { translate: 0px 0px; } }
+@keyframes motion-tabdrop-clippath { 0% { clip-path: inset(0% 0% 100%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
 }
-/* the header's own compact step starts at 389px; at 390-440 its menu button ran off the right edge */
-@media (min-width: 390px) and (max-width: 440px) {
-  #nav .nav__bar { gap: 10px; }
-  #nav .nav__logo { font-size: 18px; }
-  #nav .nav__cta { padding: 0 16px; }
+</style>
+<style data-8b-part="scene:floor-stack">
+@layer scenes {
+[data-8b-live] #floor .floor__stack > li { --floor-stick: 13svh; top: calc(var(--i) * 26px + var(--floor-stick)); }
+@media (max-width: 767px) {
+[data-8b-live] #floor .floor__stack > li { --floor-stick: 12svh; }
 }
+[data-8b-live] #floor { timeline-scope: --floor-t1; }
+[data-8b-live] #floor .floor__stack { view-timeline: --floor-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #floor .floor__backdrop > span:nth-of-type(-n+3) { animation-timeline: --floor-t1; animation-range: cover 0% cover 100%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #floor .floor__backdrop > span:nth-of-type(1) { animation-name: floor-span-floor-band-translate; }
+[data-8b-live] #floor .floor__backdrop > span:nth-of-type(2) { animation-name: floor-span-floor-band-translate-2; }
+[data-8b-live] #floor .floor__backdrop > span:nth-of-type(3) { animation-name: floor-span-floor-band-translate; }
+[data-8b-live] #floor .floor__stack > li:not(:last-child) > .floor__card { animation-name: floor-card-cover; animation-timeline: --floor-t1; animation-range: cover var(--floor-next) cover calc(var(--floor-next) + 100vh - var(--floor-stick) - (var(--i) + 1) * 26px); animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes floor-card-cover { 0% { scale: 1; filter: brightness(1); } 100% { scale: 0.9; filter: brightness(0.42); } }
+@keyframes floor-span-floor-band-translate { 0% { translate: -12% 0px; } 100% { translate: 12% 0px; } }
+@keyframes floor-span-floor-band-translate-2 { 0% { translate: 12% 0px; } 100% { translate: -12% 0px; } }
+}
+</style>
+<style data-8b-part="scene:crew-prints">
+@layer scenes {
+[data-8b-live] #crew { view-timeline: --crew-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #crew .m-frame__img, [data-8b-live] #crew .crew__prints > figure { animation-timeline: --crew-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #crew .m-frame__img { animation-name: crew-img-m-frame-img-scale, crew-img-m-frame-img-translate; animation-range: cover 28vh cover calc(100% - 88vh); }
+[data-8b-live] #crew .crew__prints > figure { animation-range: cover calc(25% - 1vh) cover calc(95% - 82.2vh); }
+[data-8b-live] #crew .crew__prints > figure:nth-of-type(2) { animation-name: crew-figure-crew-print-translate-2, crew-figure-crew-print-rotate; }
+@keyframes crew-img-m-frame-img-scale { 0% { scale: 1.24; } 100% { scale: 1; } }
+@keyframes crew-img-m-frame-img-translate { 0% { translate: 0px -3%; } 100% { translate: 0px 0px; } }
+@keyframes crew-figure-crew-print-translate-d { 0% { translate: 84px 34px; } 100% { translate: 0px 0px; } }
+@keyframes crew-figure-crew-print-translate-m { 0% { translate: 70px 34px; } 100% { translate: 0px 0px; } }
+@keyframes crew-figure-crew-print-rotate { 0% { rotate: var(--crew-figure-crew-print-rotate-from, 2deg); } 100% { rotate: var(--crew-figure-crew-print-rotate-to, -8deg); } }
+@keyframes crew-figure-crew-print-translate-2 { 0% { translate: 0px 16px; } 100% { translate: 0px -18px; } }
+@keyframes crew-figure-crew-print-translate-3-d { 0% { translate: -84px 38px; } 100% { translate: 0px 4px; } }
+@keyframes crew-figure-crew-print-translate-3-m { 0% { translate: -70px 38px; } 100% { translate: 0px 4px; } }
+@media (min-width: 768px) {
+  [data-8b-live] #crew .crew__prints > figure:nth-of-type(1) { animation-name: crew-figure-crew-print-translate-d, crew-figure-crew-print-rotate; }
+  [data-8b-live] #crew .crew__prints > figure:nth-of-type(3) { animation-name: crew-figure-crew-print-translate-3-d, crew-figure-crew-print-rotate; }
+}
+@media (max-width: 767px) {
+  [data-8b-live] #crew .crew__prints > figure:nth-of-type(1) { animation-name: crew-figure-crew-print-translate-m, crew-figure-crew-print-rotate; }
+  [data-8b-live] #crew .crew__prints > figure:nth-of-type(3) { animation-name: crew-figure-crew-print-translate-3-m, crew-figure-crew-print-rotate; }
+}
+}
+</style>
+<style data-8b-part="scene:league-sort">
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #floor .floor__head > * { animation: rw-rise .9s cubic-bezier(.2, .7, .2, 1) backwards; }
-  #floor .floor__head > :nth-child(2) { animation-delay: .1s; }
-  #floor .floor__head > :nth-child(3) { animation-delay: .2s; }
+  [data-8b-live] #league .league__board .league__row:first-child { z-index: 2; box-shadow: var(--shadow-1); }
+  [data-8b-live] #league .league__board .league__row:first-child:not(.is-top) { background: var(--color-8); }
 }
-@keyframes rw-rise { from { transform: translateY(26px); opacity: 0; } }</style>
+}
+@layer scenes {
+[data-8b-live] #league .league__board { view-timeline: --league-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #league .league__rows > li { animation-name: league-li-league-row-translate-2; animation-timeline: --league-t1; animation-range: cover calc(50% - 10% * var(--i) - 6vh + 3.6vh * var(--i)) cover calc(60% - 10% * var(--i) - 9.6vh + 3.6vh * var(--i)); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #league .league__rows > li:first-of-type { animation-range: cover 12vh cover calc(50% - 6vh); }
+[data-8b-live] #league .league__rows > li:first-of-type { animation-name: league-li-league-row-translate; }
+@keyframes league-li-league-row-translate { 0% { translate: 0px calc(5 * var(--league-step)); } 10% { translate: var(--league-side) calc(4.5 * var(--league-step)); } 90% { translate: var(--league-side) calc(0.5 * var(--league-step)); } 100% { translate: 0px 0px; } }
+@keyframes league-li-league-row-translate-2 { 0% { translate: 0px calc(-1 * var(--league-step)); } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:play-wall">
+@layer scenes {
+[data-8b-live] #play { timeline-scope: --play-t1; }
+[data-8b-live] #play .play__wall { view-timeline: --play-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #play .play__row { animation-name: play-row-slide; animation-timeline: --play-t1; animation-range: cover 0% cover 100%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes play-row-slide { 0% { translate: calc(-1 * var(--play-side) * var(--play-drift)) 0px; } 40% { translate: 0px 0px; } 60% { translate: 0px 0px; } 100% { translate: calc(var(--play-side) * var(--play-drift)) 0px; } }
+}
+</style>
+<style data-8b-part="scene:menu-track">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #menu { padding: 0; }
+  [data-8b-live] #menu .menu__stage { position: sticky; top: 0; height: 100svh; align-content: center; overflow: clip; }
+  [data-8b-live] #menu .menu__viewport { overflow: visible; padding-bottom: 0; }
+}
+}
+@layer scenes {
+[data-8b-live] #menu { height: calc(100svh + var(--menu-travel)); view-timeline: --menu-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #menu .menu__track { animation-name: menu-track-slide; animation-timeline: --menu-t1; animation-range: cover 100vh cover calc(100vh + var(--menu-travel)); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes menu-track-slide { 0% { translate: 0px 0px; } 100% { translate: calc(-1 * var(--menu-travel)) 0px; } }
+}
+</style>
+<style data-8b-part="scene:reviews-light">
+@layer scenes {
+[data-8b-live] #reviews .reviews__quote { view-timeline: --reviews-quote block; view-timeline-inset: 0; }
+[data-8b-live] #reviews .reviews__quote .w { animation-name: reviews-word-light; animation-timeline: --reviews-quote; animation-range: cover calc(10vh + (100% - 78vh) * var(--i) * 0.1 / (0.4 + var(--n) * 0.1)) cover calc(10vh + (100% - 78vh) * (var(--i) * 0.1 + 0.5) / (0.4 + var(--n) * 0.1)); animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes reviews-word-light { 0% { opacity: 0.16; } 100% { opacity: 1; } }
+}
+</style>
+<style data-8b-part="scene:footer-mark">
+@layer scenes {
+[data-8b-live] #footer .m-mark { view-timeline: --footer-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #footer .m-mark__o { animation-name: footer-disc-roll; animation-timeline: --footer-t1; animation-range: cover calc(var(--footer-i) * 14.4vh) cover 72vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes footer-disc-roll { 0% { translate: var(--footer-travel) 0px; rotate: var(--footer-turn); } 100% { translate: 0px 0px; rotate: 0deg; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: chunky two-colour wordmark, five links, a Book a booth button and a menu button that opens a full-screen overlay -->
@@ -602,7 +689,7 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
       <button class="m-iconbtn nav__menu-btn" type="button" aria-label="Open the menu" aria-expanded="false" aria-controls="site-menu"><svg class="m-iconbtn__icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7h14M3 13h14" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
     </div>
   </div>
-  <div class="nav__menu" id="site-menu" data-lenis-prevent hidden>
+  <div class="nav__menu" id="site-menu" hidden>
     <div class="nav__menu-top">
       <span class="m-text-2">1 Example Mews, Glasgow</span>
       <button class="m-iconbtn nav__menu-close" type="button" aria-label="Close the menu"><svg class="m-iconbtn__icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 4.5l11 11M15.5 4.5l-11 11" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
@@ -632,31 +719,31 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
       <div class="floor__cta"><a class="m-btn-2" href="#visit"><span class="m-btn__label">Book a booth</span><svg class="m-btn__icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 9.5 9.5 2.5M4 2.5h5.5V8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a><a class="m-link" href="#week">This week</a></div>
     </div>
     <div class="floor__backdrop" aria-hidden="true"><span class="floor__band"></span><span class="floor__band"></span><span class="floor__band"></span></div>
-    <ol class="floor__stack">
+    <ol class="floor__stack" data-8b-items=":scope > li">
       <li class="floor__item">
         <figure class="m-frame-2 floor__card">
-          <img style="background:#260c0c" class="m-frame__img" src="https://images.unsplash.com/photo-1699413157949-2a4c56378065?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fGFyY2FkZSUyMGNhYmluZXRzJTIwcm93fGVufDF8MHx8fDE3OTE0NzQ3MzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=990&amp;q=60" alt="A row of upright arcade cabinets glowing red and blue in a dark room" width="5818" height="3871" loading="lazy">
+          <img fetchpriority="high" class="m-frame__img" src="https://images.unsplash.com/photo-1699413157949-2a4c56378065?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fGFyY2FkZSUyMGNhYmluZXRzJTIwcm93fGVufDF8MHx8fDE3OTE0NzQ3MzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=990&amp;q=60" alt="A row of upright arcade cabinets glowing red and blue in a dark room" width="5818" height="3871">
           <p class="m-frame__tab m-frame__tab--bottom m-text-2">Thirty uprights from 1979 to 1999: shooters, racers, fighters and one stubborn maze.</p>
           <figcaption class="m-frame__tab m-text-5">The uprights</figcaption>
         </figure>
       </li>
       <li class="floor__item">
         <figure class="m-frame-4 floor__card">
-          <img style="background:#595973" class="m-frame__img" src="https://images.unsplash.com/photo-1692554987643-2fb74a4fdccb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGluYmFsbCUyMG1hY2hpbmV8ZW58MXwwfHx8MTc5MTQ3NDczMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=880&amp;q=60" alt="Close-up of a lit pinball playfield with bumpers and ramps" width="4032" height="3024" loading="lazy">
+          <img class="m-frame__img" src="https://images.unsplash.com/photo-1692554987643-2fb74a4fdccb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGluYmFsbCUyMG1hY2hpbmV8ZW58MXwwfHx8MTc5MTQ3NDczMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=880&amp;q=60" alt="Close-up of a lit pinball playfield with bumpers and ramps" width="4032" height="3024" loading="lazy">
           <p class="m-frame__tab m-frame__tab--bottom m-text-2">Twelve tables on the pinball row, levelled every Monday, rubbers changed every month.</p>
           <figcaption class="m-frame__tab m-text-5">Pinball row</figcaption>
         </figure>
       </li>
       <li class="floor__item">
         <figure class="m-frame-3 floor__card">
-          <img style="background:#260c0c" class="m-frame__img" src="https://images.unsplash.com/photo-1780328344434-0bdd5d7a84da?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y29ja3RhaWwlMjBiYXIlMjBuZW9ufGVufDF8MHx8fDE3OTE0NzQ3MzJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=60" alt="A bar counter lit from below, shelves of bottles glowing behind it" width="4653" height="3200" loading="lazy">
+          <img class="m-frame__img" src="https://images.unsplash.com/photo-1780328344434-0bdd5d7a84da?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y29ja3RhaWwlMjBiYXIlMjBuZW9ufGVufDF8MHx8fDE3OTE0NzQ3MzJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=60" alt="A bar counter lit from below, shelves of bottles glowing behind it" width="4653" height="3200" loading="lazy">
           <p class="m-frame__tab m-frame__tab--bottom m-text-2">Fourteen metres of bar with a ledge for your drink beside every machine.</p>
           <figcaption class="m-frame__tab m-text-5">The long bar</figcaption>
         </figure>
       </li>
       <li class="floor__item">
         <figure class="m-frame floor__card">
-          <img style="background:#260c0c" class="m-frame__img" src="https://images.unsplash.com/photo-1786989906332-775bbf6c918b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fHJldHJvJTIwYXJjYWRlJTIwYmFyfGVufDF8MHx8fDE3OTE0NzQ3MzV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=990&amp;q=60" alt="Players side by side at racing cabinets in a dim neon arcade" width="7008" height="4672" loading="lazy">
+          <img class="m-frame__img" src="https://images.unsplash.com/photo-1786989906332-775bbf6c918b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fHJldHJvJTIwYXJjYWRlJTIwYmFyfGVufDF8MHx8fDE3OTE0NzQ3MzV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=990&amp;q=60" alt="Players side by side at racing cabinets in a dim neon arcade" width="7008" height="4672" loading="lazy">
           <p class="m-frame__tab m-frame__tab--bottom m-text-2">Thursdays from eight: five machines, three tries each and a board that remembers.</p>
           <figcaption class="m-frame__tab m-text-5">League nights</figcaption>
         </figure>
@@ -673,29 +760,29 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
   </div>
   <div class="week__grid">
     <figure class="m-frame-5 week__feature">
-      <img style="background:#260c0c" class="m-frame__img" src="https://images.unsplash.com/photo-1761493251925-f8c918b1d3e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGZyaWVuZHMlMjBwbGF5aW5nJTIwYXJjYWRlJTIwZ2FtZXN8ZW58MXwwfHx8MTc5MTQ3NDczNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1060&amp;q=60" alt="A woman smiling down at the glowing screen of an arcade cabinet" width="5984" height="3989" loading="lazy">
+      <img class="m-frame__img" src="https://images.unsplash.com/photo-1761493251925-f8c918b1d3e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGZyaWVuZHMlMjBwbGF5aW5nJTIwYXJjYWRlJTIwZ2FtZXN8ZW58MXwwfHx8MTc5MTQ3NDczNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1060&amp;q=60" alt="A woman smiling down at the glowing screen of an arcade cabinet" width="5984" height="3989" loading="lazy">
       <p class="m-frame__tab week__flag m-text-2" data-8b-motion="tabdrop"><time datetime="2026-10-08T20:00">Tonight · from 8pm</time></p>
       <figcaption class="m-frame__tab m-frame__tab--corner week__feature-tab">
         <span class="m-text-5">High-score league, round three</span>
         <span class="m-text-2">Five machines, three tries, one board. Walk-ins sign up at the bar until 7.45.</span>
       </figcaption>
     </figure>
-    <ul class="week__list">
+    <ul class="week__list" data-8b-items=":scope > li">
       <li data-8b-motion="rowslide">
         <a class="week__row" href="#visit">
-          <img style="background:#0c2640" class="week__thumb" src="https://images.unsplash.com/photo-1642433706033-82b795d91fe3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fGRqJTIwdmlueWwlMjBwYXJ0eXxlbnwxfDB8fHwxNzkxNDc0NzY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="A selector at the decks in front of a dancing crowd" width="6240" height="4160" loading="lazy">
+          <img class="week__thumb" src="https://images.unsplash.com/photo-1642433706033-82b795d91fe3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fGRqJTIwdmlueWwlMjBwYXJ0eXxlbnwxfDB8fHwxNzkxNDc0NzY3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="A selector at the decks in front of a dancing crowd" width="6240" height="4160" loading="lazy">
           <span class="week__text"><span class="m-text-2"><time datetime="2026-10-09T21:00">Fri 9 Oct · 9pm</time></span><span class="m-text-5">Synth night with the house selector</span></span>
         </a>
       </li>
-      <li data-8b-motion="rowslide">
+      <li data-8b-motion="rowslide" style="--motion-side: 1">
         <a class="week__row" href="#visit">
-          <img style="background:#260c0c" class="week__thumb" src="https://images.unsplash.com/photo-1786989906324-2255afc13c66?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZnJpZW5kcyUyMHBsYXlpbmclMjBhcmNhZGUlMjBnYW1lc3xlbnwxfDB8fHwxNzkxNDc0NzM0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="Two friends playing pinball side by side in a dim room" width="6316" height="4211" loading="lazy">
+          <img class="week__thumb" src="https://images.unsplash.com/photo-1786989906324-2255afc13c66?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8ZnJpZW5kcyUyMHBsYXlpbmclMjBhcmNhZGUlMjBnYW1lc3xlbnwxfDB8fHwxNzkxNDc0NzM0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="Two friends playing pinball side by side in a dim room" width="6316" height="4211" loading="lazy">
           <span class="week__text"><span class="m-text-2"><time datetime="2026-10-10T14:00">Sat 10 Oct · 2pm</time></span><span class="m-text-5">Pinball doubles, walk-ins welcome</span></span>
         </a>
       </li>
       <li data-8b-motion="rowslide">
         <a class="week__row" href="#visit">
-          <img style="background:#260c0c" class="week__thumb" src="https://images.unsplash.com/photo-1681641095463-b4d3693a0ee3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZnJpZW5kcyUyMGxhdWdoaW5nJTIwYmFyJTIwbmlnaHR8ZW58MXwwfHx8MTc5MTQ3NDc2Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="Friends laughing round a table of drinks" width="7087" height="4724" loading="lazy">
+          <img class="week__thumb" src="https://images.unsplash.com/photo-1681641095463-b4d3693a0ee3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZnJpZW5kcyUyMGxhdWdoaW5nJTIwYmFyJTIwbmlnaHR8ZW58MXwwfHx8MTc5MTQ3NDc2Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="Friends laughing round a table of drinks" width="7087" height="4724" loading="lazy">
           <span class="week__text"><span class="m-text-2"><time datetime="2026-10-11T18:00">Sun 11 Oct · 6pm</time></span><span class="m-text-5">Two-player quiz, answers on the buzzer</span></span>
         </a>
       </li>
@@ -707,7 +794,7 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
 <section id="crew" data-8b-section="about" aria-labelledby="crew-title">
   <div class="crew__grid">
     <figure class="m-frame-2 crew__portrait">
-      <div class="m-frame__clip"><img style="background:#260c0c" class="m-frame__img crew__img" src="https://images.unsplash.com/photo-1632995561688-d382b4c5c735?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8YmFydGVuZGVyJTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTQ0MDUxNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="A bartender grinning as he stirs a drink at a red-walled bar" width="4266" height="6398" loading="lazy"></div>
+      <div class="m-frame__clip"><img class="m-frame__img crew__img" src="https://images.unsplash.com/photo-1632995561688-d382b4c5c735?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8YmFydGVuZGVyJTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTQ0MDUxNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=790&amp;q=60" alt="A bartender grinning as he stirs a drink at a red-walled bar" width="4266" height="6398" loading="lazy"></div>
       <figcaption class="m-frame__tab m-frame__tab--corner crew__tab m-text-5">Behind the bar</figcaption>
     </figure>
     <div class="crew__panel">
@@ -729,10 +816,10 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
             <li><a data-8b-placeholder="social" class="m-link" href="https://www.youtube.com/">YouTube</a></li>
           </ul>
         </div>
-        <div class="crew__prints">
-          <figure class="crew__print"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1578004612790-5c32842373b1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmFydGVuZGVyJTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTQ0MDUxNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="Dev shaking a cocktail behind the bar" width="5304" height="7952" loading="lazy"></figure>
-          <figure class="crew__print"><img style="background:#8c8cc0" src="https://images.unsplash.com/photo-1672638219074-c250c547810a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d29tYW4lMjBwb3J0cmFpdCUyMG5lb24lMjBsaWdodHxlbnwxfDF8fHwxNzkxNDc0NzY2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=170&amp;q=60" alt="A regular in sunglasses and a scarf" width="3309" height="4963" loading="lazy"></figure>
-          <figure class="crew__print"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1632995561223-6b69f855b014?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8YmFydGVuZGVyJTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTQ0MDUxNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=190&amp;q=60" alt="A regular on the phone at the end of the bar" width="2133" height="3199" loading="lazy"></figure>
+        <div class="crew__prints" data-8b-items=":scope > figure" data-8b-fixed="3">
+          <figure class="crew__print" style="--crew-figure-crew-print-rotate-from: 2deg; --crew-figure-crew-print-rotate-to: -8deg"><img src="https://images.unsplash.com/photo-1578004612790-5c32842373b1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8YmFydGVuZGVyJTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTQ0MDUxNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="Dev shaking a cocktail behind the bar" width="5304" height="7952" loading="lazy"></figure>
+          <figure class="crew__print" style="--crew-figure-crew-print-rotate-from: 0deg; --crew-figure-crew-print-rotate-to: 4deg"><img src="https://images.unsplash.com/photo-1672638219074-c250c547810a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d29tYW4lMjBwb3J0cmFpdCUyMG5lb24lMjBsaWdodHxlbnwxfDF8fHwxNzkxNDc0NzY2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="A regular in sunglasses and a scarf" width="3309" height="4963" loading="lazy"></figure>
+          <figure class="crew__print" style="--crew-figure-crew-print-rotate-from: -2deg; --crew-figure-crew-print-rotate-to: 11deg"><img src="https://images.unsplash.com/photo-1632995561223-6b69f855b014?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8YmFydGVuZGVyJTIwcG9ydHJhaXR8ZW58MXwxfHx8MTc5MTQ0MDUxNXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="A regular on the phone at the end of the bar" width="2133" height="3199" loading="lazy"></figure>
         </div>
       </div>
     </div>
@@ -746,11 +833,11 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
       <h2 class="m-text-4" id="league-title">Your initials on the board by Sunday</h2>
       <p class="m-text">Every Thursday from eight: five machines, three tries each, one board. The top six stay up until somebody beats them, and the season's champion drinks free for a month.</p>
       <a class="m-btn" href="#visit"><span class="m-btn__label">Join on Thursday</span></a>
-      <figure class="league__print"><img style="background:#0c598c" src="https://images.unsplash.com/photo-1759171053096-e7dbe7c36eb6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8YXJjYWRlJTIwZ2FtZSUyMHBsYXllciUyMGZhY2UlMjBsaXR8ZW58MXwwfHx8MTc5MTQ3NDcyOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=410&amp;q=60" alt="Arcade cabinets glowing in a dark room" width="5472" height="3648" loading="lazy"></figure>
+      <figure class="league__print"><img src="https://images.unsplash.com/photo-1759171053096-e7dbe7c36eb6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8YXJjYWRlJTIwZ2FtZSUyMHBsYXllciUyMGZhY2UlMjBsaXR8ZW58MXwwfHx8MTc5MTQ3NDcyOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=410&amp;q=60" alt="Arcade cabinets glowing in a dark room" width="5472" height="3648" loading="lazy"></figure>
     </div>
     <div class="league__board">
       <p class="league__badge m-text-2">House record since 2021</p>
-      <ol class="league__rows">
+      <ol class="league__rows" data-8b-items=":scope > li">
         <li class="league__row"><span class="league__rank m-text-2">1</span><span class="league__initials m-text-5">KAT</span><span class="league__game m-text-2">Starfall Deluxe</span><span class="league__score m-text-5">2,914,600</span></li>
         <li class="league__row"><span class="league__rank m-text-2">2</span><span class="league__initials m-text-5">DEV</span><span class="league__game m-text-2">Neon Derby</span><span class="league__score m-text-5">2,406,150</span></li>
         <li class="league__row"><span class="league__rank m-text-2">3</span><span class="league__initials m-text-5">MOR</span><span class="league__game m-text-2">Orbit Alley</span><span class="league__score m-text-5">1,988,020</span></li>
@@ -767,12 +854,12 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
 <section id="rules" data-8b-section="quote" aria-label="Our house rule">
   <div class="rules__stage">
   <figure class="m-frame-5 rules__frame">
-    <img style="background:#402626" class="m-frame__img rules__img" src="https://images.unsplash.com/photo-1654835727516-c7ef5ccfbbc8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGZyaWVuZHMlMjBsYXVnaGluZyUyMGJhciUyMG5pZ2h0fGVufDF8MHx8fDE3OTE0NzQ3NjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1460&amp;q=60" alt="Friends laughing round a table late at night" width="6000" height="4000" loading="lazy">
+    <img class="m-frame__img rules__img" src="https://images.unsplash.com/photo-1654835727516-c7ef5ccfbbc8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGZyaWVuZHMlMjBsYXVnaGluZyUyMGJhciUyMG5pZ2h0fGVufDF8MHx8fDE3OTE0NzQ3NjJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1460&amp;q=60" alt="Friends laughing round a table late at night" width="6000" height="4000" loading="lazy">
     <figcaption class="m-frame__tab rules__tab m-text-2" data-8b-motion="tabdrop">The house rule</figcaption>
   </figure>
     <blockquote class="rules__quote">
       <p class="m-text-6" data-8b-motion="rowslide">“Nobody here is too good to lose. Put your coin on the glass and wait your turn.”</p>
-      <footer class="m-text-2" data-8b-motion="rowslide">Ailsa, behind the bar since night one</footer>
+      <footer class="m-text-2" data-8b-motion="rowslide" style="--motion-side: 1">Ailsa, behind the bar since night one</footer>
     </blockquote>
   </div>
 </section>
@@ -783,7 +870,7 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
     <div class="play__row"><span class="play__word m-text-4">Insert coin</span></div>
     <div class="play__card">
       <h2 class="play__tab m-text-5" id="play-title" data-8b-motion="tabdrop">Three ways to play</h2>
-      <ul class="play__options">
+      <ul class="play__options" data-8b-items=":scope > li">
         <li class="play__option">
           <h3 class="m-text-5">Coin cup</h3>
           <p class="play__price m-text-2">£5 for twenty coins</p>
@@ -811,15 +898,15 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
     <div class="hire__copy">
       <h2 class="m-text-4" id="hire-title">Have the arches to yourselves</h2>
       <p class="m-text">Birthdays, leaving dos, launches and one memorable wedding. We set the machines to free play, the bar pours what you choose and the playlist is yours.</p>
-      <ul class="hire__options">
+      <ul class="hire__options" data-8b-items=":scope > li">
         <li data-8b-motion="rowslide"><h3 class="m-text-5">A booth for eight</h3><p class="m-text-2">Two hours, a coin cup each · from £120</p></li>
-        <li data-8b-motion="rowslide"><h3 class="m-text-5">The back arch</h3><p class="m-text-2">Up to forty guests, twelve machines · from £650</p></li>
+        <li data-8b-motion="rowslide" style="--motion-side: 1"><h3 class="m-text-5">The back arch</h3><p class="m-text-2">Up to forty guests, twelve machines · from £650</p></li>
         <li data-8b-motion="rowslide"><h3 class="m-text-5">The whole floor</h3><p class="m-text-2">Up to 160 guests, everything on free play · from £2,400</p></li>
       </ul>
       <a class="m-btn" href="#visit"><span class="m-btn__label">Ask about a date</span></a>
     </div>
     <figure class="m-frame-3 hire__photo">
-      <img style="background:#262626" class="m-frame__img" src="https://images.unsplash.com/photo-1785123550437-aaae0311cde5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGZyaWVuZHMlMjBwbGF5aW5nJTIwYXJjYWRlJTIwZ2FtZXN8ZW58MXwwfHx8MTc5MTQ3NDczNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=840&amp;q=60" alt="A group gathered round a games console at a party" width="5184" height="3456" loading="lazy">
+      <img class="m-frame__img" src="https://images.unsplash.com/photo-1785123550437-aaae0311cde5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGZyaWVuZHMlMjBwbGF5aW5nJTIwYXJjYWRlJTIwZ2FtZXN8ZW58MXwwfHx8MTc5MTQ3NDczNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=840&amp;q=60" alt="A group gathered round a games console at a party" width="5184" height="3456" loading="lazy">
       <figcaption class="m-frame__tab m-text-5" data-8b-motion="tabdrop">Free play, your playlist</figcaption>
     </figure>
   </div>
@@ -833,13 +920,13 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
       <p class="m-text">Cocktails named after the machines that taught us to lose gracefully, beer from four streets away and food that fits in one hand.</p>
     </div>
     <div class="menu__viewport">
-      <ul class="menu__track">
-        <li class="menu__item"><figure class="m-frame-5 menu__card"><img style="background:#260c0c" class="m-frame__img" src="https://images.unsplash.com/photo-1713539042291-6530b8395758?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29sb3JmdWwlMjBjb2NrdGFpbCUyMGdsYXNzJTIwZGFya3xlbnwxfDB8fHwxNzkxNDc0NzU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="A tumbler of red cocktail over ice, lit pink" width="6000" height="4000" loading="lazy"><figcaption class="m-frame__tab m-frame__tab--corner menu__tab"><span class="m-text-5">Extra Life</span><span class="m-text-2">Gin, pink grapefruit, lime and soda · £9</span></figcaption></figure></li>
-        <li class="menu__item"><figure class="m-frame-5 menu__card"><img style="background:#0c260c" class="m-frame__img" src="https://images.unsplash.com/photo-1552292511-75e06ec9a7bf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y29sb3JmdWwlMjBjb2NrdGFpbCUyMGdsYXNzJTIwZGFya3xlbnwxfDB8fHwxNzkxNDc0NzU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="Two stemmed glasses of green cocktail under green neon" width="6008" height="4008" loading="lazy"><figcaption class="m-frame__tab m-frame__tab--corner menu__tab"><span class="m-text-5">Green Screen</span><span class="m-text-2">Melon, vodka, lime and a splash of fizz · £9.50</span></figcaption></figure></li>
-        <li class="menu__item"><figure class="m-frame-5 menu__card"><img style="background:#d9d9d9" class="m-frame__img" src="https://images.unsplash.com/photo-1748674748882-b2622d33c43e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y29sb3JmdWwlMjBjb2NrdGFpbCUyMGdsYXNzJTIwZGFya3xlbnwxfDB8fHwxNzkxNDc0NzU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="Three garnished cocktails in a row on a bar" width="6023" height="4015" loading="lazy"><figcaption class="m-frame__tab m-frame__tab--corner menu__tab"><span class="m-text-5">Bonus Round</span><span class="m-text-2">Three small sours for the table · £18</span></figcaption></figure></li>
-        <li class="menu__item"><figure class="m-frame-5 menu__card"><img style="background:#c08c73" class="m-frame__img" src="https://images.unsplash.com/photo-1687771454203-97d0b08bbeb2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y3JhZnQlMjBiZWVyJTIwZ2xhc3MlMjBiYXJ8ZW58MXwwfHx8MTc5MTQ3NDc1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="A flight of five small beers from pale to dark" width="7340" height="4896" loading="lazy"><figcaption class="m-frame__tab m-frame__tab--corner menu__tab"><span class="m-text-5">Four-street flight</span><span class="m-text-2">Five thirds from a brewery round the corner · £10</span></figcaption></figure></li>
-        <li class="menu__item"><figure class="m-frame-5 menu__card"><img style="background:#a6590c" class="m-frame__img" src="https://images.unsplash.com/photo-1641246630320-60d6a3b0b328?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8aG90JTIwZG9nJTIwZnJpZXN8ZW58MXwwfHx8MTc5MTQ3NDc2MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=810&amp;q=60" alt="A hot dog with toppings in a paper basket beside a soda" width="8448" height="6336" loading="lazy"><figcaption class="m-frame__tab m-frame__tab--corner menu__tab"><span class="m-text-5">Midnight dog</span><span class="m-text-2">Beef frank, pickled onion, mustard · £8</span></figcaption></figure></li>
-        <li class="menu__item"><figure class="m-frame-5 menu__card"><img style="background:#262626" class="m-frame__img" src="https://images.unsplash.com/photo-1672856398893-2fb52d807874?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGl6emElMjBzbGljZSUyMGRhcmt8ZW58MXwwfHx8MTc5MTQ3NDc2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="A slice of pizza lifted from the tray" width="4176" height="2784" loading="lazy"><figcaption class="m-frame__tab m-frame__tab--corner menu__tab"><span class="m-text-5">Square slice</span><span class="m-text-2">Deep-pan pepperoni, hot honey · £5</span></figcaption></figure></li>
+      <ul class="menu__track" data-8b-items=":scope > li">
+        <li class="menu__item"><figure class="m-frame-5 menu__card"><img class="m-frame__img" src="https://images.unsplash.com/photo-1713539042291-6530b8395758?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29sb3JmdWwlMjBjb2NrdGFpbCUyMGdsYXNzJTIwZGFya3xlbnwxfDB8fHwxNzkxNDc0NzU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="A tumbler of red cocktail over ice, lit pink" width="6000" height="4000" loading="lazy"><figcaption class="m-frame__tab m-frame__tab--corner menu__tab"><span class="m-text-5">Extra Life</span><span class="m-text-2">Gin, pink grapefruit, lime and soda · £9</span></figcaption></figure></li>
+        <li class="menu__item"><figure class="m-frame-5 menu__card"><img class="m-frame__img" src="https://images.unsplash.com/photo-1552292511-75e06ec9a7bf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y29sb3JmdWwlMjBjb2NrdGFpbCUyMGdsYXNzJTIwZGFya3xlbnwxfDB8fHwxNzkxNDc0NzU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="Two stemmed glasses of green cocktail under green neon" width="6008" height="4008" loading="lazy"><figcaption class="m-frame__tab m-frame__tab--corner menu__tab"><span class="m-text-5">Green Screen</span><span class="m-text-2">Melon, vodka, lime and a splash of fizz · £9.50</span></figcaption></figure></li>
+        <li class="menu__item"><figure class="m-frame-5 menu__card"><img class="m-frame__img" src="https://images.unsplash.com/photo-1748674748882-b2622d33c43e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y29sb3JmdWwlMjBjb2NrdGFpbCUyMGdsYXNzJTIwZGFya3xlbnwxfDB8fHwxNzkxNDc0NzU3fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="Three garnished cocktails in a row on a bar" width="6023" height="4015" loading="lazy"><figcaption class="m-frame__tab m-frame__tab--corner menu__tab"><span class="m-text-5">Bonus Round</span><span class="m-text-2">Three small sours for the table · £18</span></figcaption></figure></li>
+        <li class="menu__item"><figure class="m-frame-5 menu__card"><img class="m-frame__img" src="https://images.unsplash.com/photo-1687771454203-97d0b08bbeb2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y3JhZnQlMjBiZWVyJTIwZ2xhc3MlMjBiYXJ8ZW58MXwwfHx8MTc5MTQ3NDc1OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="A flight of five small beers from pale to dark" width="7340" height="4896" loading="lazy"><figcaption class="m-frame__tab m-frame__tab--corner menu__tab"><span class="m-text-5">Four-street flight</span><span class="m-text-2">Five thirds from a brewery round the corner · £10</span></figcaption></figure></li>
+        <li class="menu__item"><figure class="m-frame-5 menu__card"><img class="m-frame__img" src="https://images.unsplash.com/photo-1641246630320-60d6a3b0b328?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8aG90JTIwZG9nJTIwZnJpZXN8ZW58MXwwfHx8MTc5MTQ3NDc2MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=810&amp;q=60" alt="A hot dog with toppings in a paper basket beside a soda" width="8448" height="6336" loading="lazy"><figcaption class="m-frame__tab m-frame__tab--corner menu__tab"><span class="m-text-5">Midnight dog</span><span class="m-text-2">Beef frank, pickled onion, mustard · £8</span></figcaption></figure></li>
+        <li class="menu__item"><figure class="m-frame-5 menu__card"><img class="m-frame__img" src="https://images.unsplash.com/photo-1672856398893-2fb52d807874?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8cGl6emElMjBzbGljZSUyMGRhcmt8ZW58MXwwfHx8MTc5MTQ3NDc2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=910&amp;q=60" alt="A slice of pizza lifted from the tray" width="4176" height="2784" loading="lazy"><figcaption class="m-frame__tab m-frame__tab--corner menu__tab"><span class="m-text-5">Square slice</span><span class="m-text-2">Deep-pan pepperoni, hot honey · £5</span></figcaption></figure></li>
       </ul>
     </div>
   </div>
@@ -848,22 +935,22 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
 <!-- testimonials: three regulars' reviews whose words light up as they rise (animation: scene:reviews-light) -->
 <section id="reviews" data-8b-section="testimonials" aria-labelledby="reviews-title">
   <h2 class="m-text-4 reviews__title" id="reviews-title">What the regulars say</h2>
-  <ul class="reviews__list">
+  <ul class="reviews__list" data-8b-items=":scope > li">
     <li class="reviews__item">
       <blockquote>
-        <p class="m-text-6 reviews__quote">“The only bar in town where my phone stays in my coat. Forty minutes on the racing cabinets and I'd forgotten it existed.”</p>
+        <p class="m-text-6 reviews__quote" data-8b-split="words">“The only bar in town where my phone stays in my coat. Forty minutes on the racing cabinets and I'd forgotten it existed.”</p>
         <footer class="m-text-2 reviews__author" data-8b-motion="rowslide">Priya, league regular since 2022</footer>
       </blockquote>
     </li>
     <li class="reviews__item">
       <blockquote>
-        <p class="m-text-6 reviews__quote">“They fixed the flipper on my favourite table while I finished my drink, then let me have the first go.”</p>
-        <footer class="m-text-2 reviews__author" data-8b-motion="rowslide">Tom, every second Friday</footer>
+        <p class="m-text-6 reviews__quote" data-8b-split="words">“They fixed the flipper on my favourite table while I finished my drink, then let me have the first go.”</p>
+        <footer class="m-text-2 reviews__author" data-8b-motion="rowslide" style="--motion-side: 1">Tom, every second Friday</footer>
       </blockquote>
     </li>
     <li class="reviews__item">
       <blockquote>
-        <p class="m-text-6 reviews__quote">“We had the back arch for my fortieth. Free play, our playlist, and my initials on the board by midnight.”</p>
+        <p class="m-text-6 reviews__quote" data-8b-split="words">“We had the back arch for my fortieth. Free play, our playlist, and my initials on the board by midnight.”</p>
         <footer class="m-text-2 reviews__author" data-8b-motion="rowslide">Morag, a birthday on the back arch</footer>
       </blockquote>
     </li>
@@ -876,7 +963,7 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
     <div class="visit__info">
       <h2 class="m-text-4" id="visit-title">Find the green-lit arches</h2>
       <p class="m-text">1 Example Mews, Glasgow G3 0ZZ. Five minutes from Partick station; follow the green glow under the railway.</p>
-      <dl class="visit__hours">
+      <dl class="visit__hours" data-8b-items=":scope > div">
         <div><dt class="m-text-2">Monday to Wednesday</dt><dd class="m-text">5pm – midnight</dd></div>
         <div><dt class="m-text-2">Thursday</dt><dd class="m-text">5pm – 2am · league night</dd></div>
         <div><dt class="m-text-2">Friday and Saturday</dt><dd class="m-text">2pm – 2am</dd></div>
@@ -885,7 +972,7 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
       <p class="visit__contact"><a data-8b-placeholder="phone" class="m-link" href="tel:+441410000000">0141 000 0000</a><a data-8b-placeholder="email" class="m-link" href="mailto:hello@quarter-moon.example">hello@quarter-moon.example</a></p>
     </div>
     <figure class="m-frame-2 visit__photo">
-      <img style="background:#26260c" class="m-frame__img" src="https://images.unsplash.com/photo-1654257757926-85e829c7dd00?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8bmVvbiUyMHNpZ24lMjBzdHJlZXQlMjBuaWdodHxlbnwxfDF8fHwxNzkxNDc0NzY0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A building lit green at night with a glowing bar sign" width="3456" height="5184" loading="lazy">
+      <img class="m-frame__img" src="https://images.unsplash.com/photo-1654257757926-85e829c7dd00?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8bmVvbiUyMHNpZ24lMjBzdHJlZXQlMjBuaWdodHxlbnwxfDF8fHwxNzkxNDc0NzY0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A building lit green at night with a glowing bar sign" width="3456" height="5184" loading="lazy">
       <figcaption class="m-frame__tab m-text-5" data-8b-motion="tabdrop">Under the railway</figcaption>
     </figure>
     <form data-8b-placeholder="form" class="visit__form" action="#" data-form="booking">
@@ -912,7 +999,7 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
   <div class="footer__grid">
     <div class="footer__news">
       <h2 class="m-text-5">One new machine on the floor every month. Hear about it first.</h2>
-      <img style="background:#262626" class="footer__news-photo" src="https://images.unsplash.com/photo-1549482198-c56c2ff9dc42?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fGFyY2FkZSUyMGdhbWUlMjBwbGF5ZXIlMjBmYWNlJTIwbGl0fGVufDF8MHx8fDE3OTE0NzQ3Mjh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=550&amp;q=60" alt="A young woman resting her cheek on the glass of a pinball table" width="7952" height="5304" loading="lazy">
+      <img class="footer__news-photo" src="https://images.unsplash.com/photo-1549482198-c56c2ff9dc42?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fGFyY2FkZSUyMGdhbWUlMjBwbGF5ZXIlMjBmYWNlJTIwbGl0fGVufDF8MHx8fDE3OTE0NzQ3Mjh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=550&amp;q=60" alt="A young woman resting her cheek on the glass of a pinball table" width="7952" height="5304" loading="lazy">
       <form data-8b-placeholder="form" class="footer__form" action="#" data-form="newsletter">
         <label class="m-text-2 footer__label" for="news-email">Your email</label>
         <div class="footer__form-row">
@@ -985,8 +1072,8 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
     menu.hidden = !open;
     nav.classList.toggle('is-open', open);
     openButton.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); closeButton.focus(); }
-    else { window.lenis?.start(); }
+    if (open) { window.motionKit?.wheel?.stop(); closeButton.focus(); }
+    else { window.motionKit?.wheel?.start(); }
   };
   openButton.addEventListener('click', () => setMenu(true));
   closeButton.addEventListener('click', () => { setMenu(false); openButton.focus(); });
@@ -1046,258 +1133,231 @@ textarea.m-field__input { min-height: 104px; resize: vertical; }
   });
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
+
+<script data-8b-part="motion-kit">
 (() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); });
+};
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-split=lines]>.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}[data-8b-split=lines]>.line:not(:last-child){margin-bottom:0}[data-8b-split=lines]>.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment);
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split'), again = sources.has(element);
+if (again) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+if (again) element.getAnimations({ subtree: true }).forEach(animation => { if (animation.timeline === document.timeline) try { animation.finish(); } catch {} });
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px' });
+document.fonts.ready.then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-const pageNavigation = document.getElementById('nav');
-function measureNavigation() {
-  document.documentElement.style.setProperty('--navigation-height', pageNavigation.offsetHeight + 'px');
-}
-function refreshScroll() {
-  measureNavigation();
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-measureNavigation();
-window.addEventListener('resize', measureNavigation);
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: .09, wheelMultiplier: .95, anchors: { offset: -pageNavigation.offsetHeight } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  rowslide(element, vars = {}) {
-    const side = vars.side || 1;
-    return gsap.timeline(vars.timeline).from(element, { x: side * Math.min(90, window.innerWidth * .08), opacity: 0, duration: .9, ease: 'power3.out' });
-  },
-  tabdrop(element, vars = {}) {
-    const fromBottom = element.matches('.m-frame__tab--bottom, .m-frame__tab--corner');
-    return gsap.timeline(vars.timeline).from(element, { yPercent: fromBottom ? 70 : -70, clipPath: fromBottom ? 'inset(100% 0% 0% 0%)' : 'inset(0% 0% 100% 0%)', duration: .8, ease: 'power3.out', clearProps: 'clipPath' });
-  }
-};
-['rowslide', 'tabdrop'].forEach(name => {
-  document.querySelectorAll('[data-8b-section]').forEach(section => {
-    const elements = [...section.querySelectorAll(`[data-8b-motion~="${name}"]`)];
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => ScrollTrigger.create({
-        id: `${id}:${index + 1}`, trigger: element, start: 'top 88%', once: true,
-        animation: effects[name](element, { side: index % 2 ? 1 : -1 })
-      }));
-    }), { first: section.getBoundingClientRect().top < window.innerHeight, id });
-  });
-});
-const loopWatcher = new IntersectionObserver(entries => entries.forEach(entry => entry.target.querySelectorAll(':scope > [data-loop]').forEach(loop => loop.toggleAttribute('data-loop-off', !entry.isIntersecting))));
-document.querySelectorAll('[data-loop]').forEach(element => loopWatcher.observe(element.parentElement));
-</script>
-
-<script data-8b-part="scene:floor-stack">
-queueMotion(() => {
-  const section = document.getElementById('floor');
-  const stack = section.querySelector('.floor__stack');
-  const items = [...stack.querySelectorAll(':scope > .floor__item')];
-  const bands = gsap.utils.toArray('.floor__band', section);
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    items.forEach((item, index) => { item.style.top = `calc(${window.innerWidth < 768 ? 12 : 13}svh + ${index * 26}px)`; });
-    const documentTop = element => element.getBoundingClientRect().top + window.scrollY;
-    const naturalTop = index => {
-      const style = getComputedStyle(stack);
-      const gap = parseFloat(style.rowGap) || 0;
-      let top = documentTop(stack) + (parseFloat(style.paddingTop) || 0);
-      for (let k = 0; k < index; k++) top += items[k].offsetHeight + gap;
-      return top;
-    };
-    const stuckTop = index => parseFloat(getComputedStyle(items[index]).top) || 0;
-    items.slice(0, -1).forEach((item, index) => {
-      gsap.fromTo(item.querySelector('.floor__card'), { scale: 1, filter: 'brightness(1)' }, {
-        scale: .9, filter: 'brightness(.42)', ease: 'none',
-        scrollTrigger: {
-          id: `floor-stack:card-${index + 1}`, trigger: stack, scrub: .5, invalidateOnRefresh: true,
-          start: () => naturalTop(index + 1) - window.innerHeight,
-          end: () => naturalTop(index + 1) - stuckTop(index + 1)
-        }
-      });
-    });
-    bands.forEach((band, index) => gsap.fromTo(band, { xPercent: (index % 2 ? 1 : -1) * 12 }, {
-      xPercent: (index % 2 ? -1 : 1) * 12, ease: 'none',
-      scrollTrigger: { id: `floor-stack:band-${index + 1}`, trigger: stack, start: 'top bottom', end: 'bottom top', scrub: .8 }
-    }));
-    return () => items.forEach(item => { item.style.top = ''; });
+<script data-8b-part="scene-script:floor-stack">
+motionKit.scene("floor-stack", () => {
+  const stack = document.querySelector("#floor .floor__stack"), items = [...stack.querySelectorAll(":scope > .floor__item")];
+  motionKit.measure(() => {
+    const style = getComputedStyle(stack), gap = parseFloat(style.rowGap) || 0;
+    let top = parseFloat(style.paddingTop) || 0;
+    items.forEach(item => { top += item.offsetHeight + gap; motionKit.set(item, { "--floor-next": `${top}px` }); });
   });
 });
 </script>
-<script data-8b-part="scene:crew-prints">
-queueMotion(() => {
-  const section = document.getElementById('crew');
-  const photo = section.querySelector('.crew__img');
-  const prints = gsap.utils.toArray('.crew__print', section);
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const middle = prints[Math.floor(prints.length / 2)];
-    const rest = prints.map(print => {
-      const style = getComputedStyle(print);
-      const [x = 0, y = 0] = style.translate === 'none' ? [] : style.translate.split(' ').map(parseFloat);
-      return { x: x || 0, y: y || 0, rotation: parseFloat(style.rotate) || 0 };
-    });
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'crew-prints', trigger: section, start: 'top 72%', end: 'bottom 88%', scrub: .6, invalidateOnRefresh: true
-    } });
-    timeline.fromTo(photo, { scale: 1.24, yPercent: -3 }, { scale: 1, yPercent: 0, duration: 1 }, 0);
-    prints.forEach((print, index) => timeline.fromTo(print,
-      { x: () => middle.offsetLeft - print.offsetLeft + rest[index].x, y: rest[index].y + 34, rotation: (index - (prints.length - 1) / 2) * -2 },
-      { x: rest[index].x, y: rest[index].y, rotation: rest[index].rotation, duration: .7 }, .25));
-  });
+<script data-8b-part="scene-script:league-sort">
+motionKit.scene("league-sort", () => {
+  const board = document.querySelector("#league .league__board"), rows = board.querySelectorAll(".league__row");
+  motionKit.measure(() => motionKit.set(board, { "--league-step": `${rows[1].offsetTop - rows[0].offsetTop}px`, "--league-side": `${Math.min(28, board.clientWidth * .04)}px` }));
+  { const items = [["#league .league__rows > li:nth-of-type(1)", "is-top", false, [0.96]]].map(([s, c, initial, at]) => [document.querySelector(s), c, initial, at]); motionKit.track(document.querySelector("#league .league__board"), "0% 88%", "50% 56%", p => items.forEach(([el, c, initial, at]) => el.classList.toggle(c, at.reduce((on, x) => p >= x ? !on : on, initial)))); }
 });
 </script>
-<script data-8b-part="scene:league-sort">
-queueMotion(() => {
-  const section = document.getElementById('league');
-  const board = section.querySelector('.league__board');
-  const rows = gsap.utils.toArray('.league__row', board);
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    if (rows.length < 2) return;
-    const count = rows.length, champion = rows[0];
-    const step = () => rows[1].offsetTop - rows[0].offsetTop;
-    board.setAttribute('data-sorting', '');
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'league-sort', trigger: board, start: 'top 88%', end: 'center 56%', scrub: .5, invalidateOnRefresh: true,
-      onUpdate: self => champion.classList.toggle('is-top', self.progress > .96)
-    } });
-    for (let pass = 0; pass < count - 1; pass++) {
-      timeline.fromTo(champion, { y: () => (count - 1 - pass) * step() }, { y: () => (count - 2 - pass) * step(), duration: 1, immediateRender: pass === 0 }, pass);
-      timeline.fromTo(rows[count - 1 - pass], { y: () => -step() }, { y: 0, duration: 1 }, pass);
-    }
-    timeline.fromTo(champion, { x: 0 }, { x: () => Math.min(28, board.clientWidth * .04), duration: .5 }, 0);
-    timeline.fromTo(champion, { x: () => Math.min(28, board.clientWidth * .04) }, { x: 0, duration: .5, immediateRender: false }, count - 1.5);
-    return () => { board.removeAttribute('data-sorting'); champion.classList.remove('is-top'); };
-  });
+<script data-8b-part="scene-script:play-wall">
+motionKit.scene("play-wall", () => {
+  const wall = document.querySelector("#play .play__wall");
+  wall.querySelectorAll(".play__row").forEach((row, index) => motionKit.set(row, { "--play-side": index % 2 ? 1 : -1 }));
+  motionKit.measure(() => motionKit.set(wall, { "--play-drift": `${Math.min(180, wall.clientWidth * .14)}px` }));
 });
 </script>
-<script data-8b-part="scene:play-wall">
-queueMotion(() => {
-  const section = document.getElementById('play');
-  const wall = section.querySelector('.play__wall');
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    gsap.utils.toArray('.play__row', wall).forEach((row, index) => {
-      const direction = index % 2 ? 1 : -1;
-      const drift = () => Math.min(180, wall.clientWidth * .14);
-      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-        id: `play-wall:row-${index + 1}`, trigger: wall, start: 'top bottom', end: 'bottom top', scrub: .7, invalidateOnRefresh: true
-      } });
-      timeline.fromTo(row, { x: () => -direction * drift() }, { x: 0, duration: .4 }, 0)
-        .fromTo(row, { x: 0 }, { x: () => direction * drift(), duration: .4, immediateRender: false }, .6);
-    });
-  });
+<script data-8b-part="scene-script:menu-track">
+motionKit.scene("menu-track", () => {
+  const section = document.getElementById("menu"), viewport = section.querySelector(".menu__viewport"), track = section.querySelector(".menu__track");
+  motionKit.measure(() => motionKit.set(section, { "--menu-travel": `${Math.max(1, track.scrollWidth - viewport.clientWidth)}px` }));
 });
 </script>
-<script data-8b-part="scene:menu-track">
-queueMotion(() => {
-  const section = document.getElementById('menu');
-  const stage = section.querySelector('.menu__stage');
-  const viewport = section.querySelector('.menu__viewport');
-  const track = section.querySelector('.menu__track');
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    section.setAttribute('data-track', '');
-    const distance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
-    const size = () => { section.style.height = `${stage.offsetHeight + distance()}px`; };
-    size();
-    ScrollTrigger.addEventListener('refreshInit', size);
-    gsap.fromTo(track, { x: 0 }, { x: () => -distance(), ease: 'none',
-      scrollTrigger: { id: 'menu-track', trigger: section, start: 'top top', end: () => `+=${distance()}`, scrub: .6, invalidateOnRefresh: true } });
-    return () => { ScrollTrigger.removeEventListener('refreshInit', size); section.removeAttribute('data-track'); section.style.height = ''; };
-  });
-});
-</script>
-<script data-8b-part="scene:reviews-light">
-queueMotion(() => {
-  const section = document.getElementById('reviews');
-  const quotes = gsap.utils.toArray('.reviews__quote', section);
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const splits = quotes.map((quote, index) => SplitText.create(quote, { type: 'words', autoSplit: true, onSplit(self) {
-      return gsap.fromTo(self.words, { opacity: .16 }, { opacity: 1, ease: 'none', stagger: .1,
-        scrollTrigger: { id: `reviews-light:${index + 1}`, trigger: quote, start: 'top 90%', end: 'bottom 68%', scrub: .4 } });
-    } }));
-    return () => splits.forEach(split => split.revert());
-  });
-});
-</script>
-<script data-8b-part="scene:footer-mark">
-queueMotion(() => {
-  const footer = document.getElementById('footer');
-  const mark = footer.querySelector('.footer__mark');
-  const discs = gsap.utils.toArray('.m-mark__o', mark);
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'footer-mark', trigger: mark, start: 'top bottom', end: 'top 28%', scrub: .6, invalidateOnRefresh: true
-    } });
-    discs.forEach((disc, index) => {
-      const travel = () => footer.clientWidth - disc.offsetLeft + disc.offsetWidth * (1 + index * .6);
-      timeline.fromTo(disc, { x: travel, rotation: () => travel() / (Math.PI * disc.offsetWidth) * 360 }, { x: 0, rotation: 0, duration: 1 - index * .2 }, index * .2);
-    });
-  });
+<script data-8b-part="scene-script:footer-mark">
+motionKit.scene("footer-mark", () => {
+  const footer = document.getElementById("footer"), discs = footer.querySelectorAll(".footer__mark .m-mark__o");
+  motionKit.measure(() => discs.forEach((disc, index) => {
+    const travel = footer.clientWidth - disc.offsetLeft + disc.offsetWidth * (1 + index * .6);
+    motionKit.set(disc, { "--footer-i": index, "--footer-travel": `${travel}px`, "--footer-turn": `${travel / (Math.PI * disc.offsetWidth) * 360}deg` });
+  }));
 });
 </script>
 </body>

@@ -1,8 +1,8 @@
-# Free HTML tile store website template with GSAP scroll animations
+# Free HTML tile store website template with scroll animations and no libraries
 
-Tile store website template: one free HTML file for a tile shop or bathroom studio with a showroom, free samples and its own fitters. It has a bond demonstration, a materials table with prices, a sample form and five house glazes, in a white grid ruled in black with colour blocks. AGENTS.md lets Claude Code, Cursor or Codex adapt it.
+Tile store website template: one free HTML file for a tile shop or bathroom studio with a showroom, free samples and its own fitters. It has a bond demonstration, a materials table with prices, a sample form and five house glazes, in a white grid ruled in black with colour blocks. Scroll motion is CSS, no JavaScript library.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/tile-store-website-template/)** · **[Use this template](https://github.com/new?template_name=tile-store-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/tile-store-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/tegel/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/tile-store-website-template/ma
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my tile shop or bathroom studio: name, town, showroom address and hours, materials with prices per square metre, finished jobs, sample terms, fitters and guarantee, delivery and returns, legal name and company number>. Replace first the shop name, the Belfast details, the materials and prices, the four rooms and the fitters. Keep the section ids, the classes AGENTS.md lists, exactly four room photos and equal bond rows. Ask me for missing facts; never invent prices, guarantees, reviews or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my tile shop: name, town, showroom address and hours, materials with prices per square metre, finished jobs, sample terms, fitters, guarantee, returns, legal name>. Replace first the shop name, the Belfast details, materials, prices, rooms and fitters. Keep the section ids, the gate script in the head, the data-8b attributes, the classes AGENTS.md lists, four room photos and seven equal cells per bond row; add no animation library. Never invent prices, guarantees, reviews or contacts; ask me.
 ```
 
 Vibe coding this tile store website template for Claude Code or Cursor goes fastest when you hand the agent the facts only the shop has: materials and prices per square metre, finished jobs, sample terms, glazes, fitters, guarantee, delivery, returns and legal name. The demo invents all of them. Replace the Belfast details first, and leave the section ids and the classes AGENTS.md lists alone. Check the technical tips in the questions, such as the R10 slip rating, against your own trade. [The vibe coding guide](https://8b.com/templates/vibe-coding/) compares other agents.
@@ -33,13 +33,13 @@ No agent? Click **[Use this template](https://github.com/new?template_name=tile-
 
 ## Sections and motion
 
-- **Navigation**: wordmark with a yellow block, six links, sample box and basket icons, and a menu button on phones. The navigation bar slides away when you scroll down, returns on scroll up and underlines the link of the section in view.
+- **Navigation**: wordmark with a yellow block, six links, sample box and basket icons, and a menu button on phones. The navigation bar slides away when you scroll down, returns on scroll up and underlines the link of the section in view, in every browser.
 - **Every wall starts as a grid.**: one screen of ruled cells: department links, opening hours, a three-line h1, a paragraph and buttons, and a red tiled bathroom photo, between blocks of blue, yellow and red. On load the blue, yellow and red fields wipe in from the left one after another, the photo opens from a cut and the text rises; there is no scroll scene here.
-- **One tile, three walls**: a wall of ruled cells that shifts row by row from stack bond to half bond to third bond while the section is held. Pinned for about two screens of scrolling: the four rows of the cell wall slide sideways from stack bond to half bond to third bond and the matching bond in the list lights up.
+- **One tile, three walls**: a wall of ruled cells that shifts row by row from stack bond to half bond to third bond while the section is held. Held (CSS sticky) for about two screens of scrolling: the four rows of the cell wall slide sideways from stack bond to half bond to third bond and the matching bond in the list lights up.
 - **What a tile is made of**: a table of six tile materials with where each can go and a price per square metre. The heading and the seven table rows start offset left and right in turn and settle as they rise, while a red field wipes in.
-- **Four rooms, one grid**: four finished bathrooms in a four-cell stage that recomposes so each takes the large cell in turn, with a yellow marker on its caption. Pinned for about three screens: four photos sit in clipped cells whose borders move so each room takes the large cell in turn, with a yellow marker beside its name.
+- **Four rooms, one grid**: four finished bathrooms in a four-cell stage that recomposes so each takes the large cell in turn, with a yellow marker on its caption. Held for about three screens: four photos sit in clipped cells whose borders move so each room takes the large cell in turn, with a yellow marker beside its name.
 - **Five samples, free**: a free-sample form: twelve tile chips (up to five), name, email and postcode, beside a shelf photo. The twelve sample chips open one after another from their upper-left corners and a blue field wipes in from above.
-- **Five house glazes**: five house glaze bays that travel sideways on one held screen, each colour field rising as the bay crosses the middle. Pinned while the row of five bays travels sideways, for as far as the row overflows the screen (about one screen on a laptop, less on a wide monitor), and each bay's colour field rises as the bay comes in from the right.
+- **Five house glazes**: five house glaze bays that travel sideways on one held screen, each colour field rising as the bay crosses the middle. Held while the row of five bays travels sideways, for as far as the row overflows the screen (about one screen on a laptop, less on a wide monitor); a small inline script measures the row, and each bay's colour field rises as the bay comes in from the right.
 - **Laid by our own fitters**: three fitter cards with photo, name and speciality, a guarantee on a yellow field. The three fitter cards open in turn from their upper-left corners and the yellow guarantee field wipes in from the right.
 - **From a floor plan to a finished wall**: five numbered steps of a job; a blue marker travels along the rule and the step it reaches turns yellow. A blue marker moves along the rail above the five steps, or down the left edge on a phone, and each step it passes turns its number black, the current one turning yellow.
 - **Before you order**: six questions and answers (native &lt;details&gt;) beside a yellow card with the phone number. The heading and the six questions slide in offset and settle, and the yellow phone card wipes in from the bottom.
@@ -71,7 +71,7 @@ Below the short prompt sits a longer tile store website design prompt for any AI
 
 ## Is it the right base?
 
-Choose this base when the business sells through showroom visits, free samples and fitting, not through a basket. A designer who sells colour advice will find the [interior colour studio](https://8b.com/templates/pervenche/) template closer. A shop with hundreds of lines needs product pages and a real cart, which this one-page file lacks. One weak spot: the opening screen gives Saturday hours that differ from the contact section, so make them agree.
+Choose this base when the business sells through showroom visits, free samples and fitting, not through a basket. A designer who sells colour advice will find the [interior colour studio](https://8b.com/templates/pervenche/) template closer. A shop with hundreds of lines needs product pages and a real cart. This build keeps the look and motion with no script from a CDN: 26 KB of code gzipped against 71 KB and three more requests for the GSAP version. One weak spot: the opening and contact give different Saturday hours.
 
 ## Before you publish
 
@@ -80,7 +80,9 @@ Choose this base when the business sells through showroom visits, free samples a
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 99 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 101+ (it uses cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 116 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 101+ (it uses cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 100 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

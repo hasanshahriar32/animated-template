@@ -1,8 +1,8 @@
-# Free HTML planetarium website template with GSAP scroll animations
+# Free HTML planetarium website template with scroll animations and no libraries
 
-Planetarium website template: one free HTML file for a dome or observatory that runs timed, live-narrated shows. It has a sideways space journey, a show programme with time buttons, a rooftop telescope evening, school trips, late events and a box-office form, set on night violet with orange and magenta. AGENTS.md lets Claude Code, Cursor or Codex adapt it.
+Planetarium website template: one free HTML file for a dome or observatory that runs timed, live-narrated shows. It has a sideways space journey, shows with time buttons, a rooftop telescope, school trips, late events and a box-office form, on night violet with orange and magenta. Scroll motion is plain CSS, no libraries; AGENTS.md serves Claude Code, Cursor or Codex.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/planetarium-website-template/)** · **[Use this template](https://github.com/new?template_name=planetarium-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/planetarium-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/zenith/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/planetarium-website-template/m
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my venue: name, address, what I show or teach, the programme with lengths, ages, times and prices, dome or telescope figures, astronomers, events, school offer, opening hours and how people book>. Replace first the venue name, the five shows, the journey stops, the astronomers and the prices. Keep the section ids, the classes AGENTS.md lists and the footer wordmark's len. Ask me for any missing fact and never invent prices, times, figures, names, dates or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my venue: name, address, what I show or teach, the programme with lengths, ages, times and prices, dome or telescope figures, astronomers, events, school offer, opening hours and how people book>. Replace first the venue name, the five shows, the journey stops, the astronomers and the prices. Keep the section ids, the gate script, the classes AGENTS.md lists and the footer wordmark's len; add no animation library. Never invent prices, times, figures, names, dates or contacts; ask me.
 ```
 
 Replace the venue name first, in any letter case, then the dome figures, show names, lengths, ages, times and prices, which the demo invents. Ask the owner for opening hours, astronomers, school rates, event dates and the telescope policy. Keep the section ids, the data-8b-section, data-8b-motion and data-8b-part attributes and the classes AGENTS.md lists, and set the footer wordmark's --len to the new name's length. As a planetarium website template for Claude Code or Cursor, vibe coding goes fastest when these facts arrive in one message.
@@ -35,7 +35,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=plane
 
 - **Navigation**: round mark and wordmark top-left, five links, a Book seats button and a Menu button that opens a full-screen overlay. The bar slides up out of view while you scroll down and returns when you scroll up; the phone menu is a full-screen overlay.
 - **When the lights go down, the ceiling goes too.**: a night field with a thin ring, rays and a small glowing dot orbiting it behind one big statement, a paragraph and two actions. On load the statement rises in and the paragraph and buttons lift in a beat later, while a dot circles the ring in a 42 second loop that pauses off screen.
-- **Outward**: a held section where five space stops slide sideways as a road, with a glowing runner on a progress line. Pinned while the strip of five stops slides sideways, each photo drifting into its frame and a glowing runner travelling along the progress line.
+- **Outward**: a held section where five space stops slide sideways as a road, with a glowing runner on a progress line. Held on screen while the strip of five stops slides sideways, each photo drifting into its frame and a glowing runner travelling along the progress line.
 - **A ceiling that isn’t there**: the dome in words: a porthole of star trails that turns and widens to fill the screen behind a heading split over a grid. A small circle of star-trail photo rotates from minus 80 degrees to level and opens to fill the screen over about 1.3 screens of held scroll, as a ring grows and fades.
 - **This season’s shows**: five shows as rows with a colour band, description, length and age, and time buttons. The heading words gather toward the middle and move out to place as you scroll, the intro sharpens in once, and each row's rule draws across once.
 - **“Nothing here is recorded. Ask the sky anything.”**: a large quote in scattered words over a presenter photo, with a line about the astronomers. The quote words start packed toward the middle and spread out to place while the presenter photo drifts in from the side and fades up, losing a blur on large screens.
@@ -67,12 +67,12 @@ Nowhere yet. Name, email and message are all required, and a valid submit clears
 **Can I get a site like this without editing code?**  
 Yes, with a different tool. [8B's AI website builder](https://8b.com/) designs a new site from a one-sentence description, in its own design, not this template. Designing and restyling are free; hosting with SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs inside Claude and ChatGPT through the 8B connector.
 
-**What happens with reduced motion, on a phone or without scripts?**  
-With reduced motion on, entrance and scroll animations and smooth scrolling are off, so the journey shows its five stops as a plain grid and nothing is pinned, while the bar's hide on scroll and the button hovers still run. Without JavaScript the Menu button cannot open its overlay, but the questions still open and the footer links work.
+**What happens with reduced motion, in Firefox or without scripts?**  
+The motion is CSS scroll-driven animation, so in Firefox today and with reduced motion the scroll effects, the ring's circling dot and the smooth wheel are off: the journey shows five stops as a grid and nothing is held. Firefox still plays the load-in; the bar's hide on scroll and hovers run in both. Without JavaScript the Menu cannot open.
 
 ## Is it the right base?
 
-Choose this when the venue sells timed sessions and wants one scroll that explains the room, the shows and the visit. A [museum with a permanent collection](https://8b.com/templates/wrenfield/) fits better when objects, not sessions, are the product, and a site with many pages or a member login needs more than one file. The weak spot is booking: every time button jumps to the form, which sends nothing, so link a ticket shop. Without code, 8B's builder designs a new site instead.
+Choose this when the venue sells timed sessions and wants one scroll that explains the room, the shows and the visit. A [museum with a permanent collection](https://8b.com/templates/wrenfield/) fits better when objects are the product. This light build keeps the look and motion with no script from a CDN: about 25 KB of code gzipped in one file, where the GSAP version needs 70 KB and three more requests. The weak spot is booking: every time button jumps to the form, which sends nothing.
 
 ## Before you publish
 
@@ -81,7 +81,9 @@ Choose this when the venue sells timed sessions and wants one scroll that explai
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 90 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 97 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 90 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

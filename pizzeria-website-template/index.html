@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/pizzeria-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,8 +20,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%23ff3b21'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23f6f2e8'%3EM%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/bricolagegrotesque/v9/3y9U6as8bTXq_nANBjzKo3IeZx8z6up5BeSl5jBNz_19PpZJMnuECpwUxJBOm_OJBCaaD30YfKfjZZoLvZvl-Molsg.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/montaguslab/v17/6qLhKZIQtB_zv0xUaXRDWkY_HXsphdLRZF40vm_jzR2jhk_n3T6ACkA8FUP6HM8.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://fonts.gstatic.com/s/bricolagegrotesque/v9/3y9U6as8bTXq_nANBjzKo3IeZx8z6up5BeSl5jBNz_19PpZJMnuECpwUxJBOm_OJBCaaD30YfKfjZZoLvZvl-Molsg.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/pliant/v1/R70bjyYdl_WLNKbQM1u9.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* vietnamese */
@@ -181,10 +182,6 @@
   ul, ol { padding: 0; list-style: none; }
   :focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
   .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-  .lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-smooth iframe { pointer-events: none; }
 }
 </style>
 <style data-8b-part="system">
@@ -584,27 +581,226 @@ textarea.m-field { min-height: 104px; resize: vertical; }
   @media (max-width: 760px) { #footer .footer__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; } #footer .footer__col:last-child { grid-column: 1 / -1; } }
 }
 </style>
-<style data-8b-part="scene-style:dough">
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] [data-8b-motion~="swell"] { view-timeline: --motion-swell block; view-timeline-inset: 0; animation-name: motion-swell-scale; animation-timeline: --motion-swell; animation-range: cover 0% cover 50vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] [data-8b-motion~="tilt"] { view-timeline: --motion-tilt block; view-timeline-inset: 0; animation-name: motion-tilt-rotate; animation-timeline: --motion-tilt; animation-range: cover 0% cover calc(50% - 10vh); animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] [data-8b-motion~="float"] { view-timeline: --motion-float block; view-timeline-inset: 0; animation-name: motion-float-translate; animation-timeline: --motion-float; animation-range: cover 0% cover calc(50% - 5vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] { --motion-lift-ease: linear(0, 0.1302, 0.2509, 0.3626, 0.4654, 0.5598, 0.646, 0.7244, 0.7952, 0.8589, 0.9156, 0.9658, 1.0098, 1.0478, 1.0803, 1.1074, 1.1296, 1.1471, 1.1603, 1.1695, 1.175, 1.1771, 1.1762, 1.1725, 1.1664, 1.1582, 1.1482, 1.1368, 1.1242, 1.1108, 1.0969, 1.0828, 1.0688, 1.0553, 1.0425, 1.0309, 1.0206, 1.0121, 1.0056, 1.0014, 1); }
+[data-8b-live] [data-8b-motion~="lift"] .m-lift, [data-8b-live] .m-lift[data-8b-motion~="lift"] { animation: motion-lift .7s var(--motion-lift-ease) calc(var(--i, 0) * .14s) both paused; }
+[data-8b-live] [data-8b-motion~="lift"].is-in .m-lift, [data-8b-live] .m-lift[data-8b-motion~="lift"].is-in { animation-play-state: running; }
+@keyframes motion-lift { 0% { translate: 0px 130%; rotate: -10deg; background-size: 0% .09em; } 100% { translate: 0px 0px; rotate: 0deg; background-size: 100% .09em; } }
+@keyframes motion-swell-scale { 0% { scale: 1 0.1; } 100% { scale: 1; } }
+@keyframes motion-tilt-rotate { 0% { rotate: -18deg; } 100% { rotate: -7deg; } }
+@keyframes motion-float-translate { 0% { translate: 0px min(16vh, 150px); } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+[data-8b-live] #opening { timeline-scope: --opening-t1; }
+[data-8b-live] #opening .opening__first { view-timeline: --opening-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #opening .opening__line--1, [data-8b-live] #opening .opening__line--2, [data-8b-live] #opening .opening__pill, [data-8b-live] #opening .m-wave, [data-8b-live] #opening .opening__rings > span:nth-of-type(-n+6), [data-8b-live] #opening .opening__window, [data-8b-live] #opening .opening__window > img { animation-timeline: --opening-t1; animation-fill-mode: both; }
+[data-8b-live] #opening .opening__line--1 { animation-name: opening-span-opening-line-translate; animation-range: cover 100vh cover 100%; animation-timing-function: linear; transform: none; }
+[data-8b-live] #opening .opening__line--2 { animation-name: opening-span-opening-line-translate-2; animation-range: cover 100vh cover 100%; animation-timing-function: linear; transform: none; }
+[data-8b-live] #opening .opening__pill { animation-name: opening-div-opening-pill-translate, opening-div-opening-pill-rotate; animation-range: cover 100vh cover calc(85% + 15vh); animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); transform: none; }
+[data-8b-live] #opening .m-wave { animation-name: opening-div-m-wave-scale; animation-range: cover 100vh cover calc(76% + 24vh); animation-timing-function: linear; transform: none; }
+[data-8b-live] #opening .opening__rings > span:nth-of-type(1) { animation-name: opening-span-opening-ring-translate; animation-range: cover 100vh cover 100%; animation-timing-function: linear; transform: none; }
+[data-8b-live] #opening .opening__rings > span:nth-of-type(2) { animation-name: opening-span-opening-ring-translate-2; animation-range: cover 100vh cover 100%; animation-timing-function: linear; transform: none; }
+[data-8b-live] #opening .opening__rings > span:nth-of-type(3) { animation-name: opening-span-opening-ring-translate-3; animation-range: cover 100vh cover 100%; animation-timing-function: linear; transform: none; }
+[data-8b-live] #opening .opening__rings > span:nth-of-type(4) { animation-name: opening-span-opening-ring-translate; animation-range: cover 100vh cover 100%; animation-timing-function: linear; transform: none; }
+[data-8b-live] #opening .opening__rings > span:nth-of-type(5) { animation-name: opening-span-opening-ring-translate-2; animation-range: cover 100vh cover 100%; animation-timing-function: linear; transform: none; }
+[data-8b-live] #opening .opening__rings > span:nth-of-type(6) { animation-name: opening-span-opening-ring-translate-3; animation-range: cover 100vh cover 100%; animation-timing-function: linear; transform: none; }
+[data-8b-live] #opening .opening__window { animation-name: opening-figure-opening-window-clippath; animation-range: cover calc(38% + 62vh) cover 100%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+[data-8b-live] #opening .opening__window > img { animation-name: opening-figure-opening-window-img-scale; animation-range: cover calc(38% + 62vh) cover 100%; animation-timing-function: linear; transform: none; }
+[data-8b-live] #opening .m-text-5 > .m-lift { --opening-lift: calc(.3 / (.7 + .14 * (var(--n) - 1))); --opening-lift-a: calc(.7 + var(--opening-lift) * .14 * var(--i)); --opening-lift-b: calc(var(--opening-lift-a) + var(--opening-lift) * .7); animation-name: motion-lift; animation-timeline: --opening-t1; animation-range: cover calc(var(--opening-lift-a) * 100% + (1 - var(--opening-lift-a)) * 100vh) cover calc(var(--opening-lift-b) * 100% + (1 - var(--opening-lift-b)) * 100vh); animation-timing-function: var(--motion-lift-ease); animation-fill-mode: both; }
+@keyframes opening-span-opening-line-translate { 0% { translate: 0px 0px; } 100% { translate: -42% 0px; } }
+@keyframes opening-span-opening-line-translate-2 { 0% { translate: 0px 0px; } 100% { translate: 34% 0px; } }
+@keyframes opening-div-opening-pill-translate { 0% { translate: 0px 0px; } 100% { translate: 0px 30vh; } }
+@keyframes opening-div-opening-pill-rotate { 0% { rotate: -16deg; } 100% { rotate: 34deg; } }
+@keyframes opening-div-m-wave-scale { 0% { scale: 1; animation-timing-function: linear(0, 0.0494, 0.0975, 0.1444, 0.19, 0.2344, 0.2775, 0.3194, 0.36, 0.3994, 0.4375, 0.4744, 0.51, 0.5444, 0.5775, 0.6094, 0.64, 0.6694, 0.6975, 0.7244, 0.75, 0.7744, 0.7975, 0.8194, 0.84, 0.8594, 0.8775, 0.8944, 0.91, 0.9244, 0.9375, 0.9494, 0.96, 0.9694, 0.9775, 0.9844, 0.99, 0.9944, 0.9975, 0.9994, 1); } 55.2632% { scale: 1 3.2; animation-timing-function: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); } 100% { scale: 1; } }
+@keyframes opening-span-opening-ring-translate { 0% { translate: 0px 0px; } 100% { translate: 0px -35vh; } }
+@keyframes opening-span-opening-ring-translate-2 { 0% { translate: 0px 0px; } 100% { translate: 0px -53vh; } }
+@keyframes opening-span-opening-ring-translate-3 { 0% { translate: 0px 0px; } 100% { translate: 0px -71vh; } }
+@keyframes opening-figure-opening-window-clippath { 0% { clip-path: circle(6% at 50% 50%); } 99.998% { clip-path: circle(76% at 50% 50%); } 100% { clip-path: none; } }
+@keyframes opening-figure-opening-window-img-scale { 0% { scale: 1.35; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:dough">
 @layer scenes {
   @media (prefers-reduced-motion: no-preference) {
-    #dough[data-dough-held] .dough__track { height: calc(100svh + var(--dough-count, 5) * 58svh); }
-    #dough[data-dough-held] .dough__stage { position: sticky; top: 0; min-height: 100svh; align-content: center; padding: 72px 0 40px; }
+    [data-8b-live] #dough .dough__track { height: calc(100svh + var(--dough-count, 5) * 58svh); }
+    [data-8b-live] #dough .dough__stage { position: sticky; top: 0; min-height: 100svh; align-content: center; padding: 72px 0 40px; }
   }
   @media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
-    #dough[data-dough-held] .dough__stage { gap: 18px; padding: 64px 0 24px; }
-    #dough[data-dough-held] .dough__frame-wrap { max-width: 46vw; }
-    #dough[data-dough-held] .dough__steps { gap: 10px; }
+    [data-8b-live] #dough .dough__stage { gap: 18px; padding: 64px 0 24px; }
+    [data-8b-live] #dough .dough__frame-wrap { max-width: 46vw; }
+    [data-8b-live] #dough .dough__steps { gap: 10px; }
   }
 }
+@layer scenes {
+@media (min-width: 761px) {
+[data-8b-live] #dough { --dough-count: 5; }
+}
+@media (max-width: 760px) {
+[data-8b-live] #dough { --dough-count: 5; }
+}
+[data-8b-live] #dough { --dough-wipe: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #dough .dough__track { view-timeline: --dough-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #dough .dough__frame-wrap, [data-8b-live] #dough .dough__frame > img:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5)), [data-8b-live] #dough .dough__steps > li:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5)) > .dough__name { animation-timeline: --dough-t1; animation-fill-mode: both; }
+[data-8b-live] #dough .dough__frame-wrap { animation-name: dough-div-dough-frame-wrap-rotate; animation-range: cover 100vh cover calc(100% - 100vh); animation-timing-function: linear; transform: none; }
+[data-8b-live] #dough .dough__frame > img:nth-of-type(2) { animation-name: dough-img-dough-shot-clippath; animation-range: cover calc(6% + 88vh) cover calc(100% - 100vh); animation-timing-function: var(--dough-wipe); }
+[data-8b-live] #dough .dough__steps > li:nth-of-type(2) > .dough__name { animation-name: dough-h3-dough-name-color; animation-range: cover calc(11% + 78vh) cover calc(17% + 66vh); animation-timing-function: linear; }
+[data-8b-live] #dough .dough__frame > img:nth-of-type(3) { animation-name: dough-img-dough-shot-clippath-2; animation-range: cover calc(26% + 48vh) cover calc(100% - 100vh); animation-timing-function: var(--dough-wipe); }
+[data-8b-live] #dough .dough__steps > li:nth-of-type(3) > .dough__name { animation-name: dough-h3-dough-name-color; animation-range: cover calc(31% + 38vh) cover calc(37% + 26vh); animation-timing-function: linear; }
+[data-8b-live] #dough .dough__frame > img:nth-of-type(4) { animation-name: dough-img-dough-shot-clippath-3; animation-range: cover calc(46% + 8vh) cover calc(100% - 100vh); animation-timing-function: var(--dough-wipe); }
+[data-8b-live] #dough .dough__steps > li:nth-of-type(4) > .dough__name { animation-name: dough-h3-dough-name-color; animation-range: cover calc(51% - 2vh) cover calc(57% - 14vh); animation-timing-function: linear; }
+[data-8b-live] #dough .dough__frame > img:nth-of-type(5) { animation-name: dough-img-dough-shot-clippath-4; animation-range: cover calc(66% - 32vh) cover calc(100% - 100vh); animation-timing-function: var(--dough-wipe); }
+[data-8b-live] #dough .dough__steps > li:nth-of-type(5) > .dough__name { animation-name: dough-h3-dough-name-color; animation-range: cover calc(71% - 42vh) cover calc(77% - 54vh); animation-timing-function: linear; }
+@keyframes dough-div-dough-frame-wrap-rotate { 0% { rotate: -13deg; } 100% { rotate: 0deg; } }
+@keyframes dough-img-dough-shot-clippath { 0% { clip-path: inset(100% 0% 0%); } 14.8936% { clip-path: inset(0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes dough-h3-dough-name-color { 0% { color: var(--color-4); } 100% { color: var(--color-2); } }
+@keyframes dough-img-dough-shot-clippath-2 { 0% { clip-path: inset(100% 0% 0%); } 18.9189% { clip-path: inset(0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes dough-img-dough-shot-clippath-3 { 0% { clip-path: inset(100% 0% 0%); } 25.9259% { clip-path: inset(0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes dough-img-dough-shot-clippath-4 { 0% { clip-path: inset(100% 0% 0%); } 41.1765% { clip-path: inset(0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+}
 </style>
-<style data-8b-part="scene-style:rule">
+<style data-8b-part="scene:rule">
 @layer scenes {
   @media (prefers-reduced-motion: no-preference) {
-    #rule[data-rule-held] .rule__track { height: 320svh; }
-    #rule[data-rule-held] .rule__stage { position: sticky; top: 0; height: 100svh; }
+    [data-8b-live] #rule .rule__track { height: 320svh; }
+    [data-8b-live] #rule .rule__stage { position: sticky; top: 0; height: 100svh; }
   }
 }
+@layer scenes {
+[data-8b-live] #rule { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #rule .rule__track { view-timeline: --rule-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #rule .rule__pill, [data-8b-live] #rule .rule__rings > span:nth-of-type(-n+12) { animation-timeline: --rule-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #rule .rule__pill { animation-name: rule-div-rule-pill-translate, rule-div-rule-pill-rotate; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(-n+12) { animation-timing-function: linear; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(3n+1) { --rule-ring-f: .8; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(3n+2) { --rule-ring-f: .9; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(3n+3) { --rule-ring-f: 1; }
+[data-8b-live] #rule .rule__rings > span { animation-range: cover 20vh cover calc(20vh + var(--rule-ring-f) * (35% + 10vh)); }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(1) { animation-name: rule-span-rule-ring-translate; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(2) { animation-name: rule-span-rule-ring-translate-2; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(3) { animation-name: rule-span-rule-ring-translate-3; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(4) { animation-name: rule-span-rule-ring-translate-4; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(5) { animation-name: rule-span-rule-ring-translate; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(6) { animation-name: rule-span-rule-ring-translate-2; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(7) { animation-name: rule-span-rule-ring-translate-3; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(8) { animation-name: rule-span-rule-ring-translate-4; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(9) { animation-name: rule-span-rule-ring-translate; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(10) { animation-name: rule-span-rule-ring-translate-2; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(11) { animation-name: rule-span-rule-ring-translate-3; }
+[data-8b-live] #rule .rule__rings > span:nth-of-type(12) { animation-name: rule-span-rule-ring-translate-4; }
+@keyframes rule-line-translate { 0% { translate: calc(var(--rule-line-w) * 1.4 + 50vw) 0px; animation-timing-function: linear; } 71.5789% { translate: calc(var(--rule-line-w) * -1.4 + 46vw) 0px; animation-timing-function: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); } 100% { translate: 0px 0px; } }
+@keyframes rule-word-translate { 0% { translate: calc(var(--rule-side) * (50vw + var(--rule-word-w) * .85 + 12px)) 0px; animation-timing-function: linear; } 70% { translate: calc(var(--rule-side) * var(--rule-word-w) * -.22) 0px; animation-timing-function: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); } 100% { translate: 0px 0px; } }
+@keyframes rule-word-scale { 0% { scale: 1.7; animation-timing-function: linear; } 70% { scale: 1.7; animation-timing-function: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); } 100% { scale: 1; } }
+@keyframes rule-p-rule-line-scale { 0% { scale: 2.8; } 71.5789% { scale: 2.8; } 100% { scale: 1; } }
+@keyframes rule-div-rule-pill-translate { 0% { translate: 0px 50vh; } 100% { translate: 0px 0px; } }
+@keyframes rule-div-rule-pill-rotate { 0% { rotate: -48deg; } 100% { rotate: 0deg; } }
+@keyframes rule-span-rule-ring-translate { 0% { translate: 0px 45vh; } 100% { translate: 0px 0px; } }
+@keyframes rule-span-rule-ring-translate-2 { 0% { translate: 0px 67vh; } 100% { translate: 0px 0px; } }
+@keyframes rule-span-rule-ring-translate-3 { 0% { translate: 0px 89vh; } 100% { translate: 0px 0px; } }
+@keyframes rule-span-rule-ring-translate-4 { 0% { translate: 0px 111vh; } 100% { translate: 0px 0px; } }
+@media (min-width: 761px) {
+  [data-8b-live] #rule .rule__line { animation-name: rule-line-translate, rule-p-rule-line-scale; animation-timeline: --rule-t1; animation-range: cover 100vh cover calc(79.1667% - 58.3333vh); animation-timing-function: linear, var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+  [data-8b-live] #rule .rule__pill { animation-range: cover 100vh cover calc(79.1667% - 58.3333vh); }
+}
+@media (max-width: 760px) {
+  [data-8b-live] #rule .rule__pill { animation-range: cover 100vh cover calc(70.8955% - 41.791vh); }
+  [data-8b-live] #rule .rule__line > .rule__word { --rule-t: calc(max(.27 * (var(--n) - 1) + .6, 1) + .2); --rule-a: calc(.27 * var(--i) / var(--rule-t)); --rule-b: calc((.27 * var(--i) + .6) / var(--rule-t)); animation-name: rule-word-translate, rule-word-scale; animation-timeline: --rule-t1; animation-range: cover calc(var(--rule-a) * 100% + (1 - 2 * var(--rule-a)) * 100vh) cover calc(var(--rule-b) * 100% + (1 - 2 * var(--rule-b)) * 100vh); animation-fill-mode: both; transform: none; }
+}
+}
 </style>
+<style data-8b-part="scene:pies">
+@layer scenes {
+[data-8b-live] #pies .pies__list > li { animation-fill-mode: both; transform: none; }
+@keyframes pies-deal { 0% { translate: var(--pies-x) calc(30vh - var(--i) * 14px); rotate: var(--pies-fan); animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); } 38% { translate: var(--pies-x) 0px; rotate: var(--pies-fan); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); } 100% { translate: 0px 0px; rotate: 0deg; } }
+@keyframes pies-li-pie-translate-m { 0% { translate: -55vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes pies-li-pie-rotate-m { 0% { rotate: -11deg; } 100% { rotate: 0deg; } }
+@keyframes pies-li-pie-translate-2-m { 0% { translate: 55vw 0px; } 100% { translate: 0px 0px; } }
+@keyframes pies-li-pie-rotate-2 { 0% { rotate: 11deg; } 100% { rotate: 0deg; } }
+@media (min-width: 601px) {
+  [data-8b-live] #pies .pies__list { view-timeline: --pies-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #pies .pies__list > li { animation-name: pies-deal; animation-timeline: --pies-t1; animation-range: cover 2vh cover 78vh; }
+}
+@media (max-width: 600px) {
+  [data-8b-live] #pies .pies__list > li { view-timeline: --pies-item block; view-timeline-inset: 0; animation-timeline: --pies-item; animation-range: cover 0% cover 50vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+  [data-8b-live] #pies .pies__list > li:nth-of-type(2n+1) { animation-name: pies-li-pie-translate-m, pies-li-pie-rotate-m; }
+  [data-8b-live] #pies .pies__list > li:nth-of-type(2n+2) { animation-name: pies-li-pie-translate-2-m, pies-li-pie-rotate-2; }
+}
+}
+</style>
+<style data-8b-part="scene:people">
+@layer scenes {
+[data-8b-live] { --ease-cb0991: linear(0, 0.1207, 0.2329, 0.3369, 0.433, 0.5215, 0.6026, 0.6767, 0.744, 0.8048, 0.8594, 0.908, 0.951, 0.9886, 1.0211, 1.0488, 1.072, 1.0909, 1.1059, 1.1171, 1.125, 1.1297, 1.1316, 1.131, 1.128, 1.123, 1.1164, 1.1083, 1.099, 1.0889, 1.0781, 1.0671, 1.056, 1.0452, 1.0349, 1.0254, 1.017, 1.01, 1.0046, 1.0012, 1); }
+[data-8b-live] #people .people__list { view-timeline: --people-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #people .people__list > li { animation-name: people-li-person-translate; animation-timeline: --people-t1; animation-range: cover 0% cover 63.9344vh; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #people .people__list > li > .person__photo > .person__ring { animation-name: people-span-person-ring-scale; animation-timeline: --people-t1; animation-range: cover calc(26.8525vh + 6.3934vh * var(--i)) cover calc(58.8197vh + 6.3934vh * var(--i)); animation-timing-function: var(--ease-cb0991); animation-fill-mode: both; transform: none; }
+@keyframes people-li-person-translate { 0% { translate: 0px var(--people-li-person-translate-from-2, 22vh); } 100% { translate: 0px 0px; } }
+@keyframes people-span-person-ring-scale { 0% { scale: 0.78; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:corner">
+@layer scenes {
+[data-8b-live] #corner .corner__mark { view-timeline: --corner-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #corner .corner__ring, [data-8b-live] #corner .corner__photo { animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); transform: none; }
+[data-8b-live] #corner .corner__ring { animation-name: corner-svg-corner-ring-scale, corner-svg-corner-ring-rotate; animation-timeline: --corner-t1; animation-range: cover 0% cover calc(50% - 2vh); animation-fill-mode: both; }
+[data-8b-live] #corner .corner__photo { animation-name: corner-div-corner-photo-translate, corner-div-corner-photo-rotate; animation-timeline: --corner-t1; animation-range: cover calc(2.5% - 0.1vh) cover calc(47.5% - 1.9vh); animation-fill-mode: both; }
+[data-8b-live] #corner .corner__ring > ellipse { animation-name: corner-svg-corner-ring-ellipse-strokedashoffset; animation-timeline: --corner-t1; animation-range: cover calc(7.5% - 0.3vh) cover calc(50% - 2vh); animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes corner-svg-corner-ring-scale { 0% { scale: 6.5; } 100% { scale: 1; } }
+@keyframes corner-svg-corner-ring-rotate { 0% { rotate: -40deg; } 100% { rotate: 0deg; } }
+@keyframes corner-div-corner-photo-translate { 0% { translate: 0px 220px; } 100% { translate: 0px 0px; } }
+@keyframes corner-div-corner-photo-rotate { 0% { rotate: -22deg; } 100% { rotate: 0deg; } }
+@keyframes corner-svg-corner-ring-ellipse-strokedashoffset { 0% { stroke-dashoffset: 0.7px; } 100% { stroke-dashoffset: 0px; } }
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] #contact .contact__send { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact .contact__rings > span:nth-of-type(-n+6) { animation-timeline: --contact-t1; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #contact .contact__rings > span:nth-of-type(1) { animation-name: contact-span-contact-ring-translate, contact-span-contact-ring-scale; animation-range: cover 0% cover calc(41.6667% - 10vh); }
+[data-8b-live] #contact .contact__rings > span:nth-of-type(2) { animation-name: contact-span-contact-ring-translate-2, contact-span-contact-ring-scale-2; animation-range: cover calc(1.6667% - 0.4vh) cover calc(43.3333% - 10.4vh); }
+[data-8b-live] #contact .contact__rings > span:nth-of-type(3) { animation-name: contact-span-contact-ring-translate-3, contact-span-contact-ring-scale-3; animation-range: cover calc(3.3333% - 0.8vh) cover calc(45% - 10.8vh); }
+[data-8b-live] #contact .contact__rings > span:nth-of-type(4) { animation-name: contact-span-contact-ring-translate-4, contact-span-contact-ring-scale; animation-range: cover calc(5% - 1.2vh) cover calc(46.6667% - 11.2vh); }
+[data-8b-live] #contact .contact__rings > span:nth-of-type(5) { animation-name: contact-span-contact-ring-translate-5, contact-span-contact-ring-scale-2; animation-range: cover calc(6.6667% - 1.6vh) cover calc(48.3333% - 11.6vh); }
+[data-8b-live] #contact .contact__rings > span:nth-of-type(6) { animation-name: contact-span-contact-ring-translate-6, contact-span-contact-ring-scale-3; animation-range: cover calc(8.3333% - 2vh) cover calc(50% - 12vh); }
+@keyframes contact-span-contact-ring-translate { 0% { translate: 35vw -3.644vh; } 100% { translate: 0px 0px; } }
+@keyframes contact-span-contact-ring-scale { 0% { scale: 0.35; } 100% { scale: 1; } }
+@keyframes contact-span-contact-ring-translate-2 { 0% { translate: 4.685vw 21.68vh; } 100% { translate: 0px 0px; } }
+@keyframes contact-span-contact-ring-scale-2 { 0% { scale: 0.65; } 100% { scale: 1; } }
+@keyframes contact-span-contact-ring-translate-3 { 0% { translate: -30.316vw 5.324vh; } 100% { translate: 0px 0px; } }
+@keyframes contact-span-contact-ring-scale-3 { 0% { scale: 0.95; } 100% { scale: 1; } }
+@keyframes contact-span-contact-ring-translate-4 { 0% { translate: -35vw -36.356vh; } 100% { translate: 0px 0px; } }
+@keyframes contact-span-contact-ring-translate-5 { 0% { translate: -4.685vw -61.68vh; } 100% { translate: 0px 0px; } }
+@keyframes contact-span-contact-ring-translate-6 { 0% { translate: 30.316vw -45.324vh; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:footer">
+@layer scenes {
+[data-8b-live] #footer { view-timeline: --footer-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #footer .footer__mark, [data-8b-live] #footer .footer__rings > span:nth-of-type(-n+5), [data-8b-live] #footer .footer__bar { animation-timeline: --footer-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #footer .footer__mark { animation-name: footer-p-footer-mark-translate, footer-p-footer-mark-rotate; animation-range: cover 20vh cover calc(100% - 100vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] #footer .footer__rings > span:nth-of-type(-n+5) { animation-range: cover 20vh cover calc(90% - 88vh); }
+[data-8b-live] #footer .footer__rings > span:nth-of-type(-n+5), [data-8b-live] #footer .footer__bar { animation-timing-function: linear; }
+[data-8b-live] #footer .footer__rings > span:nth-of-type(1) { animation-name: footer-span-footer-ring-translate; }
+[data-8b-live] #footer .footer__rings > span:nth-of-type(2) { animation-name: footer-span-footer-ring-translate-2; }
+[data-8b-live] #footer .footer__rings > span:nth-of-type(3) { animation-name: footer-span-footer-ring-translate-3; }
+[data-8b-live] #footer .footer__rings > span:nth-of-type(4) { animation-name: footer-span-footer-ring-translate; }
+[data-8b-live] #footer .footer__rings > span:nth-of-type(5) { animation-name: footer-span-footer-ring-translate-2; }
+[data-8b-live] #footer .footer__bar { animation-name: footer-span-footer-bar-scale; animation-range: cover calc(45% - 34vh) cover calc(95% - 94vh); }
+@keyframes footer-p-footer-mark-translate { 0% { translate: 0px 55%; } 100% { translate: 0px 0px; } }
+@keyframes footer-p-footer-mark-rotate { 0% { rotate: 6deg; } 100% { rotate: 0deg; } }
+@keyframes footer-span-footer-ring-translate { 0% { translate: 0px 160px; } 100% { translate: 0px 0px; } }
+@keyframes footer-span-footer-ring-translate-2 { 0% { translate: 0px 280px; } 100% { translate: 0px 0px; } }
+@keyframes footer-span-footer-ring-translate-3 { 0% { translate: 0px 400px; } 100% { translate: 0px 0px; } }
+@keyframes footer-span-footer-bar-scale { 0% { scale: 0 1; } 100% { scale: 1; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: an Instagram round button, the name Monella pizza and a round menu button; a full-screen menu with six links, address, phone and email -->
@@ -614,7 +810,7 @@ textarea.m-field { min-height: 104px; resize: vertical; }
     <a class="nav__logo" href="#opening" aria-label="Monella, back to the top">Monella<span class="m-lift">pizza</span></a>
     <button class="m-round nav__menu" type="button" aria-label="Open the menu" aria-expanded="false" aria-controls="site-menu"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 8h14M5 12h14M5 16h14"/></svg></button>
   </div>
-  <div class="nav__overlay" id="site-menu" data-lenis-prevent hidden>
+  <div class="nav__overlay" id="site-menu" hidden>
     <div class="nav__overlay-top">
       <p class="m-text-4">Monella · 14 Example Street</p>
       <button class="m-round nav__close" type="button" aria-label="Close the menu"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
@@ -652,7 +848,7 @@ textarea.m-field { min-height: 104px; resize: vertical; }
     </h1>
     <div class="opening__pill" aria-hidden="false">
       <div class="opening__pill-intro"><div class="opening__pill-bob">
-        <div class="m-pill"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1651978595416-9956a5fb8f7a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fHBpenphJTIwc2xpY2V8ZW58MXwxfHx8MTc5MTQ0MDc4N3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=60" alt="A hand lifting a slice of pepperoni pizza from the pie, the cheese stretching" width="900" height="1350" fetchpriority="high"></div>
+        <div class="m-pill"><img src="https://images.unsplash.com/photo-1651978595416-9956a5fb8f7a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fHBpenphJTIwc2xpY2V8ZW58MXwxfHx8MTc5MTQ0MDc4N3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=60" alt="A hand lifting a slice of pepperoni pizza from the pie, the cheese stretching" width="900" height="1350" fetchpriority="high"></div>
       </div></div>
     </div>
     <div class="opening__foot">
@@ -666,10 +862,10 @@ textarea.m-field { min-height: 104px; resize: vertical; }
   <div class="opening__second" data-ground="light">
     <div class="m-wave opening__wave" aria-hidden="true"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60Q180 8 360 60T720 60T1080 60T1440 60T1800 60T2160 60T2520 60T2880 60V120H0Z"/></svg></div>
     <figure class="opening__window">
-      <img style="background:#260c0c" src="https://images.unsplash.com/photo-1600628421060-939639517883?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZnJpZW5kcyUyMGVhdGluZyUyMHBpenphfGVufDF8MHx8fDE3OTE0NDA4MTJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" alt="Many hands reaching for slices from one big pizza on a shared table" width="1600" height="1067" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1600628421060-939639517883?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZnJpZW5kcyUyMGVhdGluZyUyMHBpenphfGVufDF8MHx8fDE3OTE0NDA4MTJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=970&amp;q=60" alt="Many hands reaching for slices from one big pizza on a shared table" width="1600" height="1067" loading="lazy">
     </figure>
     <div class="opening__say">
-      <p class="m-text-5">As you'll see, I'm not <span class="m-lift">very</span> fancy. I'm <span class="m-lift">more</span> of a shared-table, extra-napkins <span class="m-lift">and</span> one-more-slice kind of place.</p>
+      <p class="m-text-5" data-8b-items=":scope > .m-lift">As you'll see, I'm not <span class="m-lift" style="--i:0;--n:3">very</span> fancy. I'm <span class="m-lift" style="--i:1;--n:3">more</span> of a shared-table, extra-napkins <span class="m-lift" style="--i:2;--n:3">and</span> one-more-slice kind of place.</p>
       <p class="m-text">Thin in the middle, puffed at the edge, eaten with hands. The neighbours have been squeezing round my tables for thirty years, and I like it loud.</p>
       <a class="m-btn" href="#people"><span class="m-btn__label">Meet my people</span></a>
     </div>
@@ -680,12 +876,12 @@ textarea.m-field { min-height: 104px; resize: vertical; }
 <section id="dough" data-8b-section="dough" aria-labelledby="dough-title">
   <div class="m-wave" aria-hidden="true"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60Q180 8 360 60T720 60T1080 60T1440 60T1800 60T2160 60T2520 60T2880 60V120H0Z"/></svg></div>
   <div class="dough__head">
-    <h2 class="m-text-2" id="dough-title" data-8b-motion="lift">I take <span class="m-lift">my</span> time</h2>
+    <h2 class="m-text-2" id="dough-title" data-8b-motion="lift" data-8b-enter="82%" data-8b-items=":scope > .m-lift">I take <span class="m-lift">my</span> time</h2>
     <p class="m-text">Every pie you eat here started two days before you sat down. Five steps, no shortcuts, the same since my first night on Example Street.</p>
   </div>
   <div class="dough__track">
     <div class="dough__stage">
-      <ol class="dough__steps">
+      <ol class="dough__steps" data-8b-items=":scope > li" data-8b-fixed="5">
         <li class="dough__step"><span class="dough__num m-text-4">Step 1</span><h3 class="dough__name m-text-2">Rest</h3><p class="dough__note m-text">Forty-eight hours in the cold. The dough does the work, I just wait.</p></li>
         <li class="dough__step"><span class="dough__num m-text-4">Step 2</span><h3 class="dough__name m-text-2">Knead</h3><p class="dough__note m-text">By hand, at seven in the morning, before the street wakes up.</p></li>
         <li class="dough__step"><span class="dough__num m-text-4">Step 3</span><h3 class="dough__name m-text-2">Stretch</h3><p class="dough__note m-text">Fingers from the middle out. A rolling pin never touches it.</p></li>
@@ -693,12 +889,12 @@ textarea.m-field { min-height: 104px; resize: vertical; }
         <li class="dough__step"><span class="dough__num m-text-4">Step 5</span><h3 class="dough__name m-text-2">Fire</h3><p class="dough__note m-text">Ninety seconds in the wood oven. Puffed, spotted, done.</p></li>
       </ol>
       <div class="dough__frame-wrap">
-        <div class="dough__frame">
-          <img style="background:#8c8c8c" class="dough__shot" src="https://images.unsplash.com/photo-1604745186348-f2ced902a93c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZG91Z2glMjBiYWxscyUyMHByb29maW5nfGVufDF8MXx8fDE3OTE0NDA4MDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Rows of dough balls resting on a floured tray" width="900" height="1350" loading="lazy">
-          <img style="background:#260c0c" class="dough__shot" src="https://images.unsplash.com/photo-1652283321082-72bb2b601abd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cGl6emElMjBkb3VnaCUyMGhhbmRzfGVufDF8MXx8fDE3OTE0NDA4MDd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Hands kneading a ball of dough on a floured table" width="900" height="1350" loading="lazy">
-          <img style="background:#d9d9c0" class="dough__shot" src="https://images.unsplash.com/photo-1626202380338-2369f39e30d4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZG91Z2glMjBiYWxscyUyMHByb29maW5nfGVufDF8MXx8fDE3OTE0NDA4MDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Hands stretching a round of dough above a red and white cloth" width="900" height="1350" loading="lazy">
-          <img style="background:#c08c59" class="dough__shot" src="https://images.unsplash.com/photo-1754799565094-14f6e224aa9f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cGl6emElMjB0b21hdG8lMjBzYXVjZSUyMHNwcmVhZGluZ3xlbnwxfDF8fHwxNzkxNDQwODEwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="Tomato sauce spread over a stretched base in a spiral" width="900" height="1350" loading="lazy">
-          <img style="background:#260c0c" class="dough__shot" src="https://images.unsplash.com/photo-1693307090398-2a6d5cc39c77?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8d29vZCUyMGZpcmVkJTIwcGl6emElMjBvdmVufGVufDF8MXx8fDE3OTE0NDA4MTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=440&amp;q=60" alt="A pizza blistering in the flames of a wood oven" width="900" height="1350" loading="lazy">
+        <div class="dough__frame" data-8b-items=":scope > .dough__shot" data-8b-fixed="5">
+          <img class="dough__shot" src="https://images.unsplash.com/photo-1604745186348-f2ced902a93c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZG91Z2glMjBiYWxscyUyMHByb29maW5nfGVufDF8MXx8fDE3OTE0NDA4MDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="Rows of dough balls resting on a floured tray" width="900" height="1350" loading="lazy">
+          <img class="dough__shot" src="https://images.unsplash.com/photo-1652283321082-72bb2b601abd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cGl6emElMjBkb3VnaCUyMGhhbmRzfGVufDF8MXx8fDE3OTE0NDA4MDd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="Hands kneading a ball of dough on a floured table" width="900" height="1350" loading="lazy">
+          <img class="dough__shot" src="https://images.unsplash.com/photo-1626202380338-2369f39e30d4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZG91Z2glMjBiYWxscyUyMHByb29maW5nfGVufDF8MXx8fDE3OTE0NDA4MDh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="Hands stretching a round of dough above a red and white cloth" width="900" height="1350" loading="lazy">
+          <img class="dough__shot" src="https://images.unsplash.com/photo-1754799565094-14f6e224aa9f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8cGl6emElMjB0b21hdG8lMjBzYXVjZSUyMHNwcmVhZGluZ3xlbnwxfDF8fHwxNzkxNDQwODEwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="Tomato sauce spread over a stretched base in a spiral" width="900" height="1350" loading="lazy">
+          <img class="dough__shot" src="https://images.unsplash.com/photo-1693307090398-2a6d5cc39c77?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8d29vZCUyMGZpcmVkJTIwcGl6emElMjBvdmVufGVufDF8MXx8fDE3OTE0NDA4MTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=450&amp;q=60" alt="A pizza blistering in the flames of a wood oven" width="900" height="1350" loading="lazy">
         </div>
       </div>
     </div>
@@ -718,8 +914,8 @@ textarea.m-field { min-height: 104px; resize: vertical; }
         <h2 class="m-text-4" id="rule-title">The house rule</h2>
         <p class="rule__say m-text-5">Nobody leaves my tables <span class="m-lift">still</span> hungry. If you're wavering, the answer is <span class="m-lift">always</span> yes.</p>
       </div>
-      <p class="rule__line m-text-3" style="--len:14"><span class="rule__word">One</span> <span class="rule__word">more</span> <span class="rule__word">slice</span></p>
-      <div class="rule__pill"><div class="m-pill"><img style="background:#0c59d9" src="https://images.unsplash.com/photo-1689793605149-8c5c4b6db1cf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjN8fHBpenphJTIwc2xpY2V8ZW58MXwxfHx8MTc5MTQ0MDc4N3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=240&amp;q=60" alt="A slice of pepperoni pizza held up against a blue wall" width="900" height="1125" loading="lazy"></div></div>
+      <p class="rule__line m-text-3" style="--len:14" data-8b-items=":scope > .rule__word"><span class="rule__word">One</span> <span class="rule__word">more</span> <span class="rule__word">slice</span></p>
+      <div class="rule__pill"><div class="m-pill"><img src="https://images.unsplash.com/photo-1689793605149-8c5c4b6db1cf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjN8fHBpenphJTIwc2xpY2V8ZW58MXwxfHx8MTc5MTQ0MDc4N3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=60" alt="A slice of pepperoni pizza held up against a blue wall" width="900" height="1125" loading="lazy"></div></div>
       <p class="rule__note m-text-4">After ten at night the last slice on the table is on the house.</p>
     </div>
   </div>
@@ -732,24 +928,24 @@ textarea.m-field { min-height: 104px; resize: vertical; }
     <h2 class="m-text-2" id="pies-title">My pies</h2>
     <p class="m-text">Some days spicier, some days softer. The dough never changes. Four that never leave the menu, and a special on the board most nights.</p>
   </div>
-  <ul class="pies__list">
-    <li class="pie">
-      <figure class="pie__photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1680405620826-83b0f0f61b28?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWFyZ2hlcml0YSUyMHBpenphfGVufDF8MXx8fDE3OTE0NDA4NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="A margherita with torn basil and grated cheese, seen from above" width="900" height="1350" loading="lazy"></figure>
+  <ul class="pies__list" data-8b-items=":scope > li">
+    <li class="pie" style="--pies-li-pie-rotate-from: -15.6deg; --pies-li-pie-rotate-at38: -15.6deg">
+      <figure class="pie__photo"><img src="https://images.unsplash.com/photo-1680405620826-83b0f0f61b28?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWFyZ2hlcml0YSUyMHBpenphfGVufDF8MXx8fDE3OTE0NDA4NDV8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="A margherita with torn basil and grated cheese, seen from above" width="900" height="1350" loading="lazy"></figure>
       <div class="pie__body"><h3 class="pie__name m-text-2">The Monella</h3><p class="m-text">Tomato, fior di latte, basil and far too much olive oil. The one I'm named for.</p></div>
       <p class="pie__foot"><span class="m-text-4">Vegetarian</span><span class="m-badge">£11</span></p>
     </li>
-    <li class="pie">
-      <figure class="pie__photo"><img style="background:#a6260c" src="https://images.unsplash.com/photo-1716237387578-11ac7842b31e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHBlcHBlcm9uaSUyMHBpenphfGVufDF8MXx8fDE3OTE0NDA4NDZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="A pepperoni pizza covered edge to edge in cups of pepperoni" width="900" height="1350" loading="lazy"></figure>
+    <li class="pie" style="--pies-li-pie-rotate-from: 9.1deg; --pies-li-pie-rotate-at38: 9.1deg">
+      <figure class="pie__photo"><img src="https://images.unsplash.com/photo-1716237387578-11ac7842b31e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHBlcHBlcm9uaSUyMHBpenphfGVufDF8MXx8fDE3OTE0NDA4NDZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="A pepperoni pizza covered edge to edge in cups of pepperoni" width="900" height="1350" loading="lazy"></figure>
       <div class="pie__body"><h3 class="pie__name m-text-2">Big Mouth</h3><p class="m-text">Tomato, pepperoni, chilli honey, and then more pepperoni on top of that.</p></div>
       <p class="pie__foot"><span class="m-text-4">Hot</span><span class="m-badge">£13</span></p>
     </li>
-    <li class="pie">
-      <figure class="pie__photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1754047166193-bbab382fcf25?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bXVzaHJvb20lMjBwaXp6YXxlbnwxfDF8fHwxNzkxNDQwODM0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="A white pizza with mushrooms and herbs on a dark board" width="900" height="1350" loading="lazy"></figure>
+    <li class="pie" style="--pies-li-pie-rotate-from: -5.2deg; --pies-li-pie-rotate-at38: -5.2deg">
+      <figure class="pie__photo"><img src="https://images.unsplash.com/photo-1754047166193-bbab382fcf25?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bXVzaHJvb20lMjBwaXp6YXxlbnwxfDF8fHwxNzkxNDQwODM0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="A white pizza with mushrooms and herbs on a dark board" width="900" height="1350" loading="lazy"></figure>
       <div class="pie__body"><h3 class="pie__name m-text-2">Night Shift</h3><p class="m-text">No tomato. Mushrooms, garlic cream, thyme and black pepper, for after dark.</p></div>
       <p class="pie__foot"><span class="m-text-4">Vegetarian</span><span class="m-badge">£12</span></p>
     </li>
-    <li class="pie">
-      <figure class="pie__photo"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1596818532151-94f23db18997?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8dmVnZXRhYmxlJTIwcGl6emF8ZW58MXwxfHx8MTc5MTQ0MDg0N3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="A pizza with peppers, olives and soft cheese" width="900" height="1350" loading="lazy"></figure>
+    <li class="pie" style="--pies-li-pie-rotate-from: 16.9deg; --pies-li-pie-rotate-at38: 16.9deg">
+      <figure class="pie__photo"><img src="https://images.unsplash.com/photo-1596818532151-94f23db18997?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8dmVnZXRhYmxlJTIwcGl6emF8ZW58MXwxfHx8MTc5MTQ0MDg0N3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="A pizza with peppers, olives and soft cheese" width="900" height="1350" loading="lazy"></figure>
       <div class="pie__body"><h3 class="pie__name m-text-2">Garden Gossip</h3><p class="m-text">Courgette, peppers, olives, ricotta and whatever the market had that morning.</p></div>
       <p class="pie__foot"><span class="m-text-4">Vegetarian</span><span class="m-badge">£12</span></p>
     </li>
@@ -765,11 +961,11 @@ textarea.m-field { min-height: 104px; resize: vertical; }
   <div class="m-wave" aria-hidden="true" data-8b-motion="swell"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60Q180 8 360 60T720 60T1080 60T1440 60T1800 60T2160 60T2520 60T2880 60V120H0Z"/></svg></div>
   <span class="slices__ring m-ring" aria-hidden="true" data-8b-motion="float"></span>
   <span class="slices__ring m-ring" aria-hidden="true" data-8b-motion="float"></span>
-  <div class="slices__photo m-pill" data-8b-motion="tilt"><img style="background:#402626" src="https://images.unsplash.com/photo-1638981367648-d4909c40ab16?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGl6emElMjBkb3VnaCUyMGhhbmRzfGVufDF8MXx8fDE3OTE0NDA4MDd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="Trays of pizza by the slice lined up on the counter" width="900" height="1350" loading="lazy"></div>
+  <div class="slices__photo m-pill" data-8b-motion="tilt"><img src="https://images.unsplash.com/photo-1638981367648-d4909c40ab16?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cGl6emElMjBkb3VnaCUyMGhhbmRzfGVufDF8MXx8fDE3OTE0NDA4MDd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=490&amp;q=60" alt="Trays of pizza by the slice lined up on the counter" width="900" height="1350" loading="lazy"></div>
   <div class="slices__text">
-    <h2 class="m-text-2" id="slices-title" data-8b-motion="lift">The <span class="m-lift">little</span> slice window</h2>
+    <h2 class="m-text-2" id="slices-title" data-8b-motion="lift" data-8b-enter="82%" data-8b-items=":scope > .m-lift">The <span class="m-lift">little</span> slice window</h2>
     <p class="m-text">No table? No problem. The hatch on Example Street opens at eleven and closes when the last tray is gone. Slices are cut big, folded in paper, eaten on the kerb.</p>
-    <dl class="slices__menu">
+    <dl class="slices__menu" data-8b-items=":scope > div">
       <div class="slices__row"><dt class="m-text-4">Margherita</dt><dd class="m-badge">£3.50</dd></div>
       <div class="slices__row"><dt class="m-text-4">Pepperoni &amp; hot honey</dt><dd class="m-badge">£4</dd></div>
       <div class="slices__row"><dt class="m-text-4">Potato &amp; rosemary</dt><dd class="m-badge">£3.50</dd></div>
@@ -784,29 +980,29 @@ textarea.m-field { min-height: 104px; resize: vertical; }
   <div class="m-wave" aria-hidden="true" data-8b-motion="swell"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60Q180 8 360 60T720 60T1080 60T1440 60T1800 60T2160 60T2520 60T2880 60V120H0Z"/></svg></div>
   <div class="people__head">
     <h2 class="m-text-2" id="people-title">My people</h2>
-    <p class="people__say m-text-5" data-8b-motion="lift">They come <span class="m-lift">for</span> the pizza. They stay <span class="m-lift">for</span> the gossip.</p>
+    <p class="people__say m-text-5" data-8b-motion="lift" data-8b-enter="82%" data-8b-items=":scope > .m-lift">They come <span class="m-lift">for</span> the pizza. They stay <span class="m-lift">for</span> the gossip.</p>
   </div>
-  <ul class="people__list">
-    <li class="person">
-      <div class="person__photo"><span class="person__ring m-ring" aria-hidden="true"></span><img style="background:#a6c0c0" src="https://images.unsplash.com/photo-1703759354715-17fcbeea4b66?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8b2xkJTIwbWFuJTIwcG9ydHJhaXQlMjBzbWlsaW5nfGVufDF8MXx8fDE3OTE0NDA4Njd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="Sal, an older man in a green jumper, smiling by the harbour" width="900" height="1350" loading="lazy"></div>
+  <ul class="people__list" data-8b-items=":scope > li">
+    <li class="person" style="--people-li-person-translate-from-2: 22vh">
+      <div class="person__photo"><span class="person__ring m-ring" aria-hidden="true"></span><img src="https://images.unsplash.com/photo-1703759354715-17fcbeea4b66?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8b2xkJTIwbWFuJTIwcG9ydHJhaXQlMjBzbWlsaW5nfGVufDF8MXx8fDE3OTE0NDA4Njd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="Sal, an older man in a green jumper, smiling by the harbour" width="900" height="1350" loading="lazy"></div>
       <h3 class="person__name m-text-2">Sal</h3>
       <p class="person__usual m-text-4">Thursdays, table four, since 1996</p>
       <p class="m-text">“I was eating here before the oven was. A Monella, extra basil, and don't rush me.”</p>
     </li>
-    <li class="person">
-      <div class="person__photo"><span class="person__ring m-ring" aria-hidden="true"></span><img style="background:#a6c0d9" src="https://images.unsplash.com/photo-1598610089901-ade9d3eb16e2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y2hpbGQlMjBlYXRpbmclMjBwaXp6YXxlbnwxfDF8fHwxNzkxNDQwODY5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="Nina sitting in a field, eating a slice of pizza" width="900" height="1350" loading="lazy"></div>
+    <li class="person" style="--people-li-person-translate-from-2: 42vh">
+      <div class="person__photo"><span class="person__ring m-ring" aria-hidden="true"></span><img src="https://images.unsplash.com/photo-1598610089901-ade9d3eb16e2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y2hpbGQlMjBlYXRpbmclMjBwaXp6YXxlbnwxfDF8fHwxNzkxNDQwODY5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="Nina sitting in a field, eating a slice of pizza" width="900" height="1350" loading="lazy"></div>
       <h3 class="person__name m-text-2">Nina</h3>
       <p class="person__usual m-text-4">Big Mouth to take away</p>
       <p class="m-text">“It's meant to be dinner at home. It has never once made it home.”</p>
     </li>
-    <li class="person">
-      <div class="person__photo"><span class="person__ring m-ring" aria-hidden="true"></span><img style="background:#260c0c" src="https://images.unsplash.com/photo-1621786074141-dc5b960e9f17?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y2hpbGQlMjBlYXRpbmclMjBwaXp6YXxlbnwxfDF8fHwxNzkxNDQwODY5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="Theo in a grey hoodie, holding a slice and looking out of the window" width="900" height="1350" loading="lazy"></div>
+    <li class="person" style="--people-li-person-translate-from-2: 30vh">
+      <div class="person__photo"><span class="person__ring m-ring" aria-hidden="true"></span><img src="https://images.unsplash.com/photo-1621786074141-dc5b960e9f17?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y2hpbGQlMjBlYXRpbmclMjBwaXp6YXxlbnwxfDF8fHwxNzkxNDQwODY5fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="Theo in a grey hoodie, holding a slice and looking out of the window" width="900" height="1350" loading="lazy"></div>
       <h3 class="person__name m-text-2">Theo</h3>
       <p class="person__usual m-text-4">Two slices after school</p>
       <p class="m-text">“Paid in coins, every weekday. They know my order before I open the door.”</p>
     </li>
-    <li class="person">
-      <div class="person__photo"><span class="person__ring m-ring" aria-hidden="true"></span><img style="background:#262626" src="https://images.unsplash.com/photo-1656952945433-6cc98812d2a2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZGVsaXZlcnklMjByaWRlciUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTE0NDA4NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="Kofi in a helmet and an orange jacket, laughing" width="900" height="1350" loading="lazy"></div>
+    <li class="person" style="--people-li-person-translate-from-2: 52vh">
+      <div class="person__photo"><span class="person__ring m-ring" aria-hidden="true"></span><img src="https://images.unsplash.com/photo-1656952945433-6cc98812d2a2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZGVsaXZlcnklMjByaWRlciUyMHBvcnRyYWl0fGVufDF8MXx8fDE3OTE0NDA4NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=220&amp;q=60" alt="Kofi in a helmet and an orange jacket, laughing" width="900" height="1350" loading="lazy"></div>
       <h3 class="person__name m-text-2">Kofi</h3>
       <p class="person__usual m-text-4">On the delivery bike</p>
       <p class="m-text">“I know every buzzer on the block, and which ones tip in pizza crusts.”</p>
@@ -818,24 +1014,24 @@ textarea.m-field { min-height: 104px; resize: vertical; }
 <section id="nights" data-8b-section="nights" aria-labelledby="nights-title">
   <div class="m-wave" aria-hidden="true" data-8b-motion="swell"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60Q180 8 360 60T720 60T1080 60T1440 60T1800 60T2160 60T2520 60T2880 60V120H0Z"/></svg></div>
   <div class="nights__head">
-    <h2 class="m-text-2" id="nights-title" data-8b-motion="lift">Every <span class="m-lift">single</span> week</h2>
+    <h2 class="m-text-2" id="nights-title" data-8b-motion="lift" data-8b-enter="82%" data-8b-items=":scope > .m-lift">Every <span class="m-lift">single</span> week</h2>
     <p class="m-text">Three nights when the room turns into something else. Come early, there are never enough chairs.</p>
   </div>
-  <ul class="nights__list">
+  <ul class="nights__list" data-8b-items=":scope > li">
     <li class="night">
       <p class="night__day m-text-3">Tue</p>
       <div class="night__text"><h3 class="night__title m-text-2">Dough school</h3><p class="m-text">Kids from six to twelve stretch, sauce and bake their own pie. Flour everywhere, parents on the bench.</p><p class="m-badge">4.30 pm</p></div>
-      <figure class="night__photo" data-8b-motion="float"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1764226801347-caa55b91c449?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8a2lkcyUyMGNvb2tpbmclMjBjbGFzc3xlbnwxfDB8fHwxNzkxNDQwODcyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A child covered in flour playing with dough" width="1200" height="800" loading="lazy"></figure>
+      <figure class="night__photo" data-8b-motion="float"><img src="https://images.unsplash.com/photo-1764226801347-caa55b91c449?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8a2lkcyUyMGNvb2tpbmclMjBjbGFzc3xlbnwxfDB8fHwxNzkxNDQwODcyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="A child covered in flour playing with dough" width="1200" height="800" loading="lazy"></figure>
     </li>
     <li class="night">
       <p class="night__day m-text-3">Thu</p>
       <div class="night__text"><h3 class="night__title m-text-2">The long table</h3><p class="m-text">One table down the middle of the room, strangers sat together, pies passed from hand to hand.</p><p class="m-badge">7 pm</p></div>
-      <figure class="night__photo" data-8b-motion="float"><img style="background:#262626" src="https://images.unsplash.com/photo-1714978444570-729693fde1f3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZnJpZW5kcyUyMGVhdGluZyUyMHBpenphfGVufDF8MHx8fDE3OTE0NDA4MTJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="Friends laughing round a table covered in pizza boxes" width="1200" height="675" loading="lazy"></figure>
+      <figure class="night__photo" data-8b-motion="float"><img src="https://images.unsplash.com/photo-1714978444570-729693fde1f3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZnJpZW5kcyUyMGVhdGluZyUyMHBpenphfGVufDF8MHx8fDE3OTE0NDA4MTJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="Friends laughing round a table covered in pizza boxes" width="1200" height="675" loading="lazy"></figure>
     </li>
     <li class="night">
       <p class="night__day m-text-3">Sun</p>
       <div class="night__text"><h3 class="night__title m-text-2">Quiz &amp; a pie</h3><p class="m-text">Six rounds, one pie per team. The winners choose next week's special and get to name it.</p><p class="m-badge">6 pm</p></div>
-      <figure class="night__photo" data-8b-motion="float"><img style="background:#d9c0a6" src="https://images.unsplash.com/photo-1622455331494-966b1b4eda44?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8ZnJpZW5kcyUyMGVhdGluZyUyMHBpenphfGVufDF8MHx8fDE3OTE0NDA4MTJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="Two friends sharing pizza and laughing on a sofa" width="1200" height="800" loading="lazy"></figure>
+      <figure class="night__photo" data-8b-motion="float"><img src="https://images.unsplash.com/photo-1622455331494-966b1b4eda44?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8ZnJpZW5kcyUyMGVhdGluZyUyMHBpenphfGVufDF8MHx8fDE3OTE0NDA4MTJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="Two friends sharing pizza and laughing on a sofa" width="1200" height="800" loading="lazy"></figure>
     </li>
   </ul>
 </section>
@@ -844,14 +1040,14 @@ textarea.m-field { min-height: 104px; resize: vertical; }
 <section id="corner" data-8b-section="corner" data-ground="light" aria-labelledby="corner-title">
   <div class="m-wave" aria-hidden="true" data-8b-motion="swell"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60Q180 8 360 60T720 60T1080 60T1440 60T1800 60T2160 60T2520 60T2880 60V120H0Z"/></svg></div>
   <div class="corner__mark">
-    <div class="corner__photo"><div class="m-pill"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1668614119151-6ded31ac8a55?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGl6emVyaWElMjBzdG9yZWZyb250JTIwbmlnaHR8ZW58MXwxfHx8MTc5MTQ0MDg3M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="A red neon pizza sign glowing over the shop front at night" width="900" height="1350" loading="lazy"></div></div>
+    <div class="corner__photo"><div class="m-pill"><img src="https://images.unsplash.com/photo-1668614119151-6ded31ac8a55?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cGl6emVyaWElMjBzdG9yZWZyb250JTIwbmlnaHR8ZW58MXwxfHx8MTc5MTQ0MDg3M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=210&amp;q=60" alt="A red neon pizza sign glowing over the shop front at night" width="900" height="1350" loading="lazy"></div></div>
     <p class="corner__number m-text-3" aria-hidden="true">14</p>
     <div class="corner__ring-box" aria-hidden="true"><div class="corner__ring-pos"><svg class="corner__ring" viewBox="0 0 220 160"><ellipse cx="110" cy="80" rx="104" ry="72" pathLength="1"/></svg></div></div>
   </div>
   <div class="corner__info">
     <h2 class="m-text-2" id="corner-title">Find me</h2>
     <p class="corner__address m-text-5">14 Example Street, on the corner <span class="m-lift">with</span> Lime Row</p>
-    <dl class="corner__hours">
+    <dl class="corner__hours" data-8b-items=":scope > div">
       <div><dt class="m-text-4">Monday</dt><dd class="m-text">Closed, the oven rests too</dd></div>
       <div><dt class="m-text-4">Tuesday to Thursday</dt><dd class="m-text">Noon to 10 pm</dd></div>
       <div><dt class="m-text-4">Friday and Saturday</dt><dd class="m-text">Noon to 11.30 pm</dd></div>
@@ -869,10 +1065,10 @@ textarea.m-field { min-height: 104px; resize: vertical; }
 <section id="faq" data-8b-section="faq" aria-labelledby="faq-title">
   <div class="m-wave" aria-hidden="true" data-8b-motion="swell"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60Q180 8 360 60T720 60T1080 60T1440 60T1800 60T2160 60T2520 60T2880 60V120H0Z"/></svg></div>
   <div class="faq__head">
-    <h2 class="m-text-2" id="faq-title" data-8b-motion="lift">Asked <span class="m-lift">at</span> the counter</h2>
+    <h2 class="m-text-2" id="faq-title" data-8b-motion="lift" data-8b-enter="82%" data-8b-items=":scope > .m-lift">Asked <span class="m-lift">at</span> the counter</h2>
     <p class="m-text">The things the neighbours ask me most. Anything else, shout through the hatch.</p>
   </div>
-  <div class="faq__list">
+  <div class="faq__list" data-8b-items=":scope > details">
     <details><summary><span class="faq__q">Can I book for a big group?</span><span class="faq__icon" aria-hidden="true"></span></summary><p class="faq__a m-text">Up to twenty-four of you on the long table, any night but Thursday. Book through the form below or call the shop.</p></details>
     <details><summary><span class="faq__q">Is there anything gluten-free?</span><span class="faq__icon" aria-hidden="true"></span></summary><p class="faq__a m-text">Yes: a gluten-free base for any pie, baked on its own tray. Tell us about any allergy when you order.</p></details>
     <details><summary><span class="faq__q">Are dogs welcome?</span><span class="faq__icon" aria-hidden="true"></span></summary><p class="faq__a m-text">Very. Water bowl by the door, crusts by negotiation.</p></details>
@@ -885,7 +1081,7 @@ textarea.m-field { min-height: 104px; resize: vertical; }
 <section id="contact" data-8b-section="contact" data-ground="light" aria-labelledby="contact-title">
   <div class="m-wave" aria-hidden="true" data-8b-motion="swell"><svg viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60Q180 8 360 60T720 60T1080 60T1440 60T1800 60T2160 60T2520 60T2880 60V120H0Z"/></svg></div>
   <div class="contact__head">
-    <h2 class="m-text-2" id="contact-title" data-8b-motion="lift">What brings <span class="m-lift">you</span> here?</h2>
+    <h2 class="m-text-2" id="contact-title" data-8b-motion="lift" data-8b-enter="82%" data-8b-items=":scope > .m-lift">What brings <span class="m-lift">you</span> here?</h2>
     <p class="m-text">Tell me what you need and we'll sort it, love. We answer the same day, usually between two pies.</p>
   </div>
   <form data-8b-placeholder="form" class="contact__form" action="#" method="post" novalidate data-sent="Thank you. We'll ring or write back today, between two pies." data-error="I need your name and a phone number or email to get back to you.">
@@ -952,9 +1148,6 @@ textarea.m-field { min-height: 104px; resize: vertical; }
     <a class="m-text-4 m-link" href="#opening">Back to the top</a>
   </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
 <script data-8b-part="section-script:navigation">
 (() => {
   const nav = document.getElementById('navigation');
@@ -979,13 +1172,13 @@ textarea.m-field { min-height: 104px; resize: vertical; }
   function open() {
     overlay.hidden = false;
     menuButton.setAttribute('aria-expanded', 'true');
-    window.lenis?.stop();
+    window.motionKit?.wheel?.stop();
     closeButton.focus();
   }
   function close(returnFocus) {
     overlay.hidden = true;
     menuButton.setAttribute('aria-expanded', 'false');
-    window.lenis?.start();
+    window.motionKit?.wheel?.start();
     if (returnFocus) menuButton.focus();
   }
   menuButton.addEventListener('click', open);
@@ -997,145 +1190,11 @@ textarea.m-field { min-height: 104px; resize: vertical; }
 <script data-8b-part="section-script:opening">
 (() => {
   const section = document.getElementById('opening');
+  document.fonts?.ready.then(() => section.style.setProperty('--opening-fonts', '1'));
   if (!('IntersectionObserver' in window)) return;
   new IntersectionObserver(([entry]) => section.toggleAttribute('data-offscreen', !entry.isIntersecting))
     .observe(section.querySelector('.opening__first'));
 })();
-</script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function navigationHeight() {
-  const bar = document.querySelector('#navigation .nav__bar');
-  return bar ? bar.offsetHeight : 0;
-}
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: .09, anchors: { offset: -navigationHeight() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  lift(element, vars = {}) {
-    const words = element.matches('.m-lift') ? [element] : [...element.querySelectorAll('.m-lift')];
-    return gsap.timeline(vars).from(words, { yPercent: 130, rotation: -10, backgroundSize: '0% .09em', duration: .7, ease: 'back.out(2.4)', stagger: .14 });
-  },
-  swell(element, vars = {}) {
-    return gsap.timeline(vars).from(element, { scaleY: .1, duration: 1, ease: 'none' });
-  },
-  float(element, vars = {}) {
-    return gsap.timeline(vars).from(element, { y: () => Math.min(innerHeight * .16, 150), duration: 1, ease: 'none' });
-  },
-  tilt(element, vars = {}) {
-    return gsap.timeline(vars).from(element, { rotation: -18, duration: 1, ease: 'power1.out' });
-  }
-};
-const effectRanges = {
-  lift: { start: 'top 82%', toggleActions: 'play none none none', once: true },
-  swell: { start: 'top bottom', end: 'top 50%', scrub: .5 },
-  float: { start: 'top bottom', end: 'center 55%', scrub: .5, invalidateOnRefresh: true },
-  tilt: { start: 'top bottom', end: 'center 60%', scrub: .5 }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  Object.keys(effects).forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => ScrollTrigger.create({
-        id: `${id}:${index}`, trigger: element, ...effectRanges[name], animation: effects[name](element)
-      }));
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-</script>
-<script data-8b-part="scene:opening">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('opening');
-    const first = section.querySelector('.opening__first');
-    const windowFrame = section.querySelector('.opening__window');
-    const statement = section.querySelector('.opening__say .m-text-5');
-    const rings = [...section.querySelectorAll('.opening__ring')];
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'opening', trigger: first, start: 'top top', end: 'bottom top', scrub: .6, invalidateOnRefresh: true }
-    });
-    timeline
-      .to(section.querySelector('.opening__line--1'), { xPercent: -42, duration: 1 }, 0)
-      .to(section.querySelector('.opening__line--2'), { xPercent: 34, duration: 1 }, 0)
-      .to(section.querySelector('.opening__pill'), { y: () => innerHeight * .3, rotation: 34, duration: .85, ease: 'power1.in' }, 0)
-      .to(section.querySelector('.opening__wave'), { scaleY: 3.2, duration: .42, ease: 'power1.out' }, 0)
-      .to(section.querySelector('.opening__wave'), { scaleY: 1, duration: .34, ease: 'power1.inOut' }, .42)
-      .fromTo(windowFrame, { clipPath: 'circle(6% at 50% 50%)' }, { clipPath: 'circle(76% at 50% 50%)', duration: .62, ease: 'power2.inOut' }, .38)
-      .fromTo(windowFrame.querySelector('img'), { scale: 1.35 }, { scale: 1, duration: .62 }, .38)
-      .set(windowFrame, { clipPath: 'none' }, 1)
-      .add(effects.lift(statement).duration(.3), .7);
-    rings.forEach((ring, index) => timeline.to(ring, { y: () => -innerHeight * (.35 + (index % 3) * .18), duration: 1 }, 0));
-  });
-}, { first: true });
 </script>
 <script data-8b-part="section-script:contact">
 (() => {
@@ -1154,171 +1213,144 @@ queueMotion(() => {
   });
 })();
 </script>
-<script data-8b-part="scene:dough">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('dough');
-    const track = section.querySelector('.dough__track');
-    const shots = [...section.querySelectorAll('.dough__shot')];
-    const names = [...section.querySelectorAll('.dough__name')];
-    const count = Math.min(shots.length, names.length);
-    if (count < 2) return;
-    const theme = getComputedStyle(document.documentElement);
-    const ink = theme.getPropertyValue('--color-4').trim();
-    const light = theme.getPropertyValue('--color-2').trim();
-    section.setAttribute('data-dough-held', '');
-    section.style.setProperty('--dough-count', count);
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'dough', trigger: track, start: 'top top', end: 'bottom bottom', scrub: .5 }
-    });
-    timeline.fromTo(section.querySelector('.dough__frame-wrap'), { rotation: -13 }, { rotation: 0, duration: count }, 0);
-    shots.slice(1, count).forEach((shot, index) => timeline.fromTo(shot, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: .7, ease: 'power2.inOut' }, index + .3));
-    names.slice(1, count).forEach((name, index) => timeline.fromTo(name, { color: ink }, { color: light, duration: .3 }, index + .55));
-    timeline.set(shots.slice(1, count), { clipPath: 'none' }, count);
-    return () => { section.removeAttribute('data-dough-held'); section.style.removeProperty('--dough-count'); };
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+</script>
+<script data-8b-part="scene-script:rule">
+motionKit.scene('rule', () => {
+  const line = document.querySelector('#rule .rule__line');
+  const words = [...line.querySelectorAll('.rule__word')];
+  words.forEach((word, index) => motionKit.set(word, { '--rule-side': index % 2 ? -1 : 1 }));
+  motionKit.measure(() => {
+    motionKit.set(line, { '--rule-line-w': `${line.offsetWidth}px` });
+    words.forEach(word => motionKit.set(word, { '--rule-word-w': `${word.offsetWidth}px` }));
   });
 });
 </script>
-<script data-8b-part="scene:rule">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 761px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 760px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('rule');
-    const track = section.querySelector('.rule__track');
-    const line = section.querySelector('.rule__line');
-    const words = [...line.querySelectorAll('.rule__word')];
-    section.setAttribute('data-rule-held', '');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'rule', trigger: track, start: 'top top', end: 'bottom bottom', scrub: .6 }
-    });
-    if (context.conditions.wide) {
-      const size = 2.8;
-      timeline
-        .fromTo(line, { scale: size, x: () => (line.offsetWidth * size) / 2 + innerWidth / 2 }, { x: () => -((line.offsetWidth * size) / 2 - innerWidth / 2 + innerWidth * .04), duration: .68 }, 0)
-        .to(line, { x: 0, scale: 1, duration: .27, ease: 'power2.inOut' }, .68);
-    } else {
-      words.forEach((word, index) => {
-        const side = index % 2 ? -1 : 1;
-        timeline
-          .fromTo(word, { scale: 1.7, x: () => side * (innerWidth / 2 + word.offsetWidth * .85 + 12) }, { x: () => -side * word.offsetWidth * .22, duration: .42 }, index * .27)
-          .to(word, { x: 0, scale: 1, duration: .18, ease: 'power2.inOut' }, index * .27 + .42);
-      });
-    }
-    timeline.fromTo(section.querySelector('.rule__pill'), { y: () => innerHeight * .5, rotation: -48 }, { y: 0, rotation: 0, duration: .95, ease: 'power1.out' }, 0);
-    timeline.to({}, { duration: .2 }, Math.max(timeline.duration(), 1));
-    const rise = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'rule:rings', trigger: track, start: 'top 80%', end: () => `top+=${Math.round((track.offsetHeight - innerHeight) * .35)} top`, scrub: .6 }
-    });
-    section.querySelectorAll('.rule__ring').forEach((ring, index) => rise.fromTo(ring, { y: () => innerHeight * (.45 + (index % 4) * .22) }, { y: 0, duration: .8 + (index % 3) * .1 }, 0));
-    return () => section.removeAttribute('data-rule-held');
-  });
-});
-</script>
-<script data-8b-part="scene:pies">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    wide: '(min-width: 601px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 600px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('pies');
-    const list = section.querySelector('.pies__list');
-    const cards = [...list.querySelectorAll('.pie')];
-    const fan = [-12, 7, -4, 13, -8, 10];
-    if (context.conditions.wide) {
-      const timeline = gsap.timeline({
-        defaults: { ease: 'power2.out' },
-        scrollTrigger: { id: 'pies', trigger: list, start: 'top 98%', end: 'top 22%', scrub: .6, invalidateOnRefresh: true }
-      });
-      const offset = card => {
-        const box = list.getBoundingClientRect(), own = card.getBoundingClientRect();
-        return box.left + box.width / 2 - (own.left + own.width / 2) + gsap.getProperty(card, 'x');
-      };
-      cards.forEach((card, index) => {
-        timeline.fromTo(card, { x: () => offset(card), y: () => innerHeight * .3 - index * 14, rotation: fan[index % fan.length] * 1.3 }, { x: () => offset(card), y: 0, rotation: fan[index % fan.length] * 1.3, duration: .38, ease: 'power1.out' }, 0);
-        timeline.fromTo(card, { x: () => offset(card), rotation: fan[index % fan.length] * 1.3 }, { x: 0, rotation: 0, duration: .62, immediateRender: false }, .38);
-      });
-    } else {
-      cards.forEach((card, index) => {
-        const side = index % 2 ? 1 : -1;
-        gsap.fromTo(card, { x: () => side * innerWidth * .55, rotation: side * 11 }, {
-          x: 0, rotation: 0, ease: 'power2.out',
-          scrollTrigger: { id: `pies:card-${index}`, trigger: card, start: 'top bottom', end: 'top 50%', scrub: .5 }
-        });
-      });
-    }
-  });
-});
-</script>
-<script data-8b-part="scene:people">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('people');
-    const list = section.querySelector('.people__list');
-    const depth = [.22, .42, .3, .52];
-    const timeline = gsap.timeline({
-      defaults: { ease: 'power1.out' },
-      scrollTrigger: { id: 'people', trigger: list, start: 'top bottom', end: 'top 22%', scrub: .6 }
-    });
-    [...list.querySelectorAll('.person')].forEach((person, index) => {
-      timeline.fromTo(person, { y: () => innerHeight * depth[index % depth.length] }, { y: 0, duration: 1 }, 0);
-      const ring = person.querySelector('.person__ring');
-      if (ring) timeline.fromTo(ring, { scale: .78 }, { scale: 1, duration: .5, ease: 'back.out(2)' }, .42 + (index % 4) * .1);
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:corner">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('corner');
-    const mark = section.querySelector('.corner__mark');
-    const ring = section.querySelector('.corner__ring');
-    gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'corner', trigger: mark, start: 'top bottom', end: 'center 52%', scrub: .6 }
-    })
-      .fromTo(ring, { scale: 6.5, rotation: -40 }, { scale: 1, rotation: 0, duration: 1, ease: 'power2.out' }, 0)
-      .fromTo(ring.querySelector('ellipse'), { strokeDashoffset: .7 }, { autoRound: false, strokeDashoffset: 0, duration: .85 }, .15)
-      .fromTo(section.querySelector('.corner__photo'), { y: 220, rotation: -22 }, { y: 0, rotation: 0, duration: .9, ease: 'power2.out' }, .05);
-  });
-});
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const send = section.querySelector('.contact__send');
-    const rings = [...send.querySelectorAll('.contact__ring')];
-    const timeline = gsap.timeline({
-      defaults: { ease: 'power2.out' },
-      scrollTrigger: { id: 'contact', trigger: send, start: 'top bottom', end: 'center 62%', scrub: .6 }
-    });
-    rings.forEach((ring, index) => {
-      const angle = (index / rings.length) * Math.PI * 2 + .4;
-      timeline.fromTo(ring,
-        { x: () => Math.cos(angle) * innerWidth * .38, y: () => Math.sin(angle) * innerHeight * .42 - innerHeight * .2, scale: .35 + (index % 3) * .3 },
-        { x: 0, y: 0, scale: 1, duration: 1 }, index * .04);
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:footer">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const footer = document.getElementById('footer');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'footer', trigger: footer, start: 'top 80%', end: 'bottom bottom', scrub: .6 }
-    });
-    timeline
-      .fromTo(footer.querySelector('.footer__mark'), { yPercent: 55, rotation: 6 }, { yPercent: 0, rotation: 0, duration: 1, ease: 'power2.out' }, 0)
-      .fromTo(footer.querySelector('.footer__bar'), { scaleX: 0 }, { scaleX: 1, duration: .5 }, .45);
-    footer.querySelectorAll('.footer__ring').forEach((ring, index) => timeline.fromTo(ring, { y: 160 + (index % 3) * 120 }, { y: 0, duration: .9 }, 0));
+<script data-8b-part="scene-script:pies">
+motionKit.scene('pies', () => {
+  const list = document.querySelector('#pies .pies__list');
+  const cards = [...list.querySelectorAll('.pie')];
+  const fan = [-12, 7, -4, 13, -8, 10];
+  cards.forEach((card, index) => motionKit.set(card, { '--pies-fan': `${fan[index % fan.length] * 1.3}deg` }));
+  motionKit.measure(() => {
+    const centre = list.offsetLeft + list.offsetWidth / 2;
+    cards.forEach(card => motionKit.set(card, { '--pies-x': `${centre - card.offsetLeft - card.offsetWidth / 2}px` }));
   });
 });
 </script>

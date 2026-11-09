@@ -1,8 +1,8 @@
-# Free HTML bowling alley website template with GSAP scroll animations
+# Free HTML bowling alley website template with scroll animations and no libraries
 
-Bowling alley website template: one free HTML file for a venue with a kitchen and bar, three leagues, Friday glow nights, a weekly leaderboard and four party packages. The look is loud, with a near-black ground and yellow, orange, lilac and sky-blue panels. AGENTS.md is included, so Claude Code, Cursor or Codex can adapt it.
+Bowling alley website template: a free HTML file for a venue with a kitchen and bar, three leagues, Friday glow nights, a weekly leaderboard and four party packages. The look is loud: a near-black ground with yellow, orange, lilac and sky-blue panels. Scroll motion runs on CSS with no libraries; AGENTS.md lets Claude Code, Cursor or Codex adapt it.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/bowling-alley-website-template/)** · **[Use this template](https://github.com/new?template_name=bowling-alley-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/bowling-alley-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/pinfall/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/bowling-alley-website-template
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my venue: name, lane count and game prices, kitchen and bar hours, league nights and captains, menu with prices, party packages, beginners' hour, address and how guests book>. Replace the venue name, leaderboard, menu and every price first. Keep the ids, the data-8b-section, data-8b-motion and data-8b-part attributes, the classes AGENTS.md lists and the footer wordmark's len value set to the new name's character count. Ask me for missing facts and never invent prices, hours, scores, league names or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my venue: name, lane count and game prices, kitchen and bar hours, league nights and captains, menu with prices, party packages, beginners' hour, address and how guests book>. Motion is CSS scroll-driven animation plus the inline motion kit: keep the gate script in the head, the ids, the data-8b-section, data-8b-motion, data-8b-items and data-8b-part attributes, the classes AGENTS.md lists and the wordmark's len value; add no animation library. Never invent prices, hours, scores or contacts; ask me.
 ```
 
 Vibe coding this bowling alley website template for Claude Code or Cursor goes fastest when the agent gets the facts only the venue has: lane count, game prices, kitchen and bar hours, league nights, menu prices, party packages and the booking route. The demo invents all of them. It also prints two sets of opening hours that disagree, so make them match. Keep the ids and the data-8b-section, data-8b-motion and data-8b-part attributes.
@@ -33,13 +33,13 @@ No agent? Click **[Use this template](https://github.com/new?template_name=bowli
 
 ## Sections and motion
 
-- **Navigation**: two-line wordmark, a Gift cards button, a Book a lane button and a menu icon; the menu opens a full-screen overlay with five links. The bar tightens after 40 px of scroll, slides out of view when you scroll down past 120 px and returns on scroll up.
+- **Navigation**: two-line wordmark, a Gift cards button, a Book a lane button and a menu icon; the menu opens a full-screen overlay with five links. Mouse-wheel scrolling is smoothed; the bar tightens after 40 px of scroll, slides out of view when you scroll down past 120 px and returns on scroll up.
 - **Under one roof**: big "Under one roof" headline, a lead line with a button, and three tiles for lanes, kitchen and bar. On load the lead and button lift in, the heading lifts out of a clip with a slight tilt, and each tile word lands oversized and turned before pressing flat.
 - **Meet the leagues**: three league captains as duotone portrait cards with colour washes that sweep through them. Colour bands slide sideways behind each greyscale portrait as you scroll, one card a beat behind the last, and settle on purple, green and blue.
 - **Lane-side kitchen**: a round photo stage where four dish photos roll in one after another, beside the menu in four groups. The burger photo sits in a sticky round stage, and the fries, shake and cocktail photos roll in over it from the left, turning as they travel, as each later menu group scrolls up.
 - **Lights out at nine**: "Lights out at nine": the yellow ground dims to black, the heading turns neon and colour pools fade in. As the section scrolls in, one value runs the ground from yellow to black, the heading turns lilac with a purple glow, two colour pools fade in and the photo regains its colour.
-- **Wall of fame**: wall of fame: the six best games of the week, sorted by sliding rows past each other. Rows start in the order the games were bowled, given by data-day, then slide past each other into rank order with a small sideways nudge.
-- **Throw a party at the lanes**: four party packages as panels that ride in from the right while the section is held. The section holds the screen while the intro and the four panels move left, then releases; without the scene the panels wrap into a grid.
+- **Wall of fame**: wall of fame: the six best games of the week, sorted by sliding rows past each other. Tied to scroll, the six rows start in the order the games were bowled and slide past each other into rank order with a small sideways nudge.
+- **Throw a party at the lanes**: four party packages as panels that ride in from the right while the section is held. The section holds the screen while the intro and the four panels move left, then releases; with motion off the panels wrap into a grid.
 - **Never bowled? Good.**: a beginners' hour: a photo, three numbered tips and a booking button. Only the heading lifts out of a clip on arrival.
 - **Before you roll up**: six questions and answers (native &lt;details&gt;) on a panel with two balls and two brush scribbles. Two yellow balls roll in from opposite edges, turning as they travel, and two brush scribbles draw themselves.
 - **Grab a lane**: "Grab a lane" with email and phone tiles, an enquiry form and a photo with the address and opening hours. The heading lifts out of a clip on arrival.
@@ -75,7 +75,7 @@ Yes, in a different way. [8B's AI website builder](https://8b.com/) designs a ne
 
 ## Is it the right base?
 
-This is the right base for a venue that sells an evening: lanes, food, drinks, leagues and parties on one loud page. A venue run on weekly skating sessions suits the [weekly-session](https://8b.com/templates/spinway/) template better, and a quiet restaurant wants less motion. The weak spot is booking: every Book a lane button jumps to the form, and there is no lane calendar or payment. Owners who would rather not edit code can try the 8B builder.
+This is the right base for a venue that sells an evening: lanes, food, drinks, leagues and parties on one loud page. It runs with no animation library and no script from a CDN: about 24 KB of code gzipped, where the GSAP version needs about 70 KB and three extra requests. A venue run on weekly skating sessions suits the [weekly-session](https://8b.com/templates/spinway/) template better. The weak spot is booking: Book a lane jumps to the form, with no lane calendar or payment.
 
 ## Before you publish
 
@@ -84,7 +84,9 @@ This is the right base for a venue that sells an evening: lanes, food, drinks, l
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 81 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 93 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 81 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

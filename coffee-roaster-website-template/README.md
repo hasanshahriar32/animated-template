@@ -1,8 +1,8 @@
-# Free HTML coffee roaster website template with GSAP scroll animations
+# Free HTML coffee roaster website template with scroll animations and no libraries
 
-Coffee roaster website template: one free HTML file for a micro-roastery with a counter, built like a printed roast-day ticket. Cream paper, indigo ink, rust accents and round stamps frame five bean listings, a drinks board, tin refills, monthly tastings and visit details. AGENTS.md is included, so Claude Code, Cursor or Codex can adapt it.
+Coffee roaster website template: one free HTML file for a micro-roastery with a counter, built like a printed roast-day ticket. Cream paper, indigo ink, rust accents and round stamps frame five bean listings, a drinks board, tin refills, monthly tastings and visit details. Its scroll motion is CSS with no libraries, about 23 KB gzipped, with AGENTS.md for Claude Code.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/coffee-roaster-website-template/)** · **[Use this template](https://github.com/new?template_name=coffee-roaster-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/coffee-roaster-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/little-drum/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/coffee-roaster-website-templat
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my roastery or coffee shop: name, town, address, hours, roast day, coffees with origin, process, notes and prices, drinks and prices, refill or tin offer, tasting dates, owners, postage terms>. Replace first the name, the five coffees, the farms, the drinks board and the Sheffield address, then the photos. Keep the ids, the selectors AGENTS.md lists, one photo per coffee and four ticket cells for four steps. Ask me for missing facts; never invent prices, hours, reviews or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my roastery or coffee shop: name, town, address, hours, roast day, coffees with origin, process, notes and prices, drinks and prices, refill or tin offer, tasting dates, owners, postage terms>. Motion is CSS scroll-driven animation plus the inline motion kit: keep the gate script, the ids, the data-8b attributes, five coffees with one photo each and four ticket cells; add no animation library. Ask me for missing facts; never invent prices, hours, reviews or contacts.
 ```
 
 Vibe coding with Claude Code goes fastest when the agent gets the owner's facts first: coffees with origin, process and price, roast day and times, drink prices, refill terms, tasting dates, hours and address. The demo's farms, owners, batch numbers and figures such as 4,120 bags saved are invented, so the agent must ask rather than guess. It then replaces the name wherever it appears and keeps the selectors AGENTS.md lists. Bolt users can skip the download: [its one-click Bolt card](https://8b.com/templates/for-bolt/) hands over the repository.
@@ -34,7 +34,7 @@ No agent? Click **[Use this template](https://github.com/new?template_name=coffe
 ## Sections and motion
 
 - **Navigation**: wordmark, a bag icon with a count, a phone link and a Menu button that opens a rail of seven links.
-- **Roasted on Thursday, on your shelf by Friday morning**: three panels side by side: the headline with a button, a batch ticket and a photo of a batch leaving the drum. Smooth scrolling runs page-wide; on load the three indigo panels fill from the bottom one after another (from the left on phones) and the headline and ticket lines rise into place.
+- **Roasted on Thursday, on your shelf by Friday morning**: three panels side by side: the headline with a button, a batch ticket and a photo of a batch leaving the drum. Mouse wheel scrolling is smoothed page-wide; on load the three indigo panels fill from the bottom one after another (from the left on phones) and the headline and ticket lines rise into place.
 - **On the shelf This week 250 g bags, roasted Thursday**: five coffees on the shelf with prices, notes and a turning round photo frame. A round frame stays beside the list while you scroll and turns one full circle, and the next coffee's photo opens inside it from a circle as its row nears the middle of the screen.
 - **Thursday is Roast day Four steps, one ticket per batch**: four steps of roast day beside a sticky batch ticket that gets stamped. As each of the four steps passes the reading line, a ring stamp presses onto the matching ticket cell from over twice its size and turned, and the cell dips slightly.
 - **Bought direct Three farms The same growers, year after year**: a photo and three partner farms with place, year and a line each. Each of the three farm rows wipes in from the left as it arrives.
@@ -67,7 +67,7 @@ Yes, with a different tool than this file. [8B's AI website builder](https://8b.
 
 ## Is it the right base?
 
-This is the right base for a small roastery or a cafe that sells its own beans and wants a warm, printed look. Among coffee shop websites it is one page with no real shop: Add to bag buttons jump to the visit section until a checkout is linked. A place that pours beer and hosts events fits the [taproom-and-events](https://8b.com/templates/loud-kettle/) template better. Owners who do not code can try 8B, an AI website builder, instead.
+This is the right base for a small roastery or a cafe that sells its own beans and wants a warm, printed look. It is the light build: the same look and scroll behaviour with no animation library and no script from a CDN, about 23 KB of code gzipped against 69 KB for the GSAP version. Among coffee shop websites it has no real shop: Add to bag jumps to the visit section. A taproom with events fits the [taproom-and-events](https://8b.com/templates/loud-kettle/) template better.
 
 ## Before you publish
 
@@ -75,7 +75,9 @@ This is the right base for a small roastery or a cafe that sells its own beans a
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 88 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 101+ (it uses cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 100 KB, no build step. Chrome and Edge 108+, Safari 15.4+, Firefox 101+ (it uses cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 88 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

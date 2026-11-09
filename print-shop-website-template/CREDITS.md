@@ -20,7 +20,7 @@ Loaded from images.unsplash.com. Free to use under the [Unsplash License](https:
 | 10 | photo-1618410321132-9f4cebb2f7f5 | (unknown) | jobs |
 | 11 | photo-1595142545813-06fee27f3dcb | (unknown) | jobs |
 | 12 | photo-1756234814579-d0474aeae2cf | (unknown) | jobs |
-| 13 | photo-1695634365580-cae400a4360b | (unknown) | finishing |
+| 13 | [FaIwAogR7eE](https://unsplash.com/photos/folded-brochures-and-pamphlets-stacked-together-FaIwAogR7eE?utm_source=8b_templates&utm_medium=referral) | [Lola Waligora-Thomas](https://unsplash.com/@lo_thms?utm_source=8b_templates&utm_medium=referral) | finishing |
 | 14 | photo-1630448925000-f014372affc7 | (unknown) | finishing |
 | 15 | photo-1590410684548-807410022ef6 | (unknown) | finishing |
 | 16 | photo-1693658353360-10f7326e7113 | (unknown) | finishing |
@@ -30,9 +30,11 @@ Loaded from images.unsplash.com. Free to use under the [Unsplash License](https:
 
 ## Fonts (SIL Open Font License 1.1)
 
-- Reddit Sans — Google Fonts: https://fonts.google.com/specimen/Reddit+Sans
+- Reddit Sans, Google Fonts: https://fonts.google.com/specimen/Reddit+Sans
 
 ## Libraries
 
-- GSAP 3.13.0, GreenSock — standard "no charge" license: https://gsap.com/standard-license
-- Lenis 1.3.11, darkroom.engineering — MIT: https://github.com/darkroomengineering/lenis
+`index.html` uses none. `index.gsap.html` uses:
+
+- GSAP 3.13.0, GreenSock, standard "no charge" license: https://gsap.com/standard-license
+- Lenis 1.3.11, darkroom.engineering, MIT: https://github.com/darkroomengineering/lenis

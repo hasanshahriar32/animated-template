@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/car-wash-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -109,10 +110,6 @@
 @layer base {
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body { margin: 0; background: var(--color-2); color: var(--color-3); font-family: var(--font-2); font-size: 1.0625rem; line-height: 1.6; overflow-x: clip; }
 img, svg { display: block; max-width: 100%; }
 h1, h2, h3, p, ul, ol, figure, blockquote, dl, dd { margin: 0; }
@@ -250,7 +247,7 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
 #wash .wash__statement { display: grid; gap: 22px; justify-items: start; padding-top: clamp(0px, 8svh, 90px); }
 #wash .wash__statement .wash__line { display: block; }
 #wash .wash__statement .wash__line + .wash__line { color: var(--color-1); }
-#wash .wash__statement p { max-width: 46ch; color: var(--color-7); }
+#wash .wash__statement p { max-width: 27.6em; color: var(--color-7); }
 #wash .wash__soap { height: min(76svh, 760px); min-height: 420px; border-radius: var(--radius-1) var(--radius-1) 160px var(--radius-1); }
 @media (max-width: 720px) {
   #wash .wash__one { padding-top: 96px; }
@@ -295,6 +292,11 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
   @keyframes wash-drift-s { to { transform: translateX(-110px); } }
   @keyframes wash-drift-back-s { from { transform: translateX(-140px); } to { transform: translateX(0); } }
 }
+#wash .wash__two { padding-top: clamp(104px, 13svh, 128px); }
+#wash .wash__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; }
+@media (max-width: 720px) {
+  #wash .wash__two { padding-top: 102px; }
+}
 }
 </style>
 
@@ -320,13 +322,6 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
   #method .method__window { top: 12px; height: 40svh; z-index: 2; }
   #method .method__frames { border-bottom-left-radius: 90px; }
   #method .method__step { min-height: 46svh; align-content: start; padding-top: 32px; }
-}
-}
-</style>
-<style data-8b-part="scene-style:method">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #method.is-staged .method__step:not(.is-current) { opacity: .38; }
 }
 }
 </style>
@@ -372,26 +367,6 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
 #inside .inside__card:nth-child(odd) .m-frame { border-top-left-radius: 120px; }
 #inside .inside__card:nth-child(even) .m-frame { border-bottom-right-radius: 120px; }
 #inside .inside__card p { color: var(--color-7); max-width: 34ch; }
-}
-</style>
-<style data-8b-part="scene-style:inside">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #inside.is-tracking { height: calc(100svh + var(--track-run, 0px)); padding: 0; }
-  #inside.is-tracking .inside__stage { position: sticky; top: 0; width: 100%; height: 100svh; grid-template-columns: min(38vw, 480px) minmax(0, 1fr); align-items: center; gap: 0; overflow: hidden; }
-  #inside.is-tracking .inside__head { position: relative; z-index: 2; height: 100%; max-width: none; padding: 0 clamp(24px, 4vw, 56px) 0 max(var(--space-1), 50vw - 620px); background: var(--color-2); }
-  #inside.is-tracking .inside__rail { position: relative; }
-  #inside.is-tracking .inside__track { display: flex; width: max-content; gap: 24px; padding-right: var(--space-1); }
-  #inside.is-tracking .inside__card { width: clamp(260px, 26vw, 340px); }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 720px) {
-  #inside.is-tracking .inside__stage { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; align-items: start; padding-top: 88px; }
-  #inside.is-tracking .inside__head { height: auto; padding: 0 var(--space-1) 20px; gap: 12px; }
-  #inside.is-tracking .inside__head .m-btn { display: none; }
-  #inside.is-tracking .inside__track { padding-left: var(--space-1); }
-  #inside.is-tracking .inside__card { width: 72vw; }
-  #inside.is-tracking .inside__card .m-frame { aspect-ratio: 4 / 4.2; }
-}
 }
 </style>
 <style data-8b-part="section:protect">
@@ -451,15 +426,6 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
 #reviews .reviews__card footer { display: grid; color: var(--color-7); }
 #reviews .reviews__card footer b { color: var(--color-3); }
 #reviews .reviews__row:last-child .reviews__card:nth-child(odd), #reviews .reviews__row:first-child .reviews__card:nth-child(even) { background: var(--color-4); }
-}
-</style>
-<style data-8b-part="scene-style:reviews">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #reviews.is-sliding .reviews__rows { width: 100%; }
-  #reviews.is-sliding .reviews__row { display: flex; width: max-content; padding-inline: var(--space-1); }
-  #reviews.is-sliding .reviews__card { width: min(420px, 78vw); }
-}
 }
 </style>
 <style data-8b-part="section:club">
@@ -539,19 +505,147 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
 @media (max-width: 860px) { #footer .footer__inner { grid-template-columns: repeat(2, minmax(0, 1fr)); } #footer .footer__brand { grid-column: 1 / -1; } }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#wash .wash__two { padding-top: clamp(104px, 13svh, 128px); }
-#wash .wash__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; }
-@media (max-width: 720px) {
-  #wash .wash__two { padding-top: 102px; }
+<style data-8b-part="motion">
+@layer scenes {
+  @keyframes motion-lather { from { translate: 0 14%; scale: 1.03 .82; opacity: 0; transform-origin: 50% 100%; } to { translate: 0 0; scale: 1; opacity: 1; transform-origin: 50% 100%; } }
+  [data-8b-live] [data-8b-motion~="lather"]:not([data-8b-motion~="lather"]:not([data-8b-motion~="lather"] ~ *).is-in, [data-8b-motion~="lather"]:not([data-8b-motion~="lather"] ~ *).is-in ~ [data-8b-motion~="lather"]) { translate: 0 14%; scale: 1.03 .82; opacity: 0; transform-origin: 50% 100%; }
+  [data-8b-live] :is([data-8b-motion~="lather"]:not([data-8b-motion~="lather"] ~ *).is-in, [data-8b-motion~="lather"]:not([data-8b-motion~="lather"] ~ *).is-in ~ [data-8b-motion~="lather"]) { animation: motion-lather .9s linear(0, 0.0923, 0.1932, 0.2986, 0.4051, 0.51, 0.6106, 0.7052, 0.7923, 0.8708, 0.9402, 1, 1.0503, 1.0913, 1.1235, 1.1474, 1.1637, 1.1733, 1.1769, 1.1754, 1.1696, 1.1605, 1.1487, 1.1349, 1.1199, 1.1043, 1.0884, 1.0728, 1.0579, 1.0438, 1.0309, 1.0192, 1.0089, 1, 0.9925, 0.9864, 0.9816, 0.9781, 0.9757, 0.9742, 0.9737, 0.9739, 0.9748, 0.9761, 0.9779, 0.9799, 0.9822, 0.9845, 0.9869, 0.9892, 0.9914, 0.9935, 0.9954, 0.9971, 0.9987, 1, 1.0011, 1.002, 1.0027, 1.0033, 1.0036, 1.0038, 1.0039, 1.0039, 1.0037, 1.0035, 1.0033, 1.003, 1.0027, 1.0023, 1.002, 1.0016, 1.0013, 1.001, 1.0007, 1.0004, 1.0002, 1, 0.9998, 0.9997, 1) calc(var(--i, 0) * .09s) backwards; }
+  @keyframes motion-sheen { from { transform: translateX(-130%); } to { transform: translateX(130%); } }
+  [data-8b-live] [data-8b-motion~="sheen"] .sheen { transform: translateX(-130%); }
+  [data-8b-live] :is([data-8b-motion~="sheen"]:not([data-8b-motion~="sheen"] ~ *).is-in, [data-8b-motion~="sheen"]:not([data-8b-motion~="sheen"] ~ *).is-in ~ [data-8b-motion~="sheen"]) .sheen { transform: translateX(130%); animation: motion-sheen 1.3s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--i, 0) * .09s) backwards; }
 }
+</style>
+<style data-8b-part="scene:wash">
+@layer scenes {
+  [data-8b-live] #wash .wash__line { animation: wash-line .8s cubic-bezier(.2, .9, .3, 1) backwards; }
+  [data-8b-live] #wash .wash__line + .wash__line { animation-delay: .08s; }
+  [data-8b-live] #wash .wash__statement > p, [data-8b-live] #wash .wash__cta { animation: wash-rise .8s cubic-bezier(.2, .9, .3, 1) .16s backwards; }
+  [data-8b-live] #wash .wash__cta { animation-delay: .24s; }
+  [data-8b-live] #wash .wash__soap { animation: wash-stage 1s cubic-bezier(.2, .9, .3, 1) backwards; }
+}
+</style>
+<style data-8b-part="scene:method">
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #wash .wash__line { animation: wash-line .8s cubic-bezier(.2, .9, .3, 1) backwards; }
-  #wash .wash__line + .wash__line { animation-delay: .08s; }
-  #wash .wash__statement > p, #wash .wash__cta { animation: wash-rise .8s cubic-bezier(.2, .9, .3, 1) .16s backwards; }
-  #wash .wash__cta { animation-delay: .24s; }
-  #wash .wash__soap { animation: wash-stage 1s cubic-bezier(.2, .9, .3, 1) backwards; }
-}</style>
+  [data-8b-live] #method .method__step:not(.is-current) { opacity: .38; }
+}
+}
+@layer scenes {
+[data-8b-live] #method { timeline-scope: --method-t1, --method-t2, --method-t3, --method-t4; }
+[data-8b-live] #method .method__steps > li:nth-of-type(2) { view-timeline: --method-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #method .method__steps > li:nth-of-type(3) { view-timeline: --method-t2 block; view-timeline-inset: 0; }
+[data-8b-live] #method .method__steps > li:nth-of-type(4) { view-timeline: --method-t3 block; view-timeline-inset: 0; }
+[data-8b-live] #method .method__steps > li:nth-of-type(5) { view-timeline: --method-t4 block; view-timeline-inset: 0; }
+[data-8b-live] #method .method__frames > figure:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5)) { animation-name: method-figure-method-frame-translate; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #method .method__frames > figure:nth-of-type(2) { animation-timeline: --method-t1; }
+[data-8b-live] #method .method__frames > figure:nth-of-type(3) { animation-timeline: --method-t2; }
+[data-8b-live] #method .method__frames > figure:nth-of-type(4) { animation-timeline: --method-t3; }
+[data-8b-live] #method .method__frames > figure:nth-of-type(5) { animation-timeline: --method-t4; }
+@keyframes method-figure-method-frame-translate { 0% { translate: 0px 118%; } 100% { translate: 0px 0px; } }
+@media (min-width: 720px) {
+  [data-8b-live] #method .method__frames > figure:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5)) { animation-range: cover 20vh cover 56vh; }
+}
+@media (max-width: 719px) {
+  [data-8b-live] #method .method__frames > figure:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5)) { animation-range: cover 4vh cover 38vh; }
+}
+}
+</style>
+<style data-8b-part="scene:inside">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #inside { height: calc(100svh + var(--track-run, 0px)); padding: 0; }
+  [data-8b-live] #inside .inside__stage { position: sticky; top: 0; width: 100%; height: 100svh; grid-template-columns: min(38vw, 480px) minmax(0, 1fr); align-items: center; gap: 0; overflow: hidden; }
+  [data-8b-live] #inside .inside__head { position: relative; z-index: 2; height: 100%; max-width: none; padding: 0 clamp(24px, 4vw, 56px) 0 max(var(--space-1), 50vw - 620px); background: var(--color-2); }
+  [data-8b-live] #inside .inside__rail { position: relative; }
+  [data-8b-live] #inside .inside__track { display: flex; width: max-content; gap: 24px; padding-right: var(--space-1); }
+  [data-8b-live] #inside .inside__card { width: clamp(260px, 26vw, 340px); }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 720px) {
+  [data-8b-live] #inside .inside__stage { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; align-items: start; padding-top: 88px; }
+  [data-8b-live] #inside .inside__head { height: auto; padding: 0 var(--space-1) 20px; gap: 12px; }
+  [data-8b-live] #inside .inside__head .m-btn { display: none; }
+  [data-8b-live] #inside .inside__track { padding-left: var(--space-1); }
+  [data-8b-live] #inside .inside__card { width: 72vw; }
+  [data-8b-live] #inside .inside__card .m-frame { aspect-ratio: 4 / 4.2; }
+}
+}
+@layer scenes {
+[data-8b-live] #inside { view-timeline: --inside-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #inside .inside__track { animation-timeline: --inside-t1; animation-range: cover 100vh cover calc(100% - 100vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes inside-track-run { 0% { translate: 0px 0px; } 100% { translate: calc(-1 * var(--track-run, 0px)) 0px; } }
+[data-8b-live] #inside .inside__track { animation-name: inside-track-run; }
+}
+</style>
+<style data-8b-part="scene:protect">
+@layer scenes {
+[data-8b-live] { --ease-power1-inout: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); }
+[data-8b-live] #protect .protect__photos { view-timeline: --protect-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #protect .protect__coats { view-timeline: --protect-t2 block; view-timeline-inset: 0; animation-name: protect-ol-protect-coats-rotate; animation-timeline: --protect-t2; animation-range: cover 12vh cover calc(100% - 62vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #protect .protect__photo--a { animation-name: protect-figure-protect-photo-translate; animation-timeline: --protect-t1; animation-range: cover 0% cover 100%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #protect .protect__photo--b { animation-name: protect-figure-protect-photo-translate-2; animation-timeline: --protect-t1; animation-range: cover 0% cover 100%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #protect .protect__coats > li:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4)) { animation-name: protect-coat-rise; animation-timing-function: var(--ease-power1-inout); }
+[data-8b-live] #protect .protect__coats > li:nth-of-type(2) { animation-timeline: --protect-t2; animation-range: cover calc(12% + 3.12vh) cover calc(67% - 37.58vh); animation-fill-mode: both; transform: none; }
+[data-8b-live] #protect .protect__coats > li:nth-of-type(3) { animation-timeline: --protect-t2; animation-range: cover calc(28% - 8.72vh) cover calc(83% - 49.42vh); animation-fill-mode: both; transform: none; }
+[data-8b-live] #protect .protect__coats > li:nth-of-type(4) { animation-timeline: --protect-t2; animation-range: cover calc(44% - 20.56vh) cover calc(99% - 61.26vh); animation-fill-mode: both; transform: none; }
+@keyframes protect-figure-protect-photo-translate { 0% { translate: 0px 80px; } 100% { translate: 0px -80px; } }
+@keyframes protect-figure-protect-photo-translate-2 { 0% { translate: 0px -60px; } 100% { translate: 0px 60px; } }
+@keyframes protect-ol-protect-coats-rotate { 0% { rotate: -3.5deg; } 100% { rotate: 0deg; } }
+@keyframes protect-coat-rise { 0% { translate: 0px var(--protect-coat-y, 0px); } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:reviews">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #reviews .reviews__rows { width: 100%; }
+  [data-8b-live] #reviews .reviews__row { display: flex; width: max-content; padding-inline: var(--space-1); }
+  [data-8b-live] #reviews .reviews__card { width: min(420px, 78vw); }
+}
+}
+@layer scenes {
+[data-8b-live] #reviews { view-timeline: --reviews-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #reviews .reviews__rows > ul:nth-of-type(-n+2) { animation-timeline: --reviews-t1; animation-range: cover 0% cover 100%; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #reviews .reviews__rows > ul:nth-of-type(1) { animation-name: reviews-ul-reviews-row-translate; }
+[data-8b-live] #reviews .reviews__rows > ul:nth-of-type(2) { animation-name: reviews-ul-reviews-row-translate-2; }
+@keyframes reviews-ul-reviews-row-translate { 0% { translate: calc(50.007% - 50.009vw) 0px; } 100% { translate: calc(-50.007% + 50.009vw) 0px; } }
+@keyframes reviews-ul-reviews-row-translate-2 { 0% { translate: calc(-50.007% + 50.009vw) 0px; } 100% { translate: calc(50.007% - 50.009vw) 0px; } }
+}
+</style>
+<style data-8b-part="scene:club">
+@layer scenes {
+[data-8b-live] #club { view-timeline: --club-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #club .club__disc, [data-8b-live] #club-title, [data-8b-live] #club .club__price, [data-8b-live] #club .club__perks, [data-8b-live] #club .m-text-6, [data-8b-live] #club .club__actions { animation-timeline: --club-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #club .club__disc { animation-name: club-svg-club-disc-scale, club-svg-club-disc-rotate; animation-range: cover 12vh cover calc(48.5437% - 1.5922vh); animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0); }
+[data-8b-live] #club-title, [data-8b-live] #club .club__price, [data-8b-live] #club .club__perks, [data-8b-live] #club .m-text-6, [data-8b-live] #club .club__actions { animation-name: club-club-title-translate, club-club-title-scale; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] #club-title { animation-range: cover calc(14.5631% + 7.9223vh) cover calc(36.4078% + 1.8058vh); }
+[data-8b-live] #club .club__price { animation-range: cover calc(17.9612% + 6.9709vh) cover calc(39.8058% + 0.8544vh); }
+[data-8b-live] #club .club__perks { animation-range: cover calc(21.3592% + 6.0194vh) cover calc(43.2039% - 0.0971vh); }
+[data-8b-live] #club .m-text-6 { animation-range: cover calc(24.7573% + 5.068vh) cover calc(46.6019% - 1.0485vh); }
+[data-8b-live] #club .club__actions { animation-range: cover calc(28.1553% + 4.1165vh) cover calc(50% - 2vh); }
+@keyframes club-svg-club-disc-scale { 0% { scale: 0.07; } 100% { scale: 1; } }
+@keyframes club-svg-club-disc-rotate { 0% { rotate: -160deg; } 100% { rotate: 0deg; } }
+@keyframes club-club-title-translate { 0% { translate: 0px 46px; } 100% { translate: 0px 0px; } }
+@keyframes club-club-title-scale { 0% { scale: 0.92; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:book">
+@layer scenes {
+[data-8b-live] #book { view-timeline: --book-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #book .book__bubbles > div:nth-of-type(-n+3), [data-8b-live] #book .book__form { animation-timeline: --book-t1; animation-fill-mode: both; transform: none; }
+[data-8b-live] #book .book__bubbles > div:nth-of-type(-n+3) { animation-range: cover 0% cover 100%; animation-timing-function: linear; }
+[data-8b-live] #book .book__bubbles > div:nth-of-type(1) { animation-name: book-div-book-layer-translate; }
+[data-8b-live] #book .book__bubbles > div:nth-of-type(2) { animation-name: book-div-book-layer-translate-2; }
+[data-8b-live] #book .book__bubbles > div:nth-of-type(3) { animation-name: book-div-book-layer-translate-3; }
+[data-8b-live] #book .book__form { animation-name: book-form-book-form-rotate, book-form-book-form-translate; animation-range: cover 12vh cover 60vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+@keyframes book-div-book-layer-translate { 0% { translate: 0px 90px; } 100% { translate: 0px -90px; } }
+@keyframes book-div-book-layer-translate-2 { 0% { translate: 0px 220px; } 100% { translate: 0px -220px; } }
+@keyframes book-div-book-layer-translate-3 { 0% { translate: 0px 150px; } 100% { translate: 0px -150px; } }
+@keyframes book-form-book-form-rotate { 0% { rotate: -4deg; } 100% { rotate: 0deg; } }
+@keyframes book-form-book-form-translate { 0% { translate: 0px 70px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: floating pill bar with a menu button, the wordmark, a booking button and a call button; full-screen menu with nine links -->
@@ -572,7 +666,7 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
       <button class="m-icon-btn menu__close" type="button" aria-label="Close menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <nav aria-label="Sections">
-      <ul class="menu__list">
+      <ul class="menu__list" data-8b-items=":scope > li">
         <li><a href="#method">How we wash</a></li>
         <li><a href="#prices">Wash menu</a></li>
         <li><a href="#inside">Interiors</a></li>
@@ -588,7 +682,7 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
   </div>
 </header>
 <main>
-<!-- opening: one screen: the h1 with a short paragraph and two actions on the left, a tall rounded photo of a snow-foamed car on the right -->
+<!-- opening: one screen: the h1 with a short paragraph and two actions on the left, a tall rounded photo of a snow-foamed car on the right (animation: scene:wash) -->
 <section id="wash" data-8b-section="opening" aria-labelledby="wash-title">
   
   <div class="wash__two">
@@ -597,7 +691,7 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
       <p class="m-text-6">One bucket holds the shampoo, the other clean water over a grit guard. The mitt goes back into the rinse after every panel, so grit from your sills never gets dragged across your bonnet. No brushes, no tunnel, no rush: about forty minutes a car.</p>
       <div class="wash__cta"><a class="m-btn" href="#book"><span class="m-btn__label">Book a slot</span><svg class="m-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a><a class="m-link" href="#method">See how a wash goes</a></div>
     </div>
-    <figure class="wash__soap m-frame"><img style="background:#8c8c73" src="https://images.unsplash.com/photo-1781890290050-4138ef5afc97?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c25vdyUyMGZvYW0lMjBjYXJ8ZW58MXwxfHx8MTc5MTU3MDM3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A car covered in thick snow foam on wet cobblestones" width="1067" height="1600" fetchpriority="high"></figure>
+    <figure class="wash__soap m-frame"><img src="https://images.unsplash.com/photo-1781890290050-4138ef5afc97?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c25vdyUyMGZvYW0lMjBjYXJ8ZW58MXwxfHx8MTc5MTU3MDM3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A car covered in thick snow foam on wet cobblestones" width="1067" height="1600" fetchpriority="high"></figure>
   </div>
 </section>
 <!-- method: five wash steps with timings, next to a held window where each step's photo rises over the last (animation: scene:method) -->
@@ -609,15 +703,15 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
     </div>
     <div class="method__body">
       <div class="method__window">
-        <div class="method__frames">
-          <figure class="method__frame m-frame"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1694025893767-9a212606fbc5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8aGFuZCUyMGNhciUyMHdhc2glMjBmb2FtfGVufDF8MHx8fDE3OTE1NzAzNTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=820&amp;q=60" alt="The front of a car dripping with snow foam in the bay" width="1600" height="1065" loading="lazy"></figure>
-          <figure class="method__frame m-frame"><img style="background:#262626" src="https://images.unsplash.com/photo-1736805439939-ed0405d04213?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y2FyJTIwd2hlZWwlMjBjbGVhbmluZyUyMGJydXNofGVufDF8MXx8fDE3OTE1NzA1MTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A gloved hand scrubbing a wheel with a soft brush" width="1067" height="1600" loading="lazy"></figure>
-          <figure class="method__frame m-frame"><img style="background:#262640" src="https://images.unsplash.com/photo-1781890381002-8cdb499b406a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c25vdyUyMGZvYW0lMjBjYXJ8ZW58MXwxfHx8MTc5MTU3MDM3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A wash mitt full of suds moving across dark paint" width="1067" height="1600" loading="lazy"></figure>
-          <figure class="method__frame m-frame"><img style="background:#262626" src="https://images.unsplash.com/photo-1560037962-467f95c052c9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2FyJTIwdmFjdXVtJTIwY2xlYW5pbmd8ZW58MXwwfHx8MTc5MTU3MDUwN3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=820&amp;q=60" alt="A white car being rinsed with a hose" width="1600" height="1067" loading="lazy"></figure>
-          <figure class="method__frame m-frame"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1587742379711-0083b22a7ba1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZHJ5aW5nJTIwY2FyJTIwbWljcm9maWJlciUyMHRvd2VsfGVufDF8MXx8fDE3OTE1NzA1MTJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A gloved hand drying a panel with a green towel" width="1188" height="1600" loading="lazy"></figure>
+        <div class="method__frames" data-8b-items=":scope > .method__frame" data-8b-fixed="5">
+          <figure class="method__frame m-frame"><img src="https://images.unsplash.com/photo-1694025893767-9a212606fbc5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8aGFuZCUyMGNhciUyMHdhc2glMjBmb2FtfGVufDF8MHx8fDE3OTE1NzAzNTF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=820&amp;q=60" alt="The front of a car dripping with snow foam in the bay" width="1600" height="1065" loading="lazy"></figure>
+          <figure class="method__frame m-frame"><img src="https://images.unsplash.com/photo-1736805439939-ed0405d04213?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y2FyJTIwd2hlZWwlMjBjbGVhbmluZyUyMGJydXNofGVufDF8MXx8fDE3OTE1NzA1MTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A gloved hand scrubbing a wheel with a soft brush" width="1067" height="1600" loading="lazy"></figure>
+          <figure class="method__frame m-frame"><img src="https://images.unsplash.com/photo-1781890381002-8cdb499b406a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8c25vdyUyMGZvYW0lMjBjYXJ8ZW58MXwxfHx8MTc5MTU3MDM3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A wash mitt full of suds moving across dark paint" width="1067" height="1600" loading="lazy"></figure>
+          <figure class="method__frame m-frame"><img src="https://images.unsplash.com/photo-1560037962-467f95c052c9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2FyJTIwdmFjdXVtJTIwY2xlYW5pbmd8ZW58MXwwfHx8MTc5MTU3MDUwN3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=820&amp;q=60" alt="A white car being rinsed with a hose" width="1600" height="1067" loading="lazy"></figure>
+          <figure class="method__frame m-frame"><img src="https://images.unsplash.com/photo-1587742379711-0083b22a7ba1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZHJ5aW5nJTIwY2FyJTIwbWljcm9maWJlciUyMHRvd2VsfGVufDF8MXx8fDE3OTE1NzA1MTJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="A gloved hand drying a panel with a green towel" width="1188" height="1600" loading="lazy"></figure>
         </div>
       </div>
-      <ol class="method__steps">
+      <ol class="method__steps" data-8b-items=":scope > li" data-8b-fixed="5">
         <li class="method__step"><h3 class="m-text-5">Pre-rinse and snow foam</h3><p class="m-text">We rinse loose grit off from the roof down, then cover the car in thick snow foam and let it dwell for five minutes to lift the dirt before anything touches the paint.</p><span class="m-badge">10 minutes</span></li>
         <li class="method__step"><h3 class="m-text-5">Wheels and arches first</h3><p class="m-text">Wheels get their own bucket, brushes and mitts, so brake dust never meets your paintwork. Arches are flushed out and tyres scrubbed.</p><span class="m-badge">8 minutes</span></li>
         <li class="method__step"><h3 class="m-text-5">Two-bucket contact wash</h3><p class="m-text">A lambswool mitt, one panel at a time, roof to sills. After every panel the mitt is rinsed in clean water before it goes back into the shampoo.</p><span class="m-badge">12 minutes</span></li>
@@ -631,7 +725,7 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
 <section id="prices" class="l-foam" data-8b-section="prices" aria-labelledby="prices-title">
   <div class="l-wrap">
     <div class="prices__head">
-      <div data-8b-motion="lather">
+      <div data-8b-motion="lather" data-8b-enter="90%">
         <h2 class="m-text-3" id="prices-title">The wash menu</h2>
         <p class="m-text-6">Priced by the size of the vehicle. Pick yours and the whole board changes.</p>
       </div>
@@ -642,13 +736,13 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
         <label><input type="radio" name="size" value="large"><span>SUV &amp; van</span></label>
       </fieldset>
     </div>
-    <ul class="prices__board">
-      <li class="prices__row" data-8b-motion="lather"><h3 class="m-text-5">Hand wash</h3><p class="m-text">Snow foam, the two-bucket wash, wheels and tyres, dried by hand.</p><span class="m-badge">40 min</span><data class="prices__price" value="22" data-small="18" data-family="22" data-large="28">£22</data></li>
-      <li class="prices__row" data-8b-motion="lather"><h3 class="m-text-5">Wash &amp; vac</h3><p class="m-text">The hand wash, plus a full vacuum, inside glass and a wipe of the dash.</p><span class="m-badge">1 hour</span><data class="prices__price" value="34" data-small="28" data-family="34" data-large="42">£34</data></li>
-      <li class="prices__row" data-8b-motion="lather"><h3 class="m-text-5">Mini valet</h3><p class="m-text">Wash &amp; vac, plus door shuts, dressed trims, tyre shine and shampooed mats.</p><span class="m-badge">1½ hours</span><data class="prices__price" value="55" data-small="45" data-family="55" data-large="65">£55</data></li>
-      <li class="prices__row" data-8b-motion="lather"><h3 class="m-text-5">Full valet</h3><p class="m-text">Inside and out: seats shampooed or leather fed, headlining cleaned, vents steamed.</p><span class="m-badge">4–5 hours</span><data class="prices__price" value="130" data-small="110" data-family="130" data-large="155">£130</data></li>
-      <li class="prices__row" data-8b-motion="lather"><h3 class="m-text-5">Pet hair removal</h3><p class="m-text">Added to any valet: rubber brushes and a slow vacuum through every seat and boot liner.</p><span class="m-badge">+30 min</span><data class="prices__price" value="20" data-small="15" data-family="20" data-large="25">£20</data></li>
-      <li class="prices__row" data-8b-motion="lather"><h3 class="m-text-5">Engine bay</h3><p class="m-text">Covered electrics, a gentle degrease, a careful rinse and a dressing for the plastics.</p><span class="m-badge">45 min</span><data class="prices__price" value="30" data-small="25" data-family="30" data-large="35">£30</data></li>
+    <ul class="prices__board" data-8b-items=":scope > li">
+      <li class="prices__row" data-8b-motion="lather" data-8b-enter="90%"><h3 class="m-text-5">Hand wash</h3><p class="m-text">Snow foam, the two-bucket wash, wheels and tyres, dried by hand.</p><span class="m-badge">40 min</span><data class="prices__price" value="22" data-small="18" data-family="22" data-large="28">£22</data></li>
+      <li class="prices__row" data-8b-motion="lather" data-8b-enter="90%"><h3 class="m-text-5">Wash &amp; vac</h3><p class="m-text">The hand wash, plus a full vacuum, inside glass and a wipe of the dash.</p><span class="m-badge">1 hour</span><data class="prices__price" value="34" data-small="28" data-family="34" data-large="42">£34</data></li>
+      <li class="prices__row" data-8b-motion="lather" data-8b-enter="90%"><h3 class="m-text-5">Mini valet</h3><p class="m-text">Wash &amp; vac, plus door shuts, dressed trims, tyre shine and shampooed mats.</p><span class="m-badge">1½ hours</span><data class="prices__price" value="55" data-small="45" data-family="55" data-large="65">£55</data></li>
+      <li class="prices__row" data-8b-motion="lather" data-8b-enter="90%"><h3 class="m-text-5">Full valet</h3><p class="m-text">Inside and out: seats shampooed or leather fed, headlining cleaned, vents steamed.</p><span class="m-badge">4–5 hours</span><data class="prices__price" value="130" data-small="110" data-family="130" data-large="155">£130</data></li>
+      <li class="prices__row" data-8b-motion="lather" data-8b-enter="90%"><h3 class="m-text-5">Pet hair removal</h3><p class="m-text">Added to any valet: rubber brushes and a slow vacuum through every seat and boot liner.</p><span class="m-badge">+30 min</span><data class="prices__price" value="20" data-small="15" data-family="20" data-large="25">£20</data></li>
+      <li class="prices__row" data-8b-motion="lather" data-8b-enter="90%"><h3 class="m-text-5">Engine bay</h3><p class="m-text">Covered electrics, a gentle degrease, a careful rinse and a dressing for the plastics.</p><span class="m-badge">45 min</span><data class="prices__price" value="30" data-small="25" data-family="30" data-large="35">£30</data></li>
     </ul>
     <p class="prices__note m-text-4">Card or cash, paid when you collect. Booked cars go first; walk-ins until 4pm when a bay is free.</p>
   </div>
@@ -662,12 +756,12 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
       <a class="m-btn" href="#book"><span class="m-btn__label">Book a valet</span><svg class="m-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="inside__rail">
-      <ul class="inside__track">
-        <li class="inside__card"><figure class="m-frame"><img style="background:#262626" src="https://images.unsplash.com/photo-1771491237209-b89bc7290588?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y2FyJTIwaW50ZXJpb3IlMjBjbGVhbmluZ3xlbnwxfDB8fHwxNzkxNTcwMzczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1260&amp;q=60" alt="A detailing brush working dust out of a dashboard" width="1600" height="900" loading="lazy"></figure><h3 class="m-text-5">Dash and trims</h3><p class="m-text">Brushed into every seam, vents steamed, plastics left matt rather than greasy.</p></li>
-        <li class="inside__card"><figure class="m-frame"><img style="background:#262626" src="https://images.unsplash.com/photo-1746079074522-2b14240d932c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y2FyJTIwc2VhdCUyMGNsZWFuaW5nJTIwdXBob2xzdGVyeXxlbnwxfDB8fHwxNzkxNTcwNTA4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1060&amp;q=60" alt="A valeter cleaning a front seat from the open door" width="1600" height="1067" loading="lazy"></figure><h3 class="m-text-5">Front seats</h3><p class="m-text">Fabric shampooed and extracted; leather cleaned, then fed so it doesn't crack.</p></li>
-        <li class="inside__card"><figure class="m-frame"><img style="background:#737359" src="https://images.unsplash.com/photo-1789122848497-1538bd70d8ca?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8Y2FyJTIwaW50ZXJpb3IlMjBjbGVhbmluZ3xlbnwxfDB8fHwxNzkxNTcwMzczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1060&amp;q=60" alt="A gloved hand with a spray bottle beside a door card" width="1600" height="1067" loading="lazy"></figure><h3 class="m-text-5">Glass and door cards</h3><p class="m-text">Streak-free inside glass, door pockets emptied, handles and switches wiped.</p></li>
-        <li class="inside__card"><figure class="m-frame"><img style="background:#0c2626" src="https://images.unsplash.com/photo-1602794351477-4b0a974fd386?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Y2FyJTIwc2VhdCUyMGNsZWFuaW5nJTIwdXBob2xzdGVyeXxlbnwxfDB8fHwxNzkxNTcwNTA4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=950&amp;q=60" alt="A clean rear bench seat seen through the open door" width="1600" height="1200" loading="lazy"></figure><h3 class="m-text-5">Rear bench and child seats</h3><p class="m-text">Crumbs out of every crease; child seats taken out, cleaned and refitted.</p></li>
-        <li class="inside__card"><figure class="m-frame"><img style="background:#0c2626" src="https://images.unsplash.com/photo-1672658074730-c09b9e739cf6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y2FyJTIwc2VhdCUyMGNsZWFuaW5nJTIwdXBob2xzdGVyeXxlbnwxfDB8fHwxNzkxNTcwNTA4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1060&amp;q=60" alt="Steam rising inside a car with orange seats" width="1600" height="1067" loading="lazy"></figure><h3 class="m-text-5">Steam and odour</h3><p class="m-text">Steam through the vents and footwells, then a treatment that removes smells rather than covering them.</p></li>
+      <ul class="inside__track" data-8b-items=":scope > li">
+        <li class="inside__card"><figure class="m-frame"><img src="https://images.unsplash.com/photo-1771491237209-b89bc7290588?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y2FyJTIwaW50ZXJpb3IlMjBjbGVhbmluZ3xlbnwxfDB8fHwxNzkxNTcwMzczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1260&amp;q=60" alt="A detailing brush working dust out of a dashboard" width="1600" height="900" loading="lazy"></figure><h3 class="m-text-5">Dash and trims</h3><p class="m-text">Brushed into every seam, vents steamed, plastics left matt rather than greasy.</p></li>
+        <li class="inside__card"><figure class="m-frame"><img src="https://images.unsplash.com/photo-1746079074522-2b14240d932c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y2FyJTIwc2VhdCUyMGNsZWFuaW5nJTIwdXBob2xzdGVyeXxlbnwxfDB8fHwxNzkxNTcwNTA4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1060&amp;q=60" alt="A valeter cleaning a front seat from the open door" width="1600" height="1067" loading="lazy"></figure><h3 class="m-text-5">Front seats</h3><p class="m-text">Fabric shampooed and extracted; leather cleaned, then fed so it doesn't crack.</p></li>
+        <li class="inside__card"><figure class="m-frame"><img src="https://images.unsplash.com/photo-1789122848497-1538bd70d8ca?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8Y2FyJTIwaW50ZXJpb3IlMjBjbGVhbmluZ3xlbnwxfDB8fHwxNzkxNTcwMzczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1060&amp;q=60" alt="A gloved hand with a spray bottle beside a door card" width="1600" height="1067" loading="lazy"></figure><h3 class="m-text-5">Glass and door cards</h3><p class="m-text">Streak-free inside glass, door pockets emptied, handles and switches wiped.</p></li>
+        <li class="inside__card"><figure class="m-frame"><img src="https://images.unsplash.com/photo-1602794351477-4b0a974fd386?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Y2FyJTIwc2VhdCUyMGNsZWFuaW5nJTIwdXBob2xzdGVyeXxlbnwxfDB8fHwxNzkxNTcwNTA4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=950&amp;q=60" alt="A clean rear bench seat seen through the open door" width="1600" height="1200" loading="lazy"></figure><h3 class="m-text-5">Rear bench and child seats</h3><p class="m-text">Crumbs out of every crease; child seats taken out, cleaned and refitted.</p></li>
+        <li class="inside__card"><figure class="m-frame"><img src="https://images.unsplash.com/photo-1672658074730-c09b9e739cf6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y2FyJTIwc2VhdCUyMGNsZWFuaW5nJTIwdXBob2xzdGVyeXxlbnwxfDB8fHwxNzkxNTcwNTA4fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1060&amp;q=60" alt="Steam rising inside a car with orange seats" width="1600" height="1067" loading="lazy"></figure><h3 class="m-text-5">Steam and odour</h3><p class="m-text">Steam through the vents and footwells, then a treatment that removes smells rather than covering them.</p></li>
       </ul>
     </div>
   </div>
@@ -678,7 +772,7 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
     <div class="protect__copy">
       <h2 class="m-text-3" id="protect-title">Gloss that lasts the winter</h2>
       <p class="m-text-6">Salted roads and bird lime eat through a plain wash in weeks. Each coat below builds on the one before it; most cars need two.</p>
-      <ol class="protect__coats">
+      <ol class="protect__coats" data-8b-items=":scope > li" data-8b-fixed="4">
         <li class="protect__coat"><h3 class="m-text-5">Decontamination</h3><span class="m-text-4">from £60</span><p class="m-text">Iron fallout remover and a clay bar lift what washing leaves bonded to the paint.</p></li>
         <li class="protect__coat"><h3 class="m-text-5">Machine polish</h3><span class="m-text-4">from £180</span><p class="m-text">A dual-action polish takes out light swirls and haze and brings the colour back.</p></li>
         <li class="protect__coat"><h3 class="m-text-5">Sealant</h3><span class="m-text-4">from £45</span><p class="m-text">A polymer layer that beads water and keeps the shine for six months.</p></li>
@@ -687,23 +781,23 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
       <a class="m-btn-2" href="#book"><span class="m-btn__label">Ask about protection</span><svg class="m-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg></a>
     </div>
     <div class="protect__photos">
-      <figure class="protect__photo protect__photo--a m-frame" data-8b-motion="sheen"><img style="background:#40408c" src="https://images.unsplash.com/photo-1744502786515-1a7166ff3f16?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8d2F0ZXIlMjBiZWFkaW5nJTIwY2FyJTIwcGFpbnR8ZW58MXwwfHx8MTc5MTU3MDM3OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=850&amp;q=60" alt="Raindrops beading on a glossy blue bonnet" width="1600" height="1068" loading="lazy"><span class="sheen" aria-hidden="true"></span></figure>
-      <figure class="protect__photo protect__photo--b m-frame" data-8b-motion="sheen"><img style="background:#262626" src="https://images.unsplash.com/photo-1658244500543-47f32dc51dc2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Y2FyJTIwcG9saXNoaW5nJTIwZGV0YWlsaW5nfGVufDF8MHx8fDE3OTE1NzAzNzZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="A machine polisher working on a black car's bodywork" width="1600" height="1067" loading="lazy"><span class="sheen" aria-hidden="true"></span></figure>
+      <figure class="protect__photo protect__photo--a m-frame" data-8b-motion="sheen" data-8b-enter="90%"><img src="https://images.unsplash.com/photo-1744502786515-1a7166ff3f16?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8d2F0ZXIlMjBiZWFkaW5nJTIwY2FyJTIwcGFpbnR8ZW58MXwwfHx8MTc5MTU3MDM3OHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=850&amp;q=60" alt="Raindrops beading on a glossy blue bonnet" width="1600" height="1068" loading="lazy"><span class="sheen" aria-hidden="true"></span></figure>
+      <figure class="protect__photo protect__photo--b m-frame" style="--i:1" data-8b-motion="sheen" data-8b-enter="90%"><img src="https://images.unsplash.com/photo-1658244500543-47f32dc51dc2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Y2FyJTIwcG9saXNoaW5nJTIwZGV0YWlsaW5nfGVufDF8MHx8fDE3OTE1NzAzNzZ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="A machine polisher working on a black car's bodywork" width="1600" height="1067" loading="lazy"><span class="sheen" aria-hidden="true"></span></figure>
     </div>
   </div>
 </section>
 <!-- crew: four team portraits with names, roles and one line each -->
 <section id="crew" class="l-foam" data-8b-section="crew" aria-labelledby="crew-title">
   <div class="l-wrap">
-    <div class="crew__head" data-8b-motion="lather">
+    <div class="crew__head" data-8b-motion="lather" data-8b-enter="90%">
       <h2 class="m-text-3" id="crew-title">The people with the mitts</h2>
       <p class="m-text-6">Four of us, two bays and one rule about buckets.</p>
     </div>
-    <ul class="crew__line">
-      <li class="crew__person" data-8b-motion="lather sheen"><figure class="m-frame"><img style="background:#0c2626" src="https://images.unsplash.com/photo-1694552410572-c059b6be7daa?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y2FyJTIwZGV0YWlsZXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNTcwNDAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=280&amp;q=60" alt="Kemi, sitting in front of a freshly washed black car" width="1067" height="1600" loading="lazy"><span class="sheen" aria-hidden="true"></span></figure><h3 class="m-text-5">Kemi Adeyemi</h3><p class="crew__role m-text-4">Runs the bay</p><p class="m-text">Checks every car before it leaves and has never once let a brush near one.</p></li>
-      <li class="crew__person" data-8b-motion="lather sheen"><figure class="m-frame"><img style="background:#262626" src="https://images.unsplash.com/photo-1717229773894-8e7c04aac950?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWVjaGFuaWMlMjBwb3J0cmFpdCUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTU3MDQwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" alt="Joel, smiling in the workshop in a green T-shirt" width="1067" height="1600" loading="lazy"><span class="sheen" aria-hidden="true"></span></figure><h3 class="m-text-5">Joel Hart</h3><p class="crew__role m-text-4">Wheels and arches</p><p class="m-text">Eleven years of brake dust. Owns more wheel brushes than shoes.</p></li>
-      <li class="crew__person" data-8b-motion="lather sheen"><figure class="m-frame"><img style="background:#d9f3f3" src="https://images.unsplash.com/photo-1731960745314-e12045ee74a5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bWVjaGFuaWMlMjBwb3J0cmFpdCUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTU3MDQwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=280&amp;q=60" alt="Ray, smiling in a green shirt and a cap" width="1129" height="1600" loading="lazy"><span class="sheen" aria-hidden="true"></span></figure><h3 class="m-text-5">Ray Tran</h3><p class="crew__role m-text-4">Interiors</p><p class="m-text">Shampoos seats, steams vents and finds the earring you lost in 2019.</p></li>
-      <li class="crew__person" data-8b-motion="lather sheen"><figure class="m-frame"><img style="background:#262626" src="https://images.unsplash.com/photo-1632823639409-ce060d5a54cc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2FyJTIwZGV0YWlsZXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNTcwNDAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=60" alt="Sami working on a car's headlight with a polishing pad" width="1067" height="1600" loading="lazy"><span class="sheen" aria-hidden="true"></span></figure><h3 class="m-text-5">Sami Kaya</h3><p class="crew__role m-text-4">Polish and ceramic</p><p class="m-text">The quiet one with the machine polisher and the inspection lamp.</p></li>
+    <ul class="crew__line" data-8b-items=":scope > li">
+      <li class="crew__person" data-8b-motion="lather sheen" data-8b-enter="90%"><figure class="m-frame"><img src="https://images.unsplash.com/photo-1694552410572-c059b6be7daa?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Y2FyJTIwZGV0YWlsZXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNTcwNDAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Kemi, sitting in front of a freshly washed black car" width="1067" height="1600" loading="lazy"><span class="sheen" aria-hidden="true"></span></figure><h3 class="m-text-5">Kemi Adeyemi</h3><p class="crew__role m-text-4">Runs the bay</p><p class="m-text">Checks every car before it leaves and has never once let a brush near one.</p></li>
+      <li class="crew__person" data-8b-motion="lather sheen" data-8b-enter="90%"><figure class="m-frame"><img src="https://images.unsplash.com/photo-1717229773894-8e7c04aac950?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bWVjaGFuaWMlMjBwb3J0cmFpdCUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTU3MDQwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Joel, smiling in the workshop in a green T-shirt" width="1067" height="1600" loading="lazy"><span class="sheen" aria-hidden="true"></span></figure><h3 class="m-text-5">Joel Hart</h3><p class="crew__role m-text-4">Wheels and arches</p><p class="m-text">Eleven years of brake dust. Owns more wheel brushes than shoes.</p></li>
+      <li class="crew__person" data-8b-motion="lather sheen" data-8b-enter="90%"><figure class="m-frame"><img src="https://images.unsplash.com/photo-1731960745314-e12045ee74a5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bWVjaGFuaWMlMjBwb3J0cmFpdCUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTU3MDQwM3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Ray, smiling in a green shirt and a cap" width="1129" height="1600" loading="lazy"><span class="sheen" aria-hidden="true"></span></figure><h3 class="m-text-5">Ray Tran</h3><p class="crew__role m-text-4">Interiors</p><p class="m-text">Shampoos seats, steams vents and finds the earring you lost in 2019.</p></li>
+      <li class="crew__person" data-8b-motion="lather sheen" data-8b-enter="90%"><figure class="m-frame"><img src="https://images.unsplash.com/photo-1632823639409-ce060d5a54cc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y2FyJTIwZGV0YWlsZXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzkxNTcwNDAyfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=290&amp;q=60" alt="Sami working on a car's headlight with a polishing pad" width="1067" height="1600" loading="lazy"><span class="sheen" aria-hidden="true"></span></figure><h3 class="m-text-5">Sami Kaya</h3><p class="crew__role m-text-4">Polish and ceramic</p><p class="m-text">The quiet one with the machine polisher and the inspection lamp.</p></li>
     </ul>
   </div>
 </section>
@@ -714,13 +808,13 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
     <p class="m-text-6">Rated <b>4.9 out of 5</b> across more than 640 Google reviews, most of them from people who came back.</p>
   </div>
   <div class="reviews__rows">
-    <ul class="reviews__row">
+    <ul class="reviews__row" data-8b-items=":scope > li">
       <li class="reviews__card m-surface"><blockquote><p>Dropped the Golf off after a week in the Peak District and got back a car I didn't recognise.</p></blockquote><footer class="m-text-4"><b>Hannah P.</b><span>Volkswagen Golf</span></footer></li>
       <li class="reviews__card m-surface"><blockquote><p>Two years of dog in the boot. No smell, no hair. I don't know how.</p></blockquote><footer class="m-text-4"><b>Marcus D.</b><span>Skoda Octavia estate</span></footer></li>
       <li class="reviews__card m-surface"><blockquote><p>They really do use two buckets. I watched. Not one new swirl on black paint since.</p></blockquote><footer class="m-text-4"><b>Priya S.</b><span>BMW 3 Series</span></footer></li>
       <li class="reviews__card m-surface"><blockquote><p>Same-day slot on a Tuesday, waited with a coffee, done in forty minutes. Proper job.</p></blockquote><footer class="m-text-4"><b>Tom W.</b><span>Ford Transit Custom</span></footer></li>
     </ul>
-    <ul class="reviews__row">
+    <ul class="reviews__row" data-8b-items=":scope > li">
       <li class="reviews__card m-surface"><blockquote><p>Ceramic coat in November and the salt just slides off. Worth every penny.</p></blockquote><footer class="m-text-4"><b>Ellie R.</b><span>Mazda MX-5</span></footer></li>
       <li class="reviews__card m-surface"><blockquote><p>Kemi talked me out of a polish I didn't need. That's why I keep coming back.</p></blockquote><footer class="m-text-4"><b>Graham B.</b><span>Volvo XC60</span></footer></li>
       <li class="reviews__card m-surface"><blockquote><p>Got the kids' juice out of the back seats. I had honestly given up on them.</p></blockquote><footer class="m-text-4"><b>Sophie L.</b><span>Kia Sportage</span></footer></li>
@@ -736,7 +830,7 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
   <div class="l-wrap club__inner">
     <h2 class="m-text-3" id="club-title">The Wash Club</h2>
     <p class="club__price"><span class="club__amount">£34</span><span class="m-text-4">a month, cancel any month</span></p>
-    <ul class="club__perks">
+    <ul class="club__perks" data-8b-items=":scope > li">
       <li>Two hand washes every month</li>
       <li>First pick of Saturday slots</li>
       <li>10% off every valet and coat</li>
@@ -752,16 +846,16 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
 <!-- faq: five questions and answers (native <details>) -->
 <section id="faq" class="l-foam" data-8b-section="faq" aria-labelledby="faq-title">
   <div class="l-wrap faq__inner">
-    <div class="faq__head" data-8b-motion="lather">
+    <div class="faq__head" data-8b-motion="lather" data-8b-enter="90%">
       <h2 class="m-text-3" id="faq-title">Before you come</h2>
       <p class="m-text-6">Rather ask a person? Call the bay on <a data-8b-placeholder="phone" class="m-link" href="tel:+441140000000">0114 000 0000</a>.</p>
     </div>
-    <div class="faq__list">
-      <details class="faq__item" data-8b-motion="lather"><summary><span class="m-text-5">Do I need to book?</span></summary><p class="m-text">Washes take walk-ins until 4pm when a bay is free, but booked cars go first. Valets and protection are by booking only.</p></details>
-      <details class="faq__item" data-8b-motion="lather"><summary><span class="m-text-5">Can I wait while you wash?</span></summary><p class="m-text">Yes. There's a warm room with coffee and Wi-Fi. For anything longer than a mini valet we'll text you when the car is ready.</p></details>
-      <details class="faq__item" data-8b-motion="lather"><summary><span class="m-text-5">Do you pressure-wash the paint?</span></summary><p class="m-text">Only for the pre-rinse, at low pressure and a safe distance. Anything that touches the paint is a mitt or a towel.</p></details>
-      <details class="faq__item" data-8b-motion="lather"><summary><span class="m-text-5">Can you do vans and campers?</span></summary><p class="m-text">Anything up to 2.9 metres tall fits the covered bay. Taller than that, call us and we'll wash it in the yard.</p></details>
-      <details class="faq__item" data-8b-motion="lather"><summary><span class="m-text-5">What if it rains on the way home?</span></summary><p class="m-text">Rain beads off a clean, sealed car. If something we missed shows up in daylight, bring it back within 48 hours and we'll redo it free.</p></details>
+    <div class="faq__list" data-8b-items=":scope > details">
+      <details class="faq__item" data-8b-motion="lather" data-8b-enter="90%"><summary><span class="m-text-5">Do I need to book?</span></summary><p class="m-text">Washes take walk-ins until 4pm when a bay is free, but booked cars go first. Valets and protection are by booking only.</p></details>
+      <details class="faq__item" data-8b-motion="lather" data-8b-enter="90%"><summary><span class="m-text-5">Can I wait while you wash?</span></summary><p class="m-text">Yes. There's a warm room with coffee and Wi-Fi. For anything longer than a mini valet we'll text you when the car is ready.</p></details>
+      <details class="faq__item" data-8b-motion="lather" data-8b-enter="90%"><summary><span class="m-text-5">Do you pressure-wash the paint?</span></summary><p class="m-text">Only for the pre-rinse, at low pressure and a safe distance. Anything that touches the paint is a mitt or a towel.</p></details>
+      <details class="faq__item" data-8b-motion="lather" data-8b-enter="90%"><summary><span class="m-text-5">Can you do vans and campers?</span></summary><p class="m-text">Anything up to 2.9 metres tall fits the covered bay. Taller than that, call us and we'll wash it in the yard.</p></details>
+      <details class="faq__item" data-8b-motion="lather" data-8b-enter="90%"><summary><span class="m-text-5">What if it rains on the way home?</span></summary><p class="m-text">Rain beads off a clean, sealed car. If something we missed shows up in daylight, bring it back within 48 hours and we'll redo it free.</p></details>
     </div>
   </div>
 </section>
@@ -802,13 +896,13 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
 <!-- footer: wordmark with a line, section links, address and phone, social links and the copyright line -->
 <footer id="footer" class="l-foam" data-8b-section="footer">
   <div class="l-wrap footer__inner">
-    <div class="footer__brand" data-8b-motion="lather">
+    <div class="footer__brand" data-8b-motion="lather" data-8b-enter="90%">
       <a class="footer__logo" href="#wash"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 7 17 11 24 12C17 13 13 17 12 24C11 17 7 13 0 12C7 11 11 7 12 0Z"/></svg><span>Two Buckets</span></a>
       <p class="m-text">Hand car washing and valeting in Kelham Island, Sheffield. Two buckets for every car since 2014.</p>
     </div>
-    <nav class="footer__col" aria-label="Footer" data-8b-motion="lather">
+    <nav class="footer__col" style="--i:1" aria-label="Footer" data-8b-motion="lather" data-8b-enter="90%">
       <p class="m-text-4">On this page</p>
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><a class="m-link" href="#method">How we wash</a></li>
         <li><a class="m-link" href="#prices">Wash menu</a></li>
         <li><a class="m-link" href="#inside">Interiors</a></li>
@@ -816,14 +910,14 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
         <li><a class="m-link" href="#club">Wash Club</a></li>
       </ul>
     </nav>
-    <div class="footer__col" data-8b-motion="lather">
+    <div class="footer__col" style="--i:2" data-8b-motion="lather" data-8b-enter="90%">
       <p class="m-text-4">Visit</p>
       <p class="m-text">Unit 1, Example Yard<br>Sheffield S1 0ZZ</p>
       <p class="m-text"><a data-8b-placeholder="phone" class="m-link" href="tel:+441140000000">0114 000 0000</a></p>
     </div>
-    <div class="footer__col" data-8b-motion="lather">
+    <div class="footer__col" style="--i:3" data-8b-motion="lather" data-8b-enter="90%">
       <p class="m-text-4">Follow the bay</p>
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><a data-8b-placeholder="social" class="m-link" href="https://www.instagram.com/">Instagram</a></li>
         <li><a data-8b-placeholder="social" class="m-link" href="https://www.facebook.com/">Facebook</a></li>
       </ul>
@@ -832,250 +926,7 @@ textarea.m-field__control { resize: vertical; min-height: 96px; }
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function navOffset() {
-  const bar = document.querySelector('#top .nav__bar');
-  return bar ? Math.round(bar.offsetHeight + 24) : 0;
-}
-function refreshScroll() {
-  document.documentElement.style.setProperty('--nav-h', navOffset() + 'px');
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: .085, anchors: { offset: -navOffset() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  lather(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element,
-      { yPercent: 14, scaleY: .82, scaleX: 1.03, opacity: 0, transformOrigin: '50% 100%' },
-      { yPercent: 0, scaleY: 1, scaleX: 1, opacity: 1, duration: .9, ease: 'elastic.out(1, .55)', clearProps: 'transformOrigin' });
-  },
-  sheen(element, vars = {}) {
-    const band = element.querySelector('.sheen');
-    const tl = gsap.timeline(vars);
-    if (band) tl.fromTo(band, { x: 0, xPercent: -130 }, { x: 0, xPercent: 130, duration: 1.3, ease: 'power2.inOut' });
-    return tl;
-  }
-};
-/* Cream bubbles over a photo frame that pop from the centre outward; the layer is generated and removed by the caller's cleanup. */
-function popBubbles(frame, { size = .3 } = {}) {
-  const layer = document.createElement('div');
-  layer.className = 'pop';
-  layer.setAttribute('aria-hidden', 'true');
-  layer.style.setProperty('--pop', '0');
-  const w = frame.offsetWidth, h = frame.offsetHeight, d = Math.max(64, w * size);
-  const step = d * .72, reach = Math.hypot(w, h) / 2;
-  for (let row = 0, y = -d * .2; y < h + d * .2; row++, y += step * .86) {
-    for (let x = (row % 2) * step / 2 - d * .2; x < w + d * .2; x += step) {
-      const b = document.createElement('span');
-      const s = d * (.85 + ((row * 7 + Math.round(x)) % 5) * .07);
-      /* --d: distance from the frame's centre, 0..1; the scene-style turns the layer's --pop into each bubble's scale */
-      const far = Math.min(1, Math.hypot(x - w / 2, y - h / 2) / reach);
-      b.style.cssText = `left:${x - s / 2}px;top:${y - s / 2}px;width:${s}px;height:${s}px;--d:${far.toFixed(3)}`;
-      layer.append(b);
-    }
-  }
-  frame.append(layer);
-  const timeline = gsap.timeline().fromTo(layer, { '--pop': 0 }, { '--pop': 1, duration: .55, ease: 'none' });
-  return { timeline, cleanup: () => layer.remove() };
-}
-const loopObserver = 'IntersectionObserver' in window ? new IntersectionObserver(entries => entries.forEach(entry => {
-  entry.target.closest('[data-8b-section]').classList.toggle('is-off', !entry.isIntersecting);
-})) : null;
-document.querySelectorAll('[data-loop]').forEach(element => loopObserver?.observe(element));
-['lather', 'sheen'].forEach(name => document.querySelectorAll('[data-8b-section]').forEach(section => {
-  const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-  if (!elements.length) return;
-  const id = `effect:${name}:${section.id}`;
-  /* one trigger per group of sibling elements, staggered inside the group */
-  const groups = new Map();
-  elements.forEach(element => groups.set(element.parentElement, [...(groups.get(element.parentElement) || []), element]));
-  queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    [...groups.values()].forEach((group, index) => {
-      const timeline = gsap.timeline();
-      group.forEach((element, i) => timeline.add(effects[name](element), i * .09));
-      ScrollTrigger.create({ id: `${id}:${index}`, trigger: group[0], start: 'top 90%', once: true, animation: timeline });
-    });
-  }), section.getBoundingClientRect().top < innerHeight ? { first: true, id } : { near: section, id });
-}));
-</script>
 
-<script data-8b-part="scene:method">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('method');
-    const frames = [...section.querySelectorAll('.method__frame')];
-    const steps = [...section.querySelectorAll('.method__step')];
-    const count = Math.min(frames.length, steps.length);
-    const narrow = () => window.innerWidth < 720;
-    section.classList.add('is-staged');
-    for (let i = 1; i < count; i++) {
-      gsap.fromTo(frames[i], { yPercent: 118 }, { yPercent: 0, ease: 'none', scrollTrigger: {
-        id: `method:frame-${i + 1}`, trigger: steps[i], scrub: .5, invalidateOnRefresh: true,
-        start: () => narrow() ? 'top 96%' : 'top 80%', end: () => narrow() ? 'top 62%' : 'top 44%'
-      }});
-    }
-    steps.forEach((step, i) => ScrollTrigger.create({
-      id: `method:step-${i + 1}`, trigger: step, start: 'top 62%', end: 'bottom 62%',
-      toggleClass: { targets: step, className: 'is-current' }
-    }));
-    return () => { section.classList.remove('is-staged'); steps.forEach(step => step.classList.remove('is-current')); };
-  });
-}, { id: 'scene:method' });
-</script>
-<script data-8b-part="scene:inside">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('inside');
-    const rail = section.querySelector('.inside__rail');
-    const track = section.querySelector('.inside__track');
-    const run = () => Math.max(0, track.scrollWidth - rail.clientWidth);
-    const measure = () => section.style.setProperty('--track-run', `${run()}px`);
-    section.classList.add('is-tracking');
-    measure();
-    ScrollTrigger.addEventListener('refreshInit', measure);
-    gsap.to(track, { x: () => -run(), ease: 'none', scrollTrigger: {
-      id: 'inside', trigger: section, start: 'top top', end: 'bottom bottom', scrub: .5, invalidateOnRefresh: true
-    }});
-    return () => {
-      ScrollTrigger.removeEventListener('refreshInit', measure);
-      section.classList.remove('is-tracking');
-      section.style.removeProperty('--track-run');
-    };
-  });
-}, { id: 'scene:inside' });
-</script>
-<script data-8b-part="scene:protect">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('protect');
-    const list = section.querySelector('.protect__coats');
-    const coats = [...list.children];
-    const photos = section.querySelectorAll('.protect__photo');
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'protect', trigger: list, start: 'top 88%', end: 'bottom 62%', scrub: .6, invalidateOnRefresh: true
-    }});
-    timeline.fromTo(list, { rotation: -3.5 }, { rotation: 0, duration: 1 }, 0);
-    coats.forEach((coat, i) => {
-      if (!i) return;
-      timeline.fromTo(coat, { y: () => coats[0].offsetTop - coat.offsetTop + i * 14 }, { y: 0, duration: .55, ease: 'power1.inOut' }, .12 + (i - 1) * .16);
-    });
-    photos.forEach((photo, i) => gsap.fromTo(photo, { y: i ? -60 : 80 }, { y: i ? 60 : -80, ease: 'none', scrollTrigger: {
-      id: `protect:photo-${i + 1}`, trigger: photo.parentElement, start: 'top bottom', end: 'bottom top', scrub: .6
-    }}));
-  });
-}, { id: 'scene:protect' });
-</script>
-<script data-8b-part="scene:reviews">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('reviews');
-    const rows = [...section.querySelectorAll('.reviews__row')];
-    const run = row => Math.max(0, row.offsetWidth - section.clientWidth);
-    section.classList.add('is-sliding');
-    rows.forEach((row, i) => gsap.fromTo(row, { x: () => (i % 2 ? -.5 : .5) * run(row) }, { x: () => (i % 2 ? .5 : -.5) * run(row), ease: 'none', scrollTrigger: {
-      id: `reviews:row-${i + 1}`, trigger: section, start: 'top bottom', end: 'bottom top', scrub: .5, invalidateOnRefresh: true
-    }}));
-    return () => section.classList.remove('is-sliding');
-  });
-}, { id: 'scene:reviews' });
-</script>
-<script data-8b-part="scene:club">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('club');
-    const disc = section.querySelector('.club__disc');
-    const parts = [...section.querySelector('.club__inner').children];
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-      id: 'club', trigger: section, start: 'top 88%', end: 'center 52%', scrub: .6
-    }});
-    timeline.fromTo(disc, { scale: .07, rotation: -160 }, { scale: 1, rotation: 0, duration: 1, ease: 'power2.in' }, 0);
-    parts.forEach((part, i) => timeline.fromTo(part, { y: 46, scale: .92 }, { y: 0, scale: 1, duration: .45, ease: 'power2.out' }, .3 + i * .07));
-  });
-}, { id: 'scene:club' });
-</script>
-<script data-8b-part="scene:book">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('book');
-    const layers = section.querySelectorAll('.book__layer');
-    const form = section.querySelector('.book__form');
-    [90, 220, 150].forEach((travel, i) => layers[i] && gsap.fromTo(layers[i], { y: travel }, { y: -travel, ease: 'none', scrollTrigger: {
-      id: `book:layer-${i + 1}`, trigger: section, start: 'top bottom', end: 'bottom top', scrub: .4
-    }}));
-    gsap.fromTo(form, { rotation: -4, y: 70 }, { rotation: 0, y: 0, ease: 'power2.out', scrollTrigger: {
-      id: 'book:card', trigger: section, start: 'top 88%', end: 'top 40%', scrub: .6
-    }});
-  });
-}, { id: 'scene:book' });
-</script>
 <script data-8b-part="section-script:prices">
 (() => {
   const section = document.getElementById('prices');
@@ -1110,12 +961,12 @@ queueMotion(() => {
   const setMenu = open => {
     menu.hidden = !open;
     openButton.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); closeButton.focus(); } else { window.lenis?.start(); openButton.focus(); }
+    if (open) { window.motionKit?.wheel?.stop(); closeButton.focus(); } else { window.motionKit?.wheel?.start(); openButton.focus(); }
   };
   openButton.addEventListener('click', () => setMenu(true));
   closeButton.addEventListener('click', () => setMenu(false));
   menu.addEventListener('keydown', event => { if (event.key === 'Escape') setMenu(false); });
-  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { menu.hidden = true; openButton.setAttribute('aria-expanded', 'false'); window.lenis?.start(); }));
+  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { menu.hidden = true; openButton.setAttribute('aria-expanded', 'false'); window.motionKit?.wheel?.start(); }));
   let last = window.scrollY, travel = 0;
   window.addEventListener('scroll', () => {
     const y = window.scrollY, delta = y - last;
@@ -1127,6 +978,162 @@ queueMotion(() => {
   }, { passive: true });
   header.addEventListener('focusin', () => header.classList.remove('is-tucked'));
 })();
+</script>
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); });
+};
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:inside">
+motionKit.scene('inside', () => {
+  const section = document.getElementById('inside');
+  const rail = section.querySelector('.inside__rail');
+  const track = section.querySelector('.inside__track');
+  motionKit.measure(() => motionKit.set(section, { '--track-run': `${Math.max(0, track.scrollWidth - rail.clientWidth)}px` }));
+});
+</script>
+<script data-8b-part="scene-script:protect">
+motionKit.scene('protect', () => {
+  const coats = [...document.querySelector('#protect .protect__coats').children];
+  motionKit.measure(() => coats.forEach((coat, i) => motionKit.set(coat, { '--protect-coat-y': `${coats[0].offsetTop - coat.offsetTop + i * 14}px` })));
+});
+</script>
+<script data-8b-part="scene-script:method">
+motionKit.scene("method", () => {
+  { const targets = ["#method .method__steps > li:nth-of-type(1)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#method .method__steps > li:nth-of-type(1)"), "0% 62%", "100% 62%", p => targets.forEach(t => t.classList.toggle("is-current", p > 0 && p < 1))); }
+  { const targets = ["#method .method__steps > li:nth-of-type(2)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#method .method__steps > li:nth-of-type(2)"), "0% 62%", "100% 62%", p => targets.forEach(t => t.classList.toggle("is-current", p > 0 && p < 1))); }
+  { const targets = ["#method .method__steps > li:nth-of-type(3)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#method .method__steps > li:nth-of-type(3)"), "0% 62%", "100% 62%", p => targets.forEach(t => t.classList.toggle("is-current", p > 0 && p < 1))); }
+  { const targets = ["#method .method__steps > li:nth-of-type(4)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#method .method__steps > li:nth-of-type(4)"), "0% 62%", "100% 62%", p => targets.forEach(t => t.classList.toggle("is-current", p > 0 && p < 1))); }
+  { const targets = ["#method .method__steps > li:nth-of-type(5)"].map(s => document.querySelector(s)); motionKit.track(document.querySelector("#method .method__steps > li:nth-of-type(5)"), "0% 62%", "100% 62%", p => targets.forEach(t => t.classList.toggle("is-current", p > 0 && p < 1))); }
+});
 </script>
 </body>
 </html>

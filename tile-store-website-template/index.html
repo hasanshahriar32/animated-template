@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/tile-store-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -65,10 +66,6 @@
 @font-face { font-family: "Radio Canada Big Fallback"; src: local("Arial"), local("ArialMT"), local("Helvetica"); font-weight: 100 549; size-adjust: 99.6%; ascent-override: 100.4%; descent-override: 31.1%; line-gap-override: 0%; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; background: var(--color-1); }
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: hidden; }
 body { margin: 0; background: var(--color-1); color: var(--color-2); }
 img { display: block; max-width: 100%; }
 h1, h2, h3, p, figure, blockquote, dl, dd { margin: 0; }
@@ -270,21 +267,22 @@ a { color: inherit; }
   #opening .op__intro-field { animation: op-field .9s cubic-bezier(.7, 0, .2, 1) .1s backwards; }
   #opening .op__photo { animation: op-photo .9s cubic-bezier(.6, 0, .2, 1) backwards; }
   #opening .op__head { animation: op-rise .8s cubic-bezier(.3, .7, .2, 1) backwards; }
-  #opening .op__red { animation: op-red 5.5s cubic-bezier(.65, 0, .35, 1) 1.2s infinite alternate; }
-  #opening .op__gallery-img { animation: op-drift 9s ease-in-out infinite alternate; }
-  #opening[data-loops-paused] .op__red, #opening[data-loops-paused] .op__gallery-img { animation-play-state: paused; }
 }
 @keyframes op-field { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 @keyframes op-photo { from { clip-path: inset(38% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
 @keyframes op-rise { from { translate: 0 26px; } to { translate: 0 0; } }
-@keyframes op-red { from { translate: 0 0; } to { translate: 0 min(44vh, 360px); } }
-@keyframes op-drift { from { transform: scale(1.14) translate(-4%, -3%); } to { transform: scale(1.14) translate(4%, 3%); } }
+#opening .op__s2 { height: calc(100svh - var(--op-nav)); min-height: 600px; }
+#opening .op__s2-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; }
+@media (max-width: 899px) {
+  #opening .op__s2 { height: auto; min-height: calc(100svh - var(--op-nav)); }
 }
-</style>
-<style data-8b-part="scene-style:opening">
-@layer scenes {
-#opening .op__tiles { position: absolute; inset: 0; z-index: 1; display: grid; pointer-events: none; }
-#opening .op__tile { background: var(--color-1); outline: 1px solid var(--color-2); outline-offset: -1px; }
+@media (prefers-reduced-motion: no-preference) {
+  #opening .op__s2 .fill { animation: op-field .9s cubic-bezier(.7, 0, .2, 1) .1s backwards; }
+  #opening .op__s2-yellow .fill { animation-delay: .2s; }
+  #opening .op__s2-red .fill { animation-delay: .3s; }
+  #opening .op__s2-frame { animation: op-photo .9s cubic-bezier(.6, 0, .2, 1) backwards; }
+  #opening .op__s2-text { animation: op-rise .8s cubic-bezier(.3, .7, .2, 1) backwards; }
+}
 }
 </style>
 <style data-8b-part="section:bonds">
@@ -315,18 +313,6 @@ a { color: inherit; }
   #bonds .bd__side { gap: 14px; padding: 20px 16px; }
   #bonds .bd__title { font-size: clamp(30px, 8.6vw, 40px); }
   #bonds .bd__name { padding: 10px 12px 10px 22px; }
-}
-}
-</style>
-<style data-8b-part="scene-style:bonds">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #bonds[data-staged] .bd__track { height: 300vh; }
-  #bonds[data-staged] .bd__stage { position: sticky; top: 0; height: 100svh; }
-  #bonds[data-staged] .bd__wall { min-height: 0; }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 899px) {
-  #bonds[data-staged] .bd__stage { grid-template-rows: minmax(0, 36fr) minmax(0, 64fr); }
 }
 }
 </style>
@@ -402,21 +388,6 @@ a { color: inherit; }
 @media (min-width: 900px) { #rooms .rm__head { display: grid; gap: 18px; } }
 }
 </style>
-<style data-8b-part="scene-style:rooms">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #rooms[data-staged] .rm__track { height: 400vh; }
-  #rooms[data-staged] .rm__stage { position: sticky; top: 0; height: 100svh; }
-  #rooms[data-staged] .rm__frame { min-height: 0; }
-  #rooms[data-staged] .rm__marker { display: block; position: absolute; left: 0; top: 0; z-index: 2; width: 12px; background: var(--color-3); }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 899px) {
-  #rooms[data-staged] .rm__stage { grid-template-rows: auto minmax(0, 1fr) auto; }
-  #rooms[data-staged] .rm__head { padding: 18px 16px 14px; }
-  #rooms[data-staged] .rm__note { display: none; }
-}
-}
-</style>
 <style data-8b-part="section:samples">
 @layer sections {
 #samples { display: grid; gap: var(--space-1); background: var(--color-2); padding-top: var(--space-1); grid-template-columns: 14px minmax(0, 34fr) minmax(0, 54fr) minmax(0, 12fr); }
@@ -467,19 +438,6 @@ a { color: inherit; }
 @media (max-width: 899px) {
   #glazes .gz__head { grid-template-columns: minmax(0, 1fr); padding: 24px 16px; }
   #glazes .gz__title { font-size: clamp(30px, 8.6vw, 40px); }
-}
-}
-</style>
-<style data-8b-part="scene-style:glazes">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #glazes[data-staged] { --gz-travel: 0px; height: calc(100svh + var(--gz-travel)); }
-  #glazes[data-staged] .gz__stage { position: sticky; top: 0; height: 100svh; }
-  #glazes[data-staged] .gz__rail { display: flex; width: max-content; }
-  #glazes[data-staged] .gz__bay { width: min(36vw, 500px); }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 899px) {
-  #glazes[data-staged] .gz__bay { width: 82vw; grid-template-rows: minmax(0, 1fr) auto; }
 }
 }
 </style>
@@ -625,19 +583,152 @@ a { color: inherit; }
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .op__s2 { height: calc(100svh - var(--op-nav)); min-height: 600px; }
-#opening .op__s2-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; }
-@media (max-width: 899px) {
-  #opening .op__s2 { height: auto; min-height: calc(100svh - var(--op-nav)); }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] [data-8b-motion~="lay"][data-8b-items=":scope > .m-chip"] > .m-chip { animation-name: motion-lay-scope-m-chip-m-chip-clippath; animation-duration: 0.6s; animation-delay: calc(0s + 0.09s * var(--i)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="lay"][data-8b-items=":scope > .m-chip"].is-in > .m-chip { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="lay"][data-8b-items=":scope > li"] > li { animation-name: motion-lay-scope-m-chip-m-chip-clippath; animation-duration: 0.6s; animation-delay: calc(0s + 0.09s * var(--i)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="lay"][data-8b-items=":scope > li"].is-in > li { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="bond"] { view-timeline: --motion-bond block; view-timeline-inset: 0; }
+[data-8b-live] [data-8b-motion~="bond"] > * { --motion-bond-from: calc(-1 * min(40px, 4vw)); animation-name: motion-bond; animation-timeline: --motion-bond; animation-range: cover 2vh cover 45vh; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; }
+[data-8b-live] [data-8b-motion~="bond"] > :nth-child(even) { --motion-bond-from: min(40px, 4vw); }
+@keyframes motion-bond { from { translate: var(--motion-bond-from) 0; } to { translate: 0 0; } }
+[data-8b-live] [data-8b-motion~="field"] { --motion-field-from: inset(0 100% 0 0); animation-name: motion-field; animation-duration: 0.9s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="field"][data-from="top"] { --motion-field-from: inset(0 0 100% 0); }
+[data-8b-live] [data-8b-motion~="field"][data-from="right"] { --motion-field-from: inset(0 0 0 100%); }
+[data-8b-live] [data-8b-motion~="field"][data-from="bottom"] { --motion-field-from: inset(100% 0 0 0); }
+[data-8b-live] [data-8b-motion~="field"].is-in { animation-play-state: running; }
+@keyframes motion-field { from { clip-path: var(--motion-field-from); } to { clip-path: inset(0 0 0 0); } }
+@keyframes motion-lay-scope-m-chip-m-chip-clippath { 0% { clip-path: inset(0px 100% 100% 0px); } 100% { clip-path: inset(0px 0% 0% 0px); } }
 }
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
+[data-8b-live] #opening .op__red { animation: opening-red 5.5s cubic-bezier(.65, 0, .35, 1) 1.2s infinite alternate; }
+[data-8b-live] #opening .op__gallery-img { animation: opening-drift 9s ease-in-out infinite alternate; }
+@keyframes opening-red { from { translate: 0 0; } to { translate: 0 min(44vh, 360px); } }
+@keyframes opening-drift { from { transform: scale(1.14) translate(-4%, -3%); } to { transform: scale(1.14) translate(4%, 3%); } }
+}
+</style>
+<style data-8b-part="scene:bonds">
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #opening .op__s2 .fill { animation: op-field .9s cubic-bezier(.7, 0, .2, 1) .1s backwards; }
-  #opening .op__s2-yellow .fill { animation-delay: .2s; }
-  #opening .op__s2-red .fill { animation-delay: .3s; }
-  #opening .op__s2-frame { animation: op-photo .9s cubic-bezier(.6, 0, .2, 1) backwards; }
-  #opening .op__s2-text { animation: op-rise .8s cubic-bezier(.3, .7, .2, 1) backwards; }
-}</style>
+  [data-8b-live] #bonds .bd__track { height: 300vh; }
+  [data-8b-live] #bonds .bd__stage { position: sticky; top: 0; height: 100svh; }
+  [data-8b-live] #bonds .bd__wall { min-height: 0; }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 899px) {
+  [data-8b-live] #bonds .bd__stage { grid-template-rows: minmax(0, 36fr) minmax(0, 64fr); }
+}
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #bonds .bd__track { view-timeline: --bonds-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #bonds .bd__wall > div:nth-of-type(-n+4) { animation-timeline: --bonds-t1; animation-range: cover calc(10% + 80vh) cover calc(86% - 72vh); animation-fill-mode: both; transform: none; }
+[data-8b-live] #bonds .bd__wall > div:nth-of-type(1) { animation-name: bonds-div-bd-row-translate; animation-timing-function: linear; }
+[data-8b-live] #bonds .bd__wall > div:nth-of-type(3) { animation-timing-function: var(--ease-power2-inout); }
+@keyframes bonds-div-bd-row-translate { 0% { translate: 0px 0px; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 39.4737% { translate: 0px 0px; } 60.5263% { translate: 0px 0px; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 100% { translate: 0px 0px; } }
+@keyframes bonds-div-bd-row-translate-2-d { 0% { translate: 0px 0px; } 39.4737% { translate: -10.023% 0px; } 60.5263% { translate: -10.023% 0px; } 100% { translate: -6.682% 0px; } }
+@keyframes bonds-div-bd-row-translate-2-m { 0% { translate: 0px 0px; } 39.4737% { translate: -14.323% 0px; } 60.5263% { translate: -14.323% 0px; } 100% { translate: -9.549% 0px; } }
+@keyframes bonds-div-bd-row-translate-3-d { 0% { translate: 0px 0px; } 39.4737% { translate: 0px 0px; } 60.5263% { translate: 0px 0px; } 100% { translate: -13.364% 0px; } }
+@keyframes bonds-div-bd-row-translate-3-m { 0% { translate: 0px 0px; } 39.4737% { translate: 0px 0px; } 60.5263% { translate: 0px 0px; } 100% { translate: -19.097% 0px; } }
+@keyframes bonds-div-bd-row-translate-4-d { 0% { translate: 0px 0px; } 39.4737% { translate: -10.023% 0px; } 60.5263% { translate: -10.023% 0px; } 100% { translate: 0px 0px; } }
+@keyframes bonds-div-bd-row-translate-4-m { 0% { translate: 0px 0px; } 39.4737% { translate: -14.323% 0px; } 60.5263% { translate: -14.323% 0px; } 100% { translate: 0px 0px; } }
+@media (min-width: 900px) {
+  [data-8b-live] #bonds .bd__wall > div:nth-of-type(2) { animation-name: bonds-div-bd-row-translate-2-d; animation-timing-function: var(--ease-power2-inout); }
+  [data-8b-live] #bonds .bd__wall > div:nth-of-type(3) { animation-name: bonds-div-bd-row-translate-3-d; }
+  [data-8b-live] #bonds .bd__wall > div:nth-of-type(4) { animation-name: bonds-div-bd-row-translate-4-d; animation-timing-function: var(--ease-power2-inout); }
+}
+@media (max-width: 899px) {
+  [data-8b-live] #bonds .bd__wall > div:nth-of-type(2) { animation-name: bonds-div-bd-row-translate-2-m; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  [data-8b-live] #bonds .bd__wall > div:nth-of-type(3) { animation-name: bonds-div-bd-row-translate-3-m; }
+  [data-8b-live] #bonds .bd__wall > div:nth-of-type(4) { animation-name: bonds-div-bd-row-translate-4-m; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+}
+}
+</style>
+<style data-8b-part="scene:rooms">
+@layer scenes {
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #rooms .rm__track { height: 400vh; }
+  [data-8b-live] #rooms .rm__stage { position: sticky; top: 0; height: 100svh; }
+  [data-8b-live] #rooms .rm__frame { min-height: 0; }
+  [data-8b-live] #rooms .rm__marker { display: block; position: absolute; left: 0; top: 0; z-index: 2; width: 12px; background: var(--color-3); }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 899px) {
+  [data-8b-live] #rooms .rm__stage { grid-template-rows: auto minmax(0, 1fr) auto; }
+  [data-8b-live] #rooms .rm__head { padding: 18px 16px 14px; }
+  [data-8b-live] #rooms .rm__note { display: none; }
+}
+}
+@layer scenes {
+@media (min-width: 900px) {
+}
+@media (max-width: 899px) {
+}
+[data-8b-live] { --ease-power3-inout: linear(0, 0, 0.0001, 0.0003, 0.0008, 0.0019, 0.004, 0.0075, 0.0128, 0.0205, 0.0313, 0.0457, 0.0648, 0.0892, 0.1201, 0.1582, 0.2048, 0.261, 0.3281, 0.4073, 0.5, 0.5927, 0.672, 0.739, 0.7952, 0.8418, 0.88, 0.9107, 0.9352, 0.9543, 0.9688, 0.9795, 0.9872, 0.9925, 0.996, 0.998, 0.9992, 0.9998, 1, 1, 1); }
+[data-8b-live] #rooms .rm__track { view-timeline: --rooms-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #rooms .rm__marker, [data-8b-live] #rooms .rm__room--1, [data-8b-live] #rooms .rm__room--2, [data-8b-live] #rooms .rm__room--3, [data-8b-live] #rooms .rm__room--4 { animation-timeline: --rooms-t1; animation-fill-mode: both; }
+[data-8b-live] #rooms .rm__marker { animation-name: rooms-marker; animation-range: cover calc(8% + 84vh) cover calc(88% - 76vh); animation-timing-function: var(--ease-power3-inout); transform: none; }
+[data-8b-live] #rooms .rm__room--1, [data-8b-live] #rooms .rm__room--2, [data-8b-live] #rooms .rm__room--3, [data-8b-live] #rooms .rm__room--4 { animation-range: cover 100vh cover calc(100% - 100vh); animation-timing-function: linear; }
+[data-8b-live] #rooms .rm__room--1 { animation-name: rooms-div-rm-room-clip-path; }
+[data-8b-live] #rooms .rm__room--2 { animation-name: rooms-div-rm-room-clip-path-2; }
+[data-8b-live] #rooms .rm__room--3 { animation-name: rooms-div-rm-room-clip-path-3; }
+[data-8b-live] #rooms .rm__room--4 { animation-name: rooms-div-rm-room-clip-path-4; }
+@keyframes rooms-marker { 0% { translate: 0px 0px; } 25% { translate: 0px var(--rooms-at-1); } 37.5% { translate: 0px var(--rooms-at-1); } 62.5% { translate: 0px var(--rooms-at-2); } 75% { translate: 0px var(--rooms-at-2); } 100% { translate: 0px var(--rooms-at-3); } }
+@keyframes rooms-div-rm-room-clip-path { 0% { clip-path: inset(0% calc(42% + 1px) 0% 0%); } 10% { clip-path: inset(0% calc(42.035% + 1px) 0% 0%); } 11.6667% { clip-path: inset(0% calc(42.398% + 1px) 0% 0%); } 12.5% { clip-path: inset(0% calc(42.902% + 1px) 0% 0%); } 13.3333% { clip-path: inset(0% calc(43.78% + 1px) 0% 0%); } 14.1667% { clip-path: inset(0% calc(45.181% + 1px) 0% 0%); } 15% { clip-path: inset(0% calc(47.282% + 1px) 0% 0%); } 15.8333% { clip-path: inset(0% calc(50.283% + 1px) 0% 0%); } 16.6667% { clip-path: inset(0% calc(54.412% + 1px) 0% 0%); } 17.5% { clip-path: inset(0% calc(59.919% + 1px) 0% 0%); } 18.3333% { clip-path: inset(0% calc(66.79% + 1px) 0% 0%); } 19.1667% { clip-path: inset(0% calc(72.606% + 1px) 0% 0%); } 20% { clip-path: inset(0% calc(76.989% + 1px) 0% 0%); } 20.8333% { clip-path: inset(0% calc(80.196% + 1px) 0% 0%); } 21.6667% { clip-path: inset(0% calc(82.46% + 1px) 0% 0%); } 22.5% { clip-path: inset(0% calc(83.987% + 1px) 0% 0%); } 23.3333% { clip-path: inset(0% calc(84.957% + 1px) 0% 0%); } 24.1667% { clip-path: inset(0% calc(85.525% + 1px) 0% 0%); } 25.8333% { clip-path: inset(0% calc(85.952% + 1px) 0% 0%); } 73.3333% { clip-path: inset(0% calc(86.081% + 1px) 0% 0%); } 76.6667% { clip-path: inset(0% calc(86.564% + 1px) 0% 0%); } 80% { clip-path: inset(0% calc(87.59% + 1px) 0% 0%); } 84.1667% { clip-path: inset(0% calc(87.978% + 1px) 0% 0%); } 100% { clip-path: inset(0% calc(88% + 1px) 0% 0%); } }
+@keyframes rooms-div-rm-room-clip-path-2 { 0% { clip-path: inset(0% calc(18% + 1px) calc(50% + 1px) calc(58% + 1px)); } 10% { clip-path: inset(0% calc(17.997% + 1px) calc(49.981% + 1px) calc(57.965% + 1px)); } 11.6667% { clip-path: inset(0% calc(17.964% + 1px) calc(49.783% + 1px) calc(57.602% + 1px)); } 12.5% { clip-path: inset(0% calc(17.918% + 1px) calc(49.508% + 1px) calc(57.098% + 1px)); } 13.3333% { clip-path: inset(0% calc(17.838% + 1px) calc(49.029% + 1px) calc(56.22% + 1px)); } 14.1667% { clip-path: inset(0% calc(17.711% + 1px) calc(48.265% + 1px) calc(54.819% + 1px)); } 15% { clip-path: inset(0% calc(17.52% + 1px) calc(47.119% + 1px) calc(52.718% + 1px)); } 15.8333% { clip-path: inset(0% calc(17.247% + 1px) calc(45.482% + 1px) calc(49.717% + 1px)); } 16.6667% { clip-path: inset(0% calc(16.872% + 1px) calc(43.23% + 1px) calc(45.588% + 1px)); } 17.5% { clip-path: inset(0% calc(16.371% + 1px) calc(40.226% + 1px) calc(40.081% + 1px)); } 18.3333% { clip-path: inset(0% calc(15.746% + 1px) calc(36.478% + 1px) calc(33.21% + 1px)); } 19.1667% { clip-path: inset(0% calc(15.218% + 1px) calc(33.306% + 1px) calc(27.394% + 1px)); } 20% { clip-path: inset(0% calc(14.819% + 1px) calc(30.915% + 1px) calc(23.011% + 1px)); } 20.8333% { clip-path: inset(0% calc(14.528% + 1px) calc(29.166% + 1px) calc(19.804% + 1px)); } 21.6667% { clip-path: inset(0% calc(14.322% + 1px) calc(27.931% + 1px) calc(17.54% + 1px)); } 22.5% { clip-path: inset(0% calc(14.183% + 1px) calc(27.098% + 1px) calc(16.013% + 1px)); } 23.3333% { clip-path: inset(0% calc(14.095% + 1px) calc(26.569% + 1px) calc(15.043% + 1px)); } 24.1667% { clip-path: inset(0% calc(14.043% + 1px) calc(26.259% + 1px) calc(14.475% + 1px)); } 25.8333% { clip-path: inset(0% calc(14.004% + 1px) calc(26.026% + 1px) calc(14.049% + 1px)); } 26.6667% { clip-path: inset(0% calc(14.001% + 1px) calc(26.004% + 1px) calc(14.007% + 1px)); } 27.0823% { clip-path: inset(0% calc(14.001% + 1px) calc(26.004% + 1px) calc(14.007% + 1px)); } 27.0833% { clip-path: inset(0% calc(14% + 1px) calc(26% + 1px)); } 27.5% { clip-path: inset(0% calc(14% + 1px) calc(26% + 1px)); } 40% { clip-path: inset(0% calc(14% + 1px) calc(26.04% + 1px)); } 41.6667% { clip-path: inset(0% calc(14% + 1px) calc(26.452% + 1px)); } 42.5% { clip-path: inset(0% calc(14% + 1px) calc(27.025% + 1px)); } 43.3333% { clip-path: inset(0% calc(14% + 1px) calc(28.023% + 1px)); } 44.1667% { clip-path: inset(0% calc(14% + 1px) calc(29.615% + 1px)); } 45% { clip-path: inset(0% calc(14% + 1px) calc(32.002% + 1px)); } 45.8333% { clip-path: inset(0% calc(14% + 1px) calc(35.413% + 1px)); } 46.6667% { clip-path: inset(0% calc(14% + 1px) calc(40.104% + 1px)); } 47.5% { clip-path: inset(0% calc(14% + 1px) calc(46.363% + 1px)); } 48.3333% { clip-path: inset(0% calc(14% + 1px) calc(54.17% + 1px)); } 49.1667% { clip-path: inset(0% calc(14% + 1px) calc(60.779% + 1px)); } 50% { clip-path: inset(0% calc(14% + 1px) calc(65.76% + 1px)); } 50.8333% { clip-path: inset(0% calc(14% + 1px) calc(69.405% + 1px)); } 51.6667% { clip-path: inset(0% calc(14% + 1px) calc(71.978% + 1px)); } 52.5% { clip-path: inset(0% calc(14% + 1px) calc(73.712% + 1px)); } 53.3333% { clip-path: inset(0% calc(14% + 1px) calc(74.814% + 1px)); } 54.1667% { clip-path: inset(0% calc(14% + 1px) calc(75.46% + 1px)); } 55.8333% { clip-path: inset(0% calc(14% + 1px) calc(75.945% + 1px)); } 68.3333% { clip-path: inset(0% calc(14% + 1px) calc(76% + 1px)); } 68.749% { clip-path: inset(0% calc(14% + 1px) calc(76% + 1px)); } 68.75% { clip-path: inset(0% calc(14.005% + 1px) calc(75.998% + 1px) calc(14% + 1px)); } 69.1667% { clip-path: inset(0% calc(14.005% + 1px) calc(75.998% + 1px) calc(14% + 1px)); } 70.8333% { clip-path: inset(0% calc(14.161% + 1px) calc(75.916% + 1px) calc(13.994% + 1px)); } 71.6667% { clip-path: inset(0% calc(14.452% + 1px) calc(75.765% + 1px) calc(13.982% + 1px)); } 72.5% { clip-path: inset(0% calc(15.025% + 1px) calc(75.467% + 1px) calc(13.959% + 1px)); } 73.3333% { clip-path: inset(0% calc(16.023% + 1px) calc(74.948% + 1px) calc(13.919% + 1px)); } 74.1667% { clip-path: inset(0% calc(17.615% + 1px) calc(74.12% + 1px) calc(13.855% + 1px)); } 75% { clip-path: inset(0% calc(20.003% + 1px) calc(72.879% + 1px) calc(13.76% + 1px)); } 75.8333% { clip-path: inset(0% calc(23.413% + 1px) calc(71.105% + 1px) calc(13.623% + 1px)); } 76.6667% { clip-path: inset(0% calc(28.104% + 1px) calc(68.666% + 1px) calc(13.436% + 1px)); } 77.5% { clip-path: inset(0% calc(34.363% + 1px) calc(65.411% + 1px) calc(13.185% + 1px)); } 78.3333% { clip-path: inset(0% calc(42.17% + 1px) calc(61.352% + 1px) calc(12.873% + 1px)); } 79.1667% { clip-path: inset(0% calc(48.779% + 1px) calc(57.915% + 1px) calc(12.609% + 1px)); } 80% { clip-path: inset(0% calc(53.76% + 1px) calc(55.325% + 1px) calc(12.41% + 1px)); } 80.8333% { clip-path: inset(0% calc(57.405% + 1px) calc(53.429% + 1px) calc(12.264% + 1px)); } 81.6667% { clip-path: inset(0% calc(59.978% + 1px) calc(52.092% + 1px) calc(12.161% + 1px)); } 82.5% { clip-path: inset(0% calc(61.712% + 1px) calc(51.19% + 1px) calc(12.091% + 1px)); } 83.3333% { clip-path: inset(0% calc(62.814% + 1px) calc(50.617% + 1px) calc(12.047% + 1px)); } 84.1667% { clip-path: inset(0% calc(63.46% + 1px) calc(50.281% + 1px) calc(12.022% + 1px)); } 85.8333% { clip-path: inset(0% calc(63.945% + 1px) calc(50.029% + 1px) calc(12.002% + 1px)); } 100% { clip-path: inset(0% calc(64% + 1px) calc(50% + 1px) calc(12% + 1px)); } }
+@keyframes rooms-div-rm-room-clip-path-3 { 0% { clip-path: inset(calc(50% + 1px) calc(18% + 1px) 0% calc(58% + 1px)); } 10% { clip-path: inset(calc(50.019% + 1px) calc(17.997% + 1px) 0% calc(57.965% + 1px)); } 11.6667% { clip-path: inset(calc(50.217% + 1px) calc(17.964% + 1px) 0% calc(57.602% + 1px)); } 12.5% { clip-path: inset(calc(50.492% + 1px) calc(17.918% + 1px) 0% calc(57.098% + 1px)); } 13.3333% { clip-path: inset(calc(50.971% + 1px) calc(17.838% + 1px) 0% calc(56.22% + 1px)); } 14.1667% { clip-path: inset(calc(51.735% + 1px) calc(17.711% + 1px) 0% calc(54.819% + 1px)); } 15% { clip-path: inset(calc(52.881% + 1px) calc(17.52% + 1px) 0% calc(52.718% + 1px)); } 15.8333% { clip-path: inset(calc(54.518% + 1px) calc(17.247% + 1px) 0% calc(49.717% + 1px)); } 16.6667% { clip-path: inset(calc(56.77% + 1px) calc(16.872% + 1px) 0% calc(45.588% + 1px)); } 17.5% { clip-path: inset(calc(59.774% + 1px) calc(16.371% + 1px) 0% calc(40.081% + 1px)); } 18.3333% { clip-path: inset(calc(63.522% + 1px) calc(15.746% + 1px) 0% calc(33.21% + 1px)); } 19.1667% { clip-path: inset(calc(66.694% + 1px) calc(15.218% + 1px) 0% calc(27.394% + 1px)); } 20% { clip-path: inset(calc(69.085% + 1px) calc(14.819% + 1px) 0% calc(23.011% + 1px)); } 20.8333% { clip-path: inset(calc(70.834% + 1px) calc(14.528% + 1px) 0% calc(19.804% + 1px)); } 21.6667% { clip-path: inset(calc(72.069% + 1px) calc(14.322% + 1px) 0% calc(17.54% + 1px)); } 22.5% { clip-path: inset(calc(72.902% + 1px) calc(14.183% + 1px) 0% calc(16.013% + 1px)); } 23.3333% { clip-path: inset(calc(73.431% + 1px) calc(14.095% + 1px) 0% calc(15.043% + 1px)); } 24.1667% { clip-path: inset(calc(73.741% + 1px) calc(14.043% + 1px) 0% calc(14.475% + 1px)); } 25.8333% { clip-path: inset(calc(73.974% + 1px) calc(14.004% + 1px) 0% calc(14.049% + 1px)); } 26.6667% { clip-path: inset(calc(73.996% + 1px) calc(14.001% + 1px) 0% calc(14.007% + 1px)); } 27.0823% { clip-path: inset(calc(73.996% + 1px) calc(14.001% + 1px) 0% calc(14.007% + 1px)); } 27.0833% { clip-path: inset(calc(74% + 1px) calc(14% + 1px) 0%); } 27.5% { clip-path: inset(calc(74% + 1px) calc(14% + 1px) 0%); } 40% { clip-path: inset(calc(73.96% + 1px) calc(14% + 1px) 0%); } 41.6667% { clip-path: inset(calc(73.548% + 1px) calc(14% + 1px) 0%); } 42.5% { clip-path: inset(calc(72.975% + 1px) calc(14% + 1px) 0%); } 43.3333% { clip-path: inset(calc(71.977% + 1px) calc(14% + 1px) 0%); } 44.1667% { clip-path: inset(calc(70.385% + 1px) calc(14% + 1px) 0%); } 45% { clip-path: inset(calc(67.998% + 1px) calc(14% + 1px) 0%); } 45.8333% { clip-path: inset(calc(64.587% + 1px) calc(14% + 1px) 0%); } 46.6667% { clip-path: inset(calc(59.896% + 1px) calc(14% + 1px) 0%); } 47.5% { clip-path: inset(calc(53.637% + 1px) calc(14% + 1px) 0%); } 48.3333% { clip-path: inset(calc(45.83% + 1px) calc(14% + 1px) 0%); } 49.1667% { clip-path: inset(calc(39.221% + 1px) calc(14% + 1px) 0%); } 50% { clip-path: inset(calc(34.24% + 1px) calc(14% + 1px) 0%); } 50.8333% { clip-path: inset(calc(30.595% + 1px) calc(14% + 1px) 0%); } 51.6667% { clip-path: inset(calc(28.022% + 1px) calc(14% + 1px) 0%); } 52.5% { clip-path: inset(calc(26.288% + 1px) calc(14% + 1px) 0%); } 53.3333% { clip-path: inset(calc(25.186% + 1px) calc(14% + 1px) 0%); } 54.1667% { clip-path: inset(calc(24.54% + 1px) calc(14% + 1px) 0%); } 55.8333% { clip-path: inset(calc(24.055% + 1px) calc(14% + 1px) 0%); } 68.3333% { clip-path: inset(calc(24% + 1px) calc(14% + 1px) 0%); } 68.749% { clip-path: inset(calc(24% + 1px) calc(14% + 1px) 0%); } 68.75% { clip-path: inset(calc(24.002% + 1px) calc(14.005% + 1px) 0% calc(14% + 1px)); } 69.1667% { clip-path: inset(calc(24.002% + 1px) calc(14.005% + 1px) 0% calc(14% + 1px)); } 70.8333% { clip-path: inset(calc(24.084% + 1px) calc(14.161% + 1px) 0% calc(13.994% + 1px)); } 71.6667% { clip-path: inset(calc(24.235% + 1px) calc(14.452% + 1px) 0% calc(13.982% + 1px)); } 72.5% { clip-path: inset(calc(24.533% + 1px) calc(15.025% + 1px) 0% calc(13.959% + 1px)); } 73.3333% { clip-path: inset(calc(25.052% + 1px) calc(16.023% + 1px) 0% calc(13.919% + 1px)); } 74.1667% { clip-path: inset(calc(25.88% + 1px) calc(17.615% + 1px) 0% calc(13.855% + 1px)); } 75% { clip-path: inset(calc(27.121% + 1px) calc(20.003% + 1px) 0% calc(13.76% + 1px)); } 75.8333% { clip-path: inset(calc(28.895% + 1px) calc(23.413% + 1px) 0% calc(13.623% + 1px)); } 76.6667% { clip-path: inset(calc(31.334% + 1px) calc(28.104% + 1px) 0% calc(13.436% + 1px)); } 77.5% { clip-path: inset(calc(34.589% + 1px) calc(34.363% + 1px) 0% calc(13.185% + 1px)); } 78.3333% { clip-path: inset(calc(38.648% + 1px) calc(42.17% + 1px) 0% calc(12.873% + 1px)); } 79.1667% { clip-path: inset(calc(42.085% + 1px) calc(48.779% + 1px) 0% calc(12.609% + 1px)); } 80% { clip-path: inset(calc(44.675% + 1px) calc(53.76% + 1px) 0% calc(12.41% + 1px)); } 80.8333% { clip-path: inset(calc(46.571% + 1px) calc(57.405% + 1px) 0% calc(12.264% + 1px)); } 81.6667% { clip-path: inset(calc(47.908% + 1px) calc(59.978% + 1px) 0% calc(12.161% + 1px)); } 82.5% { clip-path: inset(calc(48.81% + 1px) calc(61.712% + 1px) 0% calc(12.091% + 1px)); } 83.3333% { clip-path: inset(calc(49.383% + 1px) calc(62.814% + 1px) 0% calc(12.047% + 1px)); } 84.1667% { clip-path: inset(calc(49.719% + 1px) calc(63.46% + 1px) 0% calc(12.022% + 1px)); } 85.8333% { clip-path: inset(calc(49.971% + 1px) calc(63.945% + 1px) 0% calc(12.002% + 1px)); } 100% { clip-path: inset(calc(50% + 1px) calc(64% + 1px) 0% calc(12% + 1px)); } }
+@keyframes rooms-div-rm-room-clip-path-4 { 0% { clip-path: inset(0% 0% 0% calc(82% + 1px)); } 12.5% { clip-path: inset(0% 0% 0% calc(82.082% + 1px)); } 15% { clip-path: inset(0% 0% 0% calc(82.48% + 1px)); } 16.6667% { clip-path: inset(0% 0% 0% calc(83.128% + 1px)); } 19.1667% { clip-path: inset(0% 0% 0% calc(84.782% + 1px)); } 20.8333% { clip-path: inset(0% 0% 0% calc(85.472% + 1px)); } 23.3333% { clip-path: inset(0% 0% 0% calc(85.905% + 1px)); } 70% { clip-path: inset(0% 0% 0% calc(85.96% + 1px)); } 71.6667% { clip-path: inset(0% 0% 0% calc(85.548% + 1px)); } 72.5% { clip-path: inset(0% 0% 0% calc(84.975% + 1px)); } 73.3333% { clip-path: inset(0% 0% 0% calc(83.977% + 1px)); } 74.1667% { clip-path: inset(0% 0% 0% calc(82.385% + 1px)); } 75% { clip-path: inset(0% 0% 0% calc(79.998% + 1px)); } 75.8333% { clip-path: inset(0% 0% 0% calc(76.587% + 1px)); } 76.6667% { clip-path: inset(0% 0% 0% calc(71.896% + 1px)); } 77.5% { clip-path: inset(0% 0% 0% calc(65.637% + 1px)); } 78.3333% { clip-path: inset(0% 0% 0% calc(57.83% + 1px)); } 79.1667% { clip-path: inset(0% 0% 0% calc(51.221% + 1px)); } 80% { clip-path: inset(0% 0% 0% calc(46.24% + 1px)); } 80.8333% { clip-path: inset(0% 0% 0% calc(42.595% + 1px)); } 81.6667% { clip-path: inset(0% 0% 0% calc(40.022% + 1px)); } 82.5% { clip-path: inset(0% 0% 0% calc(38.288% + 1px)); } 83.3333% { clip-path: inset(0% 0% 0% calc(37.186% + 1px)); } 84.1667% { clip-path: inset(0% 0% 0% calc(36.54% + 1px)); } 85.8333% { clip-path: inset(0% 0% 0% calc(36.055% + 1px)); } 100% { clip-path: inset(0% 0% 0% calc(36% + 1px)); } }
+@media (min-width: 900px) {
+}
+@media (max-width: 899px) {
+}
+}
+</style>
+<style data-8b-part="scene:glazes">
+@layer scenes {
+@property --glazes-p { syntax: "<number>"; inherits: true; initial-value: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  [data-8b-live] #glazes { --gz-travel: 0px; height: calc(100svh + var(--gz-travel)); }
+  [data-8b-live] #glazes .gz__stage { position: sticky; top: 0; height: 100svh; }
+  [data-8b-live] #glazes .gz__rail { display: flex; width: max-content; }
+  [data-8b-live] #glazes .gz__bay { width: min(36vw, 500px); }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 899px) {
+  [data-8b-live] #glazes .gz__bay { width: 82vw; grid-template-rows: minmax(0, 1fr) auto; }
+}
+[data-8b-live] #glazes { view-timeline: --glazes-t1 block; view-timeline-inset: 0; animation-name: glazes-track; animation-timeline: --glazes-t1; animation-range: contain 0% contain 100%; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #glazes .gz__rail { translate: calc(var(--glazes-p) * var(--gz-travel) * -1) 0; }
+[data-8b-live] #glazes .gz__field .fill { clip-path: inset(calc((1 - clamp(0, var(--gz-rise-at, 1) + var(--glazes-p) * var(--gz-rise-by, 0), 1)) * 100%) 0% 0% 0%); }
+@keyframes glazes-track { from { --glazes-p: 0; } to { --glazes-p: 1; } }
+}
+</style>
+<style data-8b-part="scene:service">
+@layer scenes {
+[data-8b-live] #service { timeline-scope: --service-steps; }
+[data-8b-live] #service .sv__steps { view-timeline: --service-steps block; view-timeline-inset: 0; }
+[data-8b-live] #service .sv__marker { animation-name: service-marker; animation-timeline: --service-steps; animation-range: cover 25vh cover calc(100% - 45vh); animation-timing-function: linear; animation-fill-mode: both; }
+@media (max-width: 899px) {
+  [data-8b-live] #service .sv__marker { animation-range: cover 30vh cover calc(100% - 55vh); }
+}
+@keyframes service-marker { from { translate: 0px 0px; } to { translate: var(--service-x, 0px) var(--service-y, 0px); } }
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] #contact { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact .ct__photo > img, [data-8b-live] #contact .ct__red > .fill, [data-8b-live] #contact .ct__yellow > .fill { animation-timeline: --contact-t1; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; }
+[data-8b-live] #contact .ct__photo > img { animation-name: contact-figure-ct-photo-img-clippath; animation-range: cover 15vh cover 85vh; }
+[data-8b-live] #contact .ct__red > .fill { animation-name: contact-span-fill-translate; animation-range: cover 18.5vh cover 81.5vh; transform: none; }
+[data-8b-live] #contact .ct__yellow > .fill { animation-name: contact-span-fill-translate-2; animation-range: cover 36vh cover 85vh; transform: none; }
+@keyframes contact-figure-ct-photo-img-clippath { 0% { clip-path: inset(32% 30%); } 100% { clip-path: inset(0%); } }
+@keyframes contact-span-fill-translate { 0% { translate: 0px -230%; } 100% { translate: 0px 0px; } }
+@keyframes contact-span-fill-translate-2 { 0% { translate: -101% 0px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body class="m-text">
 <!-- navigation: wordmark with a yellow block, six links, sample box and basket icons, and a menu button on phones -->
@@ -650,7 +741,7 @@ a { color: inherit; }
     </div>
     <span class="nav__mobile-yellow" aria-hidden="true"></span>
     <nav class="nav__links" aria-label="Main">
-      <ul id="nav-list" class="nav__list">
+      <ul id="nav-list" class="nav__list" data-8b-items=":scope > li">
         <li><a class="m-link-2" href="#bonds">Bonds</a></li>
         <li><a class="m-link-2" href="#materials">Materials</a></li>
         <li><a class="m-link-2" href="#rooms">Bathrooms</a></li>
@@ -668,13 +759,13 @@ a { color: inherit; }
   </div>
 </header>
 <main>
-<!-- opening: one screen of ruled cells: department links, opening hours, a three-line h1, a paragraph and buttons, and a red tiled bathroom photo, between blocks of blue, yellow and red -->
+<!-- opening: one screen of ruled cells: department links, opening hours, a three-line h1, a paragraph and buttons, and a red tiled bathroom photo, between blocks of blue, yellow and red (animation: scene:opening) -->
 <section id="opening" data-8b-section="opening" aria-labelledby="opening-title">
   
   <div class="op__s2">
     <div class="op__s2-edge" aria-hidden="true"></div>
     <div class="op__s2-blue" aria-hidden="true"><span class="fill"></span></div>
-    <ul class="op__s2-dept">
+    <ul class="op__s2-dept" data-8b-items=":scope > li">
       <li><a class="m-link-2" href="#bonds">Wall tiles</a></li>
       <li><a class="m-link-2" href="#materials">Floor tiles</a></li>
       <li><a class="m-link-2" href="#rooms">Bathrooms</a></li>
@@ -691,7 +782,7 @@ a { color: inherit; }
       </div>
     </div>
     <figure class="op__s2-photo">
-      <div class="op__s2-frame"><img style="background:#a6260c" class="op__s2-img" src="https://images.unsplash.com/photo-1725181213236-6600c77c6e3d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cmVkJTIwc3F1YXJlJTIwdGlsZXN8ZW58MXwyfHx8MTc5MTU2Nzk3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" alt="A bathroom tiled floor to ceiling in red square tiles, with a long red basin and two taps" width="3003" height="3003" loading="lazy"></div>
+      <div class="op__s2-frame"><img fetchpriority="high" class="op__s2-img" src="https://images.unsplash.com/photo-1725181213236-6600c77c6e3d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cmVkJTIwc3F1YXJlJTIwdGlsZXN8ZW58MXwyfHx8MTc5MTU2Nzk3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" alt="A bathroom tiled floor to ceiling in red square tiles, with a long red basin and two taps" width="3003" height="3003"></div>
       <figcaption class="op__s2-cap m-text-2">Signal 10×10, a bathroom in Holywood</figcaption>
     </figure>
     <div class="op__s2-corner" aria-hidden="true"></div>
@@ -704,17 +795,17 @@ a { color: inherit; }
       <div class="bd__side">
         <h2 id="bonds-title" class="bd__title m-text-3" data-8b-motion="bond"><span class="line">One tile,</span> <span class="line">three walls</span></h2>
         <p class="bd__lead m-text">Move every other row and the same tile changes character. The bond also decides how many tiles you cut.</p>
-        <ol class="bd__names">
+        <ol class="bd__names" data-8b-items=":scope > li">
           <li class="bd__name"><h3 class="m-text-6">Stack bond</h3><p class="m-text-4">Joints straight both ways. Calm, modern, kind to big squares.</p></li>
           <li class="bd__name"><h3 class="m-text-6">Half bond</h3><p class="m-text-4">Every other row moved by half a tile: the brick pattern of metro walls.</p></li>
           <li class="bd__name"><h3 class="m-text-6">Third bond</h3><p class="m-text-4">Rows moved by a third. The safe choice for long porcelain planks.</p></li>
         </ol>
       </div>
       <div class="bd__wall" aria-hidden="true">
-        <div class="bd__row"><span class="bd__cell"></span><span class="bd__cell bd__cell--y"></span><span class="bd__cell"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1699543909013-4b9c73081b48?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z3JvdXR8ZW58MXwwfHx8MTc5MTU2Nzk3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" alt="" width="8192" height="5464" loading="lazy"></span><span class="bd__cell"></span><span class="bd__cell bd__cell--b"></span><span class="bd__cell"></span><span class="bd__cell bd__cell--r"></span></div>
-        <div class="bd__row"><span class="bd__cell"><img style="background:#d97359" src="https://images.unsplash.com/photo-1586347956109-8ea88e918ec2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cmVkJTIwY2VyYW1pYyUyMHRpbGVzfGVufDF8Mnx8fDE3OTE1Njc4NTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="" width="3877" height="4160" loading="lazy"></span><span class="bd__cell"></span><span class="bd__cell bd__cell--k"></span><span class="bd__cell"></span><span class="bd__cell bd__cell--y"></span><span class="bd__cell"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1667752656500-a776cba67958?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8d2hpdGUlMjBnbG9zc3klMjB0aWxlc3xlbnwxfDJ8fHwxNzkxNTY3ODU0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="" width="4000" height="4000" loading="lazy"></span><span class="bd__cell"></span></div>
-        <div class="bd__row"><span class="bd__cell"></span><span class="bd__cell bd__cell--r"></span><span class="bd__cell"></span><span class="bd__cell"><img style="background:#d9c0c0" src="https://images.unsplash.com/photo-1684793219162-8b2e705f0859?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGlsaW5nJTIwZmxvb3J8ZW58MXwwfHx8MTc5MTU2Nzg1M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" alt="" width="5938" height="3852" loading="lazy"></span><span class="bd__cell"></span><span class="bd__cell bd__cell--b"></span><span class="bd__cell"></span></div>
-        <div class="bd__row"><span class="bd__cell bd__cell--b"></span><span class="bd__cell"></span><span class="bd__cell"><img style="background:#a6a6c0" src="https://images.unsplash.com/photo-1731652423371-e44f218f9fa5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGJsYWNrJTIwdGlsZXN8ZW58MXwyfHx8MTc5MTU2Nzg1NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="" width="3150" height="3150" loading="lazy"></span><span class="bd__cell bd__cell--y"></span><span class="bd__cell"></span><span class="bd__cell bd__cell--g"></span><span class="bd__cell"></span></div>
+        <div class="bd__row"><span class="bd__cell"></span><span class="bd__cell bd__cell--y"></span><span class="bd__cell"><img src="https://images.unsplash.com/photo-1699543909013-4b9c73081b48?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8Z3JvdXR8ZW58MXwwfHx8MTc5MTU2Nzk3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" alt="" width="8192" height="5464" loading="lazy"></span><span class="bd__cell"></span><span class="bd__cell bd__cell--b"></span><span class="bd__cell"></span><span class="bd__cell bd__cell--r"></span></div>
+        <div class="bd__row"><span class="bd__cell"><img src="https://images.unsplash.com/photo-1586347956109-8ea88e918ec2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cmVkJTIwY2VyYW1pYyUyMHRpbGVzfGVufDF8Mnx8fDE3OTE1Njc4NTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="" width="3877" height="4160" loading="lazy"></span><span class="bd__cell"></span><span class="bd__cell bd__cell--k"></span><span class="bd__cell"></span><span class="bd__cell bd__cell--y"></span><span class="bd__cell"><img src="https://images.unsplash.com/photo-1667752656500-a776cba67958?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8d2hpdGUlMjBnbG9zc3klMjB0aWxlc3xlbnwxfDJ8fHwxNzkxNTY3ODU0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="" width="4000" height="4000" loading="lazy"></span><span class="bd__cell"></span></div>
+        <div class="bd__row"><span class="bd__cell"></span><span class="bd__cell bd__cell--r"></span><span class="bd__cell"></span><span class="bd__cell"><img src="https://images.unsplash.com/photo-1684793219162-8b2e705f0859?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGlsaW5nJTIwZmxvb3J8ZW58MXwwfHx8MTc5MTU2Nzg1M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60" alt="" width="5938" height="3852" loading="lazy"></span><span class="bd__cell"></span><span class="bd__cell bd__cell--b"></span><span class="bd__cell"></span></div>
+        <div class="bd__row"><span class="bd__cell bd__cell--b"></span><span class="bd__cell"></span><span class="bd__cell"><img src="https://images.unsplash.com/photo-1731652423371-e44f218f9fa5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGJsYWNrJTIwdGlsZXN8ZW58MXwyfHx8MTc5MTU2Nzg1NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=180&amp;q=60" alt="" width="3150" height="3150" loading="lazy"></span><span class="bd__cell bd__cell--y"></span><span class="bd__cell"></span><span class="bd__cell bd__cell--g"></span><span class="bd__cell"></span></div>
       </div>
     </div>
   </div>
@@ -727,14 +818,14 @@ a { color: inherit; }
     <p class="m-text">Six bodies, six behaviours. The table says where each can go; the showroom lets you stand on them.</p>
   </div>
   <div class="mt__red" aria-hidden="true"><span class="fill" data-8b-motion="field" data-from="left"></span></div>
-  <div class="mt__table" role="table" aria-label="Tile materials and where they can go" data-8b-motion="bond" data-bond-rows=".mt__row">
+  <div class="mt__table" role="table" aria-label="Tile materials and where they can go" data-8b-motion="bond" data-bond-rows=".mt__row" data-8b-items=":scope > .mt__row:not(.mt__row--head)">
     <div class="mt__row mt__row--head m-text-2" role="row"><span role="columnheader">Material</span><span role="columnheader">Walls</span><span role="columnheader">Floors</span><span role="columnheader">Wet rooms</span><span role="columnheader">Outdoors</span><span role="columnheader">From, per m²</span></div>
-    <div class="mt__row" role="row"><div class="mt__mat" role="cell"><img style="background:#594073" src="https://images.unsplash.com/photo-1693854774132-19e3ba70e0f3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8dGlsZSUyMHNob3B8ZW58MXwwfHx8MTc5MTU2Nzg1NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="A basket of handmade glazed tiles in green, orange, white and patterned blue" width="6303" height="4206" loading="lazy"><div class="mt__mat-text"><h3 class="m-text-6">Glazed ceramic</h3><p class="m-text-4">Hand-dipped and kiln-fired; colours no print can match.</p></div></div><span class="mt__use mt__yes" role="cell" data-label="Walls">Yes</span><span class="mt__use mt__no" role="cell" data-label="Floors">No</span><span class="mt__use mt__yes" role="cell" data-label="Wet rooms">Yes</span><span class="mt__use mt__no" role="cell" data-label="Outdoors">No</span><span class="mt__price" role="cell">£38</span></div>
-    <div class="mt__row" role="row"><div class="mt__mat" role="cell"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1692606742904-5e840d84e448?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d2hpdGUlMjBzcXVhcmUlMjB0aWxlc3xlbnwxfDJ8fHwxNzkxNTY3OTcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="Close view of small white and grey porcelain mosaic squares" width="4096" height="4096" loading="lazy"><div class="mt__mat-text"><h3 class="m-text-6">Porcelain</h3><p class="m-text-4">Fired harder and denser, it barely drinks water. The workhorse.</p></div></div><span class="mt__use mt__yes" role="cell" data-label="Walls">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Floors">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Wet rooms">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Outdoors">Yes</span><span class="mt__price" role="cell">£29</span></div>
-    <div class="mt__row" role="row"><div class="mt__mat" role="cell"><img style="background:#8c8c8c" src="https://images.unsplash.com/photo-1691966650465-d309a9084e80?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZW5jYXVzdGljJTIwY2VtZW50JTIwdGlsZXN8ZW58MXwyfHx8MTc5MTU2Nzg1NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="Patterned cement tiles in blue, yellow, red and green laid edge to edge" width="3024" height="3024" loading="lazy"><div class="mt__mat-text"><h3 class="m-text-6">Encaustic cement</h3><p class="m-text-4">Pattern pressed into coloured cement, not printed on top.</p></div></div><span class="mt__use mt__yes" role="cell" data-label="Walls">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Floors">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Wet rooms">Yes</span><span class="mt__use mt__no" role="cell" data-label="Outdoors">No</span><span class="mt__price" role="cell">£96</span></div>
-    <div class="mt__row" role="row"><div class="mt__mat" role="cell"><img style="background:#595959" src="https://images.unsplash.com/photo-1737034165288-c263c2a61788?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGVycmF6em98ZW58MXwyfHx8MTc5MTU2Nzg1M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="A grey terrazzo surface flecked with white and black stone chips" width="4096" height="4096" loading="lazy"><div class="mt__mat-text"><h3 class="m-text-6">Terrazzo</h3><p class="m-text-4">Stone chips set in a cement base and ground flat.</p></div></div><span class="mt__use mt__yes" role="cell" data-label="Walls">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Floors">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Wet rooms">Yes</span><span class="mt__use mt__no" role="cell" data-label="Outdoors">No</span><span class="mt__price" role="cell">£84</span></div>
-    <div class="mt__row" role="row"><div class="mt__mat" role="cell"><img style="background:#a6a68c" src="https://images.unsplash.com/photo-1708919268852-7e55fa1a6f42?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Z3JvdXR8ZW58MXwwfHx8MTc5MTU2Nzk3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=150&amp;q=60" alt="White marble hexagon tiles with dark grout lines" width="4032" height="3024" loading="lazy"><div class="mt__mat-text"><h3 class="m-text-6">Marble</h3><p class="m-text-4">Every tile its own veining. Honed for floors, polished for walls.</p></div></div><span class="mt__use mt__yes" role="cell" data-label="Walls">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Floors">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Wet rooms">Yes</span><span class="mt__use mt__no" role="cell" data-label="Outdoors">No</span><span class="mt__price" role="cell">£110</span></div>
-    <div class="mt__row" role="row"><div class="mt__mat" role="cell"><img style="background:#c08c73" src="https://images.unsplash.com/photo-1672255877539-e26c7edf1972?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHRlcnJhY290dGElMjBmbG9vciUyMHRpbGVzfGVufDF8Mnx8fDE3OTE1Njc4NTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="Small terracotta-coloured tiles with a pressed square pattern" width="2400" height="2400" loading="lazy"><div class="mt__mat-text"><h3 class="m-text-6">Terracotta</h3><p class="m-text-4">Fired clay, warm underfoot, darker with every oiling.</p></div></div><span class="mt__use mt__no" role="cell" data-label="Walls">No</span><span class="mt__use mt__yes" role="cell" data-label="Floors">Yes</span><span class="mt__use mt__no" role="cell" data-label="Wet rooms">No</span><span class="mt__use mt__yes" role="cell" data-label="Outdoors">Yes</span><span class="mt__price" role="cell">£45</span></div>
+    <div class="mt__row" role="row"><div class="mt__mat" role="cell"><img src="https://images.unsplash.com/photo-1693854774132-19e3ba70e0f3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8dGlsZSUyMHNob3B8ZW58MXwwfHx8MTc5MTU2Nzg1NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="A basket of handmade glazed tiles in green, orange, white and patterned blue" width="6303" height="4206" loading="lazy"><div class="mt__mat-text"><h3 class="m-text-6">Glazed ceramic</h3><p class="m-text-4">Hand-dipped and kiln-fired; colours no print can match.</p></div></div><span class="mt__use mt__yes" role="cell" data-label="Walls">Yes</span><span class="mt__use mt__no" role="cell" data-label="Floors">No</span><span class="mt__use mt__yes" role="cell" data-label="Wet rooms">Yes</span><span class="mt__use mt__no" role="cell" data-label="Outdoors">No</span><span class="mt__price" role="cell">£38</span></div>
+    <div class="mt__row" role="row"><div class="mt__mat" role="cell"><img src="https://images.unsplash.com/photo-1692606742904-5e840d84e448?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8d2hpdGUlMjBzcXVhcmUlMjB0aWxlc3xlbnwxfDJ8fHwxNzkxNTY3OTcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="Close view of small white and grey porcelain mosaic squares" width="4096" height="4096" loading="lazy"><div class="mt__mat-text"><h3 class="m-text-6">Porcelain</h3><p class="m-text-4">Fired harder and denser, it barely drinks water. The workhorse.</p></div></div><span class="mt__use mt__yes" role="cell" data-label="Walls">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Floors">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Wet rooms">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Outdoors">Yes</span><span class="mt__price" role="cell">£29</span></div>
+    <div class="mt__row" role="row"><div class="mt__mat" role="cell"><img src="https://images.unsplash.com/photo-1691966650465-d309a9084e80?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8ZW5jYXVzdGljJTIwY2VtZW50JTIwdGlsZXN8ZW58MXwyfHx8MTc5MTU2Nzg1NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="Patterned cement tiles in blue, yellow, red and green laid edge to edge" width="3024" height="3024" loading="lazy"><div class="mt__mat-text"><h3 class="m-text-6">Encaustic cement</h3><p class="m-text-4">Pattern pressed into coloured cement, not printed on top.</p></div></div><span class="mt__use mt__yes" role="cell" data-label="Walls">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Floors">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Wet rooms">Yes</span><span class="mt__use mt__no" role="cell" data-label="Outdoors">No</span><span class="mt__price" role="cell">£96</span></div>
+    <div class="mt__row" role="row"><div class="mt__mat" role="cell"><img src="https://images.unsplash.com/photo-1737034165288-c263c2a61788?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGVycmF6em98ZW58MXwyfHx8MTc5MTU2Nzg1M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="A grey terrazzo surface flecked with white and black stone chips" width="4096" height="4096" loading="lazy"><div class="mt__mat-text"><h3 class="m-text-6">Terrazzo</h3><p class="m-text-4">Stone chips set in a cement base and ground flat.</p></div></div><span class="mt__use mt__yes" role="cell" data-label="Walls">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Floors">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Wet rooms">Yes</span><span class="mt__use mt__no" role="cell" data-label="Outdoors">No</span><span class="mt__price" role="cell">£84</span></div>
+    <div class="mt__row" role="row"><div class="mt__mat" role="cell"><img src="https://images.unsplash.com/photo-1708919268852-7e55fa1a6f42?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Z3JvdXR8ZW58MXwwfHx8MTc5MTU2Nzk3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=150&amp;q=60" alt="White marble hexagon tiles with dark grout lines" width="4032" height="3024" loading="lazy"><div class="mt__mat-text"><h3 class="m-text-6">Marble</h3><p class="m-text-4">Every tile its own veining. Honed for floors, polished for walls.</p></div></div><span class="mt__use mt__yes" role="cell" data-label="Walls">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Floors">Yes</span><span class="mt__use mt__yes" role="cell" data-label="Wet rooms">Yes</span><span class="mt__use mt__no" role="cell" data-label="Outdoors">No</span><span class="mt__price" role="cell">£110</span></div>
+    <div class="mt__row" role="row"><div class="mt__mat" role="cell"><img src="https://images.unsplash.com/photo-1672255877539-e26c7edf1972?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHRlcnJhY290dGElMjBmbG9vciUyMHRpbGVzfGVufDF8Mnx8fDE3OTE1Njc4NTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=110&amp;q=60" alt="Small terracotta-coloured tiles with a pressed square pattern" width="2400" height="2400" loading="lazy"><div class="mt__mat-text"><h3 class="m-text-6">Terracotta</h3><p class="m-text-4">Fired clay, warm underfoot, darker with every oiling.</p></div></div><span class="mt__use mt__no" role="cell" data-label="Walls">No</span><span class="mt__use mt__yes" role="cell" data-label="Floors">Yes</span><span class="mt__use mt__no" role="cell" data-label="Wet rooms">No</span><span class="mt__use mt__yes" role="cell" data-label="Outdoors">Yes</span><span class="mt__price" role="cell">£45</span></div>
   </div>
   <div class="mt__right" aria-hidden="true"></div>
 </section>
@@ -749,7 +840,7 @@ a { color: inherit; }
         </div>
         <div class="rm__listwrap">
         <span class="rm__marker" aria-hidden="true"></span>
-        <ol class="rm__list">
+        <ol class="rm__list" data-8b-items=":scope > .rm__item">
           <li class="rm__item"><h3 class="m-text-6">Stranmillis</h3><p class="rm__note m-text-4">Blue chevron in the shower, hexagon cement on the floor.</p></li>
           <li class="rm__item"><h3 class="m-text-6">Holywood</h3><p class="rm__note m-text-4">A 1930s room kept whole; its floor re-laid in blue and white.</p></li>
           <li class="rm__item"><h3 class="m-text-6">Lisburn Road</h3><p class="rm__note m-text-4">Slate-grey porcelain in third bond around one marble basin.</p></li>
@@ -758,10 +849,10 @@ a { color: inherit; }
         </div>
       </div>
       <div class="rm__frame">
-        <div class="rm__room rm__room--1"><img style="background:#d9d9d9" src="https://images.unsplash.com/photo-1782805180032-8d11f057a8dd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjF8fHNob3dlciUyMHRpbGVzfGVufDF8MXx8fDE3OTE1Njc4NTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="A shower with blue and white chevron wall tiles and a geometric cement-tile floor" width="5113" height="7666" loading="lazy"></div>
-        <div class="rm__room rm__room--2"><img style="background:#404026" src="https://images.unsplash.com/photo-1783685633414-a32b931e5b97?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHRpbGVkJTIwYmF0aHJvb20lMjB3YWxsfGVufDF8MXx8fDE3OTE1Njc4NTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="A vintage bathroom with green walls, a pedestal basin, a round mirror and a patterned tiled floor" width="3984" height="5976" loading="lazy"></div>
-        <div class="rm__room rm__room--3"><img style="background:#262640" src="https://images.unsplash.com/photo-1732279533376-42694016e100?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGJsYWNrJTIwdGlsZXN8ZW58MXwyfHx8MTc5MTU2Nzg1NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="Dark slate-grey wall tiles behind a white marble shelf and a black basin" width="3160" height="3160" loading="lazy"></div>
-        <div class="rm__room rm__room--4"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1585412727362-3abb5d23bc31?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8c2hvd2VyJTIwdGlsZXN8ZW58MXwxfHx8MTc5MTU2Nzg1M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="A shower tiled in white metro tiles with black grout and small square floor tiles" width="2624" height="3936" loading="lazy"></div>
+        <div class="rm__room rm__room--1"><img src="https://images.unsplash.com/photo-1782805180032-8d11f057a8dd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MjF8fHNob3dlciUyMHRpbGVzfGVufDF8MXx8fDE3OTE1Njc4NTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="A shower with blue and white chevron wall tiles and a geometric cement-tile floor" width="5113" height="7666" loading="lazy"></div>
+        <div class="rm__room rm__room--2"><img src="https://images.unsplash.com/photo-1783685633414-a32b931e5b97?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHRpbGVkJTIwYmF0aHJvb20lMjB3YWxsfGVufDF8MXx8fDE3OTE1Njc4NTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="A vintage bathroom with green walls, a pedestal basin, a round mirror and a patterned tiled floor" width="3984" height="5976" loading="lazy"></div>
+        <div class="rm__room rm__room--3"><img src="https://images.unsplash.com/photo-1732279533376-42694016e100?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGJsYWNrJTIwdGlsZXN8ZW58MXwyfHx8MTc5MTU2Nzg1NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="Dark slate-grey wall tiles behind a white marble shelf and a black basin" width="3160" height="3160" loading="lazy"></div>
+        <div class="rm__room rm__room--4"><img src="https://images.unsplash.com/photo-1585412727362-3abb5d23bc31?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8c2hvd2VyJTIwdGlsZXN8ZW58MXwxfHx8MTc5MTU2Nzg1M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=920&amp;q=60" alt="A shower tiled in white metro tiles with black grout and small square floor tiles" width="2624" height="3936" loading="lazy"></div>
       </div>
     </div>
   </div>
@@ -769,7 +860,7 @@ a { color: inherit; }
 <!-- samples: a free-sample form: twelve tile chips (up to five), name, email and postcode, beside a shelf photo -->
 <section id="samples" data-8b-section="samples" aria-labelledby="samples-title">
   <div class="sp__edge" aria-hidden="true"></div>
-  <figure class="sp__photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1749207325185-2d4a456273eb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fHRpbGUlMjBzYW1wbGVzfGVufDF8MHx8fDE3OTE1Njc4NTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=850&amp;q=60" alt="Shelves of tile samples in rows of greens, blues, greys and creams" width="9504" height="6336" loading="lazy"></figure>
+  <figure class="sp__photo"><img src="https://images.unsplash.com/photo-1749207325185-2d4a456273eb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fHRpbGUlMjBzYW1wbGVzfGVufDF8MHx8fDE3OTE1Njc4NTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=850&amp;q=60" alt="Shelves of tile samples in rows of greens, blues, greys and creams" width="9504" height="6336" loading="lazy"></figure>
   <div class="sp__head">
     <h2 id="samples-title" class="sp__title m-text-3" data-8b-motion="bond"><span class="line">Five samples,</span> <span class="line">free</span></h2>
     <p class="m-text">Pick up to five tiles. We post real cut pieces, ten centimetres across, the next working day. Lay them on your floor and look at them in your own light.</p>
@@ -777,7 +868,7 @@ a { color: inherit; }
   <form data-8b-placeholder="form" class="sp__form" action="#samples" novalidate>
     <fieldset class="sp__chips">
       <legend class="m-text-2">Choose up to five</legend>
-      <div class="sp__chipgrid" data-8b-motion="lay">
+      <div class="sp__chipgrid" data-8b-motion="lay" data-8b-items=":scope > .m-chip">
         <label class="m-chip"><input class="m-chip__input" type="checkbox" name="sample" value="Cobalt square"><span class="m-chip__label">Cobalt square</span></label>
         <label class="m-chip"><input class="m-chip__input" type="checkbox" name="sample" value="Saffron square"><span class="m-chip__label">Saffron square</span></label>
         <label class="m-chip"><input class="m-chip__input" type="checkbox" name="sample" value="Signal square"><span class="m-chip__label">Signal square</span></label>
@@ -811,12 +902,12 @@ a { color: inherit; }
       <h2 id="glazes-title" class="gz__title m-text-3"><span class="line">Five house</span> <span class="line">glazes</span></h2>
       <p class="m-text">Our own colours, dipped for us by a small pottery in Stoke-on-Trent. Every one comes as a square, a metro and a hexagon.</p>
     </div>
-    <ul class="gz__rail">
-      <li class="gz__bay gz__bay--cobalt"><div class="gz__top"><div class="gz__field" aria-hidden="true"><span class="fill"></span></div><figure class="gz__photo"><img style="background:#0c5973" src="https://images.unsplash.com/photo-1623790266737-58d47396b16b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8Ymx1ZSUyMHNxdWFyZSUyMHRpbGVzfGVufDF8Mnx8fDE3OTE1Njc5NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="Small teal-blue square tiles reflecting a white cloud" width="3777" height="3791" loading="lazy"></figure></div><div class="gz__text"><h3 class="m-text-6">Cobalt</h3><p class="m-text-4">Deep blue that darkens where the glaze pools at the edge.</p></div></li>
-      <li class="gz__bay gz__bay--saffron"><div class="gz__top"><div class="gz__field" aria-hidden="true"><span class="fill"></span></div><figure class="gz__photo"><img style="background:#c0a640" src="https://images.unsplash.com/photo-1787274345260-0cdcb246d957?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bXVzdGFyZCUyMHRpbGVzfGVufDF8Mnx8fDE3OTE1Njc5NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=370&amp;q=60" alt="Yellow glazed tiles with raised flowers and grey leaves" width="4742" height="5071" loading="lazy"></figure></div><div class="gz__text"><h3 class="m-text-6">Saffron</h3><p class="m-text-4">A warm yellow that holds its colour in a north-facing room.</p></div></li>
-      <li class="gz__bay gz__bay--signal"><div class="gz__top"><div class="gz__field" aria-hidden="true"><span class="fill"></span></div><figure class="gz__photo"><img style="background:#592626" src="https://images.unsplash.com/photo-1786737554096-4b22c03ad991?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHJlZCUyMGNlcmFtaWMlMjB0aWxlc3xlbnwxfDJ8fHwxNzkxNTY3ODU0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="Narrow red tiles laid vertically behind a shelf with two pump bottles" width="2450" height="2450" loading="lazy"></figure></div><div class="gz__text"><h3 class="m-text-6">Signal</h3><p class="m-text-4">Pillar-box red with a gloss deep enough to show the brush.</p></div></li>
-      <li class="gz__bay gz__bay--chalk"><div class="gz__top"><div class="gz__field" aria-hidden="true"><span class="fill"></span></div><figure class="gz__photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1633139514445-5f059d810ea1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8c3Vid2F5JTIwdGlsZXN8ZW58MXwyfHx8MTc5MTU2Nzg1NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=370&amp;q=60" alt="A wall of white bevelled tiles crossed by a zigzag of red tiles" width="3001" height="3245" loading="lazy"></figure></div><div class="gz__text"><h3 class="m-text-6">Chalk</h3><p class="m-text-4">Not quite white, so grout of any colour reads as a line.</p></div></li>
-      <li class="gz__bay gz__bay--ink"><div class="gz__top"><div class="gz__field" aria-hidden="true"><span class="fill"></span></div><figure class="gz__photo"><img style="background:#a68c73" src="https://images.unsplash.com/photo-1703868669362-562283170216?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dGlsZWQlMjBraXRjaGVufGVufDF8MHx8fDE3OTE1Njc5NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="A kitchen splashback of black metro tiles above a dark worktop" width="3224" height="2576" loading="lazy"></figure></div><div class="gz__text"><h3 class="m-text-6">Ink</h3><p class="m-text-4">Blue-black gloss that turns a small room into a deep one.</p></div></li>
+    <ul class="gz__rail" data-8b-items=":scope > li">
+      <li class="gz__bay gz__bay--cobalt"><div class="gz__top"><div class="gz__field" aria-hidden="true"><span class="fill"></span></div><figure class="gz__photo"><img src="https://images.unsplash.com/photo-1623790266737-58d47396b16b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8Ymx1ZSUyMHNxdWFyZSUyMHRpbGVzfGVufDF8Mnx8fDE3OTE1Njc5NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="Small teal-blue square tiles reflecting a white cloud" width="3777" height="3791" loading="lazy"></figure></div><div class="gz__text"><h3 class="m-text-6">Cobalt</h3><p class="m-text-4">Deep blue that darkens where the glaze pools at the edge.</p></div></li>
+      <li class="gz__bay gz__bay--saffron"><div class="gz__top"><div class="gz__field" aria-hidden="true"><span class="fill"></span></div><figure class="gz__photo"><img src="https://images.unsplash.com/photo-1787274345260-0cdcb246d957?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bXVzdGFyZCUyMHRpbGVzfGVufDF8Mnx8fDE3OTE1Njc5NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=370&amp;q=60" alt="Yellow glazed tiles with raised flowers and grey leaves" width="4742" height="5071" loading="lazy"></figure></div><div class="gz__text"><h3 class="m-text-6">Saffron</h3><p class="m-text-4">A warm yellow that holds its colour in a north-facing room.</p></div></li>
+      <li class="gz__bay gz__bay--signal"><div class="gz__top"><div class="gz__field" aria-hidden="true"><span class="fill"></span></div><figure class="gz__photo"><img src="https://images.unsplash.com/photo-1786737554096-4b22c03ad991?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHJlZCUyMGNlcmFtaWMlMjB0aWxlc3xlbnwxfDJ8fHwxNzkxNTY3ODU0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="Narrow red tiles laid vertically behind a shelf with two pump bottles" width="2450" height="2450" loading="lazy"></figure></div><div class="gz__text"><h3 class="m-text-6">Signal</h3><p class="m-text-4">Pillar-box red with a gloss deep enough to show the brush.</p></div></li>
+      <li class="gz__bay gz__bay--chalk"><div class="gz__top"><div class="gz__field" aria-hidden="true"><span class="fill"></span></div><figure class="gz__photo"><img src="https://images.unsplash.com/photo-1633139514445-5f059d810ea1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8c3Vid2F5JTIwdGlsZXN8ZW58MXwyfHx8MTc5MTU2Nzg1NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=370&amp;q=60" alt="A wall of white bevelled tiles crossed by a zigzag of red tiles" width="3001" height="3245" loading="lazy"></figure></div><div class="gz__text"><h3 class="m-text-6">Chalk</h3><p class="m-text-4">Not quite white, so grout of any colour reads as a line.</p></div></li>
+      <li class="gz__bay gz__bay--ink"><div class="gz__top"><div class="gz__field" aria-hidden="true"><span class="fill"></span></div><figure class="gz__photo"><img src="https://images.unsplash.com/photo-1703868669362-562283170216?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dGlsZWQlMjBraXRjaGVufGVufDF8MHx8fDE3OTE1Njc5NzB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="A kitchen splashback of black metro tiles above a dark worktop" width="3224" height="2576" loading="lazy"></figure></div><div class="gz__text"><h3 class="m-text-6">Ink</h3><p class="m-text-4">Blue-black gloss that turns a small room into a deep one.</p></div></li>
     </ul>
   </div>
 </section>
@@ -828,10 +919,10 @@ a { color: inherit; }
     <p class="m-text">Five fitters on the books and no subcontractors. They work from the same setting-out plan you saw in the showroom, so the cuts at both ends of a wall match.</p>
     <p><a class="m-link" href="#service">How a job runs</a></p>
   </div>
-  <ul class="fi__photos" data-8b-motion="lay">
-    <li class="fi__card"><div class="fi__pic"><img style="background:#a68c73" src="https://images.unsplash.com/photo-1747729495579-b26ab7b9c3a6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8dGlsZXIlMjB3b3JraW5nfGVufDF8MHx8fDE3OTE1Njc4NTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=710&amp;q=60" alt="A fitter working grout into the joints of a terracotta floor with a rubber float" width="5132" height="3394" loading="lazy"></div><div class="fi__cap"><h3 class="m-text-6">Ruth Kerr</h3><p class="m-text-4">Floors and grout, eleven years with us.</p></div></li>
-    <li class="fi__card"><div class="fi__pic"><img style="background:#c0d9d9" src="https://images.unsplash.com/photo-1723124280643-f883fd318ce5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8dGlsZXIlMjB3b3JraW5nfGVufDF8MHx8fDE3OTE1Njc4NTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=730&amp;q=60" alt="A fitter in green work trousers spreading adhesive on a floor before laying tiles" width="5947" height="3346" loading="lazy"></div><div class="fi__cap"><h3 class="m-text-6">Declan Moore</h3><p class="m-text-4">Wet rooms, screeds and level floors.</p></div></li>
-    <li class="fi__card"><div class="fi__pic"><img style="background:#595959" src="https://images.unsplash.com/photo-1738817628118-ad34f40733ee?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGlsZXIlMjB3b3JraW5nfGVufDF8MHx8fDE3OTE1Njc4NTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="A fitter in a high-visibility vest cutting a tile with a power saw" width="5964" height="3976" loading="lazy"></div><div class="fi__cap"><h3 class="m-text-6">Tomasz Nowak</h3><p class="m-text-4">Large-format porcelain and stone.</p></div></li>
+  <ul class="fi__photos" data-8b-motion="lay" data-8b-items=":scope > li">
+    <li class="fi__card"><div class="fi__pic"><img src="https://images.unsplash.com/photo-1747729495579-b26ab7b9c3a6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8dGlsZXIlMjB3b3JraW5nfGVufDF8MHx8fDE3OTE1Njc4NTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=710&amp;q=60" alt="A fitter working grout into the joints of a terracotta floor with a rubber float" width="5132" height="3394" loading="lazy"></div><div class="fi__cap"><h3 class="m-text-6">Ruth Kerr</h3><p class="m-text-4">Floors and grout, eleven years with us.</p></div></li>
+    <li class="fi__card"><div class="fi__pic"><img src="https://images.unsplash.com/photo-1723124280643-f883fd318ce5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8dGlsZXIlMjB3b3JraW5nfGVufDF8MHx8fDE3OTE1Njc4NTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=730&amp;q=60" alt="A fitter in green work trousers spreading adhesive on a floor before laying tiles" width="5947" height="3346" loading="lazy"></div><div class="fi__cap"><h3 class="m-text-6">Declan Moore</h3><p class="m-text-4">Wet rooms, screeds and level floors.</p></div></li>
+    <li class="fi__card"><div class="fi__pic"><img src="https://images.unsplash.com/photo-1738817628118-ad34f40733ee?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8dGlsZXIlMjB3b3JraW5nfGVufDF8MHx8fDE3OTE1Njc4NTR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=620&amp;q=60" alt="A fitter in a high-visibility vest cutting a tile with a power saw" width="5964" height="3976" loading="lazy"></div><div class="fi__cap"><h3 class="m-text-6">Tomasz Nowak</h3><p class="m-text-4">Large-format porcelain and stone.</p></div></li>
   </ul>
   <div class="fi__yellow"><span class="fill" data-8b-motion="field" data-from="right" aria-hidden="true"></span><p class="fi__promise m-text-6">Two years' guarantee on every wall and floor we lay.</p></div>
   <div class="fi__right" aria-hidden="true"></div>
@@ -843,7 +934,7 @@ a { color: inherit; }
     <p class="m-text">Five steps, in the order we work. You can stop after any of them and take the plan with you.</p>
   </div>
   <div class="sv__rail" aria-hidden="true"><span class="sv__marker"></span></div>
-  <ol class="sv__steps">
+  <ol class="sv__steps" data-8b-items=":scope > li">
     <li class="sv__step"><span class="sv__num">1</span><h3 class="m-text-6">Bring the measurements</h3><p class="m-text">A sketch with wall lengths, windows and doors is enough. Or we measure for £40, refunded with your order.</p></li>
     <li class="sv__step"><span class="sv__num">2</span><h3 class="m-text-6">We draw the setting-out</h3><p class="m-text">Where the first full tile sits, where the cuts fall and how many boxes it takes, on squared paper, in half an hour.</p></li>
     <li class="sv__step"><span class="sv__num">3</span><h3 class="m-text-6">Samples go home</h3><p class="m-text">Up to five pieces, free. Look at them in your light, in the morning and in the evening.</p></li>
@@ -858,7 +949,7 @@ a { color: inherit; }
     <div class="fq__head"><h2 id="faq-title" class="fq__title m-text-3" data-8b-motion="bond"><span class="line">Before</span> <span class="line">you order</span></h2></div>
     <div class="fq__yellow"><span class="fill" data-8b-motion="field" data-from="bottom" aria-hidden="true"></span><p class="m-text-6">Ask a fitter</p><p class="m-text"><a data-8b-placeholder="phone" class="m-link" href="tel:+442890000000">028 9000 0000</a></p></div>
   </div>
-  <div class="fq__list" data-8b-motion="bond">
+  <div class="fq__list" data-8b-motion="bond" data-8b-items=":scope > details">
     <details class="fq__item"><summary class="m-text-6">How many tiles do I need?</summary><p class="m-text">Measure each wall or floor, multiply, and add a tenth for cuts and breakages, or a seventh for diagonal and herringbone. Bring the numbers in and we check them against a setting-out plan.</p></details>
     <details class="fq__item"><summary class="m-text-6">Can I return what I don't use?</summary><p class="m-text">Unopened boxes, within 60 days, with the receipt. Tiles cut to order and clearance lines cannot come back.</p></details>
     <details class="fq__item"><summary class="m-text-6">Do you deliver to Great Britain?</summary><p class="m-text">Yes, in three working days on a pallet. Northern Ireland is next working day, and Belfast addresses can choose a two-hour slot.</p></details>
@@ -874,7 +965,7 @@ a { color: inherit; }
     <h2 id="contact-title" class="ct__title m-text-3"><span class="line">Come and</span> <span class="line">stand on them</span></h2>
     <p class="m-text">Every tile we sell is laid on a wall or a floor in the showroom, next to a table of squared paper and a kettle.</p>
   </div>
-  <figure class="ct__photo"><img style="background:#d9c08c" src="https://images.unsplash.com/photo-1720414574239-19b692165d47?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fHRpbGUlMjBzYW1wbGVzfGVufDF8MHx8fDE3OTE1Njc4NTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=860&amp;q=60" alt="A showroom wall of tile panels: metro, hexagon and herringbone in blues, greys, black and terracotta" width="5472" height="3648" loading="lazy"></figure>
+  <figure class="ct__photo"><img src="https://images.unsplash.com/photo-1720414574239-19b692165d47?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fHRpbGUlMjBzYW1wbGVzfGVufDF8MHx8fDE3OTE1Njc4NTN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=860&amp;q=60" alt="A showroom wall of tile panels: metro, hexagon and herringbone in blues, greys, black and terracotta" width="5472" height="3648" loading="lazy"></figure>
   <address class="ct__addr m-text"><span class="m-text-2">Showroom</span><span>1 Example Street<br>Belfast BT1 0ZZ</span><a data-8b-placeholder="map" class="m-link" href="https://www.google.com/maps/search/?api=1&amp;query=Belfast">Directions</a></address>
   <dl class="ct__hours m-text"><dt>Mon–Fri</dt><dd>9:00–17:30</dd><dt>Saturday</dt><dd>9:00–16:00</dd><dt>Sunday</dt><dd>Closed</dd></dl>
   <div class="ct__call m-text"><a data-8b-placeholder="phone" class="m-link" href="tel:+442890000000">028 9000 0000</a><a data-8b-placeholder="email" class="m-link" href="mailto:hello@tegel.example">hello@tegel.example</a></div>
@@ -896,118 +987,6 @@ a { color: inherit; }
     <p class="ft__legal m-text-4"><span>© 2026 TEGEL Tiles Ltd, registered in Northern Ireland, NI000000. · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></span><span>Prices per square metre include VAT.</span></p>
   </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-const pageNav = document.getElementById('navigation');
-function navHeight() { return pageNav ? pageNav.getBoundingClientRect().height : 0; }
-function refreshScroll() {
-  const opening = document.getElementById('opening');
-  if (opening && pageNav) opening.style.setProperty('--op-nav', `${Math.round(navHeight())}px`);
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: .1, anchors: { offset: -Math.round(navHeight()) } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-let resizeTimer = 0;
-window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(refreshScroll, 200); });
-</script>
-<script data-8b-part="motion">
-const effects = {
-  bond(group, vars = {}) {
-    const rows = group.matches('[data-bond-rows]') ? group.querySelectorAll(group.dataset.bondRows) : group.children;
-    const step = vars.step || Math.min(40, innerWidth * .04);
-    const tl = gsap.timeline(vars);
-    Array.from(rows).forEach((row, i) => tl.fromTo(row, { x: (i % 2 ? 1 : -1) * step }, { x: 0, ease: 'power2.out', duration: vars.defaults && vars.defaults.duration || 1 }, 0));
-    return tl;
-  },
-  field(element, vars = {}) {
-    const from = element.dataset.from || 'left';
-    const start = { top: 'inset(0 0 100% 0)', right: 'inset(0 0 0 100%)', bottom: 'inset(100% 0 0 0)', left: 'inset(0 100% 0 0)' }[from];
-    return gsap.timeline(vars).fromTo(element, { clipPath: start }, { clipPath: 'inset(0 0 0 0)', duration: .9, ease: 'power3.inOut' });
-  },
-  lay(group, vars = {}) {
-    const cells = Array.from(group.children);
-    return gsap.timeline(vars).fromTo(cells, { clipPath: 'inset(0 100% 100% 0)' }, { clipPath: 'inset(0 0% 0% 0)', duration: .6, ease: 'power2.out', stagger: .09 });
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  ['bond', 'field', 'lay'].forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, i) => {
-        if (name === 'bond') ScrollTrigger.create({ id: `${id}:${i}`, trigger: element, start: 'top 98%', end: 'top 55%', scrub: .6, animation: effects.bond(element) });
-        else ScrollTrigger.create({ id: `${id}:${i}`, trigger: element, start: 'top 88%', once: true, animation: effects[name](element) });
-      });
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-</script>
 <script data-8b-part="section-script:navigation">
 (() => {
   const nav = document.getElementById('navigation');
@@ -1070,137 +1049,192 @@ document.querySelectorAll('[data-8b-section]').forEach(section => {
   });
 })();
 </script>
-<script data-8b-part="scene:bonds">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('bonds');
-    const rows = Array.from(section.querySelectorAll('.bd__row'));
-    const names = Array.from(section.querySelectorAll('.bd__name'));
-    section.setAttribute('data-staged', '');
-    names[0].setAttribute('data-active', '');
-    const step = () => rows[0].children[0].getBoundingClientRect().width + parseFloat(getComputedStyle(rows[0]).columnGap || 0);
-    const shift = (fraction, r) => -((r * fraction) % 1) * step();
-    const show = index => names.forEach((name, i) => name.toggleAttribute('data-active', i === index));
-    const timeline = gsap.timeline({ defaults: { ease: 'power2.inOut' }, scrollTrigger: {
-      id: 'bonds', trigger: section.querySelector('.bd__track'), start: 'top top', end: 'bottom bottom', scrub: .7, invalidateOnRefresh: true,
-      onUpdate: self => show(self.progress < .34 ? 0 : self.progress < .68 ? 1 : 2)
-    } });
-    rows.forEach((row, r) => timeline.fromTo(row, { x: 0 }, { x: () => shift(.5, r), duration: .3 }, .1));
-    rows.forEach((row, r) => timeline.to(row, { x: () => shift(1 / 3, r), duration: .3 }, .56));
-    timeline.set({}, {}, 1);
-    return () => { section.removeAttribute('data-staged'); names.forEach(name => name.removeAttribute('data-active')); };
-  });
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); });
+};
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:bonds">
+motionKit.scene('bonds', () => {
+  const section = document.getElementById('bonds');
+  const names = Array.from(section.querySelectorAll('.bd__name'));
+  const show = index => names.forEach((name, i) => name.toggleAttribute('data-active', i === index));
+  motionKit.track(section.querySelector('.bd__track'), 'top 0%', 'bottom 100%', progress => show(progress < .34 ? 0 : progress < .68 ? 1 : 2));
 });
 </script>
-<script data-8b-part="scene:rooms">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('rooms');
-    const rooms = Array.from(section.querySelectorAll('.rm__room'));
-    const items = Array.from(section.querySelectorAll('.rm__item'));
-    const marker = section.querySelector('.rm__marker');
-    section.setAttribute('data-staged', '');
-    const states = [{ a: .58, b: .82, y: .5 }, { a: .14, b: .86, y: .74 }, { a: .14, b: .86, y: .24 }, { a: .12, b: .36, y: .5 }];
-    const grid = { ...states[0] };
-    const pct = value => `${(value * 100).toFixed(3).replace(/\.?0+$/, '')}%`;
-    const edge = value => `calc(${pct(value)} + 1px)`;
-    const draw = () => {
-      const { a, b, y } = grid;
-      rooms[0].style.clipPath = `inset(0% ${edge(1 - a)} 0% 0%)`;
-      rooms[1].style.clipPath = `inset(0% ${edge(1 - b)} ${edge(1 - y)} ${edge(a)})`;
-      rooms[2].style.clipPath = `inset(${edge(y)} ${edge(1 - b)} 0% ${edge(a)})`;
-      rooms[3].style.clipPath = `inset(0% 0% 0% ${edge(b)})`;
-    };
-    const mark = index => items.forEach((item, i) => item.toggleAttribute('data-active', i === index));
-    const place = index => items[index].offsetTop - items[0].offsetTop;
-    marker.style.height = `${items[0].offsetHeight}px`;
-    marker.style.top = `${items[0].offsetTop}px`;
-    const timeline = gsap.timeline({ defaults: { ease: 'power3.inOut' }, scrollTrigger: {
-      id: 'rooms', trigger: section.querySelector('.rm__track'), start: 'top top', end: 'bottom bottom', scrub: .8, invalidateOnRefresh: true,
-      onUpdate: self => mark(self.progress < .18 ? 0 : self.progress < .48 ? 1 : self.progress < .78 ? 2 : 3)
-    } });
-    states.slice(1).forEach((state, i) => {
-      const at = .08 + i * .3;
-      timeline.to(grid, { ...state, duration: .2, onUpdate: draw }, at);
-      timeline.fromTo(marker, { y: () => place(i) }, { y: () => place(i + 1), duration: .2, immediateRender: false }, at);
+<script data-8b-part="scene-script:rooms">
+motionKit.scene('rooms', () => {
+  const section = document.getElementById('rooms');
+  const items = Array.from(section.querySelectorAll('.rm__item'));
+  const marker = section.querySelector('.rm__marker');
+  const place = index => items[index].offsetTop - items[0].offsetTop;
+  motionKit.measure(() => motionKit.set(marker, {
+    height: `${items[0].offsetHeight}px`, top: `${items[0].offsetTop}px`,
+    '--rooms-at-1': `${place(1)}px`, '--rooms-at-2': `${place(2)}px`, '--rooms-at-3': `${place(3)}px`
+  }));
+});
+</script>
+<script data-8b-part="scene-script:glazes">
+motionKit.scene('glazes', () => {
+  const section = document.getElementById('glazes');
+  const stage = section.querySelector('.gz__stage');
+  const rail = section.querySelector('.gz__rail');
+  const bays = Array.from(section.querySelectorAll('.gz__bay'));
+  motionKit.measure(() => {
+    const width = stage.clientWidth, travel = Math.max(0, rail.scrollWidth - width);
+    motionKit.set(section, { '--gz-travel': `${travel}px` });
+    bays.forEach(bay => {
+      const from = width * .98, to = Math.max(width * .6, bay.offsetLeft - travel), span = Math.max(1, from - to);
+      motionKit.set(bay, { '--gz-rise-at': (from - bay.offsetLeft) / span, '--gz-rise-by': travel / span });
     });
-    timeline.set({}, {}, 1);
-    mark(0);
-    draw();
-    return () => {
-      section.removeAttribute('data-staged');
-      rooms.forEach(room => { room.style.clipPath = ''; });
-      items.forEach(item => item.removeAttribute('data-active'));
-      marker.style.height = ''; marker.style.top = '';
-    };
   });
 });
 </script>
-<script data-8b-part="scene:glazes">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('glazes');
-    const stage = section.querySelector('.gz__stage');
-    const rail = section.querySelector('.gz__rail');
-    section.setAttribute('data-staged', '');
-    const distance = () => Math.max(0, rail.scrollWidth - stage.clientWidth);
-    const measure = () => section.style.setProperty('--gz-travel', `${Math.round(distance())}px`);
-    measure();
-    ScrollTrigger.addEventListener('refreshInit', measure);
-    const bays = Array.from(section.querySelectorAll('.gz__bay'));
-    const fills = bays.map(bay => bay.querySelector('.gz__field .fill'));
-    const rise = () => {
-      const width = stage.clientWidth, travel = distance(), x = gsap.getProperty(rail, 'x');
-      bays.forEach((bay, i) => {
-        const from = width * .98, to = Math.max(width * .6, bay.offsetLeft - travel);
-        const progress = gsap.utils.clamp(0, 1, (from - (bay.offsetLeft + x)) / Math.max(1, from - to));
-        fills[i].style.clipPath = `inset(${((1 - progress) * 100).toFixed(2)}% 0% 0% 0%)`;
-      });
-    };
-    gsap.to(rail, { x: () => -distance(), ease: 'none', onUpdate: rise, scrollTrigger: {
-      id: 'glazes', trigger: section, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true, onRefresh: rise
-    } });
-    rise();
-    return () => {
-      ScrollTrigger.removeEventListener('refreshInit', measure);
-      section.removeAttribute('data-staged');
-      section.style.removeProperty('--gz-travel');
-      fills.forEach(fill => { fill.style.clipPath = ''; });
-    };
-  });
-});
-</script>
-<script data-8b-part="scene:service">
-queueMotion(() => {
-  gsap.matchMedia().add({ wide: '(min-width: 900px) and (prefers-reduced-motion: no-preference)', narrow: '(max-width: 899px) and (prefers-reduced-motion: no-preference)' }, context => {
-    const section = document.getElementById('service');
-    const marker = section.querySelector('.sv__marker');
-    const steps = Array.from(section.querySelectorAll('.sv__step'));
-    const wide = context.conditions.wide;
-    const last = steps.length - 1;
-    const travel = () => wide ? steps[last].offsetLeft - steps[0].offsetLeft : steps[last].offsetTop - steps[0].offsetTop;
-    const light = progress => {
-      const index = Math.min(last, Math.round(progress * last));
-      steps.forEach((step, i) => { step.toggleAttribute('data-on', i <= index); step.toggleAttribute('data-now', i === index); });
-    };
-    gsap.fromTo(marker, wide ? { x: 0 } : { y: 0 }, { ...(wide ? { x: travel } : { y: travel }), ease: 'none', scrollTrigger: {
-      id: 'service', trigger: section.querySelector('.sv__steps'), start: wide ? 'top 75%' : 'top 70%', end: wide ? 'bottom 45%' : 'bottom 55%', scrub: .5, invalidateOnRefresh: true,
-      onUpdate: self => light(self.progress), onLeaveBack: () => steps.forEach(step => { step.removeAttribute('data-on'); step.removeAttribute('data-now'); })
-    } });
-    return () => steps.forEach(step => { step.removeAttribute('data-on'); step.removeAttribute('data-now'); });
-  });
-});
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const timeline = gsap.timeline({ defaults: { ease: 'power2.out' }, scrollTrigger: { id: 'contact', trigger: section, start: 'top 85%', end: 'top 15%', scrub: .6 } });
-    timeline
-      .fromTo(section.querySelector('.ct__photo img'), { clipPath: 'inset(32% 30% 32% 30%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1 }, 0)
-      .fromTo(section.querySelector('.ct__red .fill'), { yPercent: -230 }, { yPercent: 0, duration: .9 }, .05)
-      .fromTo(section.querySelector('.ct__yellow .fill'), { xPercent: -101 }, { xPercent: 0, duration: .7 }, .3);
-  });
+<script data-8b-part="scene-script:service">
+motionKit.scene('service', () => {
+  const section = document.getElementById('service');
+  const list = section.querySelector('.sv__steps');
+  const steps = Array.from(section.querySelectorAll('.sv__step'));
+  const last = steps.length - 1;
+  const wide = matchMedia('(min-width: 900px)');
+  const light = progress => {
+    const index = progress > 0 ? Math.min(last, Math.round(progress * last)) : -1;
+    steps.forEach((step, i) => { step.toggleAttribute('data-on', index >= 0 && i <= index); step.toggleAttribute('data-now', i === index); });
+  };
+  motionKit.measure(() => motionKit.set(section, {
+    '--service-x': `${steps[last].offsetLeft - steps[0].offsetLeft}px`,
+    '--service-y': `${steps[last].offsetTop - steps[0].offsetTop}px`
+  }));
+  motionKit.track(list, 'top 75%', 'bottom 45%', progress => { if (wide.matches) light(progress); });
+  motionKit.track(list, 'top 70%', 'bottom 55%', progress => { if (!wide.matches) light(progress); });
 });
 </script>
 </body>

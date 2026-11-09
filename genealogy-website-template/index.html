@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/genealogy-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -20,6 +21,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%23e6ebed'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%230d0d0d'%3EK%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/redditsans/v6/EYq3maFOxq1T_-ETdN7EKQNre5Y.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://fonts.gstatic.com/s/playwriteustrad/v11/fdNX9tyHsnVPjW9trmV7wQ0stdwRBYclCsCdzOb1-cd1E8tgig.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
 <style>
 /* fallback */
@@ -88,10 +90,6 @@
 @font-face { font-family: "Playwrite US Trad Fallback"; src: local("Arial"), local("ArialMT"), local("Helvetica"); font-weight: 100 549; size-adjust: 129.1%; ascent-override: 110.8%; descent-override: 38.7%; line-gap-override: 0%; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-html.lenis, html.lenis body { height: auto; }
-.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 body {
   margin: 0;
   background-color: var(--color-1);
@@ -287,6 +285,13 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 @keyframes opening-stamp { from { transform: scale(.94) rotate(-3deg); } }
 @keyframes opening-rise { from { transform: translateY(.18em); } }
 @keyframes opening-drift { from { transform: scale(1.36) translate(-7.5%, -6%); } to { transform: scale(1.36) translate(7.5%, 6%); } }
+#opening .opening__screen--inside { height: auto; min-height: 0; }
+#opening .opening__inside { height: auto; min-height: max(632px, calc(100svh - 48px)); }
+#opening .opening__inside .opening__actions { grid-column: 1 / -1; grid-row: auto; margin-top: 0; }
+@media (min-width: 900px) {
+  #opening .opening__inside { min-height: max(666px, calc(100svh - 28px)); }
+  #opening .opening__inside .opening__actions { grid-column: 1 / 4; }
+}
 }
 </style>
 
@@ -310,15 +315,6 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
   #archives .archives__page { position: sticky; top: 9vh; }
   #archives .archives__frame { height: min(82vh, 720px); aspect-ratio: auto; }
   #archives .archives__text { padding: 4vh 0 16vh; }
-}
-}
-</style>
-<style data-8b-part="scene-style:reading-window">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #archives.is-reading .archives__ledger { filter: brightness(.42) saturate(.6); }
-  #archives .archives__lens { position: absolute; left: 0; top: 0; width: 100%; height: 24%; overflow: hidden; outline: 2px solid var(--color-8); box-shadow: var(--shadow-1); pointer-events: none; }
-  #archives .archives__zoom { position: absolute; left: 0; top: 0; max-width: none; object-fit: cover; transform-origin: 0 0; }
 }
 }
 </style>
@@ -407,15 +403,6 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="scene-style:generations">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #case.is-growing .case__track { height: 250vh; }
-  #case.is-growing .case__stage { position: sticky; top: 52px; height: calc(100vh - 60px); display: grid; align-content: center; }
-  @media (min-width: 900px) { #case.is-growing .case__stage { top: 4vh; height: 92vh; } }
-}
-}
-</style>
 <style data-8b-part="section:people">
 @layer sections {
 #people { padding: 8px 0; }
@@ -454,15 +441,9 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 #letters .letters__item:nth-child(4n) { transform: rotate(1.8deg) translateY(6px); }
 #letters .letters__sign { display: grid; gap: 2px; }
 #letters .letters__sign .m-text-3 { color: var(--color-7); }
-@media (prefers-reduced-motion: no-preference) {
-  #letters .letters__row.is-rolling { overflow: hidden; }
-  #letters .letters__row.is-rolling .letters__track { flex-wrap: nowrap; justify-content: flex-start; width: max-content; }
-  #letters .letters__row.is-rolling .letters__item { width: 290px; }
-}
 @media (min-width: 900px) {
   #letters { padding: 110px 0 120px; }
   #letters .letters__item { min-height: 270px; }
-  #letters .letters__row.is-rolling .letters__item { width: 330px; }
 }
 }
 </style>
@@ -536,24 +517,6 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="scene-style:fee-slip">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #fees.is-slipped .fees__body { display: grid; gap: 0; }
-  #fees .fees__slipcol { position: sticky; top: 46px; z-index: 2; height: 74px; margin: 0 -6px 6px; perspective: 900px; }
-  #fees .fees__card { position: relative; height: 100%; transform-style: preserve-3d; }
-  #fees .fees__face { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; background: var(--color-8); color: var(--color-6); box-shadow: var(--shadow-1); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-  #fees .fees__face + .fees__face { transform: rotateX(180deg); }
-  #fees .fees__face .fees__amount { font-size: 30px; }
-  @media (min-width: 900px) {
-    #fees.is-slipped .fees__body { grid-template-columns: 250px 1fr; gap: 44px; align-items: start; }
-    #fees .fees__slipcol { top: 26vh; height: 230px; margin: 0; }
-    #fees .fees__face { flex-direction: column; align-items: flex-start; justify-content: space-between; padding: 22px 20px; }
-    #fees .fees__face .fees__amount { font-size: 50px; }
-  }
-}
-}
-</style>
 <style data-8b-part="section:contact">
 @layer sections {
 #contact { padding: 8px 0; }
@@ -592,27 +555,179 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
 }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .opening__screen--inside { height: auto; min-height: 0; }
-#opening .opening__inside { height: auto; min-height: max(632px, calc(100svh - 48px)); }
-#opening .opening__inside .opening__actions { grid-column: 1 / -1; grid-row: auto; margin-top: 0; }
-@media (min-width: 900px) {
-  #opening .opening__inside { min-height: max(666px, calc(100svh - 28px)); }
-  #opening .opening__inside .opening__actions { grid-column: 1 / 4; }
+<style data-8b-part="motion">
+@property --motion-press-depth { syntax: '<number>'; inherits: true; initial-value: 1.8; }
+@property --motion-ink-sweep { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] [data-8b-motion~="settle"] { animation-name: motion-settle-translate, motion-settle-rotate, motion-settle-scale; animation-duration: 0.9s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="settle"].is-in { animation-play-state: running; }
+[data-8b-live] .l-sheet { view-timeline: --motion-press block; view-timeline-inset: 0; }
+[data-8b-live] [data-8b-motion~="press"]:not(.l-sheet *) { view-timeline: --motion-press block; view-timeline-inset: 0; }
+[data-8b-live] [data-8b-motion~="press"] { --press: var(--motion-press-depth); animation-name: motion-press---press; animation-timeline: --motion-press; animation-range: cover 0% cover 100%; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] [data-8b-motion~="ink"] { --ink: var(--motion-ink-sweep); animation-name: motion-ink---ink; animation-duration: 0.7s; animation-delay: 0s; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="ink"].is-in { animation-play-state: running; }
+@keyframes motion-settle-translate { 0% { translate: 0px -26px; } 100% { translate: 0px 0px; } }
+@keyframes motion-settle-rotate { 0% { rotate: var(--settle-rotate-from, -5deg); } 100% { rotate: var(--settle-rotate-to, 0deg); } }
+@keyframes motion-settle-scale { 0% { scale: 1.04; } 100% { scale: 1; } }
+@keyframes motion-press---press { 0% { --motion-press-depth: 0.15; } 100% { --motion-press-depth: 1.8; } }
+@keyframes motion-ink---ink { 0% { --motion-ink-sweep: 0; } 100% { --motion-ink-sweep: 1; } }
+[data-8b-live] [data-8b-motion~="roll"] { overflow: hidden; }
+[data-8b-live] [data-8b-motion~="roll"] .letters__track { display: flex; gap: 22px 18px; padding: 14px 16px 26px; flex-wrap: nowrap; justify-content: flex-start; width: max-content; animation: motion-roll 70s linear infinite; }
+[data-8b-live] [data-8b-motion~="roll"]:is(:hover, :focus-within) .letters__track { animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="roll"] .letters__item { flex: none; width: 290px; }
+@media (min-width: 900px) { [data-8b-live] [data-8b-motion~="roll"] .letters__item { width: 330px; } }
+@keyframes motion-roll { to { translate: -50% 0; } }
 }
+</style>
+<style data-8b-part="scene:inside-rises">
+@layer scenes {
+[data-8b-live] #opening .opening__title { animation: opening-rise .8s cubic-bezier(.2,.75,.2,1) backwards; }
+[data-8b-live] #opening .opening__intro, [data-8b-live] #opening .opening__inside .opening__actions, [data-8b-live] #opening .opening__spell li { animation: opening-up .8s cubic-bezier(.2,.75,.2,1) backwards; }
+[data-8b-live] #opening .opening__intro { animation-delay: .1s; }
+[data-8b-live] #opening .opening__inside .opening__actions { animation-delay: .2s; }
+[data-8b-live] #opening .opening__spell li:nth-child(1) { animation-delay: .15s; }
+[data-8b-live] #opening .opening__spell li:nth-child(2) { animation-delay: .22s; }
+[data-8b-live] #opening .opening__spell li:nth-child(3) { animation-delay: .29s; }
+[data-8b-live] #opening .opening__spell li:nth-child(4) { animation-delay: .36s; }
+[data-8b-live] #opening .opening__pic .m-stamp { animation: opening-stamp 1s cubic-bezier(.2,.75,.2,1) .25s backwards; }
+[data-8b-live] #opening .opening__pic:nth-child(2) .m-stamp { animation-delay: .38s; }
+@keyframes opening-up { from { transform: translateY(24px); opacity: 0; } }
+}
+</style>
+<style data-8b-part="scene:reading-window">
+@property --archives-ink { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #opening .opening__title { animation: opening-rise .8s cubic-bezier(.2,.75,.2,1) backwards; }
-  #opening .opening__intro, #opening .opening__inside .opening__actions, #opening .opening__spell li { animation: rw-up .8s cubic-bezier(.2,.75,.2,1) backwards; }
-  #opening .opening__intro { animation-delay: .1s; }
-  #opening .opening__inside .opening__actions { animation-delay: .2s; }
-  #opening .opening__spell li:nth-child(1) { animation-delay: .15s; }
-  #opening .opening__spell li:nth-child(2) { animation-delay: .22s; }
-  #opening .opening__spell li:nth-child(3) { animation-delay: .29s; }
-  #opening .opening__spell li:nth-child(4) { animation-delay: .36s; }
-  #opening .opening__pic .m-stamp { animation: opening-stamp 1s cubic-bezier(.2,.75,.2,1) .25s backwards; }
-  #opening .opening__pic:nth-child(2) .m-stamp { animation-delay: .38s; }
+  [data-8b-live] #archives .archives__ledger { filter: brightness(.42) saturate(.6); }
+  [data-8b-live] #archives .archives__lens { position: absolute; left: 0; top: 0; width: 100%; height: 24%; overflow: hidden; outline: 2px solid var(--color-8); box-shadow: var(--shadow-1); pointer-events: none; }
+  [data-8b-live] #archives .archives__zoom { position: absolute; left: 0; top: 0; max-width: none; object-fit: cover; transform-origin: 0 0; }
 }
-@keyframes rw-up { from { transform: translateY(24px); opacity: 0; } }</style>
+}
+@layer scenes {
+[data-8b-live] #archives { timeline-scope: --archives-t1; }
+[data-8b-live] #archives .archives__frame .archives__lens, [data-8b-live] #archives .archives__frame .archives__zoom { animation-timeline: --archives-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes archives-h3-archives-name---ink { 0% { --archives-ink: 0; } 0.002% { --archives-ink: 0.001; } 99.998% { --archives-ink: 0.999; } 100% { --archives-ink: 1; } }
+[data-8b-live] #archives .archives__frame .archives__lens { animation-name: archives-lens-travel; }
+[data-8b-live] #archives .archives__frame .archives__zoom { animation-name: archives-zoom-travel; width: 100%; height: calc(100% / .24); scale: 1.9; }
+@keyframes archives-lens-travel { 0% { translate: 0 0; } 100% { translate: 0 316.667%; } }
+@keyframes archives-zoom-travel { 0% { translate: -45% -10.8%; } 100% { translate: -45% -155.2%; } }
+@media (min-width: 900px) {
+  [data-8b-live] #archives .archives__inner { view-timeline: --archives-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #archives .archives__list > li > .archives__name { animation-name: archives-h3-archives-name---ink; animation-timeline: --archives-t1; animation-range: cover calc(8% + 18% * var(--i) + 34.12vh - 24.48vh * var(--i)) cover calc(18% + 18% * var(--i) + 20.52vh - 24.48vh * var(--i)); animation-timing-function: linear; animation-fill-mode: both; --ink: var(--archives-ink); }
+  [data-8b-live] #archives .archives__frame .archives__lens, [data-8b-live] #archives .archives__frame .archives__zoom { animation-range: cover 45vh cover calc(100% - 91vh); }
+}
+@media (max-width: 899px) {
+  [data-8b-live] #archives .archives__frame .archives__lens, [data-8b-live] #archives .archives__frame .archives__zoom { animation-range: cover 25vh cover calc(100% - 35vh); }
+  [data-8b-live] #archives .archives__list > li > .archives__name { --archives-ink: 0; --ink: var(--archives-ink); transition: --archives-ink .6s cubic-bezier(.65, 0, .35, 1); }
+  [data-8b-live] #archives .archives__list > li > .archives__name.is-read { --archives-ink: 1; }
+  [data-8b-live] #archives .archives__frame { view-timeline: --archives-t1 block; view-timeline-inset: 0; }
+}
+}
+</style>
+<style data-8b-part="scene:thread">
+@layer scenes {
+[data-8b-live] #method { timeline-scope: --method-t1; }
+[data-8b-live] #method .method__slips { view-timeline: --method-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #method .method__slips > svg:nth-child(1) > path:nth-child(1) { animation-name: method-ol-method-slips-path-strokedashoffset, method-ol-method-slips-path-strokedasharray; animation-timeline: --method-t1; animation-range: cover 28vh cover calc(100% - 70vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #method .method__slips > li { animation-name: method-li-method-slip-rotate, method-li-method-slip-translate; animation-timeline: --method-t1; animation-range: cover calc(-4% + 23.75% * var(--i) + 31.92vh - 23.275vh * var(--i)) cover calc(16% + 23.75% * var(--i) + 12.32vh - 23.275vh * var(--i)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #method .method__slips > li:first-of-type { animation-range: cover 28vh cover calc(20% + 8.4vh); }
+@keyframes method-ol-method-slips-path-strokedashoffset { 0% { stroke-dashoffset: 1px; } 100% { stroke-dashoffset: 0px; } }
+@keyframes method-ol-method-slips-path-strokedasharray { 0% { stroke-dasharray: 1px; } 100% { stroke-dasharray: 1px; } }
+@keyframes method-li-method-slip-rotate { 0% { rotate: var(--method-li-method-slip-rotate-from, -7deg); } 100% { rotate: 0deg; } }
+@keyframes method-li-method-slip-translate { 0% { translate: var(--method-li-method-slip-translate-from, -26px) 34px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:generations">
+@layer scenes {
+[data-8b-live] #case .case__track { height: 250vh; view-timeline: --case-track block; view-timeline-inset: 0; }
+[data-8b-live] #case .case__stage { position: sticky; top: 52px; height: calc(100vh - 60px); display: grid; align-content: center; }
+@media (min-width: 900px) { [data-8b-live] #case .case__stage { top: 4vh; height: 92vh; } }
+[data-8b-live] #case .case__chart, [data-8b-live] #case .case__lines path, [data-8b-live] #case .case__dot, [data-8b-live] #case .case__person > :not(.case__dot) { animation-timeline: --case-track; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #case .case__chart { animation-name: case-chart-back; animation-timing-function: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1513, 0.18, 0.2113, 0.245, 0.2813, 0.32, 0.3612, 0.405, 0.4512, 0.5, 0.5488, 0.595, 0.6387, 0.68, 0.7188, 0.755, 0.7888, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); animation-range: cover 93vh cover calc(93vh + 157vh * .86 / .892); transform-origin: 0% 50%; }
+[data-8b-live] #case .case__person--g1, [data-8b-live] #case .case__lines path[data-gen="1"] { --case-at: .06; --case-k: calc(var(--i) - 1); }
+[data-8b-live] #case .case__person--g2, [data-8b-live] #case .case__lines path[data-gen="2"] { --case-at: .33; --case-k: calc(var(--i) - 3); }
+[data-8b-live] #case .case__person--g3, [data-8b-live] #case .case__lines path[data-gen="3"] { --case-at: .6; --case-k: calc(var(--i) - 7); }
+[data-8b-live] #case .case__lines path { stroke-dasharray: 1; animation-name: case-line-draw; animation-range: cover calc(93vh + 157vh * var(--case-at) / .892) cover calc(93vh + 157vh * (var(--case-at) + .14) / .892); }
+[data-8b-live] #case .case__person:not(.case__person--g0) > .case__dot { animation-name: case-dot-grow; animation-range: cover calc(93vh + 157vh * (var(--case-at) + .1 + var(--case-k) * .008) / .892) cover calc(93vh + 157vh * (var(--case-at) + .17 + var(--case-k) * .008) / .892); }
+[data-8b-live] #case .case__person:not(.case__person--g0) > :not(.case__dot) { animation-name: case-label-write; animation-range: cover calc(93vh + 157vh * (var(--case-at) + .12 + var(--case-l) * .006) / .892) cover calc(93vh + 157vh * (var(--case-at) + .22 + var(--case-l) * .006) / .892); }
+[data-8b-live] #case .case__name { --case-l: calc(var(--case-k) * 2); }
+[data-8b-live] #case .case__meta { --case-l: calc(var(--case-k) * 2 + 1); }
+[data-8b-live] #case .case__open { --case-l: calc(var(--case-k) + 5); }
+@keyframes case-chart-back { 0% { scale: 2.1; } 100% { scale: 1; } }
+@keyframes case-line-draw { 0% { stroke-dashoffset: 1; } 100% { stroke-dashoffset: 0; } }
+@keyframes case-dot-grow { 0% { scale: 0; } 100% { scale: 1; } }
+@keyframes case-label-write { 0% { clip-path: inset(0% 100% 0% 0%); } 100% { clip-path: inset(0%); } }
+}
+</style>
+<style data-8b-part="scene:stamps-part">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #people .people__grid { view-timeline: --people-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #people .people__grid > li > .people__stamp, [data-8b-live] #people .people__grid > li > .people__name, [data-8b-live] #people .people__grid > li:is(:nth-of-type(1), :nth-of-type(4)) > .m-badge-2, [data-8b-live] #people .m-badge, [data-8b-live] #people .m-badge-3 { animation-timeline: --people-t1; animation-fill-mode: both; }
+[data-8b-live] #people .people__grid > li > .people__stamp { animation-range: cover 18vh cover calc(67.6329% - 36.1063vh); transform: none; }
+[data-8b-live] #people .people__grid > li > .people__name, [data-8b-live] #people .people__grid > li:is(:nth-of-type(1), :nth-of-type(4)) > .m-badge-2, [data-8b-live] #people .m-badge, [data-8b-live] #people .m-badge-3 { animation-name: people-h3-people-name-clippath; animation-timing-function: linear; }
+[data-8b-live] #people .people__grid > li > .people__name { animation-range: cover calc(59.9034% + 4.8309% * var(--i) - 29.9227vh - 3.8647vh * var(--i)) cover calc(83.0918% + 4.8309% * var(--i) - 48.4734vh - 3.8648vh * var(--i)); }
+[data-8b-live] #people .people__grid > li:nth-of-type(1) > .m-badge-2 { animation-range: cover calc(62.3188% - 31.8551vh) cover calc(85.5072% - 50.4058vh); }
+[data-8b-live] #people .m-badge { animation-range: cover calc(67.1498% - 35.7198vh) cover calc(90.3382% - 54.2705vh); }
+[data-8b-live] #people .m-badge-3 { animation-range: cover calc(71.9807% - 39.5845vh) cover calc(95.1691% - 58.1353vh); }
+[data-8b-live] #people .people__grid > li:nth-of-type(4) > .m-badge-2 { animation-range: cover calc(76.8116% - 43.4493vh) cover calc(100% - 62vh); }
+@keyframes people-div-people-stamp-translate-d { 0% { translate: var(--people-div-people-stamp-translate-from, 207px) var(--people-div-people-stamp-translate-from-2, 0px); } 100% { translate: 0px 0px; } }
+@keyframes people-div-people-stamp-translate-m { 0% { translate: var(--people-div-people-stamp-translate-from-m, 6.5px) var(--people-div-people-stamp-translate-from-2-m, 0px); } 100% { translate: 0px 0px; } }
+@keyframes people-div-people-stamp-rotate { 0% { rotate: 0deg; } 100% { rotate: var(--people-div-people-stamp-rotate-to, -1.5deg); } }
+@keyframes people-h3-people-name-clippath { 0% { clip-path: inset(0% 100% 0% 0%); } 99.998% { clip-path: inset(0% 0.0417% 0% 0%); } 100% { clip-path: inset(0%); } }
+@media (min-width: 900px) {
+  [data-8b-live] #people .people__grid > li > .people__stamp { animation-name: people-div-people-stamp-translate-d, people-div-people-stamp-rotate; animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1); }
+}
+@media (max-width: 899px) {
+  [data-8b-live] #people .people__grid > li > .people__stamp { animation-name: people-div-people-stamp-translate-m, people-div-people-stamp-rotate; }
+  [data-8b-live] #people .people__grid > li:nth-of-type(-n+2) > .people__stamp { animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  [data-8b-live] #people .people__grid > li:is(:nth-of-type(3), :nth-of-type(4)) > .people__stamp { animation-timing-function: var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1); }
+}
+}
+</style>
+<style data-8b-part="scene:room-opens">
+@layer scenes {
+[data-8b-live] #room .room__frame, [data-8b-live] #room .room__frame > img { animation-timeline: --room-t1; animation-range: cover 4vh cover 86vh; animation-fill-mode: both; transform: none; }
+[data-8b-live] #room .room__frame { view-timeline: --room-t1 block; view-timeline-inset: 0; animation-name: room-div-room-frame-scale, room-div-room-frame-rotate; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); transform-origin: 50% 0%; }
+[data-8b-live] #room .room__frame > img { animation-name: room-div-room-frame-img-scale; animation-timing-function: linear; }
+@keyframes room-div-room-frame-scale { 0% { scale: 0.3; } 100% { scale: 1; } }
+@keyframes room-div-room-frame-rotate { 0% { rotate: -6deg; } 100% { rotate: 0deg; } }
+@keyframes room-div-room-frame-img-scale { 0% { scale: 1.5; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:fee-slip">
+@layer scenes {
+[data-8b-live] #fees .fees__body { display: grid; gap: 0; }
+[data-8b-live] #fees .fees__slipcol { position: sticky; top: 46px; z-index: 2; height: 74px; margin: 0 -6px 6px; perspective: 900px; }
+[data-8b-live] #fees .fees__card { position: relative; height: 100%; transform-style: preserve-3d; transform: rotateX(calc(var(--fees-turn, 0) * -180deg)); transition: transform .7s cubic-bezier(.76, 0, .24, 1); }
+[data-8b-live] #fees .fees__face { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; background: var(--color-8); color: var(--color-6); box-shadow: var(--shadow-1); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+[data-8b-live] #fees .fees__face + .fees__face { transform: rotateX(180deg); }
+[data-8b-live] #fees .fees__face .fees__amount { font-size: 30px; }
+@media (min-width: 900px) {
+  [data-8b-live] #fees .fees__body { grid-template-columns: 250px 1fr; gap: 44px; align-items: start; }
+  [data-8b-live] #fees .fees__slipcol { top: 26vh; height: 230px; margin: 0; }
+  [data-8b-live] #fees .fees__face { flex-direction: column; align-items: flex-start; justify-content: space-between; padding: 22px 20px; }
+  [data-8b-live] #fees .fees__face .fees__amount { font-size: 50px; }
+}
+}
+</style>
+<style data-8b-part="scene:footer-press">
+@property --footer-rake { syntax: '<number>'; inherits: true; initial-value: 1.5; }
+@property --footer-depth { syntax: '<number>'; inherits: true; initial-value: 1.8; }
+@layer scenes {
+[data-8b-live] #footer { view-timeline: --footer-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #footer .footer__word, [data-8b-live] #footer .footer__light { animation-timeline: --footer-t1; animation-range: cover 0% cover calc(100% - 100vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #footer .footer__word { animation-name: footer-span-footer-word---footer-rake, footer-span-footer-word---footer-depth; }
+[data-8b-live] #footer .footer__light { animation-name: footer-span-footer-light-translate; transform: none; }
+@keyframes footer-span-footer-word---footer-rake { 0% { --footer-rake: -1.5; } 100% { --footer-rake: 1.5; } }
+@keyframes footer-span-footer-word---footer-depth { 0% { --footer-depth: 0.4; } 100% { --footer-depth: 1.8; } }
+@keyframes footer-span-footer-light-translate { 0% { translate: -90% 0px; } 100% { translate: 110% 0px; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: six fixed index tabs in four paper colours: Cover, Archive, Case, People, Fees, Write; down the right edge on wide screens, along the top on phones -->
@@ -625,7 +740,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
   <a class="tabs__tab tabs__tab--mauve" href="#contact">Write</a>
 </nav>
 <main>
-  <!-- opening: the first sheet: heading "One photo. Four spellings.", intro, two links, four spellings of a surname with their sources, two stamped photos and a ghost word -->
+  <!-- opening: the first sheet: heading "One photo. Four spellings.", intro, two links, four spellings of a surname with their sources, two stamped photos and a ghost word (animation: scene:inside-rises) -->
   <section id="opening" data-8b-section="opening" aria-labelledby="opening-title">
     
     <div class="opening__screen opening__screen--inside">
@@ -644,11 +759,11 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
         </ul>
         <div class="opening__pics">
           <figure class="opening__pic">
-            <div class="m-stamp"><img style="background:#737359" src="https://images.unsplash.com/photo-1778165489281-3ee7b0b148ec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8b2xkJTIwcGhvdG9ncmFwaCUyMHdvbWFuJTIwMTkyMHN8ZW58MXwxfHx8MTc5MTQ3MTE1NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=250&q=60" alt="An old studio portrait of a young woman with her hair pinned up" width="600" height="800" loading="lazy"></div>
+            <div class="m-stamp"><img src="https://images.unsplash.com/photo-1778165489281-3ee7b0b148ec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8b2xkJTIwcGhvdG9ncmFwaCUyMHdvbWFuJTIwMTkyMHN8ZW58MXwxfHx8MTc5MTQ3MTE1NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=250&q=60" alt="An old studio portrait of a young woman with her hair pinned up" width="600" height="800"></div>
             <figcaption class="m-text-4">Great-aunt Mary, or is it?</figcaption>
           </figure>
           <figure class="opening__pic">
-            <div class="m-stamp"><img style="background:#262626" src="https://images.unsplash.com/photo-1691067891543-95ffdeae1ea7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dmludGFnZSUyMGZhbWlseSUyMHBvcnRyYWl0JTIwYmxhY2slMjBhbmQlMjB3aGl0ZXxlbnwxfDF8fHwxNzkxNDcxMTU0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=260&q=60" alt="An old photograph of a mother and her children with their bundles at a quayside" width="600" height="800" loading="lazy"></div>
+            <div class="m-stamp"><img fetchpriority="high" src="https://images.unsplash.com/photo-1691067891543-95ffdeae1ea7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dmludGFnZSUyMGZhbWlseSUyMHBvcnRyYWl0JTIwYmxhY2slMjBhbmQlMjB3aGl0ZXxlbnwxfDF8fHwxNzkxNDcxMTU0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=250&q=60" alt="An old photograph of a mother and her children with their bundles at a quayside" width="600" height="800"></div>
             <figcaption class="m-text-4">The crossing, 1905</figcaption>
           </figure>
         </div>
@@ -662,13 +777,13 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
     <div class="archives__inner l-sheet">
       <div class="archives__page">
         <div class="archives__frame">
-          <img style="background:#d9c0c0" class="archives__ledger" src="https://images.unsplash.com/photo-1780246033063-b058393796a0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YW50aXF1ZSUyMGxlZGdlciUyMGhhbmR3cml0aW5nfGVufDF8MXx8fDE3OTE0NzExNTh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=600&q=60" alt="An open ledger filled with handwritten entries in brown ink, an inkwell beside it" width="900" height="1200" loading="lazy">
+          <img class="archives__ledger" src="https://images.unsplash.com/photo-1780246033063-b058393796a0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YW50aXF1ZSUyMGxlZGdlciUyMGhhbmR3cml0aW5nfGVufDF8MXx8fDE3OTE0NzExNTh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1130&q=60" alt="An open ledger filled with handwritten entries in brown ink, an inkwell beside it" width="900" height="1200" loading="lazy">
         </div>
       </div>
       <div class="archives__text">
         <h2 class="archives__title m-text-2" id="archives-title">Every hand is readable</h2>
         <p class="archives__lead m-text-5">Clerks wrote fast, abbreviated everything and spelled by ear. We read registers, rolls and wills line by line, and type out every entry we use, so nobody in your family has to squint at a scan.</p>
-        <ol class="archives__list">
+        <ol class="archives__list" data-8b-items=":scope > li">
           <li class="archives__item"><h3 class="archives__name m-text-6">Names, however they were spelled</h3><p class="m-text">Every version a clerk wrote down, kept side by side until two records agree.</p></li>
           <li class="archives__item"><h3 class="archives__name m-text-6">Baptisms, marriages, burials</h3><p class="m-text">Dates, parishes and the minister who signed, from the earliest surviving registers.</p></li>
           <li class="archives__item"><h3 class="archives__name m-text-6">Where they actually lived</h3><p class="m-text">Street by street through the census, then onto the old town plans.</p></li>
@@ -684,23 +799,23 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
     <div class="method__sheet l-sheet m-surface-4">
       <h2 class="method__title m-text-2" id="method-title">How a case runs</h2>
       <p class="method__lead m-text-5">Four steps and about eight weeks for most families. You hear from us at every one of them, and nothing goes on the chart until it is proven.</p>
-      <ol class="method__slips">
-        <li class="method__slip m-slip">
+      <ol class="method__slips" data-8b-items=":scope > li" data-8b-fixed="4">
+        <li class="method__slip m-slip" style="--method-li-method-slip-rotate-from: -7deg; --method-li-method-slip-translate-from: -26px">
           <span class="method__num m-badge-4" data-8b-motion="ink">Step 1</span>
           <h3 class="m-text-6">A long first call</h3>
           <p class="m-text">We write down everything the family remembers, every name, place and rumour, and agree which lines to follow first.</p>
         </li>
-        <li class="method__slip m-slip">
+        <li class="method__slip m-slip" style="--method-li-method-slip-rotate-from: 5deg; --method-li-method-slip-translate-from: 30px">
           <span class="method__num m-badge-4" data-8b-motion="ink">Step 2</span>
           <h3 class="m-text-6">Into the archives</h3>
           <p class="m-text">Parish chests, county record offices, the National Archives at Kew and the paid indexes, so you never need a subscription.</p>
         </li>
-        <li class="method__slip m-slip">
+        <li class="method__slip m-slip" style="--method-li-method-slip-rotate-from: -5deg; --method-li-method-slip-translate-from: -20px">
           <span class="method__num m-badge-4" data-8b-motion="ink">Step 3</span>
           <h3 class="m-text-6">Proving every link</h3>
           <p class="m-text">An ancestor goes on the chart only when two independent records agree on who they were and where they came from.</p>
         </li>
-        <li class="method__slip m-slip">
+        <li class="method__slip m-slip" style="--method-li-method-slip-rotate-from: 6deg; --method-li-method-slip-translate-from: 24px">
           <span class="method__num m-badge-4" data-8b-motion="ink">Step 4</span>
           <h3 class="m-text-6">Handing over the folder</h3>
           <p class="m-text">We post the bound folder, or you collect it from the reading room and we walk you through it over a pot of tea.</p>
@@ -722,9 +837,9 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
           <button class="folder__tab folder__tab--mauve" type="button" role="tab" id="folder-tab-maps" aria-controls="folder-panel-maps" aria-selected="false" tabindex="-1">Maps</button>
           <button class="folder__tab folder__tab--light" type="button" role="tab" id="folder-tab-story" aria-controls="folder-panel-story" aria-selected="false" tabindex="-1">Story</button>
         </div>
-        <div class="folder__panels">
+        <div class="folder__panels" data-8b-items=":scope > .folder__panel">
           <div class="folder__panel m-surface" role="tabpanel" id="folder-panel-tree" aria-labelledby="folder-tab-tree">
-            <div class="folder__photo m-stamp" data-8b-motion="settle"><img style="background:#737373" src="https://images.unsplash.com/photo-1679840213102-6d6ebcc10027?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8dmludGFnZSUyMGZhbWlseSUyMHBvcnRyYWl0JTIwYmxhY2slMjBhbmQlMjB3aGl0ZXxlbnwxfDF8fHwxNzkxNDcxMTU0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=490&q=60" alt="A studio photograph of three generations of a family, the grandparents seated with a baby" width="800" height="600" loading="lazy"></div>
+            <div class="folder__photo m-stamp" data-8b-motion="settle" style="--settle-rotate-from: -6.5deg; --settle-rotate-to: -1.5deg" data-8b-enter="90%"><img src="https://images.unsplash.com/photo-1679840213102-6d6ebcc10027?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8dmludGFnZSUyMGZhbWlseSUyMHBvcnRyYWl0JTIwYmxhY2slMjBhbmQlMjB3aGl0ZXxlbnwxfDF8fHwxNzkxNDcxMTU0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=570&q=60" alt="A studio photograph of three generations of a family, the grandparents seated with a baby" width="800" height="600" loading="lazy"></div>
             <div class="folder__copy">
               <h3 class="m-text-6">A chart you can unfold</h3>
               <p class="m-text">Every proven ancestor on one large sheet, with dates, places and the record behind each line, plus an index of every name in the folder.</p>
@@ -732,7 +847,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
             </div>
           </div>
           <div class="folder__panel m-surface-3" role="tabpanel" id="folder-panel-records" aria-labelledby="folder-tab-records">
-            <div class="folder__photo m-stamp" data-8b-motion="settle"><img style="background:#8c8c73" src="https://images.unsplash.com/photo-1595014361739-7370d0fc74ee?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8b2xkJTIwcGFyaXNoJTIwcmVnaXN0ZXJ8ZW58MXwwfHx8MTc5MTQ3MTE2MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="An old church record book lying open on a cloth" width="800" height="600" loading="lazy"></div>
+            <div class="folder__photo m-stamp" data-8b-motion="settle" style="--settle-rotate-from: -5deg; --settle-rotate-to: 0deg" data-8b-enter="90%"><img src="https://images.unsplash.com/photo-1595014361739-7370d0fc74ee?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8b2xkJTIwcGFyaXNoJTIwcmVnaXN0ZXJ8ZW58MXwwfHx8MTc5MTQ3MTE2MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="An old church record book lying open on a cloth" width="800" height="600" loading="lazy"></div>
             <div class="folder__copy">
               <h3 class="m-text-6">A copy of every record</h3>
               <p class="m-text">Certificates, register entries, census pages and wills, each with a typed transcription underneath and a note on where the original is kept.</p>
@@ -740,7 +855,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
             </div>
           </div>
           <div class="folder__panel m-surface-4" role="tabpanel" id="folder-panel-maps" aria-labelledby="folder-tab-maps">
-            <div class="folder__photo m-stamp" data-8b-motion="settle"><img style="background:#d9c0a6" src="https://images.unsplash.com/photo-1717700299581-c2fc3fad4ee8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8b2xkJTIwbWFwJTIwZGV0YWlsfGVufDF8MHx8fDE3OTE0NzExOTF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="A section of an old printed town plan with streets and waterways" width="800" height="600" loading="lazy"></div>
+            <div class="folder__photo m-stamp" data-8b-motion="settle" style="--settle-rotate-from: -5deg; --settle-rotate-to: 0deg" data-8b-enter="90%"><img src="https://images.unsplash.com/photo-1717700299581-c2fc3fad4ee8?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8b2xkJTIwbWFwJTIwZGV0YWlsfGVufDF8MHx8fDE3OTE0NzExOTF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="A section of an old printed town plan with streets and waterways" width="800" height="600" loading="lazy"></div>
             <div class="folder__copy">
               <h3 class="m-text-6">Where they lived</h3>
               <p class="m-text">Period town plans and survey sheets with every address marked in pencil, from the first baptism to the last census.</p>
@@ -748,7 +863,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
             </div>
           </div>
           <div class="folder__panel folder__light" role="tabpanel" id="folder-panel-story" aria-labelledby="folder-tab-story">
-            <div class="folder__photo m-stamp" data-8b-motion="settle"><img style="background:#8c8c73" src="https://images.unsplash.com/photo-1637597384611-0c33cef6ec03?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8b2xkJTIwaGFuZHdyaXR0ZW4lMjBsZXR0ZXJ8ZW58MXwwfHx8MTc5MTQ3MTE1N3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="A pile of old envelopes and postcards with stamps and handwriting" width="800" height="600" loading="lazy"></div>
+            <div class="folder__photo m-stamp" data-8b-motion="settle" style="--settle-rotate-from: -5deg; --settle-rotate-to: 0deg" data-8b-enter="90%"><img src="https://images.unsplash.com/photo-1637597384611-0c33cef6ec03?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8b2xkJTIwaGFuZHdyaXR0ZW4lMjBsZXR0ZXJ8ZW58MXwwfHx8MTc5MTQ3MTE1N3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1600&q=60" alt="A pile of old envelopes and postcards with stamps and handwriting" width="800" height="600" loading="lazy"></div>
             <div class="folder__copy">
               <h3 class="m-text-6">The family, written up</h3>
               <p class="m-text">Twenty to forty pages that tell what the records say in plain English: who moved, why, and what the world around them was doing.</p>
@@ -770,7 +885,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
       </div>
       <div class="case__track">
         <div class="case__stage">
-          <ol class="case__chart" aria-label="Four generations of the Marr family">
+          <ol class="case__chart" data-8b-items=":scope > li" data-8b-fixed="15" aria-label="Four generations of the Marr family">
             <li class="case__person case__person--g0"><span class="case__dot"></span><span class="case__name m-text-6">Ruth Marr</span><span class="case__meta m-text-3">Our client, Leeds</span></li>
             <li class="case__person case__person--g1"><span class="case__dot"></span><span class="case__name m-text-6">Thomas Marr</span><span class="case__meta m-text-3">b. 1949, Hull</span></li>
             <li class="case__person case__person--g1"><span class="case__dot"></span><span class="case__name m-text-6">Grace Okafor</span><span class="case__meta m-text-3">b. 1952, Lagos</span></li>
@@ -798,24 +913,24 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
     <div class="people__sheet l-sheet m-surface">
       <h2 class="people__title m-text-2" id="people-title">Who does the reading</h2>
       <p class="people__lead m-text-5">Four researchers with sixty years in record offices between them, from Truro to Inverness, and one rule: we only write down what we can prove.</p>
-      <ul class="people__grid">
-        <li class="people__card">
-          <div class="people__stamp m-stamp"><img style="background:#262626" src="https://images.unsplash.com/photo-1665218045783-b19b30e11ed1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8d29tYW4lMjBwb3J0cmFpdCUyMGxpYnJhcnl8ZW58MXwxfHx8MTc5MTQ3MTE4NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=270&q=60" alt="Portrait of Hannah Clough, a researcher with long hair and glasses, in front of bookshelves" width="480" height="600" loading="lazy"></div>
+      <ul class="people__grid" data-8b-items=":scope > li" data-8b-fixed="4">
+        <li class="people__card" style="--people-div-people-stamp-translate-from: 207px; --people-div-people-stamp-translate-from-2: 0px; --people-div-people-stamp-rotate-to: -1.5deg; --people-div-people-stamp-translate-from-m: 6.5px; --people-div-people-stamp-translate-from-2-m: 0px">
+          <div class="people__stamp m-stamp"><img src="https://images.unsplash.com/photo-1665218045783-b19b30e11ed1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8d29tYW4lMjBwb3J0cmFpdCUyMGxpYnJhcnl8ZW58MXwxfHx8MTc5MTQ3MTE4NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=260&q=60" alt="Portrait of Hannah Clough, a researcher with long hair and glasses, in front of bookshelves" width="480" height="600" loading="lazy"></div>
           <h3 class="people__name m-text-6">Hannah Clough</h3>
           <p class="m-badge-2">Yorkshire parishes</p>
         </li>
-        <li class="people__card">
-          <div class="people__stamp m-stamp"><img style="background:#404040" src="https://images.unsplash.com/photo-1647004042394-fa213a40d4fe?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8b2xkZXIlMjBtYW4lMjBwb3J0cmFpdCUyMGdsYXNzZXN8ZW58MXwxfHx8MTc5MTQ3MTE4N3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=270&q=60" alt="Portrait of Joseph Adeyemi, an older researcher in glasses and a scarf" width="480" height="600" loading="lazy"></div>
+        <li class="people__card" style="--people-div-people-stamp-translate-from: 187px; --people-div-people-stamp-translate-from-2: 0px; --people-div-people-stamp-rotate-to: 1.2deg; --people-div-people-stamp-translate-from-m: -7.5px; --people-div-people-stamp-translate-from-2-m: 0px">
+          <div class="people__stamp m-stamp"><img src="https://images.unsplash.com/photo-1647004042394-fa213a40d4fe?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8b2xkZXIlMjBtYW4lMjBwb3J0cmFpdCUyMGdsYXNzZXN8ZW58MXwxfHx8MTc5MTQ3MTE4N3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=260&q=60" alt="Portrait of Joseph Adeyemi, an older researcher in glasses and a scarf" width="480" height="600" loading="lazy"></div>
           <h3 class="people__name m-text-6">Joseph Adeyemi</h3>
           <p class="m-badge">West Africa and the Caribbean</p>
         </li>
-        <li class="people__card">
-          <div class="people__stamp m-stamp"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1600178572204-6ac8886aae63?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d29tYW4lMjBwb3J0cmFpdCUyMGxpYnJhcnl8ZW58MXwxfHx8MTc5MTQ3MTE4NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=270&q=60" alt="Portrait of Niamh Kearney, a researcher with short grey hair, standing in a library" width="480" height="600" loading="lazy"></div>
+        <li class="people__card" style="--people-div-people-stamp-translate-from: -187px; --people-div-people-stamp-translate-from-2: 221px; --people-div-people-stamp-rotate-to: -0.8deg; --people-div-people-stamp-translate-from-m: 6.5px; --people-div-people-stamp-translate-from-2-m: -110px">
+          <div class="people__stamp m-stamp"><img src="https://images.unsplash.com/photo-1600178572204-6ac8886aae63?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8d29tYW4lMjBwb3J0cmFpdCUyMGxpYnJhcnl8ZW58MXwxfHx8MTc5MTQ3MTE4NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=260&q=60" alt="Portrait of Niamh Kearney, a researcher with short grey hair, standing in a library" width="480" height="600" loading="lazy"></div>
           <h3 class="people__name m-text-6">Niamh Kearney</h3>
           <p class="m-badge-3">Irish and Scottish lines</p>
         </li>
-        <li class="people__card">
-          <div class="people__stamp m-stamp"><img style="background:#404026" src="https://images.unsplash.com/photo-1687377559195-87aa52e57acb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8b2xkZXIlMjBtYW4lMjBwb3J0cmFpdCUyMGdsYXNzZXN8ZW58MXwxfHx8MTc5MTQ3MTE4N3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=270&q=60" alt="Portrait of Arthur Penhale, a researcher with a white beard and glasses" width="480" height="600" loading="lazy"></div>
+        <li class="people__card" style="--people-div-people-stamp-translate-from: -207px; --people-div-people-stamp-translate-from-2: 221px; --people-div-people-stamp-rotate-to: 1.6deg; --people-div-people-stamp-translate-from-m: -7.5px; --people-div-people-stamp-translate-from-2-m: -110px">
+          <div class="people__stamp m-stamp"><img src="https://images.unsplash.com/photo-1687377559195-87aa52e57acb?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8b2xkZXIlMjBtYW4lMjBwb3J0cmFpdCUyMGdsYXNzZXN8ZW58MXwxfHx8MTc5MTQ3MTE4N3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=260&q=60" alt="Portrait of Arthur Penhale, a researcher with a white beard and glasses" width="480" height="600" loading="lazy"></div>
           <h3 class="people__name m-text-6">Arthur Penhale</h3>
           <p class="m-badge-2">Army, navy and trade</p>
         </li>
@@ -827,11 +942,11 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
   <!-- letters: five client letters on slips that roll slowly sideways -->
   <section id="letters" data-8b-section="letters" aria-labelledby="letters-title">
     <div class="letters__head l-sheet">
-      <h2 class="letters__title m-text-2" id="letters-title" data-8b-motion="settle">Letters back</h2>
+      <h2 class="letters__title m-text-2" id="letters-title" data-8b-motion="settle" style="--settle-rotate-from: -5deg; --settle-rotate-to: 0deg" data-8b-enter="90%">Letters back</h2>
       <p class="letters__lead m-text-5">Most families write to us after the folder arrives. A few of them said we could share their words.</p>
     </div>
     <div class="letters__row" role="region" aria-label="Letters from families" data-8b-motion="roll">
-      <ul class="letters__track">
+      <ul class="letters__track" data-8b-items=":scope > li">
         <li class="letters__item m-surface"><p class="m-text">We had been stuck on great-grandad for twenty years. They found him in a Hull workhouse register within a fortnight, and then found his brother.</p><p class="letters__sign"><span class="m-text-4">Sandra P.</span><span class="m-text-3">Beverley</span></p></li>
         <li class="letters__item m-surface-2"><p class="m-text">The folder lives on the piano now. My father reads the Cork pages every time he visits, and he is not a reader.</p><p class="letters__sign"><span class="m-text-4">Declan M.</span><span class="m-text-3">Croydon</span></p></li>
         <li class="letters__item m-surface-3"><p class="m-text">They told us honestly when a line had gone cold and what it would cost to keep going. We stopped there, and that felt right.</p><p class="letters__sign"><span class="m-text-4">Priya and Tom H.</span><span class="m-text-3">Harrogate</span></p></li>
@@ -846,7 +961,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
     <div class="room__sheet l-sheet m-surface-4">
       <h2 class="room__title m-text-2" id="room-title">Bring the shoebox</h2>
       <p class="room__lead m-text-5">Photographs, letters, a christening mug with a name on it: bring whatever the family kept to our reading room on Example Lane. We scan it while you wait, and it goes into the folder.</p>
-      <div class="room__details m-slip" data-8b-motion="settle">
+      <div class="room__details m-slip" data-8b-motion="settle" style="--settle-rotate-from: -3.5deg; --settle-rotate-to: 1.5deg" data-8b-enter="90%">
         <p class="m-text-3">The reading room</p>
         <p class="m-text">1 Example Lane, York YO1 0AA<br>Tuesday to Saturday, 10 till 4<br>Visits by appointment</p>
         <a class="m-link" href="#contact">Book a visit</a>
@@ -854,7 +969,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
       <span class="room__ghost m-ghost-4" aria-hidden="true" data-8b-motion="press">Visit</span>
     </div>
     <div class="room__photo">
-      <div class="room__frame m-stamp"><img style="background:#40260c" src="https://images.unsplash.com/photo-1777896067223-9990008a07d7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bGlicmFyeSUyMHJlYWRpbmclMjByb29tJTIwdGFibGUlMjBsYW1wfGVufDF8MHx8fDE3OTE0NzExOTB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1260&q=60" alt="A quiet room lined with bookshelves, with a sofa, armchair and a low table" width="1600" height="1067" loading="lazy"></div>
+      <div class="room__frame m-stamp"><img src="https://images.unsplash.com/photo-1777896067223-9990008a07d7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bGlicmFyeSUyMHJlYWRpbmclMjByb29tJTIwdGFibGUlMjBsYW1wfGVufDF8MHx8fDE3OTE0NzExOTB8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=590&q=60" alt="A quiet room lined with bookshelves, with a sofa, armchair and a low table" width="1600" height="1067" loading="lazy"></div>
     </div>
   </section>
 
@@ -865,7 +980,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
         <h2 class="questions__title m-text-2" id="questions-title">Questions</h2>
         <p class="m-text-5">The ones we hear on almost every first call.</p>
       </div>
-      <div class="questions__list">
+      <div class="questions__list" data-8b-items=":scope > details">
         <details class="questions__item"><summary class="questions__q"><span class="questions__label m-text-6">How far back can you go?</span><span class="questions__mark" aria-hidden="true"></span></summary><p class="questions__a m-text">Usually into the 1700s in England and Wales, where parish registers survive. Ireland and Scotland are patchier before about 1820. After the first fortnight we tell you what is realistic for your family.</p></details>
         <details class="questions__item"><summary class="questions__q"><span class="questions__label m-text-6">What do I need to start?</span><span class="questions__mark" aria-hidden="true"></span></summary><p class="questions__a m-text">A name and roughly when and where someone lived is enough. Photographs, certificates and family stories save time, so bring what you have.</p></details>
         <details class="questions__item"><summary class="questions__q"><span class="questions__label m-text-6">Do you use DNA tests?</span><span class="questions__mark" aria-hidden="true"></span></summary><p class="questions__a m-text">We don&rsquo;t sell kits, but if you have results from one of the big testing companies we read your matches alongside the paper trail.</p></details>
@@ -883,7 +998,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
       <h2 class="fees__title m-text-2" id="fees-title">Fees</h2>
       <p class="fees__lead m-text-5">Fixed prices, agreed before we start. If a line runs out early, we stop and refund the difference.</p>
       <div class="fees__body">
-        <ol class="fees__list">
+        <ol class="fees__list" data-8b-items=":scope > li">
           <li class="fees__item">
             <h3 class="fees__name m-text-6">One line back</h3>
             <p class="fees__price"><span class="fees__amount">£480</span><span class="fees__time m-text-3">About three weeks</span></p>
@@ -912,7 +1027,7 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
   <section id="contact" data-8b-section="contact" aria-labelledby="contact-title">
     <div class="contact__sheet l-sheet m-surface-4">
       <div class="contact__head">
-        <p class="contact__slip m-slip m-text-3" data-8b-motion="settle">Reply within two working days</p>
+        <p class="contact__slip m-slip m-text-3" data-8b-motion="settle" style="--settle-rotate-from: -7deg; --settle-rotate-to: -2deg" data-8b-enter="90%">Reply within two working days</p>
         <h2 class="contact__title m-text-2" id="contact-title">Open a case</h2>
         <p class="m-text-5">Tell us who you are looking for. We reply with what is realistic for your family and what it would cost.</p>
       </div>
@@ -969,145 +1084,6 @@ textarea.m-field__control { min-height: 110px; resize: vertical; }
     <p class="footer__small m-text-3"><span>&copy; 2026 Kinfold Research Ltd, York · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></span><span>Member of the Register of Qualified Genealogists</span></p>
   </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function navOffset() {
-  const nav = document.getElementById('tabs');
-  return nav && matchMedia('(max-width: 899px)').matches ? nav.offsetHeight - 8 : 0;
-}
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.9, anchors: { offset: -navOffset() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  roll(element, vars = {}) {
-    return gsap.timeline({ repeat: -1, ...vars }).to(element.querySelector('.letters__track'), { xPercent: -50, duration: 70, ease: 'none' });
-  },
-  press(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { '--press': 0.15 }, { '--press': 1.8, duration: 1, ease: 'none' });
-  },
-  ink(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { '--ink': 0 }, { '--ink': 1, duration: 0.7, ease: 'power2.inOut' });
-  },
-  settle(element, vars = {}) {
-    return gsap.timeline(vars).from(element, { y: -26, rotation: '-=5', scale: 1.04, duration: 0.9, ease: 'power3.out' });
-  }
-};
-const effectPreparations = {
-  roll(element) {
-    const track = element.querySelector('.letters__track');
-    const copies = [...track.children].map(item => {
-      const copy = item.cloneNode(true);
-      copy.setAttribute('aria-hidden', 'true');
-      track.appendChild(copy);
-      return copy;
-    });
-    element.classList.add('is-rolling');
-    return () => { copies.forEach(copy => copy.remove()); element.classList.remove('is-rolling'); };
-  }
-};
-const effectBindings = {
-  roll: element => ({ trigger: element, start: 'top bottom', end: 'bottom top', toggleActions: 'play pause resume pause' }),
-  press: element => ({ trigger: element.closest('.l-sheet') || element, start: 'top bottom', end: 'bottom top', scrub: true }),
-  ink: element => ({ trigger: element, start: 'top 88%', once: true, toggleActions: 'play none none none' }),
-  settle: element => ({ trigger: element, start: 'top 90%', once: true, toggleActions: 'play none none none' })
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  Object.keys(effectBindings).forEach(name => {
-    const elements = [...section.querySelectorAll(`[data-8b-motion~="${name}"]`)];
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      const cleanups = elements.map((element, index) => {
-        const cleanup = effectPreparations[name] ? effectPreparations[name](element) : null;
-        const animation = effects[name](element);
-        ScrollTrigger.create({ id: `${id}:${index}`, ...effectBindings[name](element), animation });
-        if (name === 'roll') {
-          const hold = () => animation.pause();
-          const go = () => { if (ScrollTrigger.isInViewport(element)) animation.resume(); };
-          ['mouseenter', 'focusin'].forEach(type => element.addEventListener(type, hold));
-          ['mouseleave', 'focusout'].forEach(type => element.addEventListener(type, go));
-          return () => {
-            ['mouseenter', 'focusin'].forEach(type => element.removeEventListener(type, hold));
-            ['mouseleave', 'focusout'].forEach(type => element.removeEventListener(type, go));
-            if (cleanup) cleanup();
-          };
-        }
-        return cleanup;
-      });
-      return () => cleanups.forEach(cleanup => cleanup && cleanup());
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-</script>
 
 <script data-8b-part="section-script:tabs">
 (() => {
@@ -1128,210 +1104,6 @@ document.querySelectorAll('[data-8b-section]').forEach(section => {
 })();
 </script>
 
-<script data-8b-part="scene:reading-window">
-queueMotion(() => {
-  gsap.matchMedia().add({
-    desktop: '(min-width: 900px) and (prefers-reduced-motion: no-preference)',
-    phone: '(max-width: 899px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const section = document.getElementById('archives');
-    const inner = section.querySelector('.archives__inner');
-    const frame = section.querySelector('.archives__frame');
-    const ledger = section.querySelector('.archives__ledger');
-    const names = [...section.querySelectorAll('.archives__name')];
-    const lens = document.createElement('div');
-    lens.className = 'archives__lens';
-    lens.setAttribute('aria-hidden', 'true');
-    const zoom = ledger.cloneNode(false);
-    zoom.className = 'archives__zoom';
-    zoom.alt = '';
-    zoom.loading = 'eager';
-    lens.appendChild(zoom);
-    frame.appendChild(lens);
-    section.classList.add('is-reading');
-    const scale = 1.9;
-    const state = { p: 0 };
-    const place = () => {
-      const width = frame.clientWidth, height = frame.clientHeight, band = lens.offsetHeight;
-      const y = state.p * (height - band);
-      gsap.set(lens, { y });
-      gsap.set(zoom, { width, height, x: width * (1 - scale) / 2, y: band / 2 - scale * (y + band / 2), scale, transformOrigin: '0 0' });
-    };
-    const trigger = context.conditions.desktop
-      ? { id: 'reading-window', trigger: inner, start: 'top 55%', end: 'bottom 91%', scrub: 0.5, invalidateOnRefresh: true, onRefresh: place }
-      : { id: 'reading-window', trigger: frame, start: 'top 75%', end: 'bottom 35%', scrub: 0.5, invalidateOnRefresh: true, onRefresh: place };
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: trigger });
-    timeline.to(state, { p: 1, duration: 1, onUpdate: place }, 0);
-    if (context.conditions.desktop) {
-      names.forEach((name, index) => timeline.fromTo(name, { '--ink': 0 }, { '--ink': 1, duration: 0.1 }, 0.08 + index * 0.18));
-    } else {
-      names.forEach((name, index) => gsap.fromTo(name, { '--ink': 0 }, { '--ink': 1, duration: 0.6, ease: 'power2.inOut', scrollTrigger: { id: `reading-window:name-${index}`, trigger: name, start: 'top 82%', toggleActions: 'play none none reverse' } }));
-    }
-    place();
-    return () => { lens.remove(); section.classList.remove('is-reading'); };
-  });
-}, { id: 'scene:reading-window' });
-</script>
-<script data-8b-part="scene:thread">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('method');
-    const list = section.querySelector('.method__slips');
-    const slips = [...list.children];
-    const ns = 'http://www.w3.org/2000/svg';
-    const svg = document.createElementNS(ns, 'svg');
-    svg.setAttribute('class', 'method__thread');
-    svg.setAttribute('aria-hidden', 'true');
-    const path = document.createElementNS(ns, 'path');
-    path.setAttribute('pathLength', '1');
-    svg.appendChild(path);
-    list.prepend(svg);
-    const draw = () => {
-      const narrow = innerWidth < 900;
-      const points = slips.map(slip => ({ x: narrow ? 10 : slip.offsetLeft + 34, y: slip.offsetTop + (narrow ? 32 : 30) }));
-      let d = `M ${points[0].x} ${points[0].y - 40}`;
-      points.forEach((point, index) => {
-        const from = index ? points[index - 1] : { x: points[0].x, y: points[0].y - 40 };
-        const bend = (point.y - from.y) / 2;
-        d += ` C ${from.x} ${from.y + bend}, ${point.x} ${point.y - bend}, ${point.x} ${point.y}`;
-      });
-      const last = points[points.length - 1];
-      d += ` L ${last.x} ${last.y + (narrow ? 120 : 160)}`;
-      path.setAttribute('d', d);
-    };
-    draw();
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'thread', trigger: list, start: 'top 72%', end: 'bottom 70%', scrub: 0.6, invalidateOnRefresh: true, onRefresh: draw }
-    });
-    timeline.fromTo(path, { strokeDasharray: 1, strokeDashoffset: 1 }, { autoRound: false, strokeDashoffset: 0, duration: 1 }, 0);
-    const tilt = [-7, 5, -5, 6], shift = [-26, 30, -20, 24];
-    slips.forEach((slip, index) => {
-      const at = Math.max(0, index / slips.length * 0.95 - 0.04);
-      timeline.from(slip, { rotation: tilt[index % 4], x: shift[index % 4], y: 34, duration: 0.2, ease: 'power2.out' }, at);
-    });
-    return () => svg.remove();
-  });
-}, { id: 'scene:thread' });
-</script>
-<script data-8b-part="scene:generations">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('case');
-    const track = section.querySelector('.case__track');
-    const chart = section.querySelector('.case__chart');
-    const people = generation => [...chart.querySelectorAll(`.case__person--g${generation}`)];
-    const lines = generation => [...chart.querySelectorAll(`.case__lines path[data-gen="${generation}"]`)];
-    section.classList.add('is-growing');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'generations', trigger: track, start: 'top 7%', end: 'bottom bottom', scrub: 0.6 }
-    });
-    timeline.fromTo(chart, { scale: 2.1, transformOrigin: '0% 50%' }, { scale: 1, duration: 0.86, ease: 'power1.inOut' }, 0);
-    [1, 2, 3].forEach((generation, step) => {
-      const at = 0.06 + step * 0.27;
-      const group = people(generation);
-      const labels = group.flatMap(person => [...person.children].filter(child => !child.classList.contains('case__dot')));
-      lines(generation).forEach(path => timeline.fromTo(path, { strokeDasharray: 1, strokeDashoffset: 1 }, { autoRound: false, strokeDashoffset: 0, duration: 0.14 }, at));
-      group.forEach((person, index) => timeline.from(person.querySelector('.case__dot'), { scale: 0, duration: 0.07 }, at + 0.1 + index * 0.008));
-      labels.forEach((label, index) => timeline.fromTo(label, { clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.1 }, at + 0.12 + index * 0.006));
-    });
-    return () => section.classList.remove('is-growing');
-  });
-}, { id: 'scene:generations' });
-</script>
-<script data-8b-part="scene:stamps-part">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('people');
-    const grid = section.querySelector('.people__grid');
-    const cards = [...grid.children];
-    const stamps = cards.map(card => card.querySelector('.people__stamp'));
-    const words = cards.flatMap(card => [...card.children].filter(child => !child.classList.contains('people__stamp')));
-    const measure = () => {
-      const middle = grid.clientWidth / 2;
-      return stamps.map((stamp, index) => ({
-        dx: middle - stamp.offsetWidth + (index % 2) * stamp.offsetWidth - stamp.offsetLeft,
-        dy: Math.floor(index / 2) * stamp.offsetHeight - stamp.offsetTop
-      }));
-    };
-    let block = measure();
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'stamps-part', trigger: grid, start: 'top 82%', end: 'bottom 62%', scrub: 0.6, invalidateOnRefresh: true, onRefreshInit: () => { block = measure(); } }
-    });
-    timeline
-      .from(stamps, { x: index => block[index].dx, y: index => block[index].dy, rotation: 0, duration: 0.7, ease: 'power2.inOut' }, 0)
-      ;
-    words.forEach((word, index) => timeline.fromTo(word, { clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.24 }, 0.62 + index * 0.025));
-  });
-}, { id: 'scene:stamps-part' });
-</script>
-<script data-8b-part="scene:room-opens">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('room');
-    const frame = section.querySelector('.room__frame');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'room-opens', trigger: frame, start: 'top 96%', end: 'top 14%', scrub: 0.6 }
-    });
-    timeline
-      .from(frame, { scale: 0.3, rotation: -6, transformOrigin: '50% 0%', duration: 1, ease: 'power1.inOut' }, 0)
-      .from(frame.querySelector('img'), { scale: 1.5, duration: 1 }, 0);
-  });
-}, { id: 'scene:room-opens' });
-</script>
-<script data-8b-part="scene:fee-slip">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('fees');
-    const body = section.querySelector('.fees__body');
-    const items = [...section.querySelectorAll('.fees__item')];
-    const column = document.createElement('div');
-    column.className = 'fees__slipcol';
-    column.setAttribute('aria-hidden', 'true');
-    const card = document.createElement('div');
-    card.className = 'fees__card';
-    const faces = [0, 1].map(() => card.appendChild(document.createElement('div')));
-    faces.forEach(face => { face.className = 'fees__face'; });
-    column.appendChild(card);
-    body.prepend(column);
-    section.classList.add('is-slipped');
-    const fill = (face, item) => face.replaceChildren(item.querySelector('.fees__name').cloneNode(true), item.querySelector('.fees__amount').cloneNode(true));
-    let shown = 0, turns = 0;
-    fill(faces[0], items[0]);
-    const show = index => {
-      if (index === shown) return;
-      shown = index;
-      turns += 1;
-      fill(faces[turns % 2], items[index]);
-      gsap.to(card, { rotationX: turns * -180, duration: 0.7, ease: 'power3.inOut', overwrite: true });
-    };
-    items.forEach((item, index) => ScrollTrigger.create({
-      id: `fee-slip:${index}`, trigger: item, start: 'top 58%', end: 'bottom 58%',
-      onToggle: self => { if (self.isActive) show(index); }
-    }));
-    return () => { column.remove(); section.classList.remove('is-slipped'); };
-  });
-}, { id: 'scene:fee-slip' });
-</script>
-<script data-8b-part="scene:footer-press">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const footer = document.getElementById('footer');
-    const word = footer.querySelector('.footer__word');
-    const light = footer.querySelector('.footer__light');
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'footer-press', trigger: footer, start: 'top bottom', end: 'bottom bottom', scrub: 0.6 }
-    });
-    timeline
-      .fromTo(word, { '--footer-rake': -1.5, '--footer-depth': 0.4 }, { '--footer-rake': 1.5, '--footer-depth': 1.8, duration: 1 }, 0)
-      .fromTo(light, { x: 0, xPercent: -90 }, { x: 0, xPercent: 110, duration: 1 }, 0);
-  });
-}, { id: 'scene:footer-press' });
-</script>
 <script data-8b-part="section-script:folder">
 (() => {
   const tabs = [...document.querySelectorAll('#folder [role="tab"]')];
@@ -1399,6 +1171,18 @@ queueMotion(() => {
   if (document.fonts) document.fonts.ready.then(draw);
 })();
 </script>
+<script data-8b-part="section-script:letters">
+(() => {
+  if (!document.documentElement.hasAttribute('data-8b-live')) return;
+  document.querySelectorAll('[data-8b-motion~="roll"] .letters__track').forEach(track => {
+    [...track.children].forEach(item => {
+      const copy = item.cloneNode(true);
+      copy.setAttribute('aria-hidden', 'true');
+      track.append(copy);
+    });
+  });
+})();
+</script>
 <script data-8b-part="section-script:contact">
 (() => {
   const form = document.querySelector('#contact .contact__form');
@@ -1418,6 +1202,212 @@ queueMotion(() => {
     });
   }
 })();
+</script>
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:reading-window">
+motionKit.scene("reading-window", () => {
+  const section = document.getElementById('archives');
+  const frame = section.querySelector('.archives__frame');
+  const lens = document.createElement('div');
+  lens.className = 'archives__lens';
+  lens.setAttribute('aria-hidden', 'true');
+  const zoom = section.querySelector('.archives__ledger').cloneNode(false);
+  zoom.className = 'archives__zoom';
+  zoom.alt = '';
+  zoom.loading = 'eager';
+  lens.appendChild(zoom);
+  frame.appendChild(lens);
+  section.querySelectorAll('.archives__name').forEach(name => motionKit.track(name, 'top 82%', 'top 82%', progress => name.classList.toggle('is-read', progress > 0)));
+});
+</script>
+<script data-8b-part="scene-script:thread">
+motionKit.scene("thread", () => {
+  const list = document.querySelector('#method .method__slips');
+  const slips = [...list.children];
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('class', 'method__thread');
+  svg.setAttribute('aria-hidden', 'true');
+  const path = document.createElementNS(ns, 'path');
+  path.setAttribute('pathLength', '1');
+  svg.appendChild(path);
+  list.prepend(svg);
+  motionKit.measure(() => {
+    const narrow = innerWidth < 900;
+    const points = slips.map(slip => ({ x: narrow ? 10 : slip.offsetLeft + 34, y: slip.offsetTop + (narrow ? 32 : 30) }));
+    let d = `M ${points[0].x} ${points[0].y - 40}`;
+    points.forEach((point, index) => {
+      const from = index ? points[index - 1] : { x: points[0].x, y: points[0].y - 40 };
+      const bend = (point.y - from.y) / 2;
+      d += ` C ${from.x} ${from.y + bend}, ${point.x} ${point.y - bend}, ${point.x} ${point.y}`;
+    });
+    const last = points[points.length - 1];
+    d += ` L ${last.x} ${last.y + (narrow ? 120 : 160)}`;
+    path.setAttribute('d', d);
+  });
+});
+</script>
+<script data-8b-part="scene-script:fee-slip">
+motionKit.scene("fee-slip", () => {
+  const section = document.getElementById('fees');
+  const body = section.querySelector('.fees__body');
+  const items = [...section.querySelectorAll('.fees__item')];
+  const column = document.createElement('div');
+  column.className = 'fees__slipcol';
+  column.setAttribute('aria-hidden', 'true');
+  const card = document.createElement('div');
+  card.className = 'fees__card';
+  const faces = [0, 1].map(() => card.appendChild(document.createElement('div')));
+  faces.forEach(face => { face.className = 'fees__face'; });
+  column.appendChild(card);
+  body.prepend(column);
+  const fill = (face, item) => face.replaceChildren(item.querySelector('.fees__name').cloneNode(true), item.querySelector('.fees__amount').cloneNode(true));
+  let shown = 0, turns = 0;
+  fill(faces[0], items[0]);
+  items.forEach((item, index) => motionKit.track(item, 'top 58%', 'bottom 58%', progress => {
+    if (progress <= 0 || progress >= 1 || index === shown) return;
+    shown = index;
+    turns += 1;
+    fill(faces[turns % 2], item);
+    motionKit.set(card, { '--fees-turn': turns });
+  }));
+});
 </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 # AGENTS.md: car wash website template
 
-One-page website for a hand car wash and valeting business that takes bookings and memberships. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a hand car wash and valeting business that takes bookings and memberships. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.11 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,20 +14,19 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
-  - `scene:method`: `.method__frame` `.method__step`
-  - `scene:inside`: `.inside__rail` `.inside__track`
-  - `scene:protect`: `.protect__coats` `.protect__photo`
-  - `scene:reviews`: `.reviews__row`
-  - `scene:club`: `.club__disc` `.club__inner`
-  - `scene:book`: `.book__layer` `.book__form`
   - `section-script:prices`: `.prices__price`
   - `section-script:book`: `.book__form` `.book__status` `data-done` `data-missing`
   - `section-script:top`: `.nav__open` `.menu__close`
+  - `scene-script:inside`: `.inside__rail` `.inside__track`
+  - `scene-script:protect`: `.protect__coats`
+  - `scene-script:method`: `.method__steps`
 - The prices come from three data attributes on each price element (data-small, data-family, data-large); the script reads them by those names, so add a value in all three when you add a service, and keep the three size labels in step with the radio values small, family and large.
-- The steps and photos of the method pair by order: the scene uses the shorter of the two lists, so keep the same number of photos as steps (five).
+- The method's steps and photos pair by order and the motion is written for exactly five (data-8b-fixed="5"): the photo rises are CSS rules per position and the step tracking names the five steps, so another count needs those rules and the script changed.
+- The protection list holds exactly four coats (data-8b-fixed="4"): each coat's colour and its timing in the slab are CSS rules per position.
 - The scalloped edges, the star, the club disc and the bubbles are CSS gradients and SVG, not images: recolour them through the colour variables. The "Step N" tags on the photos are CSS counters.
-- The interiors scene measures the cards at load to size the held stage; if you add cards, the stage lengthens by itself.
+- The interiors motion measures the card track on load and on resize to size the held stage; if you add cards, the stage lengthens by itself.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #3b20f0 (primary buttons, the wordmark, the violet price, protection, review and booking grounds, the menu overlay, the second line of the h1, the club price), `--color-2` #fdf7e3 (page ground, review and booking form cards, text on the violet sections, scalloped edges), `--color-3` #160c50 (body and heading text, the footer ground, the fourth protection coat, the hover fill of the primary button), `--color-4` #ffc83d (prices, the selected size, the Step tags, the club disc, the secondary button, the second protection coat, alternate review cards), `--color-5` #d6d0ff (badges, photo frame backgrounds, lead text on violet, the third protection coat, tint of the question rows), `--color-6` #5a3ffd (bubbles in the booking section, the size switch border, icon button hover and the menu close button), `--color-7` #4b4386 (paragraph text on cream sections and review footers); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -60,11 +59,13 @@ All demo text, never to be invented:
 - Footer: "© 2026 Two Buckets Hand Car Wash Ltd · Registered in England and Wales": put in your legal name and, if you show it, your company number.
 
 ## Known limits
-- Lighthouse lists gsap, ScrollTrigger and Lenis as render-blocking; they sit at the end of body and the motion scripts after them need them loaded.
 - Without JavaScript the menu button cannot open the overlay (it is hidden by an attribute the script removes), the size switch cannot change the prices (the Family column stays) and the booking form cannot show its thank-you line; the FAQ answers still open and the footer links stay reachable.
 - The booking form sends nothing: the button only shows the thank-you line, so connect a form service or your booking system before publishing.
-- The method photos are stacked and only the scroll scene uncovers them in turn: with reduced motion or without JavaScript the window shows the fifth photo and its "Step 5" tag beside all five steps. On phones the window is held at 40% of the screen height above the steps, which leaves little room for the text on short screens.
-- Leftovers of a removed first screen: the stylesheet still carries rules and looping keyframes for a violet hero (#wash .wash__one, its pattern, rating, badge, two photos and foam rows), and the motion script an unused bubble pop-up function (popBubbles) and a data-loop observer; no markup uses them, so they can be deleted.
+- The method photos are stacked and only the scroll motion uncovers them in turn: with reduced motion, without CSS scroll-driven animations (Firefox today) or without JavaScript the window shows the fifth photo and its "Step 5" tag beside all five steps. On phones the window is held at 40% of the screen height above the steps, which leaves little room for the text on short screens.
+- Without CSS scroll-driven animation support or with reduced motion the smooth wheel and all scroll motion are off and each section shows its finished layout: the interiors and the reviews are wrapping grids of cards, the club disc is full size, and the opening has no load-in. The navigation's slide-in on load still plays in Firefox, not with reduced motion.
+- The navigation hide-on-scroll and the hover effects keep running with reduced motion.
+- Section links jump with no offset for the floating bar, so a section's top can sit under the bar until you scroll up a little.
+- Leftovers of a removed first screen: the stylesheet still carries rules and looping keyframes for a violet hero (#wash .wash__one, its pattern, rating, badge, two photos and foam rows); no markup uses them, so they can be deleted.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Two Buckets left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Two Buckets left only in class names.

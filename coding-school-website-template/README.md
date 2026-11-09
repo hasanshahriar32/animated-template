@@ -1,8 +1,8 @@
-# Free HTML coding school website template with GSAP scroll animations
+# Free HTML coding school website template with scroll animations and no libraries
 
-Coding school website template: one free HTML file for a part-time school that retrains adults, with before-and-after careers, a five-module course, a weekly timetable, mentors, taster evenings and three fee plans. The look is flat colour planes in orange, plum and ice. AGENTS.md is included, so Claude Code, Cursor or Codex can adapt it.
+Coding school website template: a free HTML file for a part-time school that retrains adults, with before-and-after careers, a five-module course, a weekly timetable, mentors, taster evenings and three fee plans. The look is flat colour planes in orange, plum and ice, moved by CSS scroll animation with no libraries. AGENTS.md lets Claude Code, Cursor or Codex adapt it.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/coding-school-website-template/)** · **[Use this template](https://github.com/new?template_name=coding-school-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/coding-school-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/refactor/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/coding-school-website-template
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my school: name, city, subjects, course length and modules, weekly timetable, fees and funding, next start date, mentors, graduate stories, employer names, opening hours, how people book a taster>. Replace first the school name, six career rows, four mentors with portraits, three capstones and the fees. Keep the section ids, the classes AGENTS.md lists and the five i elements in each pixel glyph. Ask me for missing facts and never invent outcomes, employers, quotes, prices, dates or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my school: name, city, course length and modules, weekly timetable, fees and funding, next start date, mentors, graduate stories, employer names, how people book a taster>. Motion is CSS scroll-driven animation plus the inline motion kit: keep the gate script, the section ids, the data-8b-* attributes, the classes AGENTS.md lists, four mentors, three capstones and the five i elements in each pixel glyph; add no animation library. Never invent outcomes, employers, quotes, prices, dates or contacts; ask me.
 ```
 
 Vibe coding with Claude Code, Cursor or Codex starts with facts only the school has: course length, modules, timetable, fees, funding rules and start date. Ask the agent to replace the school name in the menu, footer and legal line, then the career rows, mentors, capstone clients and employer names. Graduate quotes, ages, outcomes and the employers in the opening band are invented; the owner supplies real ones or deletes them.
@@ -33,10 +33,10 @@ No agent? Click **[Use this template](https://github.com/new?template_name=codin
 
 ## Sections and motion
 
-- **Navigation**: logo glyph and word, four links, an Apply now button and a Menu button; full-screen menu. The bar turns solid after 24 px of scroll and slides away on the way down, returning when you scroll up.
+- **Navigation**: logo glyph and word, four links, an Apply now button and a Menu button; full-screen menu. Mouse-wheel scrolling is smoothed; the bar turns solid after 24 px of scroll and slides away on the way down, returning when you scroll up.
 - **Keep what works. Rewrite the rest.**: one screen: a panel of colour planes with a photo, the h1, a paragraph, a taster button and a row of employers. On load the panel and then the heading, paragraph and button lift into place; the colour planes themselves stay still.
-- **Your first career isn't dead code.**: six rows of old job to new job, each with what carried over. Each of the six rows is scrubbed on scroll: the old job is struck through and greyed, the new job wipes in from the left, then the Kept line fades up.
-- **Twenty-four weeks. Five modules. One real product.**: a pinned horizontal track of five course modules with a strip of 24 week squares that fill in. Pinned: the five module panels slide sideways while 24 week squares fill in order and each module's planes turn level as it arrives.
+- **Your first career isn't dead code.**: six rows of old job to new job, each with what carried over. Each of the six rows is tied to scroll: the old job is struck through and greyed, the new job wipes in from the left, then the Kept line fades up.
+- **Twenty-four weeks. Five modules. One real product.**: a pinned horizontal track of five course modules with a strip of 24 week squares that fill in. Held on a sticky stage: the five module panels slide sideways while 24 week squares fill in order and each module's planes turn level as it arrives.
 - **Built around the job you still have.**: three fixed weekly sessions with a photo each. The heading and lead rise out of a clip, and each of the three photos settles from a tilt, once, as they near the screen.
 - **Mentors who made the same jump.**: a sticky portrait window that changes as four mentor stories scroll past. The portrait window is sticky; as each mentor card nears the middle, the next portrait wipes in on a slant and settles from a slight zoom.
 - **Capstones that are still running.**: three project cards that stack as you scroll. The three project cards stick near the top and stack; the card underneath tilts, shrinks to 88% and darkens as the next slides over.
@@ -66,8 +66,8 @@ No agent? Click **[Use this template](https://github.com/new?template_name=codin
 
 ## Questions
 
-**Can I use it for a full-time coding bootcamp rather than a part-time school?**  
-Yes, after a text pass. The demo is a part-time school in Sheffield: 24 weeks, two evenings and a Saturday, fees in pounds and regional skills funding. Replace the timetable rows, module weeks, fees and funding with your own, and change the numbers in the course heading.
+**What shows in Firefox or with reduced motion?**  
+The same content, at rest. Without CSS scroll-driven animations (Firefox today) or with reduced motion, the page shows its finished layout: careers already rewritten, all 24 week squares filled, the taster panel as a plain red block, fees in their columns. The course track becomes a strip you scroll sideways, and the mentors window shows only the first portrait.
 
 **Does the contact form send applications?**  
 No. As shipped it checks the fields, shows a thank-you line and disables the button, and sends nothing. Connect Formspree, Netlify Forms or your own endpoint and remove the script that stops the submit. The Apply buttons and the Book buttons beside the taster dates only jump to the form.
@@ -77,7 +77,7 @@ Yes, with a different tool. [8B's AI website builder](https://8b.com/) designs a
 
 ## Is it the right base?
 
-Choose this for a cohort course with fixed sessions, a fee page and a taster evening. If you teach single instruments or private lessons instead, the [lesson studio](https://8b.com/templates/overtone/) template with programs and a booking form fits better. The weak spot is booking: the Apply buttons and the Book buttons beside the dates only jump to the form, taster dates are fixed text, and there is no calendar. Without code, 8B's builder is the other route.
+Choose this for a cohort course with fixed sessions, a fee page and a taster evening. This build looks and moves like the GSAP version with no animation library and no script from a CDN: about 42 KB of code gzipped against about 87 KB and three extra requests. For single instruments or private lessons, the [lesson studio](https://8b.com/templates/overtone/) template fits better. The weak spot is booking: Apply and Book only jump to the form, and taster dates are fixed text.
 
 ## Before you publish
 
@@ -86,7 +86,9 @@ Choose this for a cohort course with fixed sessions, a fee page and a taster eve
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 160 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), container query units, cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 169 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), container query units, cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 160 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

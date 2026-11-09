@@ -1,8 +1,8 @@
-# Free HTML movie theater website template with GSAP scroll animations
+# Free HTML movie theater website template with scroll animations and no libraries
 
-Movie theater website template: one free HTML file for an independent cinema, film club or small screening venue that runs a weekly programme, a bar and a membership. It has a near-black page with white, mint and lavender tiles, film-edge perforation strips and photo windows turned in perspective. AGENTS.md is included, so Claude Code, Cursor or Codex can adapt it.
+Movie theater website template: one free HTML file for an independent cinema, film club or small screening venue that runs a weekly programme, a bar and a membership. It has a near-black page with white, mint and lavender tiles, film-edge perforation strips and photo windows turned in perspective. The motion is CSS with no JavaScript libraries, 26 KB gzipped.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/movie-theater-website-template/)** · **[Use this template](https://github.com/new?template_name=movie-theater-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/movie-theater-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/halide/)**
 
@@ -24,16 +24,16 @@ curl -LO https://raw.githubusercontent.com/8bsite/movie-theater-website-template
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my cinema or club: name, screens and seat counts, this week's films with times, ticket and member prices, membership terms, bar menu and hours, programmers, address, ticketing link>. Replace the films, showings, prices and photos first. Keep the section ids, the classes AGENTS.md lists and one still per programme day, and set the footer wordmark's len to the new name's character count. Ask for missing facts; never invent showtimes, prices, ratings, reviews or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my cinema or club: name, screens and seat counts, this week's films with times, ticket and member prices, membership terms, bar menu and hours, programmers, address, ticketing link>. Replace films, showings, prices and photos first. Motion is CSS plus the inline kit: keep the gate script, section ids, data-8b attributes, one still per programme day and four booth frames; add no library. Set the wordmark's len to the name's length. Never invent showtimes, prices, ratings, reviews or contacts.
 ```
 
-A movie theater website template for Claude Code, Cursor or Codex goes fastest, as in any [agent-led build](https://8b.com/templates/vibe-coding/), when you supply the facts only the venue has: film titles and times, screen sizes, ticket and member prices, the bar menu and hours. The demo invents all of it, including the 12A rating, the Leith address and both programmers. Point each of the 14 showing links at its booking page. Keep one still per programme day, because the script pairs days and stills by position.
+A movie theater website template for Claude Code, Cursor or Codex goes fastest, as in any [agent-led build](https://8b.com/templates/vibe-coding/), when you supply the facts only the venue has: film titles and times, screen sizes, ticket and member prices, the bar menu and hours. The demo invents all of it, including the 12A rating, the Leith address and both programmers. Point each of the 14 showing links at its booking page. Keep one still per programme day, paired by position, and four frames in the film gate, whose steps the CSS counts.
 
 No agent? Click **[Use this template](https://github.com/new?template_name=movie-theater-website-template&template_owner=8bsite)**, edit `index.html` on GitHub and turn on **Settings > Pages**.
 
 ## Sections and motion
 
-- **Navigation**: fixed rounded white bar: wordmark, three links, Book tickets button; hides on scroll down; phone menu overlay. Smooth scrolling runs page-wide, and the nav bar slides up and away on a scroll down after the first 140px and returns on any scroll up.
+- **Navigation**: fixed rounded white bar: wordmark, three links, Book tickets button; hides on scroll down; phone menu overlay. Mouse-wheel scrolling is smoothed page-wide, and the nav bar slides up and away on a scroll down after the first 140px and returns on any scroll up.
 - **Waltz for an Empty Flat**: one screen: tonight's film title with three pills, a wide photo window, door and show times, credits, ticket price and Book a seat button. On load the heading block rises, the photo window opens from a smaller size and the three tiles rise one after another.
 - **This week at Halide**: "This week at Halide": a sticky photo screen beside six day tiles with times, titles and screen notes. The photo screen stays beside the list while each day tile turns white as it reaches the reading line and the screen wipes in that day's still from the right edge with a small swing.
 - **Still on film**: "Still on film": text about 35mm projection beside a film gate that steps four captioned frames between running sprocket columns. The section holds for about two screens of scroll while the gate steps through four frames in three moves, with a dark shutter flash and jumping sprocket columns at each move.
@@ -66,12 +66,12 @@ No. Nothing checks seats or takes payment. The Book tickets and Book a seat butt
 **Can I get a site like this without editing code?**  
 Yes, in another form. [8B's AI website builder](https://8b.com/) designs a new site from a sentence about your cinema, in its own design rather than this template. Designing and restyling are free. Publishing with hosting and SSL, full HTML export and AI edits in chat are on Pro at $9 a month billed yearly. It also runs in Claude and ChatGPT.
 
-**What happens on a phone, with reduced motion or without JavaScript?**  
-On a phone the nav links give way to a menu button with a five-link overlay, and the programme photo becomes a short band pinned above the days. With reduced motion, entrance and scroll animations and smooth scrolling are off. Without JavaScript the menu cannot open, but the Book tickets button, the six footer links and the questions work.
+**Does this version need GSAP, and what do Firefox and reduced motion show?**  
+No. The motion is CSS scroll-driven animation and a small inline script: 26 KB gzipped against 71 KB for the GSAP build. In Firefox today and with reduced motion the scroll motion and smooth wheel are off: the gate shows four frames in a column and the seasons a grid. The load-in still plays in Firefox.
 
 ## Is it the right base?
 
-Choose it when the content is a changing timetable plus a few steady offers, and you want a dark, film-edge look. The weak spot is the timetable: six day tiles edited by hand each week, with no listing feed, no seat map and no payment. A cinema that sells seats online should link out to a ticketing service. A [podcast](https://8b.com/templates/gabble/) network or audio collective is better served by a template built around shows.
+Choose it when the content is a changing timetable plus a few steady offers, and you want a dark, film-edge look. It is the light build: the same look and scroll behaviour with no animation library, 26 KB gzipped against 71 KB for the GSAP version. The weak spot is the timetable: six day tiles edited by hand each week, with no listing feed, seat map or payment. A [podcast](https://8b.com/templates/gabble/) network is better served by a template built around shows.
 
 ## Before you publish
 
@@ -80,7 +80,9 @@ Choose it when the content is a changing timetable plus a few steady offers, and
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 101 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 106 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr, 102 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

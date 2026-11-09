@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/korean-restaurant-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -810,11 +811,6 @@
   button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; }
   :focus-visible { outline: 2px solid var(--color-5); outline-offset: 3px; }
   .u-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
-  .lenis [data-lenis-prevent], .lenis [data-lenis-prevent-wheel], .lenis [data-lenis-prevent-touch] { overscroll-behavior: contain; }
-  .lenis.lenis-smooth iframe { pointer-events: none; }
-  .lenis.lenis-autoToggle { transition-property: overflow; transition-duration: 1ms; transition-behavior: allow-discrete; }
 }
 </style>
 <style data-8b-part="system">
@@ -975,6 +971,18 @@ textarea.m-field__input { resize: vertical; }
     @keyframes op-heat { from { transform: scale(1.08) translate3d(0, 0, 0); } to { transform: scale(1.16) translate3d(-2%, -4%, 0); } }
     @keyframes op-breathe { from { transform: translate3d(0, 0, 0) scale(1); opacity: .75; } to { transform: translate3d(14vw, -6vh, 0) scale(1.22); opacity: 1; } }
   }
+  #opening .op-second { padding-top: calc(var(--nv-h, 48px) + clamp(40px, 7vh, 72px)); }
+  #opening .op-go { margin-top: -6px; }
+  @media (max-width: 760px) {
+    #opening .op-text { grid-row: 3; margin-top: 32px; gap: 22px; }
+    #opening .op-ph--a, #opening .op-ph--b { grid-row: 4; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    #opening .op-note, #opening .op-statement, #opening .op-text { animation: rw-in .9s cubic-bezier(.2, .7, .1, 1) backwards; }
+    #opening .op-statement { animation-delay: .05s; }
+    #opening .op-text { animation-delay: .35s; }
+  }
+  @keyframes rw-in { from { transform: translateY(18px); opacity: 0; } }
 }
 </style>
 
@@ -1293,55 +1301,161 @@ textarea.m-field__input { resize: vertical; }
   }
 }
 </style>
-<style data-8b-part="scene-style:night">
+<style data-8b-part="motion">
 @layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #night[data-nt] .nt-stage { height: 240svh; }
-    #night[data-nt] .nt-cell--main { z-index: 2; }
-  }
+[data-8b-live] [data-8b-motion~="drift"] { animation-name: motion-drift-translate; view-timeline: --motion-drift block; view-timeline-inset: 0; animation-timeline: --motion-drift; animation-range: cover 0% cover 55vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"] { animation-name: motion-rise-clippath; animation-duration: 1.1s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="rise"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="rise"] img { animation-name: motion-rise-img-scale; animation-duration: 1.4s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"].is-in img { animation-play-state: running; }
+@keyframes motion-drift-translate { 0% { translate: min(22vw, 320px) 0px; } 100% { translate: 0px 0px; } }
+@keyframes motion-rise-clippath { 0% { clip-path: inset(100% 0% 0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes motion-rise-img-scale { 0% { scale: 1.2; } 100% { scale: 1; } }
+@property --motion-ember-a { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --motion-ember-b { syntax: "<number>"; inherits: false; initial-value: 0; }
+[data-8b-live] [data-8b-motion~="ember"] { view-timeline: --motion-ember block; view-timeline-inset: 0; }
+[data-8b-live] [data-8b-motion~="ember"] .w { color: color-mix(in srgb, var(--ember-ink, currentColor) calc(var(--motion-ember-b) * 100%), color-mix(in srgb, var(--ember-hot, var(--color-5)) calc(var(--motion-ember-a) * 100%), var(--ember-ash, color-mix(in srgb, currentColor 16%, transparent)))); animation-name: motion-ember; animation-timeline: --motion-ember; animation-range: cover calc(8vh + (100% - 70vh) * .7 * var(--i) / (var(--n) - .7)) cover calc(8vh + (100% - 70vh) * (.7 * var(--i) + .3 * var(--n)) / (var(--n) - .7)); animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes motion-ember { 0% { --motion-ember-a: 0; --motion-ember-b: 0; } 50% { --motion-ember-a: 1; --motion-ember-b: 0; } 100% { --motion-ember-a: 1; --motion-ember-b: 1; } }
 }
 </style>
-<style data-8b-part="scene-style:table">
+<style data-8b-part="scene:opening">
 @layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #table[data-tb] .tb-stage::after { content: ""; display: block; height: 140svh; }
-  }
+[data-8b-live] #opening .op-statement .w { color: color-mix(in srgb, var(--ember-ink) calc(var(--motion-ember-b) * 100%), color-mix(in srgb, var(--ember-hot) calc(var(--motion-ember-a) * 100%), var(--ember-ash))); animation-name: motion-ember; animation-duration: calc(.3s / .55); animation-delay: calc(.7s * var(--i) / var(--n) / .55); animation-timing-function: linear; animation-fill-mode: both; }
 }
 </style>
-<style data-8b-part="scene-style:journey">
+<style data-8b-part="scene:grill">
 @layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #journey[data-jr] .jr-sticky { position: sticky; top: 0; height: 100svh; min-height: 560px; display: flex; flex-direction: column; justify-content: center; padding: 0; }
-    #journey[data-jr] .jr-track { display: flex; width: max-content; margin-inline: max(var(--space-1), (100% - 1600px) / 2) 0; }
-    #journey[data-jr] .jr-year { width: clamp(280px, 38vw, 560px); padding: 0 32px 0 16px; }
-    #journey[data-jr] .jr-ph { aspect-ratio: 16 / 10; }
-  }
-  @media (prefers-reduced-motion: no-preference) and (max-width: 760px) {
-    #journey[data-jr] .jr-year { width: 78vw; padding: 0 20px 0 0; }
-    #journey[data-jr] .jr-ph { aspect-ratio: 4 / 3; }
-  }
+[data-8b-live] #grill .gr-index__mark { transition: translate .55s cubic-bezier(0.25, 1, 0.5, 1), height .55s cubic-bezier(0.25, 1, 0.5, 1); }
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #grill .gr-list > .gr-row > .gr-photos { view-timeline-inset: 0; }
+[data-8b-live] #grill-beef > .gr-photos { view-timeline: --grill-t1 block; }
+[data-8b-live] #grill-pork > .gr-photos { view-timeline: --grill-t2 block; }
+[data-8b-live] #grill-ssam > .gr-photos { view-timeline: --grill-t3 block; }
+[data-8b-live] #grill-stew > .gr-photos { view-timeline: --grill-t4 block; }
+[data-8b-live] #grill .gr-list > .gr-row > .gr-photos > .gr-ph--b { animation-name: grill-figure-gr-ph-translate; animation-range: cover 10vh cover 60vh; animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #grill-beef > .gr-photos > .gr-ph--b, [data-8b-live] #grill-beef > .gr-photos > .gr-ph--a > img { animation-timeline: --grill-t1; }
+[data-8b-live] #grill .gr-list > .gr-row > .gr-photos > .gr-ph--a > img { animation-name: grill-figure-gr-ph-img-scale; animation-range: cover 10vh cover 60vh; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #grill-pork > .gr-photos > .gr-ph--b, [data-8b-live] #grill-pork > .gr-photos > .gr-ph--a > img { animation-timeline: --grill-t2; }
+[data-8b-live] #grill-ssam > .gr-photos > .gr-ph--b, [data-8b-live] #grill-ssam > .gr-photos > .gr-ph--a > img { animation-timeline: --grill-t3; }
+[data-8b-live] #grill-stew > .gr-photos > .gr-ph--b, [data-8b-live] #grill-stew > .gr-photos > .gr-ph--a > img { animation-timeline: --grill-t4; }
+@keyframes grill-figure-gr-ph-translate { 0% { translate: -100% 0px; } 100% { translate: 0px 0px; } }
+@keyframes grill-figure-gr-ph-img-scale { 0% { scale: 1.2; } 100% { scale: 1; } }
 }
 </style>
-<style data-8b-part="scene-style:contact">
+<style data-8b-part="scene:rooms">
 @layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #contact[data-ct] .ct-title.is-slice { position: absolute; inset: 0 0 auto; }
-  }
+[data-8b-live] #rooms .rm-list > .rm-item > .rm-frame { view-timeline-inset: 0; }
+[data-8b-live] #rooms .rm-list > article:nth-of-type(1) > .rm-frame { view-timeline: --rooms-t1 block; }
+[data-8b-live] #rooms .rm-list > article:nth-of-type(2) > .rm-frame { view-timeline: --rooms-t2 block; }
+[data-8b-live] #rooms .rm-list > article:nth-of-type(3) > .rm-frame { view-timeline: --rooms-t3 block; }
+[data-8b-live] #rooms .rm-list > article:nth-of-type(4) > .rm-frame { view-timeline: --rooms-t4 block; }
+[data-8b-live] #rooms .rm-list > .rm-item > .rm-frame > .l-wrap { animation-name: rooms-figure-l-wrap-clippath; animation-range: cover 5vh cover calc(50% - 5vh); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; }
+[data-8b-live] #rooms .rm-list > article:nth-of-type(1) > .rm-frame > .l-wrap, [data-8b-live] #rooms .rm-list > article:nth-of-type(1) > .rm-frame > .l-wrap > img, [data-8b-live] #rooms .rm-list > article:nth-of-type(1) > .rm-frame > .rm-glow { animation-timeline: --rooms-t1; }
+[data-8b-live] #rooms .rm-list > .rm-item > .rm-frame > .l-wrap > img { animation-name: rooms-figure-l-wrap-img-scale; animation-range: cover 5vh cover calc(50% - 5vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #rooms .rm-list > .rm-item > .rm-frame > .rm-glow { animation-name: rooms-img-rm-glow-opacity; animation-range: cover 5vh cover calc(50% - 5vh); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #rooms .rm-list > article:nth-of-type(2) > .rm-frame > .l-wrap, [data-8b-live] #rooms .rm-list > article:nth-of-type(2) > .rm-frame > .l-wrap > img, [data-8b-live] #rooms .rm-list > article:nth-of-type(2) > .rm-frame > .rm-glow { animation-timeline: --rooms-t2; }
+[data-8b-live] #rooms .rm-list > article:nth-of-type(3) > .rm-frame > .l-wrap, [data-8b-live] #rooms .rm-list > article:nth-of-type(3) > .rm-frame > .l-wrap > img, [data-8b-live] #rooms .rm-list > article:nth-of-type(3) > .rm-frame > .rm-glow { animation-timeline: --rooms-t3; }
+[data-8b-live] #rooms .rm-list > article:nth-of-type(4) > .rm-frame > .l-wrap, [data-8b-live] #rooms .rm-list > article:nth-of-type(4) > .rm-frame > .l-wrap > img, [data-8b-live] #rooms .rm-list > article:nth-of-type(4) > .rm-frame > .rm-glow { animation-timeline: --rooms-t4; }
+@keyframes rooms-figure-l-wrap-clippath { 0% { clip-path: inset(0% 33.333%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes rooms-figure-l-wrap-img-scale { 0% { scale: 1.32; } 100% { scale: 1; } }
+@keyframes rooms-img-rm-glow-opacity { 0% { opacity: 0.12; } 100% { opacity: 0.5; } }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening .op-second { padding-top: calc(var(--nv-h, 48px) + clamp(40px, 7vh, 72px)); }
-#opening .op-go { margin-top: -6px; }
+<style data-8b-part="scene:night">
+@layer scenes {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-8b-live] #night .nt-stage { height: 240svh; }
+    [data-8b-live] #night .nt-cell--main { z-index: 2; }
+  }
+}
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #night .nt-stage { view-timeline: --night-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #night .nt-cell { animation-name: night-cell-translate, night-cell-scale; animation-timeline: --night-t1; animation-range: cover 100vh cover calc(74% - 48vh); animation-timing-function: var(--ease-power2-inout); animation-fill-mode: both; transform: none; }
+[data-8b-live] #night .nt-cell--main { animation-name: night-cell-cover; }
+@keyframes night-cell-cover { 0% { scale: var(--night-cover); } 100% { scale: 1; } }
+@keyframes night-cell-translate { 0% { translate: var(--night-x) var(--night-y); } 100% { translate: 0px 0px; } }
+@keyframes night-cell-scale { 0% { scale: 1.12; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:table">
+@layer scenes {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-8b-live] #table .tb-stage::after { content: ""; display: block; height: 140svh; }
+  }
+}
+@layer scenes {
+[data-8b-live] #table .tb-stage { view-timeline: --table-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #table .tb-heat { animation-name: table-div-tb-heat-translate; animation-timeline: --table-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes table-div-tb-heat-translate { 0% { translate: 0px 0px; } 3.3333% { translate: 0.4% 0px; } 5% { translate: 1.35% 0px; } 6.6667% { translate: 3.2% 0px; } 8.3333% { translate: 6.25% 0px; } 10% { translate: 10.8% 0px; } 11.6667% { translate: 17.15% 0px; } 13.3333% { translate: 25.6% 0px; } 15% { translate: 36.45% 0px; } 18.3333% { translate: 63.55% 0px; } 20% { translate: 74.4% 0px; } 21.6667% { translate: 82.85% 0px; } 23.3333% { translate: 89.2% 0px; } 25% { translate: 93.75% 0px; } 26.6667% { translate: 96.8% 0px; } 28.3333% { translate: 98.65% 0px; } 30% { translate: 99.6% 0px; } 31.6667% { translate: 99.95% 0px; } 35% { translate: 100% 0.05%; } 36.6667% { translate: 100% 0.4%; } 38.3333% { translate: 100% 1.35%; } 40% { translate: 100% 3.2%; } 41.6667% { translate: 100% 6.25%; } 43.3333% { translate: 100% 10.8%; } 45% { translate: 100% 17.15%; } 46.6667% { translate: 100% 25.6%; } 48.3333% { translate: 100% 36.45%; } 51.6667% { translate: 100% 63.55%; } 53.3333% { translate: 100% 74.4%; } 55% { translate: 100% 82.85%; } 56.6667% { translate: 100% 89.2%; } 58.3333% { translate: 100% 93.75%; } 60% { translate: 100% 96.8%; } 61.6667% { translate: 100% 98.65%; } 63.3333% { translate: 100% 99.6%; } 65% { translate: 100% 99.95%; } 68.3333% { translate: 99.95% 100%; } 70% { translate: 99.6% 100%; } 71.6667% { translate: 98.65% 100%; } 73.3333% { translate: 96.8% 100%; } 75% { translate: 93.75% 100%; } 76.6667% { translate: 89.2% 100%; } 78.3333% { translate: 82.85% 100%; } 80% { translate: 74.4% 100%; } 81.6667% { translate: 63.55% 100%; } 85% { translate: 36.45% 100%; } 86.6667% { translate: 25.6% 100%; } 88.3333% { translate: 17.15% 100%; } 90% { translate: 10.8% 100%; } 91.6667% { translate: 6.25% 100%; } 93.3333% { translate: 3.2% 100%; } 95% { translate: 1.35% 100%; } 96.6667% { translate: 0.4% 100%; } 98.3333% { translate: 0.05% 100%; } 100% { translate: 0px 100%; } }
+[data-8b-live] #table .tb-heat { --table-top: calc(var(--nv-h, 48px) + 40px); animation-range: cover calc(100vh - var(--table-top)) cover calc(240vh - var(--table-top)); }
+@media (max-width: 860px) {
+  [data-8b-live] #table .tb-heat { --table-top: calc(var(--nv-h, 48px) + 12px); }
+}
+}
+</style>
+<style data-8b-part="scene:stories">
+@layer scenes {
+[data-8b-live] #stories { timeline-scope: --stories-t1, --stories-t2; }
+[data-8b-live] #stories .st-quotes > figure:nth-of-type(2) { view-timeline: --stories-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #stories .st-quotes > figure:nth-of-type(3) { view-timeline: --stories-t2 block; view-timeline-inset: 0; }
+[data-8b-live] #stories .st-strip > img:is(:nth-of-type(2), :nth-of-type(3)) { animation-name: stories-img-st-face-clippath, stories-img-st-face-scale; animation-range: cover 20vh cover 55vh; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #stories .st-strip > img:nth-of-type(2) { animation-timeline: --stories-t1; }
+[data-8b-live] #stories .st-strip > img:nth-of-type(3) { animation-timeline: --stories-t2; }
+@keyframes stories-img-st-face-clippath { 0% { clip-path: inset(100% 0% 0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes stories-img-st-face-scale { 0% { scale: 1.16; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:journey">
+@layer scenes {
+[data-8b-live] #journey .jr-stage { height: calc(100vh + var(--journey-distance, 0px)); view-timeline: --journey-stage block; view-timeline-inset: 0; }
+[data-8b-live] #journey .jr-sticky { position: sticky; top: 0; height: 100svh; min-height: 560px; display: flex; flex-direction: column; justify-content: center; padding: 0; }
+[data-8b-live] #journey .jr-track { display: flex; width: max-content; margin-inline: max(var(--space-1), (100% - 1600px) / 2) 0; }
+[data-8b-live] #journey .jr-year { width: clamp(280px, 38vw, 560px); padding: 0 32px 0 16px; }
+[data-8b-live] #journey .jr-ph { aspect-ratio: 16 / 10; }
 @media (max-width: 760px) {
-  #opening .op-text { grid-row: 3; margin-top: 32px; gap: 22px; }
-  #opening .op-ph--a, #opening .op-ph--b { grid-row: 4; }
+  [data-8b-live] #journey .jr-year { width: 78vw; padding: 0 20px 0 0; }
+  [data-8b-live] #journey .jr-ph { aspect-ratio: 4 / 3; }
 }
-@media (prefers-reduced-motion: no-preference) {
-  #opening .op-note, #opening .op-statement, #opening .op-text { animation: rw-in .9s cubic-bezier(.2, .7, .1, 1) backwards; }
-  #opening .op-statement { animation-delay: .05s; }
-  #opening .op-text { animation-delay: .35s; }
+[data-8b-live] #journey .jr-track, [data-8b-live] #journey .jr-rail__fill { animation-timeline: --journey-stage; animation-range: cover 100vh cover calc(100vh + var(--journey-distance, 0px)); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #journey .jr-track { animation-name: journey-slide; }
+[data-8b-live] #journey .jr-rail__fill { animation-name: journey-fill; }
+[data-8b-live] #journey .jr-sticky { animation-name: journey-progress; animation-timeline: --journey-stage; animation-range: cover 100vh cover calc(100vh + var(--journey-distance, 0px)); animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #journey .jr-year:not(:first-child) .jr-ph { --journey-q: clamp(0, (var(--journey-p) - var(--journey-from)) / (var(--journey-to) - var(--journey-from)), 1); --journey-e: calc(1 - pow(1 - var(--journey-q), 3)); clip-path: inset(0% calc((1 - var(--journey-e)) * 100%) 0% 0%); }
+[data-8b-live] #journey .jr-year:not(:first-child) .jr-ph img { scale: calc(1.25 - .25 * var(--journey-e)); }
+@property --journey-p { syntax: "<number>"; inherits: true; initial-value: 0; }
+@keyframes journey-progress { 0% { --journey-p: 0; } 100% { --journey-p: 1; } }
+@keyframes journey-slide { 0% { translate: 0px 0px; } 100% { translate: calc(-1 * var(--journey-distance, 0px)) 0px; } }
+@keyframes journey-fill { 0% { scale: .1 1; } 100% { scale: 1 1; } }
 }
-@keyframes rw-in { from { transform: translateY(18px); opacity: 0; } }</style>
+</style>
+<style data-8b-part="scene:sets">
+@property --sets-lit { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #sets .ss-card--hot { view-timeline: --sets-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #sets .ss-fire, [data-8b-live] #sets .ss-card--hot > ul:nth-of-type(-n+2) > li { animation-timeline: --sets-t1; animation-fill-mode: both; }
+[data-8b-live] #sets .ss-fire { animation-name: sets-span-ss-fire-scale; animation-range: cover 12vh cover 70vh; animation-timing-function: var(--ease-power2-inout); transform: none; }
+[data-8b-live] #sets .ss-card--hot > ul:nth-of-type(-n+2) > li { animation-name: sets-ul-ss-items-li---lit; animation-timing-function: linear; --lit: var(--sets-lit); }
+[data-8b-live] #sets .ss-card--hot > ul:nth-of-type(1) > li { animation-range: cover calc(29.4vh + 4.06vh * var(--i)) cover calc(36.36vh + 4.06vh * var(--i)); }
+[data-8b-live] #sets .ss-card--hot > ul:nth-of-type(2) > li { animation-range: cover calc(49.7vh + 4.06vh * var(--i)) cover calc(56.66vh + 4.06vh * var(--i)); }
+@keyframes sets-span-ss-fire-scale { 0% { scale: 1 0; } 100% { scale: 1; } }
+@keyframes sets-ul-ss-items-li---lit { 0% { --sets-lit: 0; } 0.002% { --sets-lit: 0.000833; } 100% { --sets-lit: 1; } }
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] #contact .ct-titlebox { view-timeline: --contact-box block; view-timeline-inset: 0; }
+[data-8b-live] #contact .ct-title { --contact-y: 55%; --contact-at: 0; --contact-clip: inset(0% 66.6667% 0% 0%); --contact-rest: visible; animation-name: contact-join, contact-cut; animation-timeline: --contact-box, --contact-box; animation-range: cover calc(4vh + 54vh * var(--contact-at) * .08 / 1.16) cover calc(4vh + 54vh * (1 + var(--contact-at) * .08) / 1.16), cover 4vh cover 58vh; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1), linear; animation-fill-mode: both; }
+[data-8b-live] #contact .ct-title.is-slice { position: absolute; inset: 0 0 auto; --contact-y: -50%; --contact-at: 1; --contact-clip: inset(0% 33.3333% 0% 33.3333%); --contact-rest: hidden; }
+[data-8b-live] #contact .ct-title.is-slice + .is-slice { --contact-y: 100%; --contact-at: 2; --contact-clip: inset(0% 0% 0% 66.6667%); }
+@keyframes contact-join { 0% { translate: 0px var(--contact-y); } 100% { translate: 0px 0px; } }
+@keyframes contact-cut { 0%, 99.5% { clip-path: var(--contact-clip); visibility: visible; } 99.502%, 100% { clip-path: none; visibility: var(--contact-rest); } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body class="m-text">
 <!-- navigation: white top bar: logo mark and wordmark, a red badge, five links and a menu button; full-screen black menu with Hangul names, phone, address and hours -->
@@ -1353,7 +1467,7 @@ textarea.m-field__input { resize: vertical; }
         <span class="nv-badge m-text-4">Charcoal since 2016</span>
       </div>
       <nav class="nv-links m-text-4" aria-label="Main">
-        <ul>
+        <ul data-8b-items=":scope > li">
           <li><a class="m-link" href="#grill">The grill</a></li>
           <li><a class="m-link" href="#rooms">Rooms</a></li>
           <li><a class="m-link" href="#sets">Set menus</a></li>
@@ -1364,13 +1478,13 @@ textarea.m-field__input { resize: vertical; }
       <button class="m-icon nv-toggle" type="button" aria-expanded="false" aria-controls="menu"><span class="u-sr">Open the menu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 8.5h18M8 15.5h13"/></svg></button>
     </div>
   </header>
-  <div id="menu" class="nv-menu" data-lenis-prevent hidden>
+  <div id="menu" class="nv-menu" hidden>
     <div class="l-wrap">
       <div class="nv-menu__bar">
         <span class="nv-word">hwaro<sup>®</sup></span>
         <button class="m-icon nv-close" type="button"><span class="u-sr">Close the menu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
       </div>
-      <ul class="nv-menu__list">
+      <ul class="nv-menu__list" data-8b-items=":scope > li">
         <li><a href="#grill">What we fire <span class="m-ko" lang="ko">불판</span></a></li>
         <li><a href="#rooms">The rooms <span class="m-ko" lang="ko">방</span></a></li>
         <li><a href="#night">One night <span class="m-ko" lang="ko">하룻밤</span></a></li>
@@ -1393,14 +1507,14 @@ textarea.m-field__input { resize: vertical; }
   <div class="op-second l-rules">
     <div class="l-wrap op-about">
       <p class="op-note m-text-4">62 covers · 14 grills</p>
-      <h1 id="opening-title" class="op-statement m-text-5">We are a charcoal house in Ancoats: one grill sunk into every table, cuts aged behind the counter, and nobody rushing you off the coals.</h1>
-      <figure class="op-ph op-ph--a"><img style="background:#262626" src="https://images.unsplash.com/photo-1716732361381-4033d8257ed7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="Cooks turning skewers over a street grill at night while friends lean in" width="1600" height="1000" loading="lazy"></figure>
+      <h1 id="opening-title" class="op-statement m-text-5" data-8b-split="words">We are a charcoal house in Ancoats: one grill sunk into every table, cuts aged behind the counter, and nobody rushing you off the coals.</h1>
+      <figure class="op-ph op-ph--a" data-8b-motion="rise" data-8b-enter="90%"><img fetchpriority="high" src="https://images.unsplash.com/photo-1716732361381-4033d8257ed7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="Cooks turning skewers over a street grill at night while friends lean in" width="1600" height="1000"></figure>
       <div class="op-text">
         <p class="m-text">Korean barbecue is a meal you cook together. We bring the coals lit, the meat cut and the banchan full; you bring the people and decide when it is ready.</p>
         <p class="op-sign m-text-7"><strong>Min-ji Seo</strong><span>Head of grill, at the coals since the car-park days</span></p>
         <a class="m-btn op-go" href="#contact"><span class="m-btn__label">Book a table</span><span class="m-btn__plus" aria-hidden="true"></span><span class="m-btn__heat" aria-hidden="true"><i></i><i></i><i></i></span></a>
       </div>
-      <figure class="op-ph op-ph--b"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1614119068601-483274e9dcb7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dG9uZ3MlMjBncmlsbGluZyUyMG1lYXQlMjBjbG9zZXVwfGVufDF8MXx8fDE3OTE0NzExMzN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=60" alt="Tongs lifting a seared steak over open flame on a charcoal grill" width="1600" height="2286" loading="lazy"></figure>
+      <figure class="op-ph op-ph--b" data-8b-motion="rise" data-8b-enter="90%"><img srcset="https://images.unsplash.com/photo-1614119068601-483274e9dcb7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dG9uZ3MlMjBncmlsbGluZyUyMG1lYXQlMjBjbG9zZXVwfGVufDF8MXx8fDE3OTE0NzExMzN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=230&amp;q=60 230w, https://images.unsplash.com/photo-1614119068601-483274e9dcb7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dG9uZ3MlMjBncmlsbGluZyUyMG1lYXQlMjBjbG9zZXVwfGVufDF8MXx8fDE3OTE0NzExMzN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=60 340w" sizes="(max-width: 767px) 76px, 27vw" src="https://images.unsplash.com/photo-1614119068601-483274e9dcb7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8dG9uZ3MlMjBncmlsbGluZyUyMG1lYXQlMjBjbG9zZXVwfGVufDF8MXx8fDE3OTE0NzExMzN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=60" alt="Tongs lifting a seared steak over open flame on a charcoal grill" width="1600" height="2286" loading="lazy"></figure>
     </div>
   </div>
 </section>
@@ -1412,7 +1526,7 @@ textarea.m-field__input { resize: vertical; }
       <h2 id="grill-title" class="m-text-2">What we fire <span class="m-ko" lang="ko">불판</span></h2>
       <p class="m-text">Four fires on one charcoal. Everything is cut to order at the counter and reaches your table raw, so the first sear is always yours.</p>
       <nav class="gr-nav" aria-label="The four fires">
-        <ol class="gr-index m-text-4">
+        <ol class="gr-index m-text-4" data-8b-items=":scope > li">
           <li><a class="m-link" href="#grill-beef">Beef</a></li>
           <li><a class="m-link" href="#grill-pork">Pork</a></li>
           <li><a class="m-link" href="#grill-ssam">Ssam and greens</a></li>
@@ -1423,17 +1537,17 @@ textarea.m-field__input { resize: vertical; }
       <p class="gr-note m-text-7"><strong>Whole-animal Fridays</strong>Off-menu cuts from the week's carcass, until they run out.</p>
       <a class="m-btn" href="#sets"><span class="m-btn__label">See the set menus</span><span class="m-btn__plus" aria-hidden="true"></span><span class="m-btn__heat" aria-hidden="true"><i></i><i></i><i></i></span></a>
     </div>
-    <div class="gr-list">
+    <div class="gr-list" data-8b-items=":scope > .gr-row" data-8b-fixed="4">
       <article class="gr-row" id="grill-beef">
         <p class="gr-kind m-text-4">Beef <span class="m-ko" lang="ko">소고기</span></p>
         <h3 class="m-text-3">Aged behind the counter</h3>
         <div class="gr-photos">
-          <figure class="gr-ph gr-ph--a"><img style="background:#262640" src="https://images.unsplash.com/photo-1723893905879-0e309c2a8e06?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bWFyYmxlZCUyMHJhdyUyMGJlZWZ8ZW58MXwwfHx8MTc5MTQ3MTA3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="Two thick marbled beef steaks on dark slate" width="1600" height="1067" loading="lazy"></figure>
-          <figure class="gr-ph gr-ph--b"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1708388064672-6536507fdf6e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8a29yZWFuJTIwYmJxJTIwZ3JpbGx8ZW58MXwwfHx8MTc5MTQ3MTAyOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="Beef searing on a copper table grill among small bowls of side dishes" width="1600" height="1068" loading="lazy"></figure>
+          <figure class="gr-ph gr-ph--a"><img src="https://images.unsplash.com/photo-1723893905879-0e309c2a8e06?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bWFyYmxlZCUyMHJhdyUyMGJlZWZ8ZW58MXwwfHx8MTc5MTQ3MTA3MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="Two thick marbled beef steaks on dark slate" width="1600" height="1067" loading="lazy"></figure>
+          <figure class="gr-ph gr-ph--b"><img src="https://images.unsplash.com/photo-1708388064672-6536507fdf6e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8a29yZWFuJTIwYmJxJTIwZ3JpbGx8ZW58MXwwfHx8MTc5MTQ3MTAyOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="Beef searing on a copper table grill among small bowls of side dishes" width="1600" height="1068" loading="lazy"></figure>
         </div>
         <p class="gr-text m-text">Galbi marinated for two days, brisket shaved paper-thin, sirloin dry-aged for 28 days in the glass room behind the bar. Sear it hard, cut it with scissors, eat it hot.</p>
         <p class="gr-price m-text-4">From £19 a plate</p>
-        <ul class="gr-cuts">
+        <ul class="gr-cuts" data-8b-items=":scope > li">
           <li class="m-tag">Galbi short rib</li>
           <li class="m-tag">Chadol brisket</li>
           <li class="m-tag">Aged sirloin</li>
@@ -1446,12 +1560,12 @@ textarea.m-field__input { resize: vertical; }
         <p class="gr-kind m-text-4">Pork <span class="m-ko" lang="ko">돼지고기</span></p>
         <h3 class="m-text-3">Cut thick, salted twice</h3>
         <div class="gr-photos">
-          <figure class="gr-ph gr-ph--a"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1678269367584-975ae35c3b16?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8a29yZWFuJTIwYmJxJTIwZ3JpbGx8ZW58MXwwfHx8MTc5MTQ3MTAyOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="Strips of pork belly and mushrooms on a round charcoal grill" width="1600" height="1067" loading="lazy"></figure>
-          <figure class="gr-ph gr-ph--b"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1708388464743-80126e9cdecf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8dG9uZ3MlMjBncmlsbGluZyUyMG1lYXQlMjBjbG9zZXVwfGVufDF8MXx8fDE3OTE0NzExMzN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="Tongs turning chunks of pork over flames on a grill" width="1600" height="2398" loading="lazy"></figure>
+          <figure class="gr-ph gr-ph--a"><img src="https://images.unsplash.com/photo-1678269367584-975ae35c3b16?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8a29yZWFuJTIwYmJxJTIwZ3JpbGx8ZW58MXwwfHx8MTc5MTQ3MTAyOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="Strips of pork belly and mushrooms on a round charcoal grill" width="1600" height="1067" loading="lazy"></figure>
+          <figure class="gr-ph gr-ph--b"><img src="https://images.unsplash.com/photo-1708388464743-80126e9cdecf?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8dG9uZ3MlMjBncmlsbGluZyUyMG1lYXQlMjBjbG9zZXVwfGVufDF8MXx8fDE3OTE0NzExMzN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="Tongs turning chunks of pork over flames on a grill" width="1600" height="2398" loading="lazy"></figure>
         </div>
         <p class="gr-text m-text">Belly in finger-thick slabs, neck with its marbling left on, jowl that crackles at the edge. Salted at the counter, salted again on the coals, dipped in sesame oil.</p>
         <p class="gr-price m-text-4">From £15 a plate</p>
-        <ul class="gr-cuts">
+        <ul class="gr-cuts" data-8b-items=":scope > li">
           <li class="m-tag">Samgyeopsal belly</li>
           <li class="m-tag">Moksal neck</li>
           <li class="m-tag">Jowl</li>
@@ -1463,12 +1577,12 @@ textarea.m-field__input { resize: vertical; }
         <p class="gr-kind m-text-4">Ssam and greens <span class="m-ko" lang="ko">쌈</span></p>
         <h3 class="m-text-3">The leaf is the plate</h3>
         <div class="gr-photos">
-          <figure class="gr-ph gr-ph--a"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1575396459069-9d188287fed2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGV0dHVjZSUyMHdyYXAlMjBtZWF0fGVufDF8MHx8fDE3OTE0NzEzNzF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="A hand folding grilled meat into a lettuce leaf beside bowls of dipping sauce" width="1600" height="1067" loading="lazy"></figure>
-          <figure class="gr-ph gr-ph--b"><img style="background:#8c5926" src="https://images.unsplash.com/photo-1695606452994-744d28349d71?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bGV0dHVjZSUyMHdyYXAlMjBtZWF0fGVufDF8MHx8fDE3OTE0NzEzNzF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="A tray of lettuce, radish and a pot of braised meat on a wooden table" width="1600" height="1067" loading="lazy"></figure>
+          <figure class="gr-ph gr-ph--a"><img src="https://images.unsplash.com/photo-1575396459069-9d188287fed2?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bGV0dHVjZSUyMHdyYXAlMjBtZWF0fGVufDF8MHx8fDE3OTE0NzEzNzF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="A hand folding grilled meat into a lettuce leaf beside bowls of dipping sauce" width="1600" height="1067" loading="lazy"></figure>
+          <figure class="gr-ph gr-ph--b"><img src="https://images.unsplash.com/photo-1695606452994-744d28349d71?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8bGV0dHVjZSUyMHdyYXAlMjBtZWF0fGVufDF8MHx8fDE3OTE0NzEzNzF8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="A tray of lettuce, radish and a pot of braised meat on a wooden table" width="1600" height="1067" loading="lazy"></figure>
         </div>
         <p class="gr-text m-text">A basket at every grill: lettuce, perilla, raw garlic, green chilli and our own ssamjang. Wrap, fold, one bite. Refilled until you stop asking.</p>
         <p class="gr-price m-text-4">From £6 a basket</p>
-        <ul class="gr-cuts">
+        <ul class="gr-cuts" data-8b-items=":scope > li">
           <li class="m-tag">Perilla leaf</li>
           <li class="m-tag">Ssamjang</li>
           <li class="m-tag">Pickled radish</li>
@@ -1480,12 +1594,12 @@ textarea.m-field__input { resize: vertical; }
         <p class="gr-kind m-text-4">Stews and rice <span class="m-ko" lang="ko">찌개와 밥</span></p>
         <h3 class="m-text-3">The last of the fire</h3>
         <div class="gr-photos">
-          <figure class="gr-ph gr-ph--a"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1760228865341-675704c22a5b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8a2ltY2hpJTIwc3Rld3xlbnwxfDB8fHwxNzkxNDcxMzczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="Bubbling kimchi stew with tofu and spring onion" width="1600" height="1067" loading="lazy"></figure>
-          <figure class="gr-ph gr-ph--b"><img style="background:#262626" src="https://images.unsplash.com/photo-1584278858536-52532423b9ea?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YnVsZ29naXxlbnwxfDB8fHwxNzkxNDcxMzcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="A stone bowl of rice and vegetables topped with a fried egg" width="1600" height="1067" loading="lazy"></figure>
+          <figure class="gr-ph gr-ph--a"><img src="https://images.unsplash.com/photo-1760228865341-675704c22a5b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8a2ltY2hpJTIwc3Rld3xlbnwxfDB8fHwxNzkxNDcxMzczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=480&amp;q=60" alt="Bubbling kimchi stew with tofu and spring onion" width="1600" height="1067" loading="lazy"></figure>
+          <figure class="gr-ph gr-ph--b"><img src="https://images.unsplash.com/photo-1584278858536-52532423b9ea?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8YnVsZ29naXxlbnwxfDB8fHwxNzkxNDcxMzcwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60" alt="A stone bowl of rice and vegetables topped with a fried egg" width="1600" height="1067" loading="lazy"></figure>
         </div>
         <p class="gr-text m-text">When the meat is gone, the grill is not. We fry rice in what is left on the plate, or set a stew over the coals: kimchi, soybean, or cold noodles in summer.</p>
         <p class="gr-price m-text-4">From £9 a pot</p>
-        <ul class="gr-cuts">
+        <ul class="gr-cuts" data-8b-items=":scope > li">
           <li class="m-tag">Kimchi jjigae</li>
           <li class="m-tag">Doenjang jjigae</li>
           <li class="m-tag">Fried rice</li>
@@ -1503,53 +1617,53 @@ textarea.m-field__input { resize: vertical; }
     <p class="rm-note m-text-4">Walk-ins at the bar · Tables by booking</p>
   </div>
   <div class="l-wrap rm-titlebox"><h2 id="rooms-title" class="rm-title" data-8b-motion="drift" style="--len:10">The rooms.</h2></div>
-  <div class="rm-list">
+  <div class="rm-list" data-8b-items=":scope > .rm-item" data-8b-fixed="4">
     <article class="rm-item">
       <div class="l-wrap rm-meta m-text-4"><span>Ground floor</span><span><b>Seats</b>56 at 14 tables</span><span><b>From</b>17:00</span></div>
       <div class="rm-frame">
-        <img style="background:#0c2626" class="rm-glow" src="https://images.unsplash.com/photo-1790427147937-50705ef373ec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" alt="" aria-hidden="true" width="320" height="213" loading="lazy">
-        <figure class="l-wrap rm-photo"><img style="background:#0c2626" src="https://images.unsplash.com/photo-1790427147937-50705ef373ec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=60" alt="Diners around small round tables in a busy restaurant at night, seen from the street" width="1600" height="1063" loading="lazy"></figure>
+        <img class="rm-glow" src="https://images.unsplash.com/photo-1790427147937-50705ef373ec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" alt="" aria-hidden="true" width="320" height="213" loading="lazy">
+        <figure class="l-wrap rm-photo"><img src="https://images.unsplash.com/photo-1790427147937-50705ef373ec?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1590&amp;q=60" alt="Diners around small round tables in a busy restaurant at night, seen from the street" width="1600" height="1063" loading="lazy"></figure>
       </div>
       <div class="l-wrap rm-cap">
         <h3 class="m-text-3">The coal room</h3>
         <p class="m-text">Fourteen tables, each with a grill sunk into its middle. Loud, warm and full by eight; the room most people mean when they say Hwaro.</p>
-        <ul class="rm-tags m-text-4"><li>Tables of two to six</li><li>Booking advised</li></ul>
+        <ul class="rm-tags m-text-4" data-8b-items=":scope > li"><li>Tables of two to six</li><li>Booking advised</li></ul>
       </div>
     </article>
     <article class="rm-item">
       <div class="l-wrap rm-meta m-text-4"><span>Counter</span><span><b>Seats</b>10 stools</span><span><b>From</b>17:00</span></div>
       <div class="rm-frame">
-        <img style="background:#260c0c" class="rm-glow" src="https://images.unsplash.com/photo-1661177866127-6b0c0d9e42e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8a29yZWFuJTIwcmVzdGF1cmFudCUyMGludGVyaW9yJTIwbmlnaHR8ZW58MXwwfHx8MTc5MTQ3MTA5Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" alt="" aria-hidden="true" width="320" height="213" loading="lazy">
-        <figure class="l-wrap rm-photo"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1661177866127-6b0c0d9e42e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8a29yZWFuJTIwcmVzdGF1cmFudCUyMGludGVyaW9yJTIwbmlnaHR8ZW58MXwwfHx8MTc5MTQ3MTA5Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=60" alt="A lit glass counter of aged meat under a red neon sign" width="1600" height="1067" loading="lazy"></figure>
+        <img class="rm-glow" src="https://images.unsplash.com/photo-1661177866127-6b0c0d9e42e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8a29yZWFuJTIwcmVzdGF1cmFudCUyMGludGVyaW9yJTIwbmlnaHR8ZW58MXwwfHx8MTc5MTQ3MTA5Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" alt="" aria-hidden="true" width="320" height="213" loading="lazy">
+        <figure class="l-wrap rm-photo"><img src="https://images.unsplash.com/photo-1661177866127-6b0c0d9e42e9?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8a29yZWFuJTIwcmVzdGF1cmFudCUyMGludGVyaW9yJTIwbmlnaHR8ZW58MXwwfHx8MTc5MTQ3MTA5Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1590&amp;q=60" alt="A lit glass counter of aged meat under a red neon sign" width="1600" height="1067" loading="lazy"></figure>
       </div>
       <div class="l-wrap rm-cap">
         <h3 class="m-text-3">The ageing counter</h3>
         <p class="m-text">Ten stools facing the glass room where the beef hangs. The butcher cuts in front of you and tells you which side of the loin to start with.</p>
-        <ul class="rm-tags m-text-4"><li>Walk-in only</li><li>Best for two</li></ul>
+        <ul class="rm-tags m-text-4" data-8b-items=":scope > li"><li>Walk-in only</li><li>Best for two</li></ul>
       </div>
     </article>
     <article class="rm-item">
       <div class="l-wrap rm-meta m-text-4"><span>Back bar</span><span><b>Seats</b>24 standing</span><span><b>From</b>19:00</span></div>
       <div class="rm-frame">
-        <img style="background:#f3c0a6" class="rm-glow" src="https://images.unsplash.com/photo-1590189182193-1fd44f2b4048?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c29qdSUyMGdsYXNzZXN8ZW58MXwwfHx8MTc5MTQ3MTA3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" alt="" aria-hidden="true" width="320" height="213" loading="lazy">
-        <figure class="l-wrap rm-photo"><img style="background:#f3c0a6" src="https://images.unsplash.com/photo-1590189182193-1fd44f2b4048?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c29qdSUyMGdsYXNzZXN8ZW58MXwwfHx8MTc5MTQ3MTA3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=60" alt="Two hands clinking small glasses of soju over a table of food" width="1600" height="1067" loading="lazy"></figure>
+        <img class="rm-glow" src="https://images.unsplash.com/photo-1590189182193-1fd44f2b4048?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c29qdSUyMGdsYXNzZXN8ZW58MXwwfHx8MTc5MTQ3MTA3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" alt="" aria-hidden="true" width="320" height="213" loading="lazy">
+        <figure class="l-wrap rm-photo"><img src="https://images.unsplash.com/photo-1590189182193-1fd44f2b4048?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c29qdSUyMGdsYXNzZXN8ZW58MXwwfHx8MTc5MTQ3MTA3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1590&amp;q=60" alt="Two hands clinking small glasses of soju over a table of food" width="1600" height="1067" loading="lazy"></figure>
       </div>
       <div class="l-wrap rm-cap">
         <h3 class="m-text-3">The soju bar</h3>
         <p class="m-text">Twelve soju, three makgeolli on tap and a short list of bar plates from the grill. The last orders of the night are always taken here.</p>
-        <ul class="rm-tags m-text-4"><li>Until 01:00</li><li>No booking</li></ul>
+        <ul class="rm-tags m-text-4" data-8b-items=":scope > li"><li>Until 01:00</li><li>No booking</li></ul>
       </div>
     </article>
     <article class="rm-item">
       <div class="l-wrap rm-meta m-text-4"><span>Upstairs</span><span><b>Seats</b>up to 20</span><span><b>From</b>12:00 at weekends</span></div>
       <div class="rm-frame">
-        <img style="background:#262626" class="rm-glow" src="https://images.unsplash.com/photo-1624639644241-fb03ff7b30ce?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" alt="" aria-hidden="true" width="320" height="213" loading="lazy">
-        <figure class="l-wrap rm-photo"><img style="background:#262626" src="https://images.unsplash.com/photo-1624639644241-fb03ff7b30ce?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1200&amp;q=60" alt="Friends laughing at a dinner table against a brick wall" width="1600" height="1069" loading="lazy"></figure>
+        <img class="rm-glow" src="https://images.unsplash.com/photo-1624639644241-fb03ff7b30ce?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" alt="" aria-hidden="true" width="320" height="213" loading="lazy">
+        <figure class="l-wrap rm-photo"><img src="https://images.unsplash.com/photo-1624639644241-fb03ff7b30ce?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1590&amp;q=60" alt="Friends laughing at a dinner table against a brick wall" width="1600" height="1069" loading="lazy"></figure>
       </div>
       <div class="l-wrap rm-cap">
         <h3 class="m-text-3">The back room</h3>
         <p class="m-text">One long table, four grills and a door that closes. Birthdays, leaving dos and teams who have earned it; the long table set feeds everyone.</p>
-        <ul class="rm-tags m-text-4"><li>Private hire</li><li>Deposit £10 a head</li></ul>
+        <ul class="rm-tags m-text-4" data-8b-items=":scope > li"><li>Private hire</li><li>Deposit £10 a head</li></ul>
       </div>
     </article>
   </div>
@@ -1566,16 +1680,16 @@ textarea.m-field__input { resize: vertical; }
   </div>
   <div class="nt-stage">
     <div class="nt-sticky">
-      <ul class="l-wrap nt-grid">
-        <li class="nt-cell"><figure><img style="background:#262626" src="https://images.unsplash.com/photo-1589854880846-842b8fe2ba4b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8Z2xvd2luZyUyMGNoYXJjb2FsJTIwZW1iZXJzfGVufDF8MHx8fDE3OTE0NzEwNDR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="Charcoal glowing orange in a grill pit" width="1600" height="1067" loading="lazy"><figcaption class="m-text-4"><time>17:00</time><span>Coals lit</span></figcaption></figure></li>
-        <li class="nt-cell"><figure><img style="background:#260c0c" src="https://images.unsplash.com/photo-1718458206458-e66f4b99ee1f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8a29yZWFuJTIwcmVzdGF1cmFudCUyMGludGVyaW9yJTIwbmlnaHR8ZW58MXwwfHx8MTc5MTQ3MTA5Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=680&amp;q=60" alt="A restaurant doorway glowing red under paper lanterns at dusk" width="1600" height="1000" loading="lazy"><figcaption class="m-text-4"><time>17:30</time><span>Doors open</span></figcaption></figure></li>
-        <li class="nt-cell"><figure><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1677029969065-c9f4003a9ad5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG9yayUyMGJlbGx5JTIwc2FtZ3llb3BzYWx8ZW58MXwwfHx8MTc5MTQ3MTA3MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="Tongs laying meat across a mesh grill" width="1600" height="1200" loading="lazy"><figcaption class="m-text-4"><time>18:15</time><span>First round</span></figcaption></figure></li>
-        <li class="nt-cell"><figure><img style="background:#262626" src="https://images.unsplash.com/photo-1600657057535-86cb937b65df?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="A woman laughing as glasses are raised over a table grill" width="1600" height="1067" loading="lazy"><figcaption class="m-text-4"><time>19:40</time><span>Another toast</span></figcaption></figure></li>
-        <li class="nt-cell nt-cell--main"><figure><img style="background:#260c0c" src="https://images.unsplash.com/photo-1590189599125-67138c6509ef?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGtvcmVhbiUyMGJicSUyMGdyaWxsfGVufDF8MHx8fDE3OTE0NzEwMjh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="A cook turning beef on a table grill under a steel hood, a soju bottle in front" width="1600" height="1067" loading="lazy"><figcaption class="m-text-4"><time>21:00</time><span>Full house</span></figcaption></figure></li>
-        <li class="nt-cell"><figure><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1662141048633-b52c0f2174fd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Z3JpbGwlMjBzbW9rZSUyMGRhcmt8ZW58MXwwfHx8MTc5MTQ3MTEwNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="A cloud of white smoke against a dark background" width="1600" height="1067" loading="lazy"><figcaption class="m-text-4"><time>22:10</time><span>Hoods on full</span></figcaption></figure></li>
-        <li class="nt-cell"><figure><img style="background:#0c2626" src="https://images.unsplash.com/photo-1635363638580-c2809d049eee?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8a2ltY2hpJTIwc3Rld3xlbnwxfDB8fHwxNzkxNDcxMzczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="A dark bowl of spicy rice cakes seen from above" width="1600" height="1067" loading="lazy"><figcaption class="m-text-4"><time>23:30</time><span>Late plates</span></figcaption></figure></li>
-        <li class="nt-cell"><figure><img style="background:#262626" src="https://images.unsplash.com/photo-1765582870011-ff3cfdb06700?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="A group of friends crowded round a table late at night" width="1600" height="1067" loading="lazy"><figcaption class="m-text-4"><time>00:20</time><span>Last orders</span></figcaption></figure></li>
-        <li class="nt-cell"><figure><img style="background:#260c0c" src="https://images.unsplash.com/photo-1791122933975-5e1347f1eead?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2VvdWwlMjBhbGxleSUyMG5lb24lMjBuaWdodHxlbnwxfDB8fHwxNzkxNDcxMDk0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=680&amp;q=60" alt="A narrow alley at night with a parked motorbike under awnings" width="1600" height="1000" loading="lazy"><figcaption class="m-text-4"><time>01:00</time><span>The alley again</span></figcaption></figure></li>
+      <ul class="l-wrap nt-grid" data-8b-items=":scope > li" data-8b-fixed="9">
+        <li class="nt-cell"><figure><img src="https://images.unsplash.com/photo-1589854880846-842b8fe2ba4b?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8Z2xvd2luZyUyMGNoYXJjb2FsJTIwZW1iZXJzfGVufDF8MHx8fDE3OTE0NzEwNDR8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=710&amp;q=60" alt="Charcoal glowing orange in a grill pit" width="1600" height="1067" loading="lazy"><figcaption class="m-text-4"><time>17:00</time><span>Coals lit</span></figcaption></figure></li>
+        <li class="nt-cell"><figure><img src="https://images.unsplash.com/photo-1718458206458-e66f4b99ee1f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8a29yZWFuJTIwcmVzdGF1cmFudCUyMGludGVyaW9yJTIwbmlnaHR8ZW58MXwwfHx8MTc5MTQ3MTA5Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=760&amp;q=60" alt="A restaurant doorway glowing red under paper lanterns at dusk" width="1600" height="1000" loading="lazy"><figcaption class="m-text-4"><time>17:30</time><span>Doors open</span></figcaption></figure></li>
+        <li class="nt-cell"><figure><img src="https://images.unsplash.com/photo-1677029969065-c9f4003a9ad5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG9yayUyMGJlbGx5JTIwc2FtZ3llb3BzYWx8ZW58MXwwfHx8MTc5MTQ3MTA3MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="Tongs laying meat across a mesh grill" width="1600" height="1200" loading="lazy"><figcaption class="m-text-4"><time>18:15</time><span>First round</span></figcaption></figure></li>
+        <li class="nt-cell"><figure><img src="https://images.unsplash.com/photo-1600657057535-86cb937b65df?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=710&amp;q=60" alt="A woman laughing as glasses are raised over a table grill" width="1600" height="1067" loading="lazy"><figcaption class="m-text-4"><time>19:40</time><span>Another toast</span></figcaption></figure></li>
+        <li class="nt-cell nt-cell--main"><figure><img src="https://images.unsplash.com/photo-1590189599125-67138c6509ef?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTJ8fGtvcmVhbiUyMGJicSUyMGdyaWxsfGVufDF8MHx8fDE3OTE0NzEwMjh8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A cook turning beef on a table grill under a steel hood, a soju bottle in front" width="1600" height="1067" loading="lazy"><figcaption class="m-text-4"><time>21:00</time><span>Full house</span></figcaption></figure></li>
+        <li class="nt-cell"><figure><img src="https://images.unsplash.com/photo-1662141048633-b52c0f2174fd?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Z3JpbGwlMjBzbW9rZSUyMGRhcmt8ZW58MXwwfHx8MTc5MTQ3MTEwNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=710&amp;q=60" alt="A cloud of white smoke against a dark background" width="1600" height="1067" loading="lazy"><figcaption class="m-text-4"><time>22:10</time><span>Hoods on full</span></figcaption></figure></li>
+        <li class="nt-cell"><figure><img src="https://images.unsplash.com/photo-1635363638580-c2809d049eee?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8a2ltY2hpJTIwc3Rld3xlbnwxfDB8fHwxNzkxNDcxMzczfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=710&amp;q=60" alt="A dark bowl of spicy rice cakes seen from above" width="1600" height="1067" loading="lazy"><figcaption class="m-text-4"><time>23:30</time><span>Late plates</span></figcaption></figure></li>
+        <li class="nt-cell"><figure><img src="https://images.unsplash.com/photo-1765582870011-ff3cfdb06700?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8ZnJpZW5kcyUyMGVhdGluZyUyMGtvcmVhbiUyMGJhcmJlY3VlfGVufDF8MHx8fDE3OTE0NzExMDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=710&amp;q=60" alt="A group of friends crowded round a table late at night" width="1600" height="1067" loading="lazy"><figcaption class="m-text-4"><time>00:20</time><span>Last orders</span></figcaption></figure></li>
+        <li class="nt-cell"><figure><img src="https://images.unsplash.com/photo-1791122933975-5e1347f1eead?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2VvdWwlMjBhbGxleSUyMG5lb24lMjBuaWdodHxlbnwxfDB8fHwxNzkxNDcxMDk0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=760&amp;q=60" alt="A narrow alley at night with a parked motorbike under awnings" width="1600" height="1000" loading="lazy"><figcaption class="m-text-4"><time>01:00</time><span>The alley again</span></figcaption></figure></li>
       </ul>
     </div>
   </div>
@@ -1594,7 +1708,7 @@ textarea.m-field__input { resize: vertical; }
     </div>
     <div class="tb-stage">
       <div class="tb-sticky">
-        <ol class="tb-steps">
+        <ol class="tb-steps" data-8b-items=":scope > .tb-step" data-8b-fixed="4">
           <li class="tb-step">
             <div class="tb-top"><span class="tb-num m-text-4">01</span><span class="m-text-4">Choose</span></div>
             <h3 class="m-text-3">Pick your cuts at the counter</h3>
@@ -1633,21 +1747,21 @@ textarea.m-field__input { resize: vertical; }
   </div>
   <div class="l-wrap st-body">
     <div class="st-strip">
-      <img style="background:#262626" class="st-face" src="https://images.unsplash.com/photo-1761026968170-de145510ca84?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cG9ydHJhaXQlMjBzbWlsaW5nJTIwd29tYW4lMjBkYXJrJTIwYmFja2dyb3VuZHxlbnwxfDF8fHwxNzkxNDcxMzc0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" alt="Hana Kim smiling, looking away" width="1600" height="2400" loading="lazy">
-      <img style="background:#262626" class="st-face" src="https://images.unsplash.com/photo-1655839916314-1f9d3a667b19?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTl8fHBvcnRyYWl0JTIwbWFuJTIwYmxhY2slMjBhbmQlMjB3aGl0ZXxlbnwxfDF8fHwxNzkxNDcxMzc2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" alt="Tom Avery in glasses, lit from one side" width="1600" height="2400" loading="lazy">
-      <img style="background:#0c2626" class="st-face" src="https://images.unsplash.com/photo-1786300737350-6610e1ba3733?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHBvcnRyYWl0JTIwc21pbGluZyUyMHdvbWFuJTIwZGFyayUyMGJhY2tncm91bmR8ZW58MXwxfHx8MTc5MTQ3MTM3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" alt="Priya Shah looking up at night" width="1600" height="2400" loading="lazy">
+      <img class="st-face" src="https://images.unsplash.com/photo-1761026968170-de145510ca84?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8cG9ydHJhaXQlMjBzbWlsaW5nJTIwd29tYW4lMjBkYXJrJTIwYmFja2dyb3VuZHxlbnwxfDF8fHwxNzkxNDcxMzc0fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=320&amp;q=60" alt="Hana Kim smiling, looking away" width="1600" height="2400" loading="lazy">
+      <img class="st-face" src="https://images.unsplash.com/photo-1655839916314-1f9d3a667b19?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTl8fHBvcnRyYWl0JTIwbWFuJTIwYmxhY2slMjBhbmQlMjB3aGl0ZXxlbnwxfDF8fHwxNzkxNDcxMzc2fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=370&amp;q=60" alt="Tom Avery in glasses, lit from one side" width="1600" height="2400" loading="lazy">
+      <img class="st-face" src="https://images.unsplash.com/photo-1786300737350-6610e1ba3733?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fHBvcnRyYWl0JTIwc21pbGluZyUyMHdvbWFuJTIwZGFyayUyMGJhY2tncm91bmR8ZW58MXwxfHx8MTc5MTQ3MTM3NHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=370&amp;q=60" alt="Priya Shah looking up at night" width="1600" height="2400" loading="lazy">
     </div>
-    <div class="st-quotes">
+    <div class="st-quotes" data-8b-items=":scope > .st-quote" data-8b-fixed="3">
       <figure class="st-quote">
-        <blockquote><p class="m-text-5" data-8b-motion="ember">“We came for the galbi and stayed for the fried rice they make in the last of the fat. Best birthday dinner I have had in this city.”</p></blockquote>
+        <blockquote><p class="m-text-5" data-8b-motion="ember" data-8b-split="words">“We came for the galbi and stayed for the fried rice they make in the last of the fat. Best birthday dinner I have had in this city.”</p></blockquote>
         <figcaption class="m-text-7"><strong>Hana Kim</strong><span>Birthday, a table of eight in the coal room</span></figcaption>
       </figure>
       <figure class="st-quote">
-        <blockquote><p class="m-text-5" data-8b-motion="ember">“Nobody hovered. They lit the coals, turned the first round, and then let us get on with it until one in the morning.”</p></blockquote>
+        <blockquote><p class="m-text-5" data-8b-motion="ember" data-8b-split="words">“Nobody hovered. They lit the coals, turned the first round, and then let us get on with it until one in the morning.”</p></blockquote>
         <figcaption class="m-text-7"><strong>Tom Avery</strong><span>A Friday at the soju bar</span></figcaption>
       </figure>
       <figure class="st-quote">
-        <blockquote><p class="m-text-5" data-8b-motion="ember">“I ordered the aged sirloin twice. The butcher told me why it tastes like that, then sent over a stew we never asked for.”</p></blockquote>
+        <blockquote><p class="m-text-5" data-8b-motion="ember" data-8b-split="words">“I ordered the aged sirloin twice. The butcher told me why it tastes like that, then sent over a stew we never asked for.”</p></blockquote>
         <figcaption class="m-text-7"><strong>Priya Shah</strong><span>Two stools at the ageing counter</span></figcaption>
       </figure>
     </div>
@@ -1658,11 +1772,11 @@ textarea.m-field__input { resize: vertical; }
 <section id="banchan" data-8b-section="banchan" class="l-rules" aria-labelledby="banchan-title">
   <div class="l-wrap bc-head">
     <h2 id="banchan-title" class="bc-title m-text-2" data-8b-motion="drift">Eight small plates <span class="m-ko" lang="ko">반찬</span></h2>
-    <p class="bc-statement m-text-5" data-8b-motion="ember">Made here every morning, changed with the season and refilled as often as you empty them.</p>
+    <p class="bc-statement m-text-5" data-8b-motion="ember" data-8b-split="words">Made here every morning, changed with the season and refilled as often as you empty them.</p>
   </div>
   <div class="l-wrap bc-body">
-    <figure class="bc-ph bc-ph--a" data-8b-motion="rise"><img style="background:#40260c" src="https://images.unsplash.com/photo-1783254995749-e00bc71b5d21?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8a2ltY2hpJTIwYmFuY2hhbnxlbnwxfDB8fHwxNzkxNDcxMDc1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=740&amp;q=60" alt="Steel trays of kimchi, pickled vegetables and side dishes at a market stall" width="1600" height="1067" loading="lazy"></figure>
-    <ul class="bc-list">
+    <figure class="bc-ph bc-ph--a" data-8b-motion="rise"><img src="https://images.unsplash.com/photo-1783254995749-e00bc71b5d21?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8a2ltY2hpJTIwYmFuY2hhbnxlbnwxfDB8fHwxNzkxNDcxMDc1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=890&amp;q=60" alt="Steel trays of kimchi, pickled vegetables and side dishes at a market stall" width="1600" height="1067" loading="lazy"></figure>
+    <ul class="bc-list" data-8b-items=":scope > li">
       <li><p class="bc-name m-text-3">Baechu kimchi <span class="m-ko" lang="ko">배추김치</span></p><p class="m-text-7">Napa cabbage, three weeks in the crock.</p></li>
       <li><p class="bc-name m-text-3">Kkakdugi <span class="m-ko" lang="ko">깍두기</span></p><p class="m-text-7">Radish cubes, sharp and crunchy.</p></li>
       <li><p class="bc-name m-text-3">Kongnamul <span class="m-ko" lang="ko">콩나물</span></p><p class="m-text-7">Soybean sprouts with sesame and spring onion.</p></li>
@@ -1672,7 +1786,7 @@ textarea.m-field__input { resize: vertical; }
       <li><p class="bc-name m-text-3">Eomuk bokkeum <span class="m-ko" lang="ko">어묵볶음</span></p><p class="m-text-7">Fish cake stir-fried with onion.</p></li>
       <li><p class="bc-name m-text-3">Gyeran jjim <span class="m-ko" lang="ko">계란찜</span></p><p class="m-text-7">Steamed egg, served in its own clay pot.</p></li>
     </ul>
-    <figure class="bc-ph bc-ph--b" data-8b-motion="rise"><img style="background:#d9c073" src="https://images.unsplash.com/photo-1761303506087-9788d0a98e87?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8a2ltY2hpJTIwYmFuY2hhbnxlbnwxfDB8fHwxNzkxNDcxMDc1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60" alt="A wooden table covered with small brass bowls of side dishes around a grill" width="1600" height="1068" loading="lazy"></figure>
+    <figure class="bc-ph bc-ph--b" data-8b-motion="rise"><img src="https://images.unsplash.com/photo-1761303506087-9788d0a98e87?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8a2ltY2hpJTIwYmFuY2hhbnxlbnwxfDB8fHwxNzkxNDcxMDc1fDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=60" alt="A wooden table covered with small brass bowls of side dishes around a grill" width="1600" height="1068" loading="lazy"></figure>
   </div>
 </section>
 
@@ -1685,30 +1799,30 @@ textarea.m-field__input { resize: vertical; }
   <div class="jr-stage">
     <div class="jr-sticky">
       <div class="l-wrap jr-rail" aria-hidden="true"><span class="jr-rail__fill"></span></div>
-      <ol class="l-wrap jr-track">
+      <ol class="l-wrap jr-track" data-8b-items=":scope > .jr-year">
         <li class="jr-year">
           <p class="jr-when m-text-4">2016</p>
           <h3 class="m-text-3">A grill in a car park</h3>
           <p class="m-text-7">Saturday nights behind a tyre shop in Ancoats: one grill, two cuts and a queue that went round the block by the third week.</p>
-          <figure class="jr-ph"><img style="background:#262626" src="https://images.unsplash.com/photo-1674788851120-c32360e4168c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Z3JpbGwlMjBzbW9rZSUyMGRhcmt8ZW58MXwwfHx8MTc5MTQ3MTEwNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=640&amp;q=60" alt="A cook standing in thick smoke over an outdoor grill" width="1600" height="1049" loading="lazy"></figure>
+          <figure class="jr-ph"><img src="https://images.unsplash.com/photo-1674788851120-c32360e4168c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Z3JpbGwlMjBzbW9rZSUyMGRhcmt8ZW58MXwwfHx8MTc5MTQ3MTEwNHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=520&amp;q=60" alt="A cook standing in thick smoke over an outdoor grill" width="1600" height="1049" loading="lazy"></figure>
         </li>
         <li class="jr-year">
           <p class="jr-when m-text-4">2018</p>
           <h3 class="m-text-3">Thirty covers on Blossom Street</h3>
           <p class="m-text-7">A former print shop, six tables with grills dropped into them, and extraction that took a whole winter to get right.</p>
-          <figure class="jr-ph"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1639450430961-ab006ffcae87?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8a29yZWFuJTIwcmVzdGF1cmFudCUyMGludGVyaW9yJTIwbmlnaHR8ZW58MXwwfHx8MTc5MTQ3MTA5Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=630&amp;q=60" alt="A restaurant window glowing warm at night" width="1600" height="1067" loading="lazy"></figure>
+          <figure class="jr-ph"><img src="https://images.unsplash.com/photo-1639450430961-ab006ffcae87?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8a29yZWFuJTIwcmVzdGF1cmFudCUyMGludGVyaW9yJTIwbmlnaHR8ZW58MXwwfHx8MTc5MTQ3MTA5Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=530&amp;q=60" alt="A restaurant window glowing warm at night" width="1600" height="1067" loading="lazy"></figure>
         </li>
         <li class="jr-year">
           <p class="jr-when m-text-4">2021</p>
           <h3 class="m-text-3">The ageing room</h3>
           <p class="m-text-7">A glass room for whole loins behind the counter, and a butcher who came for a month and stayed.</p>
-          <figure class="jr-ph"><img style="background:#262626" src="https://images.unsplash.com/photo-1781934909002-e2df1f0caf76?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8YnV0Y2hlciUyMGNvdW50ZXIlMjBtZWF0JTIwZGlzcGxheXxlbnwxfDB8fHwxNzkxNDcxMTAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=560&amp;q=60" alt="Black-and-white photo of a butcher's display case full of cuts" width="1600" height="1305" loading="lazy"></figure>
+          <figure class="jr-ph"><img src="https://images.unsplash.com/photo-1781934909002-e2df1f0caf76?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8YnV0Y2hlciUyMGNvdW50ZXIlMjBtZWF0JTIwZGlzcGxheXxlbnwxfDB8fHwxNzkxNDcxMTAwfDA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=570&amp;q=60" alt="Black-and-white photo of a butcher's display case full of cuts" width="1600" height="1305" loading="lazy"></figure>
         </li>
         <li class="jr-year">
           <p class="jr-when m-text-4">2024</p>
           <h3 class="m-text-3">Upstairs and the soju bar</h3>
           <p class="m-text-7">The floor above became the back room, the old storeroom a bar, and the restaurant 62 covers on a busy night.</p>
-          <figure class="jr-ph"><img style="background:#262626" src="https://images.unsplash.com/photo-1566705474094-5bf047ce2754?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8a29yZWFuJTIwYmJxJTIwZ3JpbGx8ZW58MXwwfHx8MTc5MTQ3MTAyOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=580&amp;q=60" alt="A table seen from above with two grills and many small dishes" width="1600" height="1152" loading="lazy"></figure>
+          <figure class="jr-ph"><img src="https://images.unsplash.com/photo-1566705474094-5bf047ce2754?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8a29yZWFuJTIwYmJxJTIwZ3JpbGx8ZW58MXwwfHx8MTc5MTQ3MTAyOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=590&amp;q=60" alt="A table seen from above with two grills and many small dishes" width="1600" height="1152" loading="lazy"></figure>
         </li>
       </ol>
     </div>
@@ -1721,20 +1835,20 @@ textarea.m-field__input { resize: vertical; }
     <h2 id="sets-title" class="ss-title m-text-2" data-8b-motion="drift">Set menus <span class="m-ko" lang="ko">세트</span></h2>
     <p class="ss-lead m-text">Three ways in. Every set comes with the day's banchan, rice, a stew to finish and someone to light your coals.</p>
   </div>
-  <div class="l-wrap ss-grid">
+  <div class="l-wrap ss-grid" data-8b-items=":scope > .ss-card" data-8b-fixed="3">
     <article class="ss-card">
       <div class="ss-top"><p class="ss-for m-text-4">For two</p></div>
       <h3 class="m-text-3">By the coals</h3>
       <p class="ss-price"><span class="m-text-3">£58</span><span class="m-text-4">for two</span></p>
       <p class="ss-group m-text-4">On the grill</p>
-      <ul class="ss-items m-text-7">
+      <ul class="ss-items m-text-7" data-8b-items=":scope > li">
         <li>Pork belly, salted twice</li>
         <li>Galbi short rib</li>
         <li>Bulgogi</li>
         <li>A ssam basket</li>
       </ul>
       <p class="ss-group m-text-4">To finish</p>
-      <ul class="ss-items m-text-7">
+      <ul class="ss-items m-text-7" data-8b-items=":scope > li">
         <li>Kimchi jjigae</li>
         <li>Fried rice in the last fat</li>
       </ul>
@@ -1747,7 +1861,7 @@ textarea.m-field__input { resize: vertical; }
       <h3 class="m-text-3">The butcher's table</h3>
       <p class="ss-price"><span class="m-text-3">£84</span><span class="m-text-4">for two</span></p>
       <p class="ss-group m-text-4">On the grill</p>
-      <ul class="ss-items m-text-7">
+      <ul class="ss-items m-text-7" data-8b-items=":scope > li">
         <li>Sirloin aged 28 days</li>
         <li>Chadol brisket</li>
         <li>Hanger steak</li>
@@ -1755,7 +1869,7 @@ textarea.m-field__input { resize: vertical; }
         <li>Ox tongue with sesame salt</li>
       </ul>
       <p class="ss-group m-text-4">To finish</p>
-      <ul class="ss-items m-text-7">
+      <ul class="ss-items m-text-7" data-8b-items=":scope > li">
         <li>Doenjang jjigae</li>
         <li>Cold naengmyeon</li>
       </ul>
@@ -1767,14 +1881,14 @@ textarea.m-field__input { resize: vertical; }
       <h3 class="m-text-3">The long table</h3>
       <p class="ss-price"><span class="m-text-3">£39</span><span class="m-text-4">a head</span></p>
       <p class="ss-group m-text-4">On the grill</p>
-      <ul class="ss-items m-text-7">
+      <ul class="ss-items m-text-7" data-8b-items=":scope > li">
         <li>Whole pork shoulder, sliced at the table</li>
         <li>Galbi platter</li>
         <li>Gochujang pork</li>
         <li>Two ssam baskets</li>
       </ul>
       <p class="ss-group m-text-4">To finish</p>
-      <ul class="ss-items m-text-7">
+      <ul class="ss-items m-text-7" data-8b-items=":scope > li">
         <li>Two stews for the table</li>
         <li>Fried rice for everyone</li>
       </ul>
@@ -1793,7 +1907,7 @@ textarea.m-field__input { resize: vertical; }
       <p class="m-text">Anything else, ring the restaurant from 15:00. Someone at the counter always picks up.</p>
       <a data-8b-placeholder="phone" class="m-link m-text-4" href="tel:+441610000000">Call +44 161 000 0000</a>
     </div>
-    <div class="fq-list">
+    <div class="fq-list" data-8b-items=":scope > details">
       <details class="fq-item">
         <summary class="m-text-3">Do I need to book?</summary>
         <p class="m-text">For a table, yes; we hold it for fifteen minutes. The soju bar and the ageing counter are walk-in only, and there is usually a seat after ten.</p>
@@ -1860,7 +1974,7 @@ textarea.m-field__input { resize: vertical; }
   <div class="l-wrap ft-grid">
     <nav class="ft-nav m-text-4" aria-label="Footer">
       <p class="ft-h">Navigation</p>
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><a class="m-link" href="#grill">What we fire</a></li>
         <li><a class="m-link" href="#rooms">The rooms</a></li>
         <li><a class="m-link" href="#sets">Set menus</a></li>
@@ -1879,7 +1993,7 @@ textarea.m-field__input { resize: vertical; }
     </div>
     <div class="ft-legal m-text-7">
       <p>© 2016–2026 Hwaro Ltd. All rights reserved. · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></p>
-      <ul>
+      <ul data-8b-items=":scope > li">
         <li><a class="m-link" href="#faq">Allergens</a></li>
         <li><a class="m-link" href="#contact">Private hire</a></li>
       </ul>
@@ -1907,11 +2021,11 @@ textarea.m-field__input { resize: vertical; }
   const setOpen = open => {
     menu.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); close.focus(); } else { window.lenis?.start(); toggle.focus(); }
+    if (open) { window.motionKit?.wheel?.stop(); close.focus(); } else { window.motionKit?.wheel?.start(); toggle.focus(); }
   };
   toggle.addEventListener('click', () => setOpen(menu.hidden));
   close.addEventListener('click', () => setOpen(false));
-  menu.addEventListener('click', event => { if (event.target.closest('a')) { menu.hidden = true; toggle.setAttribute('aria-expanded', 'false'); window.lenis?.start(); } });
+  menu.addEventListener('click', event => { if (event.target.closest('a')) { menu.hidden = true; toggle.setAttribute('aria-expanded', 'false'); window.motionKit?.wheel?.start(); } });
   addEventListener('keydown', event => { if (event.key === 'Escape' && !menu.hidden) setOpen(false); });
 })();
 </script>
@@ -1928,375 +2042,303 @@ textarea.m-field__input { resize: vertical; }
   });
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
+<script data-8b-part="motion-kit">
 (() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); realign(); });
+};
+const realign = () => document.getAnimations().forEach(animation => {
+if (animation.timeline && animation.timeline !== document.timeline && animation.playState === 'running') { animation.pause(); animation.play(); }
+});
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+requestAnimationFrame(realign);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-split=lines]>.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}[data-8b-split=lines]>.line:not(:last-child){margin-bottom:0}[data-8b-split=lines]>.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment);
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split'), again = sources.has(element);
+if (again) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+if (again) element.getAnimations({ subtree: true }).forEach(animation => { if (animation.timeline === document.timeline) try { animation.finish(); } catch {} });
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px' });
+document.fonts.ready.then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function navHeight() { return document.querySelector('#nav .nv')?.offsetHeight || 0; }
-function refreshScroll() {
-  document.documentElement.style.setProperty('--nv-h', navHeight() + 'px');
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.085, anchors: { offset: -navHeight() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-function splitWords(element) {
-  const html = element.innerHTML;
-  const words = [];
-  const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
-  const texts = [];
-  while (walker.nextNode()) texts.push(walker.currentNode);
-  texts.forEach(text => {
-    const parts = text.textContent.split(/(\s+)/);
-    const fragment = document.createDocumentFragment();
-    parts.forEach(part => {
-      if (!part) return;
-      if (/^\s+$/.test(part)) { fragment.append(part); return; }
-      const word = document.createElement('span');
-      word.className = 'ember-w';
-      word.textContent = part;
-      fragment.append(word);
-      words.push(word);
-    });
-    text.replaceWith(fragment);
-  });
-  return { words, revert: () => { element.innerHTML = html; } };
-}
-function sliceColumns(layer, columns = 3) {
-  const clones = [];
-  for (let i = 1; i < columns; i++) {
-    const clone = layer.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    clone.inert = true;
-    clone.classList.add('is-slice');
-    clone.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
-    clone.querySelectorAll('img').forEach(img => { img.alt = ''; img.removeAttribute('fetchpriority'); });
-    layer.parentNode.append(clone);
-    clones.push(clone);
-  }
-  const strips = [layer, ...clones];
-  const source = [layer, ...layer.querySelectorAll('*')];
-  clones.forEach(clone => [clone, ...clone.querySelectorAll('*')].forEach((node, index) => {
-    const running = new Map((source[index]?.getAnimations() || []).map(animation => [animation.animationName, animation.currentTime]));
-    node.getAnimations().forEach(animation => {
-      if (running.has(animation.animationName)) animation.currentTime = running.get(animation.animationName);
-      else if (animation.effect?.getComputedTiming().iterations !== Infinity) animation.finish();
-    });
-  }));
-  let cuts = [0, 0], open = false;
-  const apply = () => {
-    const width = layer.offsetWidth;
-    const clips = [`inset(0px ${width - cuts[0]}px 0px 0px)`, `inset(0px ${width - cuts[1]}px 0px ${cuts[0]}px)`, `inset(0px 0px 0px ${cuts[1]}px)`];
-    strips.forEach((strip, index) => {
-      strip.style.clipPath = open ? clips[index] : '';
-      if (index) strip.style.visibility = open ? 'visible' : 'hidden';
-    });
+<script data-8b-part="scene-script:grill">
+motionKit.scene('grill', () => {
+  const section = document.getElementById('grill');
+  const nav = section.querySelector('.gr-nav');
+  const items = [...nav.querySelectorAll('li')];
+  const mark = nav.querySelector('.gr-index__mark');
+  if (!mark || !items.length) throw new Error('grill: the index has no mark or no items');
+  let active = 0;
+  const place = () => {
+    items.forEach((item, index) => item.classList.toggle('is-on', index === active));
+    motionKit.set(mark, { translate: `0 ${items[active].offsetTop}px`, height: `${items[active].offsetHeight}px` });
   };
-  return {
-    strips,
-    measure(grid) {
-      const box = layer.getBoundingClientRect(), wrap = grid.getBoundingClientRect();
-      const left = wrap.left - box.left;
-      cuts = [left + wrap.width / 3, left + wrap.width * 2 / 3];
-      apply();
-    },
-    open(state) { if (state !== open) { open = state; apply(); } },
-    revert() { clones.forEach(clone => clone.remove()); layer.style.clipPath = ''; }
-  };
-}
-function pauseOffscreen(elements) {
-  const observer = new IntersectionObserver(entries => entries.forEach(entry => entry.target.toggleAttribute('data-paused', !entry.isIntersecting)));
-  elements.forEach(element => observer.observe(element));
-  return () => observer.disconnect();
-}
-const effects = {
-  ember(element) {
-    const split = splitWords(element);
-    const timeline = gsap.timeline();
-    const count = split.words.length;
-    split.words.forEach((word, index) => {
-      word.style.color = 'color-mix(in srgb, var(--ember-ink) calc(var(--b) * 100%), color-mix(in srgb, var(--ember-hot) calc(var(--a) * 100%), var(--ember-ash)))';
-      const at = index / count * .7;
-      timeline.fromTo(word, { '--a': 0, '--b': 0 }, { '--a': 1, duration: .15, ease: 'none' }, at)
-        .to(word, { '--b': 1, duration: .15, ease: 'none' }, at + .15);
+  nav.setAttribute('data-on', '');
+  motionKit.measure(place);
+  section.querySelectorAll('.gr-row').forEach((row, index) => {
+    motionKit.track(row, 'top 55%', 'bottom 55%', progress => {
+      if (progress > 0 && progress < 1 && active !== index) { active = index; place(); }
     });
-    return { timeline, revert: () => { timeline.kill(); split.revert(); } };
-  },
-  rise(element) {
-    const picture = element.querySelector('img') || element;
-    return gsap.timeline()
-      .fromTo(element, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.1, ease: 'power3.inOut', clearProps: 'clipPath' }, 0)
-      .fromTo(picture, { scale: 1.2 }, { scale: 1, duration: 1.4, ease: 'power3.out', clearProps: 'scale' }, 0);
-  },
-  drift(element) {
-    return gsap.fromTo(element, { x: () => Math.min(innerWidth * .22, 320) }, { x: 0, ease: 'none' });
-  }
-};
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  ['ember', 'rise', 'drift'].forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      const reverts = [];
-      elements.forEach((element, index) => {
-        const trigger = { id: `${id}:${index}`, trigger: element, invalidateOnRefresh: true };
-        if (name === 'ember') {
-          const ember = effects.ember(element);
-          reverts.push(ember.revert);
-          ScrollTrigger.create({ ...trigger, start: 'top 92%', end: 'bottom 62%', scrub: true, animation: ember.timeline });
-        } else if (name === 'rise') {
-          ScrollTrigger.create({ ...trigger, start: 'top 88%', once: true, animation: effects.rise(element) });
-        } else {
-          ScrollTrigger.create({ ...trigger, start: 'top bottom', end: 'top 45%', scrub: .6, animation: effects.drift(element) });
-        }
-      });
-      return () => reverts.forEach(revert => revert());
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
   });
 });
 </script>
-<script data-8b-part="scene:opening">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('opening');
-    const ember = effects.ember(section.querySelector('.op-statement'));
-    ember.timeline.timeScale(.55);
-    section.querySelectorAll('.op-ph').forEach((photo, index) => {
-      ScrollTrigger.create({ id: 'opening:photo-' + index, trigger: photo, start: 'top 90%', once: true, animation: effects.rise(photo) });
-    });
-    return () => ember.revert();
+<script data-8b-part="scene-script:night">
+motionKit.scene('night', () => {
+  const section = document.getElementById('night');
+  const sticky = section.querySelector('.nt-sticky');
+  const main = section.querySelector('.nt-cell--main');
+  const others = [...section.querySelectorAll('.nt-cell')].filter(cell => cell !== main);
+  if (!sticky || !main) throw new Error('night: no .nt-sticky or .nt-cell--main');
+  motionKit.measure(() => {
+    const x = main.offsetLeft + main.offsetWidth / 2, y = main.offsetTop + main.offsetHeight / 2;
+    motionKit.set(main, { '--night-cover': Math.max(sticky.clientWidth / main.offsetWidth, sticky.clientHeight / main.offsetHeight) * 1.04 });
+    others.forEach(cell => motionKit.set(cell, {
+      '--night-x': `${(cell.offsetLeft + cell.offsetWidth / 2 - x) * .9}px`,
+      '--night-y': `${(cell.offsetTop + cell.offsetHeight / 2 - y) * .9}px`
+    }));
   });
-}, { first: true, id: 'scene:opening' });
+});
 </script>
-<script data-8b-part="scene:grill">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('grill');
-    const rows = [...section.querySelectorAll('.gr-row')];
-    const nav = section.querySelector('.gr-nav');
-    const items = [...nav.querySelectorAll('li')];
-    const mark = nav.querySelector('.gr-index__mark');
-    nav.setAttribute('data-on', '');
-    const setActive = index => {
-      items.forEach((item, i) => item.classList.toggle('is-on', i === index));
-      gsap.to(mark, { y: items[index].offsetTop, height: items[index].offsetHeight, duration: .55, ease: 'power3.out', overwrite: true });
-    };
-    items[0].classList.add('is-on');
-    rows.forEach((row, index) => {
-      const [left, right] = row.querySelectorAll('.gr-ph');
-      gsap.timeline({ scrollTrigger: { id: `grill:row-${index}`, trigger: row.querySelector('.gr-photos'), start: 'top 90%', end: 'top 40%', scrub: true, invalidateOnRefresh: true } })
-        .fromTo(right, { xPercent: -100 }, { xPercent: 0, ease: 'power2.inOut', duration: 1 }, 0)
-        .fromTo(left.querySelector('img'), { scale: 1.2 }, { scale: 1, ease: 'power1.out', duration: 1 }, 0);
-      ScrollTrigger.create({ id: `grill:index-${index}`, trigger: row, start: 'top 55%', end: 'bottom 55%', onToggle: self => { if (self.isActive) setActive(index); } });
-    });
-    return () => {
-      nav.removeAttribute('data-on');
-      items.forEach(item => item.classList.remove('is-on'));
-      gsap.killTweensOf(mark);
-      gsap.set(mark, { clearProps: 'transform,height' });
-    };
+<script data-8b-part="scene-script:table">
+motionKit.scene('table', () => {
+  const section = document.getElementById('table');
+  const stage = section.querySelector('.tb-stage');
+  const sticky = section.querySelector('.tb-sticky');
+  const steps = section.querySelector('.tb-steps');
+  if (!stage || !sticky || !steps) throw new Error('table: no .tb-stage, .tb-sticky or .tb-steps');
+  let top = 0, length = 1;
+  motionKit.measure(() => { top = parseFloat(getComputedStyle(sticky).top); length = innerHeight * 1.4; });
+  motionKit.track(stage, 'top 100%', 'bottom 0%', () => {
+    const progress = (top - stage.getBoundingClientRect().top) / length;
+    if (progress > 0) steps.setAttribute('data-lit', progress < .17 ? '1' : progress < .5 ? '2' : progress < .83 ? '3' : '4');
+    else steps.removeAttribute('data-lit');
   });
-}, { id: 'scene:grill' });
+});
 </script>
-<script data-8b-part="scene:rooms">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    document.querySelectorAll('#rooms .rm-item').forEach((item, index) => {
-      const photo = item.querySelector('.rm-photo');
-      gsap.timeline({ scrollTrigger: { id: `rooms:room-${index}`, trigger: item.querySelector('.rm-frame'), start: 'top 95%', end: 'center 55%', scrub: true } })
-        .fromTo(photo, { clipPath: 'inset(0% 33.333% 0% 33.333%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: 1 }, 0)
-        .fromTo(photo.querySelector('img'), { scale: 1.32 }, { scale: 1, ease: 'power2.out', duration: 1 }, 0)
-        .fromTo(item.querySelector('.rm-glow'), { opacity: .12 }, { opacity: .5, ease: 'none', duration: 1 }, 0)
-        .set(photo, { clipPath: 'none' }, 1);
+<script data-8b-part="scene-script:journey">
+motionKit.scene('journey', () => {
+  const section = document.getElementById('journey');
+  const track = section.querySelector('.jr-track');
+  const rail = section.querySelector('.jr-rail');
+  const photos = [...section.querySelectorAll('.jr-ph')].slice(1);
+  if (!track || !rail) throw new Error('journey: no .jr-track or .jr-rail');
+  motionKit.measure(() => {
+    const distance = Math.max(1, track.offsetWidth - rail.offsetWidth);
+    motionKit.set(section, { '--journey-distance': `${distance}px` });
+    const moved = track.getBoundingClientRect().left - motionKit.box(track).x;
+    photos.forEach(photo => {
+      const left = photo.getBoundingClientRect().left - moved;
+      motionKit.set(photo, { '--journey-from': (left - innerWidth * .96) / distance, '--journey-to': (left - innerWidth * .7) / distance });
     });
   });
-}, { id: 'scene:rooms' });
+});
 </script>
-<script data-8b-part="scene:night">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('night');
-    const stage = section.querySelector('.nt-stage');
-    const sticky = section.querySelector('.nt-sticky');
-    const main = section.querySelector('.nt-cell--main');
-    const others = [...section.querySelectorAll('.nt-cell')].filter(cell => cell !== main);
-    section.setAttribute('data-nt', '');
-    const cover = () => Math.max(sticky.clientWidth / main.offsetWidth, sticky.clientHeight / main.offsetHeight) * 1.04;
-    const offset = (cell, axis) => axis === 'x'
-      ? (cell.offsetLeft + cell.offsetWidth / 2 - main.offsetLeft - main.offsetWidth / 2) * .9
-      : (cell.offsetTop + cell.offsetHeight / 2 - main.offsetTop - main.offsetHeight / 2) * .9;
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'night', trigger: stage, start: 'top top', end: 'bottom bottom', scrub: true, invalidateOnRefresh: true } });
-    timeline.fromTo(main, { scale: cover }, { scale: 1, ease: 'power2.inOut', duration: .74 }, 0);
-    others.forEach(cell => timeline.fromTo(cell, { x: () => offset(cell, 'x'), y: () => offset(cell, 'y'), scale: 1.12 }, { x: 0, y: 0, scale: 1, ease: 'power2.inOut', duration: .74 }, 0));
-    timeline.to({}, { duration: .26 });
-    return () => section.removeAttribute('data-nt');
-  });
-}, { id: 'scene:night' });
-</script>
-<script data-8b-part="scene:table">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('table');
-    const stage = section.querySelector('.tb-stage');
-    const sticky = section.querySelector('.tb-sticky');
-    const steps = section.querySelector('.tb-steps');
-    const heat = section.querySelector('.tb-heat');
-    section.setAttribute('data-tb', '');
-    const lit = progress => String(progress < .17 ? 1 : progress < .5 ? 2 : progress < .83 ? 3 : 4);
-    gsap.timeline({ scrollTrigger: {
-      id: 'table', trigger: stage, start: () => 'top ' + parseFloat(getComputedStyle(sticky).top), end: () => '+=' + innerHeight * 1.4, scrub: true, invalidateOnRefresh: true,
-      onUpdate: self => steps.setAttribute('data-lit', lit(self.progress))
-    } })
-      .to(heat, { xPercent: 100, ease: 'power2.inOut', duration: 1 })
-      .to(heat, { yPercent: 100, ease: 'power2.inOut', duration: 1 })
-      .to(heat, { xPercent: 0, ease: 'power2.inOut', duration: 1 });
-    return () => { section.removeAttribute('data-tb'); steps.removeAttribute('data-lit'); };
-  });
-}, { id: 'scene:table' });
-</script>
-<script data-8b-part="scene:stories">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('stories');
-    const faces = [...section.querySelectorAll('.st-face')];
-    const quotes = [...section.querySelectorAll('.st-quote')];
-    faces.forEach((face, index) => {
-      if (!index || !quotes[index]) return;
-      gsap.timeline({ scrollTrigger: { id: `stories:guest-${index}`, trigger: quotes[index], start: 'top 80%', end: 'top 45%', scrub: true } })
-        .fromTo(face, { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.16 }, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, ease: 'power2.inOut', duration: 1 }, 0)
-        .set(face, { clipPath: 'none' }, 1);
-    });
-  });
-}, { id: 'scene:stories' });
-</script>
-<script data-8b-part="scene:journey">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('journey');
-    const stage = section.querySelector('.jr-stage');
-    const track = section.querySelector('.jr-track');
-    const rail = section.querySelector('.jr-rail');
-    const fill = rail.querySelector('.jr-rail__fill');
-    section.setAttribute('data-jr', '');
-    const distance = () => Math.max(0, track.offsetWidth - rail.offsetWidth);
-    const size = () => { stage.style.height = innerHeight + distance() + 'px'; };
-    size();
-    ScrollTrigger.addEventListener('refreshInit', size);
-    const slide = gsap.timeline({ scrollTrigger: { id: 'journey', trigger: stage, start: 'top top', end: () => '+=' + distance(), scrub: true, invalidateOnRefresh: true } });
-    slide.fromTo(track, { x: 0 }, { x: () => -distance(), ease: 'none', duration: 1 }, 0)
-      .fromTo(fill, { scaleX: .1 }, { scaleX: 1, ease: 'none', duration: 1 }, 0);
-    section.querySelectorAll('.jr-ph').forEach((photo, index) => {
-      if (!index) return;
-      gsap.timeline({ scrollTrigger: { id: `journey:year-${index}`, trigger: photo, containerAnimation: slide, start: 'left 96%', end: 'left 70%', scrub: true } })
-        .fromTo(photo, { clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.out', duration: 1 }, 0)
-        .fromTo(photo.querySelector('img'), { scale: 1.25 }, { scale: 1, ease: 'power2.out', duration: 1 }, 0)
-        .set(photo, { clipPath: 'none' }, 1);
-    });
-    return () => {
-      ScrollTrigger.removeEventListener('refreshInit', size);
-      stage.style.height = '';
-      section.removeAttribute('data-jr');
-    };
-  });
-}, { id: 'scene:journey' });
-</script>
-<script data-8b-part="scene:sets">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const card = document.querySelector('#sets .ss-card--hot');
-    gsap.timeline({ scrollTrigger: { id: 'sets', trigger: card, start: 'top 88%', end: 'top 30%', scrub: true } })
-      .fromTo(card.querySelector('.ss-fire'), { scaleY: 0 }, { scaleY: 1, ease: 'power2.inOut', duration: 1 }, 0)
-      .fromTo(card.querySelectorAll('.ss-items li'), { '--lit': 0 }, { '--lit': 1, ease: 'none', duration: .12, stagger: .07 }, .3);
-  });
-}, { id: 'scene:sets' });
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const box = section.querySelector('.ct-titlebox');
-    const title = box.querySelector('.ct-title');
-    section.setAttribute('data-ct', '');
-    const slices = sliceColumns(title);
-    const [left, middle, right] = slices.strips;
-    const join = gsap.timeline({ scrollTrigger: {
-      id: 'contact', trigger: box, start: 'top 96%', end: 'top 42%', scrub: true, invalidateOnRefresh: true,
-      onRefresh: () => slices.measure(box),
-      onUpdate: self => slices.open(self.progress < .995)
-    } });
-    join.fromTo(left, { yPercent: 55 }, { yPercent: 0, ease: 'power3.out', duration: 1 }, 0)
-      .fromTo(middle, { yPercent: -50 }, { yPercent: 0, ease: 'power3.out', duration: 1 }, .08)
-      .fromTo(right, { yPercent: 100 }, { yPercent: 0, ease: 'power3.out', duration: 1 }, .16);
-    slices.measure(box);
-    slices.open(join.scrollTrigger.progress < .995);
-    return () => { slices.revert(); section.removeAttribute('data-ct'); };
-  });
-}, { id: 'scene:contact' });
+<script data-8b-part="scene-script:contact">
+motionKit.scene('contact', () => {
+  const title = document.querySelector('#contact .ct-title');
+  for (let index = 0; index < 2; index++) {
+    const slice = title.cloneNode(true);
+    slice.removeAttribute('id');
+    slice.setAttribute('aria-hidden', 'true');
+    slice.inert = true;
+    slice.classList.add('is-slice');
+    title.parentNode.append(slice);
+  }
+});
 </script>
 </body>
 </html>

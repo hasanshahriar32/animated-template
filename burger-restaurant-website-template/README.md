@@ -1,8 +1,8 @@
-# Free HTML burger restaurant website template with GSAP scroll animations
+# Free HTML burger restaurant website template with scroll animations and no libraries
 
-Burger restaurant website template: one free HTML file for a burger bar or casual diner, with a six-burger menu board, a five-step method section, house pickles, weekly nights and a booth booking form. Lime, deep green and check paper give it a loud, friendly look, and AGENTS.md lets Claude Code or Cursor adapt it.
+Burger restaurant website template: one free HTML file for a burger bar or casual diner, with a six-burger menu board, a five-step method section, house pickles, weekly nights and a booth booking form. Lime, deep green and check paper give it a loud look; the scroll motion is CSS with no libraries, and AGENTS.md lets Claude Code adapt it.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/burger-restaurant-website-template/)** · **[Use this template](https://github.com/new?template_name=burger-restaurant-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/burger-restaurant-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/dillys/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/burger-restaurant-website-temp
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my burger bar or diner: name, address, opening hours, the burgers and sides with prices, allergen and gluten-free policy, weekly nights and offers, how groups book, phone, email, social links>. Replace first the wordmark, the six burgers, the five method steps, the pickle list, the quotes and the photos. Keep the section ids and the classes AGENTS.md lists for each script. Ask me for any missing fact and never invent prices, hours, sourcing claims, reviews or contacts.
+Read AGENTS.md, then edit index.html. Make this the site for <my burger bar or diner: name, address, opening hours, the burgers and sides with prices, allergen and gluten-free policy, weekly nights, how groups book, phone, email, social links>. Replace first the wordmark, the six burgers, the method steps, the pickle list, the quotes and the photos. Keep the section ids, the classes AGENTS.md lists, the gate script in the head and three room stories; add no animation library. Never invent prices, hours, sourcing claims, reviews or contacts; ask me.
 ```
 
 As a burger restaurant website template for Claude Code, Cursor or Codex, it goes fastest when you vibe code it and the agent has the facts only the bar can give: menu and prices, hours, address, allergens, weekly nights and group booking rules. The demo's hours, prices, sourcing claims and quotes are invented. Replace the wordmark, the six menu cells, the five method steps, the pickle list and the quotes first, and leave the section ids and the classes AGENTS.md lists for each script alone.
@@ -70,7 +70,7 @@ Yes, with a different tool. [8B's AI website builder](https://8b.com/) designs a
 
 ## Is it the right base?
 
-Pick this for a counter-service bar that wants noise and colour. A sit-down table-grill place with set menus fits the [Korean barbecue](https://8b.com/templates/hwaro/) template better. The weak spot is booking: the form sends nothing until a service is connected, and there is no ordering or delivery. Owners who do not want to touch code can build a new site with 8B's builder instead.
+Pick this for a counter-service bar that wants noise and colour; a sit-down table-grill place with set menus fits the [Korean barbecue](https://8b.com/templates/hwaro/) template better. This build loads no JavaScript library and no script from a CDN: the same look and motion in about 38 KB of gzipped code, against about 84 KB and three more requests for the GSAP version. The weak spot is booking: the form sends nothing until a service is connected, and there is no ordering or delivery.
 
 ## Before you publish
 
@@ -79,7 +79,9 @@ Pick this for a counter-service bar that wants noise and colour. A sit-down tabl
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 144 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 153 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 113+ (it uses color-mix(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr, 144 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

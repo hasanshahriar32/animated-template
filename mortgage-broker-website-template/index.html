@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/mortgage-broker-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -28,7 +29,7 @@
   font-weight: 400 600;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/hostgrotesk/v5/co3BmWBnlCJ3U42vbbfdwMjZqljm0U0.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -83,10 +84,6 @@
   [data-ground="dark"] .m-surface-3 :focus-visible { outline-color: var(--color-2); }
   .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   [data-loop].is-paused { animation-play-state: paused; }
-  html.lenis, html.lenis body { height: auto; }
-  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-stopped { overflow: hidden; }
-  .lenis.lenis-smooth iframe { pointer-events: none; }
 }
 </style>
 <style data-8b-part="system">
@@ -228,6 +225,16 @@
     #opening .aip { justify-self: stretch; max-width: none; padding: 1.375rem; }
     #opening .opening__second { padding: 5.5rem 0 4rem; }
   }
+  #opening { grid-template-rows: auto; }
+  #opening .opening__second { grid-area: 1 / 1 / 2 / 2; }
+  #opening .opening__copy h1 { text-wrap: balance; }
+  #opening .opening__copy .opening__actions { align-items: center; gap: 0.75rem 1.75rem; margin-top: 0.25rem; }
+  @media (prefers-reduced-motion: no-preference) {
+    #opening .opening__copy > * { animation: opening-rise 1s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; }
+    #opening .opening__copy > :nth-child(2) { animation-delay: 0.08s; }
+    #opening .opening__copy > :nth-child(3) { animation-delay: 0.16s; }
+    #opening .aip { animation: opening-rise 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s backwards; }
+  }
 }
 </style>
 
@@ -293,13 +300,6 @@
     #method .method__chip { left: 0.75rem; top: 24%; bottom: auto; right: 0.75rem; max-width: none; padding: 0.75rem 0.875rem; }
     #method .method__index { left: 0.75rem; right: 0.75rem; top: 4.75rem; display: flex; justify-content: space-between; padding: 0.6rem 0.875rem; }
     #method .method__label { display: none; }
-  }
-}
-</style>
-<style data-8b-part="scene-style:method">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #method.is-staged .method__photo { z-index: auto; }
   }
 }
 </style>
@@ -373,19 +373,6 @@
   #switch .switch__card { display: grid; gap: 0.25rem; padding: 1rem 1.125rem; margin-top: 0.25rem; }
   @media (max-width: 960px) {
     #switch .switch__panels { grid-template-columns: 100%; }
-  }
-}
-</style>
-<style data-8b-part="scene-style:switch">
-@layer scenes {
-  @media (prefers-reduced-motion: no-preference) {
-    #switch.is-track { height: 100svh; padding: 0; overflow: hidden; display: flex; align-items: center; }
-    #switch.is-track .switch__track { display: flex; align-items: center; gap: 0; width: max-content; margin: 0; padding-inline: var(--space-2); }
-    #switch.is-track .switch__intro { flex: none; width: min(34rem, 84vw); margin-right: 8vw; }
-    #switch.is-track .switch__line { display: block; position: absolute; left: 0; right: 4vw; top: 0.5rem; height: 2px; background: color-mix(in srgb, var(--color-2) 18%, transparent); }
-    #switch.is-track .switch__fill { position: absolute; inset: 0; background: var(--color-2); transform-origin: 0 50%; }
-    #switch.is-track .switch__panels { display: flex; gap: 0; }
-    #switch.is-track .switch__panel { position: relative; flex: none; width: min(31rem, 84vw); padding-right: 4vw; }
   }
 }
 </style>
@@ -483,17 +470,194 @@
   }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-#opening { grid-template-rows: auto; }
-#opening .opening__second { grid-area: 1 / 1 / 2 / 2; }
-#opening .opening__copy h1 { text-wrap: balance; }
-#opening .opening__copy .opening__actions { align-items: center; gap: 0.75rem 1.75rem; margin-top: 0.25rem; }
-@media (prefers-reduced-motion: no-preference) {
-  #opening .opening__copy > * { animation: opening-rise 1s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; }
-  #opening .opening__copy > :nth-child(2) { animation-delay: 0.08s; }
-  #opening .opening__copy > :nth-child(3) { animation-delay: 0.16s; }
-  #opening .aip { animation: opening-rise 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s backwards; }
-}</style>
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-expo-out: linear(0, 0.1587, 0.2915, 0.403, 0.4969, 0.576, 0.6429, 0.6996, 0.7476, 0.7883, 0.8229, 0.8523, 0.8772, 0.8983, 0.9162, 0.9312, 0.9438, 0.9544, 0.9632, 0.9705, 0.9766, 0.9815, 0.9855, 0.9887, 0.9913, 0.9933, 0.9949, 0.9962, 0.9971, 0.9979, 0.9984, 0.9989, 0.9992, 0.9994, 0.9996, 0.9997, 0.9998, 0.9999, 0.9999, 1, 1); }
+[data-8b-live] [data-8b-motion~="rise"] .line__in { animation-name: motion-rise-line-in-translate; animation-duration: 1s; animation-delay: calc(0s + 0.09s * var(--i)); animation-timing-function: var(--ease-expo-out); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"].is-in .line__in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="lightRows"][data-8b-items=":scope > div"] > div, [data-8b-live] [data-8b-motion~="lightRows"][data-8b-items=":scope > details"] > details { animation-name: motion-lightrows-scope-div-div---rows-lit; animation-duration: 0.6s; animation-delay: calc(0s + 0.08s * var(--i)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] [data-8b-motion~="lightRows"][data-8b-items=":scope > div"] > div { animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="lightRows"][data-8b-items=":scope > div"].is-in > div { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="lightRows"][data-8b-items=":scope > details"] > details { animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="lightRows"][data-8b-items=":scope > details"].is-in > details { animation-play-state: running; }
+[data-8b-live] #stories .stories__list > li:nth-of-type(-n+3) > .story__photo { overflow-x: clip; overflow-y: clip; }
+[data-8b-live] [data-8b-motion~="brighten"] { view-timeline: --motion-brighten block; view-timeline-inset: 0; animation-name: motion-brighten-filter, motion-brighten-scale; animation-timeline: --motion-brighten; animation-range: cover 0% cover calc(50% - 5vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes motion-rise-line-in-translate { 0% { translate: 0px calc(108% + 0.1296em); } 100% { translate: 0px 0px; } }
+@keyframes motion-lightrows-scope-div-div---rows-lit { 0% { --rows-lit: 0; } 0.002% { --rows-lit: 0.0005; } 100% { --rows-lit: 1; } }
+@keyframes motion-brighten-filter { 0% { filter: brightness(0.42) saturate(0.6); } 100% { filter: brightness(1) saturate(1); } }
+@keyframes motion-brighten-scale { 0% { scale: 1.08; } 100% { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:opening">
+</style>
+<style data-8b-part="scene:market">
+@layer scenes {
+[data-8b-live] #market { timeline-scope: --market-t1; }
+[data-8b-live] #market .market__field { view-timeline: --market-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #market .market__lines > i:is(:nth-child(31), :nth-child(33)), [data-8b-live] #market .market__lines > i:is(:nth-child(30), :nth-child(34)), [data-8b-live] #market .market__lines > i:is(:nth-child(29), :nth-child(35)), [data-8b-live] #market .market__lines > i:is(:nth-child(28), :nth-child(36)), [data-8b-live] #market .market__lines > i:is(:nth-child(27), :nth-child(37)), [data-8b-live] #market .market__lines > i:is(:nth-child(26), :nth-child(38)), [data-8b-live] #market .market__lines > i:is(:nth-child(25), :nth-child(39)), [data-8b-live] #market .market__lines > i:is(:nth-child(24), :nth-child(40)), [data-8b-live] #market .market__lines > i:is(:nth-child(23), :nth-child(41)), [data-8b-live] #market .market__lines > i:is(:nth-child(22), :nth-child(42)), [data-8b-live] #market .market__lines > i:is(:nth-child(21), :nth-child(43)), [data-8b-live] #market .market__lines > i:is(:nth-child(20), :nth-child(44)), [data-8b-live] #market .market__lines > i:is(:nth-child(19), :nth-child(45)), [data-8b-live] #market .market__lines > i:is(:nth-child(18), :nth-child(46)), [data-8b-live] #market .market__lines > i:is(:nth-child(17), :nth-child(47)), [data-8b-live] #market .market__lines > i:is(:nth-child(16), :nth-child(48)), [data-8b-live] #market .market__lines > i:is(:nth-child(15), :nth-child(49)), [data-8b-live] #market .market__lines > i:is(:nth-child(14), :nth-child(50)), [data-8b-live] #market .market__lines > i:is(:nth-child(13), :nth-child(51)), [data-8b-live] #market .market__lines > i:is(:nth-child(12), :nth-child(52)), [data-8b-live] #market .market__lines > i:is(:nth-child(11), :nth-child(53)), [data-8b-live] #market .market__lines > i:is(:nth-child(10), :nth-child(54)), [data-8b-live] #market .market__lines > i:is(:nth-child(9), :nth-child(55)), [data-8b-live] #market .market__lines > i:is(:nth-child(8), :nth-child(56)), [data-8b-live] #market .market__lines > i:is(:nth-child(7), :nth-child(57)), [data-8b-live] #market .market__lines > i:is(:nth-child(6), :nth-child(58)), [data-8b-live] #market .market__lines > i:is(:nth-child(5), :nth-child(59)), [data-8b-live] #market .market__lines > i:is(:nth-child(4), :nth-child(60)), [data-8b-live] #market .market__lines > i:is(:nth-child(3), :nth-child(61)), [data-8b-live] #market .market__lines > i:is(:nth-child(2), :nth-child(62)), [data-8b-live] #market .market__lines > i:is(:nth-child(1), :nth-child(63)), [data-8b-live] #market .market__lines > i:is(:nth-child(64), :nth-child(65), :nth-child(66), :nth-child(67), :nth-child(68), :nth-child(69), :nth-child(70), :nth-child(71), :nth-child(72), :nth-child(73), :nth-child(74), :nth-child(75), :nth-child(76), :nth-child(77), :nth-child(78), :nth-child(79), :nth-child(80), :nth-child(81), :nth-child(82), :nth-child(83), :nth-child(84), :nth-child(85), :nth-child(86), :nth-child(87), :nth-child(88), :nth-child(89), :nth-child(90), :nth-child(91), :nth-child(92), :nth-child(93), :nth-child(94)) { animation-name: market-div-market-lines-i-market-line-scale, market-div-market-lines-i-market-line-backgroundcolor; animation-timeline: --market-t1; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #market .market__lines > i:is(:nth-child(31), :nth-child(33)) { animation-range: cover calc(1.129% + 11.4129vh) cover calc(31.129% - 4.1871vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(30), :nth-child(34)) { animation-range: cover calc(2.2581% + 10.8258vh) cover calc(32.2581% - 4.7742vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(29), :nth-child(35)) { animation-range: cover calc(3.3871% + 10.2387vh) cover calc(33.3871% - 5.3613vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(28), :nth-child(36)) { animation-range: cover calc(4.5161% + 9.6516vh) cover calc(34.5161% - 5.9484vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(27), :nth-child(37)) { animation-range: cover calc(5.6452% + 9.0645vh) cover calc(35.6452% - 6.5355vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(26), :nth-child(38)) { animation-range: cover calc(6.7742% + 8.4774vh) cover calc(36.7742% - 7.1226vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(25), :nth-child(39)) { animation-range: cover calc(7.9032% + 7.8903vh) cover calc(37.9032% - 7.7097vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(24), :nth-child(40)) { animation-range: cover calc(9.0323% + 7.3032vh) cover calc(39.0323% - 8.2968vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(23), :nth-child(41)) { animation-range: cover calc(10.1613% + 6.7161vh) cover calc(40.1613% - 8.8839vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(22), :nth-child(42)) { animation-range: cover calc(11.2903% + 6.129vh) cover calc(41.2903% - 9.471vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(21), :nth-child(43)) { animation-range: cover calc(12.4193% + 5.542vh) cover calc(42.4194% - 10.0581vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(20), :nth-child(44)) { animation-range: cover calc(13.5484% + 4.9548vh) cover calc(43.5484% - 10.6452vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(19), :nth-child(45)) { animation-range: cover calc(14.6774% + 4.3678vh) cover calc(44.6774% - 11.2322vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(18), :nth-child(46)) { animation-range: cover calc(15.8064% + 3.7807vh) cover calc(45.8064% - 11.8193vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(17), :nth-child(47)) { animation-range: cover calc(16.9355% + 3.1935vh) cover calc(46.9355% - 12.4065vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(16), :nth-child(48)) { animation-range: cover calc(18.0645% + 2.6065vh) cover calc(48.0645% - 12.9935vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(15), :nth-child(49)) { animation-range: cover calc(19.1936% + 2.0193vh) cover calc(49.1935% - 13.5806vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(14), :nth-child(50)) { animation-range: cover calc(20.3226% + 1.4322vh) cover calc(50.3226% - 14.1678vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(13), :nth-child(51)) { animation-range: cover calc(21.4516% + 0.8452vh) cover calc(51.4516% - 14.7548vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(12), :nth-child(52)) { animation-range: cover calc(22.5806% + 0.2581vh) cover calc(52.5806% - 15.3419vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(11), :nth-child(53)) { animation-range: cover calc(23.7097% - 0.329vh) cover calc(53.7097% - 15.929vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(10), :nth-child(54)) { animation-range: cover calc(24.8387% - 0.9161vh) cover calc(54.8387% - 16.5161vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(9), :nth-child(55)) { animation-range: cover calc(25.9677% - 1.5032vh) cover calc(55.9677% - 17.1032vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(8), :nth-child(56)) { animation-range: cover calc(27.0968% - 2.0903vh) cover calc(57.0968% - 17.6903vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(7), :nth-child(57)) { animation-range: cover calc(28.2258% - 2.6774vh) cover calc(58.2258% - 18.2774vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(6), :nth-child(58)) { animation-range: cover calc(29.3548% - 3.2645vh) cover calc(59.3548% - 18.8645vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(5), :nth-child(59)) { animation-range: cover calc(30.4839% - 3.8516vh) cover calc(60.4839% - 19.4516vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(4), :nth-child(60)) { animation-range: cover calc(31.6129% - 4.4387vh) cover calc(61.6129% - 20.0387vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(3), :nth-child(61)) { animation-range: cover calc(32.7419% - 5.0258vh) cover calc(62.7419% - 20.6258vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(2), :nth-child(62)) { animation-range: cover calc(33.871% - 5.6129vh) cover calc(63.871% - 21.2129vh); }
+[data-8b-live] #market .market__lines > i:is(:nth-child(1), :nth-child(63)) { animation-range: cover calc(35% - 6.2vh) cover calc(65% - 21.8vh); }
+[data-8b-live] #market .market__lines > i:nth-child(64) { animation-range: cover calc(36.129% - 6.7871vh) cover calc(66.129% - 22.3871vh); }
+[data-8b-live] #market .market__lines > i:nth-child(65) { animation-range: cover calc(37.2581% - 7.3742vh) cover calc(67.2581% - 22.9742vh); }
+[data-8b-live] #market .market__lines > i:nth-child(66) { animation-range: cover calc(38.3871% - 7.9613vh) cover calc(68.3871% - 23.5613vh); }
+[data-8b-live] #market .market__lines > i:nth-child(67) { animation-range: cover calc(39.5161% - 8.5484vh) cover calc(69.5161% - 24.1484vh); }
+[data-8b-live] #market .market__lines > i:nth-child(68) { animation-range: cover calc(40.6452% - 9.1355vh) cover calc(70.6452% - 24.7355vh); }
+[data-8b-live] #market .market__lines > i:nth-child(69) { animation-range: cover calc(41.7742% - 9.7226vh) cover calc(71.7742% - 25.3226vh); }
+[data-8b-live] #market .market__lines > i:nth-child(70) { animation-range: cover calc(42.9032% - 10.3097vh) cover calc(72.9032% - 25.9097vh); }
+[data-8b-live] #market .market__lines > i:nth-child(71) { animation-range: cover calc(44.0323% - 10.8968vh) cover calc(74.0323% - 26.4968vh); }
+[data-8b-live] #market .market__lines > i:nth-child(72) { animation-range: cover calc(45.1613% - 11.4839vh) cover calc(75.1613% - 27.0839vh); }
+[data-8b-live] #market .market__lines > i:nth-child(73) { animation-range: cover calc(46.2903% - 12.071vh) cover calc(76.2903% - 27.671vh); }
+[data-8b-live] #market .market__lines > i:nth-child(74) { animation-range: cover calc(47.4193% - 12.658vh) cover calc(77.4193% - 28.258vh); }
+[data-8b-live] #market .market__lines > i:nth-child(75) { animation-range: cover calc(48.5484% - 13.2452vh) cover calc(78.5484% - 28.8452vh); }
+[data-8b-live] #market .market__lines > i:nth-child(76) { animation-range: cover calc(49.6774% - 13.8322vh) cover calc(79.6774% - 29.4322vh); }
+[data-8b-live] #market .market__lines > i:nth-child(77) { animation-range: cover calc(50.8065% - 14.4194vh) cover calc(80.8064% - 30.0193vh); }
+[data-8b-live] #market .market__lines > i:nth-child(78) { animation-range: cover calc(51.9355% - 15.0065vh) cover calc(81.9355% - 30.6065vh); }
+[data-8b-live] #market .market__lines > i:nth-child(79) { animation-range: cover calc(53.0645% - 15.5935vh) cover calc(83.0645% - 31.1935vh); }
+[data-8b-live] #market .market__lines > i:nth-child(80) { animation-range: cover calc(54.1936% - 16.1807vh) cover calc(84.1935% - 31.7806vh); }
+[data-8b-live] #market .market__lines > i:nth-child(81) { animation-range: cover calc(55.3226% - 16.7678vh) cover calc(85.3226% - 32.3678vh); }
+[data-8b-live] #market .market__lines > i:nth-child(82) { animation-range: cover calc(56.4516% - 17.3548vh) cover calc(86.4516% - 32.9548vh); }
+[data-8b-live] #market .market__lines > i:nth-child(83) { animation-range: cover calc(57.5806% - 17.9419vh) cover calc(87.5806% - 33.5419vh); }
+[data-8b-live] #market .market__lines > i:nth-child(84) { animation-range: cover calc(58.7097% - 18.529vh) cover calc(88.7097% - 34.129vh); }
+[data-8b-live] #market .market__lines > i:nth-child(85) { animation-range: cover calc(59.8387% - 19.1161vh) cover calc(89.8387% - 34.7161vh); }
+[data-8b-live] #market .market__lines > i:nth-child(86) { animation-range: cover calc(60.9677% - 19.7032vh) cover calc(90.9677% - 35.3032vh); }
+[data-8b-live] #market .market__lines > i:nth-child(87) { animation-range: cover calc(62.0968% - 20.2903vh) cover calc(92.0968% - 35.8903vh); }
+[data-8b-live] #market .market__lines > i:nth-child(88) { animation-range: cover calc(63.2258% - 20.8774vh) cover calc(93.2258% - 36.4774vh); }
+[data-8b-live] #market .market__lines > i:nth-child(89) { animation-range: cover calc(64.3548% - 21.4645vh) cover calc(94.3548% - 37.0645vh); }
+[data-8b-live] #market .market__lines > i:nth-child(90) { animation-range: cover calc(65.4839% - 22.0516vh) cover calc(95.4839% - 37.6516vh); }
+[data-8b-live] #market .market__lines > i:nth-child(91) { animation-range: cover calc(66.6129% - 22.6387vh) cover calc(96.6129% - 38.2387vh); }
+[data-8b-live] #market .market__lines > i:nth-child(92) { animation-range: cover calc(67.7419% - 23.2258vh) cover calc(97.7419% - 38.8258vh); }
+[data-8b-live] #market .market__lines > i:nth-child(93) { animation-range: cover calc(68.871% - 23.8129vh) cover calc(98.871% - 39.4129vh); }
+[data-8b-live] #market .market__lines > i:nth-child(94) { animation-range: cover calc(70% - 24.4vh) cover calc(100% - 40vh); }
+@keyframes market-div-market-lines-i-market-line-scale { 0% { scale: 1 0.2; } 100% { scale: 1; } }
+@keyframes market-div-market-lines-i-market-line-backgroundcolor { 0% { background-color: var(--color-9); } 100% { background-color: var(--color-6); } }
+}
+</style>
+<style data-8b-part="scene:method">
+@layer scenes {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-8b-live] #method .method__photo { z-index: auto; }
+  }
+}
+@layer scenes {
+[data-8b-live] #method { timeline-scope: --method-t1, --method-t2, --method-t3; }
+[data-8b-live] #method .method__steps > li:nth-of-type(2) { view-timeline: --method-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #method .method__steps > li:nth-of-type(3) { view-timeline: --method-t2 block; view-timeline-inset: 0; }
+[data-8b-live] #method .method__steps > li:nth-of-type(4) { view-timeline: --method-t3 block; view-timeline-inset: 0; }
+[data-8b-live] #method .method__frame > figure:nth-of-type(2) { animation-name: method-figure-method-photo-clippath; animation-timeline: --method-t1; animation-range: cover 15vh cover 70vh; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; }
+[data-8b-live] #method .method__frame > figure:nth-of-type(2) > .method__shift > img { animation-name: method-div-method-shift-img-scale; animation-timeline: --method-t1; animation-range: cover 15vh cover 70vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #method .method__frame > figure:nth-of-type(1) > .method__shift { animation-name: method-div-method-shift-translate, method-div-method-shift-filter; animation-timeline: --method-t1; animation-range: cover 15vh cover 70vh; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #method .method__index > li:nth-of-type(2) > .method__dot { animation-name: method-span-method-dot-scale, method-span-method-dot-opacity; animation-timeline: --method-t1, --method-t2; animation-range: cover 45.25vh cover 61.75vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #method .method__index > li:nth-of-type(1) > .method__dot { animation-name: method-span-method-dot-opacity; animation-timeline: --method-t1; animation-range: cover 45.25vh cover 61.75vh; animation-timing-function: linear; animation-fill-mode: both; }
+[data-8b-live] #method .method__frame > figure:nth-of-type(3) { animation-name: method-figure-method-photo-clippath; animation-timeline: --method-t2; animation-range: cover 15vh cover 70vh; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; }
+[data-8b-live] #method .method__frame > figure:nth-of-type(3) > .method__shift > img { animation-name: method-div-method-shift-img-scale; animation-timeline: --method-t2; animation-range: cover 15vh cover 70vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #method .method__frame > figure:nth-of-type(2) > .method__shift { animation-name: method-div-method-shift-translate, method-div-method-shift-filter; animation-timeline: --method-t2; animation-range: cover 15vh cover 70vh; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #method .method__index > li:nth-of-type(3) > .method__dot { animation-name: method-span-method-dot-scale, method-span-method-dot-opacity; animation-timeline: --method-t2, --method-t3; animation-range: cover 45.25vh cover 61.75vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #method .method__frame > figure:nth-of-type(4) { animation-name: method-figure-method-photo-clippath; animation-timeline: --method-t3; animation-range: cover 15vh cover 70vh; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; }
+[data-8b-live] #method .method__frame > figure:nth-of-type(4) > .method__shift > img { animation-name: method-div-method-shift-img-scale; animation-timeline: --method-t3; animation-range: cover 15vh cover 70vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #method .method__frame > figure:nth-of-type(3) > .method__shift { animation-name: method-div-method-shift-translate, method-div-method-shift-filter; animation-timeline: --method-t3; animation-range: cover 15vh cover 70vh; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #method .method__index > li:nth-of-type(4) > .method__dot { animation-name: method-span-method-dot-scale; animation-timeline: --method-t3; animation-range: cover 45.25vh cover 61.75vh; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes method-figure-method-photo-clippath { 0% { clip-path: inset(100% 0% 0%); } 100% { clip-path: inset(0%); } }
+@keyframes method-div-method-shift-img-scale { 0% { scale: 1.18; } 100% { scale: 1; } }
+@keyframes method-div-method-shift-translate { 0% { translate: 0px 0px; } 100% { translate: 0px -12%; } }
+@keyframes method-div-method-shift-filter { 0% { filter: brightness(1); } 100% { filter: brightness(0.4); } }
+@keyframes method-span-method-dot-scale { 0% { scale: 0; } 100% { scale: 1; } }
+@keyframes method-span-method-dot-opacity { 0% { opacity: 1; } 100% { opacity: 0; } }
+}
+</style>
+<style data-8b-part="scene:advisers">
+@layer scenes {
+[data-8b-live] #advisers .advisers__list > li { view-timeline: --advisers-item block; view-timeline-inset: 0; }
+[data-8b-live] #advisers .advisers__list > li > .adviser__frame { animation-name: advisers-div-adviser-frame-clippath; animation-timeline: --advisers-item; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); animation-fill-mode: both; }
+[data-8b-live] #advisers .advisers__list > li > .adviser__frame > img { animation-name: advisers-div-adviser-frame-img-filter, advisers-div-adviser-frame-img-scale; animation-timeline: --advisers-item; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #advisers .advisers__list > li > .adviser__text { animation-name: advisers-div-adviser-text-translate; animation-timeline: --advisers-item; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes advisers-div-adviser-frame-clippath { 0% { clip-path: inset(0% 46% round 320px); } 100% { clip-path: inset(0% round 14px); } }
+@keyframes advisers-div-adviser-frame-img-filter { 0% { filter: brightness(0.3); } 100% { filter: brightness(1); } }
+@keyframes advisers-div-adviser-frame-img-scale { 0% { scale: 1.2; } 100% { scale: 1; } }
+@keyframes advisers-div-adviser-text-translate { 0% { translate: 0px 32px; } 100% { translate: 0px 0px; } }
+@media (min-width: 961px) {
+  [data-8b-live] #advisers .advisers__list > li > .adviser__frame, [data-8b-live] #advisers .advisers__list > li > .adviser__frame > img { animation-range: cover calc(4vh + 6vh * var(--i)) cover calc(39.2vh + 6vh * var(--i)); }
+  [data-8b-live] #advisers .advisers__list > li > .adviser__text { animation-range: cover calc(21.6vh + 6vh * var(--i)) cover calc(48vh + 6vh * var(--i)); }
+}
+@media (max-width: 960px) {
+  [data-8b-live] #advisers .advisers__list > li:nth-of-type(2n+1) > .adviser__frame { animation-range: cover 4vh cover 39.2vh; }
+  [data-8b-live] #advisers .advisers__list > li:nth-of-type(2n+2) > .adviser__frame { animation-range: cover 10vh cover 45.2vh; }
+  [data-8b-live] #advisers .advisers__list > li:nth-of-type(2n+1) > .adviser__frame > img { animation-range: cover 4vh cover 39.2vh; }
+  [data-8b-live] #advisers .advisers__list > li:nth-of-type(2n+2) > .adviser__frame > img { animation-range: cover 10vh cover 45.2vh; }
+  [data-8b-live] #advisers .advisers__list > li:nth-of-type(2n+1) > .adviser__text { animation-range: cover 21.6vh cover 48vh; }
+  [data-8b-live] #advisers .advisers__list > li:nth-of-type(2n+2) > .adviser__text { animation-range: cover 27.6vh cover 54vh; }
+}
+}
+</style>
+<style data-8b-part="scene:switch">
+@layer scenes {
+  [data-8b-live] #switch { height: calc(100svh + var(--switch-distance, 0px)); padding: 0; overflow: clip; view-timeline: --switch-run block; view-timeline-inset: 0; animation-name: switch-ground; animation-timeline: --switch-run; animation-range: contain 0% contain 100%; animation-timing-function: cubic-bezier(0.3333, 0, 0.6667, 0.3333); animation-fill-mode: both; }
+  [data-8b-live] #switch .switch__track { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; gap: 0; width: max-content; margin: 0; padding-inline: var(--space-2); animation-name: switch-run; animation-timeline: --switch-run; animation-range: contain 0% contain 100%; animation-timing-function: linear; animation-fill-mode: both; }
+  [data-8b-live] #switch .switch__intro { flex: none; width: min(34rem, 84vw); margin-right: 8vw; }
+  [data-8b-live] #switch .switch__line { display: block; position: absolute; left: 0; right: 4vw; top: 0.5rem; height: 2px; background: color-mix(in srgb, var(--color-2) 18%, transparent); }
+  [data-8b-live] #switch .switch__fill { position: absolute; inset: 0; background: var(--color-2); transform-origin: 0 50%; animation-name: switch-fill; animation-timeline: --switch-run; animation-range: contain 4% contain 96%; animation-timing-function: linear; animation-fill-mode: both; }
+  [data-8b-live] #switch .switch__panels { display: flex; gap: 0; }
+  [data-8b-live] #switch .switch__panel { position: relative; flex: none; width: min(31rem, 84vw); padding-right: 4vw; }
+  [data-8b-live] #switch .switch__dot { --switch-dot-at: calc(0.06 + 0.84 * var(--i) / max(var(--n) - 1, 1)); animation-name: switch-dot; animation-timeline: --switch-run; animation-range: contain calc(var(--switch-dot-at) * 100%) contain calc((var(--switch-dot-at) + 0.08) * 100%); animation-timing-function: linear(0, 0.1444, 0.278, 0.4011, 0.514, 0.6172, 0.711, 0.7958, 0.872, 0.9399, 1, 1.0526, 1.098, 1.1367, 1.169, 1.1953, 1.216, 1.2314, 1.242, 1.2481, 1.25, 1.2482, 1.243, 1.2348, 1.224, 1.2109, 1.196, 1.1796, 1.162, 1.1437, 1.125, 1.1063, 1.088, 1.0704, 1.054, 1.0391, 1.026, 1.0152, 1.007, 1.0018, 1); animation-fill-mode: both; }
+  @keyframes switch-ground { from { background-color: var(--color-1); } to { background-color: var(--color-5); } }
+  @keyframes switch-run { from { translate: 0 0; } to { translate: calc(-1 * var(--switch-distance, 0px)) 0; } }
+  @keyframes switch-fill { from { scale: 0 1; } to { scale: 1 1; } }
+  @keyframes switch-dot { from { scale: 0.45; } to { scale: 1; } }
+}
+</style>
+<style data-8b-part="scene:offer">
+@layer scenes {
+[data-8b-live] #offer .offer__frame { view-timeline: --offer-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #offer .offer__img { animation-name: offer-img-offer-img-scale; animation-timeline: --offer-t1; animation-range: cover 15vh cover calc(50% + 5vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #offer .offer__panel { animation-name: offer-div-offer-panel-translate; animation-timeline: --offer-t1; animation-range: cover calc(7.5% + 13.5vh) cover calc(32.5% + 8.5vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #offer .offer__chart > polyline { animation-name: offer-svg-offer-chart-polyline-strokedashoffset; animation-timeline: --offer-t1; animation-range: cover calc(22.5% + 10.5vh) cover calc(45% + 6vh); animation-timing-function: linear; animation-fill-mode: both; }
+@keyframes offer-img-offer-img-scale { 0% { scale: 1.2; } 100% { scale: 1; } }
+@keyframes offer-div-offer-panel-translate { 0% { translate: 0px 140%; } 100% { translate: 0px 0px; } }
+@keyframes offer-svg-offer-chart-polyline-strokedashoffset { 0% { stroke-dashoffset: 1px; } 99.998% { stroke-dashoffset: 0.0002px; } 100% { stroke-dashoffset: 0px; } }
+}
+</style>
+<style data-8b-part="scene:contact">
+@layer scenes {
+[data-8b-live] #contact { view-timeline: --contact-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #contact .contact__disc, [data-8b-live] #contact .contact__photo { animation-timeline: --contact-t1; animation-range: cover 10vh cover 85vh; animation-fill-mode: both; transform: none; }
+[data-8b-live] #contact .contact__disc { animation-name: contact-div-contact-disc-translate, contact-div-contact-disc-scale; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] #contact .contact__photo { animation-name: contact-div-contact-photo-scale; animation-timing-function: linear; }
+@keyframes contact-div-contact-disc-translate { 0% { translate: 0px 70%; } 100% { translate: 0px 0px; } }
+@keyframes contact-div-contact-disc-scale { 0% { scale: 0.45; } 100% { scale: 1; } }
+@keyframes contact-div-contact-photo-scale { 0% { scale: 1.12; } 100% { scale: 1; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <a class="visually-hidden" href="#main">Skip to content</a>
@@ -513,7 +677,7 @@
       <button class="m-iconbtn nav__menu" type="button" aria-expanded="false" aria-controls="menu"><span class="visually-hidden">Open menu</span><span class="m-iconbtn__icon" aria-hidden="true"></span></button>
     </div>
   </div>
-  <div id="menu" class="menu" data-lenis-prevent hidden>
+  <div id="menu" class="menu" hidden>
     <div class="menu__top">
       <span class="nav__logo"><span class="nav__mark" aria-hidden="true"></span><span class="nav__word">keylight</span></span>
       <button class="m-iconbtn menu__close" type="button"><span class="visually-hidden">Close menu</span><span class="m-iconbtn__icon" aria-hidden="true"></span></button>
@@ -534,7 +698,7 @@
   </div>
 </header>
 <main id="main">
-<!-- opening: a heading, a paragraph and two actions beside a card showing an example agreement in principle -->
+<!-- opening: a heading, a paragraph and two actions beside a card showing an example agreement in principle (animation: scene:opening) -->
 <section id="opening" class="opening" data-8b-section="opening" aria-labelledby="opening-title">
   
   
@@ -578,7 +742,7 @@
         <p class="market__label market__label--end"><span class="m-text-5">Keylight</span><span class="m-text-6">Every lender, ranked by total cost</span></p>
       </div>
     </div>
-    <ul class="market__kinds" role="list">
+    <ul class="market__kinds" role="list" data-8b-items=":scope > li">
       <li><h3 class="m-text-4">High-street banks</h3><p class="m-text-6">The names you know, compared on fees and cashback as well as the headline rate.</p></li>
       <li><h3 class="m-text-4">Building societies</h3><p class="m-text-6">Often kinder to overtime, bonuses, smaller deposits and first homes.</p></li>
       <li><h3 class="m-text-4">Specialist lenders</h3><p class="m-text-6">For the self-employed, new contractors and anyone with a blip on their credit file.</p></li>
@@ -592,7 +756,7 @@
     <p class="m-text method__lead">From the first call to the front door: one adviser, four steps, and nothing you have to chase yourself.</p>
   </div>
   <div class="container method__body">
-    <ol class="method__steps" role="list">
+    <ol class="method__steps" role="list" data-8b-items=":scope > li" data-8b-fixed="4">
       <li class="method__step">
         <div class="method__card">
           <p class="m-text-5 method__num">Step 01</p>
@@ -625,19 +789,19 @@
     <div class="method__stage">
       <div class="method__frame">
         <figure class="method__photo"><div class="method__shift">
-          <img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1758522484755-93e3286fdfc4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8d29tYW4lMjBsYXB0b3AlMjBraXRjaGVuJTIwZXZlbmluZyUyMGhvbWV8ZW58MXwwfHx8MTc5MTQ0MzYwOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A woman going through her finances on a laptop at the kitchen table" width="1600" height="900" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1758522484755-93e3286fdfc4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8d29tYW4lMjBsYXB0b3AlMjBraXRjaGVuJTIwZXZlbmluZyUyMGhvbWV8ZW58MXwwfHx8MTc5MTQ0MzYwOXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A woman going through her finances on a laptop at the kitchen table" width="1600" height="900" loading="lazy">
           <figcaption class="method__chip m-surface-2"><span class="m-badge"><span class="m-badge__icon" aria-hidden="true"></span><span class="m-badge__label">Done</span></span><span class="m-text-5">Soft credit check complete</span><span class="m-text-7">No footprint on your file</span></figcaption>
         </div></figure>
         <figure class="method__photo"><div class="method__shift">
-          <img style="background:#262626" src="https://images.unsplash.com/photo-1768988497940-c123e874634c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8dGVycmFjZWQlMjBob3VzZXMlMjBzdHJlZXQlMjBkdXNrfGVufDF8MXx8fDE3OTE0NDM1NTd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1120&amp;q=60" alt="A street of red-brick terraced houses at sunset" width="1600" height="1886" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1768988497940-c123e874634c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8dGVycmFjZWQlMjBob3VzZXMlMjBzdHJlZXQlMjBkdXNrfGVufDF8MXx8fDE3OTE0NDM1NTd8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1320&amp;q=60" alt="A street of red-brick terraced houses at sunset" width="1600" height="1886" loading="lazy">
           <figcaption class="method__chip m-surface-2"><span class="m-badge"><span class="m-badge__icon" aria-hidden="true"></span><span class="m-badge__label">Shortlist</span></span><span class="m-text-5">3 deals out of 94 lenders</span><span class="m-text-7">Ranked by cost over the fixed term</span></figcaption>
         </div></figure>
         <figure class="method__photo"><div class="method__shift">
-          <img style="background:#404040" src="https://images.unsplash.com/photo-1664463760781-f159dfe3af30?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2lnbmluZyUyMGNvbnRyYWN0JTIwd2FybSUyMGxpZ2h0fGVufDF8MHx8fDE3OTE0NDM2MTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A couple signing mortgage papers with their adviser" width="1600" height="1067" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1664463760781-f159dfe3af30?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8c2lnbmluZyUyMGNvbnRyYWN0JTIwd2FybSUyMGxpZ2h0fGVufDF8MHx8fDE3OTE0NDM2MTB8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A couple signing mortgage papers with their adviser" width="1600" height="1067" loading="lazy">
           <figcaption class="method__chip m-surface-2"><span class="m-badge"><span class="m-badge__icon" aria-hidden="true"></span><span class="m-badge__label">Booked</span></span><span class="m-text-5">Valuation, Thursday 10:30</span><span class="m-text-7">Your solicitor has the offer</span></figcaption>
         </div></figure>
         <figure class="method__photo"><div class="method__shift">
-          <img style="background:#d9d9c0" src="https://images.unsplash.com/photo-1733244766159-f58f4184fd38?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8ZnJvbnQlMjBkb29yJTIwbmV3JTIwaG9tZSUyMGtleXN8ZW58MXwwfHx8MTc5MTQ0MzYxMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A hand holding up the keys to a new front door" width="1600" height="1067" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1733244766159-f58f4184fd38?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8ZnJvbnQlMjBkb29yJTIwbmV3JTIwaG9tZSUyMGtleXN8ZW58MXwwfHx8MTc5MTQ0MzYxMXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1600&amp;q=60" alt="A hand holding up the keys to a new front door" width="1600" height="1067" loading="lazy">
           <figcaption class="method__chip m-surface-2"><span class="m-badge"><span class="m-badge__icon" aria-hidden="true"></span><span class="m-badge__label">Complete</span></span><span class="m-text-5">Keys released at 12:04</span><span class="m-text-7">Next call: six months before your deal ends</span></figcaption>
         </div></figure>
         <ol class="method__index m-surface-2" aria-hidden="true">
@@ -653,9 +817,9 @@
 <!-- included: a headline about the fee and a ledger of nine included services -->
 <section id="included" class="included" data-8b-section="included" aria-labelledby="included-title">
   <div class="container included__inner">
-    <h2 id="included-title" class="m-text-3 included__title" data-8b-motion="rise">Brokers can charge up to £995. Our fee is £0.</h2>
+    <h2 id="included-title" class="m-text-3 included__title" data-8b-motion="rise" data-8b-enter="87.8%" data-8b-split="lines">Brokers can charge up to £995. Our fee is £0.</h2>
     <p class="m-text included__lead">Lenders pay us a fee when your mortgage completes, and we tell you exactly how much, in writing, before you apply. Everything below is included.</p>
-    <dl class="included__ledger" data-8b-motion="lightRows">
+    <dl class="included__ledger" data-8b-items=":scope > div" data-8b-motion="lightRows" data-8b-enter="82%">
       <div class="included__row"><dt>Affordability check</dt><dd>A written borrowing figure within a day</dd></div>
       <div class="included__row"><dt>Credit file review</dt><dd>A soft search that leaves no footprint</dd></div>
       <div class="included__row"><dt>Whole-of-market search</dt><dd>94 lenders, compared on total cost</dd></div>
@@ -677,21 +841,21 @@
       <h2 id="advisers-title" class="m-text-3">The adviser on your first call is the one who hands you the keys.</h2>
       <p class="m-text-7">Four advisers, 61 years of mortgages between them, and a speciality each. No call centre and no hand-offs.</p>
     </div>
-    <ul class="advisers__list" role="list">
+    <ul class="advisers__list" role="list" data-8b-items=":scope > li">
       <li class="adviser">
-        <div class="adviser__frame"><img style="background:#594026" src="https://images.unsplash.com/photo-1635366898830-b5d48950e4f6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG9ydHJhaXQlMjB3b21hbiUyMG5hdHVyYWwlMjBsaWdodCUyMG9mZmljZSUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTQ0MzU5Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=280&amp;q=60" alt="Portrait of Hannah Moorcroft" width="1600" height="2400" loading="lazy"></div>
+        <div class="adviser__frame"><img src="https://images.unsplash.com/photo-1635366898830-b5d48950e4f6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cG9ydHJhaXQlMjB3b21hbiUyMG5hdHVyYWwlMjBsaWdodCUyMG9mZmljZSUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTQ0MzU5Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=60" alt="Portrait of Hannah Moorcroft" width="1600" height="2400" loading="lazy"></div>
         <div class="adviser__text"><h3 class="m-text-4 adviser__name">Hannah Moorcroft</h3><p class="m-text-5 adviser__role">First-time buyers</p><p class="m-text-7">Has walked more than 900 first-time buyers through their first offer.</p></div>
       </li>
       <li class="adviser">
-        <div class="adviser__frame"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1719536342328-1ed261a77652?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBvcnRyYWl0JTIwbWFuJTIwbmF0dXJhbCUyMHdpbmRvdyUyMGxpZ2h0JTIwZnJpZW5kbHl8ZW58MXwxfHx8MTc5MTQ0MzU5M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=280&amp;q=60" alt="Portrait of Daniel Okafor" width="1600" height="2377" loading="lazy"></div>
+        <div class="adviser__frame"><img src="https://images.unsplash.com/photo-1719536342328-1ed261a77652?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fHBvcnRyYWl0JTIwbWFuJTIwbmF0dXJhbCUyMHdpbmRvdyUyMGxpZ2h0JTIwZnJpZW5kbHl8ZW58MXwxfHx8MTc5MTQ0MzU5M3ww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=60" alt="Portrait of Daniel Okafor" width="1600" height="2377" loading="lazy"></div>
         <div class="adviser__text"><h3 class="m-text-4 adviser__name">Daniel Okafor</h3><p class="m-text-5 adviser__role">Self-employed and contractors</p><p class="m-text-7">Reads tax calculations and company accounts the way underwriters do.</p></div>
       </li>
       <li class="adviser">
-        <div class="adviser__frame"><img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1758336011136-343678e4fc05?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8b2xkZXIlMjBtYW4lMjBwb3J0cmFpdCUyMG5hdHVyYWwlMjBsaWdodCUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTQ0MzY0MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=280&amp;q=60" alt="Portrait of Raj Mistry" width="1600" height="2400" loading="lazy"></div>
+        <div class="adviser__frame"><img src="https://images.unsplash.com/photo-1758336011136-343678e4fc05?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8b2xkZXIlMjBtYW4lMjBwb3J0cmFpdCUyMG5hdHVyYWwlMjBsaWdodCUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTQ0MzY0MHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=60" alt="Portrait of Raj Mistry" width="1600" height="2400" loading="lazy"></div>
         <div class="adviser__text"><h3 class="m-text-4 adviser__name">Raj Mistry</h3><p class="m-text-5 adviser__role">Remortgages and later life</p><p class="m-text-7">Twenty-two years of fixed rates ending, and not one client left on a standard rate.</p></div>
       </li>
       <li class="adviser">
-        <div class="adviser__frame"><img style="background:#8c7359" src="https://images.unsplash.com/photo-1759352675002-958a2cddf291?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cG9ydHJhaXQlMjB3b21hbiUyMG5hdHVyYWwlMjBsaWdodCUyMG9mZmljZSUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTQ0MzU5Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=280&amp;q=60" alt="Portrait of Ellie Varga" width="1600" height="2133" loading="lazy"></div>
+        <div class="adviser__frame"><img src="https://images.unsplash.com/photo-1759352675002-958a2cddf291?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8cG9ydHJhaXQlMjB3b21hbiUyMG5hdHVyYWwlMjBsaWdodCUyMG9mZmljZSUyMHNtaWxpbmd8ZW58MXwxfHx8MTc5MTQ0MzU5Mnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=340&amp;q=60" alt="Portrait of Ellie Varga" width="1600" height="2133" loading="lazy"></div>
         <div class="adviser__text"><h3 class="m-text-4 adviser__name">Ellie Varga</h3><p class="m-text-5 adviser__role">Buy-to-let and landlords</p><p class="m-text-7">Knows which lenders still take portfolio landlords and shared houses this quarter.</p></div>
       </li>
     </ul>
@@ -701,12 +865,12 @@
 <section id="stories" class="stories" data-8b-section="stories" aria-labelledby="stories-title">
   <div class="container">
     <div class="stories__head">
-      <h2 id="stories-title" class="m-text-3" data-8b-motion="rise">Bought, moved, switched.</h2>
+      <h2 id="stories-title" class="m-text-3" data-8b-motion="rise" data-8b-enter="87.8%" data-8b-split="lines">Bought, moved, switched.</h2>
       <p class="m-text-6">Three clients from this year, in their own words. Rated 4.9 out of 5 across 1,240 reviews.</p>
     </div>
-    <ol class="stories__list" role="list">
+    <ol class="stories__list" role="list" data-8b-items=":scope > li">
       <li class="story">
-        <figure class="story__photo"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1655759738611-6bf3df26a7e7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bW92aW5nJTIwYm94ZXMlMjBlbXB0eSUyMHJvb20lMjBjb3VwbGV8ZW58MXwxfHx8MTc5MTQ0MzU2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=60" alt="A couple dancing in the living room of their first home" width="1600" height="2474" loading="lazy" data-8b-motion="brighten"></figure>
+        <figure class="story__photo"><img src="https://images.unsplash.com/photo-1655759738611-6bf3df26a7e7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Mnx8bW92aW5nJTIwYm94ZXMlMjBlbXB0eSUyMHJvb20lMjBjb3VwbGV8ZW58MXwxfHx8MTc5MTQ0MzU2MXww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="A couple dancing in the living room of their first home" width="1600" height="2474" loading="lazy" data-8b-motion="brighten"></figure>
         <div class="story__text">
           <blockquote class="story__quote"><p class="m-text-8">“Our bank said £240,000. Hannah found a lender who would count Tom's overtime, and we offered on the house we actually wanted.”</p></blockquote>
           <p class="m-text-5">Amira and Tom, Chapel Allerton</p>
@@ -714,7 +878,7 @@
         </div>
       </li>
       <li class="story">
-        <figure class="story__photo"><img style="background:#40260c" src="https://images.unsplash.com/photo-1768471125958-78556538fadc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8d29tYW4lMjBzZWxmJTIwZW1wbG95ZWQlMjBzdHVkaW8lMjB3b3Jrc3BhY2V8ZW58MXwwfHx8MTc5MTQ0MzU5Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=670&amp;q=60" alt="An illustrator working at her desk in a studio full of plants" width="1600" height="1067" loading="lazy" data-8b-motion="brighten"></figure>
+        <figure class="story__photo"><img src="https://images.unsplash.com/photo-1768471125958-78556538fadc?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8d29tYW4lMjBzZWxmJTIwZW1wbG95ZWQlMjBzdHVkaW8lMjB3b3Jrc3BhY2V8ZW58MXwwfHx8MTc5MTQ0MzU5Nnww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=720&amp;q=60" alt="An illustrator working at her desk in a studio full of plants" width="1600" height="1067" loading="lazy" data-8b-motion="brighten"></figure>
         <div class="story__text">
           <blockquote class="story__quote"><p class="m-text-8">“Two years of accounts and a letter from my accountant. Daniel knew which lender would read them properly the first time.”</p></blockquote>
           <p class="m-text-5">Jess, Kirkstall</p>
@@ -722,7 +886,7 @@
         </div>
       </li>
       <li class="story">
-        <figure class="story__photo"><img style="background:#c0d9f3" src="https://images.unsplash.com/photo-1676269632049-87faf23b8ed3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8d29tYW4lMjB3aW5kb3clMjB3YXJtJTIwbGlnaHQlMjBob21lJTIwY29mZmVlfGVufDF8MXx8fDE3OTE0NDM2NDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=60" alt="A woman with a cup of coffee by an open window at home" width="1600" height="2400" loading="lazy" data-8b-motion="brighten"></figure>
+        <figure class="story__photo"><img src="https://images.unsplash.com/photo-1676269632049-87faf23b8ed3?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8M3x8d29tYW4lMjB3aW5kb3clMjB3YXJtJTIwbGlnaHQlMjBob21lJTIwY29mZmVlfGVufDF8MXx8fDE3OTE0NDM2NDJ8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=650&amp;q=60" alt="A woman with a cup of coffee by an open window at home" width="1600" height="2400" loading="lazy" data-8b-motion="brighten"></figure>
         <div class="story__text">
           <blockquote class="story__quote"><p class="m-text-8">“I'd have forgotten my fix ended in March. Raj rang in September with a new rate already held for me.”</p></blockquote>
           <p class="m-text-5">Mei, Roundhay</p>
@@ -741,7 +905,7 @@
     </div>
     <div class="switch__run">
       <div class="switch__line" aria-hidden="true"><span class="switch__fill"></span></div>
-      <ol class="switch__panels" role="list">
+      <ol class="switch__panels" role="list" data-8b-items=":scope > li">
         <li class="switch__panel">
           <span class="switch__dot" aria-hidden="true"></span>
           <h3 class="m-text-4 switch__when">Today</h3>
@@ -774,7 +938,7 @@
 <section id="offer" class="offer" data-8b-section="offer" aria-labelledby="offer-title">
   <div class="container offer__grid">
     <div class="offer__frame">
-      <img style="background:#260c0c" class="offer__img" src="https://images.unsplash.com/photo-1641753914745-d62bd463d021?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bWFuJTIwcG9ydHJhaXQlMjB3aW5kb3clMjBsaWdodCUyMGNhcmRpZ2FufGVufDF8MXx8fDE3OTE0NDM2NDN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=60" alt="A man leaning on a sunlit window sill at home" width="1600" height="2400" loading="lazy">
+      <img class="offer__img" src="https://images.unsplash.com/photo-1641753914745-d62bd463d021?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8bWFuJTIwcG9ydHJhaXQlMjB3aW5kb3clMjBsaWdodCUyMGNhcmRpZ2FufGVufDF8MXx8fDE3OTE0NDM2NDN8MA&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=730&amp;q=60" alt="A man leaning on a sunlit window sill at home" width="1600" height="2400" loading="lazy">
       <div class="offer__panel m-surface-2">
         <p class="m-text-5">Same house, better deal</p>
         <p class="offer__figure"><data value="1286">£1,286</data> <span class="m-text-7">a month</span></p>
@@ -783,10 +947,10 @@
       </div>
     </div>
     <div class="offer__copy">
-      <h2 id="offer-title" class="m-text-3" data-8b-motion="rise">Start with a free mortgage review.</h2>
+      <h2 id="offer-title" class="m-text-3" data-8b-motion="rise" data-8b-enter="87.8%" data-8b-split="lines">Start with a free mortgage review.</h2>
       <p class="m-text">Tell us where you are: buying, moving, or with a deal about to end. We'll show you what you can borrow, what it will cost and which lenders will say yes.</p>
       <p class="offer__price"><span class="offer__amount">£0</span><span class="m-text-6">no fee for most buyers, against up to £995 elsewhere</span></p>
-      <ul class="offer__checks" role="list">
+      <ul class="offer__checks" role="list" data-8b-items=":scope > li">
         <li>A written borrowing figure within a day</li>
         <li>A soft credit check with no footprint</li>
         <li>94 lenders ranked by total cost</li>
@@ -803,10 +967,10 @@
 <section id="faq" class="faq" data-8b-section="faq" aria-labelledby="faq-title">
   <div class="container faq__grid">
     <div class="faq__head">
-      <h2 id="faq-title" class="m-text-3" data-8b-motion="rise">Questions people ask before the first call</h2>
+      <h2 id="faq-title" class="m-text-3" data-8b-motion="rise" data-8b-enter="87.8%" data-8b-split="lines">Questions people ask before the first call</h2>
       <p class="m-text-6">Or ask us yourself: <a data-8b-placeholder="phone" class="m-link" href="tel:+441130000000">0113 000 0000</a></p>
     </div>
-    <div class="faq__list" data-8b-motion="lightRows">
+    <div class="faq__list" data-8b-items=":scope > details" data-8b-motion="lightRows" data-8b-enter="82%">
       <details class="faq__item"><summary class="faq__q"><span class="m-text-4">Do you really not charge a fee?</span><span class="faq__icon" aria-hidden="true"></span></summary><p class="m-text faq__a">For most residential mortgages, no. The lender pays us a fee when your mortgage completes, usually 0.35% to 0.45% of the loan, and we tell you the exact amount in writing before you apply. Complex cases, such as limited-company buy-to-let, carry a £495 fee that we agree with you first.</p></details>
       <details class="faq__item"><summary class="faq__q"><span class="m-text-4">Will talking to you affect my credit score?</span><span class="faq__icon" aria-hidden="true"></span></summary><p class="m-text faq__a">No. We use a soft search to see your file the way a lender will, and it leaves no footprint that other lenders can see. A hard search happens only when you decide to apply.</p></details>
       <details class="faq__item"><summary class="faq__q"><span class="m-text-4">How much deposit do I need?</span><span class="faq__icon" aria-hidden="true"></span></summary><p class="m-text faq__a">Some lenders accept 5%, but 10% or 15% usually unlocks noticeably better rates. We show you the difference in pounds a month for your own numbers, so you can decide whether waiting to save more is worth it.</p></details>
@@ -821,7 +985,7 @@
   <div class="container contact__grid">
     <div class="contact__visual">
       <div class="contact__disc"><div class="contact__glow"></div></div>
-      <div class="contact__photo"><img style="background:#a6a6a6" src="https://images.unsplash.com/photo-1736517425687-617ef7150e99?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2lsaG91ZXR0ZSUyMGNvdXBsZSUyMHdpbmRvdyUyMGhvbWV8ZW58MXwwfHx8MTc5MTQ0MzUxOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=960&amp;q=60" alt="" width="1600" height="1067" loading="lazy"></div>
+      <div class="contact__photo"><img src="https://images.unsplash.com/photo-1736517425687-617ef7150e99?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8c2lsaG91ZXR0ZSUyMGNvdXBsZSUyMHdpbmRvdyUyMGhvbWV8ZW58MXwwfHx8MTc5MTQ0MzUxOHww&amp;ixlib=rb-4.1.0&amp;auto=format&amp;fit=crop&amp;w=1080&amp;q=60" alt="" width="1600" height="1067" loading="lazy"></div>
     </div>
     <div class="contact__copy">
       <h2 id="contact-title" class="m-text-3 contact__title">The keys are closer than they look.</h2>
@@ -905,8 +1069,8 @@
   const setMenu = open => {
     menu.hidden = !open;
     openButton.setAttribute('aria-expanded', String(open));
-    if (open) { window.lenis?.stop(); closeButton.focus(); }
-    else { window.lenis?.start(); }
+    if (open) { window.motionKit?.wheel?.stop(); closeButton.focus(); }
+    else { window.motionKit?.wheel?.start(); }
   };
   openButton.addEventListener('click', () => setMenu(true));
   closeButton.addEventListener('click', () => { setMenu(false); openButton.focus(); });
@@ -944,232 +1108,203 @@
   });
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
+
+<script data-8b-part="motion-kit">
 (() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); });
+};
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-split=lines]>.line{display:block;overflow:clip;padding-block:.12em;margin-block:-.12em}[data-8b-split=lines]>.line:not(:last-child){margin-bottom:0}[data-8b-split=lines]>.line+.line{margin-top:-.24em}.line+.line>.line__in{text-indent:0}:where(h1,h2,h3,h4,h5,h6,p,div,blockquote,figcaption,dd,dt):where([data-8b-split="lines"]:has(>.line)){display:flow-root}.line__in{display:block}.kit-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const sources = new WeakMap(), widths = new WeakMap();
+const graphemes = text => [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)].map(part => part.segment);
+const span = (className, text) => { const element = document.createElement('span'); element.className = className; if (text != null) element.textContent = text; return element; };
+const split = element => {
+const mode = element.getAttribute('data-8b-split'), again = sources.has(element);
+if (again) element.innerHTML = sources.get(element); else sources.set(element, element.innerHTML);
+const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT), texts = [];
+while (walker.nextNode()) texts.push(walker.currentNode);
+let index = 0;
+for (const node of texts) {
+const fragment = document.createDocumentFragment();
+for (const piece of node.data.split(/(\s+)/)) {
+if (!piece) continue;
+if (/^\s+$/.test(piece)) { fragment.append(piece); continue; }
+const word = span('w');
+if (mode === 'chars') {
+word.setAttribute('aria-hidden', 'true');
+for (const character of graphemes(piece)) { const c = span('c', character); c.style.setProperty('--i', index++); word.append(c); }
+} else {
+word.textContent = piece;
+if (mode === 'words') word.style.setProperty('--i', index++);
+}
+fragment.append(word);
+}
+node.replaceWith(fragment);
+}
+if (mode === 'chars') element.append(span('kit-sr', element.textContent.replace(/\s+/g, ' ').trim()));
+if (mode === 'lines') {
+const lines = [];
+let top = null;
+for (const child of [...element.childNodes]) {
+const probe = child.nodeType === 1 ? child : null;
+const at = probe ? probe.getBoundingClientRect().top : top;
+if (probe && (top === null || Math.abs(at - top) > 2)) { lines.push([]); top = at; }
+if (!lines.length) lines.push([]);
+lines.at(-1).push(child);
+}
+lines.forEach((nodes, i) => {
+const line = span('line'), inner = span('line__in');
+line.style.setProperty('--i', i);
+nodes[0].before(line);
+inner.append(...nodes);
+line.append(inner);
+});
+index = lines.length;
+widths.set(element, element.clientWidth);
+}
+element.style.setProperty('--n', index);
+if (again) element.getAnimations({ subtree: true }).forEach(animation => { if (animation.timeline === document.timeline) try { animation.finish(); } catch {} });
+};
+const pending = [];
+let busy = false;
+const drain = () => {
+if (busy) return;
+const element = pending.shift();
+if (!element) return;
+busy = true;
+setTimeout(() => { try { split(element); } catch (error) { console.error('[motion-kit] split failed', error); } busy = false; drain(); }, 0);
+};
+const near = new IntersectionObserver(entries => entries.forEach(entry => {
+if (!entry.isIntersecting) return;
+near.unobserve(entry.target);
+pending.push(entry.target);
+drain();
+}), { rootMargin: '100% 0px' });
+document.fonts.ready.then(() => document.querySelectorAll('[data-8b-split]').forEach(element => near.observe(element)));
+kit.measure(() => document.querySelectorAll('[data-8b-split="lines"]').forEach(element => {
+if (sources.has(element) && widths.get(element) !== element.clientWidth) { pending.push(element); drain(); }
+}));
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger, SplitText);
-const navigationBar = document.getElementById('navigation');
-function measureNavigation() {
-  document.documentElement.style.setProperty('--nav-h', navigationBar.querySelector('.nav__bar').offsetHeight + 'px');
-}
-measureNavigation();
-window.addEventListener('resize', measureNavigation);
-function refreshScroll() {
-  measureNavigation();
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-window.refreshScroll = refreshScroll;
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.09, anchors: { offset: -navigationBar.querySelector('.nav__bar').offsetHeight } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
+<script data-8b-part="scene-script:switch">
+motionKit.scene('switch', () => {
+  const section = document.getElementById('switch');
+  const track = section.querySelector('.switch__track');
+  motionKit.measure(() => motionKit.set(section, { '--switch-distance': Math.max(1, track.scrollWidth - innerWidth) + 'px' }));
 });
-</script>
-<script data-8b-part="motion">
-const effects = {
-  rise(element, vars = {}) {
-    const split = SplitText.create(element, { type: 'lines', mask: 'lines' });
-    return gsap.timeline({ ...vars, onComplete() { split.revert(); } })
-      .from(split.lines, { yPercent: 108, duration: 1, ease: 'expo.out', stagger: 0.09 });
-  },
-  brighten(element, vars = {}) {
-    return gsap.timeline(vars)
-      .fromTo(element, { filter: 'brightness(0.42) saturate(0.6)', scale: 1.08 }, { filter: 'brightness(1) saturate(1)', scale: 1, ease: 'none' });
-  },
-  lightRows(element, vars = {}) {
-    const timeline = gsap.timeline(vars);
-    element.querySelectorAll(':scope > *').forEach((row, index) => {
-      timeline.fromTo(row, { '--rows-lit': 0 }, { '--rows-lit': 1, duration: 0.6, ease: 'power2.out' }, index * 0.08);
-    });
-    return timeline;
-  }
-};
-const bindEffect = (name, create) => document.querySelectorAll('[data-8b-section]').forEach(section => {
-  const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-  if (!elements.length) return;
-  const id = `effect:${name}:${section.id}`;
-  queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    elements.forEach((element, index) => create(element, `${id}:${index}`));
-  }), section.getBoundingClientRect().top < window.innerHeight ? { first: true, id } : { near: section, id });
-});
-bindEffect('rise', (element, id) => ScrollTrigger.create({ id, trigger: element, start: 'top 88%', once: true, animation: effects.rise(element) }));
-bindEffect('brighten', (element, id) => ScrollTrigger.create({ id, trigger: element, start: 'top bottom', end: 'center 55%', scrub: true, animation: effects.brighten(element) }));
-bindEffect('lightRows', (element, id) => ScrollTrigger.create({ id, trigger: element, start: 'top 82%', once: true, animation: effects.lightRows(element) }));
-const loopWatch = new IntersectionObserver(entries => entries.forEach(entry => entry.target.classList.toggle('is-paused', !entry.isIntersecting)));
-document.querySelectorAll('[data-loop]').forEach(loop => loopWatch.observe(loop));
-</script>
-
-<script data-8b-part="scene:market">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('market');
-    const field = section.querySelector('.market__field');
-    const lines = [...field.querySelectorAll('.market__line')];
-    const bank = lines.findIndex(line => line.classList.contains('is-bank'));
-    const reach = Math.max(bank, lines.length - 1 - bank, 1);
-    const root = getComputedStyle(document.documentElement);
-    const pale = root.getPropertyValue('--color-9').trim();
-    const ember = root.getPropertyValue('--color-6').trim();
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: 'market', trigger: field, start: 'top 88%', end: 'bottom 40%', scrub: true } });
-    lines.forEach((line, index) => {
-      if (index === bank) return;
-      timeline.fromTo(line, { scaleY: 0.2, backgroundColor: pale }, { scaleY: 1, backgroundColor: ember, duration: 0.3, ease: 'power2.out' }, Math.abs(index - bank) / reach * 0.7);
-    });
-  });
-}, { id: 'scene:market', near: document.getElementById('market') });
-</script>
-<script data-8b-part="scene:method">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('method');
-    const steps = [...section.querySelectorAll('.method__step')];
-    const photos = [...section.querySelectorAll('.method__photo')];
-    const dots = [...section.querySelectorAll('.method__dot')];
-    if (photos.length < steps.length || dots.length < steps.length) throw new Error('method: a photo and an index dot per step are required');
-    section.classList.add('is-staged');
-    steps.forEach((step, index) => {
-      if (index === 0) return;
-      const photo = photos[index], previous = photos[index - 1];
-      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: `method:step-${index + 1}`, trigger: step, start: 'top 85%', end: 'top 30%', scrub: true } });
-      timeline
-        .fromTo(photo, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1, ease: 'power2.inOut' }, 0)
-        .fromTo(photo.querySelector('img'), { scale: 1.18 }, { scale: 1, duration: 1 }, 0)
-        .fromTo(previous.querySelector('.method__shift'), { yPercent: 0, filter: 'brightness(1)' }, { yPercent: -12, filter: 'brightness(0.4)', duration: 1, ease: 'power2.inOut' }, 0)
-        .fromTo(dots[index], { scale: 0 }, { scale: 1, duration: 0.3 }, 0.55)
-        .fromTo(dots[index - 1], { opacity: 1 }, { opacity: 0, duration: 0.3 }, 0.55);
-    });
-    return () => section.classList.remove('is-staged');
-  });
-}, { id: 'scene:method', near: document.getElementById('method') });
-</script>
-<script data-8b-part="scene:advisers">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('advisers');
-    const people = [...section.querySelectorAll('.adviser')];
-    const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
-    const perRow = window.matchMedia('(max-width: 960px)').matches ? 2 : 4;
-    people.forEach((person, index) => {
-      const lag = (index % perRow) * 6;
-      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: `advisers:person-${index + 1}`, trigger: person, start: `top ${96 - lag}%`, end: `top ${52 - lag}%`, scrub: true } });
-      timeline
-        .fromTo(person.querySelector('.adviser__frame'), { clipPath: `inset(0% 46% 0% 46% round ${rem * 20}px)` }, { clipPath: `inset(0% 0% 0% 0% round ${rem * 0.875}px)`, duration: 0.8, ease: 'power2.inOut' }, 0)
-        .fromTo(person.querySelector('img'), { filter: 'brightness(0.3)', scale: 1.2 }, { filter: 'brightness(1)', scale: 1, duration: 0.8 }, 0)
-        .fromTo(person.querySelector('.adviser__text'), { y: rem * 2 }, { y: 0, duration: 0.6, ease: 'power2.out' }, 0.4);
-    });
-  });
-}, { id: 'scene:advisers', near: document.getElementById('advisers') });
-</script>
-<script data-8b-part="scene:switch">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('switch');
-    const track = section.querySelector('.switch__track');
-    const fill = section.querySelector('.switch__fill');
-    const dots = [...section.querySelectorAll('.switch__dot')];
-    const root = getComputedStyle(document.documentElement);
-    const white = root.getPropertyValue('--color-1').trim();
-    const amber = root.getPropertyValue('--color-5').trim();
-    section.classList.add('is-track');
-    const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { id: 'switch', trigger: section, start: 'top top', end: () => '+=' + distance(), pin: true, scrub: true, invalidateOnRefresh: true }
-    });
-    timeline
-      .fromTo(track, { x: 0 }, { x: () => -distance(), duration: 1 }, 0)
-      .fromTo(section, { backgroundColor: white }, { backgroundColor: amber, duration: 1, ease: 'power1.in' }, 0)
-      .fromTo(fill, { scaleX: 0 }, { scaleX: 1, duration: 0.92 }, 0.04);
-    dots.forEach((dot, index) => timeline.fromTo(dot, { scale: 0.45 }, { scale: 1, duration: 0.08, ease: 'back.out(3)' }, 0.06 + index / Math.max(dots.length - 1, 1) * 0.84));
-    return () => section.classList.remove('is-track');
-  });
-}, { id: 'scene:switch' });
-</script>
-<script data-8b-part="scene:offer">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('offer');
-    const frame = section.querySelector('.offer__frame');
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: 'offer', trigger: frame, start: 'top 85%', end: 'center 45%', scrub: true } });
-    timeline
-      .fromTo(frame.querySelector('.offer__img'), { scale: 1.2 }, { scale: 1, duration: 1 }, 0)
-      .fromTo(frame.querySelector('.offer__panel'), { yPercent: 140 }, { yPercent: 0, duration: 0.5, ease: 'power2.out' }, 0.15)
-      .fromTo(frame.querySelector('.offer__chart polyline'), { strokeDashoffset: 1 }, { autoRound: false, strokeDashoffset: 0, duration: 0.45 }, 0.45);
-  });
-}, { id: 'scene:offer', near: document.getElementById('offer') });
-</script>
-<script data-8b-part="scene:contact">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('contact');
-    const visual = section.querySelector('.contact__visual');
-    const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: 'contact', trigger: section, start: 'top 90%', end: 'top 15%', scrub: true } });
-    timeline
-      .fromTo(visual.querySelector('.contact__disc'), { yPercent: 70, scale: 0.45 }, { yPercent: 0, scale: 1, duration: 1, ease: 'power2.out' }, 0)
-      .fromTo(visual.querySelector('.contact__photo'), { scale: 1.12 }, { scale: 1, duration: 1 }, 0);
-  });
-}, { id: 'scene:contact', near: document.getElementById('contact') });
 </script>
 </body>
 </html>

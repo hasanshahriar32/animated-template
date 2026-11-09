@@ -1,6 +1,6 @@
 # AGENTS.md: cooking school website template
 
-One-page website for a cookery school that sells places on classes and private kitchen hire. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a cookery school that sells places on classes and private kitchen hire. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,19 +14,17 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__menu` `.m-btn-2__label` `.nav__links` `data-close`
   - `section-script:footer`: `.footer__form` `.footer__status` `data-done`
-  - `scene:courses`: `.courses__row` `.courses__photo` `.courses__code`
-  - `scene:doors`: `.doors__pair` `.doors__photo` `.doors__img`
-  - `scene:teachers`: `.teachers__who` `.teachers__win` `.teachers__img` `.teachers__name`
-  - `scene:notebook`: `.notebook__pin` `.notebook__track` `.notebook__img` `.notebook__figure`
-  - `scene:house`: `.house__frame` `.house__img` `.house__under`
+  - `scene-script:courses`: `.courses__row` `.courses__code`
+  - `scene-script:notebook`: `.notebook__pin` `.notebook__track` `.notebook__img` `.notebook__figure`
 - `style="--len:N"` = characters in that display line, spaces included: `The Catalogue` is 13, `Who Teaches` is 11, `Autumn Term` is 11, `Find Us` is 7, `Grist` is 5.
 - The four display headings (The Catalogue, Who Teaches, Autumn Term, Find Us) are justified lines whose style carries --len, the number of characters including spaces; the spread effect splits them into words at run time. Update --len to the length of your heading.
 - The footer wordmark "Grist" and the year are laid out with --len:5 and four digit spans placed at fixed fractions of the width: keep four digits, and set --len to the length of your name.
-- The sticky photo frame in the catalogue has one photo per row in the same order (seven rows, seven photos), matched by position in the scene script; add or remove a row and its photo together.
-- Teacher portraits sit inside the sentence as small windows; each name needs its own span with a photo, because the scene runs per name.
+- The sticky photo frame in the catalogue has one photo per row in the same order (seven rows, seven photos), paired by CSS :nth-of-type rules that are written for seven; add or remove a row and its photo together, and add or drop the matching rules. Without the motion the frame shows the last photo.
+- Teacher portraits sit inside the sentence as small windows; each name needs its own span with a photo, because each name runs on its own scroll timeline.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #ffffff (page ground, header bar, text and outlined buttons on the cobalt and brown grounds), `--color-2` #472600 (text, solid buttons, footer ground, the phone menu overlay and the hover fill of outlined buttons), `--color-3` #d4d1c8 (header bar's bottom line, empty photo frames, footer text and its top rule), `--color-4` #858276 (hairlines between catalogue rows, timetable rows, questions and contact rows; teacher names before they are read), `--color-5` #36619c (first screen ground, button hover fill, the lit course code, the block behind the house photo and the favicon); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -65,10 +63,10 @@ All demo text, never to be invented:
 
 ## Known limits
 - Without JavaScript the small-screen Menu button cannot open the link overlay and the timetable form shows no thank-you line; the FAQ opens natively and the footer links stay reachable.
-- The notebook pins while its track slides, about 1,150 px of extra scroll on a 375 px phone, and its Read the note links only jump back to the notebook until you set them.
+- Without CSS scroll-driven animation support (Firefox today) and with reduced motion, nothing animates and smooth wheel scrolling is off: the opening shows at once, headings sit justified, rules are drawn, the catalogue frame shows its last photo for every row, the teacher windows are open and the notebook is a strip you scroll sideways. The header bar still hides on scroll down.
+- The notebook holds the screen while its track slides, about 1,150 px of extra scroll on a 375 px phone, and its Read the note links only jump back to the notebook until you set them.
 - The timetable is a six-column table that restacks each row into a small block below 760 px; check both widths if you add a column.
 - The Book links, the footer form and the policy links point to the page itself until you set them.
-- gsap, ScrollTrigger and Lenis load from a CDN near the end of the body, and the motion scripts after them wait for those files.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Grist left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Grist left only in class names.

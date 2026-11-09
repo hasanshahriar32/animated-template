@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/bowling-alley-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -107,9 +108,6 @@
 /* end font fallbacks */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; background: var(--color-1); }
-html.lenis, html.lenis body { height: auto; }
-.lenis-stopped { overflow: clip; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 body { margin: 0; background: var(--color-1); color: var(--color-4); font-family: var(--font-2); font-size: 16px; line-height: 1.5; font-weight: 400; overflow-x: clip; }
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
@@ -199,6 +197,12 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
   #nav .nv-actions .m-btn { min-height: 42px; padding: 0 16px; font-size: 12px; }
   #nav .nv-logo { font-size: 18px; }
 }
+#nav .nv-bar { background: var(--color-1); color: var(--color-2); }
+#nav .nv-bar .nv-menu { background: var(--color-2); }
+#nav .nv-bar .nv-menu .m-icon__glyph { color: var(--color-1); }
+#nav .nv-bar .m-btn { background: var(--color-2); border-color: var(--color-2); color: var(--color-1); }
+#nav .nv-bar:not(.is-solid) :focus-visible { outline-color: var(--color-2); }
+@media (hover: hover) { #nav .nv-bar .m-btn:hover { color: var(--color-4); border-color: var(--color-3); } }
 }
 </style>
 
@@ -216,6 +220,16 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
 #roof .rf-facts { display: grid; gap: 8px; color: color-mix(in oklab, var(--color-4) 86%, transparent); }
 #roof .rf-facts .m-text-4 { color: var(--color-2); }
 @media (max-width: 860px) { #roof .rf-tiles { grid-template-columns: 1fr; } #roof .rf-tile { min-height: 0; } }
+#roof { display: flex; flex-direction: column; min-height: 100svh; padding-top: clamp(116px, 15svh, 150px); }
+#roof .rf-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: clamp(28px, 4svh, 44px); }
+#roof .rf-title { font-size: clamp(58px, 10vw, 150px); }
+#roof .rf-side { display: grid; justify-items: end; gap: 22px; max-width: 31em; text-align: right; }
+#roof .rf-tiles { flex: 1; }
+@media (max-width: 860px) {
+  #roof { min-height: 0; padding-top: 104px; }
+  #roof .rf-head { display: grid; justify-items: start; }
+  #roof .rf-side { justify-items: start; text-align: left; gap: 18px; }
+}
 }
 </style>
 <style data-8b-part="section:leagues">
@@ -347,21 +361,6 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
 #parties .pt-text .m-pill { background: var(--color-1); color: var(--color-4); }
 }
 </style>
-<style data-8b-part="scene-style:parties">
-@layer scenes {
-@media (prefers-reduced-motion: no-preference) {
-  #parties[data-tracking] .pt-pin { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; overflow: hidden; padding: 0; }
-  #parties[data-tracking] .pt-track { display: flex; align-items: stretch; width: max-content; padding: 0 var(--space-2); will-change: transform; }
-  #parties[data-tracking] .pt-intro { flex: none; width: min(36vw, 480px); padding-right: 32px; }
-  #parties[data-tracking] .pt-panel { flex: none; width: min(30vw, 400px); }
-  @media (max-width: 720px) {
-    #parties[data-tracking] .pt-intro { width: 82vw; }
-    #parties[data-tracking] .pt-panel { width: 76vw; }
-    #parties[data-tracking] .pt-panel img { aspect-ratio: 4 / 2.6; }
-  }
-}
-}
-</style>
 <style data-8b-part="section:rookie">
 @layer sections {
 #rookie { margin: var(--space-3) var(--space-1) 0; padding: clamp(40px, 6vw, 96px) var(--space-2); border-radius: var(--radius-1); background: var(--color-6); color: var(--color-1); }
@@ -457,29 +456,152 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
 @media (max-width: 720px) { #footer .ft-stamp { right: 4%; width: 92px; } }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-@layer sections {
-#roof { display: flex; flex-direction: column; min-height: 100svh; padding-top: clamp(116px, 15svh, 150px); }
-#roof .rf-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: clamp(28px, 4svh, 44px); }
-#roof .rf-title { font-size: clamp(58px, 10vw, 150px); }
-#roof .rf-side { display: grid; justify-items: end; gap: 22px; max-width: 31em; text-align: right; }
-#roof .rf-tiles { flex: 1; }
-#nav .nv-bar { background: var(--color-1); color: var(--color-2); }
-#nav .nv-bar .nv-menu { background: var(--color-2); }
-#nav .nv-bar .nv-menu .m-icon__glyph { color: var(--color-1); }
-#nav .nv-bar .m-btn { background: var(--color-2); border-color: var(--color-2); color: var(--color-1); }
-#nav .nv-bar:not(.is-solid) :focus-visible { outline-color: var(--color-2); }
-@media (hover: hover) { #nav .nv-bar .m-btn:hover { color: var(--color-4); border-color: var(--color-3); } }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power3-out: linear(0, 0.0963, 0.1855, 0.2679, 0.3439, 0.4138, 0.478, 0.5367, 0.5904, 0.6392, 0.6836, 0.7237, 0.7599, 0.7924, 0.8215, 0.8474, 0.8704, 0.8907, 0.9085, 0.924, 0.9375, 0.9491, 0.959, 0.9674, 0.9744, 0.9802, 0.985, 0.9888, 0.9919, 0.9943, 0.9961, 0.9974, 0.9984, 0.9991, 0.9995, 0.9998, 0.9999, 1, 1, 1, 1); --ease-6a9d03: linear(0, 0.1254, 0.2419, 0.3497, 0.4492, 0.5406, 0.6243, 0.7005, 0.7696, 0.8318, 0.8875, 0.9369, 0.9804, 1.0182, 1.0507, 1.0781, 1.1008, 1.119, 1.1331, 1.1433, 1.15, 1.1534, 1.1539, 1.1517, 1.1472, 1.1406, 1.1323, 1.1225, 1.1116, 1.0998, 1.0875, 1.0749, 1.0624, 1.0502, 1.0387, 1.0281, 1.0188, 1.011, 1.0051, 1.0013, 1); }
+[data-8b-live] [data-8b-motion~="rise"] { animation-name: motion-rise-translate, motion-rise-rotate, motion-rise-clippath; animation-duration: 0.9s; animation-delay: 0s; animation-timing-function: var(--ease-power3-out), cubic-bezier(0.25, 1, 0.5, 1), cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="rise"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="stamp"] { animation-name: motion-stamp-scale, motion-stamp-rotate, motion-stamp-opacity, motion-stamp-visibility; animation-duration: 0.6s; animation-delay: calc(0s + var(--stamp-delay, 0.16s)); animation-timing-function: var(--ease-6a9d03), var(--ease-6a9d03), var(--ease-6a9d03), linear; animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="stamp"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="scribble"] path { animation-name: motion-scribble-path-strokedashoffset, motion-scribble-path-strokedasharray; animation-duration: 1.1s; animation-delay: calc(0s + var(--scribble-delay, 0s)); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1), linear; animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="scribble"].is-in path { animation-play-state: running; }
+@keyframes motion-rise-translate { 0% { translate: 0px 40%; } 100% { translate: 0px 0px; } }
+@keyframes motion-rise-rotate { 0% { rotate: 2deg; } 100% { rotate: 0deg; } }
+@keyframes motion-rise-clippath { 0% { clip-path: inset(0% 0% 100%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes motion-stamp-scale { 0% { scale: 1.45; } 100% { scale: 1; } }
+@keyframes motion-stamp-rotate { 0% { rotate: -14deg; } 100% { rotate: 0deg; } }
+@keyframes motion-stamp-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes motion-stamp-visibility { 0% { visibility: hidden; } 0.002% { visibility: visible; animation-timing-function: linear(0, 0.1254, 0.2419, 0.3497, 0.4492, 0.5406, 0.6243, 0.7005, 0.7696, 0.8318, 0.8875, 0.9369, 0.9804, 1.0182, 1.0507, 1.0781, 1.1008, 1.119, 1.1331, 1.1433, 1.15, 1.1534, 1.1539, 1.1517, 1.1472, 1.1406, 1.1323, 1.1225, 1.1116, 1.0998, 1.0875, 1.0749, 1.0624, 1.0502, 1.0387, 1.0281, 1.0188, 1.011, 1.0051, 1.0013, 1); } 100% { visibility: visible; } }
+@keyframes motion-scribble-path-strokedashoffset { 0% { stroke-dashoffset: 1px; } 100% { stroke-dashoffset: 0px; } }
+@keyframes motion-scribble-path-strokedasharray { 0% { stroke-dasharray: 1px; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); } 100% { stroke-dasharray: 1px; } }
+}
+</style>
+<style data-8b-part="scene:roof">
+@layer scenes {
+[data-8b-live] #roof .rf-side { animation: roof-side-lift .7s cubic-bezier(.2,.8,.2,1) .2s backwards; }
+@keyframes roof-side-lift { from { transform: translateY(18px); opacity: 0; } }
+}
+</style>
+<style data-8b-part="scene:leagues">
+@layer scenes {
+[data-8b-live] { --ease-power1-inout: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); }
+[data-8b-live] #leagues .lg-cards > .lg-card > .lg-frame > .lg-wash { animation-name: leagues-div-lg-wash-translate; animation-timing-function: var(--ease-power1-inout); animation-fill-mode: both; transform: none; }
+@keyframes leagues-div-lg-wash-translate { 0% { translate: var(--leagues-div-lg-wash-translate-from, -50%) 0px; } 100% { translate: var(--leagues-div-lg-wash-translate-to, 0px) 0px; } }
+@media (min-width: 861px) {
+  [data-8b-live] #leagues .lg-cards { view-timeline: --leagues-t1 block; view-timeline-inset: 0; }
+  [data-8b-live] #leagues .lg-cards > .lg-card > .lg-frame > .lg-wash { animation-timeline: --leagues-t1; animation-range: cover calc(8vh - 11.6471vh * var(--i) + 13.2353% * var(--i)) cover calc(73.5294% + 13.2353% * var(--i) - 56.7059vh - 11.647vh * var(--i)); }
+}
 @media (max-width: 860px) {
-  #roof { min-height: 0; padding-top: 104px; }
-  #roof .rf-head { display: grid; justify-items: start; }
-  #roof .rf-side { justify-items: start; text-align: left; gap: 18px; }
+  [data-8b-live] #leagues .lg-cards > .lg-card > .lg-frame > .lg-wash { animation-range: cover 5vh cover calc(100% - 75vh); }
+  [data-8b-live] #leagues .lg-cards > .lg-card > .lg-frame { view-timeline-inset: 0; }
+  [data-8b-live] #leagues .lg-cards > article:nth-of-type(1) > .lg-frame { view-timeline: --leagues-t1 block; }
+  [data-8b-live] #leagues .lg-cards > article:nth-of-type(2) > .lg-frame { view-timeline: --leagues-t2 block; }
+  [data-8b-live] #leagues .lg-cards > article:nth-of-type(3) > .lg-frame { view-timeline: --leagues-t3 block; }
+  [data-8b-live] #leagues .lg-cards > article:nth-of-type(1) > .lg-frame > .lg-wash { animation-timeline: --leagues-t1; }
+  [data-8b-live] #leagues .lg-cards > article:nth-of-type(2) > .lg-frame > .lg-wash { animation-timeline: --leagues-t2; }
+  [data-8b-live] #leagues .lg-cards > article:nth-of-type(3) > .lg-frame > .lg-wash { animation-timeline: --leagues-t3; }
 }
+}
+</style>
+<style data-8b-part="scene:kitchen">
+@layer scenes {
+[data-8b-live] #kitchen { timeline-scope: --kitchen-t1, --kitchen-t2, --kitchen-t3; }
+[data-8b-live] #kitchen .kt-groups > div:nth-of-type(2) { view-timeline: --kitchen-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #kitchen .kt-groups > div:nth-of-type(3) { view-timeline: --kitchen-t2 block; view-timeline-inset: 0; }
+[data-8b-live] #kitchen .kt-groups > div:nth-of-type(4) { view-timeline: --kitchen-t3 block; view-timeline-inset: 0; }
+[data-8b-live] #kitchen .kt-disc > img:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4)) { animation-name: kitchen-img-kt-photo-translate, kitchen-img-kt-photo-rotate; animation-range: cover 8vh cover 50vh; animation-timing-function: cubic-bezier(0.3333, 0.6667, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #kitchen .kt-disc > img:nth-of-type(2) { animation-timeline: --kitchen-t1; }
+[data-8b-live] #kitchen .kt-disc > img:nth-of-type(3) { animation-timeline: --kitchen-t2; }
+[data-8b-live] #kitchen .kt-disc > img:nth-of-type(4) { animation-timeline: --kitchen-t3; }
+@keyframes kitchen-img-kt-photo-translate { 0% { translate: -175% 0px; } 100% { translate: 0px 0px; } }
+@keyframes kitchen-img-kt-photo-rotate { 0% { rotate: -200.535deg; } 100% { rotate: 0deg; } }
+}
+</style>
+<style data-8b-part="scene:glow">
+@property --glow-gl-night { syntax: '<number>'; inherits: true; initial-value: 1; }
+@layer scenes {
+[data-8b-live] { --ease-power1-inout: linear(0, 0.0013, 0.005, 0.0112, 0.02, 0.0313, 0.045, 0.0612, 0.08, 0.1013, 0.125, 0.1512, 0.18, 0.2112, 0.245, 0.2813, 0.32, 0.3613, 0.405, 0.4512, 0.5, 0.5487, 0.595, 0.6388, 0.68, 0.7188, 0.755, 0.7887, 0.82, 0.8488, 0.875, 0.8988, 0.92, 0.9387, 0.955, 0.9688, 0.98, 0.9888, 0.995, 0.9988, 1); }
+[data-8b-live] #glow { view-timeline: --glow-t1 block; view-timeline-inset: 0; animation-name: glow-glow---gl-night; animation-timeline: --glow-t1; animation-range: cover 15vh cover 78vh; animation-timing-function: var(--ease-power1-inout); animation-fill-mode: both; --gl-night: var(--glow-gl-night); }
+@keyframes glow-glow---gl-night { 0% { --glow-gl-night: 0; } 100% { --glow-gl-night: 1; } }
+}
+</style>
+<style data-8b-part="scene:fame">
+@layer scenes {
+[data-8b-live] #fame .fm-list { view-timeline: --fame-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #fame .fm-list > .fm-row { animation-timeline: --fame-t1; animation-range: cover 18vh cover calc(50% - 2vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #fame .fm-list > li:is(:nth-of-type(4), :nth-of-type(6)) { animation-name: fame-li-fm-row-translate-4; }
+@keyframes fame-li-fm-row-translate-d { 0% { translate: 0px 136px; } 5% { translate: 0.52px 135.93px; } 10% { translate: 2.08px 135.46px; } 15% { translate: 4.68px 134.16px; } 20% { translate: 8.32px 131.65px; } 23.3333% { translate: 11.32px 129.09px; } 26.6667% { translate: 14.68px 125.68px; } 30% { translate: 17.68px 121.31px; } 33.3333% { translate: 20.22px 115.85px; } 36.6667% { translate: 22.3px 109.18px; } 40% { translate: 23.92px 101.18px; } 43.3333% { translate: 25.08px 91.73px; } 45% { translate: 25.48px 86.43px; } 46.6667% { translate: 25.77px 80.71px; } 48.3333% { translate: 25.94px 74.58px; } 51.6667% { translate: 25.94px 61.42px; } 53.3333% { translate: 25.77px 55.29px; } 55% { translate: 25.48px 49.57px; } 58.3333% { translate: 24.56px 39.35px; } 61.6667% { translate: 23.17px 30.64px; } 65% { translate: 21.32px 23.32px; } 68.3333% { translate: 19.01px 17.27px; } 71.6667% { translate: 16.24px 12.37px; } 75% { translate: 13px 8.5px; } 78.3333% { translate: 9.76px 5.53px; } 83.3333% { translate: 5.78px 2.52px; } 88.3333% { translate: 2.83px 0.86px; } 93.3333% { translate: 0.92px 0.16px; } 98.3333% { translate: 0.06px 0px; } 100% { translate: 0px 0px; } }
+@keyframes fame-li-fm-row-translate-m { 0% { translate: 0px 140px; } 5% { translate: 0.52px 139.93px; } 10% { translate: 2.08px 139.44px; } 15% { translate: 4.68px 138.11px; } 20% { translate: 8.32px 135.52px; } 23.3333% { translate: 11.32px 132.89px; } 26.6667% { translate: 14.68px 129.38px; } 30% { translate: 17.68px 124.88px; } 33.3333% { translate: 20.22px 119.26px; } 36.6667% { translate: 22.3px 112.39px; } 40% { translate: 23.92px 104.16px; } 43.3333% { translate: 25.08px 94.43px; } 45% { translate: 25.48px 88.97px; } 46.6667% { translate: 25.77px 83.09px; } 48.3333% { translate: 25.94px 76.77px; } 51.6667% { translate: 25.94px 63.23px; } 53.3333% { translate: 25.77px 56.91px; } 55% { translate: 25.48px 51.03px; } 58.3333% { translate: 24.56px 40.51px; } 61.6667% { translate: 23.17px 31.54px; } 65% { translate: 21.32px 24.01px; } 68.3333% { translate: 19.01px 17.78px; } 71.6667% { translate: 16.24px 12.74px; } 75% { translate: 13px 8.75px; } 78.3333% { translate: 9.76px 5.7px; } 83.3333% { translate: 5.78px 2.59px; } 88.3333% { translate: 2.83px 0.89px; } 93.3333% { translate: 0.92px 0.17px; } 98.3333% { translate: 0.06px 0px; } 100% { translate: 0px 0px; } }
+@keyframes fame-li-fm-row-translate-2-d { 0% { translate: 0px -68px; } 5% { translate: -0.52px -67.97px; } 10% { translate: -2.08px -67.73px; } 15% { translate: -4.68px -67.08px; } 20% { translate: -8.32px -65.82px; } 25% { translate: -13px -63.75px; } 30% { translate: -17.68px -60.66px; } 35% { translate: -21.32px -56.34px; } 40% { translate: -23.92px -50.59px; } 45% { translate: -25.48px -43.21px; } 48.3333% { translate: -25.94px -37.29px; } 53.3333% { translate: -25.77px -27.64px; } 56.6667% { translate: -25.08px -22.13px; } 61.6667% { translate: -23.17px -15.32px; } 66.6667% { translate: -20.22px -10.07px; } 71.6667% { translate: -16.24px -6.19px; } 76.6667% { translate: -11.32px -3.46px; } 81.6667% { translate: -6.99px -1.68px; } 86.6667% { translate: -3.7px -0.64px; } 91.6667% { translate: -1.44px -0.16px; } 96.6667% { translate: -0.23px -0.01px; } 100% { translate: 0px 0px; } }
+@keyframes fame-li-fm-row-translate-2-m { 0% { translate: 0px -70px; } 5% { translate: -0.52px -69.97px; } 10% { translate: -2.08px -69.72px; } 15% { translate: -4.68px -69.06px; } 20% { translate: -8.32px -67.76px; } 25% { translate: -13px -65.63px; } 30% { translate: -17.68px -62.44px; } 35% { translate: -21.32px -57.99px; } 40% { translate: -23.92px -52.08px; } 43.3333% { translate: -25.08px -47.22px; } 46.6667% { translate: -25.77px -41.54px; } 51.6667% { translate: -25.94px -31.62px; } 55% { translate: -25.48px -25.52px; } 58.3333% { translate: -24.56px -20.25px; } 63.3333% { translate: -22.3px -13.8px; } 68.3333% { translate: -19.01px -8.89px; } 73.3333% { translate: -14.68px -5.31px; } 78.3333% { translate: -9.76px -2.85px; } 83.3333% { translate: -5.78px -1.3px; } 88.3333% { translate: -2.83px -0.44px; } 93.3333% { translate: -0.92px -0.08px; } 98.3333% { translate: -0.06px 0px; } 100% { translate: 0px 0px; } }
+@keyframes fame-li-fm-row-translate-4 { 0% { translate: 0px 0px; } 100% { translate: 0px 0px; } }
+@keyframes fame-li-fm-row-translate-5-d { 0% { translate: 0px -204px; } 5% { translate: -0.52px -203.9px; } 10% { translate: -2.08px -203.18px; } 15% { translate: -4.68px -201.25px; } 18.3333% { translate: -6.99px -198.97px; } 21.6667% { translate: -9.76px -195.7px; } 25% { translate: -13px -191.25px; } 28.3333% { translate: -16.24px -185.44px; } 30% { translate: -17.68px -181.97px; } 31.6667% { translate: -19.01px -178.09px; } 33.3333% { translate: -20.22px -173.78px; } 35% { translate: -21.32px -169.01px; } 36.6667% { translate: -22.3px -163.77px; } 38.3333% { translate: -23.17px -158.04px; } 40% { translate: -23.92px -151.78px; } 41.6667% { translate: -24.56px -144.97px; } 43.3333% { translate: -25.08px -137.6px; } 45% { translate: -25.48px -129.64px; } 46.6667% { translate: -25.77px -121.07px; } 48.3333% { translate: -25.94px -111.86px; } 51.6667% { translate: -25.94px -92.14px; } 53.3333% { translate: -25.77px -82.93px; } 55% { translate: -25.48px -74.36px; } 56.6667% { translate: -25.08px -66.4px; } 58.3333% { translate: -24.56px -59.03px; } 60% { translate: -23.92px -52.22px; } 61.6667% { translate: -23.17px -45.96px; } 63.3333% { translate: -22.3px -40.23px; } 65% { translate: -21.32px -34.99px; } 66.6667% { translate: -20.22px -30.22px; } 68.3333% { translate: -19.01px -25.91px; } 70% { translate: -17.68px -22.03px; } 73.3333% { translate: -14.68px -15.47px; } 76.6667% { translate: -11.32px -10.37px; } 80% { translate: -8.32px -6.53px; } 83.3333% { translate: -5.78px -3.78px; } 86.6667% { translate: -3.7px -1.93px; } 91.6667% { translate: -1.44px -0.47px; } 96.6667% { translate: -0.23px -0.03px; } 100% { translate: 0px 0px; } }
+@keyframes fame-li-fm-row-translate-5-m { 0% { translate: 0px -210px; } 5% { translate: -0.52px -209.9px; } 10% { translate: -2.08px -209.16px; } 15% { translate: -4.68px -207.16px; } 18.3333% { translate: -6.99px -204.82px; } 21.6667% { translate: -9.76px -201.46px; } 25% { translate: -13px -196.88px; } 28.3333% { translate: -16.24px -190.89px; } 30% { translate: -17.68px -187.32px; } 31.6667% { translate: -19.01px -183.33px; } 33.3333% { translate: -20.22px -178.89px; } 35% { translate: -21.32px -173.99px; } 36.6667% { translate: -22.3px -168.59px; } 38.3333% { translate: -23.17px -162.68px; } 40% { translate: -23.92px -156.24px; } 41.6667% { translate: -24.56px -149.24px; } 43.3333% { translate: -25.08px -141.65px; } 45% { translate: -25.48px -133.46px; } 46.6667% { translate: -25.77px -124.63px; } 48.3333% { translate: -25.94px -115.15px; } 51.6667% { translate: -25.94px -94.85px; } 53.3333% { translate: -25.77px -85.37px; } 55% { translate: -25.48px -76.55px; } 56.6667% { translate: -25.08px -68.35px; } 58.3333% { translate: -24.56px -60.76px; } 60% { translate: -23.92px -53.76px; } 61.6667% { translate: -23.17px -47.32px; } 63.3333% { translate: -22.3px -41.41px; } 65% { translate: -21.32px -36.02px; } 66.6667% { translate: -20.22px -31.11px; } 68.3333% { translate: -19.01px -26.67px; } 70% { translate: -17.68px -22.68px; } 73.3333% { translate: -14.68px -15.93px; } 76.6667% { translate: -11.32px -10.67px; } 80% { translate: -8.32px -6.72px; } 83.3333% { translate: -5.78px -3.89px; } 86.6667% { translate: -3.7px -1.99px; } 91.6667% { translate: -1.44px -0.49px; } 96.6667% { translate: -0.23px -0.03px; } 100% { translate: 0px 0px; } }
+@media (min-width: 861px) {
+  [data-8b-live] #fame .fm-list > li:nth-of-type(1) { animation-name: fame-li-fm-row-translate-d; }
+  [data-8b-live] #fame .fm-list > li:nth-of-type(2) { animation-name: fame-li-fm-row-translate-2-d; }
+  [data-8b-live] #fame .fm-list > li:nth-of-type(3) { animation-name: fame-li-fm-row-translate-d; }
+  [data-8b-live] #fame .fm-list > li:nth-of-type(5) { animation-name: fame-li-fm-row-translate-5-d; }
+}
+@media (max-width: 860px) {
+  [data-8b-live] #fame .fm-list > li:nth-of-type(1) { animation-name: fame-li-fm-row-translate-m; }
+  [data-8b-live] #fame .fm-list > li:nth-of-type(2) { animation-name: fame-li-fm-row-translate-2-m; }
+  [data-8b-live] #fame .fm-list > li:nth-of-type(3) { animation-name: fame-li-fm-row-translate-m; }
+  [data-8b-live] #fame .fm-list > li:nth-of-type(5) { animation-name: fame-li-fm-row-translate-5-m; }
+}
+}
+</style>
+<style data-8b-part="scene:parties">
+@layer scenes {
 @media (prefers-reduced-motion: no-preference) {
-  #roof .rf-side { animation: op-lift .7s cubic-bezier(.2,.8,.2,1) .2s backwards; }
+  [data-8b-live] #parties .pt-pin { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; overflow: hidden; padding: 0; }
+  [data-8b-live] #parties .pt-track { display: flex; align-items: stretch; width: max-content; padding: 0 var(--space-2); will-change: transform; }
+  [data-8b-live] #parties .pt-intro { flex: none; width: min(36vw, 480px); padding-right: 32px; }
+  [data-8b-live] #parties .pt-panel { flex: none; width: min(30vw, 400px); }
+  @media (max-width: 720px) {
+    [data-8b-live] #parties .pt-intro { width: 82vw; }
+    [data-8b-live] #parties .pt-panel { width: 76vw; }
+    [data-8b-live] #parties .pt-panel img { aspect-ratio: 4 / 2.6; }
+  }
 }
-@keyframes op-lift { from { transform: translateY(18px); opacity: 0; } }
-}</style>
+}
+@layer scenes {
+[data-8b-live] #parties { height: calc(var(--parties-distance, 0px) + 100vh); view-timeline: --parties-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #parties .pt-track { animation-name: parties-track; animation-timeline: --parties-t1; animation-range: cover 100vh cover calc(100% - 100vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes parties-track { from { translate: 0px 0px; } to { translate: calc(-1 * var(--parties-distance, 0px)) 0px; } }
+}
+</style>
+<style data-8b-part="scene:faq">
+@layer scenes {
+@media (min-width: 721px) {
+[data-8b-live] #faq .fq-scribble--a > path { stroke-dasharray: 1; stroke-dashoffset: 0px; }
+[data-8b-live] #faq .fq-scribble--b > path { stroke-dasharray: 1; stroke-dashoffset: 0px; }
+}
+@media (max-width: 720px) {
+[data-8b-live] #faq .fq-scribble--a > path { stroke-dasharray: 1; stroke-dashoffset: 0px; }
+[data-8b-live] #faq .fq-scribble--b > path { stroke-dasharray: 1; stroke-dashoffset: 0.0018px; }
+}
+[data-8b-live] #faq .fq-panel { view-timeline: --faq-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #faq .fq-ball--a, [data-8b-live] #faq .fq-ball--b { animation-timeline: --faq-t1; animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #faq .fq-ball--a { animation-name: faq-span-m-sphere-translate, faq-span-m-sphere-rotate; animation-range: cover 10vh cover calc(43.4783% - 3.0435vh); }
+[data-8b-live] #faq .fq-ball--b { animation-name: faq-span-m-sphere-translate-2, faq-span-m-sphere-rotate-2; animation-range: cover calc(6.5217% + 8.0435vh) cover calc(50% - 5vh); }
+@keyframes faq-span-m-sphere-translate { 0% { translate: calc(-160.124% - 59.86px) 0px; } 100% { translate: 0px 0px; } }
+@keyframes faq-span-m-sphere-rotate { 0% { rotate: -183.36deg; } 100% { rotate: 0deg; } }
+@keyframes faq-span-m-sphere-translate-2 { 0% { translate: calc(192.111% - 6.519vw) 0px; } 100% { translate: 0px 0px; } }
+@keyframes faq-span-m-sphere-rotate-2 { 0% { rotate: 183.36deg; } 100% { rotate: 0deg; } }
+}
+</style>
+<style data-8b-part="scene:footer">
+@layer scenes {
+[data-8b-live] #footer .ft-panel { overflow: clip; }
+[data-8b-live] #footer .ft-word { perspective: 900px; view-timeline: --footer-word block; view-timeline-inset: 0; }
+[data-8b-live] #footer .ft-word > span { display: inline-block; transform-origin: 50% 100%; animation-name: footer-letter; animation-timeline: --footer-word; animation-range: entry calc(var(--i) / (var(--n) + 3) * 100%) entry calc((var(--i) + 4) / (var(--n) + 3) * 100%); animation-timing-function: linear(0, 0.1426, 0.271, 0.3859, 0.488, 0.5781, 0.657, 0.7254, 0.784, 0.8336, 0.875, 0.9089, 0.936, 0.9571, 0.973, 0.9844, 0.992, 0.9966, 0.999, 0.9999, 1); animation-fill-mode: both; }
+@keyframes footer-letter { from { rotate: x -88deg; } to { rotate: x 0deg; } }
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -501,7 +623,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
       <a class="m-btn" href="#contact"><span class="m-btn__label">Book a lane</span></a>
     </div>
   </div>
-  <div class="nv-overlay" id="menu" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="nv-overlay" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
     <div class="nv-overlay__top">
       <a class="nv-logo" href="#roof"><span>Pinfall</span><span>Lanes</span></a>
       <button class="m-icon nv-close" type="button"><span class="sr-only">Close the menu</span><span class="m-icon__glyph" aria-hidden="true"><span class="nv-x"><i></i><i></i></span></span></button>
@@ -520,19 +642,19 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
 <main>
 
 
-<!-- facilities: big "Under one roof" headline, a lead line with a button, and three tiles for lanes, kitchen and bar -->
+<!-- facilities: big "Under one roof" headline, a lead line with a button, and three tiles for lanes, kitchen and bar (animation: scene:roof) -->
 <section id="roof" data-8b-section="facilities">
   <div class="rf-head">
-    <h1 class="m-text rf-title" data-8b-motion="rise">Under<br>one roof</h1>
+    <h1 class="m-text rf-title" data-8b-motion="rise" data-8b-enter="90%">Under<br>one roof</h1>
     <div class="rf-side">
       <p class="m-text-3 rf-lead">Roll in, rack up, stay late. Sixteen lanes, a kitchen and a bar until 1am, and glow bowling every Friday.</p>
       <a class="m-btn-3" href="#contact"><span class="m-btn-3__label">Book a lane</span></a>
     </div>
   </div>
-  <div class="rf-tiles">
+  <div class="rf-tiles" data-8b-items=":scope > .rf-tile" data-8b-fixed="3">
     <article class="rf-tile">
       <svg class="rf-icon" viewBox="0 0 26 26" aria-hidden="true"><path d="M5 2v22M13 2v22M21 2v22"/></svg>
-      <h3 class="m-text rf-word" data-8b-motion="stamp">Lanes</h3>
+      <h3 class="m-text rf-word" data-8b-motion="stamp" style="--stamp-delay: 0s">Lanes</h3>
       <div class="rf-facts">
         <p class="m-text-2">Sixteen lanes, eight with bumpers that pop up at a button and ramps for small bowlers.</p>
         <p class="m-text-4">From £6.50 a game, shoes included</p>
@@ -540,7 +662,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
     </article>
     <article class="rf-tile">
       <svg class="rf-icon" viewBox="0 0 26 26" aria-hidden="true"><path d="M7 2v8a3 3 0 0 0 6 0V2M10 13v11M19 24V2c-3 2-4 6-4 10h4"/></svg>
-      <h3 class="m-text rf-word" data-8b-motion="stamp">Kitchen</h3>
+      <h3 class="m-text rf-word" data-8b-motion="stamp" style="--stamp-delay: 0.08s">Kitchen</h3>
       <div class="rf-facts">
         <p class="m-text-2">Smash burgers, loaded fries and thick shakes, ordered from the lane screen and brought to your seat.</p>
         <p class="m-text-4">Served until 11pm, every day</p>
@@ -548,7 +670,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
     </article>
     <article class="rf-tile">
       <svg class="rf-icon" viewBox="0 0 26 26" aria-hidden="true"><path d="M4 3h18l-9 11zM13 14v9M8 23h10"/></svg>
-      <h3 class="m-text rf-word" data-8b-motion="stamp">Bar</h3>
+      <h3 class="m-text rf-word" data-8b-motion="stamp" style="--stamp-delay: 0.16s">Bar</h3>
       <div class="rf-facts">
         <p class="m-text-2">Sheffield beers on tap, slushy cocktails and a jukebox that every lane gets to feed.</p>
         <p class="m-text-4">Open until 1am Friday and Saturday</p>
@@ -560,14 +682,14 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
 <!-- leagues: three league captains as duotone portrait cards with colour washes that sweep through them (animation: scene:leagues) -->
 <section id="leagues" data-8b-section="leagues">
   <div class="lg-head">
-    <h2 class="m-text" data-8b-motion="rise">Meet the<br>leagues</h2>
+    <h2 class="m-text" data-8b-motion="rise" data-8b-enter="90%">Meet the<br>leagues</h2>
     <p class="m-text-3 lg-lead">Three nights a week the league bowlers own the lanes. Every league has a captain who will find you a team, lend you a ball and teach you the handshake.</p>
   </div>
-  <div class="lg-cards">
-    <article class="lg-card">
+  <div class="lg-cards" data-8b-items=":scope > .lg-card" data-8b-fixed="3">
+    <article class="lg-card" style="--leagues-div-lg-wash-translate-from: -50%; --leagues-div-lg-wash-translate-to: 0px">
       <div class="lg-frame">
         <div class="lg-wash" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <img style="background:#8c0c0c" src="https://images.unsplash.com/photo-1784330687523-4fcaa6026b3e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8d29tYW4lMjBhcm1zJTIwY3Jvc3NlZCUyMHBvcnRyYWl0JTIwc3R1ZGlvfGVufDF8MXx8fDE3OTE1Njc3ODV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=620&q=60" alt="Amara Okoye, captain of the Monday Rookies, with her arms crossed" width="1600" height="2000" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1784330687523-4fcaa6026b3e?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8d29tYW4lMjBhcm1zJTIwY3Jvc3NlZCUyMHBvcnRyYWl0JTIwc3R1ZGlvfGVufDF8MXx8fDE3OTE1Njc3ODV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=620&q=60" alt="Amara Okoye, captain of the Monday Rookies, with her arms crossed" width="1600" height="2000" loading="lazy">
         <div class="lg-body">
           <h3 class="m-text lg-name">Amara<br>Okoye</h3>
           <p class="m-pill">Monday Rookies</p>
@@ -575,10 +697,10 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
       </div>
       <p class="m-text-2 lg-info">Mondays at 7pm. Your first season, a handicap that keeps it fair and nobody minds a gutter ball.</p>
     </article>
-    <article class="lg-card">
+    <article class="lg-card" style="--leagues-div-lg-wash-translate-from: -66.667%; --leagues-div-lg-wash-translate-to: -16.667%">
       <div class="lg-frame">
         <div class="lg-wash" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <img style="background:#404040" src="https://images.unsplash.com/photo-1790575546767-f591bf40f6c7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bWFuJTIwZGVuaW0lMjBqYWNrZXQlMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDF8fHwxNzkxNTY3Nzg3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=620&q=60" alt="Callum Reid, captain of the Wednesday Hook League, in a denim jacket" width="1600" height="2844" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1790575546767-f591bf40f6c7?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8bWFuJTIwZGVuaW0lMjBqYWNrZXQlMjBwb3J0cmFpdCUyMHN0dWRpb3xlbnwxfDF8fHwxNzkxNTY3Nzg3fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=620&q=60" alt="Callum Reid, captain of the Wednesday Hook League, in a denim jacket" width="1600" height="2844" loading="lazy">
         <div class="lg-body">
           <h3 class="m-text lg-name">Callum<br>Reid</h3>
           <p class="m-pill">Wednesday Hooks</p>
@@ -586,10 +708,10 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
       </div>
       <p class="m-text-2 lg-info">Wednesdays at 8pm. Teams of four, sanctioned scoring and a trophy that is mostly pride.</p>
     </article>
-    <article class="lg-card">
+    <article class="lg-card" style="--leagues-div-lg-wash-translate-from: -83.333%; --leagues-div-lg-wash-translate-to: -33.333%">
       <div class="lg-frame">
         <div class="lg-wash" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1782204427231-5e87a2c09068?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cG9ydHJhaXQlMjBvbGRlciUyMG1hbiUyMHNtaWxpbmclMjBzdHVkaW98ZW58MXwxfHx8MTc5MTU2Nzc0NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=620&q=60" alt="Frank Mallory, coach of the Saturday Juniors, smiling" width="1600" height="2234" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1782204427231-5e87a2c09068?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8cG9ydHJhaXQlMjBvbGRlciUyMG1hbiUyMHNtaWxpbmclMjBzdHVkaW98ZW58MXwxfHx8MTc5MTU2Nzc0NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=620&q=60" alt="Frank Mallory, coach of the Saturday Juniors, smiling" width="1600" height="2234" loading="lazy">
         <div class="lg-body">
           <h3 class="m-text lg-name">Frank<br>Mallory</h3>
           <p class="m-pill">Saturday Juniors</p>
@@ -606,21 +728,21 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
   <div class="kt-grid">
     <div class="kt-stage">
       <div class="kt-disc">
-        <img style="background:#260c0c" class="kt-photo" src="https://images.unsplash.com/photo-1639020715088-e7afebe6cb25?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c21hc2glMjBidXJnZXJ8ZW58MXwwfHx8MTc5MTU2Nzc5OXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=730&q=60" alt="A double smash burger with cheese and onions" width="1200" height="800" loading="lazy">
-        <img style="background:#594026" class="kt-photo" src="https://images.unsplash.com/photo-1568226189293-77924f3f10c6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bG9hZGVkJTIwZnJpZXN8ZW58MXwwfHx8MTc5MTU2NzgwMXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=870&q=60" alt="Fries with salt on brown paper" width="1200" height="675" loading="lazy">
-        <img style="background:#590c0c" class="kt-photo" src="https://images.unsplash.com/photo-1678712803863-6cd22f6b9dba?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bWlsa3NoYWtlJTIwZGluZXJ8ZW58MXwwfHx8MTc5MTU2NzgwM3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=730&q=60" alt="A milkshake with a cherry on a red diner table" width="1200" height="800" loading="lazy">
-        <img style="background:#262626" class="kt-photo" src="https://images.unsplash.com/photo-1570204865352-934c744d682c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y29ja3RhaWwlMjBiYXIlMjBuZW9ufGVufDF8MHx8fDE3OTE0NzQ3MzJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=730&q=60" alt="A red cocktail in a short glass under purple light" width="1200" height="801" loading="lazy">
+        <img class="kt-photo" src="https://images.unsplash.com/photo-1639020715088-e7afebe6cb25?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8c21hc2glMjBidXJnZXJ8ZW58MXwwfHx8MTc5MTU2Nzc5OXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=730&q=60" alt="A double smash burger with cheese and onions" width="1200" height="800" loading="lazy">
+        <img class="kt-photo" src="https://images.unsplash.com/photo-1568226189293-77924f3f10c6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8bG9hZGVkJTIwZnJpZXN8ZW58MXwwfHx8MTc5MTU2NzgwMXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1120&q=60" alt="Fries with salt on brown paper" width="1200" height="675" loading="lazy">
+        <img class="kt-photo" src="https://images.unsplash.com/photo-1678712803863-6cd22f6b9dba?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8bWlsa3NoYWtlJTIwZGluZXJ8ZW58MXwwfHx8MTc5MTU2NzgwM3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=940&q=60" alt="A milkshake with a cherry on a red diner table" width="1200" height="800" loading="lazy">
+        <img class="kt-photo" src="https://images.unsplash.com/photo-1570204865352-934c744d682c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8Y29ja3RhaWwlMjBiYXIlMjBuZW9ufGVufDF8MHx8fDE3OTE0NzQ3MzJ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=940&q=60" alt="A red cocktail in a short glass under purple light" width="1200" height="801" loading="lazy">
       </div>
     </div>
     <div class="kt-menu">
       <div class="kt-intro">
-        <h2 class="m-text" data-8b-motion="rise">Lane-side<br>kitchen</h2>
+        <h2 class="m-text" data-8b-motion="rise" data-8b-enter="90%">Lane-side<br>kitchen</h2>
         <p class="m-text-3">Order from the screen at your lane and we bring it to your seat before your next frame.</p>
       </div>
-      <div class="kt-groups">
+      <div class="kt-groups" data-8b-items=":scope > .kt-group" data-8b-fixed="4">
         <div class="kt-group">
           <h3 class="m-text-5">Burgers</h3>
-          <ul class="kt-items">
+          <ul class="kt-items" data-8b-items=":scope > li">
             <li><span class="m-text-2 kt-dish">Double Strike</span><span class="kt-price">£11.50</span><span class="kt-note">Two smashed patties, American cheese, pickles, burger sauce</span></li>
             <li><span class="m-text-2 kt-dish">The Spare</span><span class="kt-price">£10.50</span><span class="kt-note">Crispy chicken thigh, hot honey, slaw</span></li>
             <li><span class="m-text-2 kt-dish">Gutter Garden</span><span class="kt-price">£10</span><span class="kt-note">Smoked mushroom patty, vegan cheese, onions</span></li>
@@ -628,7 +750,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
         </div>
         <div class="kt-group">
           <h3 class="m-text-5">Fries and sides</h3>
-          <ul class="kt-items">
+          <ul class="kt-items" data-8b-items=":scope > li">
             <li><span class="m-text-2 kt-dish">Loaded fries</span><span class="kt-price">£6.50</span><span class="kt-note">Cheese sauce, crispy onions, jalapeños</span></li>
             <li><span class="m-text-2 kt-dish">Seven-Ten dog</span><span class="kt-price">£7.50</span><span class="kt-note">A long beef frank, mustard, pickled onions</span></li>
             <li><span class="m-text-2 kt-dish">Pickle chips</span><span class="kt-price">£4</span><span class="kt-note">Fried dill pickles, ranch to dip</span></li>
@@ -636,7 +758,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
         </div>
         <div class="kt-group">
           <h3 class="m-text-5">Shakes</h3>
-          <ul class="kt-items">
+          <ul class="kt-items" data-8b-items=":scope > li">
             <li><span class="m-text-2 kt-dish">Cherry bomb</span><span class="kt-price">£5.50</span><span class="kt-note">Vanilla, cherry ripple, a cherry on top</span></li>
             <li><span class="m-text-2 kt-dish">Peanut butter</span><span class="kt-price">£5.50</span><span class="kt-note">Salted peanut butter and chocolate</span></li>
             <li><span class="m-text-2 kt-dish">Malted vanilla</span><span class="kt-price">£5</span><span class="kt-note">Old-school malt, whipped cream</span></li>
@@ -644,7 +766,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
         </div>
         <div class="kt-group">
           <h3 class="m-text-5">From the bar</h3>
-          <ul class="kt-items">
+          <ul class="kt-items" data-8b-items=":scope > li">
             <li><span class="m-text-2 kt-dish">Neon slushie</span><span class="kt-price">£8</span><span class="kt-note">Frozen cherry and lime with vodka, or without</span></li>
             <li><span class="m-text-2 kt-dish">Furnace pale ale</span><span class="kt-price">£5.80</span><span class="kt-note">A pint from the brewery two streets away</span></li>
             <li><span class="m-text-2 kt-dish">Cola float</span><span class="kt-price">£4.50</span><span class="kt-note">Cola with a scoop of vanilla</span></li>
@@ -667,7 +789,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
       <a class="m-btn-3" href="#contact"><span class="m-btn-3__label">Book a glow lane</span></a>
     </div>
     <figure class="gl-photo">
-      <img style="background:#260c0c" src="https://images.unsplash.com/photo-1671959986099-f7b6c63d9d00?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Ym93bGluZyUyMG5lb24lMjBsaWdodHN8ZW58MXwwfHx8MTc5MTU2Nzc1N3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1160&q=60" alt="Bowling lanes lit in neon colours with balls waiting on the return" width="1600" height="1067" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1671959986099-f7b6c63d9d00?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NHx8Ym93bGluZyUyMG5lb24lMjBsaWdodHN8ZW58MXwwfHx8MTc5MTU2Nzc1N3ww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1160&q=60" alt="Bowling lanes lit in neon colours with balls waiting on the return" width="1600" height="1067" loading="lazy">
       <div class="gl-desat" aria-hidden="true"></div>
     </figure>
   </div>
@@ -677,12 +799,12 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
 <section id="fame" data-8b-section="leaderboard">
   <div class="fm-grid">
     <div class="fm-head">
-      <h2 class="m-text" data-8b-motion="rise">Wall<br>of fame</h2>
+      <h2 class="m-text" data-8b-motion="rise" data-8b-enter="90%">Wall<br>of fame</h2>
       <p class="m-text-3">This week's six best games. Bowl a perfect 300 and your name goes up for good, with a free lane on every birthday after.</p>
     </div>
     <div class="fm-board">
       <div class="fm-cols m-text-4" aria-hidden="true"><span>Rank</span><span>Bowler</span><span>Score</span><span>Lane, day</span></div>
-      <ol class="fm-list">
+      <ol class="fm-list" data-8b-items=":scope > .fm-row" data-8b-fixed="6">
         <li class="fm-row" data-day="3"><span class="fm-rank">1</span><span class="fm-name">Priya Shah</span><span class="fm-score">279</span><span class="m-text-4 fm-meta">Lane 7, Wednesday</span></li>
         <li class="fm-row" data-day="1"><span class="fm-rank">2</span><span class="fm-name">Tom Baxter</span><span class="fm-score">268</span><span class="m-text-4 fm-meta">Lane 12, Monday</span></li>
         <li class="fm-row" data-day="6"><span class="fm-rank">3</span><span class="fm-name">Gemma Lowe</span><span class="fm-score">255</span><span class="m-text-4 fm-meta">Lane 3, Saturday</span></li>
@@ -697,14 +819,14 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
 <!-- parties: four party packages as panels that ride in from the right while the section is held (animation: scene:parties) -->
 <section id="parties" data-8b-section="parties">
   <div class="pt-pin">
-    <div class="pt-track">
+    <div class="pt-track" data-8b-items=":scope > .pt-panel">
       <div class="pt-intro">
-        <h2 class="m-text" data-8b-motion="rise">Throw a party<br>at the lanes</h2>
+        <h2 class="m-text" data-8b-motion="rise" data-8b-enter="90%">Throw a party<br>at the lanes</h2>
         <p class="m-text-3">Lanes, food and a host who keeps the scores and the noise going. Tell us the headcount and we will build the night around it.</p>
         <a class="m-btn-3" href="#contact"><span class="m-btn-3__label">Plan a party</span></a>
       </div>
       <article class="pt-panel">
-        <img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1688632107202-7902806ff3d4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fGtpZHMlMjBiaXJ0aGRheSUyMHBhcnR5fGVufDF8MHx8fDE3OTE1Njc4Mzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=620&q=60" alt="Children around a party table with a birthday cake" width="1200" height="801" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1688632107202-7902806ff3d4?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTV8fGtpZHMlMjBiaXJ0aGRheSUyMHBhcnR5fGVufDF8MHx8fDE3OTE1Njc4Mzd8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=620&q=60" alt="Children around a party table with a birthday cake" width="1200" height="801" loading="lazy">
         <div class="pt-text">
           <h3 class="m-text-5">Kids' parties</h3>
           <p class="m-text-2">Two games with the bumpers up, hot dogs and fries, a slushie each and a cake moment in the party booth. Ages 5 to 12.</p>
@@ -712,7 +834,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
         </div>
       </article>
       <article class="pt-panel">
-        <img style="background:#260c0c" src="https://images.unsplash.com/photo-1681641090195-5adb0c54eeb0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZnJpZW5kcyUyMGNlbGVicmF0aW5nJTIwY2hlZXJzJTIwYmFyfGVufDF8MHx8fDE3OTE1Njc4MzV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=630&q=60" alt="A group of friends laughing around a table with drinks" width="1200" height="800" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1681641090195-5adb0c54eeb0?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8Nnx8ZnJpZW5kcyUyMGNlbGVicmF0aW5nJTIwY2hlZXJzJTIwYmFyfGVufDF8MHx8fDE3OTE1Njc4MzV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=630&q=60" alt="A group of friends laughing around a table with drinks" width="1200" height="800" loading="lazy">
         <div class="pt-text">
           <h3 class="m-text-5">Office socials</h3>
           <p class="m-text-2">A private block of lanes, sharing platters, team scoreboards and a bar tab you set. Up to 60 people.</p>
@@ -720,7 +842,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
         </div>
       </article>
       <article class="pt-panel">
-        <img style="background:#f3d9c0" src="https://images.unsplash.com/photo-1771395834098-ded1cc2b297c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8ZnJpZW5kcyUyMGNlbGVicmF0aW5nJTIwY2hlZXJzJTIwYmFyfGVufDF8MHx8fDE3OTE1Njc4MzV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=630&q=60" alt="Friends raising cocktails over a table of snacks" width="1200" height="800" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1771395834098-ded1cc2b297c?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OHx8ZnJpZW5kcyUyMGNlbGVicmF0aW5nJTIwY2hlZXJzJTIwYmFyfGVufDF8MHx8fDE3OTE1Njc4MzV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=630&q=60" alt="Friends raising cocktails over a table of snacks" width="1200" height="800" loading="lazy">
         <div class="pt-text">
           <h3 class="m-text-5">Big birthdays</h3>
           <p class="m-text-2">Glow lanes, a round of slushie cocktails, a playlist you send ahead and a cake we bring out with the lights down.</p>
@@ -728,7 +850,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
         </div>
       </article>
       <article class="pt-panel">
-        <img style="background:#260c0c" src="https://images.unsplash.com/photo-1724692727301-27bb57701291?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8Ym93bGluZyUyMGFsbGV5fGVufDF8MHx8fDE3OTE1Njc3NTV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=630&q=60" alt="A bowler choosing a ball from the return rack" width="1200" height="796" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1724692727301-27bb57701291?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8Ym93bGluZyUyMGFsbGV5fGVufDF8MHx8fDE3OTE1Njc3NTV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=630&q=60" alt="A bowler choosing a ball from the return rack" width="1200" height="796" loading="lazy">
         <div class="pt-text">
           <h3 class="m-text-5">Lane takeover</h3>
           <p class="m-text-2">All sixteen lanes, the bar and the jukebox are yours for the night, with our hosts running the games.</p>
@@ -742,11 +864,11 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
 <!-- lessons: a beginners' hour: a photo, three numbered tips and a booking button -->
 <section id="rookie" data-8b-section="lessons">
   <div class="rk-grid">
-    <figure class="rk-photo"><img style="background:#40260c" src="https://images.unsplash.com/photo-1693579873130-555f9cc99a38?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Ym93bGluZyUyMGJhbGwlMjBoYW5kfGVufDF8MHx8fDE3OTE1Njc3NTh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=950&q=60" alt="A bowler in a yellow shirt holding a blue ball at the top of the lane" width="1600" height="1067" loading="lazy"></figure>
+    <figure class="rk-photo"><img src="https://images.unsplash.com/photo-1693579873130-555f9cc99a38?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Ym93bGluZyUyMGJhbGwlMjBoYW5kfGVufDF8MHx8fDE3OTE1Njc3NTh8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=950&q=60" alt="A bowler in a yellow shirt holding a blue ball at the top of the lane" width="1600" height="1067" loading="lazy"></figure>
     <div class="rk-copy">
-      <h2 class="m-text" data-8b-motion="rise">Never bowled?<br>Good.</h2>
+      <h2 class="m-text" data-8b-motion="rise" data-8b-enter="90%">Never bowled?<br>Good.</h2>
       <p class="m-text-3">Rookie hour runs every Sunday at 11am: forty minutes with a coach, two games after, £8 with shoes.</p>
-      <ol class="rk-steps">
+      <ol class="rk-steps" data-8b-items=":scope > li">
         <li><span class="m-text rk-n">1</span><h3 class="m-text-5">Pick a ball</h3><p class="m-text-2">About a tenth of your weight. Two fingers and a thumb, and no squeezing.</p></li>
         <li><span class="m-text rk-n">2</span><h3 class="m-text-5">Walk four steps</h3><p class="m-text-2">Start slow, finish low and slide on the last step.</p></li>
         <li><span class="m-text rk-n">3</span><h3 class="m-text-5">Aim at the arrows</h3><p class="m-text-2">Look at the arrows on the lane, not the pins. The pins take care of themselves.</p></li>
@@ -761,10 +883,10 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
   <div class="fq-panel">
     <span class="m-sphere fq-ball fq-ball--a" aria-hidden="true"></span>
     <span class="m-sphere fq-ball fq-ball--b" aria-hidden="true"></span>
-    <svg class="fq-scribble fq-scribble--a" viewBox="0 0 160 160" data-8b-motion="scribble" aria-hidden="true"><path pathLength="1" filter="url(#brush)" d="M30 40C70 10 132 20 118 62C106 98 46 110 40 130C36 146 70 150 104 138C124 130 140 126 152 136"/></svg>
-    <svg class="fq-scribble fq-scribble--b" viewBox="0 0 160 160" data-8b-motion="scribble" aria-hidden="true"><path pathLength="1" filter="url(#brush)" d="M10 150C18 110 30 70 44 96C56 120 62 60 78 70C92 80 92 120 104 104C116 88 118 40 134 30C146 24 152 44 146 60"/></svg>
-    <h2 class="m-text fq-title" data-8b-motion="rise">Before you<br>roll up</h2>
-    <div class="fq-list">
+    <svg class="fq-scribble fq-scribble--a" viewBox="0 0 160 160" data-8b-motion="scribble" aria-hidden="true" style="--scribble-delay: 0s" data-8b-enter="85%"><path pathLength="1" filter="url(#brush)" d="M30 40C70 10 132 20 118 62C106 98 46 110 40 130C36 146 70 150 104 138C124 130 140 126 152 136"/></svg>
+    <svg class="fq-scribble fq-scribble--b" viewBox="0 0 160 160" data-8b-motion="scribble" aria-hidden="true" style="--scribble-delay: 0.08s" data-8b-enter="85%"><path pathLength="1" filter="url(#brush)" d="M10 150C18 110 30 70 44 96C56 120 62 60 78 70C92 80 92 120 104 104C116 88 118 40 134 30C146 24 152 44 146 60"/></svg>
+    <h2 class="m-text fq-title" data-8b-motion="rise" data-8b-enter="90%">Before you<br>roll up</h2>
+    <div class="fq-list" data-8b-items=":scope > details">
       <details><summary class="m-text-4"><span>Do I need to book a lane?</span><span class="fq-plus" aria-hidden="true"></span></summary><p class="m-text-2">Walk-ins are welcome whenever a lane is free. Friday and Saturday nights fill up, so book ahead for those.</p></details>
       <details><summary class="m-text-4"><span>Do you have shoes in my size?</span><span class="fq-plus" aria-hidden="true"></span></summary><p class="m-text-2">From kids' size 10 to adult 15, cleaned after every pair. Shoe hire is in the lane price.</p></details>
       <details><summary class="m-text-4"><span>Can small children bowl?</span><span class="fq-plus" aria-hidden="true"></span></summary><p class="m-text-2">Yes. Bumpers pop up at the touch of a button and we have ball ramps for the smallest bowlers.</p></details>
@@ -778,7 +900,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
 <!-- contact: "Grab a lane" with email and phone tiles, an enquiry form and a photo with the address and opening hours -->
 <section id="contact" data-8b-section="contact">
   <div class="ct-head">
-    <h2 class="m-text" data-8b-motion="rise">Grab<br>a lane</h2>
+    <h2 class="m-text" data-8b-motion="rise" data-8b-enter="90%">Grab<br>a lane</h2>
     <p class="m-text-3">Call the desk, drop us a line or just turn up. We hold every booked lane for fifteen minutes.</p>
   </div>
   <div class="ct-grid">
@@ -808,7 +930,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
       <p class="m-text-3 ct-status" role="status" hidden>Thanks, we have your note. The desk will reply within a day.</p>
     </form>
     <figure class="ct-photo">
-      <img style="background:#a65926" src="https://images.unsplash.com/photo-1619966902237-7551385c2f58?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGVyc29uJTIwY2FycnlpbmclMjBiYWclMjBvcmFuZ2UlMjBiYWNrZ3JvdW5kfGVufDF8MXx8fDE3OTE1Njc4NDF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=640&q=60" alt="A woman walking past a tall orange wall" width="1200" height="1600" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1619966902237-7551385c2f58?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8cGVyc29uJTIwY2FycnlpbmclMjBiYWclMjBvcmFuZ2UlMjBiYWNrZ3JvdW5kfGVufDF8MXx8fDE3OTE1Njc4NDF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=640&q=60" alt="A woman walking past a tall orange wall" width="1200" height="1600" loading="lazy">
       <figcaption class="ct-visit">
         <span class="m-text-4">Find us</span>
         <span class="m-text-2">1 Example Street, Sheffield S1 0ZZ</span>
@@ -824,7 +946,7 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
   <div class="ft-panel">
     <p class="m-text ft-word" style="--len:7">Pinfall</p>
     <div class="ft-stamp">
-      <a class="m-stamp" href="#contact" data-8b-motion="stamp"><svg class="m-stamp__seal" viewBox="0 0 120 120" aria-hidden="true"><path d="M110.0 60.0Q119.4 68.5 108.0 74.1Q114.6 84.9 102.1 87.0Q105.3 99.3 92.7 97.8Q92.4 110.5 80.8 105.5Q76.9 117.6 67.1 109.5Q60.0 120.0 52.9 109.5Q43.1 117.6 39.2 105.5Q27.6 110.5 27.3 97.8Q14.7 99.3 17.9 87.0Q5.4 84.9 12.0 74.1Q0.6 68.5 10.0 60.0Q0.6 51.5 12.0 45.9Q5.4 35.1 17.9 33.0Q14.7 20.7 27.3 22.2Q27.6 9.5 39.2 14.5Q43.1 2.4 52.9 10.5Q60.0 0.0 67.1 10.5Q76.9 2.4 80.8 14.5Q92.4 9.5 92.7 22.2Q105.3 20.7 102.1 33.0Q114.6 35.1 108.0 45.9Q119.4 51.5 110.0 60.0Z"/><circle cx="60" cy="60" r="41"/></svg><span class="m-stamp__label">Book now</span></a>
+      <a class="m-stamp" href="#contact" data-8b-motion="stamp" style="--stamp-delay: 0s"><svg class="m-stamp__seal" viewBox="0 0 120 120" aria-hidden="true"><path d="M110.0 60.0Q119.4 68.5 108.0 74.1Q114.6 84.9 102.1 87.0Q105.3 99.3 92.7 97.8Q92.4 110.5 80.8 105.5Q76.9 117.6 67.1 109.5Q60.0 120.0 52.9 109.5Q43.1 117.6 39.2 105.5Q27.6 110.5 27.3 97.8Q14.7 99.3 17.9 87.0Q5.4 84.9 12.0 74.1Q0.6 68.5 10.0 60.0Q0.6 51.5 12.0 45.9Q5.4 35.1 17.9 33.0Q14.7 20.7 27.3 22.2Q27.6 9.5 39.2 14.5Q43.1 2.4 52.9 10.5Q60.0 0.0 67.1 10.5Q76.9 2.4 80.8 14.5Q92.4 9.5 92.7 22.2Q105.3 20.7 102.1 33.0Q114.6 35.1 108.0 45.9Q119.4 51.5 110.0 60.0Z"/><circle cx="60" cy="60" r="41"/></svg><span class="m-stamp__label">Book now</span></a>
     </div>
     <div class="ft-row">
       <nav class="ft-links" aria-label="Footer">
@@ -866,11 +988,11 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
     menu.hidden = !open;
     openBtn.setAttribute('aria-expanded', String(open));
     document.documentElement.style.overflow = open ? 'hidden' : '';
-    if (open) { window.lenis?.stop(); closeBtn.focus(); } else { window.lenis?.start(); openBtn.focus(); }
+    if (open) { window.motionKit?.wheel?.stop(); closeBtn.focus(); } else { window.motionKit?.wheel?.start(); openBtn.focus(); }
   };
   openBtn.addEventListener('click', () => setOpen(true));
   closeBtn.addEventListener('click', () => setOpen(false));
-  menu.addEventListener('click', event => { if (event.target.closest('a')) { menu.hidden = true; openBtn.setAttribute('aria-expanded', 'false'); document.documentElement.style.overflow = ''; window.lenis?.start(); } });
+  menu.addEventListener('click', event => { if (event.target.closest('a')) { menu.hidden = true; openBtn.setAttribute('aria-expanded', 'false'); document.documentElement.style.overflow = ''; window.motionKit?.wheel?.start(); } });
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !menu.hidden) setOpen(false); });
 })();
 </script>
@@ -887,232 +1009,117 @@ textarea.m-field__input { min-height: 120px; resize: vertical; }
   });
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
+
+<script data-8b-part="motion-kit">
 (() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); });
+};
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
 })();
 </script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-const navOffset = () => {
-  const bar = document.querySelector('#nav .nv-bar');
-  return bar ? Math.round(bar.getBoundingClientRect().height + 16) : 0;
-};
-function refreshScroll() {
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: 0.085, anchors: { offset: -navOffset() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
+<script data-8b-part="scene-script:parties">
+motionKit.scene('parties', () => {
+  const section = document.getElementById('parties'), track = section.querySelector('.pt-track');
+  motionKit.measure(() => motionKit.set(section, { '--parties-distance': Math.max(1, track.scrollWidth - document.documentElement.clientWidth) + 'px' }));
 });
 </script>
-<script data-8b-part="motion">
-const effects = {
-  rise(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element,
-      { yPercent: 40, rotation: 2, clipPath: 'inset(0% 0% 100% 0%)' },
-      { yPercent: 0, rotation: 0, clipPath: 'inset(0% 0% 0% 0%)', duration: .9, ease: 'power3.out', clearProps: 'clipPath' });
-  },
-  stamp(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element,
-      { scale: 1.45, rotation: -14, autoAlpha: 0 },
-      { scale: 1, rotation: 0, autoAlpha: 1, duration: .6, ease: 'back.out(2.2)' });
-  },
-  scribble(element, vars = {}) {
-    const paths = element.querySelectorAll('path');
-    return gsap.timeline(vars).fromTo(paths, { strokeDashoffset: 1, strokeDasharray: 1 }, { autoRound: false, strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut', stagger: .1 });
-  },
-  roll(element, vars = {}) {
-    const side = vars.from === 'right' ? 1 : -1;
-    const tl = gsap.timeline({ defaults: { ease: 'none' } });
-    tl.fromTo(element,
-      { x: () => side * (element.offsetWidth * 1.6 + 60), rotation: () => side * 1.6 * 2 * 57.3 },
-      { x: 0, rotation: 0, duration: 1 });
-    return tl;
-  }
-};
-const bindings = { rise: { start: 'top 90%' }, stamp: { start: 'top 88%' }, scribble: { start: 'top 85%' } };
-document.querySelectorAll('[data-8b-section]').forEach(section => {
-  Object.entries(bindings).forEach(([name, options]) => {
-    const elements = [...section.querySelectorAll(`[data-8b-motion~="${name}"]`)];
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => ScrollTrigger.create({
-        id: `${id}:${index}`, trigger: element, start: options.start, once: true,
-        animation: effects[name](element, { delay: (index % 3) * .08 })
-      }));
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
+<script data-8b-part="scene-script:footer">
+motionKit.scene('footer', () => {
+  const word = document.querySelector('#footer .ft-word'), letters = [...word.textContent.trim()];
+  word.setAttribute('aria-label', letters.join(''));
+  word.replaceChildren(...letters.map((char, index) => {
+    const span = document.createElement('span');
+    span.textContent = char;
+    span.setAttribute('aria-hidden', 'true');
+    motionKit.set(span, { '--i': index, '--n': letters.length });
+    return span;
+  }));
 });
-</script>
-
-<script data-8b-part="scene:leagues">
-queueMotion(() => {
-  gsap.matchMedia().add({ wide: '(min-width: 861px) and (prefers-reduced-motion: no-preference)', narrow: '(max-width: 860px) and (prefers-reduced-motion: no-preference)' }, context => {
-    const section = document.getElementById('leagues');
-    const box = section.querySelector('.lg-cards');
-    const washes = [...section.querySelectorAll('.lg-wash')];
-    const from = index => ({ x: 0, xPercent: -index * 100 / 6 - 50 });
-    const to = index => ({ x: 0, xPercent: -index * 100 / 6, ease: 'power1.inOut' });
-    if (context.conditions.wide) {
-      const tl = gsap.timeline({ scrollTrigger: { id: 'leagues', trigger: box, start: 'top 92%', end: 'bottom 80%', scrub: 0.8 } });
-      washes.forEach((wash, index) => tl.fromTo(wash, from(index), { ...to(index), duration: 1 }, index * .18));
-    } else {
-      washes.forEach((wash, index) => gsap.fromTo(wash, from(index), { ...to(index), scrollTrigger: { id: `leagues:card-${index}`, trigger: wash.parentElement, start: 'top 95%', end: 'bottom 75%', scrub: 0.8 } }));
-    }
-  });
-}, { id: 'scene:leagues' });
-</script>
-<script data-8b-part="scene:kitchen">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('kitchen');
-    const photos = [...section.querySelectorAll('.kt-photo')];
-    const groups = [...section.querySelectorAll('.kt-group')];
-    const roll = 1.75, turn = roll * 2 * 57.2958;
-    photos.forEach((photo, index) => {
-      if (!index || !groups[index]) return;
-      gsap.fromTo(photo,
-        { xPercent: -roll * 100, rotation: -turn },
-        { xPercent: 0, rotation: 0, ease: 'power1.out', scrollTrigger: { id: `kitchen:dish-${index}`, trigger: groups[index], start: 'top 92%', end: 'top 50%', scrub: 0.6 } });
-    });
-  });
-}, { id: 'scene:kitchen' });
-</script>
-<script data-8b-part="scene:glow">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('glow');
-    gsap.fromTo(section, { '--gl-night': 0 }, { '--gl-night': 1, ease: 'power1.inOut', scrollTrigger: { id: 'glow', trigger: section, start: 'top 85%', end: 'top 22%', scrub: 0.5 } });
-    return () => gsap.set(section, { clearProps: '--gl-night' });
-  });
-}, { id: 'scene:glow' });
-</script>
-<script data-8b-part="scene:fame">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('fame');
-    const list = section.querySelector('.fm-list');
-    const rows = [...list.querySelectorAll('.fm-row')];
-    const bowled = [...rows].sort((a, b) => Number(a.dataset.day) - Number(b.dataset.day));
-    const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: 'fame', trigger: list, start: 'top 82%', end: 'center 52%', scrub: 0.6, invalidateOnRefresh: true } });
-    rows.forEach(row => {
-      const target = () => bowled.indexOf(row);
-      const shift = () => rows[target()].offsetTop - row.offsetTop;
-      tl.fromTo(row, { y: shift }, { y: 0, duration: 1, ease: 'power2.inOut' }, 0)
-        .fromTo(row, { x: 0 }, { keyframes: { x: [0, () => (shift() > 0 ? 1 : shift() < 0 ? -1 : 0) * 26, 0] }, duration: 1, ease: 'none' }, 0);
-    });
-  });
-}, { id: 'scene:fame' });
-</script>
-<script data-8b-part="scene:parties">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('parties');
-    const track = section.querySelector('.pt-track');
-    section.setAttribute('data-tracking', '');
-    const distance = () => Math.max(0, track.scrollWidth - document.documentElement.clientWidth);
-    const size = () => { section.style.height = (distance() + window.innerHeight) + 'px'; };
-    size();
-    ScrollTrigger.addEventListener('refreshInit', size);
-    gsap.to(track, { x: () => -distance(), ease: 'none', scrollTrigger: { id: 'parties', trigger: section, start: 'top top', end: 'bottom bottom', scrub: 0.5, invalidateOnRefresh: true } });
-    return () => { ScrollTrigger.removeEventListener('refreshInit', size); section.removeAttribute('data-tracking'); section.style.height = ''; };
-  });
-}, { id: 'scene:parties' });
-</script>
-<script data-8b-part="scene:faq">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const section = document.getElementById('faq');
-    const panel = section.querySelector('.fq-panel');
-    const tl = gsap.timeline({ scrollTrigger: { id: 'faq', trigger: panel, start: 'top 90%', end: 'center 55%', scrub: 0.6, invalidateOnRefresh: true } });
-    tl.add(effects.roll(section.querySelector('.fq-ball--a'), { from: 'left' }), 0)
-      .add(effects.roll(section.querySelector('.fq-ball--b'), { from: 'right' }), .15);
-  });
-}, { id: 'scene:faq' });
-</script>
-<script data-8b-part="scene:footer">
-queueMotion(() => {
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const word = document.querySelector('#footer .ft-word');
-    const text = word.textContent;
-    word.setAttribute('aria-label', text.trim());
-    word.textContent = '';
-    const letters = [...text.trim()].map(char => {
-      const span = document.createElement('span');
-      span.textContent = char;
-      span.setAttribute('aria-hidden', 'true');
-      span.style.display = 'inline-block';
-      word.appendChild(span);
-      return span;
-    });
-    gsap.set(word, { perspective: 900 });
-    const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { id: 'footer', trigger: word, start: 'top bottom', end: 'bottom bottom', scrub: 0.5 } });
-    letters.forEach((letter, index) => {
-      tl.fromTo(letter, { rotationX: -88, transformOrigin: '50% 100%' }, { rotationX: 0, duration: .4, ease: 'power2.out' }, index * .1);
-    });
-    return () => { word.textContent = text; word.removeAttribute('aria-label'); gsap.set(word, { clearProps: 'perspective' }); };
-  });
-}, { id: 'scene:footer' });
 </script>
 </body>
 </html>

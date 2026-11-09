@@ -1,6 +1,6 @@
 # AGENTS.md: nonprofit website template
 
-One-page website for a volunteering network, charity or community group that lists open volunteer hours, takes sign-ups and asks for donations. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a volunteering network, charity or community group that lists open volunteer hours, takes sign-ups and asks for donations. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,18 +14,16 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:site-nav`: `.nav__menu` `.menu__close`
-  - `scene:hours-drawer`: `.hours__drawer` `.hours__track` `.folder`
-  - `scene:saturday-strip`: `.saturday__track` `.saturday__row` `.frame__photo`
-  - `scene:streets-fill`: `.streets__names` `.street`
   - `section-script:give`: `data-give-form` `data-give-message`
-  - `scene:give-deal`: `.give__cards` `.gift`
   - `section-script:contact`: `data-signup-form` `data-signup-message`
-  - `scene:contact-skyline`: `.contact__sky` `.contact__card`
+  - `scene-script:saturday-strip`: `.saturday__track` `.saturday__row`
+  - `scene-script:streets-fill`: `.streets__names` `.street`
 - `style="--len:N"` = characters in that display line, spaces included: `Spare Hour` is 10.
 - The footer wordmark gets its size from style="--len:10", the number of characters in Spare Hour including the space: update it when the name changes.
-- The drawer scene measures its folders and adds a scroll run per folder (about 64% of a screen each), so adding or removing a folder is safe; the streets-fill scene reads the neighbourhood names and the causes row has six cards in a stepped profile that CSS sets by position.
+- The drawer is built for six folders: each folder has its own scroll keyframes, picked by its cause class (folder--food, --reading, --river, --repairs, --company, --gardens), and the scroll run is set for five steps (--drawer-steps: 5, about 64% of a screen each). To add, remove or reorder folders, write matching keyframes and update --drawer-steps. The streets-fill script reads the neighbourhood names, so their number is free; the causes row has six cards in a stepped profile that CSS sets by position.
 - The folder tabs, the colour fields and the highlighter strokes are CSS: recolour them through the colour variables in :root (each cause has its own colour variable).
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #ffffff (page ground, step cards, input fields, white neighbourhood pills, text on the dark sections), `--color-2` #121212 (text, buttons, the Saturday section and footer grounds), `--color-3` #f3c03e (yellow: opening screen and giving section grounds, Repairs colour, button hover fill, highlighter stroke), `--color-4` #5c5c5c (lead paragraphs, answers and other secondary text), `--color-5` #e4e4e4 (hairlines between rows, the nav bar's shadow line, quotation marks), `--color-6` #ff6a21 (orange: Food folders, cards and pills, and one sign-up photo card), `--color-7` #187a44 (green: Gardens folders, cards and pills, and one sign-up photo card), `--color-8` #3a96e0 (blue: Reading folders, cards and pills, and one sign-up photo card), `--color-9` #a6dcb4 (pale green: Company folders, cards and pills, the sign-up thank-you note, the groups photo ground), `--color-10` #0d5c4c (deep teal: River folders and cards, the neighbourhoods section ground, one sign-up photo card); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
@@ -66,7 +64,8 @@ All demo text, never to be invented:
 - The six questions are native details elements and open without JavaScript.
 - The drawer section holds the page for about three screens of scrolling (about 64% of a screen per folder after the first), which can feel long on short phone screens.
 - The handwriting face for signatures is a third font family used only there, and the small colour pills over the neighbourhood names need a contrast check if you change the colours.
-- The nav behaviour and hover effects keep running with reduced motion; the scroll scenes and entrance animations are switched off.
+- Without CSS scroll-driven animation support (Firefox today), without JavaScript or with reduced motion, the opening load-in, the scroll scenes, the entrances and the smooth wheel are off: the folders and the Saturday frames show as grids, every neighbourhood name shows its pill and the gift and portrait cards stand in place. The nav behaviour and hover effects keep running.
+- The motion CSS fixes four counts (marked data-8b-fixed): three step cards in the opening, six folders in the drawer, three gift cards and five sign-up photo cards, each placed or timed by its position. Other counts need the matching CSS rules.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Spare Hour left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Spare Hour left only in class names.

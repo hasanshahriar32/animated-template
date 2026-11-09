@@ -1,8 +1,8 @@
-# Free HTML car wash website template with GSAP scroll animations
+# Free HTML car wash website template with scroll animations and no libraries
 
-Car wash website template: one free HTML page for a hand car wash or valeting bay, with a five-step wash method, a price board that changes with vehicle size, interior work, paint protection coats, a monthly Wash Club and a booking form. Violet, foam cream and yellow, with scalloped edges. One file, with AGENTS.md for Claude Code, Cursor or Codex.
+Car wash website template: one free HTML page for a hand car wash or valeting bay, with a five-step wash method, a price board that changes with vehicle size, interior work, paint protection coats, a monthly Wash Club and a booking form. Violet, foam cream and yellow, with scalloped edges and CSS scroll motion, no libraries.
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![GSAP: ScrollTrigger](https://img.shields.io/badge/GSAP-ScrollTrigger-88ce02)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![one HTML file: no build](https://img.shields.io/badge/one%20HTML%20file-no%20build-orange) ![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 
 **[Live demo](https://8bsite.github.io/car-wash-website-template/)** · **[Use this template](https://github.com/new?template_name=car-wash-website-template&template_owner=8bsite)** · **[Download ZIP](https://github.com/8bsite/car-wash-website-template/archive/refs/heads/main.zip)** · **[Template page on 8b.com](https://8b.com/templates/two-buckets/)**
 
@@ -24,7 +24,7 @@ curl -LO https://raw.githubusercontent.com/8bsite/car-wash-website-template/main
 Then fill in the angle brackets and give your agent this prompt:
 
 ```text
-Read AGENTS.md, then edit index.html. Make this the site for <my car wash or valeting business: name, address, opening hours, prices for small, family and large vehicles, the five wash steps with minutes, protection coats with prices, club price and perks, crew, booking method>. Replace first the brand, the placeholder address and phone, the Sheffield references, prices, reviews and crew. Keep the section ids, the three price data attributes and five steps with five photos. Ask me for missing facts and never invent prices, hours, guarantees or reviews.
+Read AGENTS.md, then edit index.html. Make this the site for <my car wash or valeting business: name, address, opening hours, prices for small, family and large vehicles, the five wash steps, coats with prices, club price and perks, crew, booking method>. Replace first the brand, address, phone, Sheffield references, reviews and crew. Keep the section ids, the gate script in the head, the three price data attributes, five steps with five photos and four coats; add no animation library. Never invent prices, hours, guarantees or reviews; ask me.
 ```
 
 As a car wash website template for Claude Code, Cursor or Codex, it goes quickest when you vibe code it and give the agent the facts only the owner has: prices for each vehicle size, hours, the club price and perks, protection claims, the redo promise, the tallest vehicle the bay takes, crew and company details. The demo invents all of them, plus the 4.9 rating and the eight reviews. The agent swaps the name in any letter case and rewrites the five wash steps and their minutes.
@@ -71,7 +71,7 @@ Yes, with [8B's AI website builder](https://8b.com/). You describe the site in a
 
 ## Is it the right base?
 
-As a car detailing website template it suits a single bay with bookings and a club, and it shows a price for every service. A business that quotes each job, such as [an electrician's](https://8b.com/templates/ohmstead/) practice, needs a different page. The weak spot is booking: the form sends nothing until a service is connected and there is no live calendar. Owners who want no code can use 8B's builder instead.
+As a car detailing website template it suits a single bay with bookings and a club, and it shows a price for every service. This build has no JavaScript library and no script from a CDN: the same look and scroll behaviour in about 24 KB of gzipped code, a third of the 71 KB the GSAP version needs. A business that quotes each job, such as [an electrician's](https://8b.com/templates/ohmstead/) practice, needs a different page, and the booking form sends nothing until a service is connected.
 
 ## Before you publish
 
@@ -80,7 +80,9 @@ As a car detailing website template it suits a single bay with bookings and a cl
 
 ## Tech
 
-GSAP 3.13.0, ScrollTrigger, Lenis 1.3.11 from jsDelivr, 90 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 121+ (it uses color-mix(), :has(), cascade layers, small/dynamic viewport units). With "reduce motion" on, the page is complete and still.
+No JavaScript libraries: CSS scroll-driven animations and a small inline motion script with its own smooth wheel scrolling, 96 KB, no build step. Chrome and Edge 111+, Safari 16.2+, Firefox 121+ (it uses color-mix(), :has(), cascade layers, small/dynamic viewport units). Without scroll-driven animations (Firefox today) the scroll motion and the smooth wheel are off and each section shows its finished layout (a load-in or a loop may still play); with "reduce motion" on, the page is complete and nothing moves on its own (hover effects stay).
+
+A GSAP build of the same page is [`index.gsap.html`](index.gsap.html): GSAP 3.13.0, ScrollTrigger, Lenis 1.3.11 from jsDelivr, 90 KB; its scroll motion also plays in Firefox. Use one of the two files.
 
 ## License
 

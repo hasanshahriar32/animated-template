@@ -1,6 +1,6 @@
 # AGENTS.md: planetarium website template
 
-One-page website for a planetarium or observatory with a live-narrated show programme. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a planetarium or observatory with a live-narrated show programme. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,19 +14,17 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits.
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__toggle` `.nav__overlay` `.nav__close`
   - `section-script:contact`: `.ct__form` `.ct__status`
-  - `scene:journey`: `.jr__pin` `.jr__track` `.jr__line` `.jr__runner` `.jr__stop` `.jr__img`
-  - `scene:dome`: `.dm__sky` `.dm__turn` `.dm__ring`
-  - `scene:live`: `.lv__photo` `.lv__words`
-  - `scene:roof`: `.rf__photo` `.rf__half--l` `.rf__panel--l` `.rf__half--r` `.rf__panel--r`
-  - `scene:nights`: `.nt__rail` `.nt__line` `.nt__event`
-  - `scene:contact`: `.ct__night` `.ct__ring`
+  - `scene-script:journey`: `.jr__pin` `.jr__track` `.jr__line` `.jr__stop`
 - `style="--len:N"` = characters in that display line, spaces included: `Zenith` is 6.
 - The wordmark in the footer sets its size from style="--len:6", the number of characters of the name. Change it with the name.
 - The colour bands of the show rows come from classes sh__band--1 to sh__band--5, so a sixth show needs its own band rule. The time buttons sit in a group labelled for screen readers.
-- The dome section's height and sticky stage are set by CSS added with the scene; the heading parts and two paragraphs are placed on a twelve-column grid by name (dm__w1 to dm__w3, dm__p1, dm__p2).
+- The dome section's 230vh height and sticky stage are CSS rules that apply only while scroll motion runs; the heading parts and two paragraphs are placed on a twelve-column grid by name (dm__w1 to dm__w3, dm__p1, dm__p2).
+- The presenter quote is five word spans, lv__w1 to lv__w5, each with its own start offset in the live styles; keep five spans when the quote changes, or add matching rules. The roof heading is two halves, rf__half--l and rf__half--r, that slide with their panels.
+- The journey strip is measured by a short script (its overflow, the runner's run and each photo's drift range), so stops can be added or removed; the five dots on the progress line are placed by CSS at 0, 25, 50, 75 and 100 percent.
 - The opening ring, rays, night and sky layers are empty divs drawn with CSS gradients and borders: recolour them through the CSS variables.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #eb5d16 (flat orange ground of the shows section and the footer, and the warm end of the contact gradient), `--color-2` #140a31 (main night ground: body, first screen, journey, nights, the logo's pill once you scroll and the start of the live and contact gradients), `--color-3` #4c27b8 (blue-violet ground of the dome and schools sections and of the full-screen phone menu), `--color-4` #ee55b6 (magenta: the roof's right panel, the journey runner, the event dots, text selection and the glow in the live and contact gradients), `--color-5` #ffffff (type on dark grounds, the white nav pill, filled buttons, the question section ground and the stars), `--color-6` #0f0822 (type on orange, white and magenta grounds, button text, dark buttons and the rules in the shows list and questions), `--color-7` #ffc9ee (pale pink for captions, stop distances, event dates and meta lines, contact labels and the thank-you line), `--color-8` #a3300c (rust: the roof's left panel and the colour bands of the first and fifth shows); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
@@ -64,9 +62,9 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the Menu button cannot open the overlay on phones; the footer links stay reachable. The questions are native details and open without it.
 - The contact form is a demo: with JavaScript it only clears itself and shows the thank-you line; without it the form posts to #.
-- The journey section is pinned for the width the five stops overflow, which is long on wide screens, and the dome holds for about 1.3 screens.
+- The journey section is held for the width the five stops overflow, which is long on wide screens, and the dome holds for about 1.3 screens.
+- In browsers without CSS scroll-driven animations (Firefox today), with reduced motion or without JavaScript, the scroll motion, the ring's circling dot and the smooth wheel are off: the journey is a grid of five stops, the dome one screen with the full sky, and nothing is held. Firefox still plays the opening load-in.
 - Small pale pink text (stop distances, school prices, event dates and meta lines, contact labels) sits on night and violet grounds; check its contrast after changing colours.
-- gsap, ScrollTrigger and Lenis load from a CDN before the motion scripts; offline they are missing and the motion does not run.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Zenith Planetarium left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Zenith Planetarium left only in class names.

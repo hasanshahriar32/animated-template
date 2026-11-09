@@ -4,6 +4,7 @@
   Source: https://github.com/8bsite/coffee-roaster-website-template
   MIT License (code) https://8b.com/ · Photos: Unsplash License, see CREDITS.md · Fonts: Google Fonts (OFL)
   One HTML file, no build step. Notes for people and AI agents: README.md and AGENTS.md.
+  Scroll motion: CSS scroll-driven animations and an inline script, no libraries. A GSAP build of this page: index.gsap.html.
 -->
 <html lang="en">
 <head>
@@ -19,9 +20,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2064%2064'%3E%3Crect%20width%3D'64'%20height%3D'64'%20rx%3D'14'%20fill%3D'%2341339a'%2F%3E%3Ctext%20x%3D'32'%20y%3D'45'%20font-family%3D'Arial%2CHelvetica%2Csans-serif'%20font-size%3D'38'%20font-weight%3D'700'%20text-anchor%3D'middle'%20fill%3D'%23fce9da'%3EL%3C%2Ftext%3E%3C%2Fsvg%3E" data-8b-placeholder="favicon">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.gstatic.com/s/radiocanadabig/v3/LYjZdHrinEImAoQewU0hyTsPFra4SJOS8g.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/brygada1918/v27/pe0pMI6eKpdGqlF5LANrM--qBP5v.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="https://fonts.gstatic.com/s/instrumentsans/v4/pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPiefr0SZe1Q.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="https://fonts.gstatic.com/s/radiocanadabig/v3/LYjZdHrinEImAoQewU0hyTsPFra4SJOS8g.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* cyrillic-ext */
 @font-face {
@@ -152,10 +153,6 @@ ul, ol { padding: 0; list-style: none; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: clip; }
-.lenis.lenis-smooth iframe { pointer-events: none; }
 }
 </style>
 <style data-8b-part="system">
@@ -346,6 +343,21 @@ html.lenis, html.lenis body { height: auto; }
   #opening .opening__stamp-loop { animation: opening-turn 28s linear infinite reverse; }
   #opening .opening__bowl-loop.is-paused, #opening .opening__stamp-loop.is-paused { animation-play-state: paused; }
 }
+@media (prefers-reduced-motion: no-preference) {
+  #opening .opening__fill { animation: opening-flood-y .8s cubic-bezier(.6, 0, .2, 1) backwards; }
+  #opening .opening__col:nth-child(2) .opening__fill { animation-delay: .12s; }
+  #opening .opening__col:nth-child(1) .opening__fill { animation-delay: .24s; }
+  #opening .opening__say h1 > span, #opening .opening__say-foot > *, #opening .opening__ticket > div, #opening .opening__drop > p { animation: opening-rise .8s cubic-bezier(.2, .7, .2, 1) .3s backwards; }
+  #opening .opening__say h1 > span:nth-child(2) { animation-delay: .38s; }
+  #opening .opening__say h1 > span:nth-child(3), #opening .opening__say-foot > * { animation-delay: .46s; }
+}
+@media (max-width: 1023.98px) and (prefers-reduced-motion: no-preference) {
+  #opening .opening__fill { animation-name: opening-flood-x; }
+  #opening .opening__col:nth-child(1) .opening__fill { animation-delay: 0s; }
+  #opening .opening__col:nth-child(3) .opening__fill { animation-delay: .24s; }
+}
+@keyframes opening-flood-y { from { scale: 1 0; } }
+@keyframes opening-flood-x { from { scale: 0 1; } }
 @keyframes opening-rise { from { transform: translateY(.6em); } }
 @keyframes opening-settle { from { transform: scale(.93) rotate(-8deg); } }
 @keyframes opening-turn { to { transform: rotate(360deg); } }
@@ -525,7 +537,7 @@ html.lenis, html.lenis body { height: auto; }
 #people .people__intro { max-width: 38ch; }
 #people .people__photo { position: relative; aspect-ratio: 16 / 8; overflow: hidden; border-top: 1.5px solid var(--color-2); border-bottom: 1.5px solid var(--color-2); }
 #people .people__photo > img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
-#people .people__photo.is-slatted > img { visibility: hidden; }
+[data-8b-live] #people .people__photo > img { visibility: hidden; }
 #people .people__slat { position: absolute; inset: 0; }
 #people .people__slat img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
 #people .people__bios { display: grid; grid-template-columns: 1fr 1fr; }
@@ -592,22 +604,156 @@ html.lenis, html.lenis body { height: auto; }
 @media (hover: hover) { #footer .footer__links a:hover { background-size: 100% 1.5px; animation: none; } }
 }
 </style>
-<style data-8b-part="rework-first-screen">
-@media (prefers-reduced-motion: no-preference) {
-  #opening .opening__fill { animation: rw-flood-y .8s cubic-bezier(.6, 0, .2, 1) backwards; }
-  #opening .opening__col:nth-child(2) .opening__fill { animation-delay: .12s; }
-  #opening .opening__col:nth-child(1) .opening__fill { animation-delay: .24s; }
-  #opening .opening__say h1 > span, #opening .opening__say-foot > *, #opening .opening__ticket > div, #opening .opening__drop > p { animation: opening-rise .8s cubic-bezier(.2, .7, .2, 1) .3s backwards; }
-  #opening .opening__say h1 > span:nth-child(2) { animation-delay: .38s; }
-  #opening .opening__say h1 > span:nth-child(3), #opening .opening__say-foot > * { animation-delay: .46s; }
+<style data-8b-part="motion">
+@layer scenes {
+[data-8b-live] { --ease-power4-in: linear(0, 0, 0, 0, 0, 0, 0.0001, 0.0002, 0.0003, 0.0006, 0.001, 0.0016, 0.0024, 0.0036, 0.0053, 0.0074, 0.0102, 0.0139, 0.0185, 0.0242, 0.0313, 0.0399, 0.0503, 0.0629, 0.0778, 0.0954, 0.116, 0.1401, 0.1681, 0.2003, 0.2373, 0.2796, 0.3277, 0.3822, 0.4437, 0.5129, 0.5905, 0.6772, 0.7738, 0.8811, 1); }
+[data-8b-live] [data-8b-motion~="rule"] { animation-name: motion-rule-clippath; animation-duration: 0.9s; animation-delay: 0s; animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1); animation-fill-mode: both; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="rule"].is-in { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="lockup"] > * { animation-name: motion-lockup; animation-duration: 0.85s; animation-delay: calc(var(--i, 0) * 0.12s); animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); animation-fill-mode: backwards; animation-play-state: paused; }
+[data-8b-live] [data-8b-motion~="lockup"].is-in > * { animation-play-state: running; }
+[data-8b-live] [data-8b-motion~="stamp"] { animation-name: motion-stamp-scale, motion-stamp-rotate, motion-stamp-opacity, motion-stamp-visibility; animation-duration: 0.55s; animation-delay: 0s; animation-timing-function: var(--ease-power4-in), cubic-bezier(0.64, 0, 0.78, 0), var(--ease-power4-in), linear; animation-fill-mode: both; animation-play-state: paused; transform: none; }
+[data-8b-live] [data-8b-motion~="stamp"].is-in { animation-play-state: running; }
+@keyframes motion-rule-clippath { 0% { clip-path: inset(0% 100% 0% 0%); } 99.998% { clip-path: inset(0%); } 100% { clip-path: none; } }
+@keyframes motion-lockup { 0% { translate: 0 60%; clip-path: inset(0% 0% 100% 0%); } 100% { translate: 0 0; clip-path: inset(0%); } }
+@keyframes motion-stamp-scale { 0% { scale: 2.2; } 99.998% { scale: 1.0011; } 100% { scale: 1; } }
+@keyframes motion-stamp-rotate { 0% { rotate: var(--stamp-rotate-from, -48deg); } 0.002% { rotate: var(--stamp-rotate-at0_002, -36deg); } 100% { rotate: var(--stamp-rotate-to, -12deg); } }
+@keyframes motion-stamp-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes motion-stamp-visibility { 0% { visibility: hidden; } 0.002% { visibility: visible; animation-timing-function: cubic-bezier(0.64, 0, 0.78, 0); } 100% { visibility: visible; } }
 }
-@media (max-width: 1023.98px) and (prefers-reduced-motion: no-preference) {
-  #opening .opening__fill { animation-name: rw-flood-x; }
-  #opening .opening__col:nth-child(1) .opening__fill { animation-delay: 0s; }
-  #opening .opening__col:nth-child(3) .opening__fill { animation-delay: .24s; }
+</style>
+<style data-8b-part="scene:opening">
+@layer scenes {
 }
-@keyframes rw-flood-y { from { scale: 1 0; } }
-@keyframes rw-flood-x { from { scale: 0 1; } }</style>
+</style>
+<style data-8b-part="scene:beans">
+@layer scenes {
+[data-8b-live] #beans { timeline-scope: --beans-t1, --beans-t2, --beans-t3, --beans-t4, --beans-t5; }
+[data-8b-live] #beans .beans__list { view-timeline: --beans-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #beans .beans__list > li:nth-of-type(2) { view-timeline: --beans-t2 block; view-timeline-inset: 0; }
+[data-8b-live] #beans .beans__list > li:nth-of-type(3) { view-timeline: --beans-t3 block; view-timeline-inset: 0; }
+[data-8b-live] #beans .beans__list > li:nth-of-type(4) { view-timeline: --beans-t4 block; view-timeline-inset: 0; }
+[data-8b-live] #beans .beans__list > li:nth-of-type(5) { view-timeline: --beans-t5 block; view-timeline-inset: 0; }
+[data-8b-live] #beans .beans__turn { animation-name: beans-div-beans-turn-rotate; animation-timeline: --beans-t1; animation-range: cover 25vh cover calc(100% - 55vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #beans .beans__turn > div:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5)) { animation-name: beans-div-beans-shot-clippath; animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+[data-8b-live] #beans .beans__turn > div:nth-of-type(2) { animation-timeline: --beans-t2; animation-fill-mode: both; }
+[data-8b-live] #beans .beans__turn > div:nth-of-type(3) { animation-timeline: --beans-t3; animation-fill-mode: both; }
+[data-8b-live] #beans .beans__turn > div:nth-of-type(4) { animation-timeline: --beans-t4; animation-fill-mode: both; }
+[data-8b-live] #beans .beans__turn > div:nth-of-type(5) { animation-timeline: --beans-t5; animation-fill-mode: both; }
+@keyframes beans-div-beans-turn-rotate { 0% { rotate: 0deg; } 100% { rotate: 360deg; } }
+@keyframes beans-div-beans-shot-clippath { 0% { clip-path: circle(0% at 50% 50%); } 100% { clip-path: circle(71% at 50% 50%); } }
+@media (min-width: 1024px) {
+  [data-8b-live] #beans .beans__turn > div:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5)) { animation-range: cover 36vh cover 52vh; }
+}
+@media (max-width: 1023px) {
+  [data-8b-live] #beans .beans__turn > div:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5)) { animation-range: cover 44vh cover 60vh; }
+}
+}
+</style>
+<style data-8b-part="scene:roast-days">
+@layer scenes {
+[data-8b-live] { --ease-power4-in: linear(0, 0, 0, 0, 0, 0, 0.0001, 0.0002, 0.0003, 0.0006, 0.001, 0.0016, 0.0024, 0.0036, 0.0053, 0.0074, 0.0102, 0.0139, 0.0185, 0.0242, 0.0313, 0.0399, 0.0503, 0.0629, 0.0778, 0.0954, 0.116, 0.1401, 0.1681, 0.2003, 0.2373, 0.2796, 0.3277, 0.3822, 0.4437, 0.5129, 0.5905, 0.6772, 0.7738, 0.8811, 1); }
+[data-8b-live] #roast-days { timeline-scope: --roast-days-t1, --roast-days-t2, --roast-days-t3, --roast-days-t4; }
+[data-8b-live] #roast-days .roast__steps > li { view-timeline-inset: 0; }
+[data-8b-live] #roast-days .roast__steps > li:nth-of-type(1) { view-timeline: --roast-days-item block, --roast-days-t1 block; }
+[data-8b-live] #roast-days .roast__steps > li:nth-of-type(2) { view-timeline: --roast-days-item block, --roast-days-t2 block; }
+[data-8b-live] #roast-days .roast__steps > li:nth-of-type(3) { view-timeline: --roast-days-item block, --roast-days-t3 block; }
+[data-8b-live] #roast-days .roast__steps > li:nth-of-type(4) { view-timeline: --roast-days-item block, --roast-days-t4 block; }
+[data-8b-live] #roast-days .roast__cells > .roast__cell > .roast__mark > .m-stamp { animation-name: roast-days-div-m-stamp-scale, roast-days-div-m-stamp-rotate, roast-days-div-m-stamp-opacity, roast-days-div-m-stamp-visibility; animation-timing-function: var(--ease-power4-in), var(--ease-power4-in), var(--ease-power4-in), linear; animation-fill-mode: both; transform: none; }
+[data-8b-live] #roast-days .roast__cells > div:nth-of-type(1) > .roast__mark > .m-stamp, [data-8b-live] #roast-days .roast__cells > div:nth-of-type(1) { animation-timeline: --roast-days-t1; }
+[data-8b-live] #roast-days .roast__cells > .roast__cell { animation-name: roast-days-div-roast-cell-scale; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+[data-8b-live] #roast-days .roast__cells > div:nth-of-type(2) > .roast__mark > .m-stamp, [data-8b-live] #roast-days .roast__cells > div:nth-of-type(2) { animation-timeline: --roast-days-t2; }
+[data-8b-live] #roast-days .roast__cells > div:nth-of-type(3) > .roast__mark > .m-stamp, [data-8b-live] #roast-days .roast__cells > div:nth-of-type(3) { animation-timeline: --roast-days-t3; }
+[data-8b-live] #roast-days .roast__cells > div:nth-of-type(4) > .roast__mark > .m-stamp, [data-8b-live] #roast-days .roast__cells > div:nth-of-type(4) { animation-timeline: --roast-days-t4; }
+@keyframes roast-days-div-m-stamp-scale { 0% { scale: 2.3; } 100% { scale: 1; } }
+@keyframes roast-days-div-m-stamp-rotate { 0% { rotate: -28deg; } 100% { rotate: 0deg; } }
+@keyframes roast-days-div-m-stamp-opacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes roast-days-div-m-stamp-visibility { 0% { visibility: hidden; } 0.002% { visibility: visible; animation-timing-function: cubic-bezier(0.64, 0, 0.78, 0); } 100% { visibility: visible; } }
+@keyframes roast-days-div-roast-cell-scale { 0% { scale: 1; } 33.3333% { scale: 0.955; } 100% { scale: 1; } }
+@media (min-width: 1024px) {
+  [data-8b-live] #roast-days .roast__cells > .roast__cell > .roast__mark > .m-stamp { animation-range: cover 36vh cover 55.6vh; }
+  [data-8b-live] #roast-days .roast__cells > .roast__cell { animation-range: cover 55.6vh cover 64vh; }
+}
+@media (max-width: 1023px) {
+  [data-8b-live] #roast-days .roast__cells > .roast__cell > .roast__mark > .m-stamp { animation-range: cover 14vh cover 29.4vh; }
+  [data-8b-live] #roast-days .roast__cells > .roast__cell { animation-range: cover 29.4vh cover 36vh; }
+}
+}
+</style>
+<style data-8b-part="scene:counter">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #counter .counter__list { view-timeline: --counter-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #counter .counter__list > li:is(:nth-of-type(2), :nth-of-type(3), :nth-of-type(4), :nth-of-type(5), :nth-of-type(6), :nth-of-type(7)), [data-8b-live] #counter .counter__list > li > .counter__in { animation-timeline: --counter-t1; animation-fill-mode: both; }
+[data-8b-live] #counter .counter__list > li:nth-of-type(2) { animation-name: counter-li-counter-row-translate; animation-range: cover 18vh cover 49.0588vh; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); transform: none; }
+[data-8b-live] #counter .counter__list > li:nth-of-type(3) { animation-name: counter-li-counter-row-translate-2; animation-range: cover 21.3882vh cover 52.4471vh; animation-timing-function: var(--ease-power2-inout); transform: none; }
+[data-8b-live] #counter .counter__list > li > .counter__in { animation-name: counter-p-counter-in-clippath; animation-range: cover calc(24.7765vh + 3.9529vh * var(--i)) cover calc(41.7176vh + 3.953vh * var(--i)); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+[data-8b-live] #counter .counter__list > li:nth-of-type(4) { animation-name: counter-li-counter-row-translate-3; animation-range: cover 24.7765vh cover 55.8353vh; animation-timing-function: var(--ease-power2-inout); transform: none; }
+[data-8b-live] #counter .counter__list > li:nth-of-type(5) { animation-name: counter-li-counter-row-translate-4; animation-range: cover 28.1647vh cover 59.2235vh; animation-timing-function: var(--ease-power2-inout); transform: none; }
+[data-8b-live] #counter .counter__list > li:nth-of-type(6) { animation-name: counter-li-counter-row-translate-5; animation-range: cover 31.5529vh cover 62.6118vh; animation-timing-function: var(--ease-power2-inout); transform: none; }
+[data-8b-live] #counter .counter__list > li:nth-of-type(7) { animation-name: counter-li-counter-row-translate-6; animation-range: cover 34.9412vh cover 66vh; animation-timing-function: var(--ease-power2-inout); transform: none; }
+@keyframes counter-li-counter-row-translate { 0% { translate: 0px -55px; } 100% { translate: 0px 0px; } }
+@keyframes counter-li-counter-row-translate-2 { 0% { translate: 0px -109px; } 100% { translate: 0px 0px; } }
+@keyframes counter-p-counter-in-clippath { 0% { clip-path: inset(0% 0% 100%); } 100% { clip-path: inset(-30% -4%); } }
+@keyframes counter-li-counter-row-translate-3 { 0% { translate: 0px -163px; } 100% { translate: 0px 0px; } }
+@keyframes counter-li-counter-row-translate-4 { 0% { translate: 0px -216px; } 100% { translate: 0px 0px; } }
+@keyframes counter-li-counter-row-translate-5 { 0% { translate: 0px -270px; } 100% { translate: 0px 0px; } }
+@keyframes counter-li-counter-row-translate-6 { 0% { translate: 0px -324px; } 100% { translate: 0px 0px; } }
+}
+</style>
+<style data-8b-part="scene:refills">
+@layer scenes {
+[data-8b-live] #refills .refills__track { view-timeline: --refills-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #refills .refills__lid { animation-name: refills-lid-roll; animation-timeline: --refills-t1; animation-range: cover 22vh cover calc(100% - 42vh); animation-timing-function: linear; animation-fill-mode: both; transform: none; }
+@keyframes refills-lid-roll { 0% { translate: calc(-1 * var(--refills-travel, 0px)) 0px; rotate: var(--refills-turn, 0deg); } 100% { translate: 0px 0px; rotate: 0deg; } }
+}
+</style>
+<style data-8b-part="scene:people">
+@layer scenes {
+[data-8b-live] #people { timeline-scope: --people-t1; }
+[data-8b-live] #people .people__photo { view-timeline: --people-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #people .people__photo > div:is(:nth-child(2), :nth-child(3), :nth-child(4)) { animation-timeline: --people-t1; animation-range: cover 0% cover calc(50% - 2vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+@keyframes people-div-people-photo-div-people-slat-translate-d { 0% { translate: 0px -24%; } 100% { translate: 0px 0px; } }
+@keyframes people-div-people-photo-div-people-slat-translate-m { 0% { translate: 0px -16%; } 100% { translate: 0px 0px; } }
+@keyframes people-div-people-photo-div-people-slat-translate-2-d { 0% { translate: 0px 28.8%; } 100% { translate: 0px 0px; } }
+@keyframes people-div-people-photo-div-people-slat-translate-2-m { 0% { translate: 0px 19.2%; } 100% { translate: 0px 0px; } }
+@keyframes people-div-people-photo-div-people-slat-translate-3-d { 0% { translate: 0px -33.6%; } 100% { translate: 0px 0px; } }
+@keyframes people-div-people-photo-div-people-slat-translate-3-m { 0% { translate: 0px -22.4%; } 100% { translate: 0px 0px; } }
+@keyframes people-div-people-photo-div-people-slat-translate-4 { 0% { translate: 0px 38.4%; } 100% { translate: 0px 0px; } }
+@media (min-width: 700px) {
+  [data-8b-live] #people .people__photo > div:nth-child(2) { animation-name: people-div-people-photo-div-people-slat-translate-d; }
+  [data-8b-live] #people .people__photo > div:nth-child(3) { animation-name: people-div-people-photo-div-people-slat-translate-2-d; }
+  [data-8b-live] #people .people__photo > div:nth-child(4) { animation-name: people-div-people-photo-div-people-slat-translate-3-d; }
+  [data-8b-live] #people .people__photo > div:nth-child(5) { animation-name: people-div-people-photo-div-people-slat-translate-4; animation-timeline: --people-t1; animation-range: cover 0% cover calc(50% - 2vh); animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); animation-fill-mode: both; transform: none; }
+}
+@media (max-width: 699px) {
+  [data-8b-live] #people .people__photo > div:nth-child(2) { animation-name: people-div-people-photo-div-people-slat-translate-m; }
+  [data-8b-live] #people .people__photo > div:nth-child(3) { animation-name: people-div-people-photo-div-people-slat-translate-2-m; }
+  [data-8b-live] #people .people__photo > div:nth-child(4) { animation-name: people-div-people-photo-div-people-slat-translate-3-m; }
+}
+}
+</style>
+<style data-8b-part="scene:visit">
+@layer scenes {
+[data-8b-live] { --ease-power2-inout: linear(0, 0.0001, 0.0005, 0.0017, 0.004, 0.0078, 0.0135, 0.0214, 0.032, 0.0456, 0.0625, 0.0832, 0.108, 0.1373, 0.1715, 0.2109, 0.256, 0.3071, 0.3645, 0.4287, 0.5, 0.5713, 0.6355, 0.6929, 0.744, 0.7891, 0.8285, 0.8627, 0.892, 0.9168, 0.9375, 0.9544, 0.968, 0.9786, 0.9865, 0.9922, 0.996, 0.9983, 0.9995, 0.9999, 1); }
+[data-8b-live] #visit .visit__window, [data-8b-live] #visit .visit__window > img { animation-timeline: --visit-t1; animation-range: cover 8vh cover calc(50% - 18vh); animation-fill-mode: both; transform: none; }
+[data-8b-live] #visit .visit__window { view-timeline: --visit-t1 block; view-timeline-inset: 0; }
+[data-8b-live] #visit .visit__window > img { animation-name: visit-div-visit-window-img-scale; animation-timing-function: cubic-bezier(0.3333, 1, 0.6667, 1); }
+@keyframes visit-div-visit-window-translate-d { 0% { translate: -38% 22%; } 100% { translate: 0px 0px; } }
+@keyframes visit-div-visit-window-translate-m { 0% { translate: 0px 14%; } 100% { translate: 0px 0px; } }
+@keyframes visit-div-visit-window-rotate { 0% { rotate: -90deg; } 100% { rotate: 0deg; } }
+@keyframes visit-div-visit-window-clippath { 0% { clip-path: inset(20% round 50%); } 100% { clip-path: inset(0% round 0%); } }
+@keyframes visit-div-visit-window-img-scale { 0% { scale: 1.3; } 100% { scale: 1; } }
+@media (min-width: 1024px) {
+  [data-8b-live] #visit .visit__window { animation-name: visit-div-visit-window-translate-d, visit-div-visit-window-rotate, visit-div-visit-window-clippath; animation-timing-function: var(--ease-power2-inout), var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1); }
+}
+@media (max-width: 1023px) {
+  [data-8b-live] #visit .visit__window { animation-name: visit-div-visit-window-translate-m, visit-div-visit-window-rotate, visit-div-visit-window-clippath; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1), var(--ease-power2-inout), cubic-bezier(0.65, 0, 0.35, 1); }
+}
+}
+</style>
+<script data-8b-part="motion-gate">
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && CSS.supports('animation-timeline: view()')) document.documentElement.setAttribute('data-8b-live', '');
+</script>
 </head>
 <body>
 <!-- navigation: wordmark, a bag icon with a count, a phone link and a Menu button that opens a rail of seven links -->
@@ -622,8 +768,8 @@ html.lenis, html.lenis body { height: auto; }
       <button class="m-icon-btn nav__menu-btn" type="button" aria-expanded="false" aria-controls="nav-rail"><svg class="m-icon-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8 10.5h8M8 13.5h8"/></svg><span class="nav__menu-label">Menu</span></button>
     </div>
   </div>
-  <nav class="nav__rail" id="nav-rail" aria-label="Main" data-lenis-prevent>
-    <ul class="nav__list">
+  <nav class="nav__rail" id="nav-rail" aria-label="Main">
+    <ul class="nav__list" data-8b-items=":scope > li">
       <li><a class="m-link m-text-4" href="#opening">Roastery</a></li>
       <li><a class="m-link m-text-4" href="#beans">Beans</a></li>
       <li><a class="m-link m-text-4" href="#roast-days">Roast days</a></li>
@@ -637,7 +783,7 @@ html.lenis, html.lenis body { height: auto; }
 </header>
 
 <main class="page" id="main">
-<!-- opening: three panels side by side: the headline with a button, a batch ticket and a photo of a batch leaving the drum -->
+<!-- opening: three panels side by side: the headline with a button, a batch ticket and a photo of a batch leaving the drum (animation: scene:opening) -->
 <section id="opening" data-8b-section="opening" class="opening">
   <div class="opening__second">
     <div class="opening__col">
@@ -665,7 +811,7 @@ html.lenis, html.lenis body { height: auto; }
     </div>
     <div class="opening__col opening__drop">
       <span class="opening__fill" aria-hidden="true"></span>
-      <img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1621267714769-1ad1508a6bd6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8Y29mZmVlJTIwcm9hc3RpbmclMjBkcnVtfGVufDF8MHx8fDE3OTE1Njc3NTV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=830&q=60" alt="Freshly roasted beans pouring from the drum into the cooling tray" width="1600" height="1067" loading="lazy">
+      <img fetchpriority="high" srcset="https://images.unsplash.com/photo-1621267714769-1ad1508a6bd6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8Y29mZmVlJTIwcm9hc3RpbmclMjBkcnVtfGVufDF8MHx8fDE3OTE1Njc3NTV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=500&q=60 500w, https://images.unsplash.com/photo-1621267714769-1ad1508a6bd6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8Y29mZmVlJTIwcm9hc3RpbmclMjBkcnVtfGVufDF8MHx8fDE3OTE1Njc3NTV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=830&q=60 830w" sizes="(max-width: 767px) 166px, 65vw" src="https://images.unsplash.com/photo-1621267714769-1ad1508a6bd6?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8OXx8Y29mZmVlJTIwcm9hc3RpbmclMjBkcnVtfGVufDF8MHx8fDE3OTE1Njc3NTV8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=830&q=60" alt="Freshly roasted beans pouring from the drum into the cooling tray" width="1600" height="1067" loading="lazy">
       <p class="m-text-4">Batch 214 leaving the drum. The tray stirs it cool in four minutes.</p>
     </div>
   </div>
@@ -674,11 +820,11 @@ html.lenis, html.lenis body { height: auto; }
 <!-- beans: five coffees on the shelf with prices, notes and a turning round photo frame (animation: scene:beans) -->
 <section id="beans" data-8b-section="beans" class="beans">
   <div class="beans__head">
-    <h2 class="lockup" data-8b-motion="lockup"><span class="m-text-3">On the shelf</span><span class="m-text-2">This week</span><span class="m-text-3">250 g bags, roasted Thursday</span></h2>
+    <h2 class="lockup" data-8b-motion="lockup" data-8b-items=":scope > *"><span class="m-text-3">On the shelf</span><span class="m-text-2">This week</span><span class="m-text-3">250 g bags, roasted Thursday</span></h2>
     <p class="beans__intro m-text">Five coffees, each roasted for the way it tastes best. Ask for it whole or ground for your brewer — we grind at the counter while you wait.</p>
   </div>
   <div class="beans__body">
-    <ol class="beans__list">
+    <ol class="beans__list" data-8b-items=":scope > li" data-8b-fixed="5">
       <li class="beans__row">
         <h3 class="beans__name m-text-2">Kivu</h3>
         <p class="m-text-3">Rwanda · washed · for filter</p>
@@ -712,11 +858,11 @@ html.lenis, html.lenis body { height: auto; }
     </ol>
     <div class="beans__stage">
       <div class="beans__frame"><div class="beans__turn">
-        <div class="beans__shot"><img style="background:#734026" src="https://images.unsplash.com/photo-1549883498-9c1eb45b3cae?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29mZmVlJTIwdGlufGVufDF8MHx8fDE3OTE1Njc3OTF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=560&q=60" alt="A small bowl of roasted beans sunk in a sea of beans, seen from above" width="1600" height="1068" loading="lazy"></div>
-        <div class="beans__shot"><img style="background:#f3a60c" src="https://images.unsplash.com/photo-1597472608214-05bb98cb7d03?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29mZmVlJTIwYmVhbnMlMjBpbiUyMGJvd2x8ZW58MXwwfHx8MTc5MTU2Nzc1MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=560&q=60" alt="Roasted beans in a clear glass bowl" width="1600" height="1067" loading="lazy"></div>
-        <div class="beans__shot"><img style="background:#c07340" src="https://images.unsplash.com/photo-1743958488250-83982fb9dd2f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGNvZmZlZSUyMGJlYW5zJTIwaW4lMjBib3dsfGVufDF8MHx8fDE3OTE1Njc3NTF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=540&q=60" alt="A cup and saucer filled to the brim with roasted beans" width="1600" height="1104" loading="lazy"></div>
-        <div class="beans__shot"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1640591250947-01a91a0e94f1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fGNvZmZlZSUyMGNvb2xpbmclMjB0cmF5JTIwYmVhbnN8ZW58MXwwfHx8MTc5MTU2Nzc4NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=470&q=60" alt="A darker espresso roast turning in the round cooling tray" width="1600" height="1280" loading="lazy"></div>
-        <div class="beans__shot"><img style="background:#260c0c" src="https://images.unsplash.com/photo-1673208127664-23a2f3b27921?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y29mZmVlJTIwY29vbGluZyUyMHRyYXklMjBiZWFuc3xlbnwxfDB8fHwxNzkxNTY3Nzg1fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=560&q=60" alt="Close view of evenly roasted beans" width="1600" height="1067" loading="lazy"></div>
+        <div class="beans__shot"><img src="https://images.unsplash.com/photo-1549883498-9c1eb45b3cae?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8Y29mZmVlJTIwdGlufGVufDF8MHx8fDE3OTE1Njc3OTF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=560&q=60" alt="A small bowl of roasted beans sunk in a sea of beans, seen from above" width="1600" height="1068" loading="lazy"></div>
+        <div class="beans__shot"><img src="https://images.unsplash.com/photo-1597472608214-05bb98cb7d03?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29mZmVlJTIwYmVhbnMlMjBpbiUyMGJvd2x8ZW58MXwwfHx8MTc5MTU2Nzc1MXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=560&q=60" alt="Roasted beans in a clear glass bowl" width="1600" height="1067" loading="lazy"></div>
+        <div class="beans__shot"><img src="https://images.unsplash.com/photo-1743958488250-83982fb9dd2f?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTB8fGNvZmZlZSUyMGJlYW5zJTIwaW4lMjBib3dsfGVufDF8MHx8fDE3OTE1Njc3NTF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=540&q=60" alt="A cup and saucer filled to the brim with roasted beans" width="1600" height="1104" loading="lazy"></div>
+        <div class="beans__shot"><img src="https://images.unsplash.com/photo-1640591250947-01a91a0e94f1?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTZ8fGNvZmZlZSUyMGNvb2xpbmclMjB0cmF5JTIwYmVhbnN8ZW58MXwwfHx8MTc5MTU2Nzc4NXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=470&q=60" alt="A darker espresso roast turning in the round cooling tray" width="1600" height="1280" loading="lazy"></div>
+        <div class="beans__shot"><img src="https://images.unsplash.com/photo-1673208127664-23a2f3b27921?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y29mZmVlJTIwY29vbGluZyUyMHRyYXklMjBiZWFuc3xlbnwxfDB8fHwxNzkxNTY3Nzg1fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=560&q=60" alt="Close view of evenly roasted beans" width="1600" height="1067" loading="lazy"></div>
       </div></div>
     </div>
   </div>
@@ -725,11 +871,11 @@ html.lenis, html.lenis body { height: auto; }
 <!-- roast-days: four steps of roast day beside a sticky batch ticket that gets stamped (animation: scene:roast-days) -->
 <section id="roast-days" data-8b-section="roast-days" class="roast">
   <div class="roast__head">
-    <h2 class="lockup lockup--flood" data-8b-motion="lockup"><span class="m-text-4">Thursday is</span><span class="m-text-2">Roast day</span><span class="m-text-4">Four steps, one ticket per batch</span></h2>
+    <h2 class="lockup lockup--flood" data-8b-motion="lockup" data-8b-items=":scope > *"><span class="m-text-4">Thursday is</span><span class="m-text-2">Roast day</span><span class="m-text-4">Four steps, one ticket per batch</span></h2>
     <p class="roast__intro m-text">Every batch gets a paper ticket when the green coffee is weighed, and a stamp at each step until it is bagged. The ticket stays pinned above the drum until the last bag is sold.</p>
   </div>
   <div class="roast__body">
-    <ol class="roast__steps">
+    <ol class="roast__steps" data-8b-items=":scope > li" data-8b-fixed="4">
       <li class="roast__step"><p class="m-text-4">Tuesday</p><h3 class="m-text-5">Weighed out</h3><p class="m-text">Green coffee comes off the pallet in twelve-kilo lots. We pick out broken and pale beans by hand on the back table.</p></li>
       <li class="roast__step"><p class="m-text-4">Thursday, 7 am</p><h3 class="m-text-5">Into the drum</h3><p class="m-text">The drum is charged hot and each batch takes eleven to thirteen minutes. We listen for first crack and drop every coffee by its own clock.</p></li>
       <li class="roast__step"><p class="m-text-4">Four minutes later</p><h3 class="m-text-5">Stirred cool</h3><p class="m-text">The tray's arms turn the beans until they are cool to the hand. Fast cooling keeps the sweetness the drum built.</p></li>
@@ -738,7 +884,7 @@ html.lenis, html.lenis body { height: auto; }
     <div class="roast__stage">
       <div class="roast__ticket">
         <p class="roast__ticket-head"><span class="m-text-7">Batch 215</span><span class="m-text-4">Huila · washed</span></p>
-        <div class="roast__cells">
+        <div class="roast__cells" data-8b-items=":scope > .roast__cell" data-8b-fixed="4">
           <div class="roast__cell"><span class="m-text-4">Weighed</span><div class="roast__mark"><div class="m-stamp"><svg class="m-stamp__ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ring-roast-1" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#ring-roast-1" textLength="490">Weighed on Tuesday · sorted by hand · green ·</textPath></text></svg><span class="m-stamp__word m-text-7">12 kg</span></div></div></div>
           <div class="roast__cell"><span class="m-text-4">Roasted</span><div class="roast__mark"><div class="m-stamp"><svg class="m-stamp__ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ring-roast-2" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#ring-roast-2" textLength="490">Charged at seven · dropped at first crack ·</textPath></text></svg><span class="m-stamp__word m-text-7">7:04</span></div></div></div>
           <div class="roast__cell"><span class="m-text-4">Cooled</span><div class="roast__mark"><div class="m-stamp"><svg class="m-stamp__ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ring-roast-3" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#ring-roast-3" textLength="490">Stirred in the tray · cool to the hand ·</textPath></text></svg><span class="m-stamp__word m-text-7">4 min</span></div></div></div>
@@ -751,11 +897,11 @@ html.lenis, html.lenis body { height: auto; }
 
 <!-- farms: a photo and three partner farms with place, year and a line each -->
 <section id="farms" data-8b-section="farms" class="farms">
-  <div class="farms__photo"><img style="background:#400c0c" src="https://images.unsplash.com/photo-1790492486342-5058f2637317?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29mZmVlJTIwY2hlcnJpZXMlMjBoYW5kc3xlbnwxfDB8fHwxNzkxNTY3Nzk0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1270&q=60" alt="Hands holding ripe red coffee cherries over a woven basket" width="1600" height="1067" loading="lazy"></div>
+  <div class="farms__photo"><img src="https://images.unsplash.com/photo-1790492486342-5058f2637317?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29mZmVlJTIwY2hlcnJpZXMlMjBoYW5kc3xlbnwxfDB8fHwxNzkxNTY3Nzk0fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1270&q=60" alt="Hands holding ripe red coffee cherries over a woven basket" width="1600" height="1067" loading="lazy"></div>
   <div class="farms__text">
-    <h2 class="lockup lockup--left" data-8b-motion="lockup"><span class="m-text-3">Bought direct</span><span class="m-text-2">Three farms</span><span class="m-text-3">The same growers, year after year</span></h2>
+    <h2 class="lockup lockup--left" data-8b-motion="lockup" data-8b-items=":scope > *"><span class="m-text-3">Bought direct</span><span class="m-text-2">Three farms</span><span class="m-text-3">The same growers, year after year</span></h2>
     <p class="farms__intro m-text">We buy from three places we have visited, at a price agreed before the harvest and paid before the coffee ships. Most of our shelf comes from them.</p>
-    <ul class="farms__list">
+    <ul class="farms__list" data-8b-items=":scope > li">
       <li data-8b-motion="rule"><h3 class="m-text-2">Gatare</h3><p class="m-text-3">Nyamasheke, Rwanda · since 2019</p><p class="m-text">A washing station on the hills above Lake Kivu, run by a cooperative of six hundred smallholders.</p></li>
       <li data-8b-motion="rule"><h3 class="m-text-2">Hambela</h3><p class="m-text-3">Guji, Ethiopia · since 2021</p><p class="m-text">Natural coffees dried whole on raised beds for three weeks. The fruit is where the strawberry comes from.</p></li>
       <li data-8b-motion="rule"><h3 class="m-text-2">La Esperanza</h3><p class="m-text-3">Huila, Colombia · since 2020</p><p class="m-text">A family farm at 1,800 metres. We buy their whole washed lot every spring.</p></li>
@@ -766,8 +912,8 @@ html.lenis, html.lenis body { height: auto; }
 <!-- counter: a drinks board of seven rows that fans open, and a photo of the counter (animation: scene:counter) -->
 <section id="counter" data-8b-section="counter" class="counter">
   <div class="counter__board">
-    <h2 class="lockup lockup--flood lockup--left" data-8b-motion="lockup"><span class="m-text-4">At the</span><span class="m-text-2">Counter</span><span class="m-text-4">Espresso, filter and cake</span></h2>
-    <ul class="counter__list">
+    <h2 class="lockup lockup--flood lockup--left" data-8b-motion="lockup" data-8b-items=":scope > *"><span class="m-text-4">At the</span><span class="m-text-2">Counter</span><span class="m-text-4">Espresso, filter and cake</span></h2>
+    <ul class="counter__list" data-8b-items=":scope > li" data-8b-fixed="7">
       <li class="counter__row"><p class="counter__in"><span class="m-text-6">Espresso</span><span class="m-text-5">2.40</span></p></li>
       <li class="counter__row"><p class="counter__in"><span class="m-text-6">Macchiato</span><span class="m-text-5">2.60</span></p></li>
       <li class="counter__row"><p class="counter__in"><span class="m-text-6">Flat white</span><span class="m-text-5">3.30</span></p></li>
@@ -779,7 +925,7 @@ html.lenis, html.lenis body { height: auto; }
     <p class="counter__note m-text">Oat milk at no extra cost. Every drink uses this week's roast, and any bag on the shelf can be brewed as a filter while you choose.</p>
   </div>
   <figure class="counter__photo">
-    <img style="background:#f3f3f3" src="https://images.unsplash.com/photo-1595475038705-1af15f928681?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmFyaXN0YSUyMHBvcnRyYWl0fGVufDF8MHx8fDE3OTE1Njc3OTZ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1140&q=60" alt="Pour-overs being made at a white tiled counter" width="1600" height="1067" loading="lazy">
+    <img src="https://images.unsplash.com/photo-1595475038705-1af15f928681?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8NXx8YmFyaXN0YSUyMHBvcnRyYWl0fGVufDF8MHx8fDE3OTE1Njc3OTZ8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1140&q=60" alt="Pour-overs being made at a white tiled counter" width="1600" height="1067" loading="lazy">
     <figcaption class="m-text-4">Six seats at the counter, two outside on the bench.</figcaption>
   </figure>
 </section>
@@ -788,7 +934,7 @@ html.lenis, html.lenis body { height: auto; }
 <section id="refills" data-8b-section="refills" class="refills">
   <div class="refills__top">
     <div class="refills__copy">
-      <h2 class="lockup lockup--left" data-8b-motion="lockup"><span class="m-text-3">Bring the</span><span class="m-text-2">Tin back</span><span class="m-text-3">Refills on every opening day</span></h2>
+      <h2 class="lockup lockup--left" data-8b-motion="lockup" data-8b-items=":scope > *"><span class="m-text-3">Bring the</span><span class="m-text-2">Tin back</span><span class="m-text-3">Refills on every opening day</span></h2>
       <p class="m-text">Buy a Little Drum tin once and bring it back whenever it is empty. We fill it from the shelf, write the batch on the lid and take a tenth off the price.</p>
       <a class="m-btn" href="#visit"><span class="m-btn__label">Get a tin</span></a>
     </div>
@@ -799,7 +945,7 @@ html.lenis, html.lenis body { height: auto; }
     </dl>
   </div>
   <div class="refills__track">
-    <div class="refills__tin"><img style="background:#c0c0c0" src="https://images.unsplash.com/photo-1666873903780-396269c73a54?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29mZmVlJTIwdGlufGVufDF8MHx8fDE3OTE1Njc3OTF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=490&q=60" alt="An open tin filled with roasted beans, seen from above" width="1600" height="1200" loading="lazy"></div>
+    <div class="refills__tin"><img src="https://images.unsplash.com/photo-1666873903780-396269c73a54?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MXx8Y29mZmVlJTIwdGlufGVufDF8MHx8fDE3OTE1Njc3OTF8MA&ixlib=rb-4.1.0&auto=format&fit=crop&w=490&q=60" alt="An open tin filled with roasted beans, seen from above" width="1600" height="1200" loading="lazy"></div>
     <div class="refills__lid"><div class="m-stamp"><svg class="m-stamp__ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ring-lid" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#ring-lid" textLength="490">Bring it back · ten off every fill · no new bag ·</textPath></text></svg><span class="m-stamp__word m-text-7">Refill</span></div></div>
   </div>
 </section>
@@ -807,13 +953,13 @@ html.lenis, html.lenis body { height: auto; }
 <!-- cupping: a round photo with a Free stamp and four monthly tasting dates -->
 <section id="cupping" data-8b-section="cupping" class="cupping">
   <div class="cupping__visual">
-    <div class="cupping__round"><img style="background:#262626" src="https://images.unsplash.com/photo-1595950206454-9e2d02a2848d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGNvZmZlZSUyMGN1cHBpbmd8ZW58MXwwfHx8MTc5MTU2Nzc4Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=710&q=60" alt="A cupping spoon lifting coffee from a white bowl" width="1600" height="1067" loading="lazy"></div>
-    <div class="cupping__free" data-8b-motion="stamp"><div class="m-stamp"><svg class="m-stamp__ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ring-free" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#ring-free" textLength="490">Eight seats · bring a friend · spoons provided ·</textPath></text></svg><span class="m-stamp__word m-text-7">Free</span></div></div>
+    <div class="cupping__round"><img src="https://images.unsplash.com/photo-1595950206454-9e2d02a2848d?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTF8fGNvZmZlZSUyMGN1cHBpbmd8ZW58MXwwfHx8MTc5MTU2Nzc4Nnww&ixlib=rb-4.1.0&auto=format&fit=crop&w=710&q=60" alt="A cupping spoon lifting coffee from a white bowl" width="1600" height="1067" loading="lazy"></div>
+    <div class="cupping__free" data-8b-motion="stamp" style="--stamp-rotate-from: -48deg; --stamp-rotate-at0_002: -36deg; --stamp-rotate-to: -12deg"><div class="m-stamp"><svg class="m-stamp__ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ring-free" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#ring-free" textLength="490">Eight seats · bring a friend · spoons provided ·</textPath></text></svg><span class="m-stamp__word m-text-7">Free</span></div></div>
   </div>
   <div class="cupping__text">
-    <h2 class="lockup lockup--flood" data-8b-motion="lockup"><span class="m-text-4">First Saturday</span><span class="m-text-2">Cupping</span><span class="m-text-4">Ten till half eleven</span></h2>
+    <h2 class="lockup lockup--flood" data-8b-motion="lockup" data-8b-items=":scope > *"><span class="m-text-4">First Saturday</span><span class="m-text-2">Cupping</span><span class="m-text-4">Ten till half eleven</span></h2>
     <p class="cupping__intro m-text">Once a month we set out every coffee on the shelf, side by side, and taste them the way we choose them: slurped from a spoon. No experience needed, just a free morning.</p>
-    <ul class="cupping__dates">
+    <ul class="cupping__dates" data-8b-items=":scope > li">
       <li><span class="m-text-6">Sat 7 Nov</span><span class="m-text-4">The new Guji against last year's</span><a data-8b-placeholder="email" class="m-link m-text-4" href="mailto:counter@little-drum.example?subject=Cupping%207%20November">Book a seat</a></li>
       <li><span class="m-text-6">Sat 5 Dec</span><span class="m-text-4">Three washed coffees</span><a data-8b-placeholder="email" class="m-link m-text-4" href="mailto:counter@little-drum.example?subject=Cupping%205%20December">Book a seat</a></li>
       <li><span class="m-text-6">Sat 2 Jan</span><span class="m-text-4">Espresso blends, no milk</span><a data-8b-placeholder="email" class="m-link m-text-4" href="mailto:counter@little-drum.example?subject=Cupping%202%20January">Book a seat</a></li>
@@ -825,11 +971,11 @@ html.lenis, html.lenis body { height: auto; }
 <!-- people: a photo of the two owners that assembles from slats, with a short bio each (animation: scene:people) -->
 <section id="people" data-8b-section="people" class="people">
   <div class="people__head">
-    <h2 class="lockup lockup--left" data-8b-motion="lockup"><span class="m-text-3">Two people</span><span class="m-text-2">One drum</span><span class="m-text-3">Kelham Island since 2019</span></h2>
+    <h2 class="lockup lockup--left" data-8b-motion="lockup" data-8b-items=":scope > *"><span class="m-text-3">Two people</span><span class="m-text-2">One drum</span><span class="m-text-3">Kelham Island since 2019</span></h2>
     <p class="people__intro m-text">Little Drum started as a five-kilo roaster in a garage on Neepsend Lane. The drum is bigger now; the two of us are the same.</p>
   </div>
-  <div class="people__photo"><img style="background:#262640" src="https://images.unsplash.com/photo-1753351052277-a7ff634f0bd5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fGJhcmlzdGElMjBwb3J0cmFpdHxlbnwxfDB8fHwxNzkxNTY3Nzk2fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1060&q=60" alt="Tom and Hana in their aprons behind the counter" width="1600" height="900" loading="lazy"></div>
-  <div class="people__bios">
+  <div class="people__photo"><img src="https://images.unsplash.com/photo-1753351052277-a7ff634f0bd5?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8MTN8fGJhcmlzdGElMjBwb3J0cmFpdHxlbnwxfDB8fHwxNzkxNTY3Nzk2fDA&ixlib=rb-4.1.0&auto=format&fit=crop&w=1060&q=60" alt="Tom and Hana in their aprons behind the counter" width="1600" height="900" loading="lazy"></div>
+  <div class="people__bios" data-8b-items=":scope > .people__bio">
     <div class="people__bio"><h3 class="m-text-2">Tom Ashworth</h3><p class="m-text-3">The counter</p><p class="m-text">Ten years behind other people's espresso machines before this one. Knows every regular's grind by heart.</p></div>
     <div class="people__bio"><h3 class="m-text-2">Hana Pryce</h3><p class="m-text-3">The roaster</p><p class="m-text">Roasts every batch herself on Thursday mornings and visits the farms each harvest.</p></div>
   </div>
@@ -838,9 +984,9 @@ html.lenis, html.lenis body { height: auto; }
 <!-- faq: five questions and answers (native details) -->
 <section id="faq" data-8b-section="faq" class="faq">
   <div class="faq__head">
-    <h2 class="lockup lockup--left" data-8b-motion="lockup"><span class="m-text-3">Asked at</span><span class="m-text-2">The counter</span><span class="m-text-3">Five things people ask</span></h2>
+    <h2 class="lockup lockup--left" data-8b-motion="lockup" data-8b-items=":scope > *"><span class="m-text-3">Asked at</span><span class="m-text-2">The counter</span><span class="m-text-3">Five things people ask</span></h2>
   </div>
-  <div class="faq__list">
+  <div class="faq__list" data-8b-items=":scope > details">
     <details class="faq__item" data-8b-motion="rule"><summary class="m-text-6">Can you grind for my brewer?<span class="faq__plus" aria-hidden="true"></span></summary><p class="m-text">Yes — tell us what you brew with, from espresso to cafetière, and we grind on the spot. Whole beans keep longer, so we will always offer that first.</p></details>
     <details class="faq__item" data-8b-motion="rule"><summary class="m-text-6">How long do the beans keep?<span class="faq__plus" aria-hidden="true"></span></summary><p class="m-text">They are at their best from a few days to five weeks after the roast date on the bag. Keep them sealed, cool and out of the fridge.</p></details>
     <details class="faq__item" data-8b-motion="rule"><summary class="m-text-6">Do you post beans?<span class="faq__plus" aria-hidden="true"></span></summary><p class="m-text">Orders placed by Wednesday night go out on Friday with the new roast. UK postage is free over two bags.</p></details>
@@ -852,7 +998,7 @@ html.lenis, html.lenis body { height: auto; }
 <!-- visit: address, hours, phone, email, directions and a square photo behind the counter (animation: scene:visit) -->
 <section id="visit" data-8b-section="visit" class="visit">
   <div class="visit__info">
-    <h2 class="lockup lockup--flood" data-8b-motion="lockup"><span class="m-text-4">Come to</span><span class="m-text-2">The counter</span><span class="m-text-4">Kelham Island, Sheffield</span></h2>
+    <h2 class="lockup lockup--flood" data-8b-motion="lockup" data-8b-items=":scope > *"><span class="m-text-4">Come to</span><span class="m-text-2">The counter</span><span class="m-text-4">Kelham Island, Sheffield</span></h2>
     <dl class="visit__list">
       <div><dt class="m-text-4">Address</dt><dd class="m-text-6">1 Example Street, Kelham Island, Sheffield S3 0ZZ</dd></div>
       <div><dt class="m-text-4">Hours</dt><dd class="m-text-6">Tue–Sat 8 am – 5 pm, Sun 9 am – 2 pm, closed Monday</dd></div>
@@ -865,8 +1011,8 @@ html.lenis, html.lenis body { height: auto; }
     </div>
   </div>
   <div class="visit__side">
-    <div class="visit__window"><img style="background:#735959" src="https://images.unsplash.com/photo-1764584503115-3fca2f40700a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y29mZmVlJTIwc2hvcCUyMGNvdW50ZXJ8ZW58MXwwfHx8MTc5MTQ3MTUwOXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=840&q=60" alt="Behind the counter on a quiet morning, drinks being made" width="1600" height="1067" loading="lazy"></div>
-    <div class="visit__stamp" data-8b-motion="stamp"><div class="m-stamp"><svg class="m-stamp__ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ring-visit" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#ring-visit" textLength="490">Roasting from seven · come and smell it ·</textPath></text></svg><span class="m-stamp__word m-text-7">Thu</span></div></div>
+    <div class="visit__window"><img src="https://images.unsplash.com/photo-1764584503115-3fca2f40700a?ixid=M3w0Mzc5fDB8MXxzZWFyY2h8N3x8Y29mZmVlJTIwc2hvcCUyMGNvdW50ZXJ8ZW58MXwwfHx8MTc5MTQ3MTUwOXww&ixlib=rb-4.1.0&auto=format&fit=crop&w=1090&q=60" alt="Behind the counter on a quiet morning, drinks being made" width="1600" height="1067" loading="lazy"></div>
+    <div class="visit__stamp" data-8b-motion="stamp" style="--stamp-rotate-from: -44deg; --stamp-rotate-at0_002: -34deg; --stamp-rotate-to: -10deg"><div class="m-stamp"><svg class="m-stamp__ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ring-visit" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#ring-visit" textLength="490">Roasting from seven · come and smell it ·</textPath></text></svg><span class="m-stamp__word m-text-7">Thu</span></div></div>
   </div>
 </section>
 </main>
@@ -875,7 +1021,7 @@ html.lenis, html.lenis body { height: auto; }
 <footer id="footer" data-8b-section="footer" class="page-foot">
   <div class="footer__row">
     <p class="m-text-4">© Little Drum Coffee Roasters · Design: <a href="https://8b.com/" style="color:inherit" data-8b-credit>8B</a></p>
-    <ul class="footer__links m-text-4">
+    <ul class="footer__links m-text-4" data-8b-items=":scope > li">
       <li><a data-8b-placeholder="email" class="m-link" href="mailto:counter@little-drum.example">Email</a></li>
       <li><a data-8b-placeholder="social" class="m-link" href="https://www.instagram.com/">Instagram</a></li>
       <li><a data-8b-placeholder="social" class="m-link" href="https://www.facebook.com/">Facebook</a></li>
@@ -895,7 +1041,7 @@ html.lenis, html.lenis body { height: auto; }
     nav.classList.toggle('is-open', open);
     button.setAttribute('aria-expanded', String(open));
     label.textContent = open ? 'Close' : openText;
-    if (open) window.lenis?.stop(); else window.lenis?.start();
+    if (open) window.motionKit?.wheel?.stop(); else window.motionKit?.wheel?.start();
   };
   button.addEventListener('click', () => setOpen(!nav.classList.contains('is-open')));
   rail.addEventListener('click', event => { if (event.target.closest('a')) setOpen(false); });
@@ -917,242 +1063,167 @@ html.lenis, html.lenis body { height: auto; }
 })();
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script data-8b-part="motion-queue">
-(() => {
-  'use strict';
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-  const parsed = document.readyState === 'loading' ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true })) : Promise.resolve();
-  const ready = () => Promise.all([fonts, parsed]).then(() => firsts);
-  const nextTask = () => window.scheduler?.yield?.() ?? new Promise(resolve => setTimeout(resolve));
-  const refresh = () => {
-    if (typeof window.refreshScroll === 'function') return window.refreshScroll();
-    window.ScrollTrigger?.sort(); window.ScrollTrigger?.refresh();
-  };
-  const run = (setup, name) => {
-    for (const trigger of window.ScrollTrigger?.getAll() || []) if (!trigger.end && window.ScrollTrigger.getAll().includes(trigger)) trigger.refresh(0, 1);
-    const context = window.gsap.context(() => {});
-    const log = new MutationObserver(() => {});
-    log.observe(document.documentElement, { attributes: true, attributeOldValue: true, subtree: true });
-    let failure = null, records;
-    try { context.add(() => { try { setup(); } catch (error) { failure = error; } }); }
-    finally { records = log.takeRecords(); log.disconnect(); }
-    if (!failure) return true;
-    try { context.revert(); } catch (error) { console.error(name, 'revert failed', error); }
-    for (const { target, attributeName, oldValue } of records.reverse()) {
-      const now = target.getAttribute(attributeName);
-      if (oldValue == null) { if (now != null) target.removeAttribute(attributeName); }
-      else if (now !== oldValue) target.setAttribute(attributeName, oldValue);
-    }
-    console.error(name, failure);
-    return false;
-  };
-  let firsts = Promise.resolve(), tail = null, pending = 0, lazy = null, building = 0, firstCount = 0;
-  window.motionReady = ready();
-  parsed.then(() => { if (firstCount && !tail) firsts.then(refresh); });
-  window.queueMotion = (setup, { first = false, near, id } = {}) => {
-    if (!window.gsap || typeof setup !== 'function') return;
-    const name = id || document.currentScript?.getAttribute('data-8b-part') || 'motion';
-    if (near instanceof Element && window.IntersectionObserver) {
-      const watch = new IntersectionObserver(entries => {
-        if (!entries.some(entry => entry.isIntersecting)) return;
-        watch.disconnect();
-        building++;
-        lazy = (lazy || ready()).then(nextTask).then(() => run(setup, name)).finally(() => { if (!--building) refresh(); });
-      }, { rootMargin: '100% 0px' });
-      watch.observe(near);
-      return;
-    }
-    if (first) { firstCount++; firsts = firsts.then(() => fonts).then(() => { if (!run(setup, name)) refresh(); }); }
-    else {
-      pending++;
-      tail = (tail || ready()).then(nextTask).then(() => run(setup, name))
-        .finally(() => { if (!--pending) refresh(); });
-    }
-    window.motionReady = Promise.all([firsts, tail]);
-  };
-})();
-</script>
-<script data-8b-part="page-init">
-gsap.registerPlugin(ScrollTrigger);
-function navOffset() {
-  const bar = document.querySelector('#nav .nav__bar');
-  return bar ? Math.round(bar.getBoundingClientRect().height) : 0;
-}
-function refreshScroll() {
-  if (window.lenis) window.lenis.options.anchors = { offset: -navOffset() };
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
-}
-gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-  const lenis = window.lenis = new Lenis({ lerp: .09, anchors: { offset: -navOffset() } });
-  const tick = time => lenis.raf(time * 1000);
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(tick);
-  gsap.ticker.lagSmoothing(0);
-  return () => { gsap.ticker.remove(tick); gsap.ticker.lagSmoothing(500, 33); lenis.destroy(); window.lenis = null; };
-});
-</script>
-<script data-8b-part="motion">
-const effects = {
-  rule(element, vars = {}) {
-    const fromRight = getComputedStyle(element).textAlign === 'right';
-    return gsap.timeline(vars).fromTo(element,
-      { clipPath: fromRight ? 'inset(0% 0% 0% 100%)' : 'inset(0% 100% 0% 0%)' },
-      { clipPath: 'inset(0% 0% 0% 0%)', duration: .9, ease: 'power3.inOut', clearProps: 'clipPath' });
-  },
-  lockup(element, vars = {}) {
-    const lines = [...element.children];
-    return gsap.timeline(vars).fromTo(lines,
-      { yPercent: 60, clipPath: 'inset(0% 0% 100% 0%)' },
-      { yPercent: 0, clipPath: 'inset(0% 0% 0% 0%)', duration: .85, ease: 'power3.out', stagger: .12, clearProps: 'transform,clipPath' });
-  },
-  stamp(element, vars = {}) {
-    return gsap.timeline(vars).fromTo(element,
-      { scale: 2.2, rotation: '-=24', autoAlpha: 0 },
-      { scale: 1, rotation: '+=24', autoAlpha: 1, duration: .55, ease: 'power4.in', clearProps: 'transform,opacity,visibility' });
-  },
-  turn(element, degrees = 360, vars = {}) {
-    return gsap.timeline(vars).fromTo(element, { rotation: 0 }, { rotation: degrees, ease: 'none', duration: 1 });
-  }
-};
-document.querySelectorAll('main [data-8b-section]').forEach(section => {
-  ['rule', 'lockup', 'stamp'].forEach(name => {
-    const elements = section.querySelectorAll(`[data-8b-motion~="${name}"]`);
-    if (!elements.length) return;
-    const id = `effect:${name}:${section.id}`;
-    queueMotion(() => gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      elements.forEach((element, index) => ScrollTrigger.create({ id: `${id}:${index}`, trigger: element, start: 'top 88%', once: true, animation: effects[name](element) }));
-    }), { first: section.getBoundingClientRect().top < innerHeight, id });
-  });
-});
-(() => {
-  const loops = document.querySelectorAll('[data-loop]');
-  if (!loops.length) return;
-  const observer = new IntersectionObserver(entries => entries.forEach(entry => entry.target.classList.toggle('is-paused', !entry.isIntersecting)));
-  loops.forEach(loop => observer.observe(loop));
-})();
-</script>
 
-<script data-8b-part="scene:beans">
-queueMotion(() => {
-  const section = document.getElementById('beans');
-  const list = section.querySelector('.beans__list');
-  const turn = section.querySelector('.beans__turn');
-  const rows = [...section.querySelectorAll('.beans__row')];
-  const shots = [...section.querySelectorAll('.beans__shot')];
-  if (!list || !turn || shots.length !== rows.length) throw new Error('beans: one photo per row is required');
-  gsap.matchMedia().add({
-    wide: '(min-width: 1024px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const line = context.conditions.wide ? 50 : 42;
-    gsap.fromTo(turn, { rotation: 0 }, { rotation: 360, ease: 'none', scrollTrigger: { id: 'beans', trigger: list, start: 'top 75%', end: 'bottom 55%', scrub: .6 } });
-    rows.forEach((row, index) => {
-      ScrollTrigger.create({ id: `beans:row-${index}`, trigger: row, start: `top ${line}%`, end: `bottom ${line}%`, toggleClass: { targets: row, className: 'is-current' } });
-      if (!index) return;
-      gsap.fromTo(shots[index], { clipPath: 'circle(0% at 50% 50%)' }, { clipPath: 'circle(71% at 50% 50%)', ease: 'power1.inOut', scrollTrigger: { id: `beans:shot-${index}`, trigger: row, start: `top ${line + 14}%`, end: `top ${line - 2}%`, scrub: .4 } });
-    });
+<script data-8b-part="motion-kit">
+(() => {
+const live = document.documentElement.hasAttribute('data-8b-live');
+const measures = new Set();
+let queued = false;
+const run = fn => { try { fn(); } catch (error) { console.error('[motion-kit] measure failed', error); } };
+const remeasure = () => {
+if (queued) return;
+queued = true;
+requestAnimationFrame(() => { queued = false; measures.forEach(run); });
+};
+window.motionKit = {
+live,
+box(element) {
+if (!(element instanceof HTMLElement)) { const r = element.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+let x = 0, y = 0, node = element;
+while (node) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+return { x, y, w: element.offsetWidth, h: element.offsetHeight };
+},
+set(element, vars) { for (const [name, value] of Object.entries(vars)) element.style.setProperty(name, String(value)); },
+measure(fn) { if (!live) return; measures.add(fn); run(fn); },
+scene(id, fn) {
+if (!live) return;
+try { fn(); } catch (error) {
+console.error(`[motion-kit] scene ${id} failed; its section stays static`, error);
+document.querySelector(`style[data-8b-part="scene:${id}"]`)?.setAttribute('media', 'not all');
+}
+}
+};
+if (!live) { window.motionReady = Promise.resolve(); return; }
+const number = () => document.querySelectorAll('[data-8b-items]').forEach(group => {
+let items;
+try { items = [...group.querySelectorAll(group.getAttribute('data-8b-items'))]; } catch { return; }
+items.forEach((item, index) => { item.style.setProperty('--i', index); item.style.setProperty('--n', items.length); });
+});
+number();
+measures.add(number);
+new ResizeObserver(remeasure).observe(document.body);
+document.fonts.ready.then(remeasure);
+addEventListener('load', remeasure);
+window.motionReady = document.fonts.ready.then(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live || !matchMedia('(pointer: fine)').matches) return;
+let target = scrollY, current = scrollY, last = 0, running = false, paused = false;
+const inner = (node, dy) => {
+for (; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+if (!/(auto|scroll)/.test(getComputedStyle(node).overflowY) || node.scrollHeight <= node.clientHeight) continue;
+if (dy > 0 ? node.scrollTop + node.clientHeight < node.scrollHeight - 1 : node.scrollTop > 0) return true;
+}
+return false;
+};
+const step = now => {
+current += (target - current) * (1 - Math.exp(-5.3 * Math.min(0.05, (now - last) / 1000)));
+last = now;
+if (Math.abs(target - current) < 0.5) current = target;
+scrollTo({ top: current, behavior: 'instant' });
+if (current !== target) requestAnimationFrame(step); else running = false;
+};
+addEventListener('wheel', event => {
+if (paused || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || inner(event.target, event.deltaY)) return;
+event.preventDefault();
+if (!running) target = current = scrollY;
+const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? innerHeight : 1;
+target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, target + event.deltaY * unit * 0.95));
+if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+}, { passive: false });
+kit.wheel = { stop() { paused = true; }, start() { paused = false; } };
+})();
+(() => {
+const kit = window.motionKit;
+if (!kit.live) return;
+const at = element => {
+const own = parseFloat(element.getAttribute('data-8b-enter'));
+return own >= 0 && own <= 100 ? own / 100 : 0.88;
+};
+let pending = [...document.querySelectorAll('[data-8b-motion]')].map(element => ({ element, y: 0, at: at(element) }));
+let queued = false;
+const check = () => {
+queued = false;
+pending = pending.filter(item => {
+if (item.y > scrollY + innerHeight * item.at) return true;
+item.element.classList.add('is-in');
+return false;
+});
+};
+const queue = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+kit.measure(() => { pending.forEach(item => { item.y = kit.box(item.element).y; }); queue(); });
+addEventListener('scroll', queue, { passive: true });
+})();
+(() => {
+if (!window.motionKit.live) return;
+const sheet = new CSSStyleSheet();
+sheet.replaceSync('[data-8b-off],[data-8b-off]::before,[data-8b-off]::after{animation-play-state:paused!important}');
+document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+const seen = new Set(), loops = new Map();
+const watch = new IntersectionObserver(entries => {
+entries.forEach(entry => entry.isIntersecting ? seen.add(entry.target) : seen.delete(entry.target));
+loops.forEach((section, element) => element.toggleAttribute('data-8b-off', !seen.has(element) && !seen.has(section)));
+});
+const scan = () => document.getAnimations().forEach(animation => {
+const element = animation.effect?.target;
+if (!element || loops.has(element) || animation.effect.getTiming().iterations !== Infinity || animation.timeline !== document.timeline) return;
+const section = element.closest('section,header,footer') || element;
+loops.set(element, section);
+watch.observe(element);
+watch.observe(section);
+});
+scan();
+addEventListener('load', scan);
+document.addEventListener('animationstart', scan, true);
+})();
+(() => {
+const kit = window.motionKit;
+kit.track = () => {};
+if (!kit.live) return;
+const named = { top: 0, center: 0.5, bottom: 1 };
+const point = text => text.trim().split(/\s+/).map(word => named[word] ?? parseFloat(word) / 100);
+kit.track = (element, start, end, fn) => {
+const [s0, v0] = point(start), [s1, v1] = point(end);
+let queued = false;
+const run = () => {
+queued = false;
+const box = element.getBoundingClientRect(), vh = innerHeight;
+const d0 = box.top + box.height * s0 - vh * v0, d1 = box.top + box.height * s1 - vh * v1;
+fn(d1 === d0 ? (d0 <= 0 ? 1 : 0) : Math.min(1, Math.max(0, -d0 / (d1 - d0))));
+};
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+kit.measure(run);
+};
+})();
+</script>
+<script data-8b-part="scene-script:beans">
+motionKit.scene("beans", () => {
+  const wide = matchMedia("(min-width: 1024px)");
+  document.querySelectorAll("#beans .beans__row").forEach(row => {
+    motionKit.track(row, "top 50%", "bottom 50%", p => { if (wide.matches) row.classList.toggle("is-current", p > 0 && p < 1); });
+    motionKit.track(row, "top 42%", "bottom 42%", p => { if (!wide.matches) row.classList.toggle("is-current", p > 0 && p < 1); });
   });
 });
 </script>
-<script data-8b-part="scene:roast-days">
-queueMotion(() => {
-  const section = document.getElementById('roast-days');
-  const steps = [...section.querySelectorAll('.roast__step')];
-  const cells = [...section.querySelectorAll('.roast__cell')];
-  if (!steps.length || steps.length !== cells.length) throw new Error('roast-days: one ticket cell per step is required');
-  gsap.matchMedia().add({
-    wide: '(min-width: 1024px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const { wide } = context.conditions;
-    steps.forEach((step, index) => {
-      const cell = cells[index];
-      const stamp = cell.querySelector('.m-stamp');
-      gsap.timeline({ scrollTrigger: { id: `roast-days:step-${index}`, trigger: step, start: wide ? 'top 64%' : 'top 86%', end: wide ? 'top 36%' : 'top 64%', scrub: .3 } })
-        .fromTo(stamp, { scale: 2.3, rotation: -28, autoAlpha: 0 }, { scale: 1, rotation: 0, autoAlpha: 1, ease: 'power4.in', duration: .7 })
-        .fromTo(cell, { scale: 1 }, { scale: .955, ease: 'power2.out', duration: .1 }, .7)
-        .to(cell, { scale: 1, ease: 'power2.out', duration: .2 });
-    });
+<script data-8b-part="scene-script:refills">
+motionKit.scene("refills", () => {
+  const tin = document.querySelector("#refills .refills__tin"), lid = document.querySelector("#refills .refills__lid");
+  motionKit.measure(() => {
+    const distance = lid.offsetLeft - tin.offsetLeft;
+    motionKit.set(lid, { "--refills-travel": `${distance}px`, "--refills-turn": `${-(distance / (lid.offsetWidth / 2)) * 180 / Math.PI}deg` });
   });
 });
 </script>
-<script data-8b-part="scene:counter">
-queueMotion(() => {
-  const section = document.getElementById('counter');
-  const board = section.querySelector('.counter__list');
-  const rows = [...section.querySelectorAll('.counter__row')];
-  if (!board || rows.length < 2) throw new Error('counter: the board needs rows');
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'counter', trigger: board, start: 'top 82%', end: 'top 34%', scrub: .5, invalidateOnRefresh: true } });
-    rows.forEach((row, index) => {
-      if (index) timeline.fromTo(row, { y: () => rows[0].offsetTop - row.offsetTop }, { y: 0, ease: 'power2.inOut', duration: .55 }, (index - 1) * .06);
-      timeline.fromTo(row.querySelector('.counter__in'), { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(-30% -4% -30% -4%)', ease: 'power2.out', duration: .3 }, .12 + index * .07);
-    });
-  });
-});
-</script>
-<script data-8b-part="scene:refills">
-queueMotion(() => {
-  const section = document.getElementById('refills');
-  const track = section.querySelector('.refills__track');
-  const tin = section.querySelector('.refills__tin');
-  const lid = section.querySelector('.refills__lid');
-  if (!track || !tin || !lid) throw new Error('refills: track, tin and lid are required');
-  gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-    const distance = () => lid.offsetLeft - tin.offsetLeft;
-    const turn = () => -(distance() / (lid.offsetWidth / 2)) * 180 / Math.PI;
-    gsap.fromTo(lid, { x: () => -distance(), rotation: turn }, { x: 0, rotation: 0, ease: 'none', scrollTrigger: { id: 'refills', trigger: track, start: 'top 78%', end: 'bottom 42%', scrub: .6, invalidateOnRefresh: true } });
-  });
-});
-</script>
-<script data-8b-part="scene:people">
-queueMotion(() => {
-  const section = document.getElementById('people');
-  const photo = section.querySelector('.people__photo');
-  const image = photo && photo.querySelector(':scope > img');
-  if (!image) throw new Error('people: the photo is required');
-  gsap.matchMedia().add({
-    wide: '(min-width: 700px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 699.98px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const count = context.conditions.wide ? 4 : 3;
-    const slats = Array.from({ length: count }, (_, index) => {
-      const slat = document.createElement('div');
-      slat.className = 'people__slat';
-      slat.setAttribute('aria-hidden', 'true');
-      slat.style.clipPath = `inset(0% ${100 - (index + 1) * 100 / count}% 0% ${index * 100 / count}%)`;
-      const copy = image.cloneNode();
-      copy.alt = '';
-      slat.append(copy);
-      photo.append(slat);
-      return slat;
-    });
-    photo.classList.add('is-slatted');
-    const timeline = gsap.timeline({ scrollTrigger: { id: 'people', trigger: photo, start: 'top bottom', end: 'center 52%', scrub: .6 } });
-    slats.forEach((slat, index) => timeline.fromTo(slat, { yPercent: (index % 2 ? 1 : -1) * (context.conditions.wide ? 24 : 16) * (1 + index * .2) }, { yPercent: 0, ease: 'power2.out' }, 0));
-    return () => { slats.forEach(slat => slat.remove()); photo.classList.remove('is-slatted'); };
-  });
-});
-</script>
-<script data-8b-part="scene:visit">
-queueMotion(() => {
-  const section = document.getElementById('visit');
-  const view = section.querySelector('.visit__window');
-  const image = view && view.querySelector('img');
-  if (!image) throw new Error('visit: the window photo is required');
-  gsap.matchMedia().add({
-    wide: '(min-width: 1024px) and (prefers-reduced-motion: no-preference)',
-    narrow: '(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)'
-  }, context => {
-    const { wide } = context.conditions;
-    gsap.timeline({ scrollTrigger: { id: 'visit', trigger: view, start: 'top 92%', end: 'center 68%', scrub: .5 } })
-      .fromTo(view, { xPercent: wide ? -38 : 0, yPercent: wide ? 22 : 14, rotation: -90, clipPath: 'inset(20% 20% 20% 20% round 50%)' }, { xPercent: 0, yPercent: 0, rotation: 0, clipPath: 'inset(0% 0% 0% 0% round 0%)', ease: 'power2.inOut' }, 0)
-      .fromTo(image, { scale: 1.3 }, { scale: 1, ease: 'power2.out' }, 0);
-  });
+<script data-8b-part="scene-script:people">
+motionKit.scene("people", () => {
+  const make = (tag, attrs, ...children) => { const el = tag.startsWith('svg:') ? document.createElementNS('http://www.w3.org/2000/svg', tag.slice(4)) : document.createElement(tag); for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v); el.append(...children); return el; };
+  const copy = (element, deep, attrs = {}) => { const el = element.cloneNode(deep); for (const [k, v] of Object.entries(attrs)) v == null ? el.removeAttribute(k) : el.setAttribute(k, v); return el; };
+  if (matchMedia("(min-width: 700px)").matches) {
+    { const parent = document.querySelector("#people .people__photo"); parent.append(...Array.from({ length: 4 }, (_, i) => make("div", { class: "people__slat", "aria-hidden": "true", style: `clip-path: inset(0% ${75 - 25 * i}% 0% ${25 * i}%)` }, copy(parent.querySelector(":scope > img:nth-of-type(1)"), false, { "alt": "" })))); }
+  } else {
+    { const parent = document.querySelector("#people .people__photo"); parent.append(...Array.from({ length: 3 }, (_, i) => make("div", { class: "people__slat", "aria-hidden": "true", style: `clip-path: inset(0% ${66.6667 - 33.3334 * i}% 0% ${33.3334 * i}%)` }, copy(parent.querySelector(":scope > img:nth-of-type(1)"), false, { "alt": "" })))); }
+  }
 });
 </script>
 </body>

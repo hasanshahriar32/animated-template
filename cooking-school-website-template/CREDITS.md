@@ -34,10 +34,12 @@ Loaded from images.unsplash.com. Free to use under the [Unsplash License](https:
 
 ## Fonts (SIL Open Font License 1.1)
 
-- Hedvig Letters Serif — Google Fonts: https://fonts.google.com/specimen/Hedvig+Letters+Serif
-- Kalnia — Google Fonts: https://fonts.google.com/specimen/Kalnia
+- Hedvig Letters Serif, Google Fonts: https://fonts.google.com/specimen/Hedvig+Letters+Serif
+- Kalnia, Google Fonts: https://fonts.google.com/specimen/Kalnia
 
 ## Libraries
 
-- GSAP 3.13.0, GreenSock — standard "no charge" license: https://gsap.com/standard-license
-- Lenis 1.3.4, darkroom.engineering — MIT: https://github.com/darkroomengineering/lenis
+`index.html` uses none. `index.gsap.html` uses:
+
+- GSAP 3.13.0, GreenSock, standard "no charge" license: https://gsap.com/standard-license
+- Lenis 1.3.4, darkroom.engineering, MIT: https://github.com/darkroomengineering/lenis

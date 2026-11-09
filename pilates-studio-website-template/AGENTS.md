@@ -1,6 +1,6 @@
 # AGENTS.md: pilates studio website template
 
-One-page website for a small reformer Pilates studio that teaches beginners, runners, new mothers, desk workers and people over sixty. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a small reformer Pilates studio that teaches beginners, runners, new mothers, desk workers and people over sixty. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,17 +14,16 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits.
 - Selectors the scripts use:
   - `section-script:nav`: `.nav__sheet` `.nav__menu` `.nav__close`
   - `section-script:contact`: `.co-form` `.co-status`
-  - `scene:classes`: `.cl-wrap` `.cl-carriage` `.cl-rail`
-  - `scene:fifty`: `.fi-stage` `.fi-track` `.fi-block` `.fi-rail` `.fi-rail__dot` `.fi-rail__fill` `data-from` `data-to`
-  - `scene:bodies`: `.bo-list` `.bo-item` `.bo-frame` `.bo-name` `.bo-text`
-  - `scene:studio`: `.st-lanes` `.st-lane--a` `.st-lane--b`
-  - `scene:prices`: `.pr-list` `.pr-plan`
+  - `scene-script:classes`: `.cl-wrap` `.cl-carriage` `.cl-rail`
+  - `scene-script:fifty`: `.fi-stage` `.fi-track` `.fi-block` `.fi-rail` `data-from` `data-to`
+  - `scene-script:bodies`: `.bo-list` `.bo-item` `.bo-frame`
 - "Hundred" is both the brand and a real Pilates warm-up exercise: the h1 "Every class opens with the Hundred.", its lead paragraph and the first block of the fifty track ("The Hundred") name the exercise. When you rename the studio, change the title, meta description, wordmarks, the logo's aria-label, the email and the copyright, and keep or rewrite the exercise lines on purpose.
-- Each block of the fifty track carries data-from and data-to minutes: scene:fifty reads them to fill the block under the rail's dot, and the largest data-to is the length of the rail. The tick labels (0 to 50 min) are plain text: keep them, the ranges and the "Minutes ... to ..." lines in step.
-- scene:classes sizes its one carriage (.cl-carriage) from the first rail and relies on all rails sharing one height (grid-auto-rows: 1fr); the first rail carries .is-on in the HTML as the filled state without JavaScript. Any number of rails works, but the longest text sets the height of all.
+- Each block of the fifty track carries data-from and data-to minutes: the fifty script reads them to fill the block under the rail's dot, and the largest data-to is the length of the rail. The tick labels (0 to 50 min) are plain text: keep them, the ranges and the "Minutes ... to ..." lines in step.
+- The classes script sizes its one carriage (.cl-carriage) from the first rail and relies on all rails sharing one height (grid-auto-rows: 1fr); the first rail carries .is-on in the HTML as the filled state when the scroll motion is off. Any number of rails works, but the longest text sets the height of all.
 - The class glyphs (spokes, four rings, a ring with a disc, four blades) are inline SVG in currentColor, reused on the teacher cards and the fifty track; the frame, sheet and filled cards are CSS. Recolour through --color-1 to --color-4, and keep filled timetable chips (.m-surface-2) matching the line "Filled slots are Reformer classes".
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #f6f4e9 (cream sheet under the page, the fixed bar and the phone menu; text on deep coral; the cream buttons in the opening and on the middle price card), `--color-2` #ef573b (bright coral frame round the sheet; section headings, class, plan, teacher and day names, prices; card outlines, glyphs, hairlines and form underlines), `--color-3` #c3331c (deep coral opening and footer panels, the carriage and every filled card or chip, buttons, links, rule lead-ins, meta lines, form labels, the minute rail's dot and fill), `--color-4` #6b665e (warm grey body text, the six rules paragraph, the address and hours in contact, and typed form text); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
@@ -59,9 +58,9 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the Menu button (screens up to 900 px) cannot open the menu sheet. The footer repeats Classes, Timetable, Prices and Contact, but Teachers (#teachers) has no other link on those screens.
 - The contact form sends nothing yet: section-script:contact checks the fields and shows the thank-you line. Without JavaScript Send posts the form to the page itself (action="#"), which a static host may refuse.
-- The opening photo sits on the first screen but has loading="lazy" like every photo on the page, so it starts loading late and can slow the largest paint; set it to load eagerly if it stays at the top.
 - In classes, while the carriage moves between two rails, the rail it is leaving shows its light text partly over the cream sheet for a moment.
-- Lighthouse lists the GSAP scripts as render-blocking; they sit at the end of body and the motion scripts after them need them loaded.
+- Without CSS scroll-driven animation support (Firefox today) or with reduced motion on, the page is static: no opening load-in, entrances, carriage or scroll effects; the first rail stays filled, the class plan is a plain grid without the minute rail, the portraits show at full height, the lanes and price cards rest in line, and scrolling is the browser's own. The hiding bar and hover fills still run.
+- The price cards' start offsets are inline custom properties on each card (--prices-li-pr-plan-translate-from-2 and --prices-li-pr-plan-translate-from); a card added without them starts from a default offset.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Hundred left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Hundred left only in class names.

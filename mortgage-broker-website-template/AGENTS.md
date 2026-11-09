@@ -1,6 +1,6 @@
 # AGENTS.md: mortgage broker website template
 
-One-page website for a mortgage broker or adviser who compares the whole market and books free calls. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for a mortgage broker or adviser who compares the whole market and books free calls. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, SplitText, Lenis 1.3.27 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,20 +14,17 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:navigation`: `.nav__menu` `.menu__close`
   - `section-script:market`: `.market__field` `.market__lines` `.market__count` `.market__chart` `data-bank`
   - `section-script:contact`: `.contact__form` `.contact__status`
-  - `scene:market`: `.market__field` `.market__line`
-  - `scene:method`: `.method__step` `.method__photo` `.method__dot` `.method__shift`
-  - `scene:advisers`: `.adviser` `.adviser__frame` `.adviser__text`
-  - `scene:switch`: `.switch__track` `.switch__fill` `.switch__dot`
-  - `scene:offer`: `.offer__frame` `.offer__img` `.offer__panel` `.offer__chart`
-  - `scene:contact`: `.contact__visual` `.contact__disc` `.contact__photo`
-- The market chart counts its lines from the value of the data element in the lead paragraph (94; the script then sets --market-count, whose inline value draws the plain stripes shown before the script runs). The bank's dark line is the position in data-bank (31) on the field, and the label follows the inline --market-bank on the chart: keep the two equal and below the count. The 94 also appears as text in the opening card, the method step and chip, the ledger and the offer checks: change them all together.
-- The method scene reads one photo and one index dot for every step, so keep four steps with four photos and four dots, or add all three together.
-- The switch section turns into a strip of panels only while the scene runs: it sets the section to one screen high with a flex strip; each new panel needs a dot with the class switch__dot, which the scene scales.
-- The line chart in the offer panel draws with strokeDashoffset from 1 to 0 and autoRound turned off so it draws smoothly; keep that setting if you restyle it.
+  - `scene-script:switch`: `.switch__track`
+- The market chart counts its lines from the value of the data element in the lead paragraph (94; section-script:market then sets --market-count, whose inline value draws the plain stripes shown before the script runs). The bank's dark line is the position in data-bank (31) on the field, and the label follows the inline --market-bank on the chart: keep the two equal and below the count. The 94 also appears as text in the opening card, the method step and chip, the ledger and the offer checks: change them all together.
+- The growth of the chart lines is timed in scene:market by :nth-child rules written for exactly 94 lines spreading out from the 32nd (data-bank 31). With another count or bank position, rewrite those rules, or lines past the 94th stand still and the spread starts from the wrong line.
+- The method scene is CSS written for four steps (:nth-of-type rules for the photos, the index dots and the step timelines), so keep four steps with four photos and four dots, or add the rules with them.
+- The switch section turns into a sideways strip only while the motion is on: scene:switch makes the section one screen plus --switch-distance high (scene-script:switch measures it) with a sticky flex strip. Each new panel needs a dot with the class switch__dot; the dots are timed from their position in the list, so the number of panels can change.
+- The line chart in the offer panel draws with stroke-dashoffset from 1 to 0 on a polyline with pathLength="1"; keep that attribute if you redraw the line.
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #ffffff (page ground, the nav bar, the footer card and the call-back form card, text on the dark sections), `--color-2` #18181b (body text, the dark buttons, the advisers section ground, the bank's line in the chart, the switch dots and fill line), `--color-3` #62626b (secondary small text and the descriptions in the fee ledger), `--color-4` #f4f4f5 (alternate ledger rows, the FAQ section ground, the form fields), `--color-5` #ffb547 (amber: the middle of the glow gradient, the switch section's final ground, adviser specialities, the method index dots, the line in the offer panel's chart), `--color-6` #fc5f2b (ember: the chart lines other than the bank's, bullets and step markers, the round badge icon behind the white tick, the link underline on hover, the end of the glow), `--color-7` #120d0a (warm near black: the contact section and footer ground, the backing of the photo frames, the dark photo chips and the offer panel), `--color-8` #a1a1aa (muted small text, such as the one-line adviser notes and the photo chip subtitles), `--color-9` #e4e4e7 (hairlines, field borders, the pale start of the chart lines and the dimmed ledger and FAQ rows before they light up), `--color-10` #ffe3b3 (the cream centre of every glow: the first screen, the button hover, the logo mark and the contact disc); body text needs 4.5:1 contrast.
 - With reduced motion the page must read in full.
 - Keep the header comment and `<meta name="generator">`. Keep the "Design: 8B" footer link unless the site owner asks to remove it.
@@ -62,9 +59,10 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the Menu button cannot open the overlay; the header links on wide screens and the footer links stay reachable. The market chart then shows 94 even ember stripes drawn by CSS, with no dark bank line. The questions are native details and open without it.
 - The call-back form is a demo: with JavaScript it only checks the required fields, clears itself and shows the thank-you line; without it the form posts to #contact.
-- The switch section pins for the whole sideways run of its panels: about 1,300 px of scrolling at 1440 px wide and 1,270 on a 375 px phone.
+- The switch section holds the screen for the whole sideways run of its panels: about 1,300 px of scrolling at 1440 px wide and 1,270 on a 375 px phone.
 - The footer links to /privacy and /complaints do not exist on a static copy: point them to real pages.
-- gsap, ScrollTrigger, SplitText and Lenis load from a CDN before the motion scripts; offline they are missing and the motion does not run.
+- The CSS animates fixed counts: 94 chart lines around the 32nd and four method steps. Another lender count or a fifth step needs matching rules in scene:market or scene:method.
+- Without scroll-driven animation support (Firefox today) and with reduced motion, the scroll motion and the smooth wheel are off: the chart stands lit with its dark bank line, the held method frame keeps its first photo with all four index dots lit, the ledger and FAQ rows are lit, and the switch panels sit in a grid (one column at 960 px and below) on the amber ground. The opening load-in still plays in Firefox and stops with reduced motion; the nav bar still hides on scroll.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Keylight Mortgages left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Keylight Mortgages left only in class names.

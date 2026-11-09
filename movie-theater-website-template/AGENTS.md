@@ -1,6 +1,6 @@
 # AGENTS.md: movie theater website template
 
-One-page website for an independent cinema, film club or small screening venue that wants a weekly programme, a bar and a membership. One file, `index.html`, with inline CSS and scripts (GSAP, ScrollTrigger, Lenis from jsDelivr); no build step, and none is needed for copy, colour or photo edits.
+One-page website for an independent cinema, film club or small screening venue that wants a weekly programme, a bar and a membership. One file, `index.html`, with inline CSS and scripts, no JavaScript libraries: the scroll motion is CSS scroll-driven animations plus a small inline motion kit; no build step, and none is needed for copy, colour or photo edits. A GSAP build of the same page is `index.gsap.html` (GSAP 3.13.0, ScrollTrigger, Lenis 1.3.4 from jsDelivr): edit one of the two, not both.
 
 ## Files
 Edit these files, not a page fetched by URL (that arrives as a summary).
@@ -14,17 +14,16 @@ Upload `index.html`, LICENSE and CREDITS.md; not this file, README.md or `previe
 
 ## Keep
 - Every `id`, `data-8b-section`, `data-8b-motion` and `data-8b-part` (`section:<id>` styles, `scene:<id>` animation).
+- The motion parts `motion-gate` (head: sets `data-8b-live` on `<html>` only with scroll-driven animation support and no reduced motion), `motion-kit` and `motion`, and every other `data-8b-*` attribute (`data-8b-items` groups, `data-8b-off`, `data-8b-enter`): the CSS and the kit read them. Items ordered by `--i` follow their group; counts the CSS fixes are listed under Known limits (`data-8b-fixed` marks such a group).
 - Selectors the scripts use:
   - `section-script:site-nav`: `.nav__menu` `.nav__close`
   - `section-script:visit`: `.visit__form` `.visit__status`
-  - `scene:programme`: `.programme__days` `.programme__day` `.programme__still` `.programme__pane`
-  - `scene:booth`: `.booth__run` `.booth__strip` `.booth__shutter` `.booth__perf` `.m-perf-2__track`
-  - `scene:picks`: `.picks__notes` `.picks__note`
-  - `scene:membership`: `.membership__ticket` `.membership__sheet` `.membership__stub` `.membership__perf-row` `.membership__perf` `.m-perf__track` `.m-perf-2__track`
-  - `scene:seasons`: `.seasons__pin` `.seasons__track` `.m-window__pane`
-  - `scene:visit`: `.visit__head` `.visit__window` `.m-window__pane` `.m-text-7`
+  - `scene-script:programme`: `.programme__days` `.programme__day` `.programme__still` `.programme__pane`
+  - `scene-script:picks`: `.picks__notes` `.picks__note`
+  - `scene-script:seasons`: `.seasons__pin` `.seasons__track` `.m-window__pane`
 - `style="--len:N"` = characters in that display line, spaces included: `Halide` is 6.
-- The programme scene pairs the six day tiles with the six stills by position; add or remove a day and a still together. The booth scene reads its frames from the list, so the count of frames can change.
+- The programme scene pairs the six day tiles with the six stills by position; add or remove a day and a still together.
+- The booth gate is written for four frames (data-8b-fixed="4"): the keyframes of scene:booth step the strip, the sprocket columns and the shutter in three moves. A fifth frame needs new keyframes.
 - The footer wordmark gets its size from style="--len:6", the number of characters in Halide: update it when the name changes.
 - The perforation strips, sprocket columns, tilted windows and the gate frame are CSS: recolour them through the variables in :root (the strips and the gate use --color-1, --color-2 and --color-5).
 - Colours and fonts are variables in `:root` (`data-8b-part="tokens"`): `--color-1` #121214 (page ground, text on white, mint and lavender tiles, label on the lavender buttons, the phone menu ground and the shutter flash over the booth frames), `--color-2` #ffffff (nav bar, white tiles and question tiles, text on the dark ground, the visit section once it has brightened, the lit programme day), `--color-3` #b8a4f7 (main buttons, lavender tiles (the Book a seat tile, the second programmer, the membership stub, the visit form, one season panel), focus outline, hover tint on programme rows, the open-question marker), `--color-4` #8cf2e6 (mint tiles: the doors tile on the first screen, the first programmer, the questions heading tile and one season panel), `--color-5` #222226 (the film gate frame in the booth, the perforation strips in the rooms section and the footer, the background behind photos while they load), `--color-6` #a9a9b3 (secondary text on the dark ground: section intro lines, room descriptions, programme notes, bar note, footer address, text inside the dark visit tiles), `--color-7` #55555e (secondary text on white, mint and lavender tiles: first-screen captions, question answers, the visit intro line after it brightens); body text needs 4.5:1 contrast.
@@ -62,9 +61,9 @@ All demo text, never to be invented:
 ## Known limits
 - Without JavaScript the phone menu button cannot open the overlay (the Book tickets button and the six footer links still work), and the message form submits to the page itself; with or without JavaScript it sends nothing until a form service is connected.
 - The six questions are native details elements and open without JavaScript.
-- The booth gate holds the page for about two screens of scroll and the seasons track for about two and a half at 1440 by 900 (a little over one on a phone); with reduced motion or without JavaScript they fall back to a column of captioned photos and a grid of panels.
-- The nav hide-on-scroll and the hover effects keep running with reduced motion; the GSAP scenes, the entrance animations and smooth scrolling are switched off.
+- The booth gate holds the page for about two screens of scroll and the seasons track for about two and a half at 1440 by 900 (a little over one on a phone).
+- Without scroll-driven animation support (Firefox today) and with reduced motion, the scroll motion and the smooth wheel are off: the programme screen keeps its first still with no day lit, the gate shows its four captioned frames in a column, the notes sit in their grid, the ticket rests torn, the seasons form a grid of panels (one column below 1100 px) and the visit section is white. The opening load-in still plays in Firefox and stops with reduced motion; the nav hide-on-scroll and the hover effects keep running.
 - The CSS turns every photo greyscale (filter: grayscale(1)), so colour photos also show in black and white; remove the filter to show colour. The booth captions sit on white plates, so they stay readable over any photo.
 
 ## Check
-375 and 1440 px, reduced motion on, console clean; `data-8b-placeholder` and Halide left only in class names.
+375 and 1440 px, reduced motion on, a browser without scroll-driven animations (Firefox: the finished static layout), console clean; `data-8b-placeholder` and Halide left only in class names.
